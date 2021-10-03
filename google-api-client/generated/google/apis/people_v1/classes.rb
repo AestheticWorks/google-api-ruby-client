@@ -2007,6 +2007,27 @@ module Google
           @status = args[:status] if args.key?(:status)
         end
       end
+
+      class SearchResult
+        include Google::Apis::Core::Hashable
+      
+        # Information about a person merged from various data sources such as the
+        # authenticated user's contacts and profile data. Most fields can have multiple
+        # items. The items in a field have no guaranteed order, but each non-empty field
+        # is guaranteed to have exactly one field with `metadata.primary` set to true.
+        # Corresponds to the JSON property `person`
+        # @return [Google::Apis::PeopleV1::Person]
+        attr_accessor :person
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @person = args[:person] if args.key?(:person)
+        end
+      end
       
       # A person's phone number.
       class PhoneNumber
@@ -2293,6 +2314,22 @@ module Google
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @people = args[:people] if args.key?(:people)
           @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+
+      class SearchResponse
+        include Google::Apis::Core::Hashable
+        attr_accessor :results
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          puts "!@#!@#"
+          puts args
+          @results = args[:results] if args.key?(:results)
         end
       end
       
