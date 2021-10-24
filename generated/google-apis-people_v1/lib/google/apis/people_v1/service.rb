@@ -988,6 +988,17 @@ module Google
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
         end
+
+        def search_the_user_contacts(page_size: nil, page_token: nil, query: nil, read_mask: nil, sources: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/people:searchContacts', options)
+          command.response_representation = Google::Apis::PeopleV1::SearchResponse::Representation
+          command.response_class = Google::Apis::PeopleV1::SearchResponse
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['query'] = query unless query.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['sources'] = sources unless sources.nil?
+          execute_or_queue_command(command, &block)
+        end
         
         # Update contact data for an existing contact person. Any non-contact data will
         # not be modified. Any non-contact data in the person to update will be ignored.
