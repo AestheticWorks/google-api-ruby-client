@@ -738,7 +738,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
 
-        def search_the_user_contacts(page_size: nil, page_token: nil, query: nil, read_mask: nil, sources: nil, options: nil, &block)
+        def search_contacts(page_size: nil, page_token: nil, query: nil, read_mask: nil, sources: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/people:searchContacts', options)
           command.response_representation = Google::Apis::PeopleV1::SearchResponse::Representation
           command.response_class = Google::Apis::PeopleV1::SearchResponse
