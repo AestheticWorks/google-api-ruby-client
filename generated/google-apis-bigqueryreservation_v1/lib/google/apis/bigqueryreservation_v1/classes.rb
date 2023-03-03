@@ -39,7 +39,9 @@ module Google
         attr_accessor :job_type
       
         # Output only. Name of the resource. E.g.: `projects/myproject/locations/US/
-        # reservations/team1-prod/assignments/123`.
+        # reservations/team1-prod/assignments/123`. The assignment_id must only contain
+        # lower case alphanumeric characters or dashes and the max length is 64
+        # characters.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -62,6 +64,32 @@ module Google
         end
       end
       
+      # Auto scaling settings.
+      class Autoscale
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The slot capacity added to this reservation when autoscale
+        # happens. Will be between [0, max_slots].
+        # Corresponds to the JSON property `currentSlots`
+        # @return [Fixnum]
+        attr_accessor :current_slots
+      
+        # Number of slots to be scaled when needed.
+        # Corresponds to the JSON property `maxSlots`
+        # @return [Fixnum]
+        attr_accessor :max_slots
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @current_slots = args[:current_slots] if args.key?(:current_slots)
+          @max_slots = args[:max_slots] if args.key?(:max_slots)
+        end
+      end
+      
       # Represents a BI Reservation.
       class BiReservation
         include Google::Apis::Core::Hashable
@@ -71,6 +99,11 @@ module Google
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Preferred tables to use BI capacity for.
+        # Corresponds to the JSON property `preferredTables`
+        # @return [Array<Google::Apis::BigqueryreservationV1::TableReference>]
+        attr_accessor :preferred_tables
       
         # Size of a reservation, in bytes.
         # Corresponds to the JSON property `size`
@@ -89,6 +122,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @name = args[:name] if args.key?(:name)
+          @preferred_tables = args[:preferred_tables] if args.key?(:preferred_tables)
           @size = args[:size] if args.key?(:size)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
@@ -115,6 +149,11 @@ module Google
         # @return [String]
         attr_accessor :commitment_start_time
       
+        # Do not use.
+        # Corresponds to the JSON property `edition`
+        # @return [String]
+        attr_accessor :edition
+      
         # The `Status` type defines a logical error model that is suitable for different
         # programming environments, including REST APIs and RPC APIs. It is used by [
         # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
@@ -125,8 +164,20 @@ module Google
         # @return [Google::Apis::BigqueryreservationV1::Status]
         attr_accessor :failure_status
       
+        # Applicable only for commitments located within one of the BigQuery multi-
+        # regions (US or EU). If set to true, this commitment is placed in the
+        # organization's secondary region which is designated for disaster recovery
+        # purposes. If false, this commitment is placed in the organization's default
+        # region.
+        # Corresponds to the JSON property `multiRegionAuxiliary`
+        # @return [Boolean]
+        attr_accessor :multi_region_auxiliary
+        alias_method :multi_region_auxiliary?, :multi_region_auxiliary
+      
         # Output only. The resource name of the capacity commitment, e.g., `projects/
-        # myproject/locations/US/capacityCommitments/123`
+        # myproject/locations/US/capacityCommitments/123` The commitment_id must only
+        # contain lower case alphanumeric characters or dashes. It must start with a
+        # letter and must not end with a dash. Its maximum length is 64 characters.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -161,7 +212,9 @@ module Google
         def update!(**args)
           @commitment_end_time = args[:commitment_end_time] if args.key?(:commitment_end_time)
           @commitment_start_time = args[:commitment_start_time] if args.key?(:commitment_start_time)
+          @edition = args[:edition] if args.key?(:edition)
           @failure_status = args[:failure_status] if args.key?(:failure_status)
+          @multi_region_auxiliary = args[:multi_region_auxiliary] if args.key?(:multi_region_auxiliary)
           @name = args[:name] if args.key?(:name)
           @plan = args[:plan] if args.key?(:plan)
           @renewal_plan = args[:renewal_plan] if args.key?(:renewal_plan)
@@ -173,8 +226,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -314,10 +366,30 @@ module Google
       class Reservation
         include Google::Apis::Core::Hashable
       
+        # Auto scaling settings.
+        # Corresponds to the JSON property `autoscale`
+        # @return [Google::Apis::BigqueryreservationV1::Autoscale]
+        attr_accessor :autoscale
+      
+        # Job concurrency target which sets a soft upper bound on the number of jobs
+        # that can run concurrently in this reservation. This is a soft target due to
+        # asynchronous nature of the system and various optimizations for small queries.
+        # Default value is 0 which means that concurrency target will be automatically
+        # computed by the system. NOTE: this field is exposed as `target_job_concurrency`
+        # in the Information Schema, DDL and BQ CLI.
+        # Corresponds to the JSON property `concurrency`
+        # @return [Fixnum]
+        attr_accessor :concurrency
+      
         # Output only. Creation time of the reservation.
         # Corresponds to the JSON property `creationTime`
         # @return [String]
         attr_accessor :creation_time
+      
+        # Do not use.
+        # Corresponds to the JSON property `edition`
+        # @return [String]
+        attr_accessor :edition
       
         # If false, any query or pipeline job using this reservation will use idle slots
         # from other reservations within the same admin project. If true, a query or
@@ -328,8 +400,20 @@ module Google
         attr_accessor :ignore_idle_slots
         alias_method :ignore_idle_slots?, :ignore_idle_slots
       
+        # Applicable only for reservations located within one of the BigQuery multi-
+        # regions (US or EU). If set to true, this reservation is placed in the
+        # organization's secondary region which is designated for disaster recovery
+        # purposes. If false, this reservation is placed in the organization's default
+        # region.
+        # Corresponds to the JSON property `multiRegionAuxiliary`
+        # @return [Boolean]
+        attr_accessor :multi_region_auxiliary
+        alias_method :multi_region_auxiliary?, :multi_region_auxiliary
+      
         # The resource name of the reservation, e.g., `projects/*/locations/*/
-        # reservations/team1-prod`.
+        # reservations/team1-prod`. The reservation_id must only contain lower case
+        # alphanumeric characters or dashes. It must start with a letter and must not
+        # end with a dash. Its maximum length is 64 characters.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -337,10 +421,11 @@ module Google
         # Minimum slots available to this reservation. A slot is a unit of computational
         # power in BigQuery, and serves as the unit of parallelism. Queries using this
         # reservation might use more slots during runtime if ignore_idle_slots is set to
-        # false. If the new reservation's slot capacity exceed the parent's slot
-        # capacity or if total slot capacity of the new reservation and its siblings
-        # exceeds the parent's slot capacity, the request will fail with `google.rpc.
-        # Code.RESOURCE_EXHAUSTED`.
+        # false. If total slot_capacity of the reservation and its siblings exceeds the
+        # total slot_count of all capacity commitments, the request will fail with `
+        # google.rpc.Code.RESOURCE_EXHAUSTED`. NOTE: for reservations in US or EU multi-
+        # regions, slot capacity constraints are checked separately for default and
+        # auxiliary regions. See multi_region_auxiliary flag for more details.
         # Corresponds to the JSON property `slotCapacity`
         # @return [Fixnum]
         attr_accessor :slot_capacity
@@ -356,8 +441,12 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @autoscale = args[:autoscale] if args.key?(:autoscale)
+          @concurrency = args[:concurrency] if args.key?(:concurrency)
           @creation_time = args[:creation_time] if args.key?(:creation_time)
+          @edition = args[:edition] if args.key?(:edition)
           @ignore_idle_slots = args[:ignore_idle_slots] if args.key?(:ignore_idle_slots)
+          @multi_region_auxiliary = args[:multi_region_auxiliary] if args.key?(:multi_region_auxiliary)
           @name = args[:name] if args.key?(:name)
           @slot_capacity = args[:slot_capacity] if args.key?(:slot_capacity)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -506,6 +595,38 @@ module Google
           @code = args[:code] if args.key?(:code)
           @details = args[:details] if args.key?(:details)
           @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # Fully qualified reference to BigQuery table. Internally stored as google.cloud.
+      # bi.v1.BqTableReference.
+      class TableReference
+        include Google::Apis::Core::Hashable
+      
+        # The ID of the dataset in the above project.
+        # Corresponds to the JSON property `datasetId`
+        # @return [String]
+        attr_accessor :dataset_id
+      
+        # The assigned project ID of the project.
+        # Corresponds to the JSON property `projectId`
+        # @return [String]
+        attr_accessor :project_id
+      
+        # The ID of the table in the above dataset.
+        # Corresponds to the JSON property `tableId`
+        # @return [String]
+        attr_accessor :table_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset_id = args[:dataset_id] if args.key?(:dataset_id)
+          @project_id = args[:project_id] if args.key?(:project_id)
+          @table_id = args[:table_id] if args.key?(:table_id)
         end
       end
     end

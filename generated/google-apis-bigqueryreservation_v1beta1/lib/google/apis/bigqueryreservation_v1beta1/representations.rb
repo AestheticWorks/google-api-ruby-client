@@ -106,6 +106,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TableReference
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Assignment
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -120,6 +126,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
+          collection :preferred_tables, as: 'preferredTables', class: Google::Apis::BigqueryreservationV1beta1::TableReference, decorator: Google::Apis::BigqueryreservationV1beta1::TableReference::Representation
+      
           property :size, :numeric_string => true, as: 'size'
           property :update_time, as: 'updateTime'
         end
@@ -132,6 +140,7 @@ module Google
           property :commitment_start_time, as: 'commitmentStartTime'
           property :failure_status, as: 'failureStatus', class: Google::Apis::BigqueryreservationV1beta1::Status, decorator: Google::Apis::BigqueryreservationV1beta1::Status::Representation
       
+          property :multi_region_auxiliary, as: 'multiRegionAuxiliary'
           property :name, as: 'name'
           property :plan, as: 'plan'
           property :renewal_plan, as: 'renewalPlan'
@@ -190,8 +199,10 @@ module Google
       class Reservation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :concurrency, :numeric_string => true, as: 'concurrency'
           property :creation_time, as: 'creationTime'
           property :ignore_idle_slots, as: 'ignoreIdleSlots'
+          property :multi_region_auxiliary, as: 'multiRegionAuxiliary'
           property :name, as: 'name'
           property :slot_capacity, :numeric_string => true, as: 'slotCapacity'
           property :update_time, as: 'updateTime'
@@ -230,6 +241,15 @@ module Google
           property :code, as: 'code'
           collection :details, as: 'details'
           property :message, as: 'message'
+        end
+      end
+      
+      class TableReference
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dataset_id, as: 'datasetId'
+          property :project_id, as: 'projectId'
+          property :table_id, as: 'tableId'
         end
       end
     end

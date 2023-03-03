@@ -34,6 +34,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BootImage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CancelOperationRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -47,6 +53,24 @@ module Google
       end
       
       class DataprocParameters
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DiagnoseInstanceRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DiagnoseRuntimeRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DiagnosticConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -208,7 +232,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RefreshRuntimeTokenInternalRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RefreshRuntimeTokenInternalResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RegisterInstanceRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ReportInstanceEventRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -394,6 +436,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UpdateInstanceMetadataItemsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UpdateInstanceMetadataItemsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class UpdateShieldedInstanceConfigRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -413,6 +467,12 @@ module Google
       end
       
       class UpgradeInstanceRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UpgradeRuntimeRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -460,6 +520,12 @@ module Google
         end
       end
       
+      class BootImage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class CancelOperationRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -478,6 +544,33 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cluster, as: 'cluster'
+        end
+      end
+      
+      class DiagnoseInstanceRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :diagnostic_config, as: 'diagnosticConfig', class: Google::Apis::NotebooksV1::DiagnosticConfig, decorator: Google::Apis::NotebooksV1::DiagnosticConfig::Representation
+      
+        end
+      end
+      
+      class DiagnoseRuntimeRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :diagnostic_config, as: 'diagnosticConfig', class: Google::Apis::NotebooksV1::DiagnosticConfig, decorator: Google::Apis::NotebooksV1::DiagnosticConfig::Representation
+      
+        end
+      end
+      
+      class DiagnosticConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :copy_home_files_flag_enabled, as: 'copyHomeFilesFlagEnabled'
+          property :gcs_bucket, as: 'gcsBucket'
+          property :packet_capture_flag_enabled, as: 'packetCaptureFlagEnabled'
+          property :relative_path, as: 'relativePath'
+          property :repair_flag_enabled, as: 'repairFlagEnabled'
         end
       end
       
@@ -531,6 +624,7 @@ module Google
       class Event
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :details, as: 'details'
           property :report_time, as: 'reportTime'
           property :type, as: 'type'
         end
@@ -562,6 +656,7 @@ module Google
       
           property :input_notebook_file, as: 'inputNotebookFile'
           property :job_type, as: 'jobType'
+          property :kernel_spec, as: 'kernelSpec'
           hash :labels, as: 'labels'
           property :master_type, as: 'masterType'
           property :output_notebook_folder, as: 'outputNotebookFolder'
@@ -569,6 +664,7 @@ module Google
           property :params_yaml_file, as: 'paramsYamlFile'
           property :scale_tier, as: 'scaleTier'
           property :service_account, as: 'serviceAccount'
+          property :tensorboard, as: 'tensorboard'
           property :vertex_ai_parameters, as: 'vertexAiParameters', class: Google::Apis::NotebooksV1::VertexAiParameters, decorator: Google::Apis::NotebooksV1::VertexAiParameters::Representation
       
         end
@@ -606,9 +702,11 @@ module Google
       
           property :boot_disk_size_gb, :numeric_string => true, as: 'bootDiskSizeGb'
           property :boot_disk_type, as: 'bootDiskType'
+          property :can_ip_forward, as: 'canIpForward'
           property :container_image, as: 'containerImage', class: Google::Apis::NotebooksV1::ContainerImage, decorator: Google::Apis::NotebooksV1::ContainerImage::Representation
       
           property :create_time, as: 'createTime'
+          property :creator, as: 'creator'
           property :custom_gpu_driver_path, as: 'customGpuDriverPath'
           property :data_disk_size_gb, :numeric_string => true, as: 'dataDiskSizeGb'
           property :data_disk_type, as: 'dataDiskType'
@@ -810,10 +908,34 @@ module Google
         end
       end
       
+      class RefreshRuntimeTokenInternalRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :vm_id, as: 'vmId'
+        end
+      end
+      
+      class RefreshRuntimeTokenInternalResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :access_token, as: 'accessToken'
+          property :expire_time, as: 'expireTime'
+        end
+      end
+      
       class RegisterInstanceRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :instance_id, as: 'instanceId'
+        end
+      end
+      
+      class ReportInstanceEventRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :event, as: 'event', class: Google::Apis::NotebooksV1::Event, decorator: Google::Apis::NotebooksV1::Event::Representation
+      
+          property :vm_id, as: 'vmId'
         end
       end
       
@@ -852,6 +974,7 @@ module Google
       class ResetRuntimeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, as: 'requestId'
         end
       end
       
@@ -869,6 +992,7 @@ module Google
       
           property :create_time, as: 'createTime'
           property :health_state, as: 'healthState'
+          hash :labels, as: 'labels'
           property :metrics, as: 'metrics', class: Google::Apis::NotebooksV1::RuntimeMetrics, decorator: Google::Apis::NotebooksV1::RuntimeMetrics::Representation
       
           property :name, as: 'name'
@@ -925,12 +1049,18 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :custom_gpu_driver_path, as: 'customGpuDriverPath'
+          property :disable_terminal, as: 'disableTerminal'
           property :enable_health_monitoring, as: 'enableHealthMonitoring'
           property :idle_shutdown, as: 'idleShutdown'
           property :idle_shutdown_timeout, as: 'idleShutdownTimeout'
           property :install_gpu_driver, as: 'installGpuDriver'
+          collection :kernels, as: 'kernels', class: Google::Apis::NotebooksV1::ContainerImage, decorator: Google::Apis::NotebooksV1::ContainerImage::Representation
+      
           property :notebook_upgrade_schedule, as: 'notebookUpgradeSchedule'
           property :post_startup_script, as: 'postStartupScript'
+          property :post_startup_script_behavior, as: 'postStartupScriptBehavior'
+          property :upgradeable, as: 'upgradeable'
+          property :version, as: 'version'
         end
       end
       
@@ -1008,6 +1138,7 @@ module Google
       class StartRuntimeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, as: 'requestId'
         end
       end
       
@@ -1029,6 +1160,7 @@ module Google
       class StopRuntimeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, as: 'requestId'
         end
       end
       
@@ -1038,6 +1170,7 @@ module Google
           property :accelerator_config, as: 'acceleratorConfig', class: Google::Apis::NotebooksV1::RuntimeAcceleratorConfig, decorator: Google::Apis::NotebooksV1::RuntimeAcceleratorConfig::Representation
       
           property :machine_type, as: 'machineType'
+          property :request_id, as: 'requestId'
         end
       end
       
@@ -1069,6 +1202,20 @@ module Google
         end
       end
       
+      class UpdateInstanceMetadataItemsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :items, as: 'items'
+        end
+      end
+      
+      class UpdateInstanceMetadataItemsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :items, as: 'items'
+        end
+      end
+      
       class UpdateShieldedInstanceConfigRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1096,6 +1243,7 @@ module Google
       class UpgradeInstanceInternalRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :type, as: 'type'
           property :vm_id, as: 'vmId'
         end
       end
@@ -1103,12 +1251,21 @@ module Google
       class UpgradeInstanceRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :type, as: 'type'
+        end
+      end
+      
+      class UpgradeRuntimeRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, as: 'requestId'
         end
       end
       
       class VertexAiParameters
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :env, as: 'env'
           property :network, as: 'network'
         end
       end
@@ -1128,6 +1285,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :accelerator_config, as: 'acceleratorConfig', class: Google::Apis::NotebooksV1::RuntimeAcceleratorConfig, decorator: Google::Apis::NotebooksV1::RuntimeAcceleratorConfig::Representation
       
+          property :boot_image, as: 'bootImage', class: Google::Apis::NotebooksV1::BootImage, decorator: Google::Apis::NotebooksV1::BootImage::Representation
+      
           collection :container_images, as: 'containerImages', class: Google::Apis::NotebooksV1::ContainerImage, decorator: Google::Apis::NotebooksV1::ContainerImage::Representation
       
           property :data_disk, as: 'dataDisk', class: Google::Apis::NotebooksV1::LocalDisk, decorator: Google::Apis::NotebooksV1::LocalDisk::Representation
@@ -1141,6 +1300,7 @@ module Google
           hash :metadata, as: 'metadata'
           property :network, as: 'network'
           property :nic_type, as: 'nicType'
+          property :reserved_ip_range, as: 'reservedIpRange'
           property :shielded_instance_config, as: 'shieldedInstanceConfig', class: Google::Apis::NotebooksV1::RuntimeShieldedInstanceConfig, decorator: Google::Apis::NotebooksV1::RuntimeShieldedInstanceConfig::Representation
       
           property :subnet, as: 'subnet'

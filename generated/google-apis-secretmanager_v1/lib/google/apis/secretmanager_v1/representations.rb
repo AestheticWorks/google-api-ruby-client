@@ -432,6 +432,7 @@ module Google
       class Secret
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :annotations, as: 'annotations'
           property :create_time, as: 'createTime'
           property :etag, as: 'etag'
           property :expire_time, as: 'expireTime'
@@ -444,6 +445,7 @@ module Google
           collection :topics, as: 'topics', class: Google::Apis::SecretmanagerV1::Topic, decorator: Google::Apis::SecretmanagerV1::Topic::Representation
       
           property :ttl, as: 'ttl'
+          hash :version_aliases, as: 'versionAliases'
         end
       end
       
@@ -451,12 +453,14 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :data, :base64 => true, as: 'data'
+          property :data_crc32c, :numeric_string => true, as: 'dataCrc32c'
         end
       end
       
       class SecretVersion
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :client_specified_payload_checksum, as: 'clientSpecifiedPayloadChecksum'
           property :create_time, as: 'createTime'
           property :destroy_time, as: 'destroyTime'
           property :etag, as: 'etag'

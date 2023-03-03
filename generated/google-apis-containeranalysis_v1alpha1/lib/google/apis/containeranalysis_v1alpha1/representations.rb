@@ -22,7 +22,19 @@ module Google
   module Apis
     module ContaineranalysisV1alpha1
       
+      class AnalysisCompleted
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Artifact
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Assessment
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -94,6 +106,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Cvss
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CisBenchmark
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -125,6 +143,186 @@ module Google
       end
       
       class ComplianceVersion
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Build
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Hash
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Results
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Secret
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Source
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Volume
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -173,6 +371,12 @@ module Google
       end
       
       class Detail
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Digest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -239,6 +443,12 @@ module Google
       end
       
       class FileHashes
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FileLocation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -322,6 +532,42 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleDevtoolsContaineranalysisV1alpha1SourceContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -329,6 +575,12 @@ module Google
       end
       
       class HashProp
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentifierHelper
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -353,6 +605,12 @@ module Google
       end
       
       class Layer
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class License
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -383,6 +641,12 @@ module Google
       end
       
       class Location
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Material
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -424,19 +688,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PackageInfoNote
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PackageInfoOccurrence
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PackageIssue
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class PackageNote
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class PackageOccurrence
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -449,6 +713,18 @@ module Google
       end
       
       class Policy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Product
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Publisher
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -473,6 +749,12 @@ module Google
       end
       
       class RelationshipOccurrence
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Remediation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -503,6 +785,42 @@ module Google
       end
       
       class SeverityCount
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaBuilder
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaCompleteness
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaProvenance
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaProvenanceZeroTwo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaRecipe
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -544,7 +862,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Threat
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class TimeSpan
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Uri
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -580,7 +910,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class VexAssessment
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Volume
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VulnerabilityAssessmentNote
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -604,6 +946,13 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AnalysisCompleted
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :analysis_type, as: 'analysisType'
+        end
+      end
+      
       class Artifact
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -611,6 +960,22 @@ module Google
           property :id, as: 'id'
           property :name, as: 'name'
           collection :names, as: 'names'
+        end
+      end
+      
+      class Assessment
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cve, as: 'cve'
+          property :long_description, as: 'longDescription'
+          collection :related_uris, as: 'relatedUris', class: Google::Apis::ContaineranalysisV1alpha1::Uri, decorator: Google::Apis::ContaineranalysisV1alpha1::Uri::Representation
+      
+          collection :remediations, as: 'remediations', class: Google::Apis::ContaineranalysisV1alpha1::Remediation, decorator: Google::Apis::ContaineranalysisV1alpha1::Remediation::Representation
+      
+          property :short_description, as: 'shortDescription'
+          property :state, as: 'state'
+          collection :threats, as: 'threats', class: Google::Apis::ContaineranalysisV1alpha1::Threat, decorator: Google::Apis::ContaineranalysisV1alpha1::Threat::Representation
+      
         end
       end
       
@@ -661,6 +1026,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :intoto_provenance, as: 'intotoProvenance', class: Google::Apis::ContaineranalysisV1alpha1::InTotoProvenance, decorator: Google::Apis::ContaineranalysisV1alpha1::InTotoProvenance::Representation
       
+          property :intoto_statement, as: 'intotoStatement', class: Google::Apis::ContaineranalysisV1alpha1::InTotoStatement, decorator: Google::Apis::ContaineranalysisV1alpha1::InTotoStatement::Representation
+      
           property :provenance, as: 'provenance', class: Google::Apis::ContaineranalysisV1alpha1::BuildProvenance, decorator: Google::Apis::ContaineranalysisV1alpha1::BuildProvenance::Representation
       
           property :provenance_bytes, as: 'provenanceBytes'
@@ -702,10 +1069,13 @@ module Google
       class BuildStep
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :allow_exit_codes, as: 'allowExitCodes'
+          property :allow_failure, as: 'allowFailure'
           collection :args, as: 'args'
           property :dir, as: 'dir'
           property :entrypoint, as: 'entrypoint'
           collection :env, as: 'env'
+          property :exit_code, as: 'exitCode'
           property :id, as: 'id'
           property :name, as: 'name'
           property :pull_timing, as: 'pullTiming', class: Google::Apis::ContaineranalysisV1alpha1::TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::TimeSpan::Representation
@@ -735,6 +1105,24 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :id, as: 'id'
+        end
+      end
+      
+      class Cvss
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :attack_complexity, as: 'attackComplexity'
+          property :attack_vector, as: 'attackVector'
+          property :authentication, as: 'authentication'
+          property :availability_impact, as: 'availabilityImpact'
+          property :base_score, as: 'baseScore'
+          property :confidentiality_impact, as: 'confidentialityImpact'
+          property :exploitability_score, as: 'exploitabilityScore'
+          property :impact_score, as: 'impactScore'
+          property :integrity_impact, as: 'integrityImpact'
+          property :privileges_required, as: 'privilegesRequired'
+          property :scope, as: 'scope'
+          property :user_interaction, as: 'userInteraction'
         end
       end
       
@@ -794,8 +1182,371 @@ module Google
       class ComplianceVersion
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :benchmark_document, as: 'benchmarkDocument'
           property :cpe_uri, as: 'cpeUri'
           property :version, as: 'version'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :approval_required, as: 'approvalRequired'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :approval_time, as: 'approvalTime'
+          property :approver_account, as: 'approverAccount'
+          property :comment, as: 'comment'
+          property :decision, as: 'decision'
+          property :url, as: 'url'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :images, as: 'images'
+          collection :maven_artifacts, as: 'mavenArtifacts', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact::Representation
+      
+          property :objects, as: 'objects', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects::Representation
+      
+          collection :python_packages, as: 'pythonPackages', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsArtifactObjects
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :location, as: 'location'
+          collection :paths, as: 'paths'
+          property :timing, as: 'timing', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsMavenArtifact
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :artifact_id, as: 'artifactId'
+          property :group_id, as: 'groupId'
+          property :path, as: 'path'
+          property :repository, as: 'repository'
+          property :version, as: 'version'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1ArtifactsPythonPackage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :paths, as: 'paths'
+          property :repository, as: 'repository'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Build
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :approval, as: 'approval', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval::Representation
+      
+          property :artifacts, as: 'artifacts', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Artifacts::Representation
+      
+          property :available_secrets, as: 'availableSecrets', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets::Representation
+      
+          property :build_trigger_id, as: 'buildTriggerId'
+          property :create_time, as: 'createTime'
+          property :failure_info, as: 'failureInfo', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo::Representation
+      
+          property :finish_time, as: 'finishTime'
+          property :id, as: 'id'
+          collection :images, as: 'images'
+          property :log_url, as: 'logUrl'
+          property :logs_bucket, as: 'logsBucket'
+          property :name, as: 'name'
+          property :options, as: 'options', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions::Representation
+      
+          property :project_id, as: 'projectId'
+          property :queue_ttl, as: 'queueTtl'
+          property :results, as: 'results', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Results, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Results::Representation
+      
+          collection :secrets, as: 'secrets', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Secret, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Secret::Representation
+      
+          property :service_account, as: 'serviceAccount'
+          property :source, as: 'source', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Source, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Source::Representation
+      
+          property :source_provenance, as: 'sourceProvenance', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance::Representation
+      
+          property :start_time, as: 'startTime'
+          property :status, as: 'status'
+          property :status_detail, as: 'statusDetail'
+          collection :steps, as: 'steps', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep::Representation
+      
+          hash :substitutions, as: 'substitutions'
+          collection :tags, as: 'tags'
+          property :timeout, as: 'timeout'
+          hash :timing, as: 'timing', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          collection :warnings, as: 'warnings', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildApproval
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config, as: 'config', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalConfig::Representation
+      
+          property :result, as: 'result', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1ApprovalResult::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildFailureInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :detail, as: 'detail'
+          property :type, as: 'type'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :disk_size_gb, :numeric_string => true, as: 'diskSizeGb'
+          property :dynamic_substitutions, as: 'dynamicSubstitutions'
+          collection :env, as: 'env'
+          property :log_streaming_option, as: 'logStreamingOption'
+          property :logging, as: 'logging'
+          property :machine_type, as: 'machineType'
+          property :pool, as: 'pool', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption::Representation
+      
+          property :requested_verify_option, as: 'requestedVerifyOption'
+          collection :secret_env, as: 'secretEnv'
+          collection :source_provenance_hash, as: 'sourceProvenanceHash'
+          property :substitution_option, as: 'substitutionOption'
+          collection :volumes, as: 'volumes', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Volume, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Volume::Representation
+      
+          property :worker_pool, as: 'workerPool'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :allow_exit_codes, as: 'allowExitCodes'
+          property :allow_failure, as: 'allowFailure'
+          collection :args, as: 'args'
+          property :dir, as: 'dir'
+          property :entrypoint, as: 'entrypoint'
+          collection :env, as: 'env'
+          property :exit_code, as: 'exitCode'
+          property :id, as: 'id'
+          property :name, as: 'name'
+          property :pull_timing, as: 'pullTiming', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          property :script, as: 'script'
+          collection :secret_env, as: 'secretEnv'
+          property :status, as: 'status'
+          property :timeout, as: 'timeout'
+          property :timing, as: 'timing', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          collection :volumes, as: 'volumes', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Volume, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Volume::Representation
+      
+          collection :wait_for, as: 'waitFor'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuildWarning
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :priority, as: 'priority'
+          property :text, as: 'text'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :digest, as: 'digest'
+          property :name, as: 'name'
+          property :push_timing, as: 'pushTiming', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :file_hash, as: 'fileHash', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Hash, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1Hash::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Hash
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :type, as: 'type'
+          property :value, :base64 => true, as: 'value'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :env_map, as: 'envMap'
+          property :kms_key_name, as: 'kmsKeyName'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :branch_name, as: 'branchName'
+          property :commit_sha, as: 'commitSha'
+          property :dir, as: 'dir'
+          property :invert_regex, as: 'invertRegex'
+          property :project_id, as: 'projectId'
+          property :repo_name, as: 'repoName'
+          hash :substitutions, as: 'substitutions'
+          property :tag_name, as: 'tagName'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Results
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :artifact_manifest, as: 'artifactManifest'
+          property :artifact_timing, as: 'artifactTiming', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          collection :build_step_images, as: 'buildStepImages'
+          collection :build_step_outputs, as: 'buildStepOutputs'
+          collection :images, as: 'images', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1BuiltImage::Representation
+      
+          collection :maven_artifacts, as: 'mavenArtifacts', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact::Representation
+      
+          property :num_artifacts, :numeric_string => true, as: 'numArtifacts'
+          collection :python_packages, as: 'pythonPackages', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Secret
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :kms_key_name, as: 'kmsKeyName'
+          hash :secret_env, as: 'secretEnv'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :env, as: 'env'
+          property :version_name, as: 'versionName'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Secrets
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :inline, as: 'inline', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1InlineSecret::Representation
+      
+          collection :secret_manager, as: 'secretManager', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1SecretManagerSecret::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Source
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :repo_source, as: 'repoSource', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource::Representation
+      
+          property :storage_source, as: 'storageSource', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource::Representation
+      
+          property :storage_source_manifest, as: 'storageSourceManifest', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1SourceProvenance
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :file_hashes, as: 'fileHashes', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes::Representation
+      
+          property :resolved_repo_source, as: 'resolvedRepoSource', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1RepoSource::Representation
+      
+          property :resolved_storage_source, as: 'resolvedStorageSource', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource::Representation
+      
+          property :resolved_storage_source_manifest, as: 'resolvedStorageSourceManifest', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest::Representation
+      
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket, as: 'bucket'
+          property :generation, :numeric_string => true, as: 'generation'
+          property :object, as: 'object'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1StorageSourceManifest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket, as: 'bucket'
+          property :generation, :numeric_string => true, as: 'generation'
+          property :object, as: 'object'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedMavenArtifact
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_hashes, as: 'fileHashes', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes::Representation
+      
+          property :push_timing, as: 'pushTiming', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_hashes, as: 'fileHashes', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1FileHashes::Representation
+      
+          property :push_timing, as: 'pushTiming', class: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan, decorator: Google::Apis::ContaineranalysisV1alpha1::ContaineranalysisGoogleDevtoolsCloudbuildV1TimeSpan::Representation
+      
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class ContaineranalysisGoogleDevtoolsCloudbuildV1Volume
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :path, as: 'path'
         end
       end
       
@@ -885,14 +1636,28 @@ module Google
         end
       end
       
+      class Digest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :algo, as: 'algo'
+          property :digest_bytes, :base64 => true, as: 'digestBytes'
+        end
+      end
+      
       class Discovered
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :analysis_completed, as: 'analysisCompleted', class: Google::Apis::ContaineranalysisV1alpha1::AnalysisCompleted, decorator: Google::Apis::ContaineranalysisV1alpha1::AnalysisCompleted::Representation
+      
+          collection :analysis_error, as: 'analysisError', class: Google::Apis::ContaineranalysisV1alpha1::Status, decorator: Google::Apis::ContaineranalysisV1alpha1::Status::Representation
+      
           property :analysis_status, as: 'analysisStatus'
           property :analysis_status_error, as: 'analysisStatusError', class: Google::Apis::ContaineranalysisV1alpha1::Status, decorator: Google::Apis::ContaineranalysisV1alpha1::Status::Representation
       
+          property :archive_time, as: 'archiveTime'
           property :continuous_analysis, as: 'continuousAnalysis'
           property :cpe, as: 'cpe'
+          property :last_scan_time, as: 'lastScanTime'
           property :operation, as: 'operation', class: Google::Apis::ContaineranalysisV1alpha1::Operation, decorator: Google::Apis::ContaineranalysisV1alpha1::Operation::Representation
       
         end
@@ -993,6 +1758,13 @@ module Google
         end
       end
       
+      class FileLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_path, as: 'filePath'
+        end
+      end
+      
       class FileNote
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1011,8 +1783,8 @@ module Google
           property :copyright, as: 'copyright'
           collection :files_license_info, as: 'filesLicenseInfo'
           property :id, as: 'id'
-          property :license_comments, as: 'licenseComments'
-          property :license_concluded, as: 'licenseConcluded'
+          property :license_concluded, as: 'licenseConcluded', class: Google::Apis::ContaineranalysisV1alpha1::License, decorator: Google::Apis::ContaineranalysisV1alpha1::License::Representation
+      
           property :notice, as: 'notice'
         end
       end
@@ -1112,6 +1884,61 @@ module Google
         end
       end
       
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+        end
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :environment, as: 'environment'
+          property :materials, as: 'materials'
+          property :parameters, as: 'parameters'
+        end
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :entry_point, as: 'entryPoint'
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config_source, as: 'configSource', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaConfigSource::Representation
+      
+          hash :environment, as: 'environment'
+          hash :parameters, as: 'parameters'
+        end
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :build_finished_on, as: 'buildFinishedOn'
+          property :build_invocation_id, as: 'buildInvocationId'
+          property :build_started_on, as: 'buildStartedOn'
+          property :completeness, as: 'completeness', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaCompleteness::Representation
+      
+          property :reproducible, as: 'reproducible'
+        end
+      end
+      
       class GoogleDevtoolsContaineranalysisV1alpha1SourceContext
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1133,6 +1960,14 @@ module Google
         end
       end
       
+      class IdentifierHelper
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :field, as: 'field'
+          property :generic_uri, as: 'genericUri'
+        end
+      end
+      
       class InTotoProvenance
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1149,21 +1984,32 @@ module Google
       class InTotoStatement
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :_type, as: '_type'
           property :predicate_type, as: 'predicateType'
           property :provenance, as: 'provenance', class: Google::Apis::ContaineranalysisV1alpha1::InTotoProvenance, decorator: Google::Apis::ContaineranalysisV1alpha1::InTotoProvenance::Representation
       
+          property :slsa_provenance, as: 'slsaProvenance', class: Google::Apis::ContaineranalysisV1alpha1::SlsaProvenance, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaProvenance::Representation
+      
+          property :slsa_provenance_zero_two, as: 'slsaProvenanceZeroTwo', class: Google::Apis::ContaineranalysisV1alpha1::SlsaProvenanceZeroTwo, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaProvenanceZeroTwo::Representation
+      
           collection :subject, as: 'subject', class: Google::Apis::ContaineranalysisV1alpha1::Subject, decorator: Google::Apis::ContaineranalysisV1alpha1::Subject::Representation
       
-          property :type, as: 'type'
         end
       end
       
       class Installation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :architecture, as: 'architecture'
+          property :cpe_uri, as: 'cpeUri'
+          property :license, as: 'license', class: Google::Apis::ContaineranalysisV1alpha1::License, decorator: Google::Apis::ContaineranalysisV1alpha1::License::Representation
+      
           collection :location, as: 'location', class: Google::Apis::ContaineranalysisV1alpha1::Location, decorator: Google::Apis::ContaineranalysisV1alpha1::Location::Representation
       
           property :name, as: 'name'
+          property :package_type, as: 'packageType'
+          property :version, as: 'version', class: Google::Apis::ContaineranalysisV1alpha1::Version, decorator: Google::Apis::ContaineranalysisV1alpha1::Version::Representation
+      
         end
       end
       
@@ -1172,6 +2018,14 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :arguments, as: 'arguments'
           property :directive, as: 'directive'
+        end
+      end
+      
+      class License
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :comments, as: 'comments'
+          property :expression, as: 'expression'
         end
       end
       
@@ -1218,6 +2072,14 @@ module Google
           property :path, as: 'path'
           property :version, as: 'version', class: Google::Apis::ContaineranalysisV1alpha1::Version, decorator: Google::Apis::ContaineranalysisV1alpha1::Version::Representation
       
+        end
+      end
+      
+      class Material
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :uri, as: 'uri'
         end
       end
       
@@ -1273,12 +2135,14 @@ module Google
           property :short_description, as: 'shortDescription'
           property :spdx_file, as: 'spdxFile', class: Google::Apis::ContaineranalysisV1alpha1::FileNote, decorator: Google::Apis::ContaineranalysisV1alpha1::FileNote::Representation
       
-          property :spdx_package, as: 'spdxPackage', class: Google::Apis::ContaineranalysisV1alpha1::PackageNote, decorator: Google::Apis::ContaineranalysisV1alpha1::PackageNote::Representation
+          property :spdx_package, as: 'spdxPackage', class: Google::Apis::ContaineranalysisV1alpha1::PackageInfoNote, decorator: Google::Apis::ContaineranalysisV1alpha1::PackageInfoNote::Representation
       
           property :spdx_relationship, as: 'spdxRelationship', class: Google::Apis::ContaineranalysisV1alpha1::RelationshipNote, decorator: Google::Apis::ContaineranalysisV1alpha1::RelationshipNote::Representation
       
           property :update_time, as: 'updateTime'
           property :upgrade, as: 'upgrade', class: Google::Apis::ContaineranalysisV1alpha1::UpgradeNote, decorator: Google::Apis::ContaineranalysisV1alpha1::UpgradeNote::Representation
+      
+          property :vulnerability_assessment, as: 'vulnerabilityAssessment', class: Google::Apis::ContaineranalysisV1alpha1::VulnerabilityAssessmentNote, decorator: Google::Apis::ContaineranalysisV1alpha1::VulnerabilityAssessmentNote::Representation
       
           property :vulnerability_type, as: 'vulnerabilityType', class: Google::Apis::ContaineranalysisV1alpha1::VulnerabilityType, decorator: Google::Apis::ContaineranalysisV1alpha1::VulnerabilityType::Representation
       
@@ -1318,7 +2182,7 @@ module Google
       
           property :spdx_file, as: 'spdxFile', class: Google::Apis::ContaineranalysisV1alpha1::FileOccurrence, decorator: Google::Apis::ContaineranalysisV1alpha1::FileOccurrence::Representation
       
-          property :spdx_package, as: 'spdxPackage', class: Google::Apis::ContaineranalysisV1alpha1::PackageOccurrence, decorator: Google::Apis::ContaineranalysisV1alpha1::PackageOccurrence::Representation
+          property :spdx_package, as: 'spdxPackage', class: Google::Apis::ContaineranalysisV1alpha1::PackageInfoOccurrence, decorator: Google::Apis::ContaineranalysisV1alpha1::PackageInfoOccurrence::Representation
       
           property :spdx_relationship, as: 'spdxRelationship', class: Google::Apis::ContaineranalysisV1alpha1::RelationshipOccurrence, decorator: Google::Apis::ContaineranalysisV1alpha1::RelationshipOccurrence::Representation
       
@@ -1345,9 +2209,63 @@ module Google
       class Package
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :architecture, as: 'architecture'
+          property :cpe_uri, as: 'cpeUri'
+          property :description, as: 'description'
+          collection :digest, as: 'digest', class: Google::Apis::ContaineranalysisV1alpha1::Digest, decorator: Google::Apis::ContaineranalysisV1alpha1::Digest::Representation
+      
           collection :distribution, as: 'distribution', class: Google::Apis::ContaineranalysisV1alpha1::Distribution, decorator: Google::Apis::ContaineranalysisV1alpha1::Distribution::Representation
       
+          property :license, as: 'license', class: Google::Apis::ContaineranalysisV1alpha1::License, decorator: Google::Apis::ContaineranalysisV1alpha1::License::Representation
+      
+          property :maintainer, as: 'maintainer'
           property :name, as: 'name'
+          property :package_type, as: 'packageType'
+          property :url, as: 'url'
+          property :version, as: 'version', class: Google::Apis::ContaineranalysisV1alpha1::Version, decorator: Google::Apis::ContaineranalysisV1alpha1::Version::Representation
+      
+        end
+      end
+      
+      class PackageInfoNote
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :analyzed, as: 'analyzed'
+          property :attribution, as: 'attribution'
+          property :checksum, as: 'checksum'
+          property :copyright, as: 'copyright'
+          property :detailed_description, as: 'detailedDescription'
+          property :download_location, as: 'downloadLocation'
+          collection :external_refs, as: 'externalRefs', class: Google::Apis::ContaineranalysisV1alpha1::ExternalRef, decorator: Google::Apis::ContaineranalysisV1alpha1::ExternalRef::Representation
+      
+          collection :files_license_info, as: 'filesLicenseInfo'
+          property :home_page, as: 'homePage'
+          property :license_declared, as: 'licenseDeclared', class: Google::Apis::ContaineranalysisV1alpha1::License, decorator: Google::Apis::ContaineranalysisV1alpha1::License::Representation
+      
+          property :originator, as: 'originator'
+          property :package_type, as: 'packageType'
+          property :summary_description, as: 'summaryDescription'
+          property :supplier, as: 'supplier'
+          property :title, as: 'title'
+          property :verification_code, as: 'verificationCode'
+          property :version, as: 'version'
+        end
+      end
+      
+      class PackageInfoOccurrence
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :comment, as: 'comment'
+          property :filename, as: 'filename'
+          property :home_page, as: 'homePage'
+          property :id, as: 'id'
+          property :license_concluded, as: 'licenseConcluded', class: Google::Apis::ContaineranalysisV1alpha1::License, decorator: Google::Apis::ContaineranalysisV1alpha1::License::Representation
+      
+          property :package_type, as: 'packageType'
+          property :source_info, as: 'sourceInfo'
+          property :summary_description, as: 'summaryDescription'
+          property :title, as: 'title'
+          property :version, as: 'version'
         end
       end
       
@@ -1361,41 +2279,6 @@ module Google
       
           property :package_type, as: 'packageType'
           property :severity_name, as: 'severityName'
-        end
-      end
-      
-      class PackageNote
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :analyzed, as: 'analyzed'
-          property :attribution, as: 'attribution'
-          property :checksum, as: 'checksum'
-          property :copyright, as: 'copyright'
-          property :detailed_description, as: 'detailedDescription'
-          property :download_location, as: 'downloadLocation'
-          collection :external_refs, as: 'externalRefs', class: Google::Apis::ContaineranalysisV1alpha1::ExternalRef, decorator: Google::Apis::ContaineranalysisV1alpha1::ExternalRef::Representation
-      
-          collection :files_license_info, as: 'filesLicenseInfo'
-          property :home_page, as: 'homePage'
-          property :license_declared, as: 'licenseDeclared'
-          property :originator, as: 'originator'
-          property :summary_description, as: 'summaryDescription'
-          property :supplier, as: 'supplier'
-          property :title, as: 'title'
-          property :verification_code, as: 'verificationCode'
-          property :version, as: 'version'
-        end
-      end
-      
-      class PackageOccurrence
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :comment, as: 'comment'
-          property :filename, as: 'filename'
-          property :id, as: 'id'
-          property :license_comments, as: 'licenseComments'
-          property :license_concluded, as: 'licenseConcluded'
-          property :source_info, as: 'sourceInfo'
         end
       end
       
@@ -1415,6 +2298,25 @@ module Google
       
           property :etag, :base64 => true, as: 'etag'
           property :version, as: 'version'
+        end
+      end
+      
+      class Product
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+          property :identifier_helper, as: 'identifierHelper', class: Google::Apis::ContaineranalysisV1alpha1::IdentifierHelper, decorator: Google::Apis::ContaineranalysisV1alpha1::IdentifierHelper::Representation
+      
+          property :name, as: 'name'
+        end
+      end
+      
+      class Publisher
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :context, as: 'context'
+          property :issuing_authority, as: 'issuingAuthority'
+          property :name, as: 'name'
         end
       end
       
@@ -1440,6 +2342,7 @@ module Google
       class RelationshipNote
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :type, as: 'type'
         end
       end
       
@@ -1450,6 +2353,17 @@ module Google
           property :source, as: 'source'
           property :target, as: 'target'
           property :type, as: 'type'
+        end
+      end
+      
+      class Remediation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :details, as: 'details'
+          property :remediation_time, as: 'remediationTime'
+          property :remediation_type, as: 'remediationType'
+          property :remediation_uri, as: 'remediationUri', class: Google::Apis::ContaineranalysisV1alpha1::Uri, decorator: Google::Apis::ContaineranalysisV1alpha1::Uri::Representation
+      
         end
       end
       
@@ -1498,6 +2412,75 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :count, :numeric_string => true, as: 'count'
           property :severity, as: 'severity'
+        end
+      end
+      
+      class SlsaBuilder
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+        end
+      end
+      
+      class SlsaCompleteness
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :arguments, as: 'arguments'
+          property :environment, as: 'environment'
+          property :materials, as: 'materials'
+        end
+      end
+      
+      class SlsaMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :build_finished_on, as: 'buildFinishedOn'
+          property :build_invocation_id, as: 'buildInvocationId'
+          property :build_started_on, as: 'buildStartedOn'
+          property :completeness, as: 'completeness', class: Google::Apis::ContaineranalysisV1alpha1::SlsaCompleteness, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaCompleteness::Representation
+      
+          property :reproducible, as: 'reproducible'
+        end
+      end
+      
+      class SlsaProvenance
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :builder, as: 'builder', class: Google::Apis::ContaineranalysisV1alpha1::SlsaBuilder, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaBuilder::Representation
+      
+          collection :materials, as: 'materials', class: Google::Apis::ContaineranalysisV1alpha1::Material, decorator: Google::Apis::ContaineranalysisV1alpha1::Material::Representation
+      
+          property :metadata, as: 'metadata', class: Google::Apis::ContaineranalysisV1alpha1::SlsaMetadata, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaMetadata::Representation
+      
+          property :recipe, as: 'recipe', class: Google::Apis::ContaineranalysisV1alpha1::SlsaRecipe, decorator: Google::Apis::ContaineranalysisV1alpha1::SlsaRecipe::Representation
+      
+        end
+      end
+      
+      class SlsaProvenanceZeroTwo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :build_config, as: 'buildConfig'
+          property :build_type, as: 'buildType'
+          property :builder, as: 'builder', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaBuilder::Representation
+      
+          property :invocation, as: 'invocation', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaInvocation::Representation
+      
+          collection :materials, as: 'materials', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMaterial::Representation
+      
+          property :metadata, as: 'metadata', class: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata, decorator: Google::Apis::ContaineranalysisV1alpha1::GoogleDevtoolsContaineranalysisV1alpha1SlsaProvenanceZeroTwoSlsaMetadata::Representation
+      
+        end
+      end
+      
+      class SlsaRecipe
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :arguments, as: 'arguments'
+          property :defined_in_material, :numeric_string => true, as: 'definedInMaterial'
+          property :entry_point, as: 'entryPoint'
+          hash :environment, as: 'environment'
+          property :type, as: 'type'
         end
       end
       
@@ -1559,11 +2542,27 @@ module Google
         end
       end
       
+      class Threat
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :details, as: 'details'
+          property :threat_type, as: 'threatType'
+        end
+      end
+      
       class TimeSpan
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :end_time, as: 'endTime'
           property :start_time, as: 'startTime'
+        end
+      end
+      
+      class Uri
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :label, as: 'label'
+          property :uri, as: 'uri'
         end
       end
       
@@ -1619,6 +2618,21 @@ module Google
         end
       end
       
+      class VexAssessment
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cve, as: 'cve'
+          property :note_name, as: 'noteName'
+          collection :related_uris, as: 'relatedUris', class: Google::Apis::ContaineranalysisV1alpha1::Uri, decorator: Google::Apis::ContaineranalysisV1alpha1::Uri::Representation
+      
+          collection :remediations, as: 'remediations', class: Google::Apis::ContaineranalysisV1alpha1::Remediation, decorator: Google::Apis::ContaineranalysisV1alpha1::Remediation::Representation
+      
+          property :state, as: 'state'
+          collection :threats, as: 'threats', class: Google::Apis::ContaineranalysisV1alpha1::Threat, decorator: Google::Apis::ContaineranalysisV1alpha1::Threat::Representation
+      
+        end
+      end
+      
       class Volume
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1627,15 +2641,38 @@ module Google
         end
       end
       
+      class VulnerabilityAssessmentNote
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :assessment, as: 'assessment', class: Google::Apis::ContaineranalysisV1alpha1::Assessment, decorator: Google::Apis::ContaineranalysisV1alpha1::Assessment::Representation
+      
+          property :language_code, as: 'languageCode'
+          property :long_description, as: 'longDescription'
+          property :product, as: 'product', class: Google::Apis::ContaineranalysisV1alpha1::Product, decorator: Google::Apis::ContaineranalysisV1alpha1::Product::Representation
+      
+          property :publisher, as: 'publisher', class: Google::Apis::ContaineranalysisV1alpha1::Publisher, decorator: Google::Apis::ContaineranalysisV1alpha1::Publisher::Representation
+      
+          property :short_description, as: 'shortDescription'
+          property :title, as: 'title'
+        end
+      end
+      
       class VulnerabilityDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cvss_score, as: 'cvssScore'
+          property :cvss_v2, as: 'cvssV2', class: Google::Apis::ContaineranalysisV1alpha1::Cvss, decorator: Google::Apis::ContaineranalysisV1alpha1::Cvss::Representation
+      
+          property :cvss_v3, as: 'cvssV3', class: Google::Apis::ContaineranalysisV1alpha1::Cvss, decorator: Google::Apis::ContaineranalysisV1alpha1::Cvss::Representation
+      
+          property :cvss_version, as: 'cvssVersion'
           property :effective_severity, as: 'effectiveSeverity'
           collection :package_issue, as: 'packageIssue', class: Google::Apis::ContaineranalysisV1alpha1::PackageIssue, decorator: Google::Apis::ContaineranalysisV1alpha1::PackageIssue::Representation
       
           property :severity, as: 'severity'
           property :type, as: 'type'
+          property :vex_assessment, as: 'vexAssessment', class: Google::Apis::ContaineranalysisV1alpha1::VexAssessment, decorator: Google::Apis::ContaineranalysisV1alpha1::VexAssessment::Representation
+      
         end
       end
       
@@ -1643,6 +2680,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cpe_uri, as: 'cpeUri'
+          collection :file_location, as: 'fileLocation', class: Google::Apis::ContaineranalysisV1alpha1::FileLocation, decorator: Google::Apis::ContaineranalysisV1alpha1::FileLocation::Representation
+      
           property :package, as: 'package'
           property :version, as: 'version', class: Google::Apis::ContaineranalysisV1alpha1::Version, decorator: Google::Apis::ContaineranalysisV1alpha1::Version::Representation
       
@@ -1653,6 +2692,10 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cvss_score, as: 'cvssScore'
+          property :cvss_v2, as: 'cvssV2', class: Google::Apis::ContaineranalysisV1alpha1::Cvss, decorator: Google::Apis::ContaineranalysisV1alpha1::Cvss::Representation
+      
+          property :cvss_version, as: 'cvssVersion'
+          collection :cwe, as: 'cwe'
           collection :details, as: 'details', class: Google::Apis::ContaineranalysisV1alpha1::Detail, decorator: Google::Apis::ContaineranalysisV1alpha1::Detail::Representation
       
           property :severity, as: 'severity'

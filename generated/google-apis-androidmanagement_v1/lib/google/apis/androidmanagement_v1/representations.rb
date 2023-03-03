@@ -22,6 +22,18 @@ module Google
   module Apis
     module AndroidmanagementV1
       
+      class AdbShellCommandEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AdbShellInteractiveEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AdvancedSecurityOverrides
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -40,7 +52,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AppProcessInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AppProcessStartEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AppTrackInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AppVersion
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -82,13 +112,49 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BatchUsageLogEvents
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BlockAction
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CertAuthorityInstalledEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CertAuthorityRemovedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CertValidationFailureEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ChoosePrivateKeyRule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ClearAppsDataParams
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ClearAppsDataStatus
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -112,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ConnectEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ContactInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -125,6 +197,12 @@ module Google
       end
       
       class CrossProfilePolicies
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CryptoSelfTestCompletedEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -149,6 +227,12 @@ module Google
       end
       
       class DisplayProp
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DnsEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -184,6 +268,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FilePulledEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FilePushedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class FreezePeriod
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -208,7 +304,49 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class KeyDestructionEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyGeneratedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyImportEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyIntegrityViolationEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class KeyedAppState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyguardDismissAuthAttemptEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyguardDismissedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeyguardSecuredEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -227,6 +365,12 @@ module Google
       end
       
       class ListDevicesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListEnrollmentTokensResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -256,6 +400,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class LogBufferSizeCriticalEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LoggingStartedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LoggingStoppedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ManagedConfigurationTemplate
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -269,6 +431,18 @@ module Google
       end
       
       class ManagedPropertyEntry
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MediaMountEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MediaUnmountEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -310,7 +484,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class OncWifiContext
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Operation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsShutdownEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsStartupEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -322,7 +514,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PasswordPoliciesContext
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PasswordRequirements
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PerAppResult
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -382,6 +586,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RemoteLockEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SecurityPosture
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -407,6 +617,12 @@ module Google
       end
       
       class SoftwareInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SpecificNonComplianceContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -448,6 +664,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UsageLog
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UsageLogEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class User
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -484,6 +712,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class WipeFailureEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AdbShellCommandEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :shell_cmd, as: 'shellCmd'
+        end
+      end
+      
+      class AdbShellInteractiveEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class AdvancedSecurityOverrides
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -510,6 +757,27 @@ module Google
         end
       end
       
+      class AppProcessInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :apk_sha256_hash, as: 'apkSha256Hash'
+          collection :package_names, as: 'packageNames'
+          property :pid, as: 'pid'
+          property :process_name, as: 'processName'
+          property :seinfo, as: 'seinfo'
+          property :start_time, as: 'startTime'
+          property :uid, as: 'uid'
+        end
+      end
+      
+      class AppProcessStartEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :process_info, as: 'processInfo', class: Google::Apis::AndroidmanagementV1::AppProcessInfo, decorator: Google::Apis::AndroidmanagementV1::AppProcessInfo::Representation
+      
+        end
+      end
+      
       class AppTrackInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -518,17 +786,45 @@ module Google
         end
       end
       
+      class AppVersion
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :production, as: 'production'
+          collection :track_ids, as: 'trackIds'
+          property :version_code, as: 'versionCode'
+          property :version_string, as: 'versionString'
+        end
+      end
+      
       class Application
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :app_pricing, as: 'appPricing'
           collection :app_tracks, as: 'appTracks', class: Google::Apis::AndroidmanagementV1::AppTrackInfo, decorator: Google::Apis::AndroidmanagementV1::AppTrackInfo::Representation
       
+          collection :app_versions, as: 'appVersions', class: Google::Apis::AndroidmanagementV1::AppVersion, decorator: Google::Apis::AndroidmanagementV1::AppVersion::Representation
+      
+          property :author, as: 'author'
+          collection :available_countries, as: 'availableCountries'
+          property :category, as: 'category'
+          property :content_rating, as: 'contentRating'
+          property :description, as: 'description'
+          property :distribution_channel, as: 'distributionChannel'
+          collection :features, as: 'features'
+          property :full_description, as: 'fullDescription'
+          property :icon_url, as: 'iconUrl'
           collection :managed_properties, as: 'managedProperties', class: Google::Apis::AndroidmanagementV1::ManagedProperty, decorator: Google::Apis::AndroidmanagementV1::ManagedProperty::Representation
       
+          property :min_android_sdk_version, as: 'minAndroidSdkVersion'
           property :name, as: 'name'
           collection :permissions, as: 'permissions', class: Google::Apis::AndroidmanagementV1::ApplicationPermission, decorator: Google::Apis::AndroidmanagementV1::ApplicationPermission::Representation
       
+          property :play_store_url, as: 'playStoreUrl'
+          property :recent_changes, as: 'recentChanges'
+          collection :screenshot_urls, as: 'screenshotUrls'
+          property :small_icon_url, as: 'smallIconUrl'
           property :title, as: 'title'
+          property :update_time, as: 'updateTime'
         end
       end
       
@@ -553,6 +849,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :accessible_track_ids, as: 'accessibleTrackIds'
+          property :always_on_vpn_lockdown_exemption, as: 'alwaysOnVpnLockdownExemption'
           property :auto_update_mode, as: 'autoUpdateMode'
           property :connected_work_and_personal_app, as: 'connectedWorkAndPersonalApp'
           property :default_permission_policy, as: 'defaultPermissionPolicy'
@@ -569,6 +866,7 @@ module Google
           property :package_name, as: 'packageName'
           collection :permission_grants, as: 'permissionGrants', class: Google::Apis::AndroidmanagementV1::PermissionGrant, decorator: Google::Apis::AndroidmanagementV1::PermissionGrant::Representation
       
+          property :work_profile_widgets, as: 'workProfileWidgets'
         end
       end
       
@@ -598,11 +896,47 @@ module Google
         end
       end
       
+      class BatchUsageLogEvents
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :device, as: 'device'
+          property :retrieval_time, as: 'retrievalTime'
+          collection :usage_log_events, as: 'usageLogEvents', class: Google::Apis::AndroidmanagementV1::UsageLogEvent, decorator: Google::Apis::AndroidmanagementV1::UsageLogEvent::Representation
+      
+          property :user, as: 'user'
+        end
+      end
+      
       class BlockAction
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :block_after_days, as: 'blockAfterDays'
           property :block_scope, as: 'blockScope'
+        end
+      end
+      
+      class CertAuthorityInstalledEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :certificate, as: 'certificate'
+          property :success, as: 'success'
+          property :user_id, as: 'userId'
+        end
+      end
+      
+      class CertAuthorityRemovedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :certificate, as: 'certificate'
+          property :success, as: 'success'
+          property :user_id, as: 'userId'
+        end
+      end
+      
+      class CertValidationFailureEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :failure_reason, as: 'failureReason'
         end
       end
       
@@ -615,9 +949,28 @@ module Google
         end
       end
       
+      class ClearAppsDataParams
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :package_names, as: 'packageNames'
+        end
+      end
+      
+      class ClearAppsDataStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :results, as: 'results', class: Google::Apis::AndroidmanagementV1::PerAppResult, decorator: Google::Apis::AndroidmanagementV1::PerAppResult::Representation
+      
+        end
+      end
+      
       class Command
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :clear_apps_data_params, as: 'clearAppsDataParams', class: Google::Apis::AndroidmanagementV1::ClearAppsDataParams, decorator: Google::Apis::AndroidmanagementV1::ClearAppsDataParams::Representation
+      
+          property :clear_apps_data_status, as: 'clearAppsDataStatus', class: Google::Apis::AndroidmanagementV1::ClearAppsDataStatus, decorator: Google::Apis::AndroidmanagementV1::ClearAppsDataStatus::Representation
+      
           property :create_time, as: 'createTime'
           property :duration, as: 'duration'
           property :error_code, as: 'errorCode'
@@ -644,6 +997,15 @@ module Google
           property :non_compliance_detail_condition, as: 'nonComplianceDetailCondition', class: Google::Apis::AndroidmanagementV1::NonComplianceDetailCondition, decorator: Google::Apis::AndroidmanagementV1::NonComplianceDetailCondition::Representation
       
           collection :package_names_to_disable, as: 'packageNamesToDisable'
+        end
+      end
+      
+      class ConnectEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :destination_ip_address, as: 'destinationIpAddress'
+          property :destination_port, as: 'destinationPort'
+          property :package_name, as: 'packageName'
         end
       end
       
@@ -675,6 +1037,14 @@ module Google
           property :cross_profile_copy_paste, as: 'crossProfileCopyPaste'
           property :cross_profile_data_sharing, as: 'crossProfileDataSharing'
           property :show_work_contacts_in_personal_profile, as: 'showWorkContactsInPersonalProfile'
+          property :work_profile_widgets_default, as: 'workProfileWidgetsDefault'
+        end
+      end
+      
+      class CryptoSelfTestCompletedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :success, as: 'success'
         end
       end
       
@@ -770,6 +1140,16 @@ module Google
         end
       end
       
+      class DnsEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hostname, as: 'hostname'
+          collection :ip_addresses, as: 'ipAddresses'
+          property :package_name, as: 'packageName'
+          property :total_ip_addresses_returned, :numeric_string => true, as: 'totalIpAddressesReturned'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -829,6 +1209,20 @@ module Google
         end
       end
       
+      class FilePulledEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_path, as: 'filePath'
+        end
+      end
+      
+      class FilePushedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_path, as: 'filePath'
+        end
+      end
+      
       class FreezePeriod
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -848,6 +1242,7 @@ module Google
           collection :cpu_shutdown_temperatures, as: 'cpuShutdownTemperatures'
           collection :cpu_throttling_temperatures, as: 'cpuThrottlingTemperatures'
           property :device_baseband_version, as: 'deviceBasebandVersion'
+          property :enterprise_specific_id, as: 'enterpriseSpecificId'
           collection :gpu_shutdown_temperatures, as: 'gpuShutdownTemperatures'
           collection :gpu_throttling_temperatures, as: 'gpuThrottlingTemperatures'
           property :hardware, as: 'hardware'
@@ -878,6 +1273,41 @@ module Google
         end
       end
       
+      class KeyDestructionEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :application_uid, as: 'applicationUid'
+          property :key_alias, as: 'keyAlias'
+          property :success, as: 'success'
+        end
+      end
+      
+      class KeyGeneratedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :application_uid, as: 'applicationUid'
+          property :key_alias, as: 'keyAlias'
+          property :success, as: 'success'
+        end
+      end
+      
+      class KeyImportEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :application_uid, as: 'applicationUid'
+          property :key_alias, as: 'keyAlias'
+          property :success, as: 'success'
+        end
+      end
+      
+      class KeyIntegrityViolationEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :application_uid, as: 'applicationUid'
+          property :key_alias, as: 'keyAlias'
+        end
+      end
+      
       class KeyedAppState
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -887,6 +1317,26 @@ module Google
           property :last_update_time, as: 'lastUpdateTime'
           property :message, as: 'message'
           property :severity, as: 'severity'
+        end
+      end
+      
+      class KeyguardDismissAuthAttemptEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :strong_auth_method_used, as: 'strongAuthMethodUsed'
+          property :success, as: 'success'
+        end
+      end
+      
+      class KeyguardDismissedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class KeyguardSecuredEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -912,6 +1362,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :devices, as: 'devices', class: Google::Apis::AndroidmanagementV1::Device, decorator: Google::Apis::AndroidmanagementV1::Device::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListEnrollmentTokensResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :enrollment_tokens, as: 'enrollmentTokens', class: Google::Apis::AndroidmanagementV1::EnrollmentToken, decorator: Google::Apis::AndroidmanagementV1::EnrollmentToken::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -953,6 +1412,24 @@ module Google
         end
       end
       
+      class LogBufferSizeCriticalEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class LoggingStartedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class LoggingStoppedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class ManagedConfigurationTemplate
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -981,6 +1458,22 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
           property :value, as: 'value'
+        end
+      end
+      
+      class MediaMountEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :mount_point, as: 'mountPoint'
+          property :volume_label, as: 'volumeLabel'
+        end
+      end
+      
+      class MediaUnmountEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :mount_point, as: 'mountPoint'
+          property :volume_label, as: 'volumeLabel'
         end
       end
       
@@ -1022,6 +1515,9 @@ module Google
           property :non_compliance_reason, as: 'nonComplianceReason'
           property :package_name, as: 'packageName'
           property :setting_name, as: 'settingName'
+          property :specific_non_compliance_context, as: 'specificNonComplianceContext', class: Google::Apis::AndroidmanagementV1::SpecificNonComplianceContext, decorator: Google::Apis::AndroidmanagementV1::SpecificNonComplianceContext::Representation
+      
+          property :specific_non_compliance_reason, as: 'specificNonComplianceReason'
         end
       end
       
@@ -1043,6 +1539,13 @@ module Google
         end
       end
       
+      class OncWifiContext
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :wifi_guid, as: 'wifiGuid'
+        end
+      end
+      
       class Operation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1055,10 +1558,31 @@ module Google
         end
       end
       
+      class OsShutdownEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class OsStartupEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :verified_boot_state, as: 'verifiedBootState'
+          property :verity_mode, as: 'verityMode'
+        end
+      end
+      
       class PackageNameList
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :package_names, as: 'packageNames'
+        end
+      end
+      
+      class PasswordPoliciesContext
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :password_policy_scope, as: 'passwordPolicyScope'
         end
       end
       
@@ -1078,6 +1602,14 @@ module Google
           property :password_quality, as: 'passwordQuality'
           property :password_scope, as: 'passwordScope'
           property :require_password_unlock, as: 'requirePasswordUnlock'
+          property :unified_lock_settings, as: 'unifiedLockSettings'
+        end
+      end
+      
+      class PerAppResult
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :clearing_result, as: 'clearingResult'
         end
       end
       
@@ -1139,6 +1671,7 @@ module Google
           property :bluetooth_config_disabled, as: 'bluetoothConfigDisabled'
           property :bluetooth_contact_sharing_disabled, as: 'bluetoothContactSharingDisabled'
           property :bluetooth_disabled, as: 'bluetoothDisabled'
+          property :camera_access, as: 'cameraAccess'
           property :camera_disabled, as: 'cameraDisabled'
           property :cell_broadcasts_config_disabled, as: 'cellBroadcastsConfigDisabled'
           collection :choose_private_key_rules, as: 'choosePrivateKeyRules', class: Google::Apis::AndroidmanagementV1::ChoosePrivateKeyRule, decorator: Google::Apis::AndroidmanagementV1::ChoosePrivateKeyRule::Representation
@@ -1170,6 +1703,7 @@ module Google
           property :long_support_message, as: 'longSupportMessage', class: Google::Apis::AndroidmanagementV1::UserFacingMessage, decorator: Google::Apis::AndroidmanagementV1::UserFacingMessage::Representation
       
           property :maximum_time_to_lock, :numeric_string => true, as: 'maximumTimeToLock'
+          property :microphone_access, as: 'microphoneAccess'
           property :minimum_api_level, as: 'minimumApiLevel'
           property :mobile_networks_config_disabled, as: 'mobileNetworksConfigDisabled'
           property :modify_accounts_disabled, as: 'modifyAccountsDisabled'
@@ -1199,6 +1733,7 @@ module Google
           property :play_store_mode, as: 'playStoreMode'
           collection :policy_enforcement_rules, as: 'policyEnforcementRules', class: Google::Apis::AndroidmanagementV1::PolicyEnforcementRule, decorator: Google::Apis::AndroidmanagementV1::PolicyEnforcementRule::Representation
       
+          property :preferential_network_service, as: 'preferentialNetworkService'
           property :private_key_selection_enabled, as: 'privateKeySelectionEnabled'
           property :recommended_global_proxy, as: 'recommendedGlobalProxy', class: Google::Apis::AndroidmanagementV1::ProxyInfo, decorator: Google::Apis::AndroidmanagementV1::ProxyInfo::Representation
       
@@ -1223,6 +1758,8 @@ module Google
           property :tethering_config_disabled, as: 'tetheringConfigDisabled'
           property :uninstall_apps_disabled, as: 'uninstallAppsDisabled'
           property :unmute_microphone_disabled, as: 'unmuteMicrophoneDisabled'
+          property :usage_log, as: 'usageLog', class: Google::Apis::AndroidmanagementV1::UsageLog, decorator: Google::Apis::AndroidmanagementV1::UsageLog::Representation
+      
           property :usb_file_transfer_disabled, as: 'usbFileTransferDisabled'
           property :usb_mass_storage_enabled, as: 'usbMassStorageEnabled'
           property :version, :numeric_string => true, as: 'version'
@@ -1268,6 +1805,15 @@ module Google
           property :host, as: 'host'
           property :pac_uri, as: 'pacUri'
           property :port, as: 'port'
+        end
+      end
+      
+      class RemoteLockEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :admin_package_name, as: 'adminPackageName'
+          property :admin_user_id, as: 'adminUserId'
+          property :target_user_id, as: 'targetUserId'
         end
       end
       
@@ -1324,6 +1870,16 @@ module Google
           property :primary_language_code, as: 'primaryLanguageCode'
           property :security_patch_level, as: 'securityPatchLevel'
           property :system_update_info, as: 'systemUpdateInfo', class: Google::Apis::AndroidmanagementV1::SystemUpdateInfo, decorator: Google::Apis::AndroidmanagementV1::SystemUpdateInfo::Representation
+      
+        end
+      end
+      
+      class SpecificNonComplianceContext
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :onc_wifi_context, as: 'oncWifiContext', class: Google::Apis::AndroidmanagementV1::OncWifiContext, decorator: Google::Apis::AndroidmanagementV1::OncWifiContext::Representation
+      
+          property :password_policies_context, as: 'passwordPoliciesContext', class: Google::Apis::AndroidmanagementV1::PasswordPoliciesContext, decorator: Google::Apis::AndroidmanagementV1::PasswordPoliciesContext::Representation
       
         end
       end
@@ -1392,6 +1948,77 @@ module Google
         end
       end
       
+      class UsageLog
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :enabled_log_types, as: 'enabledLogTypes'
+          collection :upload_on_cellular_allowed, as: 'uploadOnCellularAllowed'
+        end
+      end
+      
+      class UsageLogEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :adb_shell_command_event, as: 'adbShellCommandEvent', class: Google::Apis::AndroidmanagementV1::AdbShellCommandEvent, decorator: Google::Apis::AndroidmanagementV1::AdbShellCommandEvent::Representation
+      
+          property :adb_shell_interactive_event, as: 'adbShellInteractiveEvent', class: Google::Apis::AndroidmanagementV1::AdbShellInteractiveEvent, decorator: Google::Apis::AndroidmanagementV1::AdbShellInteractiveEvent::Representation
+      
+          property :app_process_start_event, as: 'appProcessStartEvent', class: Google::Apis::AndroidmanagementV1::AppProcessStartEvent, decorator: Google::Apis::AndroidmanagementV1::AppProcessStartEvent::Representation
+      
+          property :cert_authority_installed_event, as: 'certAuthorityInstalledEvent', class: Google::Apis::AndroidmanagementV1::CertAuthorityInstalledEvent, decorator: Google::Apis::AndroidmanagementV1::CertAuthorityInstalledEvent::Representation
+      
+          property :cert_authority_removed_event, as: 'certAuthorityRemovedEvent', class: Google::Apis::AndroidmanagementV1::CertAuthorityRemovedEvent, decorator: Google::Apis::AndroidmanagementV1::CertAuthorityRemovedEvent::Representation
+      
+          property :cert_validation_failure_event, as: 'certValidationFailureEvent', class: Google::Apis::AndroidmanagementV1::CertValidationFailureEvent, decorator: Google::Apis::AndroidmanagementV1::CertValidationFailureEvent::Representation
+      
+          property :connect_event, as: 'connectEvent', class: Google::Apis::AndroidmanagementV1::ConnectEvent, decorator: Google::Apis::AndroidmanagementV1::ConnectEvent::Representation
+      
+          property :crypto_self_test_completed_event, as: 'cryptoSelfTestCompletedEvent', class: Google::Apis::AndroidmanagementV1::CryptoSelfTestCompletedEvent, decorator: Google::Apis::AndroidmanagementV1::CryptoSelfTestCompletedEvent::Representation
+      
+          property :dns_event, as: 'dnsEvent', class: Google::Apis::AndroidmanagementV1::DnsEvent, decorator: Google::Apis::AndroidmanagementV1::DnsEvent::Representation
+      
+          property :event_id, :numeric_string => true, as: 'eventId'
+          property :event_time, as: 'eventTime'
+          property :event_type, as: 'eventType'
+          property :file_pulled_event, as: 'filePulledEvent', class: Google::Apis::AndroidmanagementV1::FilePulledEvent, decorator: Google::Apis::AndroidmanagementV1::FilePulledEvent::Representation
+      
+          property :file_pushed_event, as: 'filePushedEvent', class: Google::Apis::AndroidmanagementV1::FilePushedEvent, decorator: Google::Apis::AndroidmanagementV1::FilePushedEvent::Representation
+      
+          property :key_destruction_event, as: 'keyDestructionEvent', class: Google::Apis::AndroidmanagementV1::KeyDestructionEvent, decorator: Google::Apis::AndroidmanagementV1::KeyDestructionEvent::Representation
+      
+          property :key_generated_event, as: 'keyGeneratedEvent', class: Google::Apis::AndroidmanagementV1::KeyGeneratedEvent, decorator: Google::Apis::AndroidmanagementV1::KeyGeneratedEvent::Representation
+      
+          property :key_import_event, as: 'keyImportEvent', class: Google::Apis::AndroidmanagementV1::KeyImportEvent, decorator: Google::Apis::AndroidmanagementV1::KeyImportEvent::Representation
+      
+          property :key_integrity_violation_event, as: 'keyIntegrityViolationEvent', class: Google::Apis::AndroidmanagementV1::KeyIntegrityViolationEvent, decorator: Google::Apis::AndroidmanagementV1::KeyIntegrityViolationEvent::Representation
+      
+          property :keyguard_dismiss_auth_attempt_event, as: 'keyguardDismissAuthAttemptEvent', class: Google::Apis::AndroidmanagementV1::KeyguardDismissAuthAttemptEvent, decorator: Google::Apis::AndroidmanagementV1::KeyguardDismissAuthAttemptEvent::Representation
+      
+          property :keyguard_dismissed_event, as: 'keyguardDismissedEvent', class: Google::Apis::AndroidmanagementV1::KeyguardDismissedEvent, decorator: Google::Apis::AndroidmanagementV1::KeyguardDismissedEvent::Representation
+      
+          property :keyguard_secured_event, as: 'keyguardSecuredEvent', class: Google::Apis::AndroidmanagementV1::KeyguardSecuredEvent, decorator: Google::Apis::AndroidmanagementV1::KeyguardSecuredEvent::Representation
+      
+          property :log_buffer_size_critical_event, as: 'logBufferSizeCriticalEvent', class: Google::Apis::AndroidmanagementV1::LogBufferSizeCriticalEvent, decorator: Google::Apis::AndroidmanagementV1::LogBufferSizeCriticalEvent::Representation
+      
+          property :logging_started_event, as: 'loggingStartedEvent', class: Google::Apis::AndroidmanagementV1::LoggingStartedEvent, decorator: Google::Apis::AndroidmanagementV1::LoggingStartedEvent::Representation
+      
+          property :logging_stopped_event, as: 'loggingStoppedEvent', class: Google::Apis::AndroidmanagementV1::LoggingStoppedEvent, decorator: Google::Apis::AndroidmanagementV1::LoggingStoppedEvent::Representation
+      
+          property :media_mount_event, as: 'mediaMountEvent', class: Google::Apis::AndroidmanagementV1::MediaMountEvent, decorator: Google::Apis::AndroidmanagementV1::MediaMountEvent::Representation
+      
+          property :media_unmount_event, as: 'mediaUnmountEvent', class: Google::Apis::AndroidmanagementV1::MediaUnmountEvent, decorator: Google::Apis::AndroidmanagementV1::MediaUnmountEvent::Representation
+      
+          property :os_shutdown_event, as: 'osShutdownEvent', class: Google::Apis::AndroidmanagementV1::OsShutdownEvent, decorator: Google::Apis::AndroidmanagementV1::OsShutdownEvent::Representation
+      
+          property :os_startup_event, as: 'osStartupEvent', class: Google::Apis::AndroidmanagementV1::OsStartupEvent, decorator: Google::Apis::AndroidmanagementV1::OsStartupEvent::Representation
+      
+          property :remote_lock_event, as: 'remoteLockEvent', class: Google::Apis::AndroidmanagementV1::RemoteLockEvent, decorator: Google::Apis::AndroidmanagementV1::RemoteLockEvent::Representation
+      
+          property :wipe_failure_event, as: 'wipeFailureEvent', class: Google::Apis::AndroidmanagementV1::WipeFailureEvent, decorator: Google::Apis::AndroidmanagementV1::WipeFailureEvent::Representation
+      
+        end
+      end
+      
       class User
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1443,6 +2070,12 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :preserve_frp, as: 'preserveFrp'
           property :wipe_after_days, as: 'wipeAfterDays'
+        end
+      end
+      
+      class WipeFailureEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
     end

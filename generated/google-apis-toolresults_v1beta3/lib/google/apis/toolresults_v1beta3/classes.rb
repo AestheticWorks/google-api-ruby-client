@@ -487,6 +487,20 @@ module Google
         end
       end
       
+      # A notification that Robo detected a splash screen provided by app (vs. Android
+      # OS splash screen).
+      class DetectedAppSplashScreen
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # A warning that device ran out of memory
       class DeviceOutOfMemory
         include Google::Apis::Core::Hashable
@@ -726,7 +740,7 @@ module Google
       # represent: - a mobile test executed across a range of device configurations -
       # a jenkins job with a build step followed by a test step The maximum size of an
       # execution message is 1 MiB. An Execution can be updated until its state is set
-      # to COMPLETE at which point it becomes immutable.
+      # to COMPLETE at which point it becomes immutable. Next tag: 16
       class Execution
         include Google::Apis::Core::Hashable
       

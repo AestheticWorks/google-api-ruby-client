@@ -93,6 +93,110 @@ module Google
         end
       end
       
+      # The request message for Operations.CancelOperation.
+      class CancelOperationRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Description of the custom voice to be synthesized.
+      class CustomVoiceParams
+        include Google::Apis::Core::Hashable
+      
+        # Required. The name of the AutoML model that synthesizes the custom voice.
+        # Corresponds to the JSON property `model`
+        # @return [String]
+        attr_accessor :model
+      
+        # Optional. The usage of the synthesized audio to be reported.
+        # Corresponds to the JSON property `reportedUsage`
+        # @return [String]
+        attr_accessor :reported_usage
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @model = args[:model] if args.key?(:model)
+          @reported_usage = args[:reported_usage] if args.key?(:reported_usage)
+        end
+      end
+      
+      # A generic empty message that you can re-use to avoid defining duplicated empty
+      # messages in your APIs. A typical example is to use it as the request or the
+      # response type of an API method. For instance: service Foo ` rpc Bar(google.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
+      class Empty
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Metadata for response returned by the `SynthesizeLongAudio` method.
+      class GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The progress of the most recent processing update in percentage, ie. 70.0%.
+        # Corresponds to the JSON property `progressPercentage`
+        # @return [Float]
+        attr_accessor :progress_percentage
+      
+        # Time when the request was received.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @progress_percentage = args[:progress_percentage] if args.key?(:progress_percentage)
+          @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
+      # The response message for Operations.ListOperations.
+      class ListOperationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The standard List next-page token.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # A list of operations that matches the specified filter in the request.
+        # Corresponds to the JSON property `operations`
+        # @return [Array<Google::Apis::TexttospeechV1::Operation>]
+        attr_accessor :operations
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @operations = args[:operations] if args.key?(:operations)
+        end
+      end
+      
       # The message returned to the client by the `ListVoices` method.
       class ListVoicesResponse
         include Google::Apis::Core::Hashable
@@ -112,9 +216,110 @@ module Google
         end
       end
       
+      # This resource represents a long-running operation that is the result of a
+      # network API call.
+      class Operation
+        include Google::Apis::Core::Hashable
+      
+        # If the value is `false`, it means the operation is still in progress. If `true`
+        # , the operation is completed, and either `error` or `response` is available.
+        # Corresponds to the JSON property `done`
+        # @return [Boolean]
+        attr_accessor :done
+        alias_method :done?, :done
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `error`
+        # @return [Google::Apis::TexttospeechV1::Status]
+        attr_accessor :error
+      
+        # Service-specific metadata associated with the operation. It typically contains
+        # progress information and common metadata such as create time. Some services
+        # might not provide such metadata. Any method that returns a long-running
+        # operation should document the metadata type, if any.
+        # Corresponds to the JSON property `metadata`
+        # @return [Hash<String,Object>]
+        attr_accessor :metadata
+      
+        # The server-assigned name, which is only unique within the same service that
+        # originally returns it. If you use the default HTTP mapping, the `name` should
+        # be a resource name ending with `operations/`unique_id``.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The normal response of the operation in case of success. If the original
+        # method returns no data on success, such as `Delete`, the response is `google.
+        # protobuf.Empty`. If the original method is standard `Get`/`Create`/`Update`,
+        # the response should be the resource. For other methods, the response should
+        # have the type `XxxResponse`, where `Xxx` is the original method name. For
+        # example, if the original method name is `TakeSnapshot()`, the inferred
+        # response type is `TakeSnapshotResponse`.
+        # Corresponds to the JSON property `response`
+        # @return [Hash<String,Object>]
+        attr_accessor :response
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @done = args[:done] if args.key?(:done)
+          @error = args[:error] if args.key?(:error)
+          @metadata = args[:metadata] if args.key?(:metadata)
+          @name = args[:name] if args.key?(:name)
+          @response = args[:response] if args.key?(:response)
+        end
+      end
+      
+      # The `Status` type defines a logical error model that is suitable for different
+      # programming environments, including REST APIs and RPC APIs. It is used by [
+      # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+      # data: error code, error message, and error details. You can find out more
+      # about this error model and how to work with it in the [API Design Guide](https:
+      # //cloud.google.com/apis/design/errors).
+      class Status
+        include Google::Apis::Core::Hashable
+      
+        # The status code, which should be an enum value of google.rpc.Code.
+        # Corresponds to the JSON property `code`
+        # @return [Fixnum]
+        attr_accessor :code
+      
+        # A list of messages that carry the error details. There is a common set of
+        # message types for APIs to use.
+        # Corresponds to the JSON property `details`
+        # @return [Array<Hash<String,Object>>]
+        attr_accessor :details
+      
+        # A developer-facing error message, which should be in English. Any user-facing
+        # error message should be localized and sent in the google.rpc.Status.details
+        # field, or localized by the client.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+          @details = args[:details] if args.key?(:details)
+          @message = args[:message] if args.key?(:message)
+        end
+      end
+      
       # Contains text input to be synthesized. Either `text` or `ssml` must be
       # supplied. Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
-      # The input size is limited to 5000 characters.
+      # The input size is limited to 5000 bytes.
       class SynthesisInput
         include Google::Apis::Core::Hashable
       
@@ -142,6 +347,71 @@ module Google
         end
       end
       
+      # Metadata for response returned by the `SynthesizeLongAudio` method.
+      class SynthesizeLongAudioMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The progress of the most recent processing update in percentage, ie. 70.0%.
+        # Corresponds to the JSON property `progressPercentage`
+        # @return [Float]
+        attr_accessor :progress_percentage
+      
+        # Time when the request was received.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @progress_percentage = args[:progress_percentage] if args.key?(:progress_percentage)
+          @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
+      # The top-level message sent by the client for the `SynthesizeLongAudio` method.
+      class SynthesizeLongAudioRequest
+        include Google::Apis::Core::Hashable
+      
+        # Description of audio data to be synthesized.
+        # Corresponds to the JSON property `audioConfig`
+        # @return [Google::Apis::TexttospeechV1::AudioConfig]
+        attr_accessor :audio_config
+      
+        # Contains text input to be synthesized. Either `text` or `ssml` must be
+        # supplied. Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
+        # The input size is limited to 5000 bytes.
+        # Corresponds to the JSON property `input`
+        # @return [Google::Apis::TexttospeechV1::SynthesisInput]
+        attr_accessor :input
+      
+        # Specifies a Cloud Storage URI for the synthesis results. Must be specified in
+        # the format: `gs://bucket_name/object_name`, and the bucket must already exist.
+        # Corresponds to the JSON property `outputGcsUri`
+        # @return [String]
+        attr_accessor :output_gcs_uri
+      
+        # Description of which voice to use for a synthesis request.
+        # Corresponds to the JSON property `voice`
+        # @return [Google::Apis::TexttospeechV1::VoiceSelectionParams]
+        attr_accessor :voice
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_config = args[:audio_config] if args.key?(:audio_config)
+          @input = args[:input] if args.key?(:input)
+          @output_gcs_uri = args[:output_gcs_uri] if args.key?(:output_gcs_uri)
+          @voice = args[:voice] if args.key?(:voice)
+        end
+      end
+      
       # The top-level message sent by the client for the `SynthesizeSpeech` method.
       class SynthesizeSpeechRequest
         include Google::Apis::Core::Hashable
@@ -153,7 +423,7 @@ module Google
       
         # Contains text input to be synthesized. Either `text` or `ssml` must be
         # supplied. Supplying both or neither returns google.rpc.Code.INVALID_ARGUMENT.
-        # The input size is limited to 5000 characters.
+        # The input size is limited to 5000 bytes.
         # Corresponds to the JSON property `input`
         # @return [Google::Apis::TexttospeechV1::SynthesisInput]
         attr_accessor :input
@@ -241,6 +511,11 @@ module Google
       class VoiceSelectionParams
         include Google::Apis::Core::Hashable
       
+        # Description of the custom voice to be synthesized.
+        # Corresponds to the JSON property `customVoice`
+        # @return [Google::Apis::TexttospeechV1::CustomVoiceParams]
+        attr_accessor :custom_voice
+      
         # Required. The language (and potentially also the region) of the voice
         # expressed as a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
         # tag, e.g. "en-US". This should not include a script tag (e.g. use "cmn-cn"
@@ -276,6 +551,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @custom_voice = args[:custom_voice] if args.key?(:custom_voice)
           @language_code = args[:language_code] if args.key?(:language_code)
           @name = args[:name] if args.key?(:name)
           @ssml_gender = args[:ssml_gender] if args.key?(:ssml_gender)

@@ -326,7 +326,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -349,38 +349,43 @@ module Google
         # @return [Google::Apis::CloudtasksV2beta2::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -394,6 +399,59 @@ module Google
           @condition = args[:condition] if args.key?(:condition)
           @members = args[:members] if args.key?(:members)
           @role = args[:role] if args.key?(:role)
+        end
+      end
+      
+      # LINT.IfChange Request message for BufferTask.
+      class BufferTaskRequest
+        include Google::Apis::Core::Hashable
+      
+        # Message that represents an arbitrary HTTP body. It should only be used for
+        # payload formats that can't be represented as JSON, such as raw binary or an
+        # HTML page. This message can be used both in streaming and non-streaming API
+        # methods in the request as well as the response. It can be used as a top-level
+        # request field, which is convenient if one wants to extract parameters from
+        # either the URL or HTTP template into the request fields and also want access
+        # to the raw HTTP body. Example: message GetResourceRequest ` // A unique
+        # request id. string request_id = 1; // The raw HTTP body is bound to this field.
+        # google.api.HttpBody http_body = 2; ` service ResourceService ` rpc
+        # GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc
+        # UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); ` Example
+        # with streaming methods: service CaldavService ` rpc GetCalendar(stream google.
+        # api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream
+        # google.api.HttpBody) returns (stream google.api.HttpBody); ` Use of this type
+        # only changes how the request and response bodies are handled, all other
+        # features will continue to work unchanged.
+        # Corresponds to the JSON property `body`
+        # @return [Google::Apis::CloudtasksV2beta2::HttpBody]
+        attr_accessor :body
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @body = args[:body] if args.key?(:body)
+        end
+      end
+      
+      # Response message for BufferTask.
+      class BufferTaskResponse
+        include Google::Apis::Core::Hashable
+      
+        # A unit of scheduled work.
+        # Corresponds to the JSON property `task`
+        # @return [Google::Apis::CloudtasksV2beta2::Task]
+        attr_accessor :task
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @task = args[:task] if args.key?(:task)
         end
       end
       
@@ -462,8 +520,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -553,13 +610,16 @@ module Google
       class GetPolicyOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. The policy format version to be returned. Valid values are 0, 1, and
-        # 3. Requests specifying an invalid value will be rejected. Requests for
-        # policies with any conditional bindings must specify version 3. Policies
-        # without any conditional bindings may specify any valid value or leave the
-        # field unset. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies).
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected. Requests for policies with any conditional role bindings must
+        # specify version 3. Policies with no conditional role bindings may specify any
+        # valid value or leave the field unset. The policy in the response might use the
+        # policy version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
         # Corresponds to the JSON property `requestedPolicyVersion`
         # @return [Fixnum]
         attr_accessor :requested_policy_version
@@ -571,6 +631,246 @@ module Google
         # Update properties of this object
         def update!(**args)
           @requested_policy_version = args[:requested_policy_version] if args.key?(:requested_policy_version)
+        end
+      end
+      
+      # Defines a header message. A header can have a key and a value.
+      class Header
+        include Google::Apis::Core::Hashable
+      
+        # The key of the header.
+        # Corresponds to the JSON property `key`
+        # @return [String]
+        attr_accessor :key
+      
+        # The value of the header.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @key = args[:key] if args.key?(:key)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Wraps the Header object.
+      class HeaderOverride
+        include Google::Apis::Core::Hashable
+      
+        # Defines a header message. A header can have a key and a value.
+        # Corresponds to the JSON property `header`
+        # @return [Google::Apis::CloudtasksV2beta2::Header]
+        attr_accessor :header
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @header = args[:header] if args.key?(:header)
+        end
+      end
+      
+      # Message that represents an arbitrary HTTP body. It should only be used for
+      # payload formats that can't be represented as JSON, such as raw binary or an
+      # HTML page. This message can be used both in streaming and non-streaming API
+      # methods in the request as well as the response. It can be used as a top-level
+      # request field, which is convenient if one wants to extract parameters from
+      # either the URL or HTTP template into the request fields and also want access
+      # to the raw HTTP body. Example: message GetResourceRequest ` // A unique
+      # request id. string request_id = 1; // The raw HTTP body is bound to this field.
+      # google.api.HttpBody http_body = 2; ` service ResourceService ` rpc
+      # GetResource(GetResourceRequest) returns (google.api.HttpBody); rpc
+      # UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty); ` Example
+      # with streaming methods: service CaldavService ` rpc GetCalendar(stream google.
+      # api.HttpBody) returns (stream google.api.HttpBody); rpc UpdateCalendar(stream
+      # google.api.HttpBody) returns (stream google.api.HttpBody); ` Use of this type
+      # only changes how the request and response bodies are handled, all other
+      # features will continue to work unchanged.
+      class HttpBody
+        include Google::Apis::Core::Hashable
+      
+        # The HTTP Content-Type header value specifying the content type of the body.
+        # Corresponds to the JSON property `contentType`
+        # @return [String]
+        attr_accessor :content_type
+      
+        # The HTTP request/response body as raw binary.
+        # Corresponds to the JSON property `data`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :data
+      
+        # Application specific response metadata. Must be set in the first response for
+        # streaming APIs.
+        # Corresponds to the JSON property `extensions`
+        # @return [Array<Hash<String,Object>>]
+        attr_accessor :extensions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_type = args[:content_type] if args.key?(:content_type)
+          @data = args[:data] if args.key?(:data)
+          @extensions = args[:extensions] if args.key?(:extensions)
+        end
+      end
+      
+      # HTTP request. The task will be pushed to the worker as an HTTP request. An
+      # HTTP request embodies a url, an http method, headers, body and authorization
+      # for the http task.
+      class HttpRequest
+        include Google::Apis::Core::Hashable
+      
+        # HTTP request body. A request body is allowed only if the HTTP method is POST,
+        # PUT, or PATCH. It is an error to set body on a task with an incompatible
+        # HttpMethod.
+        # Corresponds to the JSON property `body`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :body
+      
+        # HTTP request headers. This map contains the header field names and values.
+        # Headers can be set when running the task is created or task is created. These
+        # headers represent a subset of the headers that will accompany the task's HTTP
+        # request. Some HTTP request headers will be ignored or replaced. A partial list
+        # of headers that will be ignored or replaced is: * Any header that is prefixed
+        # with "X-CloudTasks-" will be treated as service header. Service headers define
+        # properties of the task and are predefined in CloudTask. * Host: This will be
+        # computed by Cloud Tasks and derived from HttpRequest.url. * Content-Length:
+        # This will be computed by Cloud Tasks. * User-Agent: This will be set to `"
+        # Google-Cloud-Tasks"`. * `X-Google-*`: Google use only. * `X-AppEngine-*`:
+        # Google use only. `Content-Type` won't be set by Cloud Tasks. You can
+        # explicitly set `Content-Type` to a media type when the task is created. For
+        # example, `Content-Type` can be set to `"application/octet-stream"` or `"
+        # application/json"`. Headers which can have multiple values (according to
+        # RFC2616) can be specified using comma-separated values. The size of the
+        # headers must be less than 80KB.
+        # Corresponds to the JSON property `headers`
+        # @return [Hash<String,String>]
+        attr_accessor :headers
+      
+        # The HTTP method to use for the request. The default is POST.
+        # Corresponds to the JSON property `httpMethod`
+        # @return [String]
+        attr_accessor :http_method
+      
+        # Contains information needed for generating an [OAuth token](https://developers.
+        # google.com/identity/protocols/OAuth2). This type of authorization should
+        # generally only be used when calling Google APIs hosted on *.googleapis.com.
+        # Corresponds to the JSON property `oauthToken`
+        # @return [Google::Apis::CloudtasksV2beta2::OAuthToken]
+        attr_accessor :oauth_token
+      
+        # Contains information needed for generating an [OpenID Connect token](https://
+        # developers.google.com/identity/protocols/OpenIDConnect). This type of
+        # authorization can be used for many scenarios, including calling Cloud Run, or
+        # endpoints where you intend to validate the token yourself.
+        # Corresponds to the JSON property `oidcToken`
+        # @return [Google::Apis::CloudtasksV2beta2::OidcToken]
+        attr_accessor :oidc_token
+      
+        # Required. The full url path that the request will be sent to. This string must
+        # begin with either "http://" or "https://". Some examples are: `http://acme.com`
+        # and `https://acme.com/sales:8080`. Cloud Tasks will encode some characters
+        # for safety and compatibility. The maximum allowed URL length is 2083
+        # characters after encoding. The `Location` header response from a redirect
+        # response [`300` - `399`] may be followed. The redirect is not counted as a
+        # separate attempt.
+        # Corresponds to the JSON property `url`
+        # @return [String]
+        attr_accessor :url
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @body = args[:body] if args.key?(:body)
+          @headers = args[:headers] if args.key?(:headers)
+          @http_method = args[:http_method] if args.key?(:http_method)
+          @oauth_token = args[:oauth_token] if args.key?(:oauth_token)
+          @oidc_token = args[:oidc_token] if args.key?(:oidc_token)
+          @url = args[:url] if args.key?(:url)
+        end
+      end
+      
+      # HTTP target. When specified as a Queue, all the tasks with [HttpRequest] will
+      # be overridden according to the target.
+      class HttpTarget
+        include Google::Apis::Core::Hashable
+      
+        # HTTP target headers. This map contains the header field names and values.
+        # Headers will be set when running the task is created and/or task is created.
+        # These headers represent a subset of the headers that will accompany the task's
+        # HTTP request. Some HTTP request headers will be ignored or replaced. A partial
+        # list of headers that will be ignored or replaced is: * Any header that is
+        # prefixed with "X-CloudTasks-" will be treated as service header. Service
+        # headers define properties of the task and are predefined in CloudTask. * Host:
+        # This will be computed by Cloud Tasks and derived from HttpRequest.url. *
+        # Content-Length: This will be computed by Cloud Tasks. * User-Agent: This will
+        # be set to `"Google-CloudTasks"`. * `X-Google-*`: Google use only. * `X-
+        # AppEngine-*`: Google use only. `Content-Type` won't be set by Cloud Tasks. You
+        # can explicitly set `Content-Type` to a media type when the task is created.
+        # For example, `Content-Type` can be set to `"application/octet-stream"` or `"
+        # application/json"`. Headers which can have multiple values (according to
+        # RFC2616) can be specified using comma-separated values. The size of the
+        # headers must be less than 80KB. Queue-level headers to override headers of all
+        # the tasks in the queue.
+        # Corresponds to the JSON property `headerOverrides`
+        # @return [Array<Google::Apis::CloudtasksV2beta2::HeaderOverride>]
+        attr_accessor :header_overrides
+      
+        # The HTTP method to use for the request. When specified, it will override
+        # HttpRequest for the task. Note that if the value is set to HttpMethod the
+        # HttpRequest of the task will be ignored at execution time.
+        # Corresponds to the JSON property `httpMethod`
+        # @return [String]
+        attr_accessor :http_method
+      
+        # Contains information needed for generating an [OAuth token](https://developers.
+        # google.com/identity/protocols/OAuth2). This type of authorization should
+        # generally only be used when calling Google APIs hosted on *.googleapis.com.
+        # Corresponds to the JSON property `oauthToken`
+        # @return [Google::Apis::CloudtasksV2beta2::OAuthToken]
+        attr_accessor :oauth_token
+      
+        # Contains information needed for generating an [OpenID Connect token](https://
+        # developers.google.com/identity/protocols/OpenIDConnect). This type of
+        # authorization can be used for many scenarios, including calling Cloud Run, or
+        # endpoints where you intend to validate the token yourself.
+        # Corresponds to the JSON property `oidcToken`
+        # @return [Google::Apis::CloudtasksV2beta2::OidcToken]
+        attr_accessor :oidc_token
+      
+        # Uri Override. When specified, all the HTTP tasks inside the queue will be
+        # partially or fully overridden depending on the configured values.
+        # Corresponds to the JSON property `uriOverride`
+        # @return [Google::Apis::CloudtasksV2beta2::UriOverride]
+        attr_accessor :uri_override
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @header_overrides = args[:header_overrides] if args.key?(:header_overrides)
+          @http_method = args[:http_method] if args.key?(:http_method)
+          @oauth_token = args[:oauth_token] if args.key?(:oauth_token)
+          @oidc_token = args[:oidc_token] if args.key?(:oidc_token)
+          @uri_override = args[:uri_override] if args.key?(:uri_override)
         end
       end
       
@@ -785,6 +1085,88 @@ module Google
         end
       end
       
+      # Contains information needed for generating an [OAuth token](https://developers.
+      # google.com/identity/protocols/OAuth2). This type of authorization should
+      # generally only be used when calling Google APIs hosted on *.googleapis.com.
+      class OAuthToken
+        include Google::Apis::Core::Hashable
+      
+        # OAuth scope to be used for generating OAuth access token. If not specified, "
+        # https://www.googleapis.com/auth/cloud-platform" will be used.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        # [Service account email](https://cloud.google.com/iam/docs/service-accounts) to
+        # be used for generating OAuth token. The service account must be within the
+        # same project as the queue. The caller must have iam.serviceAccounts.actAs
+        # permission for the service account.
+        # Corresponds to the JSON property `serviceAccountEmail`
+        # @return [String]
+        attr_accessor :service_account_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @scope = args[:scope] if args.key?(:scope)
+          @service_account_email = args[:service_account_email] if args.key?(:service_account_email)
+        end
+      end
+      
+      # Contains information needed for generating an [OpenID Connect token](https://
+      # developers.google.com/identity/protocols/OpenIDConnect). This type of
+      # authorization can be used for many scenarios, including calling Cloud Run, or
+      # endpoints where you intend to validate the token yourself.
+      class OidcToken
+        include Google::Apis::Core::Hashable
+      
+        # Audience to be used when generating OIDC token. If not specified, the URI
+        # specified in target will be used.
+        # Corresponds to the JSON property `audience`
+        # @return [String]
+        attr_accessor :audience
+      
+        # [Service account email](https://cloud.google.com/iam/docs/service-accounts) to
+        # be used for generating OIDC token. The service account must be within the same
+        # project as the queue. The caller must have iam.serviceAccounts.actAs
+        # permission for the service account.
+        # Corresponds to the JSON property `serviceAccountEmail`
+        # @return [String]
+        attr_accessor :service_account_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audience = args[:audience] if args.key?(:audience)
+          @service_account_email = args[:service_account_email] if args.key?(:service_account_email)
+        end
+      end
+      
+      # PathOverride. Path message defines path override for HTTP targets.
+      class PathOverride
+        include Google::Apis::Core::Hashable
+      
+        # The URI path (e.g., a/b/c). Default is Empty string.
+        # Corresponds to the JSON property `path`
+        # @return [String]
+        attr_accessor :path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @path = args[:path] if args.key?(:path)
+        end
+      end
+      
       # Request message for PauseQueue.
       class PauseQueueRequest
         include Google::Apis::Core::Hashable
@@ -800,37 +1182,42 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::CloudtasksV2beta2::Binding>]
         attr_accessor :bindings
@@ -945,6 +1332,25 @@ module Google
         end
       end
       
+      # QueryOverride. Query message defines query override for HTTP targets.
+      class QueryOverride
+        include Google::Apis::Core::Hashable
+      
+        # The query parameters (e.g., qparam1=123&qparam2=456). Default is Empty string.
+        # Corresponds to the JSON property `queryParams`
+        # @return [String]
+        attr_accessor :query_params
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @query_params = args[:query_params] if args.key?(:query_params)
+        end
+      end
+      
       # A queue is a container of related tasks. Queues are configured to manage how
       # those tasks are dispatched. Configurable properties include rate limits, retry
       # options, target types, and others.
@@ -961,6 +1367,12 @@ module Google
         # Corresponds to the JSON property `appEngineHttpTarget`
         # @return [Google::Apis::CloudtasksV2beta2::AppEngineHttpTarget]
         attr_accessor :app_engine_http_target
+      
+        # HTTP target. When specified as a Queue, all the tasks with [HttpRequest] will
+        # be overridden according to the target.
+        # Corresponds to the JSON property `httpTarget`
+        # @return [Google::Apis::CloudtasksV2beta2::HttpTarget]
+        attr_accessor :http_target
       
         # Caller-specified and required in CreateQueue, after which it becomes output
         # only. The queue name. The queue name must have the following format: `projects/
@@ -1047,6 +1459,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @app_engine_http_target = args[:app_engine_http_target] if args.key?(:app_engine_http_target)
+          @http_target = args[:http_target] if args.key?(:http_target)
           @name = args[:name] if args.key?(:name)
           @pull_target = args[:pull_target] if args.key?(:pull_target)
           @purge_time = args[:purge_time] if args.key?(:purge_time)
@@ -1344,31 +1757,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::CloudtasksV2beta2::Policy]
         attr_accessor :policy
@@ -1470,6 +1883,13 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # HTTP request. The task will be pushed to the worker as an HTTP request. An
+        # HTTP request embodies a url, an http method, headers, body and authorization
+        # for the http task.
+        # Corresponds to the JSON property `httpRequest`
+        # @return [Google::Apis::CloudtasksV2beta2::HttpRequest]
+        attr_accessor :http_request
+      
         # Optionally caller-specified in CreateTask. The task name. The task name must
         # have the following format: `projects/PROJECT_ID/locations/LOCATION_ID/queues/
         # QUEUE_ID/tasks/TASK_ID` * `PROJECT_ID` can contain letters ([A-Za-z]), numbers
@@ -1521,6 +1941,7 @@ module Google
         def update!(**args)
           @app_engine_http_request = args[:app_engine_http_request] if args.key?(:app_engine_http_request)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @http_request = args[:http_request] if args.key?(:http_request)
           @name = args[:name] if args.key?(:name)
           @pull_message = args[:pull_message] if args.key?(:pull_message)
           @schedule_time = args[:schedule_time] if args.key?(:schedule_time)
@@ -1573,7 +1994,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -1605,6 +2026,64 @@ module Google
         # Update properties of this object
         def update!(**args)
           @permissions = args[:permissions] if args.key?(:permissions)
+        end
+      end
+      
+      # Uri Override. When specified, all the HTTP tasks inside the queue will be
+      # partially or fully overridden depending on the configured values.
+      class UriOverride
+        include Google::Apis::Core::Hashable
+      
+        # Host override. When specified, will replace the host part of the task URL. For
+        # example, if the task URL is "https://www.google.com", and host value is set to
+        # "example.net", the overridden URI will be changed to "https://example.net".
+        # Host value cannot be an empty string.
+        # Corresponds to the JSON property `host`
+        # @return [String]
+        attr_accessor :host
+      
+        # PathOverride. Path message defines path override for HTTP targets.
+        # Corresponds to the JSON property `pathOverride`
+        # @return [Google::Apis::CloudtasksV2beta2::PathOverride]
+        attr_accessor :path_override
+      
+        # Port override. When specified, will replace the port part of the task URI. For
+        # instance, for a URI http://www.google.com/foo and port=123, the overridden URI
+        # becomes http://www.google.com:123/foo. Note that the port value must be a
+        # positive integer. Setting the port to 0 (Zero) clears the URI port.
+        # Corresponds to the JSON property `port`
+        # @return [Fixnum]
+        attr_accessor :port
+      
+        # QueryOverride. Query message defines query override for HTTP targets.
+        # Corresponds to the JSON property `queryOverride`
+        # @return [Google::Apis::CloudtasksV2beta2::QueryOverride]
+        attr_accessor :query_override
+      
+        # Scheme override. When specified, the task URI scheme is replaced by the
+        # provided value (HTTP or HTTPS).
+        # Corresponds to the JSON property `scheme`
+        # @return [String]
+        attr_accessor :scheme
+      
+        # URI Override Enforce Mode When specified, determines the Target UriOverride
+        # mode. If not specified, it defaults to ALWAYS.
+        # Corresponds to the JSON property `uriOverrideEnforceMode`
+        # @return [String]
+        attr_accessor :uri_override_enforce_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @host = args[:host] if args.key?(:host)
+          @path_override = args[:path_override] if args.key?(:path_override)
+          @port = args[:port] if args.key?(:port)
+          @query_override = args[:query_override] if args.key?(:query_override)
+          @scheme = args[:scheme] if args.key?(:scheme)
+          @uri_override_enforce_mode = args[:uri_override_enforce_mode] if args.key?(:uri_override_enforce_mode)
         end
       end
     end

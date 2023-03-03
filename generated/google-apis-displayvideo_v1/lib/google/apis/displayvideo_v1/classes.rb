@@ -409,11 +409,11 @@ module Google
       class AgeRangeAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The age range of an audience. We only support targeting a
-        # continuous age range of an audience. Thus, the age range represented in this
-        # field can be 1) targeted solely, or, 2) part of a larger continuous age range.
-        # The reach of a continuous age range targeting can be expanded by also
-        # targeting an audience of an unknown age.
+        # The age range of an audience. We only support targeting a continuous age range
+        # of an audience. Thus, the age range represented in this field can be 1)
+        # targeted solely, or, 2) part of a larger continuous age range. The reach of a
+        # continuous age range targeting can be expanded by also targeting an audience
+        # of an unknown age. Output only in v1. Required in v2.
         # Corresponds to the JSON property `ageRange`
         # @return [String]
         attr_accessor :age_range
@@ -715,11 +715,20 @@ module Google
         # the details field of an AssignedTargetingOption when targeting_type is `
         # TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
         # except for excluded_first_and_third_party_audience_group and
-        # excluded_google_audience_group, of which COMPLEMENT is UNION'ed with other
-        # groups.
+        # excluded_google_audience_group, of which COMPLEMENT is used as an INTERSECTION
+        # with other groups.
         # Corresponds to the JSON property `audienceGroupDetails`
         # @return [Google::Apis::DisplayvideoV1::AudienceGroupAssignedTargetingOptionDetails]
         attr_accessor :audience_group_details
+      
+        # Details for audio content type assigned targeting option. This will be
+        # populated in the audio_content_type_details field when targeting_type is `
+        # TARGETING_TYPE_AUDIO_CONTENT_TYPE`. Explicitly targeting all options is not
+        # supported. Remove all audio content type targeting options to achieve this
+        # effect.
+        # Corresponds to the JSON property `audioContentTypeDetails`
+        # @return [Google::Apis::DisplayvideoV1::AudioContentTypeAssignedTargetingOptionDetails]
+        attr_accessor :audio_content_type_details
       
         # Represents an assigned authorized seller status. This will be populated in the
         # details field of an AssignedTargetingOption when targeting_type is `
@@ -762,6 +771,23 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::ChannelAssignedTargetingOptionDetails]
         attr_accessor :channel_details
       
+        # Details for content duration assigned targeting option. This will be populated
+        # in the content_duration_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_DURATION`. Explicitly targeting all options is not
+        # supported. Remove all content duration targeting options to achieve this
+        # effect.
+        # Corresponds to the JSON property `contentDurationDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentDurationAssignedTargetingOptionDetails]
+        attr_accessor :content_duration_details
+      
+        # Details for content genre assigned targeting option. This will be populated in
+        # the content_genre_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_GENRE`. Explicitly targeting all options is not
+        # supported. Remove all content genre targeting options to achieve this effect.
+        # Corresponds to the JSON property `contentGenreDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentGenreAssignedTargetingOptionDetails]
+        attr_accessor :content_genre_details
+      
         # Assigned content instream position targeting option details. This will be
         # populated in the content_instream_position_details field when targeting_type
         # is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
@@ -775,6 +801,15 @@ module Google
         # Corresponds to the JSON property `contentOutstreamPositionDetails`
         # @return [Google::Apis::DisplayvideoV1::ContentOutstreamPositionAssignedTargetingOptionDetails]
         attr_accessor :content_outstream_position_details
+      
+        # Details for content stream type assigned targeting option. This will be
+        # populated in the content_stream_type_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_STREAM_TYPE`. Explicitly targeting all options is not
+        # supported. Remove all content stream type targeting options to achieve this
+        # effect.
+        # Corresponds to the JSON property `contentStreamTypeDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentStreamTypeAssignedTargetingOptionDetails]
+        attr_accessor :content_stream_type_details
       
         # Representation of a segment of time defined on a specific day of the week and
         # with a start and end time. The time represented by `start_hour` must be before
@@ -820,7 +855,7 @@ module Google
       
         # Details for assigned gender targeting option. This will be populated in the
         # details field of an AssignedTargetingOption when targeting_type is `
-        # TARTGETING_TYPE_GENDER`.
+        # TARGETING_TYPE_GENDER`.
         # Corresponds to the JSON property `genderDetails`
         # @return [Google::Apis::DisplayvideoV1::GenderAssignedTargetingOptionDetails]
         attr_accessor :gender_details
@@ -916,7 +951,7 @@ module Google
       
         # Details for assigned parental status targeting option. This will be populated
         # in the details field of an AssignedTargetingOption when targeting_type is `
-        # TARTGETING_TYPE_PARENTAL_STATUS`.
+        # TARGETING_TYPE_PARENTAL_STATUS`.
         # Corresponds to the JSON property `parentalStatusDetails`
         # @return [Google::Apis::DisplayvideoV1::ParentalStatusAssignedTargetingOptionDetails]
         attr_accessor :parental_status_details
@@ -1009,14 +1044,18 @@ module Google
           @app_details = args[:app_details] if args.key?(:app_details)
           @assigned_targeting_option_id = args[:assigned_targeting_option_id] if args.key?(:assigned_targeting_option_id)
           @audience_group_details = args[:audience_group_details] if args.key?(:audience_group_details)
+          @audio_content_type_details = args[:audio_content_type_details] if args.key?(:audio_content_type_details)
           @authorized_seller_status_details = args[:authorized_seller_status_details] if args.key?(:authorized_seller_status_details)
           @browser_details = args[:browser_details] if args.key?(:browser_details)
           @business_chain_details = args[:business_chain_details] if args.key?(:business_chain_details)
           @carrier_and_isp_details = args[:carrier_and_isp_details] if args.key?(:carrier_and_isp_details)
           @category_details = args[:category_details] if args.key?(:category_details)
           @channel_details = args[:channel_details] if args.key?(:channel_details)
+          @content_duration_details = args[:content_duration_details] if args.key?(:content_duration_details)
+          @content_genre_details = args[:content_genre_details] if args.key?(:content_genre_details)
           @content_instream_position_details = args[:content_instream_position_details] if args.key?(:content_instream_position_details)
           @content_outstream_position_details = args[:content_outstream_position_details] if args.key?(:content_outstream_position_details)
+          @content_stream_type_details = args[:content_stream_type_details] if args.key?(:content_stream_type_details)
           @day_and_time_details = args[:day_and_time_details] if args.key?(:day_and_time_details)
           @device_make_model_details = args[:device_make_model_details] if args.key?(:device_make_model_details)
           @device_type_details = args[:device_type_details] if args.key?(:device_type_details)
@@ -1094,8 +1133,8 @@ module Google
       # the details field of an AssignedTargetingOption when targeting_type is `
       # TARGETING_TYPE_AUDIENCE_GROUP`. The relation between each group is UNION,
       # except for excluded_first_and_third_party_audience_group and
-      # excluded_google_audience_group, of which COMPLEMENT is UNION'ed with other
-      # groups.
+      # excluded_google_audience_group, of which COMPLEMENT is used as an INTERSECTION
+      # with other groups.
       class AudienceGroupAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
@@ -1151,6 +1190,57 @@ module Google
           @included_custom_list_group = args[:included_custom_list_group] if args.key?(:included_custom_list_group)
           @included_first_and_third_party_audience_groups = args[:included_first_and_third_party_audience_groups] if args.key?(:included_first_and_third_party_audience_groups)
           @included_google_audience_group = args[:included_google_audience_group] if args.key?(:included_google_audience_group)
+        end
+      end
+      
+      # Details for audio content type assigned targeting option. This will be
+      # populated in the audio_content_type_details field when targeting_type is `
+      # TARGETING_TYPE_AUDIO_CONTENT_TYPE`. Explicitly targeting all options is not
+      # supported. Remove all audio content type targeting options to achieve this
+      # effect.
+      class AudioContentTypeAssignedTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # The audio content type. Output only in v1. Required in v2.
+        # Corresponds to the JSON property `audioContentType`
+        # @return [String]
+        attr_accessor :audio_content_type
+      
+        # Required. The targeting_option_id field when targeting_type is `
+        # TARGETING_TYPE_AUDIO_CONTENT_TYPE`.
+        # Corresponds to the JSON property `targetingOptionId`
+        # @return [String]
+        attr_accessor :targeting_option_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_content_type = args[:audio_content_type] if args.key?(:audio_content_type)
+          @targeting_option_id = args[:targeting_option_id] if args.key?(:targeting_option_id)
+        end
+      end
+      
+      # Represents a targetable audio content type. This will be populated in the
+      # audio_content_type_details field when targeting_type is `
+      # TARGETING_TYPE_AUDIO_CONTENT_TYPE`.
+      class AudioContentTypeTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The audio content type.
+        # Corresponds to the JSON property `audioContentType`
+        # @return [String]
+        attr_accessor :audio_content_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_content_type = args[:audio_content_type] if args.key?(:audio_content_type)
         end
       end
       
@@ -2664,6 +2754,194 @@ module Google
         end
       end
       
+      # Contact information defining a Customer Match audience member.
+      class ContactInfo
+        include Google::Apis::Core::Hashable
+      
+        # Country code of the member. Must also be set with the following fields: *
+        # hashed_first_name * hashed_last_name * zip_codes
+        # Corresponds to the JSON property `countryCode`
+        # @return [String]
+        attr_accessor :country_code
+      
+        # A list of SHA256 hashed email of the member. Before hashing, remove all
+        # whitespace and make sure the string is all lowercase.
+        # Corresponds to the JSON property `hashedEmails`
+        # @return [Array<String>]
+        attr_accessor :hashed_emails
+      
+        # SHA256 hashed first name of the member. Before hashing, remove all whitespace
+        # and make sure the string is all lowercase. Must also be set with the following
+        # fields: * country_code * hashed_last_name * zip_codes
+        # Corresponds to the JSON property `hashedFirstName`
+        # @return [String]
+        attr_accessor :hashed_first_name
+      
+        # SHA256 hashed last name of the member. Before hashing, remove all whitespace
+        # and make sure the string is all lowercase. Must also be set with the following
+        # fields: * country_code * hashed_first_name * zip_codes
+        # Corresponds to the JSON property `hashedLastName`
+        # @return [String]
+        attr_accessor :hashed_last_name
+      
+        # A list of SHA256 hashed phone numbers of the member. Before hashing, all phone
+        # numbers must be formatted using the [E.164 format](//en.wikipedia.org/wiki/E.
+        # 164) and include the country calling code.
+        # Corresponds to the JSON property `hashedPhoneNumbers`
+        # @return [Array<String>]
+        attr_accessor :hashed_phone_numbers
+      
+        # A list of zip codes of the member. Must also be set with the following fields:
+        # * country_code * hashed_first_name * hashed_last_name
+        # Corresponds to the JSON property `zipCodes`
+        # @return [Array<String>]
+        attr_accessor :zip_codes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @country_code = args[:country_code] if args.key?(:country_code)
+          @hashed_emails = args[:hashed_emails] if args.key?(:hashed_emails)
+          @hashed_first_name = args[:hashed_first_name] if args.key?(:hashed_first_name)
+          @hashed_last_name = args[:hashed_last_name] if args.key?(:hashed_last_name)
+          @hashed_phone_numbers = args[:hashed_phone_numbers] if args.key?(:hashed_phone_numbers)
+          @zip_codes = args[:zip_codes] if args.key?(:zip_codes)
+        end
+      end
+      
+      # Wrapper message for a list of contact information defining Customer Match
+      # audience members.
+      class ContactInfoList
+        include Google::Apis::Core::Hashable
+      
+        # A list of ContactInfo objects defining Customer Match audience members. The
+        # size of members after splitting the contact_infos mustn't be greater than 500,
+        # 000.
+        # Corresponds to the JSON property `contactInfos`
+        # @return [Array<Google::Apis::DisplayvideoV1::ContactInfo>]
+        attr_accessor :contact_infos
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @contact_infos = args[:contact_infos] if args.key?(:contact_infos)
+        end
+      end
+      
+      # Details for content duration assigned targeting option. This will be populated
+      # in the content_duration_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_DURATION`. Explicitly targeting all options is not
+      # supported. Remove all content duration targeting options to achieve this
+      # effect.
+      class ContentDurationAssignedTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The content duration.
+        # Corresponds to the JSON property `contentDuration`
+        # @return [String]
+        attr_accessor :content_duration
+      
+        # Required. The targeting_option_id field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_DURATION`.
+        # Corresponds to the JSON property `targetingOptionId`
+        # @return [String]
+        attr_accessor :targeting_option_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_duration = args[:content_duration] if args.key?(:content_duration)
+          @targeting_option_id = args[:targeting_option_id] if args.key?(:targeting_option_id)
+        end
+      end
+      
+      # Represents a targetable content duration. This will be populated in the
+      # content_duration_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_DURATION`.
+      class ContentDurationTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The content duration.
+        # Corresponds to the JSON property `contentDuration`
+        # @return [String]
+        attr_accessor :content_duration
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_duration = args[:content_duration] if args.key?(:content_duration)
+        end
+      end
+      
+      # Details for content genre assigned targeting option. This will be populated in
+      # the content_genre_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_GENRE`. Explicitly targeting all options is not
+      # supported. Remove all content genre targeting options to achieve this effect.
+      class ContentGenreAssignedTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The display name of the content genre.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Indicates if this option is being negatively targeted.
+        # Corresponds to the JSON property `negative`
+        # @return [Boolean]
+        attr_accessor :negative
+        alias_method :negative?, :negative
+      
+        # Required. The targeting_option_id field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_GENRE`.
+        # Corresponds to the JSON property `targetingOptionId`
+        # @return [String]
+        attr_accessor :targeting_option_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @negative = args[:negative] if args.key?(:negative)
+          @targeting_option_id = args[:targeting_option_id] if args.key?(:targeting_option_id)
+        end
+      end
+      
+      # Represents a targetable content genre. This will be populated in the
+      # content_genre_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_GENRE`.
+      class ContentGenreTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The display name of the content genre
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+        end
+      end
+      
       # Assigned content instream position targeting option details. This will be
       # populated in the content_instream_position_details field when targeting_type
       # is `TARGETING_TYPE_CONTENT_INSTREAM_POSITION`.
@@ -2681,7 +2959,8 @@ module Google
         # @return [String]
         attr_accessor :ad_type
       
-        # Output only. The content instream position for video or audio ads.
+        # The content instream position for video or audio ads. Output only in v1.
+        # Required in v2.
         # Corresponds to the JSON property `contentInstreamPosition`
         # @return [String]
         attr_accessor :content_instream_position
@@ -2743,7 +3022,7 @@ module Google
         # @return [String]
         attr_accessor :ad_type
       
-        # Output only. The content outstream position.
+        # The content outstream position. Output only in v1. Required in v2.
         # Corresponds to the JSON property `contentOutstreamPosition`
         # @return [String]
         attr_accessor :content_outstream_position
@@ -2785,6 +3064,57 @@ module Google
         # Update properties of this object
         def update!(**args)
           @content_outstream_position = args[:content_outstream_position] if args.key?(:content_outstream_position)
+        end
+      end
+      
+      # Details for content stream type assigned targeting option. This will be
+      # populated in the content_stream_type_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_STREAM_TYPE`. Explicitly targeting all options is not
+      # supported. Remove all content stream type targeting options to achieve this
+      # effect.
+      class ContentStreamTypeAssignedTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The content stream type.
+        # Corresponds to the JSON property `contentStreamType`
+        # @return [String]
+        attr_accessor :content_stream_type
+      
+        # Required. The targeting_option_id field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+        # Corresponds to the JSON property `targetingOptionId`
+        # @return [String]
+        attr_accessor :targeting_option_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_stream_type = args[:content_stream_type] if args.key?(:content_stream_type)
+          @targeting_option_id = args[:targeting_option_id] if args.key?(:targeting_option_id)
+        end
+      end
+      
+      # Represents a targetable content stream type. This will be populated in the
+      # content_stream_type_details field when targeting_type is `
+      # TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+      class ContentStreamTypeTargetingOptionDetails
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The content stream type.
+        # Corresponds to the JSON property `contentStreamType`
+        # @return [String]
+        attr_accessor :content_stream_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_stream_type = args[:content_stream_type] if args.key?(:content_stream_type)
         end
       end
       
@@ -3299,8 +3629,8 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::UniversalAdId]
         attr_accessor :universal_ad_id
       
-        # Output only. The timestamp when the creative was last updated. Assigned by the
-        # system.
+        # Output only. The timestamp when the creative was last updated, either by the
+        # user or system (e.g. creative review). Assigned by the system.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
         attr_accessor :update_time
@@ -3384,7 +3714,9 @@ module Google
       class CreativeConfig
         include Google::Apis::Core::Hashable
       
-        # The type of creative that can be assigned to the inventory source.
+        # The type of creative that can be assigned to the inventory source. Only the
+        # following types are supported: * `CREATIVE_TYPE_STANDARD` * `
+        # CREATIVE_TYPE_VIDEO`
         # Corresponds to the JSON property `creativeType`
         # @return [String]
         attr_accessor :creative_type
@@ -3450,6 +3782,17 @@ module Google
         # @return [String]
         attr_accessor :entity_status
       
+        # Output only. The state of custom bidding model readiness for each advertiser
+        # who has access. This field may only include the state of the queried
+        # advertiser if the algorithm [`owner`](/display-video/api/reference/rest/v1/
+        # customBiddingAlgorithms#CustomBiddingAlgorithm.FIELDS.oneof_owner) is a
+        # partner and is being retrieved using an advertiser [`accessor`](/display-video/
+        # api/reference/rest/v1/customBiddingAlgorithms/list#body.QUERY_PARAMETERS.
+        # oneof_accessor).
+        # Corresponds to the JSON property `modelReadiness`
+        # @return [Array<Google::Apis::DisplayvideoV1::CustomBiddingModelReadinessState>]
+        attr_accessor :model_readiness
+      
         # Output only. The resource name of the custom bidding algorithm.
         # Corresponds to the JSON property `name`
         # @return [String]
@@ -3483,9 +3826,122 @@ module Google
           @custom_bidding_algorithm_type = args[:custom_bidding_algorithm_type] if args.key?(:custom_bidding_algorithm_type)
           @display_name = args[:display_name] if args.key?(:display_name)
           @entity_status = args[:entity_status] if args.key?(:entity_status)
+          @model_readiness = args[:model_readiness] if args.key?(:model_readiness)
           @name = args[:name] if args.key?(:name)
           @partner_id = args[:partner_id] if args.key?(:partner_id)
           @shared_advertiser_ids = args[:shared_advertiser_ids] if args.key?(:shared_advertiser_ids)
+        end
+      end
+      
+      # The custom bidding algorithm model readiness state for a single shared
+      # advertiser.
+      class CustomBiddingModelReadinessState
+        include Google::Apis::Core::Hashable
+      
+        # The unique ID of the relevant advertiser.
+        # Corresponds to the JSON property `advertiserId`
+        # @return [Fixnum]
+        attr_accessor :advertiser_id
+      
+        # The readiness state of custom bidding model.
+        # Corresponds to the JSON property `readinessState`
+        # @return [String]
+        attr_accessor :readiness_state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @advertiser_id = args[:advertiser_id] if args.key?(:advertiser_id)
+          @readiness_state = args[:readiness_state] if args.key?(:readiness_state)
+        end
+      end
+      
+      # A single custom bidding script.
+      class CustomBiddingScript
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Whether the script is currently being used for scoring by the
+        # parent algorithm.
+        # Corresponds to the JSON property `active`
+        # @return [Boolean]
+        attr_accessor :active
+        alias_method :active?, :active
+      
+        # Output only. The time when the script was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The unique ID of the custom bidding algorithm the script belongs
+        # to.
+        # Corresponds to the JSON property `customBiddingAlgorithmId`
+        # @return [Fixnum]
+        attr_accessor :custom_bidding_algorithm_id
+      
+        # Output only. The unique ID of the custom bidding script.
+        # Corresponds to the JSON property `customBiddingScriptId`
+        # @return [Fixnum]
+        attr_accessor :custom_bidding_script_id
+      
+        # Output only. Error details of a rejected custom bidding script. This field
+        # will only be populated when Script.state is REJECTED.
+        # Corresponds to the JSON property `errors`
+        # @return [Array<Google::Apis::DisplayvideoV1::ScriptError>]
+        attr_accessor :errors
+      
+        # Output only. The resource name of the custom bidding script.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The reference to the uploaded custom bidding script file.
+        # Corresponds to the JSON property `script`
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingScriptRef]
+        attr_accessor :script
+      
+        # Output only. The state of the custom bidding script.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @active = args[:active] if args.key?(:active)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @custom_bidding_algorithm_id = args[:custom_bidding_algorithm_id] if args.key?(:custom_bidding_algorithm_id)
+          @custom_bidding_script_id = args[:custom_bidding_script_id] if args.key?(:custom_bidding_script_id)
+          @errors = args[:errors] if args.key?(:errors)
+          @name = args[:name] if args.key?(:name)
+          @script = args[:script] if args.key?(:script)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # The reference to the uploaded custom bidding script file.
+      class CustomBiddingScriptRef
+        include Google::Apis::Core::Hashable
+      
+        # A resource name to be used in media.download to Download the script files. Or
+        # media.upload to Upload the script files. Resource names have the format `
+        # customBiddingAlgorithms/`custom_bidding_algorithm_id`/scriptRef/`ref_id``.
+        # Corresponds to the JSON property `resourceName`
+        # @return [String]
+        attr_accessor :resource_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @resource_name = args[:resource_name] if args.key?(:resource_name)
         end
       end
       
@@ -3565,11 +4021,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -3610,11 +4066,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::DisplayvideoV1::Date]
         attr_accessor :end_date
@@ -3622,11 +4078,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::DisplayvideoV1::Date]
         attr_accessor :start_date
@@ -3785,7 +4241,7 @@ module Google
       class DeviceTypeAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The display name of the device type.
+        # The display name of the device type. Output only in v1. Required in v2.
         # Corresponds to the JSON property `deviceType`
         # @return [String]
         attr_accessor :device_type
@@ -4098,11 +4554,191 @@ module Google
         end
       end
       
+      # Request message for FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
+      class EditCustomerMatchMembersRequest
+        include Google::Apis::Core::Hashable
+      
+        # Wrapper message for a list of contact information defining Customer Match
+        # audience members.
+        # Corresponds to the JSON property `addedContactInfoList`
+        # @return [Google::Apis::DisplayvideoV1::ContactInfoList]
+        attr_accessor :added_contact_info_list
+      
+        # Wrapper message for a list of mobile device IDs defining Customer Match
+        # audience members.
+        # Corresponds to the JSON property `addedMobileDeviceIdList`
+        # @return [Google::Apis::DisplayvideoV1::MobileDeviceIdList]
+        attr_accessor :added_mobile_device_id_list
+      
+        # Required. The ID of the owner advertiser of the updated Customer Match
+        # FirstAndThirdPartyAudience.
+        # Corresponds to the JSON property `advertiserId`
+        # @return [Fixnum]
+        attr_accessor :advertiser_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @added_contact_info_list = args[:added_contact_info_list] if args.key?(:added_contact_info_list)
+          @added_mobile_device_id_list = args[:added_mobile_device_id_list] if args.key?(:added_mobile_device_id_list)
+          @advertiser_id = args[:advertiser_id] if args.key?(:advertiser_id)
+        end
+      end
+      
+      # The response of FirstAndThirdPartyAudienceService.EditCustomerMatchMembers.
+      class EditCustomerMatchMembersResponse
+        include Google::Apis::Core::Hashable
+      
+        # Required. The ID of the updated Customer Match FirstAndThirdPartyAudience.
+        # Corresponds to the JSON property `firstAndThirdPartyAudienceId`
+        # @return [Fixnum]
+        attr_accessor :first_and_third_party_audience_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @first_and_third_party_audience_id = args[:first_and_third_party_audience_id] if args.key?(:first_and_third_party_audience_id)
+        end
+      end
+      
+      # Request message for GuaranteedOrderService.EditGuaranteedOrderReadAccessors.
+      class EditGuaranteedOrderReadAccessorsRequest
+        include Google::Apis::Core::Hashable
+      
+        # The advertisers to add as read accessors to the guaranteed order.
+        # Corresponds to the JSON property `addedAdvertisers`
+        # @return [Array<Fixnum>]
+        attr_accessor :added_advertisers
+      
+        # Required. The partner context in which the change is being made.
+        # Corresponds to the JSON property `partnerId`
+        # @return [Fixnum]
+        attr_accessor :partner_id
+      
+        # Whether to give all advertisers of the read/write accessor partner read access
+        # to the guaranteed order. Only applicable if read_write_partner_id is set in
+        # the guaranteed order.
+        # Corresponds to the JSON property `readAccessInherited`
+        # @return [Boolean]
+        attr_accessor :read_access_inherited
+        alias_method :read_access_inherited?, :read_access_inherited
+      
+        # The advertisers to remove as read accessors to the guaranteed order.
+        # Corresponds to the JSON property `removedAdvertisers`
+        # @return [Array<Fixnum>]
+        attr_accessor :removed_advertisers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @added_advertisers = args[:added_advertisers] if args.key?(:added_advertisers)
+          @partner_id = args[:partner_id] if args.key?(:partner_id)
+          @read_access_inherited = args[:read_access_inherited] if args.key?(:read_access_inherited)
+          @removed_advertisers = args[:removed_advertisers] if args.key?(:removed_advertisers)
+        end
+      end
+      
+      # 
+      class EditGuaranteedOrderReadAccessorsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Whether all advertisers of read_write_partner_id have read access to the
+        # guaranteed order.
+        # Corresponds to the JSON property `readAccessInherited`
+        # @return [Boolean]
+        attr_accessor :read_access_inherited
+        alias_method :read_access_inherited?, :read_access_inherited
+      
+        # The IDs of advertisers with read access to the guaranteed order.
+        # Corresponds to the JSON property `readAdvertiserIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :read_advertiser_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @read_access_inherited = args[:read_access_inherited] if args.key?(:read_access_inherited)
+          @read_advertiser_ids = args[:read_advertiser_ids] if args.key?(:read_advertiser_ids)
+        end
+      end
+      
+      # Request message for InventorySourceService.
+      # EditInventorySourceReadWriteAccessors.
+      class EditInventorySourceReadWriteAccessorsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Update to the list of advertisers with read/write access to the inventory
+        # source.
+        # Corresponds to the JSON property `advertisersUpdate`
+        # @return [Google::Apis::DisplayvideoV1::EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate]
+        attr_accessor :advertisers_update
+      
+        # Set the partner context as read/write accessor of the inventory source. This
+        # will remove all other current read/write advertiser accessors.
+        # Corresponds to the JSON property `assignPartner`
+        # @return [Boolean]
+        attr_accessor :assign_partner
+        alias_method :assign_partner?, :assign_partner
+      
+        # Required. The partner context by which the accessors change is being made.
+        # Corresponds to the JSON property `partnerId`
+        # @return [Fixnum]
+        attr_accessor :partner_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @advertisers_update = args[:advertisers_update] if args.key?(:advertisers_update)
+          @assign_partner = args[:assign_partner] if args.key?(:assign_partner)
+          @partner_id = args[:partner_id] if args.key?(:partner_id)
+        end
+      end
+      
+      # Update to the list of advertisers with read/write access to the inventory
+      # source.
+      class EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate
+        include Google::Apis::Core::Hashable
+      
+        # The advertisers to add.
+        # Corresponds to the JSON property `addedAdvertisers`
+        # @return [Array<Fixnum>]
+        attr_accessor :added_advertisers
+      
+        # The advertisers to remove.
+        # Corresponds to the JSON property `removedAdvertisers`
+        # @return [Array<Fixnum>]
+        attr_accessor :removed_advertisers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @added_advertisers = args[:added_advertisers] if args.key?(:added_advertisers)
+          @removed_advertisers = args[:removed_advertisers] if args.key?(:removed_advertisers)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -4121,7 +4757,7 @@ module Google
       class EnvironmentAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The serving environment.
+        # The serving environment. Output only in v1. Required in v2.
         # Corresponds to the JSON property `environment`
         # @return [String]
         attr_accessor :environment
@@ -4347,15 +4983,27 @@ module Google
         # @return [Fixnum]
         attr_accessor :active_display_audience_size
       
+        # The app_id matches with the type of the mobile_device_ids being uploaded. Only
+        # applicable to audience_type `CUSTOMER_MATCH_DEVICE_ID`
+        # Corresponds to the JSON property `appId`
+        # @return [String]
+        attr_accessor :app_id
+      
         # Output only. The source of the audience.
         # Corresponds to the JSON property `audienceSource`
         # @return [String]
         attr_accessor :audience_source
       
-        # Output only. The type of the audience.
+        # The type of the audience.
         # Corresponds to the JSON property `audienceType`
         # @return [String]
         attr_accessor :audience_type
+      
+        # Wrapper message for a list of contact information defining Customer Match
+        # audience members.
+        # Corresponds to the JSON property `contactInfoList`
+        # @return [Google::Apis::DisplayvideoV1::ContactInfoList]
+        attr_accessor :contact_info_list
       
         # The user-provided description of the audience. Only applicable to first party
         # audiences.
@@ -4409,7 +5057,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :first_and_third_party_audience_id
       
-        # Output only. Whether the audience is a first or third party audience.
+        # Whether the audience is a first or third party audience.
         # Corresponds to the JSON property `firstAndThirdPartyAudienceType`
         # @return [String]
         attr_accessor :first_and_third_party_audience_type
@@ -4423,10 +5071,20 @@ module Google
         attr_accessor :gmail_audience_size
       
         # The duration in days that an entry remains in the audience after the
-        # qualifying event. Only applicable to first party audiences.
+        # qualifying event. If the audience has no expiration, set the value of this
+        # field to 10000. Otherwise, the set value must be greater than 0 and less than
+        # or equal to 540. Only applicable to first party audiences. This field is
+        # required if one of the following audience_type is used: * `
+        # CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`
         # Corresponds to the JSON property `membershipDurationDays`
         # @return [Fixnum]
         attr_accessor :membership_duration_days
+      
+        # Wrapper message for a list of mobile device IDs defining Customer Match
+        # audience members.
+        # Corresponds to the JSON property `mobileDeviceIdList`
+        # @return [Google::Apis::DisplayvideoV1::MobileDeviceIdList]
+        attr_accessor :mobile_device_id_list
       
         # Output only. The resource name of the first and third party audience.
         # Corresponds to the JSON property `name`
@@ -4448,8 +5106,10 @@ module Google
         # Update properties of this object
         def update!(**args)
           @active_display_audience_size = args[:active_display_audience_size] if args.key?(:active_display_audience_size)
+          @app_id = args[:app_id] if args.key?(:app_id)
           @audience_source = args[:audience_source] if args.key?(:audience_source)
           @audience_type = args[:audience_type] if args.key?(:audience_type)
+          @contact_info_list = args[:contact_info_list] if args.key?(:contact_info_list)
           @description = args[:description] if args.key?(:description)
           @display_audience_size = args[:display_audience_size] if args.key?(:display_audience_size)
           @display_desktop_audience_size = args[:display_desktop_audience_size] if args.key?(:display_desktop_audience_size)
@@ -4460,6 +5120,7 @@ module Google
           @first_and_third_party_audience_type = args[:first_and_third_party_audience_type] if args.key?(:first_and_third_party_audience_type)
           @gmail_audience_size = args[:gmail_audience_size] if args.key?(:gmail_audience_size)
           @membership_duration_days = args[:membership_duration_days] if args.key?(:membership_duration_days)
+          @mobile_device_id_list = args[:mobile_device_id_list] if args.key?(:mobile_device_id_list)
           @name = args[:name] if args.key?(:name)
           @youtube_audience_size = args[:youtube_audience_size] if args.key?(:youtube_audience_size)
         end
@@ -4611,8 +5272,9 @@ module Google
       class FrequencyCap
         include Google::Apis::Core::Hashable
       
-        # The maximum number of times a user may be shown with the same ad during this
-        # period. Must be greater than 0. Required when unlimited is `false`.
+        # The maximum number of times a user may be shown the same ad during this period.
+        # Must be greater than 0. Required when unlimited is `false` and max_views is
+        # not set.
         # Corresponds to the JSON property `maxImpressions`
         # @return [Fixnum]
         attr_accessor :max_impressions
@@ -4656,11 +5318,11 @@ module Google
       
       # Details for assigned gender targeting option. This will be populated in the
       # details field of an AssignedTargetingOption when targeting_type is `
-      # TARTGETING_TYPE_GENDER`.
+      # TARGETING_TYPE_GENDER`.
       class GenderAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The gender of the audience.
+        # The gender of the audience. Output only in v1. Required in v2.
         # Corresponds to the JSON property `gender`
         # @return [String]
         attr_accessor :gender
@@ -4926,13 +5588,168 @@ module Google
         end
       end
       
+      # A guaranteed order. Guaranteed orders are parent entity of guaranteed
+      # inventory sources. When creating a guaranteed inventory source, a guaranteed
+      # order ID must be assigned to the inventory source.
+      class GuaranteedOrder
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The ID of default advertiser of the guaranteed order. The default
+        # advertiser is either the read_write_advertiser_id or, if that is not set, the
+        # first advertiser listed in read_advertiser_ids. Otherwise, there is no default
+        # advertiser.
+        # Corresponds to the JSON property `defaultAdvertiserId`
+        # @return [Fixnum]
+        attr_accessor :default_advertiser_id
+      
+        # The ID of the default campaign that is assigned to the guaranteed order. The
+        # default campaign must belong to the default advertiser.
+        # Corresponds to the JSON property `defaultCampaignId`
+        # @return [Fixnum]
+        attr_accessor :default_campaign_id
+      
+        # Required. The display name of the guaranteed order. Must be UTF-8 encoded with
+        # a maximum size of 240 bytes.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Required. Immutable. The exchange where the guaranteed order originated.
+        # Corresponds to the JSON property `exchange`
+        # @return [String]
+        attr_accessor :exchange
+      
+        # Output only. The unique identifier of the guaranteed order. The guaranteed
+        # order IDs have the format ``exchange`-`legacy_guaranteed_order_id``.
+        # Corresponds to the JSON property `guaranteedOrderId`
+        # @return [String]
+        attr_accessor :guaranteed_order_id
+      
+        # Output only. The legacy ID of the guaranteed order. Assigned by the original
+        # exchange. The legacy ID is unique within one exchange, but is not guaranteed
+        # to be unique across all guaranteed orders. This ID is used in SDF and UI.
+        # Corresponds to the JSON property `legacyGuaranteedOrderId`
+        # @return [String]
+        attr_accessor :legacy_guaranteed_order_id
+      
+        # Output only. The resource name of the guaranteed order.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. The publisher name of the guaranteed order. Must be UTF-8 encoded
+        # with a maximum size of 240 bytes.
+        # Corresponds to the JSON property `publisherName`
+        # @return [String]
+        attr_accessor :publisher_name
+      
+        # Whether all advertisers of read_write_partner_id have read access to the
+        # guaranteed order. Only applicable if read_write_partner_id is set. If True,
+        # overrides read_advertiser_ids.
+        # Corresponds to the JSON property `readAccessInherited`
+        # @return [Boolean]
+        attr_accessor :read_access_inherited
+        alias_method :read_access_inherited?, :read_access_inherited
+      
+        # The IDs of advertisers with read access to the guaranteed order. This field
+        # must not include the advertiser assigned to read_write_advertiser_id if it is
+        # set. All advertisers in this field must belong to read_write_partner_id or the
+        # same partner as read_write_advertiser_id.
+        # Corresponds to the JSON property `readAdvertiserIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :read_advertiser_ids
+      
+        # The advertiser with read/write access to the guaranteed order. This is also
+        # the default advertiser of the guaranteed order.
+        # Corresponds to the JSON property `readWriteAdvertiserId`
+        # @return [Fixnum]
+        attr_accessor :read_write_advertiser_id
+      
+        # The partner with read/write access to the guaranteed order.
+        # Corresponds to the JSON property `readWritePartnerId`
+        # @return [Fixnum]
+        attr_accessor :read_write_partner_id
+      
+        # The status settings of the guaranteed order.
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DisplayvideoV1::GuaranteedOrderStatus]
+        attr_accessor :status
+      
+        # Output only. The timestamp when the guaranteed order was last updated.
+        # Assigned by the system.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @default_advertiser_id = args[:default_advertiser_id] if args.key?(:default_advertiser_id)
+          @default_campaign_id = args[:default_campaign_id] if args.key?(:default_campaign_id)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @exchange = args[:exchange] if args.key?(:exchange)
+          @guaranteed_order_id = args[:guaranteed_order_id] if args.key?(:guaranteed_order_id)
+          @legacy_guaranteed_order_id = args[:legacy_guaranteed_order_id] if args.key?(:legacy_guaranteed_order_id)
+          @name = args[:name] if args.key?(:name)
+          @publisher_name = args[:publisher_name] if args.key?(:publisher_name)
+          @read_access_inherited = args[:read_access_inherited] if args.key?(:read_access_inherited)
+          @read_advertiser_ids = args[:read_advertiser_ids] if args.key?(:read_advertiser_ids)
+          @read_write_advertiser_id = args[:read_write_advertiser_id] if args.key?(:read_write_advertiser_id)
+          @read_write_partner_id = args[:read_write_partner_id] if args.key?(:read_write_partner_id)
+          @status = args[:status] if args.key?(:status)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # The status settings of the guaranteed order.
+      class GuaranteedOrderStatus
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The configuration status of the guaranteed order. Acceptable
+        # values are `PENDING` and `COMPLETED`. A guaranteed order must be configured (
+        # fill in the required fields, choose creatives, and select a default campaign)
+        # before it can serve. Currently the configuration action can only be performed
+        # via UI.
+        # Corresponds to the JSON property `configStatus`
+        # @return [String]
+        attr_accessor :config_status
+      
+        # The user-provided reason for pausing this guaranteed order. Must be UTF-8
+        # encoded with a maximum length of 100 bytes. Only applicable when entity_status
+        # is set to `ENTITY_STATUS_PAUSED`.
+        # Corresponds to the JSON property `entityPauseReason`
+        # @return [String]
+        attr_accessor :entity_pause_reason
+      
+        # Whether or not the guaranteed order is servable. Acceptable values are `
+        # ENTITY_STATUS_ACTIVE`, `ENTITY_STATUS_ARCHIVED`, and `ENTITY_STATUS_PAUSED`.
+        # Default value is `ENTITY_STATUS_ACTIVE`.
+        # Corresponds to the JSON property `entityStatus`
+        # @return [String]
+        attr_accessor :entity_status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @config_status = args[:config_status] if args.key?(:config_status)
+          @entity_pause_reason = args[:entity_pause_reason] if args.key?(:entity_pause_reason)
+          @entity_status = args[:entity_status] if args.key?(:entity_status)
+        end
+      end
+      
       # Details for assigned household income targeting option. This will be populated
       # in the details field of an AssignedTargetingOption when targeting_type is `
       # TARGETING_TYPE_HOUSEHOLD_INCOME`.
       class HouseholdIncomeAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The household income of the audience.
+        # The household income of the audience. Output only in v1. Required in v2.
         # Corresponds to the JSON property `householdIncome`
         # @return [String]
         attr_accessor :household_income
@@ -5044,6 +5861,11 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::BiddingStrategy]
         attr_accessor :bid_strategy
       
+        # Immutable. The billable outcome of the insertion order.
+        # Corresponds to the JSON property `billableOutcome`
+        # @return [String]
+        attr_accessor :billable_outcome
+      
         # Settings that control how insertion order budget is allocated.
         # Corresponds to the JSON property `budget`
         # @return [Google::Apis::DisplayvideoV1::InsertionOrderBudget]
@@ -5116,6 +5938,11 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::PerformanceGoal]
         attr_accessor :performance_goal
       
+        # Output only. The reservation type of the insertion order.
+        # Corresponds to the JSON property `reservationType`
+        # @return [String]
+        attr_accessor :reservation_type
+      
         # Output only. The timestamp when the insertion order was last updated. Assigned
         # by the system.
         # Corresponds to the JSON property `updateTime`
@@ -5130,6 +5957,7 @@ module Google
         def update!(**args)
           @advertiser_id = args[:advertiser_id] if args.key?(:advertiser_id)
           @bid_strategy = args[:bid_strategy] if args.key?(:bid_strategy)
+          @billable_outcome = args[:billable_outcome] if args.key?(:billable_outcome)
           @budget = args[:budget] if args.key?(:budget)
           @campaign_id = args[:campaign_id] if args.key?(:campaign_id)
           @display_name = args[:display_name] if args.key?(:display_name)
@@ -5142,6 +5970,7 @@ module Google
           @pacing = args[:pacing] if args.key?(:pacing)
           @partner_costs = args[:partner_costs] if args.key?(:partner_costs)
           @performance_goal = args[:performance_goal] if args.key?(:performance_goal)
+          @reservation_type = args[:reservation_type] if args.key?(:reservation_type)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -5205,7 +6034,7 @@ module Google
       
         # The budget segment description. It can be used to enter Purchase Order
         # information for each budget segment and have that information printed on the
-        # invoices. Must be UTF-8 encoded with a length of no more than 80 characters.
+        # invoices. Must be UTF-8 encoded.
         # Corresponds to the JSON property `description`
         # @return [String]
         attr_accessor :description
@@ -5392,10 +6221,23 @@ module Google
         # @return [String]
         attr_accessor :exchange
       
+        # Immutable. The ID of the guaranteed order that this inventory source belongs
+        # to. Only applicable when commitment is `INVENTORY_SOURCE_COMMITMENT_GUARANTEED`
+        # .
+        # Corresponds to the JSON property `guaranteedOrderId`
+        # @return [String]
+        attr_accessor :guaranteed_order_id
+      
         # Output only. The unique ID of the inventory source. Assigned by the system.
         # Corresponds to the JSON property `inventorySourceId`
         # @return [Fixnum]
         attr_accessor :inventory_source_id
+      
+        # Output only. The product type of the inventory source, denoting the way
+        # through which it sells inventory.
+        # Corresponds to the JSON property `inventorySourceProductType`
+        # @return [String]
+        attr_accessor :inventory_source_product_type
       
         # Denotes the type of the inventory source.
         # Corresponds to the JSON property `inventorySourceType`
@@ -5417,10 +6259,34 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::RateDetails]
         attr_accessor :rate_details
       
+        # Output only. The IDs of advertisers with read-only access to the inventory
+        # source.
+        # Corresponds to the JSON property `readAdvertiserIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :read_advertiser_ids
+      
+        # Output only. The IDs of partners with read-only access to the inventory source.
+        # All advertisers of partners in this field inherit read-only access to the
+        # inventory source.
+        # Corresponds to the JSON property `readPartnerIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :read_partner_ids
+      
+        # The partner or advertisers with access to the inventory source.
+        # Corresponds to the JSON property `readWriteAccessors`
+        # @return [Google::Apis::DisplayvideoV1::InventorySourceAccessors]
+        attr_accessor :read_write_accessors
+      
         # The status related settings of the inventory source.
         # Corresponds to the JSON property `status`
         # @return [Google::Apis::DisplayvideoV1::InventorySourceStatus]
         attr_accessor :status
+      
+        # Immutable. The unique ID of the sub-site property assigned to this inventory
+        # source.
+        # Corresponds to the JSON property `subSitePropertyId`
+        # @return [Fixnum]
+        attr_accessor :sub_site_property_id
       
         # A time range.
         # Corresponds to the JSON property `timeRange`
@@ -5445,14 +6311,83 @@ module Google
           @delivery_method = args[:delivery_method] if args.key?(:delivery_method)
           @display_name = args[:display_name] if args.key?(:display_name)
           @exchange = args[:exchange] if args.key?(:exchange)
+          @guaranteed_order_id = args[:guaranteed_order_id] if args.key?(:guaranteed_order_id)
           @inventory_source_id = args[:inventory_source_id] if args.key?(:inventory_source_id)
+          @inventory_source_product_type = args[:inventory_source_product_type] if args.key?(:inventory_source_product_type)
           @inventory_source_type = args[:inventory_source_type] if args.key?(:inventory_source_type)
           @name = args[:name] if args.key?(:name)
           @publisher_name = args[:publisher_name] if args.key?(:publisher_name)
           @rate_details = args[:rate_details] if args.key?(:rate_details)
+          @read_advertiser_ids = args[:read_advertiser_ids] if args.key?(:read_advertiser_ids)
+          @read_partner_ids = args[:read_partner_ids] if args.key?(:read_partner_ids)
+          @read_write_accessors = args[:read_write_accessors] if args.key?(:read_write_accessors)
           @status = args[:status] if args.key?(:status)
+          @sub_site_property_id = args[:sub_site_property_id] if args.key?(:sub_site_property_id)
           @time_range = args[:time_range] if args.key?(:time_range)
           @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # The partner or advertisers with access to the inventory source.
+      class InventorySourceAccessors
+        include Google::Apis::Core::Hashable
+      
+        # The advertisers with access to the inventory source.
+        # Corresponds to the JSON property `advertisers`
+        # @return [Google::Apis::DisplayvideoV1::InventorySourceAccessorsAdvertiserAccessors]
+        attr_accessor :advertisers
+      
+        # The partner with access to the inventory source.
+        # Corresponds to the JSON property `partner`
+        # @return [Google::Apis::DisplayvideoV1::InventorySourceAccessorsPartnerAccessor]
+        attr_accessor :partner
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @advertisers = args[:advertisers] if args.key?(:advertisers)
+          @partner = args[:partner] if args.key?(:partner)
+        end
+      end
+      
+      # The advertisers with access to the inventory source.
+      class InventorySourceAccessorsAdvertiserAccessors
+        include Google::Apis::Core::Hashable
+      
+        # The IDs of the advertisers.
+        # Corresponds to the JSON property `advertiserIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :advertiser_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @advertiser_ids = args[:advertiser_ids] if args.key?(:advertiser_ids)
+        end
+      end
+      
+      # The partner with access to the inventory source.
+      class InventorySourceAccessorsPartnerAccessor
+        include Google::Apis::Core::Hashable
+      
+        # The ID of the partner.
+        # Corresponds to the JSON property `partnerId`
+        # @return [Fixnum]
+        attr_accessor :partner_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @partner_id = args[:partner_id] if args.key?(:partner_id)
         end
       end
       
@@ -5687,11 +6622,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `dueDate`
         # @return [Google::Apis::DisplayvideoV1::Date]
         attr_accessor :due_date
@@ -5709,11 +6644,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `issueDate`
         # @return [Google::Apis::DisplayvideoV1::Date]
         attr_accessor :issue_date
@@ -5958,6 +6893,13 @@ module Google
         # @return [String]
         attr_accessor :entity_status
       
+        # Whether to exclude new exchanges from automatically being targeted by the line
+        # item. This field is false by default.
+        # Corresponds to the JSON property `excludeNewExchanges`
+        # @return [Boolean]
+        attr_accessor :exclude_new_exchanges
+        alias_method :exclude_new_exchanges?, :exclude_new_exchanges
+      
         # Settings that control the active duration of a line item.
         # Corresponds to the JSON property `flight`
         # @return [Google::Apis::DisplayvideoV1::LineItemFlight]
@@ -6022,6 +6964,11 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::PartnerRevenueModel]
         attr_accessor :partner_revenue_model
       
+        # Output only. The reservation type of the line item.
+        # Corresponds to the JSON property `reservationType`
+        # @return [String]
+        attr_accessor :reservation_type
+      
         # Settings that control the targeting expansion of the line item. Targeting
         # expansion allows the line item to reach a larger audience based on the
         # original audience list and the targeting expansion level.
@@ -6056,6 +7003,7 @@ module Google
           @creative_ids = args[:creative_ids] if args.key?(:creative_ids)
           @display_name = args[:display_name] if args.key?(:display_name)
           @entity_status = args[:entity_status] if args.key?(:entity_status)
+          @exclude_new_exchanges = args[:exclude_new_exchanges] if args.key?(:exclude_new_exchanges)
           @flight = args[:flight] if args.key?(:flight)
           @frequency_cap = args[:frequency_cap] if args.key?(:frequency_cap)
           @insertion_order_id = args[:insertion_order_id] if args.key?(:insertion_order_id)
@@ -6068,6 +7016,7 @@ module Google
           @pacing = args[:pacing] if args.key?(:pacing)
           @partner_costs = args[:partner_costs] if args.key?(:partner_costs)
           @partner_revenue_model = args[:partner_revenue_model] if args.key?(:partner_revenue_model)
+          @reservation_type = args[:reservation_type] if args.key?(:reservation_type)
           @targeting_expansion = args[:targeting_expansion] if args.key?(:targeting_expansion)
           @update_time = args[:update_time] if args.key?(:update_time)
           @warning_messages = args[:warning_messages] if args.key?(:warning_messages)
@@ -6428,6 +7377,34 @@ module Google
       end
       
       # 
+      class ListCustomBiddingScriptsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of custom bidding scripts. This list will be absent if empty.
+        # Corresponds to the JSON property `customBiddingScripts`
+        # @return [Array<Google::Apis::DisplayvideoV1::CustomBiddingScript>]
+        attr_accessor :custom_bidding_scripts
+      
+        # A token to retrieve the next page of results. Pass this value in the
+        # page_token field in the subsequent call to `ListCustomBiddingScriptsRequest`
+        # method to retrieve the next page of results. If this field is null, it means
+        # this is the last page.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @custom_bidding_scripts = args[:custom_bidding_scripts] if args.key?(:custom_bidding_scripts)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # 
       class ListCustomListsResponse
         include Google::Apis::Core::Hashable
       
@@ -6505,6 +7482,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @google_audiences = args[:google_audiences] if args.key?(:google_audiences)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # 
+      class ListGuaranteedOrdersResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of guaranteed orders. This list will be absent if empty.
+        # Corresponds to the JSON property `guaranteedOrders`
+        # @return [Array<Google::Apis::DisplayvideoV1::GuaranteedOrder>]
+        attr_accessor :guaranteed_orders
+      
+        # A token to retrieve the next page of results. Pass this value in the
+        # page_token field in the subsequent call to `ListGuaranteedOrders` method to
+        # retrieve the next page of results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @guaranteed_orders = args[:guaranteed_orders] if args.key?(:guaranteed_orders)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -7127,6 +8131,12 @@ module Google
         # @return [String]
         attr_accessor :performance_goal_type
       
+        # Whether the strategy takes deal floor prices into account.
+        # Corresponds to the JSON property `raiseBidForDeals`
+        # @return [Boolean]
+        attr_accessor :raise_bid_for_deals
+        alias_method :raise_bid_for_deals?, :raise_bid_for_deals
+      
         def initialize(**args)
            update!(**args)
         end
@@ -7136,6 +8146,7 @@ module Google
           @custom_bidding_algorithm_id = args[:custom_bidding_algorithm_id] if args.key?(:custom_bidding_algorithm_id)
           @max_average_cpm_bid_amount_micros = args[:max_average_cpm_bid_amount_micros] if args.key?(:max_average_cpm_bid_amount_micros)
           @performance_goal_type = args[:performance_goal_type] if args.key?(:performance_goal_type)
+          @raise_bid_for_deals = args[:raise_bid_for_deals] if args.key?(:raise_bid_for_deals)
         end
       end
       
@@ -7206,6 +8217,27 @@ module Google
         end
       end
       
+      # Wrapper message for a list of mobile device IDs defining Customer Match
+      # audience members.
+      class MobileDeviceIdList
+        include Google::Apis::Core::Hashable
+      
+        # A list of mobile device IDs defining Customer Match audience members. The size
+        # of mobile_device_ids mustn't be greater than 500,000.
+        # Corresponds to the JSON property `mobileDeviceIds`
+        # @return [Array<String>]
+        attr_accessor :mobile_device_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @mobile_device_ids = args[:mobile_device_ids] if args.key?(:mobile_device_ids)
+        end
+      end
+      
       # Represents an amount of money with its currency type.
       class Money
         include Google::Apis::Core::Hashable
@@ -7250,7 +8282,7 @@ module Google
       class NativeContentPositionAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The content position.
+        # The content position. Output only in v1. Required in v2.
         # Corresponds to the JSON property `contentPosition`
         # @return [String]
         attr_accessor :content_position
@@ -7462,7 +8494,8 @@ module Google
       class OmidAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The type of Open Measurement enabled inventory.
+        # The type of Open Measurement enabled inventory. Output only in v1. Required in
+        # v2.
         # Corresponds to the JSON property `omid`
         # @return [String]
         attr_accessor :omid
@@ -7770,11 +8803,11 @@ module Google
       
       # Details for assigned parental status targeting option. This will be populated
       # in the details field of an AssignedTargetingOption when targeting_type is `
-      # TARTGETING_TYPE_PARENTAL_STATUS`.
+      # TARGETING_TYPE_PARENTAL_STATUS`.
       class ParentalStatusAssignedTargetingOptionDetails
         include Google::Apis::Core::Hashable
       
-        # Output only. The parental status of the audience.
+        # The parental status of the audience. Output only in v1. Required in v2.
         # Corresponds to the JSON property `parentalStatus`
         # @return [String]
         attr_accessor :parental_status
@@ -8597,6 +9630,43 @@ module Google
         end
       end
       
+      # An error message for a custom bidding script.
+      class ScriptError
+        include Google::Apis::Core::Hashable
+      
+        # The column number in the script where the error was thrown.
+        # Corresponds to the JSON property `column`
+        # @return [Fixnum]
+        attr_accessor :column
+      
+        # The type of error.
+        # Corresponds to the JSON property `errorCode`
+        # @return [String]
+        attr_accessor :error_code
+      
+        # The detailed error message.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        # The line number in the script where the error was thrown.
+        # Corresponds to the JSON property `line`
+        # @return [Fixnum]
+        attr_accessor :line
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @column = args[:column] if args.key?(:column)
+          @error_code = args[:error_code] if args.key?(:error_code)
+          @error_message = args[:error_message] if args.key?(:error_message)
+          @line = args[:line] if args.key?(:line)
+        end
+      end
+      
       # Structured Data File (SDF) related settings.
       class SdfConfig
         include Google::Apis::Core::Hashable
@@ -8698,7 +9768,7 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::GeoRegionSearchTerms]
         attr_accessor :geo_region_search_terms
       
-        # Requested page size. Must be between `1` and `100`. If unspecified will
+        # Requested page size. Must be between `1` and `200`. If unspecified will
         # default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         # specified.
         # Corresponds to the JSON property `pageSize`
@@ -8923,10 +9993,11 @@ module Google
       class TargetingExpansionConfig
         include Google::Apis::Core::Hashable
       
-        # Required. Whether to exclude first party audiences from targeting. Similar
-        # audiences of the excluded first party lists will not be excluded. Only
-        # applicable when a first-party audience is positively targeted (directly or
-        # included in a combined audience), otherwise this selection will be ignored.
+        # Required. Whether to exclude first-party audiences from use in targeting
+        # expansion or optimized targeting. Similar audiences of the excluded first-
+        # party lists will not be excluded. Only applicable when a first-party audience
+        # is positively targeted (directly or included in a combined audience),
+        # otherwise this selection will be ignored.
         # Corresponds to the JSON property `excludeFirstPartyAudience`
         # @return [Boolean]
         attr_accessor :exclude_first_party_audience
@@ -8967,6 +10038,13 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::AppCategoryTargetingOptionDetails]
         attr_accessor :app_category_details
       
+        # Represents a targetable audio content type. This will be populated in the
+        # audio_content_type_details field when targeting_type is `
+        # TARGETING_TYPE_AUDIO_CONTENT_TYPE`.
+        # Corresponds to the JSON property `audioContentTypeDetails`
+        # @return [Google::Apis::DisplayvideoV1::AudioContentTypeTargetingOptionDetails]
+        attr_accessor :audio_content_type_details
+      
         # Represents a targetable authorized seller status. This will be populated in
         # the authorized_seller_status_details field when targeting_type is `
         # TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`.
@@ -9001,6 +10079,20 @@ module Google
         # @return [Google::Apis::DisplayvideoV1::CategoryTargetingOptionDetails]
         attr_accessor :category_details
       
+        # Represents a targetable content duration. This will be populated in the
+        # content_duration_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_DURATION`.
+        # Corresponds to the JSON property `contentDurationDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentDurationTargetingOptionDetails]
+        attr_accessor :content_duration_details
+      
+        # Represents a targetable content genre. This will be populated in the
+        # content_genre_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_GENRE`.
+        # Corresponds to the JSON property `contentGenreDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentGenreTargetingOptionDetails]
+        attr_accessor :content_genre_details
+      
         # Represents a targetable content instream position, which could be used by
         # video and audio ads. This will be populated in the
         # content_instream_position_details field when targeting_type is `
@@ -9016,6 +10108,13 @@ module Google
         # Corresponds to the JSON property `contentOutstreamPositionDetails`
         # @return [Google::Apis::DisplayvideoV1::ContentOutstreamPositionTargetingOptionDetails]
         attr_accessor :content_outstream_position_details
+      
+        # Represents a targetable content stream type. This will be populated in the
+        # content_stream_type_details field when targeting_type is `
+        # TARGETING_TYPE_CONTENT_STREAM_TYPE`.
+        # Corresponds to the JSON property `contentStreamTypeDetails`
+        # @return [Google::Apis::DisplayvideoV1::ContentStreamTypeTargetingOptionDetails]
+        attr_accessor :content_stream_type_details
       
         # Represents a targetable device make and model. This will be populated in the
         # device_make_model_details field of a TargetingOption when targeting_type is `
@@ -9177,13 +10276,17 @@ module Google
         def update!(**args)
           @age_range_details = args[:age_range_details] if args.key?(:age_range_details)
           @app_category_details = args[:app_category_details] if args.key?(:app_category_details)
+          @audio_content_type_details = args[:audio_content_type_details] if args.key?(:audio_content_type_details)
           @authorized_seller_status_details = args[:authorized_seller_status_details] if args.key?(:authorized_seller_status_details)
           @browser_details = args[:browser_details] if args.key?(:browser_details)
           @business_chain_details = args[:business_chain_details] if args.key?(:business_chain_details)
           @carrier_and_isp_details = args[:carrier_and_isp_details] if args.key?(:carrier_and_isp_details)
           @category_details = args[:category_details] if args.key?(:category_details)
+          @content_duration_details = args[:content_duration_details] if args.key?(:content_duration_details)
+          @content_genre_details = args[:content_genre_details] if args.key?(:content_genre_details)
           @content_instream_position_details = args[:content_instream_position_details] if args.key?(:content_instream_position_details)
           @content_outstream_position_details = args[:content_outstream_position_details] if args.key?(:content_outstream_position_details)
+          @content_stream_type_details = args[:content_stream_type_details] if args.key?(:content_stream_type_details)
           @device_make_model_details = args[:device_make_model_details] if args.key?(:device_make_model_details)
           @device_type_details = args[:device_type_details] if args.key?(:device_type_details)
           @digital_content_label_details = args[:digital_content_label_details] if args.key?(:digital_content_label_details)
@@ -9610,7 +10713,7 @@ module Google
         # @return [String]
         attr_accessor :targeting_option_id
       
-        # Output only. The video player size.
+        # The video player size. Output only in v1. Required in v2.
         # Corresponds to the JSON property `videoPlayerSize`
         # @return [String]
         attr_accessor :video_player_size
@@ -9660,7 +10763,7 @@ module Google
         # @return [String]
         attr_accessor :targeting_option_id
       
-        # Output only. The predicted viewability percentage.
+        # The predicted viewability percentage. Output only in v1. Required in v2.
         # Corresponds to the JSON property `viewability`
         # @return [String]
         attr_accessor :viewability

@@ -22,6 +22,124 @@ module Google
   module Apis
     module DatastoreV1beta3
       
+      # Defines a aggregation that produces a single result.
+      class Aggregation
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional name of the property to store the result of the aggregation.
+        # If not provided, Datastore will pick a default name following the format `
+        # property_`. For example: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1,
+        # COUNT_UP_TO(2), COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); `
+        # `` becomes: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS
+        # property_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS property_2 OVER
+        # ( ... ); ``` Requires: * Must be unique across all aggregation aliases. *
+        # Conform to entity property name limitations.
+        # Corresponds to the JSON property `alias`
+        # @return [String]
+        attr_accessor :alias
+      
+        # Count of entities that match the query. The `COUNT(*)` aggregation function
+        # operates on the entire entity so it does not require a field reference.
+        # Corresponds to the JSON property `count`
+        # @return [Google::Apis::DatastoreV1beta3::Count]
+        attr_accessor :count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @alias = args[:alias] if args.key?(:alias)
+          @count = args[:count] if args.key?(:count)
+        end
+      end
+      
+      # Datastore query for running an aggregation over a Query.
+      class AggregationQuery
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Series of aggregations to apply over the results of the `
+        # nested_query`. Requires: * A minimum of one and maximum of five aggregations
+        # per query.
+        # Corresponds to the JSON property `aggregations`
+        # @return [Array<Google::Apis::DatastoreV1beta3::Aggregation>]
+        attr_accessor :aggregations
+      
+        # A query for entities.
+        # Corresponds to the JSON property `nestedQuery`
+        # @return [Google::Apis::DatastoreV1beta3::Query]
+        attr_accessor :nested_query
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregations = args[:aggregations] if args.key?(:aggregations)
+          @nested_query = args[:nested_query] if args.key?(:nested_query)
+        end
+      end
+      
+      # The result of a single bucket from a Datastore aggregation query. The keys of `
+      # aggregate_properties` are the same for all results in an aggregation query,
+      # unlike entity queries which can have different fields present for each result.
+      class AggregationResult
+        include Google::Apis::Core::Hashable
+      
+        # The result of the aggregation functions, ex: `COUNT(*) AS total_entities`. The
+        # key is the alias assigned to the aggregation function on input and the size of
+        # this map equals the number of aggregation functions in the query.
+        # Corresponds to the JSON property `aggregateProperties`
+        # @return [Hash<String,Google::Apis::DatastoreV1beta3::Value>]
+        attr_accessor :aggregate_properties
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregate_properties = args[:aggregate_properties] if args.key?(:aggregate_properties)
+        end
+      end
+      
+      # A batch of aggregation results produced by an aggregation query.
+      class AggregationResultBatch
+        include Google::Apis::Core::Hashable
+      
+        # The aggregation results for this batch.
+        # Corresponds to the JSON property `aggregationResults`
+        # @return [Array<Google::Apis::DatastoreV1beta3::AggregationResult>]
+        attr_accessor :aggregation_results
+      
+        # The state of the query after the current batch. Only COUNT(*) aggregations are
+        # supported in the initial launch. Therefore, expected result type is limited to
+        # `NO_MORE_RESULTS`.
+        # Corresponds to the JSON property `moreResults`
+        # @return [String]
+        attr_accessor :more_results
+      
+        # Read timestamp this batch was returned from. In a single transaction,
+        # subsequent query result batches for the same query can have a greater
+        # timestamp. Each batch's read timestamp is valid for all preceding batches.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregation_results = args[:aggregation_results] if args.key?(:aggregation_results)
+          @more_results = args[:more_results] if args.key?(:more_results)
+          @read_time = args[:read_time] if args.key?(:read_time)
+        end
+      end
+      
       # The request for Datastore.AllocateIds.
       class AllocateIdsRequest
         include Google::Apis::Core::Hashable
@@ -165,6 +283,11 @@ module Google
       class CommitResponse
         include Google::Apis::Core::Hashable
       
+        # The transaction commit timestamp. Not set for non-transactional commits.
+        # Corresponds to the JSON property `commitTime`
+        # @return [String]
+        attr_accessor :commit_time
+      
         # The number of index entries updated during the commit, or zero if none were
         # updated.
         # Corresponds to the JSON property `indexUpdates`
@@ -183,6 +306,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @commit_time = args[:commit_time] if args.key?(:commit_time)
           @index_updates = args[:index_updates] if args.key?(:index_updates)
           @mutation_results = args[:mutation_results] if args.key?(:mutation_results)
         end
@@ -192,7 +316,7 @@ module Google
       class CompositeFilter
         include Google::Apis::Core::Hashable
       
-        # The list of filters to combine. Must contain at least one filter.
+        # The list of filters to combine. Requires: * At least one filter is present.
         # Corresponds to the JSON property `filters`
         # @return [Array<Google::Apis::DatastoreV1beta3::Filter>]
         attr_accessor :filters
@@ -210,6 +334,31 @@ module Google
         def update!(**args)
           @filters = args[:filters] if args.key?(:filters)
           @op = args[:op] if args.key?(:op)
+        end
+      end
+      
+      # Count of entities that match the query. The `COUNT(*)` aggregation function
+      # operates on the entire entity so it does not require a field reference.
+      class Count
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional constraint on the maximum number of entities to count. This
+        # provides a way to set an upper bound on the number of entities to scan,
+        # limiting latency and cost. Unspecified is interpreted as no bound. If a zero
+        # value is provided, a count result of zero should always be expected. High-
+        # Level Example: ``` AGGREGATE COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ```
+        # Requires: * Must be non-negative when present.
+        # Corresponds to the JSON property `upTo`
+        # @return [Fixnum]
+        attr_accessor :up_to
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @up_to = args[:up_to] if args.key?(:up_to)
         end
       end
       
@@ -249,6 +398,12 @@ module Google
       class EntityResult
         include Google::Apis::Core::Hashable
       
+        # The time at which the entity was created. This field is set for `FULL` entity
+        # results. If this entity is missing, this field will not be set.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
         # A cursor that points to the position after the result entity. Set only when
         # the `EntityResult` is part of a `QueryResultBatch` message.
         # Corresponds to the JSON property `cursor`
@@ -262,6 +417,12 @@ module Google
         # Corresponds to the JSON property `entity`
         # @return [Google::Apis::DatastoreV1beta3::Entity]
         attr_accessor :entity
+      
+        # The time at which the entity was last changed. This field is set for `FULL`
+        # entity results. If this entity is missing, this field will not be set.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
       
         # The version of the entity, a strictly positive number that monotonically
         # increases with changes to the entity. This field is set for `FULL` entity
@@ -278,8 +439,10 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
           @cursor = args[:cursor] if args.key?(:cursor)
           @entity = args[:entity] if args.key?(:entity)
+          @update_time = args[:update_time] if args.key?(:update_time)
           @version = args[:version] if args.key?(:version)
         end
       end
@@ -350,6 +513,37 @@ module Google
           @operation_type = args[:operation_type] if args.key?(:operation_type)
           @start_time = args[:start_time] if args.key?(:start_time)
           @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Metadata for Datastore to Firestore migration operations. The
+      # DatastoreFirestoreMigration operation is not started by the end-user via an
+      # explicit "creation" method. This is an intentional deviation from the LRO
+      # design pattern. This singleton resource can be accessed at: "projects/`
+      # project_id`/operations/datastore-firestore-migration"
+      class GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The current state of migration from Cloud Datastore to Cloud Firestore in
+        # Datastore mode.
+        # Corresponds to the JSON property `migrationState`
+        # @return [String]
+        attr_accessor :migration_state
+      
+        # The current step of migration from Cloud Datastore to Cloud Firestore in
+        # Datastore mode.
+        # Corresponds to the JSON property `migrationStep`
+        # @return [String]
+        attr_accessor :migration_step
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @migration_state = args[:migration_state] if args.key?(:migration_state)
+          @migration_step = args[:migration_step] if args.key?(:migration_step)
         end
       end
       
@@ -546,6 +740,81 @@ module Google
         end
       end
       
+      # An event signifying the start of a new step in a [migration from Cloud
+      # Datastore to Cloud Firestore in Datastore mode](https://cloud.google.com/
+      # datastore/docs/upgrade-to-firestore).
+      class GoogleDatastoreAdminV1MigrationProgressEvent
+        include Google::Apis::Core::Hashable
+      
+        # Details for the `PREPARE` step.
+        # Corresponds to the JSON property `prepareStepDetails`
+        # @return [Google::Apis::DatastoreV1beta3::GoogleDatastoreAdminV1PrepareStepDetails]
+        attr_accessor :prepare_step_details
+      
+        # Details for the `REDIRECT_WRITES` step.
+        # Corresponds to the JSON property `redirectWritesStepDetails`
+        # @return [Google::Apis::DatastoreV1beta3::GoogleDatastoreAdminV1RedirectWritesStepDetails]
+        attr_accessor :redirect_writes_step_details
+      
+        # The step that is starting. An event with step set to `START` indicates that
+        # the migration has been reverted back to the initial pre-migration state.
+        # Corresponds to the JSON property `step`
+        # @return [String]
+        attr_accessor :step
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @prepare_step_details = args[:prepare_step_details] if args.key?(:prepare_step_details)
+          @redirect_writes_step_details = args[:redirect_writes_step_details] if args.key?(:redirect_writes_step_details)
+          @step = args[:step] if args.key?(:step)
+        end
+      end
+      
+      # An event signifying a change in state of a [migration from Cloud Datastore to
+      # Cloud Firestore in Datastore mode](https://cloud.google.com/datastore/docs/
+      # upgrade-to-firestore).
+      class GoogleDatastoreAdminV1MigrationStateEvent
+        include Google::Apis::Core::Hashable
+      
+        # The new state of the migration.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Details for the `PREPARE` step.
+      class GoogleDatastoreAdminV1PrepareStepDetails
+        include Google::Apis::Core::Hashable
+      
+        # The concurrency mode this database will use when it reaches the `
+        # REDIRECT_WRITES` step.
+        # Corresponds to the JSON property `concurrencyMode`
+        # @return [String]
+        attr_accessor :concurrency_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @concurrency_mode = args[:concurrency_mode] if args.key?(:concurrency_mode)
+        end
+      end
+      
       # Measures the progress of a particular metric.
       class GoogleDatastoreAdminV1Progress
         include Google::Apis::Core::Hashable
@@ -570,6 +839,25 @@ module Google
         def update!(**args)
           @work_completed = args[:work_completed] if args.key?(:work_completed)
           @work_estimated = args[:work_estimated] if args.key?(:work_estimated)
+        end
+      end
+      
+      # Details for the `REDIRECT_WRITES` step.
+      class GoogleDatastoreAdminV1RedirectWritesStepDetails
+        include Google::Apis::Core::Hashable
+      
+        # Ths concurrency mode for this database.
+        # Corresponds to the JSON property `concurrencyMode`
+        # @return [String]
+        attr_accessor :concurrency_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @concurrency_mode = args[:concurrency_mode] if args.key?(:concurrency_mode)
         end
       end
       
@@ -1022,6 +1310,11 @@ module Google
         # @return [Array<Google::Apis::DatastoreV1beta3::EntityResult>]
         attr_accessor :missing
       
+        # The time at which these entities were read or found missing.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1031,6 +1324,7 @@ module Google
           @deferred = args[:deferred] if args.key?(:deferred)
           @found = args[:found] if args.key?(:found)
           @missing = args[:missing] if args.key?(:missing)
+          @read_time = args[:read_time] if args.key?(:read_time)
         end
       end
       
@@ -1065,6 +1359,12 @@ module Google
         # @return [Google::Apis::DatastoreV1beta3::Entity]
         attr_accessor :update
       
+        # The update time of the entity that this mutation is being applied to. If this
+        # does not match the current update time on the server, the mutation conflicts.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
         # A Datastore data object. An entity is limited to 1 megabyte when stored. That
         # _roughly_ corresponds to a limit of 1 megabyte for the serialized form of this
         # message.
@@ -1082,6 +1382,7 @@ module Google
           @delete = args[:delete] if args.key?(:delete)
           @insert = args[:insert] if args.key?(:insert)
           @update = args[:update] if args.key?(:update)
+          @update_time = args[:update_time] if args.key?(:update_time)
           @upsert = args[:upsert] if args.key?(:upsert)
         end
       end
@@ -1097,12 +1398,25 @@ module Google
         attr_accessor :conflict_detected
         alias_method :conflict_detected?, :conflict_detected
       
+        # The create time of the entity. This field will not be set after a 'delete'.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
         # A unique identifier for an entity. If a key's partition ID or any of its path
         # kinds or names are reserved/read-only, the key is reserved/read-only. A
         # reserved/read-only key is forbidden in certain documented contexts.
         # Corresponds to the JSON property `key`
         # @return [Google::Apis::DatastoreV1beta3::Key]
         attr_accessor :key
+      
+        # The update time of the entity on the server after processing the mutation. If
+        # the mutation doesn't change anything on the server, then the timestamp will be
+        # the update timestamp of the current entity. This field will not be set after a
+        # 'delete'.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
       
         # The version of the entity on the server after processing the mutation. If the
         # mutation doesn't change anything on the server, then the version will be the
@@ -1120,7 +1434,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @conflict_detected = args[:conflict_detected] if args.key?(:conflict_detected)
+          @create_time = args[:create_time] if args.key?(:create_time)
           @key = args[:key] if args.key?(:key)
+          @update_time = args[:update_time] if args.key?(:update_time)
           @version = args[:version] if args.key?(:version)
         end
       end
@@ -1172,13 +1488,16 @@ module Google
       
         # The kind of the entity. A kind matching regex `__.*__` is reserved/read-only.
         # A kind must not contain more than 1500 bytes when UTF-8 encoded. Cannot be `""`
-        # .
+        # . Must be valid UTF-8 bytes. Legacy values that are not valid UTF-8 are
+        # encoded as `__bytes__` where `` is the base-64 encoding of the bytes.
         # Corresponds to the JSON property `kind`
         # @return [String]
         attr_accessor :kind
       
         # The name of the entity. A name matching regex `__.*__` is reserved/read-only.
         # A name must not be more than 1500 bytes when UTF-8 encoded. Cannot be `""`.
+        # Must be valid UTF-8 bytes. Legacy values that are not valid UTF-8 are encoded
+        # as `__bytes__` where `` is the base-64 encoding of the bytes.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1394,6 +1713,17 @@ module Google
         # @return [String]
         attr_accessor :more_results
       
+        # Read timestamp this batch was returned from. This applies to the range of
+        # results from the query's `start_cursor` (or the beginning of the query if no
+        # cursor was given) to this batch's `end_cursor` (not the query's `end_cursor`).
+        # In a single transaction, subsequent query result batches for the same query
+        # can have a greater timestamp. Each batch's read timestamp is valid for all
+        # preceding batches. This value will not be set for eventually consistent
+        # queries in Cloud Datastore.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
         # A cursor that points to the position after the last skipped result. Will be
         # set when `skipped_results` != 0.
         # Corresponds to the JSON property `skippedCursor`
@@ -1427,6 +1757,7 @@ module Google
           @entity_result_type = args[:entity_result_type] if args.key?(:entity_result_type)
           @entity_results = args[:entity_results] if args.key?(:entity_results)
           @more_results = args[:more_results] if args.key?(:more_results)
+          @read_time = args[:read_time] if args.key?(:read_time)
           @skipped_cursor = args[:skipped_cursor] if args.key?(:skipped_cursor)
           @skipped_results = args[:skipped_results] if args.key?(:skipped_results)
           @snapshot_version = args[:snapshot_version] if args.key?(:snapshot_version)
@@ -1437,12 +1768,18 @@ module Google
       class ReadOnly
         include Google::Apis::Core::Hashable
       
+        # Reads entities at the given time. This may not be older than 60 seconds.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @read_time = args[:read_time] if args.key?(:read_time)
         end
       end
       
@@ -1450,11 +1787,16 @@ module Google
       class ReadOptions
         include Google::Apis::Core::Hashable
       
-        # The non-transactional read consistency to use. Cannot be set to `STRONG` for
-        # global queries.
+        # The non-transactional read consistency to use.
         # Corresponds to the JSON property `readConsistency`
         # @return [String]
         attr_accessor :read_consistency
+      
+        # Reads entities as they were at the given time. This may not be older than 270
+        # seconds. This value is only supported for Cloud Firestore in Datastore mode.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
       
         # The identifier of the transaction in which to read. A transaction identifier
         # is returned by a call to Datastore.BeginTransaction.
@@ -1470,6 +1812,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @read_consistency = args[:read_consistency] if args.key?(:read_consistency)
+          @read_time = args[:read_time] if args.key?(:read_time)
           @transaction = args[:transaction] if args.key?(:transaction)
         end
       end
@@ -1498,7 +1841,8 @@ module Google
       class ReserveIdsRequest
         include Google::Apis::Core::Hashable
       
-        # If not empty, the ID of the database against which to make the request.
+        # The ID of the database against which to make the request. '(default)' is not
+        # allowed; please use empty string '' to refer the default database.
         # Corresponds to the JSON property `databaseId`
         # @return [String]
         attr_accessor :database_id
@@ -1564,6 +1908,77 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # The request for Datastore.RunAggregationQuery.
+      class RunAggregationQueryRequest
+        include Google::Apis::Core::Hashable
+      
+        # Datastore query for running an aggregation over a Query.
+        # Corresponds to the JSON property `aggregationQuery`
+        # @return [Google::Apis::DatastoreV1beta3::AggregationQuery]
+        attr_accessor :aggregation_query
+      
+        # A [GQL query](https://cloud.google.com/datastore/docs/apis/gql/gql_reference).
+        # Corresponds to the JSON property `gqlQuery`
+        # @return [Google::Apis::DatastoreV1beta3::GqlQuery]
+        attr_accessor :gql_query
+      
+        # A partition ID identifies a grouping of entities. The grouping is always by
+        # project and namespace, however the namespace ID may be empty. A partition ID
+        # contains several dimensions: project ID and namespace ID. Partition dimensions:
+        # - May be `""`. - Must be valid UTF-8 bytes. - Must have values that match
+        # regex `[A-Za-z\d\.\-_]`1,100`` If the value of any dimension matches regex `__.
+        # *__`, the partition is reserved/read-only. A reserved/read-only partition ID
+        # is forbidden in certain documented contexts. Foreign partition IDs (in which
+        # the project ID does not match the context project ID ) are discouraged. Reads
+        # and writes of foreign partition IDs may fail if the project is not in an
+        # active state.
+        # Corresponds to the JSON property `partitionId`
+        # @return [Google::Apis::DatastoreV1beta3::PartitionId]
+        attr_accessor :partition_id
+      
+        # The options shared by read requests.
+        # Corresponds to the JSON property `readOptions`
+        # @return [Google::Apis::DatastoreV1beta3::ReadOptions]
+        attr_accessor :read_options
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregation_query = args[:aggregation_query] if args.key?(:aggregation_query)
+          @gql_query = args[:gql_query] if args.key?(:gql_query)
+          @partition_id = args[:partition_id] if args.key?(:partition_id)
+          @read_options = args[:read_options] if args.key?(:read_options)
+        end
+      end
+      
+      # The response for Datastore.RunAggregationQuery.
+      class RunAggregationQueryResponse
+        include Google::Apis::Core::Hashable
+      
+        # A batch of aggregation results produced by an aggregation query.
+        # Corresponds to the JSON property `batch`
+        # @return [Google::Apis::DatastoreV1beta3::AggregationResultBatch]
+        attr_accessor :batch
+      
+        # Datastore query for running an aggregation over a Query.
+        # Corresponds to the JSON property `query`
+        # @return [Google::Apis::DatastoreV1beta3::AggregationQuery]
+        attr_accessor :query
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @batch = args[:batch] if args.key?(:batch)
+          @query = args[:query] if args.key?(:query)
         end
       end
       

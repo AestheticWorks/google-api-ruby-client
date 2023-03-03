@@ -71,7 +71,7 @@ module Google
       
         # Required. Input only. The resource name of the account which will be the
         # primary owner of the account being created. It should be of the form `accounts/
-        # `account_id`/`.
+        # `account_id``.
         # Corresponds to the JSON property `primaryOwner`
         # @return [String]
         attr_accessor :primary_owner
@@ -123,6 +123,15 @@ module Google
       class Admin
         include Google::Apis::Core::Hashable
       
+        # Immutable. The name of the Account resource that this Admin refers to. Used
+        # when calling locations.admins.create to invite a LocationGroup as an admin. If
+        # both this field and `admin` are set on `CREATE` requests, this field takes
+        # precedence and the email address in `admin` will be ignored. Format: `accounts/
+        # `account``.
+        # Corresponds to the JSON property `account`
+        # @return [String]
+        attr_accessor :account
+      
         # Optional. The name of the admin. When making the initial invitation, this is
         # the invitee's email address. On `GET` calls, the user's email address is
         # returned if the invitation is still pending. Otherwise, it contains the user's
@@ -159,6 +168,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @account = args[:account] if args.key?(:account)
           @admin = args[:admin] if args.key?(:admin)
           @name = args[:name] if args.key?(:name)
           @pending_invitation = args[:pending_invitation] if args.key?(:pending_invitation)
@@ -182,8 +192,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -341,11 +350,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `address`
         # @return [Google::Apis::MybusinessaccountmanagementV1::PostalAddress]
         attr_accessor :address
@@ -377,11 +386,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -456,8 +465,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]

@@ -58,12 +58,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class V2CloneKeyRequest
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class V2GetKeyStringResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -164,13 +158,6 @@ module Google
         end
       end
       
-      class V2CloneKeyRequest
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :key_id, as: 'keyId'
-        end
-      end
-      
       class V2GetKeyStringResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -188,6 +175,7 @@ module Google
       class V2Key
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :annotations, as: 'annotations'
           property :create_time, as: 'createTime'
           property :delete_time, as: 'deleteTime'
           property :display_name, as: 'displayName'

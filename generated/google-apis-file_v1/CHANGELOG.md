@@ -1,5 +1,79 @@
 # Release history for google-apis-file_v1
 
+### v0.30.0 (2023-02-15)
+
+* Regenerated using generator version 0.12.0
+
+### v0.29.0 (2023-01-29)
+
+* Regenerated from discovery document revision 20230118
+* Regenerated using generator version 0.11.1
+
+### v0.28.0 (2022-12-13)
+
+* Regenerated from discovery document revision 20221207
+
+### v0.27.0 (2022-11-17)
+
+* Regenerated from discovery document revision 20221111
+
+### v0.26.0 (2022-11-08)
+
+* Regenerated from discovery document revision 20221026
+* Regenerated using generator version 0.11.0
+
+### v0.25.0 (2022-09-27)
+
+* Regenerated using generator version 0.10.0
+
+### v0.24.0 (2022-08-13)
+
+* Regenerated from discovery document revision 20220729
+
+### v0.23.0 (2022-07-23)
+
+* Regenerated from discovery document revision 20220715
+* Regenerated using generator version 0.9.0
+
+### v0.22.0 (2022-06-30)
+
+* Regenerated using generator version 0.8.0
+
+### v0.21.0 (2022-06-19)
+
+* Regenerated using generator version 0.7.0
+
+### v0.20.0 (2022-06-05)
+
+* Regenerated from discovery document revision 20220530
+* Regenerated using generator version 0.5.0
+
+### v0.19.0 (2022-04-16)
+
+* Regenerated from discovery document revision 20220407
+
+### v0.18.0 (2022-03-20)
+
+* Regenerated from discovery document revision 20220222
+
+### v0.17.0 (2022-02-28)
+
+* Regenerated from discovery document revision 20220214
+* Regenerated using generator version 0.4.1
+
+### v0.16.0 (2021-12-14)
+
+* Unspecified changes
+
+### v0.15.0 (2021-11-14)
+
+* Regenerated from discovery document revision 20211105
+
+### v0.14.0 (2021-10-24)
+
+* Regenerated from discovery document revision 20211017
+* Unspecified changes
+
 ### v0.13.0 (2021-09-07)
 
 * Regenerated from discovery document revision 20210822

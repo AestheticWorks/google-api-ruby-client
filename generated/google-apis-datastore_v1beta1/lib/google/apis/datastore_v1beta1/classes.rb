@@ -66,6 +66,37 @@ module Google
         end
       end
       
+      # Metadata for Datastore to Firestore migration operations. The
+      # DatastoreFirestoreMigration operation is not started by the end-user via an
+      # explicit "creation" method. This is an intentional deviation from the LRO
+      # design pattern. This singleton resource can be accessed at: "projects/`
+      # project_id`/operations/datastore-firestore-migration"
+      class GoogleDatastoreAdminV1DatastoreFirestoreMigrationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The current state of migration from Cloud Datastore to Cloud Firestore in
+        # Datastore mode.
+        # Corresponds to the JSON property `migrationState`
+        # @return [String]
+        attr_accessor :migration_state
+      
+        # The current step of migration from Cloud Datastore to Cloud Firestore in
+        # Datastore mode.
+        # Corresponds to the JSON property `migrationStep`
+        # @return [String]
+        attr_accessor :migration_step
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @migration_state = args[:migration_state] if args.key?(:migration_state)
+          @migration_step = args[:migration_step] if args.key?(:migration_step)
+        end
+      end
+      
       # Identifies a subset of entities in a project. This is specified as
       # combinations of kinds and namespaces (either or both of which may be all, as
       # described in the following examples). Example usage: Entire project: kinds=[],
@@ -259,6 +290,81 @@ module Google
         end
       end
       
+      # An event signifying the start of a new step in a [migration from Cloud
+      # Datastore to Cloud Firestore in Datastore mode](https://cloud.google.com/
+      # datastore/docs/upgrade-to-firestore).
+      class GoogleDatastoreAdminV1MigrationProgressEvent
+        include Google::Apis::Core::Hashable
+      
+        # Details for the `PREPARE` step.
+        # Corresponds to the JSON property `prepareStepDetails`
+        # @return [Google::Apis::DatastoreV1beta1::GoogleDatastoreAdminV1PrepareStepDetails]
+        attr_accessor :prepare_step_details
+      
+        # Details for the `REDIRECT_WRITES` step.
+        # Corresponds to the JSON property `redirectWritesStepDetails`
+        # @return [Google::Apis::DatastoreV1beta1::GoogleDatastoreAdminV1RedirectWritesStepDetails]
+        attr_accessor :redirect_writes_step_details
+      
+        # The step that is starting. An event with step set to `START` indicates that
+        # the migration has been reverted back to the initial pre-migration state.
+        # Corresponds to the JSON property `step`
+        # @return [String]
+        attr_accessor :step
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @prepare_step_details = args[:prepare_step_details] if args.key?(:prepare_step_details)
+          @redirect_writes_step_details = args[:redirect_writes_step_details] if args.key?(:redirect_writes_step_details)
+          @step = args[:step] if args.key?(:step)
+        end
+      end
+      
+      # An event signifying a change in state of a [migration from Cloud Datastore to
+      # Cloud Firestore in Datastore mode](https://cloud.google.com/datastore/docs/
+      # upgrade-to-firestore).
+      class GoogleDatastoreAdminV1MigrationStateEvent
+        include Google::Apis::Core::Hashable
+      
+        # The new state of the migration.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Details for the `PREPARE` step.
+      class GoogleDatastoreAdminV1PrepareStepDetails
+        include Google::Apis::Core::Hashable
+      
+        # The concurrency mode this database will use when it reaches the `
+        # REDIRECT_WRITES` step.
+        # Corresponds to the JSON property `concurrencyMode`
+        # @return [String]
+        attr_accessor :concurrency_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @concurrency_mode = args[:concurrency_mode] if args.key?(:concurrency_mode)
+        end
+      end
+      
       # Measures the progress of a particular metric.
       class GoogleDatastoreAdminV1Progress
         include Google::Apis::Core::Hashable
@@ -283,6 +389,25 @@ module Google
         def update!(**args)
           @work_completed = args[:work_completed] if args.key?(:work_completed)
           @work_estimated = args[:work_estimated] if args.key?(:work_estimated)
+        end
+      end
+      
+      # Details for the `REDIRECT_WRITES` step.
+      class GoogleDatastoreAdminV1RedirectWritesStepDetails
+        include Google::Apis::Core::Hashable
+      
+        # Ths concurrency mode for this database.
+        # Corresponds to the JSON property `concurrencyMode`
+        # @return [String]
+        attr_accessor :concurrency_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @concurrency_mode = args[:concurrency_mode] if args.key?(:concurrency_mode)
         end
       end
       

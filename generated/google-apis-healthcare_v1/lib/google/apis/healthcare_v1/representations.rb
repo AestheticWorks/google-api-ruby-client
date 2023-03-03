@@ -160,6 +160,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DeidentifiedStoreDestination
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DeidentifyConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -256,6 +262,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ExportMessagesRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ExportMessagesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ExportResourcesRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -305,6 +323,18 @@ module Google
       end
       
       class FieldMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GcsDestination
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GcsSource
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -430,6 +460,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ImportMessagesRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ImportMessagesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ImportResourcesRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -455,6 +497,12 @@ module Google
       end
       
       class IngestMessageResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KmsWrappedCryptoKey
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -760,6 +808,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ValidationConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class VersionSource
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -958,6 +1012,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :crypto_key, :base64 => true, as: 'cryptoKey'
+          property :kms_wrapped, as: 'kmsWrapped', class: Google::Apis::HealthcareV1::KmsWrappedCryptoKey, decorator: Google::Apis::HealthcareV1::KmsWrappedCryptoKey::Representation
+      
         end
       end
       
@@ -973,6 +1029,17 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :crypto_key, :base64 => true, as: 'cryptoKey'
+          property :kms_wrapped, as: 'kmsWrapped', class: Google::Apis::HealthcareV1::KmsWrappedCryptoKey, decorator: Google::Apis::HealthcareV1::KmsWrappedCryptoKey::Representation
+      
+        end
+      end
+      
+      class DeidentifiedStoreDestination
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config, as: 'config', class: Google::Apis::HealthcareV1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1::DeidentifyConfig::Representation
+      
+          property :store, as: 'store'
         end
       end
       
@@ -996,6 +1063,7 @@ module Google
           property :config, as: 'config', class: Google::Apis::HealthcareV1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1::DeidentifyConfig::Representation
       
           property :destination_dataset, as: 'destinationDataset'
+          property :gcs_config_uri, as: 'gcsConfigUri'
         end
       end
       
@@ -1007,6 +1075,7 @@ module Google
           property :destination_store, as: 'destinationStore'
           property :filter_config, as: 'filterConfig', class: Google::Apis::HealthcareV1::DicomFilterConfig, decorator: Google::Apis::HealthcareV1::DicomFilterConfig::Representation
       
+          property :gcs_config_uri, as: 'gcsConfigUri'
         end
       end
       
@@ -1016,8 +1085,10 @@ module Google
           property :config, as: 'config', class: Google::Apis::HealthcareV1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1::DeidentifyConfig::Representation
       
           property :destination_store, as: 'destinationStore'
+          property :gcs_config_uri, as: 'gcsConfigUri'
           property :resource_filter, as: 'resourceFilter', class: Google::Apis::HealthcareV1::FhirFilter, decorator: Google::Apis::HealthcareV1::FhirFilter::Representation
       
+          property :skip_modified_resources, as: 'skipModifiedResources'
         end
       end
       
@@ -1138,9 +1209,27 @@ module Google
         end
       end
       
+      class ExportMessagesRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :gcs_destination, as: 'gcsDestination', class: Google::Apis::HealthcareV1::GcsDestination, decorator: Google::Apis::HealthcareV1::GcsDestination::Representation
+      
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class ExportMessagesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class ExportResourcesRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :_since, as: '_since'
+          property :_type, as: '_type'
           property :bigquery_destination, as: 'bigqueryDestination', class: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirBigQueryDestination, decorator: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirBigQueryDestination::Representation
       
           property :gcs_destination, as: 'gcsDestination', class: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirGcsDestination, decorator: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirGcsDestination::Representation
@@ -1175,6 +1264,7 @@ module Google
       class FhirConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :default_keep_extensions, as: 'defaultKeepExtensions'
           collection :field_metadata_list, as: 'fieldMetadataList', class: Google::Apis::HealthcareV1::FieldMetadata, decorator: Google::Apis::HealthcareV1::FieldMetadata::Representation
       
         end
@@ -1191,6 +1281,7 @@ module Google
       class FhirStore
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :complex_data_type_reference_parsing, as: 'complexDataTypeReferenceParsing'
           property :default_search_handling_strict, as: 'defaultSearchHandlingStrict'
           property :disable_referential_integrity, as: 'disableReferentialIntegrity'
           property :disable_resource_versioning, as: 'disableResourceVersioning'
@@ -1200,6 +1291,8 @@ module Google
           property :notification_config, as: 'notificationConfig', class: Google::Apis::HealthcareV1::NotificationConfig, decorator: Google::Apis::HealthcareV1::NotificationConfig::Representation
       
           collection :stream_configs, as: 'streamConfigs', class: Google::Apis::HealthcareV1::StreamConfig, decorator: Google::Apis::HealthcareV1::StreamConfig::Representation
+      
+          property :validation_config, as: 'validationConfig', class: Google::Apis::HealthcareV1::ValidationConfig, decorator: Google::Apis::HealthcareV1::ValidationConfig::Representation
       
           property :version, as: 'version'
         end
@@ -1221,6 +1314,22 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :action, as: 'action'
           collection :paths, as: 'paths'
+        end
+      end
+      
+      class GcsDestination
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_structure, as: 'contentStructure'
+          property :message_view, as: 'messageView'
+          property :uri_prefix, as: 'uriPrefix'
+        end
+      end
+      
+      class GcsSource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :uri, as: 'uri'
         end
       end
       
@@ -1258,6 +1367,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :force, as: 'force'
           property :table_uri, as: 'tableUri'
+          property :write_disposition, as: 'writeDisposition'
         end
       end
       
@@ -1390,6 +1500,20 @@ module Google
         end
       end
       
+      class ImportMessagesRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gcs_source, as: 'gcsSource', class: Google::Apis::HealthcareV1::GcsSource, decorator: Google::Apis::HealthcareV1::GcsSource::Representation
+      
+        end
+      end
+      
+      class ImportMessagesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class ImportResourcesRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1436,6 +1560,14 @@ module Google
           property :hl7_ack, :base64 => true, as: 'hl7Ack'
           property :message, as: 'message', class: Google::Apis::HealthcareV1::Message, decorator: Google::Apis::HealthcareV1::Message::Representation
       
+        end
+      end
+      
+      class KmsWrappedCryptoKey
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :crypto_key, as: 'cryptoKey'
+          property :wrapped_key, :base64 => true, as: 'wrappedKey'
         end
       end
       
@@ -1833,6 +1965,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :bigquery_destination, as: 'bigqueryDestination', class: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirBigQueryDestination, decorator: Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirBigQueryDestination::Representation
       
+          property :deidentified_store_destination, as: 'deidentifiedStoreDestination', class: Google::Apis::HealthcareV1::DeidentifiedStoreDestination, decorator: Google::Apis::HealthcareV1::DeidentifiedStoreDestination::Representation
+      
           collection :resource_types, as: 'resourceTypes'
         end
       end
@@ -1894,6 +2028,17 @@ module Google
           collection :resource_attributes, as: 'resourceAttributes', class: Google::Apis::HealthcareV1::Attribute, decorator: Google::Apis::HealthcareV1::Attribute::Representation
       
           property :user_id, as: 'userId'
+        end
+      end
+      
+      class ValidationConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :disable_fhirpath_validation, as: 'disableFhirpathValidation'
+          property :disable_profile_validation, as: 'disableProfileValidation'
+          property :disable_reference_type_validation, as: 'disableReferenceTypeValidation'
+          property :disable_required_field_validation, as: 'disableRequiredFieldValidation'
+          collection :enabled_implementation_guides, as: 'enabledImplementationGuides'
         end
       end
       

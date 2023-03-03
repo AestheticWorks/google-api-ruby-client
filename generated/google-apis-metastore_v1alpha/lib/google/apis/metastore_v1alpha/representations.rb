@@ -22,6 +22,18 @@ module Google
   module Apis
     module MetastoreV1alpha
       
+      class AlterMetadataResourceLocationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AlterMetadataResourceLocationResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AuditConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -34,6 +46,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AuxiliaryVersionConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BackendMetastore
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Backup
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -41,6 +65,18 @@ module Google
       end
       
       class Binding
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CancelOperationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Consumer
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -88,6 +124,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Federation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class HiveMetastoreConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -113,6 +155,12 @@ module Google
       end
       
       class ListBackupsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListFederationsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -184,6 +232,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MoveTableToDatabaseRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MoveTableToDatabaseResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NetworkConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Operation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -197,6 +263,30 @@ module Google
       end
       
       class Policy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryMetadataRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryMetadataResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveIamPolicyResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -238,6 +328,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TelemetryConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class TestIamPermissionsRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -248,6 +344,20 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AlterMetadataResourceLocationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :location_uri, as: 'locationUri'
+          property :resource_name, as: 'resourceName'
+        end
+      end
+      
+      class AlterMetadataResourceLocationResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
       end
       
       class AuditConfig
@@ -264,6 +374,24 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :exempted_members, as: 'exemptedMembers'
           property :log_type, as: 'logType'
+        end
+      end
+      
+      class AuxiliaryVersionConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :config_overrides, as: 'configOverrides'
+          property :network_config, as: 'networkConfig', class: Google::Apis::MetastoreV1alpha::NetworkConfig, decorator: Google::Apis::MetastoreV1alpha::NetworkConfig::Representation
+      
+          property :version, as: 'version'
+        end
+      end
+      
+      class BackendMetastore
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :metastore_type, as: 'metastoreType'
+          property :name, as: 'name'
         end
       end
       
@@ -288,6 +416,20 @@ module Google
       
           collection :members, as: 'members'
           property :role, as: 'role'
+        end
+      end
+      
+      class CancelOperationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class Consumer
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :endpoint_uri, as: 'endpointUri'
+          property :subnetwork, as: 'subnetwork'
         end
       end
       
@@ -348,9 +490,28 @@ module Google
         end
       end
       
+      class Federation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :backend_metastores, as: 'backendMetastores', class: Google::Apis::MetastoreV1alpha::BackendMetastore, decorator: Google::Apis::MetastoreV1alpha::BackendMetastore::Representation
+      
+          property :create_time, as: 'createTime'
+          property :endpoint_uri, as: 'endpointUri'
+          hash :labels, as: 'labels'
+          property :name, as: 'name'
+          property :state, as: 'state'
+          property :state_message, as: 'stateMessage'
+          property :uid, as: 'uid'
+          property :update_time, as: 'updateTime'
+          property :version, as: 'version'
+        end
+      end
+      
       class HiveMetastoreConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :auxiliary_versions, as: 'auxiliaryVersions', class: Google::Apis::MetastoreV1alpha::AuxiliaryVersionConfig, decorator: Google::Apis::MetastoreV1alpha::AuxiliaryVersionConfig::Representation
+      
           hash :config_overrides, as: 'configOverrides'
           property :endpoint_protocol, as: 'endpointProtocol'
           property :kerberos_config, as: 'kerberosConfig', class: Google::Apis::MetastoreV1alpha::KerberosConfig, decorator: Google::Apis::MetastoreV1alpha::KerberosConfig::Representation
@@ -388,6 +549,16 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :backups, as: 'backups', class: Google::Apis::MetastoreV1alpha::Backup, decorator: Google::Apis::MetastoreV1alpha::Backup::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          collection :unreachable, as: 'unreachable'
+        end
+      end
+      
+      class ListFederationsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :federations, as: 'federations', class: Google::Apis::MetastoreV1alpha::Federation, decorator: Google::Apis::MetastoreV1alpha::Federation::Representation
       
           property :next_page_token, as: 'nextPageToken'
           collection :unreachable, as: 'unreachable'
@@ -504,6 +675,29 @@ module Google
         end
       end
       
+      class MoveTableToDatabaseRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :db_name, as: 'dbName'
+          property :destination_db_name, as: 'destinationDbName'
+          property :table_name, as: 'tableName'
+        end
+      end
+      
+      class MoveTableToDatabaseResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class NetworkConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :consumers, as: 'consumers', class: Google::Apis::MetastoreV1alpha::Consumer, decorator: Google::Apis::MetastoreV1alpha::Consumer::Representation
+      
+        end
+      end
+      
       class Operation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -541,6 +735,34 @@ module Google
         end
       end
       
+      class QueryMetadataRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :query, as: 'query'
+        end
+      end
+      
+      class QueryMetadataResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :result_manifest_uri, as: 'resultManifestUri'
+        end
+      end
+      
+      class RemoveIamPolicyRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :asynchronous, as: 'asynchronous'
+        end
+      end
+      
+      class RemoveIamPolicyResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :success, as: 'success'
+        end
+      end
+      
       class Restore
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -574,6 +796,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :artifact_gcs_uri, as: 'artifactGcsUri'
           property :create_time, as: 'createTime'
+          property :database_type, as: 'databaseType'
           property :encryption_config, as: 'encryptionConfig', class: Google::Apis::MetastoreV1alpha::EncryptionConfig, decorator: Google::Apis::MetastoreV1alpha::EncryptionConfig::Representation
       
           property :endpoint_uri, as: 'endpointUri'
@@ -588,10 +811,14 @@ module Google
       
           property :name, as: 'name'
           property :network, as: 'network'
+          property :network_config, as: 'networkConfig', class: Google::Apis::MetastoreV1alpha::NetworkConfig, decorator: Google::Apis::MetastoreV1alpha::NetworkConfig::Representation
+      
           property :port, as: 'port'
           property :release_channel, as: 'releaseChannel'
           property :state, as: 'state'
           property :state_message, as: 'stateMessage'
+          property :telemetry_config, as: 'telemetryConfig', class: Google::Apis::MetastoreV1alpha::TelemetryConfig, decorator: Google::Apis::MetastoreV1alpha::TelemetryConfig::Representation
+      
           property :tier, as: 'tier'
           property :uid, as: 'uid'
           property :update_time, as: 'updateTime'
@@ -613,6 +840,13 @@ module Google
           property :code, as: 'code'
           collection :details, as: 'details'
           property :message, as: 'message'
+        end
+      end
+      
+      class TelemetryConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :log_format, as: 'logFormat'
         end
       end
       

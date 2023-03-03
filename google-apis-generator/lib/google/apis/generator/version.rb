@@ -15,7 +15,7 @@
 module Google
   module Apis
     class Generator
-      VERSION = "0.4.0"
+      VERSION = "0.12.0"
     end
   end
 end

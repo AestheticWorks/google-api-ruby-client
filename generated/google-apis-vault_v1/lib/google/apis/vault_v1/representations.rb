@@ -358,6 +358,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SitesUrlInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Status
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -550,6 +556,7 @@ module Google
       class DriveOptions
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :client_side_encrypted_option, as: 'clientSideEncryptedOption'
           property :include_shared_drives, as: 'includeSharedDrives'
           property :include_team_drives, as: 'includeTeamDrives'
           property :version_date, as: 'versionDate'
@@ -796,6 +803,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :export_format, as: 'exportFormat'
           property :show_confidential_mode_content, as: 'showConfidentialModeContent'
+          property :use_new_export, as: 'useNewExport'
         end
       end
       
@@ -867,6 +875,8 @@ module Google
           property :search_method, as: 'searchMethod'
           property :shared_drive_info, as: 'sharedDriveInfo', class: Google::Apis::VaultV1::SharedDriveInfo, decorator: Google::Apis::VaultV1::SharedDriveInfo::Representation
       
+          property :sites_url_info, as: 'sitesUrlInfo', class: Google::Apis::VaultV1::SitesUrlInfo, decorator: Google::Apis::VaultV1::SitesUrlInfo::Representation
+      
           property :start_time, as: 'startTime'
           property :team_drive_info, as: 'teamDriveInfo', class: Google::Apis::VaultV1::TeamDriveInfo, decorator: Google::Apis::VaultV1::TeamDriveInfo::Representation
       
@@ -929,6 +939,13 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :shared_drive_ids, as: 'sharedDriveIds'
+        end
+      end
+      
+      class SitesUrlInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :urls, as: 'urls'
         end
       end
       

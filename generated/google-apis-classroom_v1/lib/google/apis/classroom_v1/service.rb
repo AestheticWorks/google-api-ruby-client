@@ -50,12 +50,15 @@ module Google
         end
         
         # Creates a course. The user specified in `ownerId` is the owner of the created
-        # course and added as a teacher. This method returns the following error codes: *
+        # course and added as a teacher. A non-admin requesting user can only create a
+        # course with themselves as the owner. Domain admins can create courses owned by
+        # any user within their domain. This method returns the following error codes: *
         # `PERMISSION_DENIED` if the requesting user is not permitted to create courses
         # or for access errors. * `NOT_FOUND` if the primary teacher is not a valid user.
         # * `FAILED_PRECONDITION` if the course owner's account is disabled or for the
-        # following request errors: * UserGroupsMembershipLimitReached * `ALREADY_EXISTS`
-        # if an alias was specified in the `id` and already exists.
+        # following request errors: * UserCannotOwnCourse *
+        # UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if an alias was specified
+        # in the `id` and already exists.
         # @param [Google::Apis::ClassroomV1::Course] course_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -216,7 +219,8 @@ module Google
         # modify the requested course or for access errors. * `NOT_FOUND` if no course
         # exists with the requested ID. * `INVALID_ARGUMENT` if invalid fields are
         # specified in the update mask or if no update mask is supplied. * `
-        # FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable
+        # FAILED_PRECONDITION` for the following request errors: * CourseNotModifiable *
+        # InactiveCourseOwner * IneligibleOwner
         # @param [String] id
         #   Identifier of the course to update. This identifier can be either the
         #   Classroom-assigned identifier or an alias.
@@ -1577,14 +1581,17 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Adds a user as a student of a course. This method returns the following error
-        # codes: * `PERMISSION_DENIED` if the requesting user is not permitted to create
-        # students in this course or for access errors. * `NOT_FOUND` if the requested
-        # course ID does not exist. * `FAILED_PRECONDITION` if the requested user's
-        # account is disabled, for the following request errors: *
-        # CourseMemberLimitReached * CourseNotModifiable *
-        # UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a
-        # student or teacher in the course.
+        # Adds a user as a student of a course. Domain administrators are permitted to [
+        # directly add](https://developers.google.com/classroom/guides/manage-users)
+        # users within their domain as students to courses within their domain. Students
+        # are permitted to add themselves to a course using an enrollment code. This
+        # method returns the following error codes: * `PERMISSION_DENIED` if the
+        # requesting user is not permitted to create students in this course or for
+        # access errors. * `NOT_FOUND` if the requested course ID does not exist. * `
+        # FAILED_PRECONDITION` if the requested user's account is disabled, for the
+        # following request errors: * CourseMemberLimitReached * CourseNotModifiable *
+        # UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
+        # the user is already a student or teacher in the course.
         # @param [String] course_id
         #   Identifier of the course to create the student in. This identifier can be
         #   either the Classroom-assigned identifier or an alias.
@@ -1743,14 +1750,17 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a teacher of a course. This method returns the following error codes: *
-        # `PERMISSION_DENIED` if the requesting user is not permitted to create
-        # teachers in this course or for access errors. * `NOT_FOUND` if the requested
-        # course ID does not exist. * `FAILED_PRECONDITION` if the requested user's
-        # account is disabled, for the following request errors: *
+        # Creates a teacher of a course. Domain administrators are permitted to [
+        # directly add](https://developers.google.com/classroom/guides/manage-users)
+        # users within their domain as teachers to courses within their domain. Non-
+        # admin users should send an Invitation instead. This method returns the
+        # following error codes: * `PERMISSION_DENIED` if the requesting user is not
+        # permitted to create teachers in this course or for access errors. * `NOT_FOUND`
+        # if the requested course ID does not exist. * `FAILED_PRECONDITION` if the
+        # requested user's account is disabled, for the following request errors: *
         # CourseMemberLimitReached * CourseNotModifiable * CourseTeacherLimitReached *
-        # UserGroupsMembershipLimitReached * `ALREADY_EXISTS` if the user is already a
-        # teacher or student in the course.
+        # UserGroupsMembershipLimitReached * InactiveCourseOwner * `ALREADY_EXISTS` if
+        # the user is already a teacher or student in the course.
         # @param [String] course_id
         #   Identifier of the course. This identifier can be either the Classroom-assigned
         #   identifier or an alias.
@@ -1784,14 +1794,14 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a teacher of a course. This method returns the following error codes: *
-        # `PERMISSION_DENIED` if the requesting user is not permitted to delete
-        # teachers of this course or for access errors. * `NOT_FOUND` if no teacher of
-        # this course has the requested ID or if the course does not exist. * `
-        # FAILED_PRECONDITION` if the requested ID belongs to the primary teacher of
-        # this course. * `FAILED_PRECONDITION` if the requested ID belongs to the owner
-        # of the course Drive folder. * `FAILED_PRECONDITION` if the course no longer
-        # has an active owner.
+        # Removes the specified teacher from the specified course. This method returns
+        # the following error codes: * `PERMISSION_DENIED` if the requesting user is not
+        # permitted to delete teachers of this course or for access errors. * `NOT_FOUND`
+        # if no teacher of this course has the requested ID or if the course does not
+        # exist. * `FAILED_PRECONDITION` if the requested ID belongs to the primary
+        # teacher of this course. * `FAILED_PRECONDITION` if the requested ID belongs to
+        # the owner of the course Drive folder. * `FAILED_PRECONDITION` if the course no
+        # longer has an active owner.
         # @param [String] course_id
         #   Identifier of the course. This identifier can be either the Classroom-assigned
         #   identifier or an alias.
@@ -2158,10 +2168,10 @@ module Google
         # returns the following error codes: * `PERMISSION_DENIED` if the requesting
         # user is not permitted to create invitations for this course or for access
         # errors. * `NOT_FOUND` if the course or the user does not exist. * `
-        # FAILED_PRECONDITION` if the requested user's account is disabled or if the
-        # user already has this role or a role with greater permissions. * `
-        # ALREADY_EXISTS` if an invitation for the specified user and course already
-        # exists.
+        # FAILED_PRECONDITION`: * if the requested user's account is disabled. * if the
+        # user already has this role or a role with greater permissions. * for the
+        # following request errors: * IneligibleOwner * `ALREADY_EXISTS` if an
+        # invitation for the specified user and course already exists.
         # @param [Google::Apis::ClassroomV1::Invitation] invitation_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.

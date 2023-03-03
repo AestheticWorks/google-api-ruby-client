@@ -28,6 +28,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AdBlockingRecoveryTag
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AdClient
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -77,6 +83,12 @@ module Google
       end
       
       class Date
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Empty
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -216,8 +228,17 @@ module Google
           property :name, as: 'name'
           collection :pending_tasks, as: 'pendingTasks'
           property :premium, as: 'premium'
+          property :state, as: 'state'
           property :time_zone, as: 'timeZone', class: Google::Apis::AdsenseV2::TimeZone, decorator: Google::Apis::AdsenseV2::TimeZone::Representation
       
+        end
+      end
+      
+      class AdBlockingRecoveryTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error_protection_code, as: 'errorProtectionCode'
+          property :tag, as: 'tag'
         end
       end
       
@@ -227,6 +248,7 @@ module Google
           property :name, as: 'name'
           property :product_code, as: 'productCode'
           property :reporting_dimension_id, as: 'reportingDimensionId'
+          property :state, as: 'state'
         end
       end
       
@@ -286,6 +308,7 @@ module Google
       class CustomChannel
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :active, as: 'active'
           property :display_name, as: 'displayName'
           property :name, as: 'name'
           property :reporting_dimension_id, as: 'reportingDimensionId'
@@ -298,6 +321,12 @@ module Google
           property :day, as: 'day'
           property :month, as: 'month'
           property :year, as: 'year'
+        end
+      end
+      
+      class Empty
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       

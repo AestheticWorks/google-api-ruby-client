@@ -34,6 +34,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2AllInfoTypes
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2AllText
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -250,6 +262,48 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2DataProfileAction
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataProfileConfigSnapshot
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataProfileJobConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataProfileLocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataProfilePubSubCondition
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataProfilePubSubMessage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2DataRiskLevel
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2DatastoreKey
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -269,6 +323,12 @@ module Google
       end
       
       class GooglePrivacyDlpV2DateTime
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2Deidentify
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -358,6 +418,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2ExcludeByHotword
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2ExcludeInfoTypes
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -365,6 +431,12 @@ module Google
       end
       
       class GooglePrivacyDlpV2ExclusionRule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2Export
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -478,7 +550,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2ImageTransformation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2ImageTransformations
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2InfoType
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2InfoTypeCategory
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -497,6 +587,12 @@ module Google
       end
       
       class GooglePrivacyDlpV2InfoTypeStats
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2InfoTypeSummary
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -760,6 +856,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2OtherInfoTypeSummary
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2OutputStorageConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -790,7 +892,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2ProfileStatus
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2Proximity
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2PubSubCondition
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2PubSubExpressions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2PubSubNotification
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -874,6 +1000,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2RecordTransformation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2RecordTransformations
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -911,6 +1043,12 @@ module Google
       end
       
       class GooglePrivacyDlpV2ReidentifyContentResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2ReplaceDictionaryConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -965,6 +1103,18 @@ module Google
       end
       
       class GooglePrivacyDlpV2Schedule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2SelectedInfoTypes
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2SensitivityScore
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1036,6 +1186,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2TableDataProfile
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2TableLocation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -1078,13 +1234,49 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2TransformationConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2TransformationDescription
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2TransformationDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2TransformationDetailsStorageConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2TransformationErrorHandling
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2TransformationLocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2TransformationOverview
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GooglePrivacyDlpV2TransformationResultStatus
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1150,6 +1342,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GooglePrivacyDlpV2VersionDescription
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GooglePrivacyDlpV2WordList
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -1183,6 +1381,8 @@ module Google
       class GooglePrivacyDlpV2Action
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :deidentify, as: 'deidentify', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Deidentify, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Deidentify::Representation
+      
           property :job_notification_emails, as: 'jobNotificationEmails', class: Google::Apis::DlpV2::GooglePrivacyDlpV2JobNotificationEmails, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2JobNotificationEmails::Representation
       
           property :pub_sub, as: 'pubSub', class: Google::Apis::DlpV2::GooglePrivacyDlpV2PublishToPubSub, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2PublishToPubSub::Representation
@@ -1199,6 +1399,18 @@ module Google
       end
       
       class GooglePrivacyDlpV2ActivateJobTriggerRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GooglePrivacyDlpV2AllInfoTypes
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GooglePrivacyDlpV2AllText
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end
@@ -1265,6 +1477,8 @@ module Google
           collection :excluded_fields, as: 'excludedFields', class: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId::Representation
       
           collection :identifying_fields, as: 'identifyingFields', class: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId::Representation
+      
+          collection :included_fields, as: 'includedFields', class: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId::Representation
       
           property :rows_limit, :numeric_string => true, as: 'rowsLimit'
           property :rows_limit_percent, as: 'rowsLimitPercent'
@@ -1598,6 +1812,70 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2DataProfileAction
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :export_data, as: 'exportData', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Export, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Export::Representation
+      
+          property :pub_sub_notification, as: 'pubSubNotification', class: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubNotification, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubNotification::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataProfileConfigSnapshot
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :data_profile_job, as: 'dataProfileJob', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileJobConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileJobConfig::Representation
+      
+          property :inspect_config, as: 'inspectConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InspectConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InspectConfig::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataProfileJobConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :data_profile_actions, as: 'dataProfileActions', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileAction, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileAction::Representation
+      
+          collection :inspect_templates, as: 'inspectTemplates'
+          property :location, as: 'location', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileLocation, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileLocation::Representation
+      
+          property :project_id, as: 'projectId'
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataProfileLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :folder_id, :numeric_string => true, as: 'folderId'
+          property :organization_id, :numeric_string => true, as: 'organizationId'
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataProfilePubSubCondition
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :expressions, as: 'expressions', class: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubExpressions, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubExpressions::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataProfilePubSubMessage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :event, as: 'event'
+          property :profile, as: 'profile', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TableDataProfile, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TableDataProfile::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2DataRiskLevel
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :score, as: 'score'
+        end
+      end
+      
       class GooglePrivacyDlpV2DatastoreKey
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1641,9 +1919,23 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2Deidentify
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cloud_storage_output, as: 'cloudStorageOutput'
+          collection :file_types_to_transform, as: 'fileTypesToTransform'
+          property :transformation_config, as: 'transformationConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationConfig::Representation
+      
+          property :transformation_details_storage_config, as: 'transformationDetailsStorageConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationDetailsStorageConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationDetailsStorageConfig::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2DeidentifyConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :image_transformations, as: 'imageTransformations', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ImageTransformations, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ImageTransformations::Representation
+      
           property :info_type_transformations, as: 'infoTypeTransformations', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeTransformations, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeTransformations::Representation
       
           property :record_transformations, as: 'recordTransformations', class: Google::Apis::DlpV2::GooglePrivacyDlpV2RecordTransformations, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2RecordTransformations::Representation
@@ -1792,6 +2084,16 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2ExcludeByHotword
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hotword_regex, as: 'hotwordRegex', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Regex, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Regex::Representation
+      
+          property :proximity, as: 'proximity', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Proximity, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Proximity::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2ExcludeInfoTypes
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1805,10 +2107,20 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :dictionary, as: 'dictionary', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Dictionary, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Dictionary::Representation
       
+          property :exclude_by_hotword, as: 'excludeByHotword', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ExcludeByHotword, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ExcludeByHotword::Representation
+      
           property :exclude_info_types, as: 'excludeInfoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ExcludeInfoTypes, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ExcludeInfoTypes::Representation
       
           property :matching_type, as: 'matchingType'
           property :regex, as: 'regex', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Regex, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Regex::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2Export
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :profile_table, as: 'profileTable', class: Google::Apis::DlpV2::GooglePrivacyDlpV2BigQueryTable, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2BigQueryTable::Representation
       
         end
       end
@@ -1997,20 +2309,58 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2ImageTransformation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :all_info_types, as: 'allInfoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2AllInfoTypes, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2AllInfoTypes::Representation
+      
+          property :all_text, as: 'allText', class: Google::Apis::DlpV2::GooglePrivacyDlpV2AllText, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2AllText::Representation
+      
+          property :redaction_color, as: 'redactionColor', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Color, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Color::Representation
+      
+          property :selected_info_types, as: 'selectedInfoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2SelectedInfoTypes, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2SelectedInfoTypes::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2ImageTransformations
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :transforms, as: 'transforms', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ImageTransformation, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ImageTransformation::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2InfoType
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
+          property :version, as: 'version'
+        end
+      end
+      
+      class GooglePrivacyDlpV2InfoTypeCategory
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :industry_category, as: 'industryCategory'
+          property :location_category, as: 'locationCategory'
+          property :type_category, as: 'typeCategory'
         end
       end
       
       class GooglePrivacyDlpV2InfoTypeDescription
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :categories, as: 'categories', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeCategory, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeCategory::Representation
+      
           property :description, as: 'description'
           property :display_name, as: 'displayName'
           property :name, as: 'name'
+          property :sensitivity_score, as: 'sensitivityScore', class: Google::Apis::DlpV2::GooglePrivacyDlpV2SensitivityScore, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2SensitivityScore::Representation
+      
           collection :supported_by, as: 'supportedBy'
+          collection :versions, as: 'versions', class: Google::Apis::DlpV2::GooglePrivacyDlpV2VersionDescription, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2VersionDescription::Representation
+      
         end
       end
       
@@ -2027,6 +2377,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :count, :numeric_string => true, as: 'count'
+          property :info_type, as: 'infoType', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2InfoTypeSummary
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :estimated_prevalence, as: 'estimatedPrevalence'
           property :info_type, as: 'infoType', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType::Representation
       
         end
@@ -2459,6 +2818,15 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2OtherInfoTypeSummary
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :estimated_prevalence, as: 'estimatedPrevalence'
+          property :info_type, as: 'infoType', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2OutputStorageConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2506,6 +2874,8 @@ module Google
       
           property :replace_config, as: 'replaceConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceValueConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceValueConfig::Representation
       
+          property :replace_dictionary_config, as: 'replaceDictionaryConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceDictionaryConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceDictionaryConfig::Representation
+      
           property :replace_with_info_type_config, as: 'replaceWithInfoTypeConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceWithInfoTypeConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ReplaceWithInfoTypeConfig::Representation
       
           property :time_part_config, as: 'timePartConfig', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TimePartConfig, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TimePartConfig::Representation
@@ -2531,11 +2901,48 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2ProfileStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :status, as: 'status', class: Google::Apis::DlpV2::GoogleRpcStatus, decorator: Google::Apis::DlpV2::GoogleRpcStatus::Representation
+      
+          property :timestamp, as: 'timestamp'
+        end
+      end
+      
       class GooglePrivacyDlpV2Proximity
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :window_after, as: 'windowAfter'
           property :window_before, as: 'windowBefore'
+        end
+      end
+      
+      class GooglePrivacyDlpV2PubSubCondition
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :minimum_risk_score, as: 'minimumRiskScore'
+          property :minimum_sensitivity_score, as: 'minimumSensitivityScore'
+        end
+      end
+      
+      class GooglePrivacyDlpV2PubSubExpressions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :conditions, as: 'conditions', class: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubCondition, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2PubSubCondition::Representation
+      
+          property :logical_operator, as: 'logicalOperator'
+        end
+      end
+      
+      class GooglePrivacyDlpV2PubSubNotification
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :detail_of_message, as: 'detailOfMessage'
+          property :event, as: 'event'
+          property :pubsub_condition, as: 'pubsubCondition', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfilePubSubCondition, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfilePubSubCondition::Representation
+      
+          property :topic, as: 'topic'
         end
       end
       
@@ -2650,6 +3057,16 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2RecordTransformation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :container_timestamp, as: 'containerTimestamp'
+          property :container_version, as: 'containerVersion'
+          property :field_id, as: 'fieldId', class: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2FieldId::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2RecordTransformations
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2719,6 +3136,14 @@ module Google
           property :item, as: 'item', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ContentItem, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ContentItem::Representation
       
           property :overview, as: 'overview', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationOverview, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationOverview::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2ReplaceDictionaryConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :word_list, as: 'wordList', class: Google::Apis::DlpV2::GooglePrivacyDlpV2WordList, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2WordList::Representation
       
         end
       end
@@ -2799,6 +3224,21 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :recurrence_period_duration, as: 'recurrencePeriodDuration'
+        end
+      end
+      
+      class GooglePrivacyDlpV2SelectedInfoTypes
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :info_types, as: 'infoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType::Representation
+      
+        end
+      end
+      
+      class GooglePrivacyDlpV2SensitivityScore
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :score, as: 'score'
         end
       end
       
@@ -2917,6 +3357,43 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2TableDataProfile
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config_snapshot, as: 'configSnapshot', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileConfigSnapshot, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataProfileConfigSnapshot::Representation
+      
+          property :create_time, as: 'createTime'
+          property :data_risk_level, as: 'dataRiskLevel', class: Google::Apis::DlpV2::GooglePrivacyDlpV2DataRiskLevel, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2DataRiskLevel::Representation
+      
+          property :dataset_id, as: 'datasetId'
+          property :dataset_location, as: 'datasetLocation'
+          property :dataset_project_id, as: 'datasetProjectId'
+          property :encryption_status, as: 'encryptionStatus'
+          property :expiration_time, as: 'expirationTime'
+          property :failed_column_count, :numeric_string => true, as: 'failedColumnCount'
+          property :full_resource, as: 'fullResource'
+          property :last_modified_time, as: 'lastModifiedTime'
+          property :name, as: 'name'
+          collection :other_info_types, as: 'otherInfoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2OtherInfoTypeSummary, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2OtherInfoTypeSummary::Representation
+      
+          collection :predicted_info_types, as: 'predictedInfoTypes', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeSummary, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoTypeSummary::Representation
+      
+          property :profile_last_generated, as: 'profileLastGenerated'
+          property :profile_status, as: 'profileStatus', class: Google::Apis::DlpV2::GooglePrivacyDlpV2ProfileStatus, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2ProfileStatus::Representation
+      
+          property :project_data_profile, as: 'projectDataProfile'
+          hash :resource_labels, as: 'resourceLabels'
+          property :resource_visibility, as: 'resourceVisibility'
+          property :row_count, :numeric_string => true, as: 'rowCount'
+          property :scanned_column_count, :numeric_string => true, as: 'scannedColumnCount'
+          property :sensitivity_score, as: 'sensitivityScore', class: Google::Apis::DlpV2::GooglePrivacyDlpV2SensitivityScore, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2SensitivityScore::Representation
+      
+          property :state, as: 'state'
+          property :table_id, as: 'tableId'
+          property :table_size_bytes, :numeric_string => true, as: 'tableSizeBytes'
+        end
+      end
+      
       class GooglePrivacyDlpV2TableLocation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2976,6 +3453,49 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2TransformationConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :deidentify_template, as: 'deidentifyTemplate'
+          property :image_redact_template, as: 'imageRedactTemplate'
+          property :structured_deidentify_template, as: 'structuredDeidentifyTemplate'
+        end
+      end
+      
+      class GooglePrivacyDlpV2TransformationDescription
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :condition, as: 'condition'
+          property :description, as: 'description'
+          property :info_type, as: 'infoType', class: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2InfoType::Representation
+      
+          property :type, as: 'type'
+        end
+      end
+      
+      class GooglePrivacyDlpV2TransformationDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :container_name, as: 'containerName'
+          property :resource_name, as: 'resourceName'
+          property :status_details, as: 'statusDetails', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationResultStatus, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationResultStatus::Representation
+      
+          collection :transformation, as: 'transformation', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationDescription, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationDescription::Representation
+      
+          property :transformation_location, as: 'transformationLocation', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationLocation, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationLocation::Representation
+      
+          property :transformed_bytes, :numeric_string => true, as: 'transformedBytes'
+        end
+      end
+      
+      class GooglePrivacyDlpV2TransformationDetailsStorageConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :table, as: 'table', class: Google::Apis::DlpV2::GooglePrivacyDlpV2BigQueryTable, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2BigQueryTable::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2TransformationErrorHandling
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2986,12 +3506,31 @@ module Google
         end
       end
       
+      class GooglePrivacyDlpV2TransformationLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :container_type, as: 'containerType'
+          property :finding_id, as: 'findingId'
+          property :record_transformation, as: 'recordTransformation', class: Google::Apis::DlpV2::GooglePrivacyDlpV2RecordTransformation, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2RecordTransformation::Representation
+      
+        end
+      end
+      
       class GooglePrivacyDlpV2TransformationOverview
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :transformation_summaries, as: 'transformationSummaries', class: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationSummary, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2TransformationSummary::Representation
       
           property :transformed_bytes, :numeric_string => true, as: 'transformedBytes'
+        end
+      end
+      
+      class GooglePrivacyDlpV2TransformationResultStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :details, as: 'details', class: Google::Apis::DlpV2::GoogleRpcStatus, decorator: Google::Apis::DlpV2::GoogleRpcStatus::Representation
+      
+          property :result_status_type, as: 'resultStatusType'
         end
       end
       
@@ -3096,6 +3635,14 @@ module Google
           property :count, :numeric_string => true, as: 'count'
           property :value, as: 'value', class: Google::Apis::DlpV2::GooglePrivacyDlpV2Value, decorator: Google::Apis::DlpV2::GooglePrivacyDlpV2Value::Representation
       
+        end
+      end
+      
+      class GooglePrivacyDlpV2VersionDescription
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :version, as: 'version'
         end
       end
       

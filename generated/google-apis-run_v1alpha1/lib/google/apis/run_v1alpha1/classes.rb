@@ -103,10 +103,17 @@ module Google
       class ConfigMapVolumeSource
         include Google::Apis::Core::Hashable
       
-        # (Optional) Mode bits to use on created files by default. Must be a value
-        # between 0 and 0777. Defaults to 0644. Directories within the path are not
-        # affected by this setting. This might be in conflict with other options that
-        # affect the file mode, like fsGroup, and the result can be other mode bits set.
+        # (Optional) Integer representation of mode bits to use on created files by
+        # default. Must be a value between 01 and 0777 (octal). If 0 or not set, it will
+        # default to 0644. Directories within the path are not affected by this setting.
+        # Notes * Internally, a umask of 0222 will be applied to any non-zero value. *
+        # This is an integer representation of the mode bits. So, the octal integer
+        # value should look exactly as the chmod numeric notation with a leading zero.
+        # Some examples: for chmod 777 (a=rwx), set to 0777 (octal) or 511 (base-10).
+        # For chmod 640 (u=rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755 (
+        # u=rwx,g=rx,o=rx), set to 0755 (octal) or 493 (base-10). * This might be in
+        # conflict with other options that affect the file mode, like fsGroup, and the
+        # result can be other mode bits set.
         # Corresponds to the JSON property `defaultMode`
         # @return [Fixnum]
         attr_accessor :default_mode
@@ -342,8 +349,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -475,6 +481,34 @@ module Google
         # Update properties of this object
         def update!(**args)
           @command = args[:command] if args.key?(:command)
+        end
+      end
+      
+      # Not supported by Cloud Run GRPCAction describes an action involving a GRPC
+      # port.
+      class GrpcAction
+        include Google::Apis::Core::Hashable
+      
+        # Port number of the gRPC service. Number must be in the range 1 to 65535.
+        # Corresponds to the JSON property `port`
+        # @return [Fixnum]
+        attr_accessor :port
+      
+        # Service is the name of the service to place in the gRPC HealthCheckRequest (
+        # see https://github.com/grpc/grpc/blob/master/doc/health-checking.md). If this
+        # is not specified, the default behavior is defined by gRPC.
+        # Corresponds to the JSON property `service`
+        # @return [String]
+        attr_accessor :service
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @port = args[:port] if args.key?(:port)
+          @service = args[:service] if args.key?(:service)
         end
       end
       
@@ -1030,10 +1064,16 @@ module Google
         # @return [String]
         attr_accessor :key
       
-        # (Optional) Mode bits to use on this file, must be a value between 0000 and
-        # 0777. If not specified, the volume defaultMode will be used. This might be in
-        # conflict with other options that affect the file mode, like fsGroup, and the
-        # result can be other mode bits set.
+        # (Optional) Mode bits to use on this file, must be a value between 01 and 0777 (
+        # octal). If 0 or not set, the Volume's default mode will be used. Notes *
+        # Internally, a umask of 0222 will be applied to any non-zero value. * This is
+        # an integer representation of the mode bits. So, the octal integer value should
+        # look exactly as the chmod numeric notation with a leading zero. Some examples:
+        # for chmod 777 (a=rwx), set to 0777 (octal) or 511 (base-10). For chmod 640 (u=
+        # rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755 (u=rwx,g=rx,o=rx),
+        # set to 0755 (octal) or 493 (base-10). * This might be in conflict with other
+        # options that affect the file mode, like fsGroup, and the result can be other
+        # mode bits set.
         # Corresponds to the JSON property `mode`
         # @return [Fixnum]
         attr_accessor :mode
@@ -1187,7 +1227,7 @@ module Google
         # (Optional) Annotations is an unstructured key value map stored with a resource
         # that may be set by external tools to store and retrieve arbitrary metadata.
         # They are not queryable and should be preserved when modifying objects. More
-        # info: http://kubernetes.io/docs/user-guide/annotations
+        # info: https://kubernetes.io/docs/user-guide/annotations
         # Corresponds to the JSON property `annotations`
         # @return [Hash<String,String>]
         attr_accessor :annotations
@@ -1274,7 +1314,8 @@ module Google
       
         # (Optional) Map of string keys and values that can be used to organize and
         # categorize (scope and select) objects. May match selectors of replication
-        # controllers and routes. More info: http://kubernetes.io/docs/user-guide/labels
+        # controllers and routes. More info: https://kubernetes.io/docs/user-guide/
+        # labels
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
         attr_accessor :labels
@@ -1283,7 +1324,7 @@ module Google
         # when creating resources, although some resources may allow a client to request
         # the generation of an appropriate name automatically. Name is primarily
         # intended for creation idempotence and configuration definition. Cannot be
-        # updated. More info: http://kubernetes.io/docs/user-guide/identifiers#names +
+        # updated. More info: https://kubernetes.io/docs/user-guide/identifiers#names +
         # optional
         # Corresponds to the JSON property `name`
         # @return [String]
@@ -1325,7 +1366,7 @@ module Google
         # (Optional) UID is the unique in time and space value for this object. It is
         # typically generated by the server on successful creation of a resource and is
         # not allowed to change on PUT operations. Populated by the system. Read-only.
-        # More info: http://kubernetes.io/docs/user-guide/identifiers#uids
+        # More info: https://kubernetes.io/docs/user-guide/identifiers#uids
         # Corresponds to the JSON property `uid`
         # @return [String]
         attr_accessor :uid
@@ -1387,13 +1428,13 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # Name of the referent. More info: http://kubernetes.io/docs/user-guide/
+        # Name of the referent. More info: https://kubernetes.io/docs/user-guide/
         # identifiers#names
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # UID of the referent. More info: http://kubernetes.io/docs/user-guide/
+        # UID of the referent. More info: https://kubernetes.io/docs/user-guide/
         # identifiers#uids
         # Corresponds to the JSON property `uid`
         # @return [String]
@@ -1431,28 +1472,36 @@ module Google
         # @return [Fixnum]
         attr_accessor :failure_threshold
       
+        # Not supported by Cloud Run GRPCAction describes an action involving a GRPC
+        # port.
+        # Corresponds to the JSON property `grpc`
+        # @return [Google::Apis::RunV1alpha1::GrpcAction]
+        attr_accessor :grpc
+      
         # Not supported by Cloud Run HTTPGetAction describes an action based on HTTP Get
         # requests.
         # Corresponds to the JSON property `httpGet`
         # @return [Google::Apis::RunV1alpha1::HttpGetAction]
         attr_accessor :http_get
       
-        # (Optional) Number of seconds after the container has started before liveness
-        # probes are initiated. More info: https://kubernetes.io/docs/concepts/workloads/
-        # pods/pod-lifecycle#container-probes
+        # (Optional) Number of seconds after the container has started before the probe
+        # is initiated. Defaults to 0 seconds. Minimum value is 0. Maximum value for
+        # liveness probe is 3600. Maximum value for startup probe is 240. More info:
+        # https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-
+        # probes
         # Corresponds to the JSON property `initialDelaySeconds`
         # @return [Fixnum]
         attr_accessor :initial_delay_seconds
       
         # (Optional) How often (in seconds) to perform the probe. Default to 10 seconds.
-        # Minimum value is 1.
+        # Minimum value is 1. Maximum value for liveness probe is 3600. Maximum value
+        # for startup probe is 240. Must be greater or equal than timeout_seconds.
         # Corresponds to the JSON property `periodSeconds`
         # @return [Fixnum]
         attr_accessor :period_seconds
       
         # (Optional) Minimum consecutive successes for the probe to be considered
-        # successful after having failed. Defaults to 1. Must be 1 for liveness. Minimum
-        # value is 1.
+        # successful after having failed. Must be 1 if set.
         # Corresponds to the JSON property `successThreshold`
         # @return [Fixnum]
         attr_accessor :success_threshold
@@ -1464,8 +1513,9 @@ module Google
         attr_accessor :tcp_socket
       
         # (Optional) Number of seconds after which the probe times out. Defaults to 1
-        # second. Minimum value is 1. More info: https://kubernetes.io/docs/concepts/
-        # workloads/pods/pod-lifecycle#container-probes
+        # second. Minimum value is 1. Maximum value is 3600. Must be smaller than
+        # period_seconds. More info: https://kubernetes.io/docs/concepts/workloads/pods/
+        # pod-lifecycle#container-probes
         # Corresponds to the JSON property `timeoutSeconds`
         # @return [Fixnum]
         attr_accessor :timeout_seconds
@@ -1478,6 +1528,7 @@ module Google
         def update!(**args)
           @exec = args[:exec] if args.key?(:exec)
           @failure_threshold = args[:failure_threshold] if args.key?(:failure_threshold)
+          @grpc = args[:grpc] if args.key?(:grpc)
           @http_get = args[:http_get] if args.key?(:http_get)
           @initial_delay_seconds = args[:initial_delay_seconds] if args.key?(:initial_delay_seconds)
           @period_seconds = args[:period_seconds] if args.key?(:period_seconds)
@@ -1491,23 +1542,20 @@ module Google
       class ResourceRequirements
         include Google::Apis::Core::Hashable
       
-        # (Optional) Only memory and CPU are supported. Note: The only supported values
-        # for CPU are '1', '2', and '4'. Setting 4 CPU requires at least 2Gi of memory.
-        # Limits describes the maximum amount of compute resources allowed. The values
-        # of the map is string form of the 'quantity' k8s type: https://github.com/
-        # kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/pkg/api/
-        # resource/quantity.go
+        # (Optional) Only memory and CPU are supported. Limits describes the maximum
+        # amount of compute resources allowed. The values of the map is string form of
+        # the 'quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/
+        # staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
         # Corresponds to the JSON property `limits`
         # @return [Hash<String,String>]
         attr_accessor :limits
       
-        # (Optional) Only memory and CPU are supported. Note: The only supported values
-        # for CPU are '1' and '2'. Requests describes the minimum amount of compute
-        # resources required. If Requests is omitted for a container, it defaults to
-        # Limits if that is explicitly specified, otherwise to an implementation-defined
-        # value. The values of the map is string form of the 'quantity' k8s type: https:/
-        # /github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/
-        # pkg/api/resource/quantity.go
+        # (Optional) Only memory and CPU are supported. Requests describes the minimum
+        # amount of compute resources required. If Requests is omitted for a container,
+        # it defaults to Limits if that is explicitly specified, otherwise to an
+        # implementation-defined value. The values of the map is string form of the '
+        # quantity' k8s type: https://github.com/kubernetes/kubernetes/blob/master/
+        # staging/src/k8s.io/apimachinery/pkg/api/resource/quantity.go
         # Corresponds to the JSON property `requests`
         # @return [Hash<String,String>]
         attr_accessor :requests
@@ -1611,13 +1659,17 @@ module Google
       class SecretVolumeSource
         include Google::Apis::Core::Hashable
       
-        # (Optional) Mode bits to use on created files by default. Must be a value
-        # between 0000 and 0777. Defaults to 0644. Directories within the path are not
-        # affected by this setting. This might be in conflict with other options that
-        # affect the file mode, like fsGroup, and the result can be other mode bits set.
-        # NOTE: This is an integer representation of the mode bits. So, the integer
-        # value should look exactly as the chmod numeric notation, i.e. Unix chmod "777"
-        # (a=rwx) should have the integer value 777.
+        # Integer representation of mode bits to use on created files by default. Must
+        # be a value between 01 and 0777 (octal). If 0 or not set, it will default to
+        # 0444. Directories within the path are not affected by this setting. Notes *
+        # Internally, a umask of 0222 will be applied to any non-zero value. * This is
+        # an integer representation of the mode bits. So, the octal integer value should
+        # look exactly as the chmod numeric notation with a leading zero. Some examples:
+        # for chmod 777 (a=rwx), set to 0777 (octal) or 511 (base-10). For chmod 640 (u=
+        # rw,g=r), set to 0640 (octal) or 416 (base-10). For chmod 755 (u=rwx,g=rx,o=rx),
+        # set to 0755 (octal) or 493 (base-10). * This might be in conflict with other
+        # options that affect the file mode, like fsGroup, and the result can be other
+        # mode bits set.
         # Corresponds to the JSON property `defaultMode`
         # @return [Fixnum]
         attr_accessor :default_mode

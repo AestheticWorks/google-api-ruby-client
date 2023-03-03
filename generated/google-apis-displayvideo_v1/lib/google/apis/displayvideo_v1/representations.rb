@@ -154,6 +154,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AudioContentTypeAssignedTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AudioContentTypeTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AudioVideoOffset
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -430,6 +442,42 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ContactInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContactInfoList
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentDurationAssignedTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentDurationTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentGenreAssignedTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentGenreTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ContentInstreamPositionAssignedTargetingOptionDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -449,6 +497,18 @@ module Google
       end
       
       class ContentOutstreamPositionTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentStreamTypeAssignedTargetingOptionDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ContentStreamTypeTargetingOptionDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -503,6 +563,24 @@ module Google
       end
       
       class CustomBiddingAlgorithm
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CustomBiddingModelReadinessState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CustomBiddingScript
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CustomBiddingScriptRef
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -629,6 +707,42 @@ module Google
       end
       
       class DoubleVerifyVideoViewability
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditCustomerMatchMembersRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditCustomerMatchMembersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditGuaranteedOrderReadAccessorsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditGuaranteedOrderReadAccessorsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditInventorySourceReadWriteAccessorsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -784,6 +898,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GuaranteedOrder
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GuaranteedOrderStatus
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class HouseholdIncomeAssignedTargetingOptionDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -833,6 +959,24 @@ module Google
       end
       
       class InventorySource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InventorySourceAccessors
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InventorySourceAccessorsAdvertiserAccessors
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InventorySourceAccessorsPartnerAccessor
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -982,6 +1126,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListCustomBiddingScriptsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListCustomListsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -995,6 +1145,12 @@ module Google
       end
       
       class ListGoogleAudiencesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListGuaranteedOrdersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1133,6 +1289,12 @@ module Google
       end
       
       class MobileApp
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MobileDeviceIdList
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1373,6 +1535,12 @@ module Google
       end
       
       class ReviewStatusInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ScriptError
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1742,6 +1910,8 @@ module Google
           property :assigned_targeting_option_id, as: 'assignedTargetingOptionId'
           property :audience_group_details, as: 'audienceGroupDetails', class: Google::Apis::DisplayvideoV1::AudienceGroupAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AudienceGroupAssignedTargetingOptionDetails::Representation
       
+          property :audio_content_type_details, as: 'audioContentTypeDetails', class: Google::Apis::DisplayvideoV1::AudioContentTypeAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AudioContentTypeAssignedTargetingOptionDetails::Representation
+      
           property :authorized_seller_status_details, as: 'authorizedSellerStatusDetails', class: Google::Apis::DisplayvideoV1::AuthorizedSellerStatusAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AuthorizedSellerStatusAssignedTargetingOptionDetails::Representation
       
           property :browser_details, as: 'browserDetails', class: Google::Apis::DisplayvideoV1::BrowserAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::BrowserAssignedTargetingOptionDetails::Representation
@@ -1754,9 +1924,15 @@ module Google
       
           property :channel_details, as: 'channelDetails', class: Google::Apis::DisplayvideoV1::ChannelAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ChannelAssignedTargetingOptionDetails::Representation
       
+          property :content_duration_details, as: 'contentDurationDetails', class: Google::Apis::DisplayvideoV1::ContentDurationAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentDurationAssignedTargetingOptionDetails::Representation
+      
+          property :content_genre_details, as: 'contentGenreDetails', class: Google::Apis::DisplayvideoV1::ContentGenreAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentGenreAssignedTargetingOptionDetails::Representation
+      
           property :content_instream_position_details, as: 'contentInstreamPositionDetails', class: Google::Apis::DisplayvideoV1::ContentInstreamPositionAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentInstreamPositionAssignedTargetingOptionDetails::Representation
       
           property :content_outstream_position_details, as: 'contentOutstreamPositionDetails', class: Google::Apis::DisplayvideoV1::ContentOutstreamPositionAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentOutstreamPositionAssignedTargetingOptionDetails::Representation
+      
+          property :content_stream_type_details, as: 'contentStreamTypeDetails', class: Google::Apis::DisplayvideoV1::ContentStreamTypeAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentStreamTypeAssignedTargetingOptionDetails::Representation
       
           property :day_and_time_details, as: 'dayAndTimeDetails', class: Google::Apis::DisplayvideoV1::DayAndTimeAssignedTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::DayAndTimeAssignedTargetingOptionDetails::Representation
       
@@ -1847,6 +2023,21 @@ module Google
       
           property :included_google_audience_group, as: 'includedGoogleAudienceGroup', class: Google::Apis::DisplayvideoV1::GoogleAudienceGroup, decorator: Google::Apis::DisplayvideoV1::GoogleAudienceGroup::Representation
       
+        end
+      end
+      
+      class AudioContentTypeAssignedTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :audio_content_type, as: 'audioContentType'
+          property :targeting_option_id, as: 'targetingOptionId'
+        end
+      end
+      
+      class AudioContentTypeTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :audio_content_type, as: 'audioContentType'
         end
       end
       
@@ -2287,6 +2478,57 @@ module Google
         end
       end
       
+      class ContactInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :country_code, as: 'countryCode'
+          collection :hashed_emails, as: 'hashedEmails'
+          property :hashed_first_name, as: 'hashedFirstName'
+          property :hashed_last_name, as: 'hashedLastName'
+          collection :hashed_phone_numbers, as: 'hashedPhoneNumbers'
+          collection :zip_codes, as: 'zipCodes'
+        end
+      end
+      
+      class ContactInfoList
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :contact_infos, as: 'contactInfos', class: Google::Apis::DisplayvideoV1::ContactInfo, decorator: Google::Apis::DisplayvideoV1::ContactInfo::Representation
+      
+        end
+      end
+      
+      class ContentDurationAssignedTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_duration, as: 'contentDuration'
+          property :targeting_option_id, as: 'targetingOptionId'
+        end
+      end
+      
+      class ContentDurationTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_duration, as: 'contentDuration'
+        end
+      end
+      
+      class ContentGenreAssignedTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :negative, as: 'negative'
+          property :targeting_option_id, as: 'targetingOptionId'
+        end
+      end
+      
+      class ContentGenreTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+        end
+      end
+      
       class ContentInstreamPositionAssignedTargetingOptionDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2316,6 +2558,21 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :content_outstream_position, as: 'contentOutstreamPosition'
+        end
+      end
+      
+      class ContentStreamTypeAssignedTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_stream_type, as: 'contentStreamType'
+          property :targeting_option_id, as: 'targetingOptionId'
+        end
+      end
+      
+      class ContentStreamTypeTargetingOptionDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_stream_type, as: 'contentStreamType'
         end
       end
       
@@ -2462,9 +2719,42 @@ module Google
           property :custom_bidding_algorithm_type, as: 'customBiddingAlgorithmType'
           property :display_name, as: 'displayName'
           property :entity_status, as: 'entityStatus'
+          collection :model_readiness, as: 'modelReadiness', class: Google::Apis::DisplayvideoV1::CustomBiddingModelReadinessState, decorator: Google::Apis::DisplayvideoV1::CustomBiddingModelReadinessState::Representation
+      
           property :name, as: 'name'
           property :partner_id, :numeric_string => true, as: 'partnerId'
           collection :shared_advertiser_ids, as: 'sharedAdvertiserIds'
+        end
+      end
+      
+      class CustomBiddingModelReadinessState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :advertiser_id, :numeric_string => true, as: 'advertiserId'
+          property :readiness_state, as: 'readinessState'
+        end
+      end
+      
+      class CustomBiddingScript
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :active, as: 'active'
+          property :create_time, as: 'createTime'
+          property :custom_bidding_algorithm_id, :numeric_string => true, as: 'customBiddingAlgorithmId'
+          property :custom_bidding_script_id, :numeric_string => true, as: 'customBiddingScriptId'
+          collection :errors, as: 'errors', class: Google::Apis::DisplayvideoV1::ScriptError, decorator: Google::Apis::DisplayvideoV1::ScriptError::Representation
+      
+          property :name, as: 'name'
+          property :script, as: 'script', class: Google::Apis::DisplayvideoV1::CustomBiddingScriptRef, decorator: Google::Apis::DisplayvideoV1::CustomBiddingScriptRef::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class CustomBiddingScriptRef
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :resource_name, as: 'resourceName'
         end
       end
       
@@ -2649,6 +2939,60 @@ module Google
         end
       end
       
+      class EditCustomerMatchMembersRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :added_contact_info_list, as: 'addedContactInfoList', class: Google::Apis::DisplayvideoV1::ContactInfoList, decorator: Google::Apis::DisplayvideoV1::ContactInfoList::Representation
+      
+          property :added_mobile_device_id_list, as: 'addedMobileDeviceIdList', class: Google::Apis::DisplayvideoV1::MobileDeviceIdList, decorator: Google::Apis::DisplayvideoV1::MobileDeviceIdList::Representation
+      
+          property :advertiser_id, :numeric_string => true, as: 'advertiserId'
+        end
+      end
+      
+      class EditCustomerMatchMembersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :first_and_third_party_audience_id, :numeric_string => true, as: 'firstAndThirdPartyAudienceId'
+        end
+      end
+      
+      class EditGuaranteedOrderReadAccessorsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :added_advertisers, as: 'addedAdvertisers'
+          property :partner_id, :numeric_string => true, as: 'partnerId'
+          property :read_access_inherited, as: 'readAccessInherited'
+          collection :removed_advertisers, as: 'removedAdvertisers'
+        end
+      end
+      
+      class EditGuaranteedOrderReadAccessorsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :read_access_inherited, as: 'readAccessInherited'
+          collection :read_advertiser_ids, as: 'readAdvertiserIds'
+        end
+      end
+      
+      class EditInventorySourceReadWriteAccessorsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :advertisers_update, as: 'advertisersUpdate', class: Google::Apis::DisplayvideoV1::EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate, decorator: Google::Apis::DisplayvideoV1::EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate::Representation
+      
+          property :assign_partner, as: 'assignPartner'
+          property :partner_id, :numeric_string => true, as: 'partnerId'
+        end
+      end
+      
+      class EditInventorySourceReadWriteAccessorsRequestAdvertisersUpdate
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :added_advertisers, as: 'addedAdvertisers'
+          collection :removed_advertisers, as: 'removedAdvertisers'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2724,8 +3068,11 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :active_display_audience_size, :numeric_string => true, as: 'activeDisplayAudienceSize'
+          property :app_id, as: 'appId'
           property :audience_source, as: 'audienceSource'
           property :audience_type, as: 'audienceType'
+          property :contact_info_list, as: 'contactInfoList', class: Google::Apis::DisplayvideoV1::ContactInfoList, decorator: Google::Apis::DisplayvideoV1::ContactInfoList::Representation
+      
           property :description, as: 'description'
           property :display_audience_size, :numeric_string => true, as: 'displayAudienceSize'
           property :display_desktop_audience_size, :numeric_string => true, as: 'displayDesktopAudienceSize'
@@ -2736,6 +3083,8 @@ module Google
           property :first_and_third_party_audience_type, as: 'firstAndThirdPartyAudienceType'
           property :gmail_audience_size, :numeric_string => true, as: 'gmailAudienceSize'
           property :membership_duration_days, :numeric_string => true, as: 'membershipDurationDays'
+          property :mobile_device_id_list, as: 'mobileDeviceIdList', class: Google::Apis::DisplayvideoV1::MobileDeviceIdList, decorator: Google::Apis::DisplayvideoV1::MobileDeviceIdList::Representation
+      
           property :name, as: 'name'
           property :youtube_audience_size, :numeric_string => true, as: 'youtubeAudienceSize'
         end
@@ -2872,6 +3221,36 @@ module Google
         end
       end
       
+      class GuaranteedOrder
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :default_advertiser_id, :numeric_string => true, as: 'defaultAdvertiserId'
+          property :default_campaign_id, :numeric_string => true, as: 'defaultCampaignId'
+          property :display_name, as: 'displayName'
+          property :exchange, as: 'exchange'
+          property :guaranteed_order_id, as: 'guaranteedOrderId'
+          property :legacy_guaranteed_order_id, as: 'legacyGuaranteedOrderId'
+          property :name, as: 'name'
+          property :publisher_name, as: 'publisherName'
+          property :read_access_inherited, as: 'readAccessInherited'
+          collection :read_advertiser_ids, as: 'readAdvertiserIds'
+          property :read_write_advertiser_id, :numeric_string => true, as: 'readWriteAdvertiserId'
+          property :read_write_partner_id, :numeric_string => true, as: 'readWritePartnerId'
+          property :status, as: 'status', class: Google::Apis::DisplayvideoV1::GuaranteedOrderStatus, decorator: Google::Apis::DisplayvideoV1::GuaranteedOrderStatus::Representation
+      
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class GuaranteedOrderStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config_status, as: 'configStatus'
+          property :entity_pause_reason, as: 'entityPauseReason'
+          property :entity_status, as: 'entityStatus'
+        end
+      end
+      
       class HouseholdIncomeAssignedTargetingOptionDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2905,6 +3284,7 @@ module Google
           property :advertiser_id, :numeric_string => true, as: 'advertiserId'
           property :bid_strategy, as: 'bidStrategy', class: Google::Apis::DisplayvideoV1::BiddingStrategy, decorator: Google::Apis::DisplayvideoV1::BiddingStrategy::Representation
       
+          property :billable_outcome, as: 'billableOutcome'
           property :budget, as: 'budget', class: Google::Apis::DisplayvideoV1::InsertionOrderBudget, decorator: Google::Apis::DisplayvideoV1::InsertionOrderBudget::Representation
       
           property :campaign_id, :numeric_string => true, as: 'campaignId'
@@ -2923,6 +3303,7 @@ module Google
       
           property :performance_goal, as: 'performanceGoal', class: Google::Apis::DisplayvideoV1::PerformanceGoal, decorator: Google::Apis::DisplayvideoV1::PerformanceGoal::Representation
       
+          property :reservation_type, as: 'reservationType'
           property :update_time, as: 'updateTime'
         end
       end
@@ -2986,17 +3367,48 @@ module Google
           property :delivery_method, as: 'deliveryMethod'
           property :display_name, as: 'displayName'
           property :exchange, as: 'exchange'
+          property :guaranteed_order_id, as: 'guaranteedOrderId'
           property :inventory_source_id, :numeric_string => true, as: 'inventorySourceId'
+          property :inventory_source_product_type, as: 'inventorySourceProductType'
           property :inventory_source_type, as: 'inventorySourceType'
           property :name, as: 'name'
           property :publisher_name, as: 'publisherName'
           property :rate_details, as: 'rateDetails', class: Google::Apis::DisplayvideoV1::RateDetails, decorator: Google::Apis::DisplayvideoV1::RateDetails::Representation
       
+          collection :read_advertiser_ids, as: 'readAdvertiserIds'
+          collection :read_partner_ids, as: 'readPartnerIds'
+          property :read_write_accessors, as: 'readWriteAccessors', class: Google::Apis::DisplayvideoV1::InventorySourceAccessors, decorator: Google::Apis::DisplayvideoV1::InventorySourceAccessors::Representation
+      
           property :status, as: 'status', class: Google::Apis::DisplayvideoV1::InventorySourceStatus, decorator: Google::Apis::DisplayvideoV1::InventorySourceStatus::Representation
       
+          property :sub_site_property_id, :numeric_string => true, as: 'subSitePropertyId'
           property :time_range, as: 'timeRange', class: Google::Apis::DisplayvideoV1::TimeRange, decorator: Google::Apis::DisplayvideoV1::TimeRange::Representation
       
           property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class InventorySourceAccessors
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :advertisers, as: 'advertisers', class: Google::Apis::DisplayvideoV1::InventorySourceAccessorsAdvertiserAccessors, decorator: Google::Apis::DisplayvideoV1::InventorySourceAccessorsAdvertiserAccessors::Representation
+      
+          property :partner, as: 'partner', class: Google::Apis::DisplayvideoV1::InventorySourceAccessorsPartnerAccessor, decorator: Google::Apis::DisplayvideoV1::InventorySourceAccessorsPartnerAccessor::Representation
+      
+        end
+      end
+      
+      class InventorySourceAccessorsAdvertiserAccessors
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :advertiser_ids, as: 'advertiserIds'
+        end
+      end
+      
+      class InventorySourceAccessorsPartnerAccessor
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :partner_id, :numeric_string => true, as: 'partnerId'
         end
       end
       
@@ -3124,6 +3536,7 @@ module Google
           collection :creative_ids, as: 'creativeIds'
           property :display_name, as: 'displayName'
           property :entity_status, as: 'entityStatus'
+          property :exclude_new_exchanges, as: 'excludeNewExchanges'
           property :flight, as: 'flight', class: Google::Apis::DisplayvideoV1::LineItemFlight, decorator: Google::Apis::DisplayvideoV1::LineItemFlight::Representation
       
           property :frequency_cap, as: 'frequencyCap', class: Google::Apis::DisplayvideoV1::FrequencyCap, decorator: Google::Apis::DisplayvideoV1::FrequencyCap::Representation
@@ -3143,6 +3556,7 @@ module Google
       
           property :partner_revenue_model, as: 'partnerRevenueModel', class: Google::Apis::DisplayvideoV1::PartnerRevenueModel, decorator: Google::Apis::DisplayvideoV1::PartnerRevenueModel::Representation
       
+          property :reservation_type, as: 'reservationType'
           property :targeting_expansion, as: 'targetingExpansion', class: Google::Apis::DisplayvideoV1::TargetingExpansionConfig, decorator: Google::Apis::DisplayvideoV1::TargetingExpansionConfig::Representation
       
           property :update_time, as: 'updateTime'
@@ -3259,6 +3673,15 @@ module Google
         end
       end
       
+      class ListCustomBiddingScriptsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :custom_bidding_scripts, as: 'customBiddingScripts', class: Google::Apis::DisplayvideoV1::CustomBiddingScript, decorator: Google::Apis::DisplayvideoV1::CustomBiddingScript::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
       class ListCustomListsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -3281,6 +3704,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :google_audiences, as: 'googleAudiences', class: Google::Apis::DisplayvideoV1::GoogleAudience, decorator: Google::Apis::DisplayvideoV1::GoogleAudience::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListGuaranteedOrdersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :guaranteed_orders, as: 'guaranteedOrders', class: Google::Apis::DisplayvideoV1::GuaranteedOrder, decorator: Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -3475,6 +3907,7 @@ module Google
           property :custom_bidding_algorithm_id, :numeric_string => true, as: 'customBiddingAlgorithmId'
           property :max_average_cpm_bid_amount_micros, :numeric_string => true, as: 'maxAverageCpmBidAmountMicros'
           property :performance_goal_type, as: 'performanceGoalType'
+          property :raise_bid_for_deals, as: 'raiseBidForDeals'
         end
       end
       
@@ -3493,6 +3926,13 @@ module Google
           property :display_name, as: 'displayName'
           property :platform, as: 'platform'
           property :publisher, as: 'publisher'
+        end
+      end
+      
+      class MobileDeviceIdList
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :mobile_device_ids, as: 'mobileDeviceIds'
         end
       end
       
@@ -3866,6 +4306,16 @@ module Google
         end
       end
       
+      class ScriptError
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :column, :numeric_string => true, as: 'column'
+          property :error_code, as: 'errorCode'
+          property :error_message, as: 'errorMessage'
+          property :line, :numeric_string => true, as: 'line'
+        end
+      end
+      
       class SdfConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -3975,6 +4425,8 @@ module Google
       
           property :app_category_details, as: 'appCategoryDetails', class: Google::Apis::DisplayvideoV1::AppCategoryTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AppCategoryTargetingOptionDetails::Representation
       
+          property :audio_content_type_details, as: 'audioContentTypeDetails', class: Google::Apis::DisplayvideoV1::AudioContentTypeTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AudioContentTypeTargetingOptionDetails::Representation
+      
           property :authorized_seller_status_details, as: 'authorizedSellerStatusDetails', class: Google::Apis::DisplayvideoV1::AuthorizedSellerStatusTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::AuthorizedSellerStatusTargetingOptionDetails::Representation
       
           property :browser_details, as: 'browserDetails', class: Google::Apis::DisplayvideoV1::BrowserTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::BrowserTargetingOptionDetails::Representation
@@ -3985,9 +4437,15 @@ module Google
       
           property :category_details, as: 'categoryDetails', class: Google::Apis::DisplayvideoV1::CategoryTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::CategoryTargetingOptionDetails::Representation
       
+          property :content_duration_details, as: 'contentDurationDetails', class: Google::Apis::DisplayvideoV1::ContentDurationTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentDurationTargetingOptionDetails::Representation
+      
+          property :content_genre_details, as: 'contentGenreDetails', class: Google::Apis::DisplayvideoV1::ContentGenreTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentGenreTargetingOptionDetails::Representation
+      
           property :content_instream_position_details, as: 'contentInstreamPositionDetails', class: Google::Apis::DisplayvideoV1::ContentInstreamPositionTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentInstreamPositionTargetingOptionDetails::Representation
       
           property :content_outstream_position_details, as: 'contentOutstreamPositionDetails', class: Google::Apis::DisplayvideoV1::ContentOutstreamPositionTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentOutstreamPositionTargetingOptionDetails::Representation
+      
+          property :content_stream_type_details, as: 'contentStreamTypeDetails', class: Google::Apis::DisplayvideoV1::ContentStreamTypeTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::ContentStreamTypeTargetingOptionDetails::Representation
       
           property :device_make_model_details, as: 'deviceMakeModelDetails', class: Google::Apis::DisplayvideoV1::DeviceMakeModelTargetingOptionDetails, decorator: Google::Apis::DisplayvideoV1::DeviceMakeModelTargetingOptionDetails::Representation
       

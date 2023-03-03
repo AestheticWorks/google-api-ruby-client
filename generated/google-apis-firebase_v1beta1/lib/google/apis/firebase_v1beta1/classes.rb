@@ -152,6 +152,13 @@ module Google
       class AnalyticsProperty
         include Google::Apis::Core::Hashable
       
+        # Output only. The ID of the [Google Analytics account](https://www.google.com/
+        # analytics/) for the Google Analytics property associated with the specified
+        # FirebaseProject.
+        # Corresponds to the JSON property `analyticsAccountId`
+        # @return [String]
+        attr_accessor :analytics_account_id
+      
         # The display name of the Google Analytics property associated with the
         # specified `FirebaseProject`.
         # Corresponds to the JSON property `displayName`
@@ -174,6 +181,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @analytics_account_id = args[:analytics_account_id] if args.key?(:analytics_account_id)
           @display_name = args[:display_name] if args.key?(:display_name)
           @id = args[:id] if args.key?(:id)
         end
@@ -183,9 +191,27 @@ module Google
       class AndroidApp
         include Google::Apis::Core::Hashable
       
-        # Immutable. The globally unique, Firebase-assigned identifier for the `
-        # AndroidApp`. This identifier should be treated as an opaque token, as the data
-        # format is not specified.
+        # The globally unique, Google-assigned identifier (UID) for the Firebase API key
+        # associated with the `AndroidApp`. Be aware that this value is the UID of the
+        # API key, _not_ the [`keyString`](https://cloud.google.com/api-keys/docs/
+        # reference/rest/v2/projects.locations.keys#Key.FIELDS.key_string) of the API
+        # key. The `keyString` is the value that can be found in the App's [
+        # configuration artifact](../../rest/v1beta1/projects.androidApps/getConfig). If
+        # `api_key_id` is not set in requests to [`androidApps.Create`](../../rest/
+        # v1beta1/projects.androidApps/create), then Firebase automatically associates
+        # an `api_key_id` with the `AndroidApp`. This auto-associated key may be an
+        # existing valid key or, if no valid key exists, a new one will be provisioned.
+        # In patch requests, `api_key_id` cannot be set to an empty value, and the new
+        # UID must have no restrictions or only have restrictions that are valid for the
+        # associated `AndroidApp`. We recommend using the [Google Cloud Console](https://
+        # console.cloud.google.com/apis/credentials) to manage API keys.
+        # Corresponds to the JSON property `apiKeyId`
+        # @return [String]
+        attr_accessor :api_key_id
+      
+        # Output only. Immutable. The globally unique, Firebase-assigned identifier for
+        # the `AndroidApp`. This identifier should be treated as an opaque token, as the
+        # data format is not specified.
         # Corresponds to the JSON property `appId`
         # @return [String]
         attr_accessor :app_id
@@ -194,6 +220,21 @@ module Google
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # This checksum is computed by the server based on the value of other fields,
+        # and it may be sent with update requests to ensure the client has an up-to-date
+        # value before proceeding. Learn more about `etag` in Google's [AIP-154 standard]
+        # (https://google.aip.dev/154#declarative-friendly-resources). This etag is
+        # strongly validated.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Output only. Timestamp of when the App will be considered expired and cannot
+        # be undeleted. This value is only provided if the App is in the `DELETED` state.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
       
         # The resource name of the AndroidApp, in the format: projects/
         # PROJECT_IDENTIFIER/androidApps/APP_ID * PROJECT_IDENTIFIER: the parent Project'
@@ -214,11 +255,26 @@ module Google
         # @return [String]
         attr_accessor :package_name
       
-        # Immutable. A user-assigned unique identifier of the parent FirebaseProject for
-        # the `AndroidApp`.
+        # Output only. Immutable. A user-assigned unique identifier of the parent
+        # FirebaseProject for the `AndroidApp`.
         # Corresponds to the JSON property `projectId`
         # @return [String]
         attr_accessor :project_id
+      
+        # The SHA1 certificate hashes for the AndroidApp.
+        # Corresponds to the JSON property `sha1Hashes`
+        # @return [Array<String>]
+        attr_accessor :sha1_hashes
+      
+        # The SHA256 certificate hashes for the AndroidApp.
+        # Corresponds to the JSON property `sha256Hashes`
+        # @return [Array<String>]
+        attr_accessor :sha256_hashes
+      
+        # Output only. The lifecycle state of the App.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
       
         def initialize(**args)
            update!(**args)
@@ -226,11 +282,17 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @api_key_id = args[:api_key_id] if args.key?(:api_key_id)
           @app_id = args[:app_id] if args.key?(:app_id)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
           @name = args[:name] if args.key?(:name)
           @package_name = args[:package_name] if args.key?(:package_name)
           @project_id = args[:project_id] if args.key?(:project_id)
+          @sha1_hashes = args[:sha1_hashes] if args.key?(:sha1_hashes)
+          @sha256_hashes = args[:sha256_hashes] if args.key?(:sha256_hashes)
+          @state = args[:state] if args.key?(:state)
         end
       end
       
@@ -265,41 +327,42 @@ module Google
       class DefaultResources
         include Google::Apis::Core::Hashable
       
-        # The default Firebase Hosting site name, in the format: PROJECT_ID Though rare,
-        # your `projectId` might already be used as the name for an existing Hosting
-        # site in another project (learn more about creating non-default, [additional
-        # sites](https://firebase.google.com/docs/hosting/multisites)). In these cases,
-        # your `projectId` is appended with a hyphen then five alphanumeric characters
-        # to create your default Hosting site name. For example, if your `projectId` is `
-        # myproject123`, your default Hosting site name might be: `myproject123-a5c16`
+        # Output only. The default Firebase Hosting site name, in the format: PROJECT_ID
+        # Though rare, your `projectId` might already be used as the name for an
+        # existing Hosting site in another project (learn more about creating non-
+        # default, [additional sites](https://firebase.google.com/docs/hosting/
+        # multisites)). In these cases, your `projectId` is appended with a hyphen then
+        # five alphanumeric characters to create your default Hosting site name. For
+        # example, if your `projectId` is `myproject123`, your default Hosting site name
+        # might be: `myproject123-a5c16`
         # Corresponds to the JSON property `hostingSite`
         # @return [String]
         attr_accessor :hosting_site
       
-        # The ID of the Project's default GCP resource location. The location is one of
-        # the available [GCP resource locations](https://firebase.google.com/docs/
-        # projects/locations). This field is omitted if the default GCP resource
-        # location has not been finalized yet. To set a Project's default GCP resource
-        # location, call [`FinalizeDefaultLocation`](../projects.defaultLocation/
-        # finalize) after you add Firebase resources to the Project.
+        # Output only. The ID of the Project's default GCP resource location. The
+        # location is one of the available [GCP resource locations](https://firebase.
+        # google.com/docs/projects/locations). This field is omitted if the default GCP
+        # resource location has not been finalized yet. To set a Project's default GCP
+        # resource location, call [`FinalizeDefaultLocation`](../projects.
+        # defaultLocation/finalize) after you add Firebase resources to the Project.
         # Corresponds to the JSON property `locationId`
         # @return [String]
         attr_accessor :location_id
       
-        # The default Firebase Realtime Database instance name, in the format:
-        # PROJECT_ID Though rare, your `projectId` might already be used as the name for
-        # an existing Realtime Database instance in another project (learn more about [
-        # database sharding](https://firebase.google.com/docs/database/usage/sharding)).
-        # In these cases, your `projectId` is appended with a hyphen then five
-        # alphanumeric characters to create your default Realtime Database instance name.
-        # For example, if your `projectId` is `myproject123`, your default database
-        # instance name might be: `myproject123-a5c16`
+        # Output only. The default Firebase Realtime Database instance name, in the
+        # format: PROJECT_ID Though rare, your `projectId` might already be used as the
+        # name for an existing Realtime Database instance in another project (learn more
+        # about [database sharding](https://firebase.google.com/docs/database/usage/
+        # sharding)). In these cases, your `projectId` is appended with a hyphen then
+        # five alphanumeric characters to create your default Realtime Database instance
+        # name. For example, if your `projectId` is `myproject123`, your default
+        # database instance name might be: `myproject123-a5c16`
         # Corresponds to the JSON property `realtimeDatabaseInstance`
         # @return [String]
         attr_accessor :realtime_database_instance
       
-        # The default Cloud Storage for Firebase storage bucket, in the format:
-        # PROJECT_ID.appspot.com
+        # Output only. The default Cloud Storage for Firebase storage bucket, in the
+        # format: PROJECT_ID.appspot.com
         # Corresponds to the JSON property `storageBucket`
         # @return [String]
         attr_accessor :storage_bucket
@@ -320,8 +383,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -359,6 +421,23 @@ module Google
       class FirebaseAppInfo
         include Google::Apis::Core::Hashable
       
+        # The globally unique, Google-assigned identifier (UID) for the Firebase API key
+        # associated with the App. Be aware that this value is the UID of the API key,
+        # _not_ the [`keyString`](https://cloud.google.com/api-keys/docs/reference/rest/
+        # v2/projects.locations.keys#Key.FIELDS.key_string) of the API key. The `
+        # keyString` is the value that can be found in the App's configuration artifact (
+        # [`AndroidApp`](../../rest/v1beta1/projects.androidApps/getConfig) | [`IosApp`](
+        # ../../rest/v1beta1/projects.iosApps/getConfig) | [`WebApp`](../../rest/v1beta1/
+        # projects.webApps/getConfig)). If `api_key_id` is not set in requests to create
+        # the App ([`AndroidApp`](../../rest/v1beta1/projects.androidApps/create) | [`
+        # IosApp`](../../rest/v1beta1/projects.iosApps/create) | [`WebApp`](../../rest/
+        # v1beta1/projects.webApps/create)), then Firebase automatically associates an `
+        # api_key_id` with the App. This auto-associated key may be an existing valid
+        # key or, if no valid key exists, a new one will be provisioned.
+        # Corresponds to the JSON property `apiKeyId`
+        # @return [String]
+        attr_accessor :api_key_id
+      
         # Output only. Immutable. The globally unique, Firebase-assigned identifier for
         # the `WebApp`. This identifier should be treated as an opaque token, as the
         # data format is not specified.
@@ -370,6 +449,12 @@ module Google
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # Output only. Timestamp of when the App will be considered expired and cannot
+        # be undeleted. This value is only provided if the App is in the `DELETED` state.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
       
         # The resource name of the Firebase App, in the format: projects/PROJECT_ID /
         # iosApps/APP_ID or projects/PROJECT_ID/androidApps/APP_ID or projects/
@@ -394,17 +479,25 @@ module Google
         # @return [String]
         attr_accessor :platform
       
+        # Output only. The lifecycle state of the App.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @api_key_id = args[:api_key_id] if args.key?(:api_key_id)
           @app_id = args[:app_id] if args.key?(:app_id)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
           @name = args[:name] if args.key?(:name)
           @namespace = args[:namespace] if args.key?(:namespace)
           @platform = args[:platform] if args.key?(:platform)
+          @state = args[:state] if args.key?(:state)
         end
       end
       
@@ -421,10 +514,27 @@ module Google
       class FirebaseProject
         include Google::Apis::Core::Hashable
       
+        # A set of user-defined annotations for the FirebaseProject. Learn more about
+        # annotations in Google's [AIP-128 standard](https://google.aip.dev/128#
+        # annotations). These annotations are intended solely for developers and client-
+        # side tools. Firebase services will not mutate this annotations set.
+        # Corresponds to the JSON property `annotations`
+        # @return [Hash<String,String>]
+        attr_accessor :annotations
+      
         # The user-assigned display name of the Project.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # This checksum is computed by the server based on the value of other fields,
+        # and it may be sent with update requests to ensure the client has an up-to-date
+        # value before proceeding. Learn more about `etag` in Google's [AIP-154 standard]
+        # (https://google.aip.dev/154#declarative-friendly-resources). This etag is
+        # strongly validated.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
       
         # The resource name of the Project, in the format: projects/PROJECT_IDENTIFIER
         # PROJECT_IDENTIFIER: the Project's [`ProjectNumber`](../projects#
@@ -437,17 +547,17 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Immutable. A user-assigned unique identifier for the Project. This identifier
-        # may appear in URLs or names for some Firebase resources associated with the
-        # Project, but it should generally be treated as a convenience alias to
-        # reference the Project.
+        # Output only. Immutable. A user-assigned unique identifier for the Project.
+        # This identifier may appear in URLs or names for some Firebase resources
+        # associated with the Project, but it should generally be treated as a
+        # convenience alias to reference the Project.
         # Corresponds to the JSON property `projectId`
         # @return [String]
         attr_accessor :project_id
       
-        # Immutable. The globally unique, Google-assigned canonical identifier for the
-        # Project. Use this identifier when configuring integrations and/or making API
-        # calls to Firebase or third-party services.
+        # Output only. Immutable. The globally unique, Google-assigned canonical
+        # identifier for the Project. Use this identifier when configuring integrations
+        # and/or making API calls to Firebase or third-party services.
         # Corresponds to the JSON property `projectNumber`
         # @return [Fixnum]
         attr_accessor :project_number
@@ -457,9 +567,7 @@ module Google
         # @return [Google::Apis::FirebaseV1beta1::DefaultResources]
         attr_accessor :resources
       
-        # Output only. The lifecycle state of the Project. Updates to the state must be
-        # performed via com.google.cloudresourcemanager.v1.Projects.DeleteProject and
-        # com.google.cloudresourcemanager.v1.Projects.UndeleteProject
+        # Output only. The lifecycle state of the Project.
         # Corresponds to the JSON property `state`
         # @return [String]
         attr_accessor :state
@@ -470,7 +578,9 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @annotations = args[:annotations] if args.key?(:annotations)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
           @name = args[:name] if args.key?(:name)
           @project_id = args[:project_id] if args.key?(:project_id)
           @project_number = args[:project_number] if args.key?(:project_number)
@@ -483,9 +593,27 @@ module Google
       class IosApp
         include Google::Apis::Core::Hashable
       
-        # Immutable. The globally unique, Firebase-assigned identifier for the `IosApp`.
-        # This identifier should be treated as an opaque token, as the data format is
-        # not specified.
+        # The globally unique, Google-assigned identifier (UID) for the Firebase API key
+        # associated with the `IosApp`. Be aware that this value is the UID of the API
+        # key, _not_ the [`keyString`](https://cloud.google.com/api-keys/docs/reference/
+        # rest/v2/projects.locations.keys#Key.FIELDS.key_string) of the API key. The `
+        # keyString` is the value that can be found in the App's [configuration artifact]
+        # (../../rest/v1beta1/projects.iosApps/getConfig). If `api_key_id` is not set in
+        # requests to [`iosApps.Create`](../../rest/v1beta1/projects.iosApps/create),
+        # then Firebase automatically associates an `api_key_id` with the `IosApp`. This
+        # auto-associated key may be an existing valid key or, if no valid key exists, a
+        # new one will be provisioned. In patch requests, `api_key_id` cannot be set to
+        # an empty value, and the new UID must have no restrictions or only have
+        # restrictions that are valid for the associated `IosApp`. We recommend using
+        # the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+        # to manage API keys.
+        # Corresponds to the JSON property `apiKeyId`
+        # @return [String]
+        attr_accessor :api_key_id
+      
+        # Output only. Immutable. The globally unique, Firebase-assigned identifier for
+        # the `IosApp`. This identifier should be treated as an opaque token, as the
+        # data format is not specified.
         # Corresponds to the JSON property `appId`
         # @return [String]
         attr_accessor :app_id
@@ -507,6 +635,21 @@ module Google
         # @return [String]
         attr_accessor :display_name
       
+        # This checksum is computed by the server based on the value of other fields,
+        # and it may be sent with update requests to ensure the client has an up-to-date
+        # value before proceeding. Learn more about `etag` in Google's [AIP-154 standard]
+        # (https://google.aip.dev/154#declarative-friendly-resources). This etag is
+        # strongly validated.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Output only. Timestamp of when the App will be considered expired and cannot
+        # be undeleted. This value is only provided if the App is in the `DELETED` state.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
+      
         # The resource name of the IosApp, in the format: projects/PROJECT_IDENTIFIER /
         # iosApps/APP_ID * PROJECT_IDENTIFIER: the parent Project's [`ProjectNumber`](../
         # projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`
@@ -520,11 +663,21 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Immutable. A user-assigned unique identifier of the parent FirebaseProject for
-        # the `IosApp`.
+        # Output only. Immutable. A user-assigned unique identifier of the parent
+        # FirebaseProject for the `IosApp`.
         # Corresponds to the JSON property `projectId`
         # @return [String]
         attr_accessor :project_id
+      
+        # Output only. The lifecycle state of the App.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # The Apple Developer Team ID associated with the App in the App Store.
+        # Corresponds to the JSON property `teamId`
+        # @return [String]
+        attr_accessor :team_id
       
         def initialize(**args)
            update!(**args)
@@ -532,12 +685,17 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @api_key_id = args[:api_key_id] if args.key?(:api_key_id)
           @app_id = args[:app_id] if args.key?(:app_id)
           @app_store_id = args[:app_store_id] if args.key?(:app_store_id)
           @bundle_id = args[:bundle_id] if args.key?(:bundle_id)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
           @name = args[:name] if args.key?(:name)
           @project_id = args[:project_id] if args.key?(:project_id)
+          @state = args[:state] if args.key?(:state)
+          @team_id = args[:team_id] if args.key?(:team_id)
         end
       end
       
@@ -870,6 +1028,25 @@ module Google
         end
       end
       
+      # Metadata about a long-running Product operation.
+      class ProductMetadata
+        include Google::Apis::Core::Hashable
+      
+        # List of warnings related to the associated operation.
+        # Corresponds to the JSON property `warningMessages`
+        # @return [Array<String>]
+        attr_accessor :warning_messages
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @warning_messages = args[:warning_messages] if args.key?(:warning_messages)
+        end
+      end
+      
       # A reference to a Google Cloud Platform (GCP) `Project`.
       class ProjectInfo
         include Google::Apis::Core::Hashable
@@ -931,6 +1108,144 @@ module Google
         # Update properties of this object
         def update!(**args)
           @analytics_property_id = args[:analytics_property_id] if args.key?(:analytics_property_id)
+        end
+      end
+      
+      # 
+      class RemoveAndroidAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # If set to true, and the App is not found, the request will succeed but no
+        # action will be taken on the server.
+        # Corresponds to the JSON property `allowMissing`
+        # @return [Boolean]
+        attr_accessor :allow_missing
+        alias_method :allow_missing?, :allow_missing
+      
+        # Checksum provided in the AndroidApp resource. If provided, this checksum
+        # ensures that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Determines whether to _immediately_ delete the AndroidApp. If set to true, the
+        # App is immediately deleted from the Project and cannot be restored to the
+        # Project. If not set, defaults to false, which means the App will be set to
+        # expire in 30 days. Within the 30 days, the App may be restored to the Project
+        # using UndeleteAndroidApp.
+        # Corresponds to the JSON property `immediate`
+        # @return [Boolean]
+        attr_accessor :immediate
+        alias_method :immediate?, :immediate
+      
+        # If set to true, the request is only validated. The App will _not_ be removed.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @allow_missing = args[:allow_missing] if args.key?(:allow_missing)
+          @etag = args[:etag] if args.key?(:etag)
+          @immediate = args[:immediate] if args.key?(:immediate)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+        end
+      end
+      
+      # 
+      class RemoveIosAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # If set to true, and the App is not found, the request will succeed but no
+        # action will be taken on the server.
+        # Corresponds to the JSON property `allowMissing`
+        # @return [Boolean]
+        attr_accessor :allow_missing
+        alias_method :allow_missing?, :allow_missing
+      
+        # Checksum provided in the IosApp resource. If provided, this checksum ensures
+        # that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Determines whether to _immediately_ delete the IosApp. If set to true, the App
+        # is immediately deleted from the Project and cannot be restored to the Project.
+        # If not set, defaults to false, which means the App will be set to expire in 30
+        # days. Within the 30 days, the App may be restored to the Project using
+        # UndeleteIosApp
+        # Corresponds to the JSON property `immediate`
+        # @return [Boolean]
+        attr_accessor :immediate
+        alias_method :immediate?, :immediate
+      
+        # If set to true, the request is only validated. The App will _not_ be removed.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @allow_missing = args[:allow_missing] if args.key?(:allow_missing)
+          @etag = args[:etag] if args.key?(:etag)
+          @immediate = args[:immediate] if args.key?(:immediate)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+        end
+      end
+      
+      # 
+      class RemoveWebAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # If set to true, and the App is not found, the request will succeed but no
+        # action will be taken on the server.
+        # Corresponds to the JSON property `allowMissing`
+        # @return [Boolean]
+        attr_accessor :allow_missing
+        alias_method :allow_missing?, :allow_missing
+      
+        # Checksum provided in the WebApp resource. If provided, this checksum ensures
+        # that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Determines whether to _immediately_ delete the WebApp. If set to true, the App
+        # is immediately deleted from the Project and cannot be restored to the Project.
+        # If not set, defaults to false, which means the App will be set to expire in 30
+        # days. Within the 30 days, the App may be restored to the Project using
+        # UndeleteWebApp
+        # Corresponds to the JSON property `immediate`
+        # @return [Boolean]
+        attr_accessor :immediate
+        alias_method :immediate?, :immediate
+      
+        # If set to true, the request is only validated. The App will _not_ be removed.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @allow_missing = args[:allow_missing] if args.key?(:allow_missing)
+          @etag = args[:etag] if args.key?(:etag)
+          @immediate = args[:immediate] if args.key?(:immediate)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
         end
       end
       
@@ -1105,7 +1420,7 @@ module Google
         # of the Google Analytics web stream associated with the Firebase Web App.
         # Firebase SDKs use this ID to interact with Google Analytics APIs. Learn more
         # about this ID and Google Analytics web streams in the [Analytics documentation]
-        # (https://support.google.com/analytics/topic/9303475).
+        # (https://support.google.com/analytics/answer/9304153).
         # Corresponds to the JSON property `measurementId`
         # @return [String]
         attr_accessor :measurement_id
@@ -1130,13 +1445,112 @@ module Google
         end
       end
       
+      # 
+      class UndeleteAndroidAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # Checksum provided in the AndroidApp resource. If provided, this checksum
+        # ensures that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # If set to true, the request is only validated. The App will _not_ be undeleted.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @etag = args[:etag] if args.key?(:etag)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+        end
+      end
+      
+      # 
+      class UndeleteIosAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # Checksum provided in the IosApp resource. If provided, this checksum ensures
+        # that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # If set to true, the request is only validated. The App will _not_ be undeleted.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @etag = args[:etag] if args.key?(:etag)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+        end
+      end
+      
+      # 
+      class UndeleteWebAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # Checksum provided in the WebApp resource. If provided, this checksum ensures
+        # that the client has an up-to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # If set to true, the request is only validated. The App will _not_ be undeleted.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @etag = args[:etag] if args.key?(:etag)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+        end
+      end
+      
       # Details of a Firebase App for the web.
       class WebApp
         include Google::Apis::Core::Hashable
       
-        # Immutable. The globally unique, Firebase-assigned identifier for the `WebApp`.
-        # This identifier should be treated as an opaque token, as the data format is
-        # not specified.
+        # The globally unique, Google-assigned identifier (UID) for the Firebase API key
+        # associated with the `WebApp`. Be aware that this value is the UID of the API
+        # key, _not_ the [`keyString`](https://cloud.google.com/api-keys/docs/reference/
+        # rest/v2/projects.locations.keys#Key.FIELDS.key_string) of the API key. The `
+        # keyString` is the value that can be found in the App's [configuration artifact]
+        # (../../rest/v1beta1/projects.webApps/getConfig). If `api_key_id` is not set in
+        # requests to [`webApps.Create`](../../rest/v1beta1/projects.webApps/create),
+        # then Firebase automatically associates an `api_key_id` with the `WebApp`. This
+        # auto-associated key may be an existing valid key or, if no valid key exists, a
+        # new one will be provisioned. In patch requests, `api_key_id` cannot be set to
+        # an empty value, and the new UID must have no restrictions or only have
+        # restrictions that are valid for the associated `WebApp`. We recommend using
+        # the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+        # to manage API keys.
+        # Corresponds to the JSON property `apiKeyId`
+        # @return [String]
+        attr_accessor :api_key_id
+      
+        # Output only. Immutable. The globally unique, Firebase-assigned identifier for
+        # the `WebApp`. This identifier should be treated as an opaque token, as the
+        # data format is not specified.
         # Corresponds to the JSON property `appId`
         # @return [String]
         attr_accessor :app_id
@@ -1151,6 +1565,21 @@ module Google
         # @return [String]
         attr_accessor :display_name
       
+        # This checksum is computed by the server based on the value of other fields,
+        # and it may be sent with update requests to ensure the client has an up-to-date
+        # value before proceeding. Learn more about `etag` in Google's [AIP-154 standard]
+        # (https://google.aip.dev/154#declarative-friendly-resources). This etag is
+        # strongly validated.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Output only. Timestamp of when the App will be considered expired and cannot
+        # be undeleted. This value is only provided if the App is in the `DELETED` state.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
+      
         # The resource name of the WebApp, in the format: projects/PROJECT_IDENTIFIER /
         # webApps/APP_ID * PROJECT_IDENTIFIER: the parent Project's [`ProjectNumber`](../
         # projects#FirebaseProject.FIELDS.project_number) ***(recommended)*** or its [`
@@ -1164,11 +1593,16 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Immutable. A user-assigned unique identifier of the parent FirebaseProject for
-        # the `WebApp`.
+        # Output only. Immutable. A user-assigned unique identifier of the parent
+        # FirebaseProject for the `WebApp`.
         # Corresponds to the JSON property `projectId`
         # @return [String]
         attr_accessor :project_id
+      
+        # Output only. The lifecycle state of the App.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
       
         # Output only. Immutable. A unique, Firebase-assigned identifier for the `WebApp`
         # . This identifier is only used to populate the `namespace` value for the `
@@ -1185,11 +1619,15 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @api_key_id = args[:api_key_id] if args.key?(:api_key_id)
           @app_id = args[:app_id] if args.key?(:app_id)
           @app_urls = args[:app_urls] if args.key?(:app_urls)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
           @name = args[:name] if args.key?(:name)
           @project_id = args[:project_id] if args.key?(:project_id)
+          @state = args[:state] if args.key?(:state)
           @web_id = args[:web_id] if args.key?(:web_id)
         end
       end
@@ -1198,7 +1636,11 @@ module Google
       class WebAppConfig
         include Google::Apis::Core::Hashable
       
-        # The API key associated with the `WebApp`.
+        # The [`keyString`](https://cloud.google.com/api-keys/docs/reference/rest/v2/
+        # projects.locations.keys#Key.FIELDS.key_string) of the API key associated with
+        # the `WebApp`. Note that this value is _not_ the [`apiKeyId`](../projects.
+        # webApps#WebApp.FIELDS.api_key_id) (the UID) of the API key associated with the
+        # `WebApp`.
         # Corresponds to the JSON property `apiKey`
         # @return [String]
         attr_accessor :api_key
@@ -1234,8 +1676,8 @@ module Google
         # Google Analytics APIs. This field is only present if the `WebApp` is linked to
         # a web stream in a Google Analytics App + Web property. Learn more about this
         # ID and Google Analytics web streams in the [Analytics documentation](https://
-        # support.google.com/analytics/topic/9303475). To generate a `measurementId` and
-        # link the `WebApp` with a Google Analytics web stream, call [`
+        # support.google.com/analytics/answer/9304153). To generate a `measurementId`
+        # and link the `WebApp` with a Google Analytics web stream, call [`
         # AddGoogleAnalytics`](../../v1beta1/projects/addGoogleAnalytics). For apps
         # using the Firebase JavaScript SDK v7.20.0 and later, Firebase dynamically
         # fetches the `measurementId` when your app initializes Analytics. Having this

@@ -70,6 +70,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ApnsCertificateExpirationInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AppMakerSqlSetupNotification
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -220,7 +226,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MandatoryServiceAnnouncement
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class MatchInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MergeInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -239,6 +257,12 @@ module Google
       end
       
       class PredefinedDetectorInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PrimaryAdminChangedEvent
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -274,6 +298,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SsoProfileCreatedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SsoProfileDeletedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SsoProfileUpdatedEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SensitiveAdminAction
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Settings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -292,6 +340,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SuperAdminPasswordResetEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SuspiciousActivity
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -299,6 +353,18 @@ module Google
       end
       
       class SuspiciousActivitySecurityDetail
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TransferError
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TransferMisconfiguration
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -323,6 +389,24 @@ module Google
       end
       
       class UserDefinedDetectorInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VoiceMisconfiguration
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VoicemailMisconfiguration
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VoicemailRecipientError
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -424,6 +508,15 @@ module Google
         end
       end
       
+      class ApnsCertificateExpirationInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :apple_id, as: 'appleId'
+          property :expiration_time, as: 'expirationTime'
+          property :uid, as: 'uid'
+        end
+      end
+      
       class AppMakerSqlSetupNotification
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -444,6 +537,9 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :dashboard_uri, as: 'dashboardUri'
+          property :incident_tracking_id, as: 'incidentTrackingId'
+          property :merge_info, as: 'mergeInfo', class: Google::Apis::AlertcenterV1beta1::MergeInfo, decorator: Google::Apis::AlertcenterV1beta1::MergeInfo::Representation
+      
           property :next_update_time, as: 'nextUpdateTime'
           collection :products, as: 'products'
           property :resolution_time, as: 'resolutionTime'
@@ -602,6 +698,7 @@ module Google
           property :attachment_data, as: 'attachmentData', class: Google::Apis::AlertcenterV1beta1::Attachment, decorator: Google::Apis::AlertcenterV1beta1::Attachment::Representation
       
           property :description, as: 'description'
+          property :domain, as: 'domain'
           property :header, as: 'header'
           property :title, as: 'title'
         end
@@ -656,6 +753,14 @@ module Google
         end
       end
       
+      class MandatoryServiceAnnouncement
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :title, as: 'title'
+        end
+      end
+      
       class MatchInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -663,6 +768,14 @@ module Google
       
           property :user_defined_detector, as: 'userDefinedDetector', class: Google::Apis::AlertcenterV1beta1::UserDefinedDetectorInfo, decorator: Google::Apis::AlertcenterV1beta1::UserDefinedDetectorInfo::Representation
       
+        end
+      end
+      
+      class MergeInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :new_alert_id, as: 'newAlertId'
+          property :new_incident_tracking_id, as: 'newIncidentTrackingId'
         end
       end
       
@@ -691,6 +804,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :detector_name, as: 'detectorName'
+        end
+      end
+      
+      class PrimaryAdminChangedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :domain, as: 'domain'
+          property :previous_admin_email, as: 'previousAdminEmail'
+          property :updated_admin_email, as: 'updatedAdminEmail'
         end
       end
       
@@ -748,6 +870,46 @@ module Google
         end
       end
       
+      class SsoProfileCreatedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :inbound_sso_profile_name, as: 'inboundSsoProfileName'
+        end
+      end
+      
+      class SsoProfileDeletedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :inbound_sso_profile_name, as: 'inboundSsoProfileName'
+        end
+      end
+      
+      class SsoProfileUpdatedEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :inbound_sso_profile_changes, as: 'inboundSsoProfileChanges'
+          property :inbound_sso_profile_name, as: 'inboundSsoProfileName'
+        end
+      end
+      
+      class SensitiveAdminAction
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :actor_email, as: 'actorEmail'
+          property :event_time, as: 'eventTime'
+          property :primary_admin_changed_event, as: 'primaryAdminChangedEvent', class: Google::Apis::AlertcenterV1beta1::PrimaryAdminChangedEvent, decorator: Google::Apis::AlertcenterV1beta1::PrimaryAdminChangedEvent::Representation
+      
+          property :sso_profile_created_event, as: 'ssoProfileCreatedEvent', class: Google::Apis::AlertcenterV1beta1::SsoProfileCreatedEvent, decorator: Google::Apis::AlertcenterV1beta1::SsoProfileCreatedEvent::Representation
+      
+          property :sso_profile_deleted_event, as: 'ssoProfileDeletedEvent', class: Google::Apis::AlertcenterV1beta1::SsoProfileDeletedEvent, decorator: Google::Apis::AlertcenterV1beta1::SsoProfileDeletedEvent::Representation
+      
+          property :sso_profile_updated_event, as: 'ssoProfileUpdatedEvent', class: Google::Apis::AlertcenterV1beta1::SsoProfileUpdatedEvent, decorator: Google::Apis::AlertcenterV1beta1::SsoProfileUpdatedEvent::Representation
+      
+          property :super_admin_password_reset_event, as: 'superAdminPasswordResetEvent', class: Google::Apis::AlertcenterV1beta1::SuperAdminPasswordResetEvent, decorator: Google::Apis::AlertcenterV1beta1::SuperAdminPasswordResetEvent::Representation
+      
+        end
+      end
+      
       class Settings
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -772,6 +934,13 @@ module Google
         end
       end
       
+      class SuperAdminPasswordResetEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :user_email, as: 'userEmail'
+        end
+      end
+      
       class SuspiciousActivity
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -793,6 +962,25 @@ module Google
           property :old_value, as: 'oldValue'
           property :resource_id, as: 'resourceId'
           property :serial_number, as: 'serialNumber'
+        end
+      end
+      
+      class TransferError
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :email, as: 'email'
+          property :entity_type, as: 'entityType'
+          property :id, as: 'id'
+          property :invalid_reason, as: 'invalidReason'
+          property :name, as: 'name'
+        end
+      end
+      
+      class TransferMisconfiguration
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :errors, as: 'errors', class: Google::Apis::AlertcenterV1beta1::TransferError, decorator: Google::Apis::AlertcenterV1beta1::TransferError::Representation
+      
         end
       end
       
@@ -823,6 +1011,37 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :display_name, as: 'displayName'
           property :resource_name, as: 'resourceName'
+        end
+      end
+      
+      class VoiceMisconfiguration
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :entity_name, as: 'entityName'
+          property :entity_type, as: 'entityType'
+          property :fix_uri, as: 'fixUri'
+          property :members_misconfiguration, as: 'membersMisconfiguration', class: Google::Apis::AlertcenterV1beta1::TransferMisconfiguration, decorator: Google::Apis::AlertcenterV1beta1::TransferMisconfiguration::Representation
+      
+          property :transfer_misconfiguration, as: 'transferMisconfiguration', class: Google::Apis::AlertcenterV1beta1::TransferMisconfiguration, decorator: Google::Apis::AlertcenterV1beta1::TransferMisconfiguration::Representation
+      
+          property :voicemail_misconfiguration, as: 'voicemailMisconfiguration', class: Google::Apis::AlertcenterV1beta1::VoicemailMisconfiguration, decorator: Google::Apis::AlertcenterV1beta1::VoicemailMisconfiguration::Representation
+      
+        end
+      end
+      
+      class VoicemailMisconfiguration
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :errors, as: 'errors', class: Google::Apis::AlertcenterV1beta1::VoicemailRecipientError, decorator: Google::Apis::AlertcenterV1beta1::VoicemailRecipientError::Representation
+      
+        end
+      end
+      
+      class VoicemailRecipientError
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :email, as: 'email'
+          property :invalid_reason, as: 'invalidReason'
         end
       end
     end

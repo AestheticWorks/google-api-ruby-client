@@ -58,10 +58,10 @@ module Google
         # @return [String]
         attr_accessor :description
       
-        # Required. Resource name for the Access Level. The `short_name` component must
-        # begin with a letter and only include alphanumeric and '_'. Format: `
-        # accessPolicies/`access_policy`/accessLevels/`access_level``. The maximum
-        # length of the `access_level` component is 50 characters.
+        # Resource name for the `AccessLevel`. Format: `accessPolicies/`access_policy`/
+        # accessLevels/`access_level``. The `access_level` component must begin with a
+        # letter, followed by alphanumeric characters or `_`. Its maximum length is 50
+        # characters. After you create an `AccessLevel`, you cannot change its `name`.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -113,6 +113,21 @@ module Google
         # @return [String]
         attr_accessor :parent
       
+        # The scopes of a policy define which resources an ACM policy can restrict, and
+        # where ACM resources can be referenced. For example, a policy with scopes=["
+        # folders/123"] has the following behavior: - vpcsc perimeters can only restrict
+        # projects within folders/123 - access levels can only be referenced by
+        # resources within folders/123. If empty, there are no limitations on which
+        # resources can be restricted by an ACM policy, and there are no limitations on
+        # where ACM resources can be referenced. Only one policy can include a given
+        # scope (attempting to create a second policy which includes "folders/123" will
+        # result in an error). Currently, scopes cannot be modified after a policy is
+        # created. Currently, policies can only have a single scope. Format: list of `
+        # folders/`folder_number`` or `projects/`project_number``
+        # Corresponds to the JSON property `scopes`
+        # @return [Array<String>]
+        attr_accessor :scopes
+      
         # Required. Human readable title. Does not affect behavior.
         # Corresponds to the JSON property `title`
         # @return [String]
@@ -127,6 +142,7 @@ module Google
           @etag = args[:etag] if args.key?(:etag)
           @name = args[:name] if args.key?(:name)
           @parent = args[:parent] if args.key?(:parent)
+          @scopes = args[:scopes] if args.key?(:scopes)
           @title = args[:title] if args.key?(:title)
         end
       end
@@ -161,6 +177,138 @@ module Google
         end
       end
       
+      # Specifies the audit configuration for a service. The configuration determines
+      # which permission types are logged, and what identities, if any, are exempted
+      # from logging. An AuditConfig must have one or more AuditLogConfigs. If there
+      # are AuditConfigs for both `allServices` and a specific service, the union of
+      # the two AuditConfigs is used for that service: the log_types specified in each
+      # AuditConfig are enabled, and the exempted_members in each AuditLogConfig are
+      # exempted. Example Policy with multiple AuditConfigs: ` "audit_configs": [ ` "
+      # service": "allServices", "audit_log_configs": [ ` "log_type": "DATA_READ", "
+      # exempted_members": [ "user:jose@example.com" ] `, ` "log_type": "DATA_WRITE" `,
+      # ` "log_type": "ADMIN_READ" ` ] `, ` "service": "sampleservice.googleapis.com",
+      # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
+      # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
+      # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
+      class AuditConfig
+        include Google::Apis::Core::Hashable
+      
+        # The configuration for logging of each type of permission.
+        # Corresponds to the JSON property `auditLogConfigs`
+        # @return [Array<Google::Apis::AccesscontextmanagerV1::AuditLogConfig>]
+        attr_accessor :audit_log_configs
+      
+        # Specifies a service that will be enabled for audit logging. For example, `
+        # storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices` is a special
+        # value that covers all services.
+        # Corresponds to the JSON property `service`
+        # @return [String]
+        attr_accessor :service
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audit_log_configs = args[:audit_log_configs] if args.key?(:audit_log_configs)
+          @service = args[:service] if args.key?(:service)
+        end
+      end
+      
+      # Provides the configuration for logging a type of permissions. Example: ` "
+      # audit_log_configs": [ ` "log_type": "DATA_READ", "exempted_members": [ "user:
+      # jose@example.com" ] `, ` "log_type": "DATA_WRITE" ` ] ` This enables '
+      # DATA_READ' and 'DATA_WRITE' logging, while exempting jose@example.com from
+      # DATA_READ logging.
+      class AuditLogConfig
+        include Google::Apis::Core::Hashable
+      
+        # Specifies the identities that do not cause logging for this type of permission.
+        # Follows the same format of Binding.members.
+        # Corresponds to the JSON property `exemptedMembers`
+        # @return [Array<String>]
+        attr_accessor :exempted_members
+      
+        # The log type that this config enables.
+        # Corresponds to the JSON property `logType`
+        # @return [String]
+        attr_accessor :log_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @exempted_members = args[:exempted_members] if args.key?(:exempted_members)
+          @log_type = args[:log_type] if args.key?(:log_type)
+        end
+      end
+      
+      # `AuthorizedOrgsDesc` contains data for an organization's authorization policy.
+      class AuthorizedOrgsDesc
+        include Google::Apis::Core::Hashable
+      
+        # The asset type of this authorized orgs desc. Valid values are `
+        # ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.
+        # Corresponds to the JSON property `assetType`
+        # @return [String]
+        attr_accessor :asset_type
+      
+        # The direction of the authorization relationship between this organization and
+        # the organizations listed in the `orgs` field. The valid values for this field
+        # include the following: `AUTHORIZATION_DIRECTION_FROM`: Allows this
+        # organization to evaluate traffic in the organizations listed in the `orgs`
+        # field. `AUTHORIZATION_DIRECTION_TO`: Allows the organizations listed in the `
+        # orgs` field to evaluate the traffic in this organization. For the
+        # authorization relationship to take effect, all of the organizations must
+        # authorize and specify the appropriate relationship direction. For example, if
+        # organization A authorized organization B and C to evaluate its traffic, by
+        # specifying `AUTHORIZATION_DIRECTION_TO` as the authorization direction,
+        # organizations B and C must specify `AUTHORIZATION_DIRECTION_FROM` as the
+        # authorization direction in their `AuthorizedOrgsDesc` resource.
+        # Corresponds to the JSON property `authorizationDirection`
+        # @return [String]
+        attr_accessor :authorization_direction
+      
+        # A granular control type for authorization levels. Valid value is `
+        # AUTHORIZATION_TYPE_TRUST`.
+        # Corresponds to the JSON property `authorizationType`
+        # @return [String]
+        attr_accessor :authorization_type
+      
+        # Resource name for the `AuthorizedOrgsDesc`. Format: `accessPolicies/`
+        # access_policy`/authorizedOrgsDescs/`authorized_orgs_desc``. The `
+        # authorized_orgs_desc` component must begin with a letter, followed by
+        # alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`, you
+        # cannot change its `name`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The list of organization ids in this AuthorizedOrgsDesc. Format: `
+        # organizations/` Example: `organizations/123456`
+        # Corresponds to the JSON property `orgs`
+        # @return [Array<String>]
+        attr_accessor :orgs
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @asset_type = args[:asset_type] if args.key?(:asset_type)
+          @authorization_direction = args[:authorization_direction] if args.key?(:authorization_direction)
+          @authorization_type = args[:authorization_type] if args.key?(:authorization_type)
+          @name = args[:name] if args.key?(:name)
+          @orgs = args[:orgs] if args.key?(:orgs)
+        end
+      end
+      
       # `BasicLevel` is an `AccessLevel` using a set of recommended features.
       class BasicLevel
         include Google::Apis::Core::Hashable
@@ -187,6 +335,82 @@ module Google
         def update!(**args)
           @combining_function = args[:combining_function] if args.key?(:combining_function)
           @conditions = args[:conditions] if args.key?(:conditions)
+        end
+      end
+      
+      # Associates `members`, or principals, with a `role`.
+      class Binding
+        include Google::Apis::Core::Hashable
+      
+        # Represents a textual expression in the Common Expression Language (CEL) syntax.
+        # CEL is a C-like expression language. The syntax and semantics of CEL are
+        # documented at https://github.com/google/cel-spec. Example (Comparison): title:
+        # "Summary size limit" description: "Determines if a summary is less than 100
+        # chars" expression: "document.summary.size() < 100" Example (Equality): title: "
+        # Requestor is owner" description: "Determines if requestor is the document
+        # owner" expression: "document.owner == request.auth.claims.email" Example (
+        # Logic): title: "Public documents" description: "Determine whether the document
+        # should be publicly visible" expression: "document.type != 'private' &&
+        # document.type != 'internal'" Example (Data Manipulation): title: "Notification
+        # string" description: "Create a notification string with a timestamp."
+        # expression: "'New message received at ' + string(document.create_time)" The
+        # exact variables and functions that may be referenced within an expression are
+        # determined by the service that evaluates it. See the service documentation for
+        # additional information.
+        # Corresponds to the JSON property `condition`
+        # @return [Google::Apis::AccesscontextmanagerV1::Expr]
+        attr_accessor :condition
+      
+        # Specifies the principals requesting access for a Google Cloud resource. `
+        # members` can have the following values: * `allUsers`: A special identifier
+        # that represents anyone who is on the internet; with or without a Google
+        # account. * `allAuthenticatedUsers`: A special identifier that represents
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
+        # Corresponds to the JSON property `members`
+        # @return [Array<String>]
+        attr_accessor :members
+      
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
+        # Corresponds to the JSON property `role`
+        # @return [String]
+        attr_accessor :role
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @condition = args[:condition] if args.key?(:condition)
+          @members = args[:members] if args.key?(:members)
+          @role = args[:role] if args.key?(:role)
         end
       end
       
@@ -507,6 +731,16 @@ module Google
       class EgressTo
         include Google::Apis::Core::Hashable
       
+        # A list of external resources that are allowed to be accessed. Only AWS and
+        # Azure resources are supported. For Amazon S3, the supported format is s3://
+        # BUCKET_NAME. For Azure Storage, the supported format is azure://myaccount.blob.
+        # core.windows.net/CONTAINER_NAME. A request matches if it contains an external
+        # resource in this list (Example: s3://bucket/path). Currently '*' is not
+        # allowed.
+        # Corresponds to the JSON property `externalResources`
+        # @return [Array<String>]
+        attr_accessor :external_resources
+      
         # A list of ApiOperations allowed to be performed by the sources specified in
         # the corresponding EgressFrom. A request matches if it uses an operation/
         # service in this list.
@@ -529,6 +763,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @external_resources = args[:external_resources] if args.key?(:external_resources)
           @operations = args[:operations] if args.key?(:operations)
           @resources = args[:resources] if args.key?(:resources)
         end
@@ -537,8 +772,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -663,6 +897,53 @@ module Google
         end
       end
       
+      # Request message for `GetIamPolicy` method.
+      class GetIamPolicyRequest
+        include Google::Apis::Core::Hashable
+      
+        # Encapsulates settings provided to GetIamPolicy.
+        # Corresponds to the JSON property `options`
+        # @return [Google::Apis::AccesscontextmanagerV1::GetPolicyOptions]
+        attr_accessor :options
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @options = args[:options] if args.key?(:options)
+        end
+      end
+      
+      # Encapsulates settings provided to GetIamPolicy.
+      class GetPolicyOptions
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected. Requests for policies with any conditional role bindings must
+        # specify version 3. Policies with no conditional role bindings may specify any
+        # valid value or leave the field unset. The policy in the response might use the
+        # policy version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
+        # Corresponds to the JSON property `requestedPolicyVersion`
+        # @return [Fixnum]
+        attr_accessor :requested_policy_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @requested_policy_version = args[:requested_policy_version] if args.key?(:requested_policy_version)
+        end
+      end
+      
       # Defines the conditions under which an IngressPolicy matches a request.
       # Conditions are based on information about the source of the request. The
       # request must satisfy what is defined in `sources` AND identity related fields
@@ -759,10 +1040,11 @@ module Google
       
         # A Google Cloud resource that is allowed to ingress the perimeter. Requests
         # from these resources will be allowed to access perimeter data. Currently only
-        # projects are allowed. Format: `projects/`project_number`` The project may be
-        # in any Google Cloud organization, not just the organization that the perimeter
-        # is defined in. `*` is not allowed, the case of allowing all Google Cloud
-        # resources only is not supported.
+        # projects and VPCs are allowed. Project format: `projects/`project_number`` VPC
+        # network format: `//compute.googleapis.com/projects/`PROJECT_ID`/global/
+        # networks/`NAME``. The project may be in any Google Cloud organization, not
+        # just the organization that the perimeter is defined in. `*` is not allowed,
+        # the case of allowing all Google Cloud resources only is not supported.
         # Corresponds to the JSON property `resource`
         # @return [String]
         attr_accessor :resource
@@ -858,6 +1140,32 @@ module Google
         # Update properties of this object
         def update!(**args)
           @access_policies = args[:access_policies] if args.key?(:access_policies)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # A response to `ListAuthorizedOrgsDescsRequest`.
+      class ListAuthorizedOrgsDescsResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of all the Authorized Orgs Desc instances.
+        # Corresponds to the JSON property `authorizedOrgsDescs`
+        # @return [Array<Google::Apis::AccesscontextmanagerV1::AuthorizedOrgsDesc>]
+        attr_accessor :authorized_orgs_descs
+      
+        # The pagination token to retrieve the next page of results. If the value is
+        # empty, no further results remain.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @authorized_orgs_descs = args[:authorized_orgs_descs] if args.key?(:authorized_orgs_descs)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -1065,6 +1373,101 @@ module Google
         end
       end
       
+      # An Identity and Access Management (IAM) policy, which specifies access
+      # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
+      class Policy
+        include Google::Apis::Core::Hashable
+      
+        # Specifies cloud audit logging configuration for this policy.
+        # Corresponds to the JSON property `auditConfigs`
+        # @return [Array<Google::Apis::AccesscontextmanagerV1::AuditConfig>]
+        attr_accessor :audit_configs
+      
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
+        # Corresponds to the JSON property `bindings`
+        # @return [Array<Google::Apis::AccesscontextmanagerV1::Binding>]
+        attr_accessor :bindings
+      
+        # `etag` is used for optimistic concurrency control as a way to help prevent
+        # simultaneous updates of a policy from overwriting each other. It is strongly
+        # suggested that systems make use of the `etag` in the read-modify-write cycle
+        # to perform policy updates in order to avoid race conditions: An `etag` is
+        # returned in the response to `getIamPolicy`, and systems are expected to put
+        # that etag in the request to `setIamPolicy` to ensure that their change will be
+        # applied to the same version of the policy. **Important:** If you use IAM
+        # Conditions, you must include the `etag` field whenever you call `setIamPolicy`.
+        # If you omit this field, then IAM allows you to overwrite a version `3` policy
+        # with a version `1` policy, and all of the conditions in the version `3` policy
+        # are lost.
+        # Corresponds to the JSON property `etag`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :etag
+      
+        # Specifies the format of the policy. Valid values are `0`, `1`, and `3`.
+        # Requests that specify an invalid value are rejected. Any operation that
+        # affects conditional role bindings must specify version `3`. This requirement
+        # applies to the following operations: * Getting a policy that includes a
+        # conditional role binding * Adding a conditional role binding to a policy *
+        # Changing a conditional role binding in a policy * Removing any role binding,
+        # with or without a condition, from a policy that includes conditions **
+        # Important:** If you use IAM Conditions, you must include the `etag` field
+        # whenever you call `setIamPolicy`. If you omit this field, then IAM allows you
+        # to overwrite a version `3` policy with a version `1` policy, and all of the
+        # conditions in the version `3` policy are lost. If a policy does not include
+        # any conditions, operations on that policy may specify any valid version or
+        # leave the field unset. To learn which resources support conditions in their
+        # IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/
+        # conditions/resource-policies).
+        # Corresponds to the JSON property `version`
+        # @return [Fixnum]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audit_configs = args[:audit_configs] if args.key?(:audit_configs)
+          @bindings = args[:bindings] if args.key?(:bindings)
+          @etag = args[:etag] if args.key?(:etag)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
       # A request to replace all existing Access Levels in an Access Policy with the
       # Access Levels provided. This is done atomically.
       class ReplaceAccessLevelsRequest
@@ -1175,9 +1578,10 @@ module Google
       # has a target outside of the `ServicePerimeter`, the request will be blocked.
       # Otherwise the request is allowed. There are two types of Service Perimeter -
       # Regular and Bridge. Regular Service Perimeters cannot overlap, a single Google
-      # Cloud project can only belong to a single regular Service Perimeter. Service
-      # Perimeter Bridges can contain only Google Cloud projects as members, a single
-      # Google Cloud project may belong to multiple Service Perimeter Bridges.
+      # Cloud project or VPC network can only belong to a single regular Service
+      # Perimeter. Service Perimeter Bridges can contain only Google Cloud projects as
+      # members, a single Google Cloud project may belong to multiple Service
+      # Perimeter Bridges.
       class ServicePerimeter
         include Google::Apis::Core::Hashable
       
@@ -1186,18 +1590,19 @@ module Google
         # @return [String]
         attr_accessor :description
       
-        # Required. Resource name for the ServicePerimeter. The `short_name` component
-        # must begin with a letter and only include alphanumeric and '_'. Format: `
-        # accessPolicies/`access_policy`/servicePerimeters/`service_perimeter``
+        # Resource name for the `ServicePerimeter`. Format: `accessPolicies/`
+        # access_policy`/servicePerimeters/`service_perimeter``. The `service_perimeter`
+        # component must begin with a letter, followed by alphanumeric characters or `_`.
+        # After you create a `ServicePerimeter`, you cannot change its `name`.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # Perimeter type indicator. A single project is allowed to be a member of single
-        # regular perimeter, but multiple service perimeter bridges. A project cannot be
-        # a included in a perimeter bridge without being included in regular perimeter.
-        # For perimeter bridges, the restricted service list as well as access level
-        # lists must be empty.
+        # Perimeter type indicator. A single project or VPC network is allowed to be a
+        # member of single regular perimeter, but multiple service perimeter bridges. A
+        # project cannot be a included in a perimeter bridge without being included in
+        # regular perimeter. For perimeter bridges, the restricted service list as well
+        # as access level lists must be empty.
         # Corresponds to the JSON property `perimeterType`
         # @return [String]
         attr_accessor :perimeter_type
@@ -1280,7 +1685,9 @@ module Google
         attr_accessor :ingress_policies
       
         # A list of Google Cloud resources that are inside of the service perimeter.
-        # Currently only projects are allowed. Format: `projects/`project_number``
+        # Currently only projects and VPCs are allowed. Project format: `projects/`
+        # project_number`` VPC network format: `//compute.googleapis.com/projects/`
+        # PROJECT_ID`/global/networks/`NAME``.
         # Corresponds to the JSON property `resources`
         # @return [Array<String>]
         attr_accessor :resources
@@ -1309,6 +1716,59 @@ module Google
           @resources = args[:resources] if args.key?(:resources)
           @restricted_services = args[:restricted_services] if args.key?(:restricted_services)
           @vpc_accessible_services = args[:vpc_accessible_services] if args.key?(:vpc_accessible_services)
+        end
+      end
+      
+      # Request message for `SetIamPolicy` method.
+      class SetIamPolicyRequest
+        include Google::Apis::Core::Hashable
+      
+        # An Identity and Access Management (IAM) policy, which specifies access
+        # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
+        # Corresponds to the JSON property `policy`
+        # @return [Google::Apis::AccesscontextmanagerV1::Policy]
+        attr_accessor :policy
+      
+        # OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
+        # the fields in the mask will be modified. If no mask is provided, the following
+        # default mask is used: `paths: "bindings, etag"`
+        # Corresponds to the JSON property `updateMask`
+        # @return [String]
+        attr_accessor :update_mask
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @policy = args[:policy] if args.key?(:policy)
+          @update_mask = args[:update_mask] if args.key?(:update_mask)
         end
       end
       
@@ -1348,6 +1808,46 @@ module Google
           @code = args[:code] if args.key?(:code)
           @details = args[:details] if args.key?(:details)
           @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # Request message for `TestIamPermissions` method.
+      class TestIamPermissionsRequest
+        include Google::Apis::Core::Hashable
+      
+        # The set of permissions to check for the `resource`. Permissions with wildcards
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
+        # Overview](https://cloud.google.com/iam/docs/overview#permissions).
+        # Corresponds to the JSON property `permissions`
+        # @return [Array<String>]
+        attr_accessor :permissions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @permissions = args[:permissions] if args.key?(:permissions)
+        end
+      end
+      
+      # Response message for `TestIamPermissions` method.
+      class TestIamPermissionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A subset of `TestPermissionsRequest.permissions` that the caller is allowed.
+        # Corresponds to the JSON property `permissions`
+        # @return [Array<String>]
+        attr_accessor :permissions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @permissions = args[:permissions] if args.key?(:permissions)
         end
       end
       

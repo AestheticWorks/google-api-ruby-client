@@ -358,6 +358,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ScopedPlayerIds
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ScoreSubmission
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -826,6 +832,7 @@ module Google
           property :experience_info, as: 'experienceInfo', class: Google::Apis::GamesV1::PlayerExperienceInfo, decorator: Google::Apis::GamesV1::PlayerExperienceInfo::Representation
       
           property :friend_status, as: 'friendStatus'
+          property :game_player_id, as: 'gamePlayerId'
           property :kind, as: 'kind'
           property :name, as: 'name', class: Google::Apis::GamesV1::Player::Name, decorator: Google::Apis::GamesV1::Player::Name::Representation
       
@@ -1010,6 +1017,14 @@ module Google
           property :api_version, as: 'apiVersion'
           property :kind, as: 'kind'
           property :revision_status, as: 'revisionStatus'
+        end
+      end
+      
+      class ScopedPlayerIds
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :developer_player_key, as: 'developerPlayerKey'
+          property :game_player_id, as: 'gamePlayerId'
         end
       end
       

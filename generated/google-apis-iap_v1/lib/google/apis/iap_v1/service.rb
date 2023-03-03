@@ -51,11 +51,11 @@ module Google
         
         # Constructs a new OAuth brand for the project if one does not exist. The
         # created brand is "internal only", meaning that OAuth clients created under it
-        # only accept requests from users who belong to the same G Suite organization as
-        # the project. The brand is created in an un-reviewed status. NOTE: The "
-        # internal only" status can be manually changed in the Google Cloud console.
-        # Requires that a brand does not already exist for the project, and that the
-        # specified support email is owned by the caller.
+        # only accept requests from users who belong to the same Google Workspace
+        # organization as the project. The brand is created in an un-reviewed status.
+        # NOTE: The "internal only" status can be manually changed in the Google Cloud
+        # Console. Requires that a brand does not already exist for the project, and
+        # that the specified support email is owned by the caller.
         # @param [String] parent
         #   Required. GCP Project number/id under which the brand is to be created. In the
         #   following format: projects/`project_number/id`.
@@ -333,12 +333,200 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a new TunnelDestGroup.
+        # @param [String] parent
+        #   Required. Google Cloud Project ID and location. In the following format: `
+        #   projects/`project_number/id`/iap_tunnel/locations/`location``.
+        # @param [Google::Apis::IapV1::TunnelDestGroup] tunnel_dest_group_object
+        # @param [String] tunnel_dest_group_id
+        #   Required. The ID to use for the TunnelDestGroup, which becomes the final
+        #   component of the resource name. This value must be 4-63 characters, and valid
+        #   characters are `[a-z]-`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IapV1::TunnelDestGroup] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IapV1::TunnelDestGroup]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_iap_tunnel_location_dest_group(parent, tunnel_dest_group_object = nil, tunnel_dest_group_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/destGroups', options)
+          command.request_representation = Google::Apis::IapV1::TunnelDestGroup::Representation
+          command.request_object = tunnel_dest_group_object
+          command.response_representation = Google::Apis::IapV1::TunnelDestGroup::Representation
+          command.response_class = Google::Apis::IapV1::TunnelDestGroup
+          command.params['parent'] = parent unless parent.nil?
+          command.query['tunnelDestGroupId'] = tunnel_dest_group_id unless tunnel_dest_group_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a TunnelDestGroup.
+        # @param [String] name
+        #   Required. Name of the TunnelDestGroup to delete. In the following format: `
+        #   projects/`project_number/id`/iap_tunnel/locations/`location`/destGroups/`
+        #   dest_group``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IapV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IapV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_iap_tunnel_location_dest_group(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IapV1::Empty::Representation
+          command.response_class = Google::Apis::IapV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves an existing TunnelDestGroup.
+        # @param [String] name
+        #   Required. Name of the TunnelDestGroup to be fetched. In the following format: `
+        #   projects/`project_number/id`/iap_tunnel/locations/`location`/destGroups/`
+        #   dest_group``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IapV1::TunnelDestGroup] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IapV1::TunnelDestGroup]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_iap_tunnel_location_dest_group(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IapV1::TunnelDestGroup::Representation
+          command.response_class = Google::Apis::IapV1::TunnelDestGroup
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the existing TunnelDestGroups. To group across all locations, use a `-`
+        # as the location ID. For example: `/v1/projects/123/iap_tunnel/locations/-/
+        # destGroups`
+        # @param [String] parent
+        #   Required. Google Cloud Project ID and location. In the following format: `
+        #   projects/`project_number/id`/iap_tunnel/locations/`location``. A `-` can be
+        #   used for the location to group across all locations.
+        # @param [Fixnum] page_size
+        #   The maximum number of groups to return. The service might return fewer than
+        #   this value. If unspecified, at most 100 groups are returned. The maximum value
+        #   is 1000; values above 1000 are coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListTunnelDestGroups` call. Provide
+        #   this to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListTunnelDestGroups` must match the call that provided the page
+        #   token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IapV1::ListTunnelDestGroupsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IapV1::ListTunnelDestGroupsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_iap_tunnel_location_dest_groups(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/destGroups', options)
+          command.response_representation = Google::Apis::IapV1::ListTunnelDestGroupsResponse::Representation
+          command.response_class = Google::Apis::IapV1::ListTunnelDestGroupsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a TunnelDestGroup.
+        # @param [String] name
+        #   Required. Immutable. Identifier for the TunnelDestGroup. Must be unique within
+        #   the project and contain only lower case letters (a-z) and dashes (-).
+        # @param [Google::Apis::IapV1::TunnelDestGroup] tunnel_dest_group_object
+        # @param [String] update_mask
+        #   A field mask that specifies which IAP settings to update. If omitted, then all
+        #   of the settings are updated. See https://developers.google.com/protocol-
+        #   buffers/docs/reference/google.protobuf#fieldmask
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IapV1::TunnelDestGroup] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IapV1::TunnelDestGroup]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_iap_tunnel_location_dest_group(name, tunnel_dest_group_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::IapV1::TunnelDestGroup::Representation
+          command.request_object = tunnel_dest_group_object
+          command.response_representation = Google::Apis::IapV1::TunnelDestGroup::Representation
+          command.response_class = Google::Apis::IapV1::TunnelDestGroup
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets the access control policy for an Identity-Aware Proxy protected resource.
         # More information about managing access via IAP can be found at: https://cloud.
         # google.com/iap/docs/managing-access#managing_access_via_the_api
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::IapV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -405,8 +593,9 @@ module Google
         # can be found at: https://cloud.google.com/iap/docs/managing-access#
         # managing_access_via_the_api
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::IapV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -441,8 +630,9 @@ module Google
         # resource. More information about managing access via IAP can be found at:
         # https://cloud.google.com/iap/docs/managing-access#managing_access_via_the_api
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::IapV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.

@@ -130,6 +130,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class NodeInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Operation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -137,6 +143,18 @@ module Google
       end
       
       class OutputConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PersistenceConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ReconciliationOperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -262,9 +280,11 @@ module Google
           property :alternative_location_id, as: 'alternativeLocationId'
           property :auth_enabled, as: 'authEnabled'
           property :authorized_network, as: 'authorizedNetwork'
+          collection :available_maintenance_versions, as: 'availableMaintenanceVersions'
           property :connect_mode, as: 'connectMode'
           property :create_time, as: 'createTime'
           property :current_location_id, as: 'currentLocationId'
+          property :customer_managed_key, as: 'customerManagedKey'
           property :display_name, as: 'displayName'
           property :host, as: 'host'
           hash :labels, as: 'labels'
@@ -273,17 +293,28 @@ module Google
       
           property :maintenance_schedule, as: 'maintenanceSchedule', class: Google::Apis::RedisV1::MaintenanceSchedule, decorator: Google::Apis::RedisV1::MaintenanceSchedule::Representation
       
+          property :maintenance_version, as: 'maintenanceVersion'
           property :memory_size_gb, as: 'memorySizeGb'
           property :name, as: 'name'
+          collection :nodes, as: 'nodes', class: Google::Apis::RedisV1::NodeInfo, decorator: Google::Apis::RedisV1::NodeInfo::Representation
+      
+          property :persistence_config, as: 'persistenceConfig', class: Google::Apis::RedisV1::PersistenceConfig, decorator: Google::Apis::RedisV1::PersistenceConfig::Representation
+      
           property :persistence_iam_identity, as: 'persistenceIamIdentity'
           property :port, as: 'port'
+          property :read_endpoint, as: 'readEndpoint'
+          property :read_endpoint_port, as: 'readEndpointPort'
+          property :read_replicas_mode, as: 'readReplicasMode'
           hash :redis_configs, as: 'redisConfigs'
           property :redis_version, as: 'redisVersion'
+          property :replica_count, as: 'replicaCount'
           property :reserved_ip_range, as: 'reservedIpRange'
+          property :secondary_ip_range, as: 'secondaryIpRange'
           collection :server_ca_certs, as: 'serverCaCerts', class: Google::Apis::RedisV1::TlsCertificate, decorator: Google::Apis::RedisV1::TlsCertificate::Representation
       
           property :state, as: 'state'
           property :status_message, as: 'statusMessage'
+          collection :suspension_reasons, as: 'suspensionReasons'
           property :tier, as: 'tier'
           property :transit_encryption_mode, as: 'transitEncryptionMode'
         end
@@ -356,6 +387,14 @@ module Google
         end
       end
       
+      class NodeInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+          property :zone, as: 'zone'
+        end
+      end
+      
       class Operation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -373,6 +412,24 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :gcs_destination, as: 'gcsDestination', class: Google::Apis::RedisV1::GcsDestination, decorator: Google::Apis::RedisV1::GcsDestination::Representation
       
+        end
+      end
+      
+      class PersistenceConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :persistence_mode, as: 'persistenceMode'
+          property :rdb_next_snapshot_time, as: 'rdbNextSnapshotTime'
+          property :rdb_snapshot_period, as: 'rdbSnapshotPeriod'
+          property :rdb_snapshot_start_time, as: 'rdbSnapshotStartTime'
+        end
+      end
+      
+      class ReconciliationOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :delete_resource, as: 'deleteResource'
+          property :exclusive_action, as: 'exclusiveAction'
         end
       end
       

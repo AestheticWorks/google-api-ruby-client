@@ -50,6 +50,93 @@ module Google
           @batch_path = 'batch'
         end
         
+        # Create a database.
+        # @param [String] parent
+        #   Required. A parent name of the form `projects/`project_id``
+        # @param [Google::Apis::FirestoreV1::GoogleFirestoreAdminV1Database] google_firestore_admin_v1_database_object
+        # @param [String] database_id
+        #   Required. The ID to use for the database, which will become the final
+        #   component of the database's resource name. This value should be 4-63
+        #   characters. Valid characters are /a-z-/ with first character a letter and the
+        #   last a letter or a number. Must not be UUID-like /[0-9a-f]`8`(-[0-9a-f]`4`)`3`-
+        #   [0-9a-f]`12`/. "(default)" database id is also valid.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirestoreV1::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirestoreV1::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_database(parent, google_firestore_admin_v1_database_object = nil, database_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/databases', options)
+          command.request_representation = Google::Apis::FirestoreV1::GoogleFirestoreAdminV1Database::Representation
+          command.request_object = google_firestore_admin_v1_database_object
+          command.response_representation = Google::Apis::FirestoreV1::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::FirestoreV1::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['databaseId'] = database_id unless database_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a database.
+        # @param [String] name
+        #   Required. A name of the form `projects/`project_id`/databases/`database_id``
+        # @param [Boolean] allow_missing
+        #   If set to true and the Database is not found, the request will succeed but no
+        #   action will be taken.
+        # @param [String] etag
+        #   The current etag of the Database. If an etag is provided and does not match
+        #   the current etag of the database, deletion will be blocked and a
+        #   FAILED_PRECONDITION error will be returned.
+        # @param [Boolean] free_id
+        #   If set, will free the database_id associated with this database. uid will be
+        #   used as the resource id to identify this deleted database.
+        # @param [Boolean] validate_only
+        #   If set, validate the request and preview the response, but do not actually
+        #   delete the database.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirestoreV1::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirestoreV1::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_database(name, allow_missing: nil, etag: nil, free_id: nil, validate_only: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::FirestoreV1::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::FirestoreV1::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['allowMissing'] = allow_missing unless allow_missing.nil?
+          command.query['etag'] = etag unless etag.nil?
+          command.query['freeId'] = free_id unless free_id.nil?
+          command.query['validateOnly'] = validate_only unless validate_only.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Exports a copy of all or a subset of documents from Google Cloud Firestore to
         # another storage system, such as Google Cloud Storage. Recent updates to
         # documents may not be reflected in the export. The export occurs in the
@@ -702,7 +789,7 @@ module Google
         #   target document must not exist.
         # @param [String] current_document_update_time
         #   When set, the target document must exist and have been last updated at that
-        #   time.
+        #   time. Timestamp must be microsecond aligned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -782,28 +869,35 @@ module Google
         #   databases/my-database/documents` or `projects/my-project/databases/my-database/
         #   documents/chatrooms/my-chatroom`
         # @param [String] collection_id
-        #   Required. The collection ID, relative to `parent`, to list. For example: `
-        #   chatrooms` or `messages`.
+        #   Optional. The collection ID, relative to `parent`, to list. For example: `
+        #   chatrooms` or `messages`. This is optional, and when not provided, Firestore
+        #   will list documents from all collections under the provided `parent`.
         # @param [Array<String>, String] mask_field_paths
         #   The list of field paths in the mask. See Document.fields for a field path
         #   syntax reference.
         # @param [String] order_by
-        #   The order to sort results by. For example: `priority desc, name`.
+        #   Optional. The optional ordering of the documents to return. For example: `
+        #   priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore
+        #   queries but in a string representation. When absent, documents are ordered
+        #   based on `__name__ ASC`.
         # @param [Fixnum] page_size
-        #   The maximum number of documents to return.
+        #   Optional. The maximum number of documents to return in a single response.
+        #   Firestore may return fewer than this value.
         # @param [String] page_token
-        #   The `next_page_token` value returned from a previous List request, if any.
+        #   Optional. A page token, received from a previous `ListDocuments` response.
+        #   Provide this to retrieve the subsequent page. When paginating, all other
+        #   parameters (with the exception of `page_size`) must match the values set in
+        #   the request that generated the page token.
         # @param [String] read_time
-        #   Reads documents as they were at the given time. This may not be older than 270
-        #   seconds.
+        #   Perform the read at the provided time. This may not be older than 270 seconds.
         # @param [Boolean] show_missing
-        #   If the list should show missing documents. A missing document is a document
-        #   that does not exist but has sub-documents. These documents will be returned
-        #   with a key but will not have fields, Document.create_time, or Document.
-        #   update_time set. Requests with `show_missing` may not specify `where` or `
-        #   order_by`.
+        #   If the list should show missing documents. A document is missing if it does
+        #   not exist, but there are sub-documents nested underneath it. When true, such
+        #   missing documents will be returned with a key but will not have fields, `
+        #   create_time`, or `update_time` set. Requests with `show_missing` may not
+        #   specify `where` or `order_by`.
         # @param [String] transaction
-        #   Reads documents in a transaction.
+        #   Perform the read as part of an already active transaction.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -874,7 +968,79 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Listens to changes.
+        # Lists documents.
+        # @param [String] parent
+        #   Required. The parent resource name. In the format: `projects/`project_id`/
+        #   databases/`database_id`/documents` or `projects/`project_id`/databases/`
+        #   database_id`/documents/`document_path``. For example: `projects/my-project/
+        #   databases/my-database/documents` or `projects/my-project/databases/my-database/
+        #   documents/chatrooms/my-chatroom`
+        # @param [String] collection_id
+        #   Optional. The collection ID, relative to `parent`, to list. For example: `
+        #   chatrooms` or `messages`. This is optional, and when not provided, Firestore
+        #   will list documents from all collections under the provided `parent`.
+        # @param [Array<String>, String] mask_field_paths
+        #   The list of field paths in the mask. See Document.fields for a field path
+        #   syntax reference.
+        # @param [String] order_by
+        #   Optional. The optional ordering of the documents to return. For example: `
+        #   priority desc, __name__ desc`. This mirrors the `ORDER BY` used in Firestore
+        #   queries but in a string representation. When absent, documents are ordered
+        #   based on `__name__ ASC`.
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of documents to return in a single response.
+        #   Firestore may return fewer than this value.
+        # @param [String] page_token
+        #   Optional. A page token, received from a previous `ListDocuments` response.
+        #   Provide this to retrieve the subsequent page. When paginating, all other
+        #   parameters (with the exception of `page_size`) must match the values set in
+        #   the request that generated the page token.
+        # @param [String] read_time
+        #   Perform the read at the provided time. This may not be older than 270 seconds.
+        # @param [Boolean] show_missing
+        #   If the list should show missing documents. A document is missing if it does
+        #   not exist, but there are sub-documents nested underneath it. When true, such
+        #   missing documents will be returned with a key but will not have fields, `
+        #   create_time`, or `update_time` set. Requests with `show_missing` may not
+        #   specify `where` or `order_by`.
+        # @param [String] transaction
+        #   Perform the read as part of an already active transaction.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirestoreV1::ListDocumentsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirestoreV1::ListDocumentsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_database_document_documents(parent, collection_id, mask_field_paths: nil, order_by: nil, page_size: nil, page_token: nil, read_time: nil, show_missing: nil, transaction: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/{collectionId}', options)
+          command.response_representation = Google::Apis::FirestoreV1::ListDocumentsResponse::Representation
+          command.response_class = Google::Apis::FirestoreV1::ListDocumentsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.params['collectionId'] = collection_id unless collection_id.nil?
+          command.query['mask.fieldPaths'] = mask_field_paths unless mask_field_paths.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['readTime'] = read_time unless read_time.nil?
+          command.query['showMissing'] = show_missing unless show_missing.nil?
+          command.query['transaction'] = transaction unless transaction.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Listens to changes. This method is only available via the gRPC API (not REST).
         # @param [String] database
         #   Required. The database name. In the format: `projects/`project_id`/databases/`
         #   database_id``.
@@ -955,7 +1121,7 @@ module Google
         #   target document must not exist.
         # @param [String] current_document_update_time
         #   When set, the target document must exist and have been last updated at that
-        #   time.
+        #   time. Timestamp must be microsecond aligned.
         # @param [Array<String>, String] mask_field_paths
         #   The list of field paths in the mask. See Document.fields for a field path
         #   syntax reference.
@@ -1029,6 +1195,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Runs an aggregation query. Rather than producing Document results like
+        # Firestore.RunQuery, this API allows running an aggregation to produce a series
+        # of AggregationResult server-side. High-Level Example: ``` -- Return the number
+        # of documents in table given a filter. SELECT COUNT(*) FROM ( SELECT * FROM k
+        # where a = true ); ```
+        # @param [String] parent
+        #   Required. The parent resource name. In the format: `projects/`project_id`/
+        #   databases/`database_id`/documents` or `projects/`project_id`/databases/`
+        #   database_id`/documents/`document_path``. For example: `projects/my-project/
+        #   databases/my-database/documents` or `projects/my-project/databases/my-database/
+        #   documents/chatrooms/my-chatroom`
+        # @param [Google::Apis::FirestoreV1::RunAggregationQueryRequest] run_aggregation_query_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirestoreV1::RunAggregationQueryResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirestoreV1::RunAggregationQueryResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def run_document_aggregation_query(parent, run_aggregation_query_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}:runAggregationQuery', options)
+          command.request_representation = Google::Apis::FirestoreV1::RunAggregationQueryRequest::Representation
+          command.request_object = run_aggregation_query_request_object
+          command.response_representation = Google::Apis::FirestoreV1::RunAggregationQueryResponse::Representation
+          command.response_class = Google::Apis::FirestoreV1::RunAggregationQueryResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Runs a query.
         # @param [String] parent
         #   Required. The parent resource name. In the format: `projects/`project_id`/
@@ -1066,7 +1273,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Streams batches of document updates and deletes, in order.
+        # Streams batches of document updates and deletes, in order. This method is only
+        # available via the gRPC API (not REST).
         # @param [String] database
         #   Required. The database name. In the format: `projects/`project_id`/databases/`
         #   database_id``. This is only required in the first message.
@@ -1285,8 +1493,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.

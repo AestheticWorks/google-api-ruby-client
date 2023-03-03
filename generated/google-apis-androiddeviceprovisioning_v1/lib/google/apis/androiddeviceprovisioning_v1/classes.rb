@@ -26,7 +26,7 @@ module Google
       class ClaimDeviceRequest
         include Google::Apis::Core::Hashable
       
-        # Required. The ID of the customer for whom the device is being claimed.
+        # The ID of the customer for whom the device is being claimed.
         # Corresponds to the JSON property `customerId`
         # @return [Fixnum]
         attr_accessor :customer_id
@@ -44,10 +44,27 @@ module Google
         # @return [Google::Apis::AndroiddeviceprovisioningV1::DeviceMetadata]
         attr_accessor :device_metadata
       
+        # The Google Workspace customer ID.
+        # Corresponds to the JSON property `googleWorkspaceCustomerId`
+        # @return [String]
+        attr_accessor :google_workspace_customer_id
+      
+        # Optional. Must and can only be set for Chrome OS devices.
+        # Corresponds to the JSON property `preProvisioningToken`
+        # @return [String]
+        attr_accessor :pre_provisioning_token
+      
         # Required. The section type of the device's provisioning record.
         # Corresponds to the JSON property `sectionType`
         # @return [String]
         attr_accessor :section_type
+      
+        # Optional. Must and can only be set when DeviceProvisioningSectionType is
+        # SECTION_TYPE_SIM_LOCK. The unique identifier of the SimLock profile (go/
+        # simlock/profiles).
+        # Corresponds to the JSON property `simlockProfileId`
+        # @return [Fixnum]
+        attr_accessor :simlock_profile_id
       
         def initialize(**args)
            update!(**args)
@@ -58,7 +75,10 @@ module Google
           @customer_id = args[:customer_id] if args.key?(:customer_id)
           @device_identifier = args[:device_identifier] if args.key?(:device_identifier)
           @device_metadata = args[:device_metadata] if args.key?(:device_metadata)
+          @google_workspace_customer_id = args[:google_workspace_customer_id] if args.key?(:google_workspace_customer_id)
+          @pre_provisioning_token = args[:pre_provisioning_token] if args.key?(:pre_provisioning_token)
           @section_type = args[:section_type] if args.key?(:section_type)
+          @simlock_profile_id = args[:simlock_profile_id] if args.key?(:simlock_profile_id)
         end
       end
       
@@ -130,6 +150,11 @@ module Google
         # @return [String]
         attr_accessor :company_name
       
+        # A Google Workspace customer.
+        # Corresponds to the JSON property `googleWorkspaceAccount`
+        # @return [Google::Apis::AndroiddeviceprovisioningV1::GoogleWorkspaceAccount]
+        attr_accessor :google_workspace_account
+      
         # Input only. The preferred locale of the customer represented as a BCP47
         # language code. This field is validated on input and requests containing
         # unsupported language codes will be rejected. Supported language codes: Arabic (
@@ -185,6 +210,7 @@ module Google
           @admin_emails = args[:admin_emails] if args.key?(:admin_emails)
           @company_id = args[:company_id] if args.key?(:company_id)
           @company_name = args[:company_name] if args.key?(:company_name)
+          @google_workspace_account = args[:google_workspace_account] if args.key?(:google_workspace_account)
           @language_code = args[:language_code] if args.key?(:language_code)
           @name = args[:name] if args.key?(:name)
           @owner_emails = args[:owner_emails] if args.key?(:owner_emails)
@@ -480,7 +506,7 @@ module Google
         end
       end
       
-      # An Android device registered for zero-touch enrollment.
+      # An Android or Chrome OS device registered for zero-touch enrollment.
       class Device
         include Google::Apis::Core::Hashable
       
@@ -548,6 +574,11 @@ module Google
         # @return [String]
         attr_accessor :additional_service
       
+        # The ID of the Google Workspace account that owns the Chrome OS device.
+        # Corresponds to the JSON property `googleWorkspaceCustomerId`
+        # @return [String]
+        attr_accessor :google_workspace_customer_id
+      
         # The ID of the Customer that purchased the device.
         # Corresponds to the JSON property `ownerCompanyId`
         # @return [Fixnum]
@@ -582,6 +613,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @additional_service = args[:additional_service] if args.key?(:additional_service)
+          @google_workspace_customer_id = args[:google_workspace_customer_id] if args.key?(:google_workspace_customer_id)
           @owner_company_id = args[:owner_company_id] if args.key?(:owner_company_id)
           @reseller_id = args[:reseller_id] if args.key?(:reseller_id)
           @section_type = args[:section_type] if args.key?(:section_type)
@@ -596,13 +628,24 @@ module Google
       class DeviceIdentifier
         include Google::Apis::Core::Hashable
       
+        # An identifier provided by OEMs, carried through the production and sales
+        # process. Only applicable to Chrome OS devices.
+        # Corresponds to the JSON property `chromeOsAttestedDeviceId`
+        # @return [String]
+        attr_accessor :chrome_os_attested_device_id
+      
+        # The type of the device
+        # Corresponds to the JSON property `deviceType`
+        # @return [String]
+        attr_accessor :device_type
+      
         # The device’s IMEI number. Validated on input.
         # Corresponds to the JSON property `imei`
         # @return [String]
         attr_accessor :imei
       
         # The device manufacturer’s name. Matches the device's built-in value returned
-        # from `android.os.Build.MANUFACTURER`. Allowed values are listed in [
+        # from `android.os.Build.MANUFACTURER`. Allowed values are listed in [Android
         # manufacturers](/zero-touch/resources/manufacturer-names#manufacturers-names).
         # Corresponds to the JSON property `manufacturer`
         # @return [String]
@@ -613,9 +656,9 @@ module Google
         # @return [String]
         attr_accessor :meid
       
-        # The device model's name. Matches the device's built-in value returned from `
-        # android.os.Build.MODEL`. Allowed values are listed in [models](/zero-touch/
-        # resources/manufacturer-names#model-names).
+        # The device model's name. Allowed values are listed in [Android models](/zero-
+        # touch/resources/manufacturer-names#model-names) and [Chrome OS models](https://
+        # support.google.com/chrome/a/answer/10130175#identify_compatible).
         # Corresponds to the JSON property `model`
         # @return [String]
         attr_accessor :model
@@ -632,6 +675,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @chrome_os_attested_device_id = args[:chrome_os_attested_device_id] if args.key?(:chrome_os_attested_device_id)
+          @device_type = args[:device_type] if args.key?(:device_type)
           @imei = args[:imei] if args.key?(:imei)
           @manufacturer = args[:manufacturer] if args.key?(:manufacturer)
           @meid = args[:meid] if args.key?(:meid)
@@ -712,7 +757,7 @@ module Google
         attr_accessor :processing_status
       
         # The processing progress of the operation. Measured as a number from 0 to 100.
-        # A value of 10O doesnt always mean the operation completed—check for the
+        # A value of 10O doesn't always mean the operation completed—check for the
         # inclusion of a `done` field.
         # Corresponds to the JSON property `progress`
         # @return [Fixnum]
@@ -802,8 +847,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -886,10 +930,15 @@ module Google
       class FindDevicesByOwnerRequest
         include Google::Apis::Core::Hashable
       
-        # Required. The list of customer IDs to search for.
+        # The list of customer IDs to search for.
         # Corresponds to the JSON property `customerId`
         # @return [Array<Fixnum>]
         attr_accessor :customer_id
+      
+        # The list of IDs of Google Workspace accounts to search for.
+        # Corresponds to the JSON property `googleWorkspaceCustomerId`
+        # @return [Array<String>]
+        attr_accessor :google_workspace_customer_id
       
         # Required. The maximum number of devices to show in a page of results. Must be
         # between 1 and 100 inclusive.
@@ -914,6 +963,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @customer_id = args[:customer_id] if args.key?(:customer_id)
+          @google_workspace_customer_id = args[:google_workspace_customer_id] if args.key?(:google_workspace_customer_id)
           @limit = args[:limit] if args.key?(:limit)
           @page_token = args[:page_token] if args.key?(:page_token)
           @section_type = args[:section_type] if args.key?(:section_type)
@@ -949,6 +999,31 @@ module Google
           @devices = args[:devices] if args.key?(:devices)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # A Google Workspace customer.
+      class GoogleWorkspaceAccount
+        include Google::Apis::Core::Hashable
+      
+        # Required. The customer ID.
+        # Corresponds to the JSON property `customerId`
+        # @return [String]
+        attr_accessor :customer_id
+      
+        # Output only. The pre-provisioning tokens previously used to claim devices.
+        # Corresponds to the JSON property `preProvisioningTokens`
+        # @return [Array<String>]
+        attr_accessor :pre_provisioning_tokens
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @customer_id = args[:customer_id] if args.key?(:customer_id)
+          @pre_provisioning_tokens = args[:pre_provisioning_tokens] if args.key?(:pre_provisioning_tokens)
         end
       end
       
@@ -1146,7 +1221,7 @@ module Google
       class PartnerClaim
         include Google::Apis::Core::Hashable
       
-        # Required. The ID of the customer for whom the device is being claimed.
+        # The ID of the customer for whom the device is being claimed.
         # Corresponds to the JSON property `customerId`
         # @return [Fixnum]
         attr_accessor :customer_id
@@ -1164,6 +1239,16 @@ module Google
         # @return [Google::Apis::AndroiddeviceprovisioningV1::DeviceMetadata]
         attr_accessor :device_metadata
       
+        # The Google Workspace customer ID.
+        # Corresponds to the JSON property `googleWorkspaceCustomerId`
+        # @return [String]
+        attr_accessor :google_workspace_customer_id
+      
+        # Optional. Must and can only be set for Chrome OS devices.
+        # Corresponds to the JSON property `preProvisioningToken`
+        # @return [String]
+        attr_accessor :pre_provisioning_token
+      
         # Required. The section type of the device's provisioning record.
         # Corresponds to the JSON property `sectionType`
         # @return [String]
@@ -1178,6 +1263,8 @@ module Google
           @customer_id = args[:customer_id] if args.key?(:customer_id)
           @device_identifier = args[:device_identifier] if args.key?(:device_identifier)
           @device_metadata = args[:device_metadata] if args.key?(:device_metadata)
+          @google_workspace_customer_id = args[:google_workspace_customer_id] if args.key?(:google_workspace_customer_id)
+          @pre_provisioning_token = args[:pre_provisioning_token] if args.key?(:pre_provisioning_token)
           @section_type = args[:section_type] if args.key?(:section_type)
         end
       end

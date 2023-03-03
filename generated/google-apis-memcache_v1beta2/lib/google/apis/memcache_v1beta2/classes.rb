@@ -122,11 +122,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -168,11 +168,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::MemcacheV1beta2::Date]
         attr_accessor :end_date
@@ -180,11 +180,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::MemcacheV1beta2::Date]
         attr_accessor :start_date
@@ -211,8 +211,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -243,6 +242,46 @@ module Google
         # Update properties of this object
         def update!(**args)
           @available_zones = args[:available_zones] if args.key?(:available_zones)
+        end
+      end
+      
+      # Maintenance policy per instance.
+      class GoogleCloudMemcacheV1beta2MaintenancePolicy
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time when the policy was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Description of what this policy is for. Create/Update methods return
+        # INVALID_ARGUMENT if the length is greater than 512.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. The time when the policy was updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # Required. Maintenance window that is applied to resources covered by this
+        # policy. Minimum 1. For the current version, the maximum number of
+        # weekly_maintenance_windows is expected to be one.
+        # Corresponds to the JSON property `weeklyMaintenanceWindow`
+        # @return [Array<Google::Apis::MemcacheV1beta2::WeeklyMaintenanceWindow>]
+        attr_accessor :weekly_maintenance_window
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @description = args[:description] if args.key?(:description)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @weekly_maintenance_window = args[:weekly_maintenance_window] if args.key?(:weekly_maintenance_window)
         end
       end
       
@@ -318,14 +357,30 @@ module Google
         end
       end
       
-      # 
+      # Instance represents the interface for SLM services to actuate the state of
+      # control plane resources. Example Instance in JSON, where consumer-project-
+      # number=123456, producer-project-id=cloud-sql: ```json Instance: ` "name": "
+      # projects/123456/locations/us-east1/instances/prod-instance", "create_time": ` "
+      # seconds": 1526406431, `, "labels": ` "env": "prod", "foo": "bar" `, "state":
+      # READY, "software_versions": ` "software_update": "cloud-sql-09-28-2018", `, "
+      # maintenance_policy_names": ` "UpdatePolicy": "projects/123456/locations/us-
+      # east1/maintenancePolicies/prod-update-policy", ` "tenant_project_id": "cloud-
+      # sql-test-tenant", "producer_metadata": ` "cloud-sql-tier": "basic", "cloud-sql-
+      # instance-size": "1G", `, "provisioned_resources": [ ` "resource-type": "
+      # compute-instance", "resource-url": "https://www.googleapis.com/compute/v1/
+      # projects/cloud-sql/zones/us-east1-b/instances/vm-1", ` ], "
+      # maintenance_schedules": ` "csa_rollout": ` "start_time": ` "seconds":
+      # 1526406431, `, "end_time": ` "seconds": 1535406431, `, `, "ncsa_rollout": ` "
+      # start_time": ` "seconds": 1526406431, `, "end_time": ` "seconds": 1535406431, `
+      # , ` `, "consumer_defined_name": "my-sql-instance1", ` ``` LINT.IfChange
       class GoogleCloudSaasacceleratorManagementProvidersV1Instance
         include Google::Apis::Core::Hashable
       
-        # consumer_defined_name is the name that is set by the consumer. On the other
-        # hand Name field represents system-assigned id of an instance so consumers are
-        # not necessarily aware of it. consumer_defined_name is used for notification/UI
-        # purposes for consumer to recognize their instances.
+        # consumer_defined_name is the name of the instance set by the service consumers.
+        # Generally this is different from the `name` field which reperesents the
+        # system-assigned id of the instance which the service consumers do not
+        # recognize. This is a required field for tenants onboarding to Maintenance
+        # Window notifications (go/slm-rollout-maintenance-policies#prerequisites).
         # Corresponds to the JSON property `consumerDefinedName`
         # @return [String]
         attr_accessor :consumer_defined_name
@@ -335,6 +390,16 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Optional. The instance_type of this instance of format: projects/`
+        # project_number`/locations/`location_id`/instanceTypes/`instance_type_id`.
+        # Instance Type represents a high-level tier or SKU of the service that this
+        # instance belong to. When enabled(eg: Maintenance Rollout), Rollout uses '
+        # instance_type' along with 'software_versions' to determine whether instance
+        # needs an update or not.
+        # Corresponds to the JSON property `instanceType`
+        # @return [String]
+        attr_accessor :instance_type
+      
         # Optional. Resource labels to represent user provided metadata. Each label is a
         # key-value pair, where both the key and the value are arbitrary strings
         # provided by the user.
@@ -342,10 +407,11 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :labels
       
-        # Deprecated. The MaintenancePolicies that have been attached to the instance.
-        # The key must be of the type name of the oneof policy name defined in
+        # Optional. The MaintenancePolicies that have been attached to the instance. The
+        # key must be of the type name of the oneof policy name defined in
         # MaintenancePolicy, and the referenced policy must define the same policy type.
-        # For complete details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
+        # For details, please refer to go/cloud-saas-mw-ug. Should not be set if
+        # maintenance_settings.maintenance_policies is set.
         # Corresponds to the JSON property `maintenancePolicyNames`
         # @return [Hash<String,String>]
         attr_accessor :maintenance_policy_names
@@ -362,13 +428,22 @@ module Google
         # @return [Google::Apis::MemcacheV1beta2::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings]
         attr_accessor :maintenance_settings
       
-        # Unique name of the resource. It uses the form: `projects/`project_id|
-        # project_number`/locations/`location_id`/instances/`instance_id`` Note: Either
-        # project_id or project_number can be used, but keep it consistent with other
-        # APIs (e.g. RescheduleUpdate)
+        # Unique name of the resource. It uses the form: `projects/`project_number`/
+        # locations/`location_id`/instances/`instance_id`` Note: This name is passed,
+        # stored and logged across the rollout system. So use of consumer project_id or
+        # any other consumer PII in the name is strongly discouraged for wipeout (go/
+        # wipeout) compliance. See go/elysium/project_ids#storage-guidance for more
+        # details.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Optional. notification_parameter are information that service producers may
+        # like to include that is not relevant to Rollout. This parameter will only be
+        # passed to Gamma and Cloud Logging for notification/logging purpose.
+        # Corresponds to the JSON property `notificationParameters`
+        # @return [Hash<String,Google::Apis::MemcacheV1beta2::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter>]
+        attr_accessor :notification_parameters
       
         # Output only. Custom string attributes used primarily to expose producer-
         # specific information in monitoring dashboards. See go/get-instance-metadata.
@@ -427,11 +502,13 @@ module Google
         def update!(**args)
           @consumer_defined_name = args[:consumer_defined_name] if args.key?(:consumer_defined_name)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @instance_type = args[:instance_type] if args.key?(:instance_type)
           @labels = args[:labels] if args.key?(:labels)
           @maintenance_policy_names = args[:maintenance_policy_names] if args.key?(:maintenance_policy_names)
           @maintenance_schedules = args[:maintenance_schedules] if args.key?(:maintenance_schedules)
           @maintenance_settings = args[:maintenance_settings] if args.key?(:maintenance_settings)
           @name = args[:name] if args.key?(:name)
+          @notification_parameters = args[:notification_parameters] if args.key?(:notification_parameters)
           @producer_metadata = args[:producer_metadata] if args.key?(:producer_metadata)
           @provisioned_resources = args[:provisioned_resources] if args.key?(:provisioned_resources)
           @slm_instance_template = args[:slm_instance_template] if args.key?(:slm_instance_template)
@@ -517,9 +594,9 @@ module Google
         # Optional. The MaintenancePolicies that have been attached to the instance. The
         # key must be of the type name of the oneof policy name defined in
         # MaintenancePolicy, and the embedded policy must define the same policy type.
-        # For complete details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
-        # If only the name is needed (like in the deprecated Instance.
-        # maintenance_policy_names field) then only populate MaintenancePolicy.name.
+        # For details, please refer to go/cloud-saas-mw-ug. Should not be set if
+        # maintenance_policy_names is set. If only the name is needed, then only
+        # populate MaintenancePolicy.name.
         # Corresponds to the JSON property `maintenancePolicies`
         # @return [Hash<String,Google::Apis::MemcacheV1beta2::MaintenancePolicy>]
         attr_accessor :maintenance_policies
@@ -567,6 +644,25 @@ module Google
           @location = args[:location] if args.key?(:location)
           @node_id = args[:node_id] if args.key?(:node_id)
           @per_sli_eligibility = args[:per_sli_eligibility] if args.key?(:per_sli_eligibility)
+        end
+      end
+      
+      # Contains notification related data.
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Array of string values. e.g. instance's replica information.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @values = args[:values] if args.key?(:values)
         end
       end
       
@@ -734,6 +830,16 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :labels
       
+        # Maintenance policy per instance.
+        # Corresponds to the JSON property `maintenancePolicy`
+        # @return [Google::Apis::MemcacheV1beta2::GoogleCloudMemcacheV1beta2MaintenancePolicy]
+        attr_accessor :maintenance_policy
+      
+        # Upcoming maintenance schedule.
+        # Corresponds to the JSON property `maintenanceSchedule`
+        # @return [Google::Apis::MemcacheV1beta2::MaintenanceSchedule]
+        attr_accessor :maintenance_schedule
+      
         # Output only. The full version of memcached server running on this instance.
         # System automatically determines the full memcached version for an instance
         # based on the input MemcacheVersion. The full version format will be "memcached-
@@ -775,10 +881,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :node_count
       
-        # The unique ID associated with this set of parameters. Users can use this id to
-        # determine if the parameters associated with the instance differ from the
-        # parameters associated with the nodes. A discrepancy between parameter ids can
-        # inform users that they may need to take action to apply parameters on nodes.
+        # User defined parameters to apply to the memcached process on each node.
         # Corresponds to the JSON property `parameters`
         # @return [Google::Apis::MemcacheV1beta2::MemcacheParameters]
         attr_accessor :parameters
@@ -818,6 +921,8 @@ module Google
           @display_name = args[:display_name] if args.key?(:display_name)
           @instance_messages = args[:instance_messages] if args.key?(:instance_messages)
           @labels = args[:labels] if args.key?(:labels)
+          @maintenance_policy = args[:maintenance_policy] if args.key?(:maintenance_policy)
+          @maintenance_schedule = args[:maintenance_schedule] if args.key?(:maintenance_schedule)
           @memcache_full_version = args[:memcache_full_version] if args.key?(:memcache_full_version)
           @memcache_nodes = args[:memcache_nodes] if args.key?(:memcache_nodes)
           @memcache_version = args[:memcache_version] if args.key?(:memcache_version)
@@ -1010,7 +1115,7 @@ module Google
         end
       end
       
-      # Defines policies to service maintenance events.
+      # LINT.IfChange Defines policies to service maintenance events.
       class MaintenancePolicy
         include Google::Apis::Core::Hashable
       
@@ -1072,6 +1177,40 @@ module Google
         end
       end
       
+      # Upcoming maintenance schedule.
+      class MaintenanceSchedule
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The end time of any upcoming scheduled maintenance for this
+        # instance.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Output only. The deadline that the maintenance schedule start time can not go
+        # beyond, including reschedule.
+        # Corresponds to the JSON property `scheduleDeadlineTime`
+        # @return [String]
+        attr_accessor :schedule_deadline_time
+      
+        # Output only. The start time of any upcoming scheduled maintenance for this
+        # instance.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @schedule_deadline_time = args[:schedule_deadline_time] if args.key?(:schedule_deadline_time)
+          @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
       # MaintenanceWindow definition.
       class MaintenanceWindow
         include Google::Apis::Core::Hashable
@@ -1097,14 +1236,15 @@ module Google
         end
       end
       
-      # The unique ID associated with this set of parameters. Users can use this id to
-      # determine if the parameters associated with the instance differ from the
-      # parameters associated with the nodes. A discrepancy between parameter ids can
-      # inform users that they may need to take action to apply parameters on nodes.
+      # 
       class MemcacheParameters
         include Google::Apis::Core::Hashable
       
-        # Output only.
+        # Output only. The unique ID associated with this set of parameters. Users can
+        # use this id to determine if the parameters associated with the instance differ
+        # from the parameters associated with the nodes. A discrepancy between parameter
+        # ids can inform users that they may need to take action to apply parameters on
+        # nodes.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -1141,10 +1281,7 @@ module Google
         # @return [String]
         attr_accessor :node_id
       
-        # The unique ID associated with this set of parameters. Users can use this id to
-        # determine if the parameters associated with the instance differ from the
-        # parameters associated with the nodes. A discrepancy between parameter ids can
-        # inform users that they may need to take action to apply parameters on nodes.
+        # User defined parameters currently applied to the node.
         # Corresponds to the JSON property `parameters`
         # @return [Google::Apis::MemcacheV1beta2::MemcacheParameters]
         attr_accessor :parameters
@@ -1332,6 +1469,33 @@ module Google
         end
       end
       
+      # Request for RescheduleMaintenance.
+      class RescheduleMaintenanceRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. If reschedule type is SPECIFIC_TIME, must set up schedule_time as
+        # well.
+        # Corresponds to the JSON property `rescheduleType`
+        # @return [String]
+        attr_accessor :reschedule_type
+      
+        # Timestamp when the maintenance shall be rescheduled to if reschedule_type=
+        # SPECIFIC_TIME, in RFC 3339 format, for example `2012-11-15T16:19:00.094Z`.
+        # Corresponds to the JSON property `scheduleTime`
+        # @return [String]
+        attr_accessor :schedule_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @reschedule_type = args[:reschedule_type] if args.key?(:reschedule_type)
+          @schedule_time = args[:schedule_time] if args.key?(:schedule_time)
+        end
+      end
+      
       # Configure the schedule.
       class Schedule
         include Google::Apis::Core::Hashable
@@ -1449,10 +1613,7 @@ module Google
       class UpdateParametersRequest
         include Google::Apis::Core::Hashable
       
-        # The unique ID associated with this set of parameters. Users can use this id to
-        # determine if the parameters associated with the instance differ from the
-        # parameters associated with the nodes. A discrepancy between parameter ids can
-        # inform users that they may need to take action to apply parameters on nodes.
+        # The parameters to apply to the instance.
         # Corresponds to the JSON property `parameters`
         # @return [Google::Apis::MemcacheV1beta2::MemcacheParameters]
         attr_accessor :parameters
@@ -1522,6 +1683,39 @@ module Google
         # Update properties of this object
         def update!(**args)
           @schedule = args[:schedule] if args.key?(:schedule)
+        end
+      end
+      
+      # Time window specified for weekly operations.
+      class WeeklyMaintenanceWindow
+        include Google::Apis::Core::Hashable
+      
+        # Required. Allows to define schedule that runs specified day of the week.
+        # Corresponds to the JSON property `day`
+        # @return [String]
+        attr_accessor :day
+      
+        # Required. Duration of the time window.
+        # Corresponds to the JSON property `duration`
+        # @return [String]
+        attr_accessor :duration
+      
+        # Represents a time of day. The date and time zone are either not significant or
+        # are specified elsewhere. An API may choose to allow leap seconds. Related
+        # types are google.type.Date and `google.protobuf.Timestamp`.
+        # Corresponds to the JSON property `startTime`
+        # @return [Google::Apis::MemcacheV1beta2::TimeOfDay]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @day = args[:day] if args.key?(:day)
+          @duration = args[:duration] if args.key?(:duration)
+          @start_time = args[:start_time] if args.key?(:start_time)
         end
       end
       

@@ -51,7 +51,7 @@ module Google
       end
       
       # Represents the metadata of the longrunning operation for the
-      # AnalyzeIamPolicyLongrunning rpc.
+      # AnalyzeIamPolicyLongrunning RPC.
       class AnalyzeIamPolicyLongrunningMetadata
         include Google::Apis::Core::Hashable
       
@@ -74,7 +74,7 @@ module Google
       class AnalyzeIamPolicyLongrunningRequest
         include Google::Apis::Core::Hashable
       
-        # ## IAM policy analysis query message.
+        # IAM policy analysis query message.
         # Corresponds to the JSON property `analysisQuery`
         # @return [Google::Apis::CloudassetV1::IamPolicyAnalysisQuery]
         attr_accessor :analysis_query
@@ -84,6 +84,21 @@ module Google
         # @return [Google::Apis::CloudassetV1::IamPolicyAnalysisOutputConfig]
         attr_accessor :output_config
       
+        # Optional. The name of a saved query, which must be in the format of: *
+        # projects/project_number/savedQueries/saved_query_id * folders/folder_number/
+        # savedQueries/saved_query_id * organizations/organization_number/savedQueries/
+        # saved_query_id If both `analysis_query` and `saved_analysis_query` are
+        # provided, they will be merged together with the `saved_analysis_query` as base
+        # and the `analysis_query` as overrides. For more details of the merge behavior,
+        # please refer to the [MergeFrom](https://developers.google.com/protocol-buffers/
+        # docs/reference/cpp/google.protobuf.message#Message.MergeFrom.details) doc.
+        # Note that you cannot override primitive fields with default value, such as 0
+        # or empty string, etc., because we use proto3, which doesn't support field
+        # presence yet.
+        # Corresponds to the JSON property `savedAnalysisQuery`
+        # @return [String]
+        attr_accessor :saved_analysis_query
+      
         def initialize(**args)
            update!(**args)
         end
@@ -92,6 +107,7 @@ module Google
         def update!(**args)
           @analysis_query = args[:analysis_query] if args.key?(:analysis_query)
           @output_config = args[:output_config] if args.key?(:output_config)
+          @saved_analysis_query = args[:saved_analysis_query] if args.key?(:saved_analysis_query)
         end
       end
       
@@ -148,7 +164,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The list of analyses returned from performing the intended resource move
-        # analysis. The analysis is grouped by different Cloud services.
+        # analysis. The analysis is grouped by different Google Cloud services.
         # Corresponds to the JSON property `moveAnalysis`
         # @return [Array<Google::Apis::CloudassetV1::MoveAnalysis>]
         attr_accessor :move_analysis
@@ -163,11 +179,193 @@ module Google
         end
       end
       
+      # The response message for AssetService.AnalyzeOrgPolicies.
+      class AnalyzeOrgPoliciesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The organization policy constraint definition.
+        # Corresponds to the JSON property `constraint`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicyConstraint]
+        attr_accessor :constraint
+      
+        # The page token to fetch the next page for AnalyzeOrgPoliciesResponse.
+        # org_policy_results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The organization policies under the AnalyzeOrgPoliciesRequest.scope with the
+        # AnalyzeOrgPoliciesRequest.constraint.
+        # Corresponds to the JSON property `orgPolicyResults`
+        # @return [Array<Google::Apis::CloudassetV1::OrgPolicyResult>]
+        attr_accessor :org_policy_results
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @constraint = args[:constraint] if args.key?(:constraint)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @org_policy_results = args[:org_policy_results] if args.key?(:org_policy_results)
+        end
+      end
+      
+      # The response message for AssetService.AnalyzeOrgPolicyGovernedAssets.
+      class AnalyzeOrgPolicyGovernedAssetsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The organization policy constraint definition.
+        # Corresponds to the JSON property `constraint`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicyConstraint]
+        attr_accessor :constraint
+      
+        # The list of the analyzed governed assets.
+        # Corresponds to the JSON property `governedAssets`
+        # @return [Array<Google::Apis::CloudassetV1::GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset>]
+        attr_accessor :governed_assets
+      
+        # The page token to fetch the next page for
+        # AnalyzeOrgPolicyGovernedAssetsResponse.governed_assets.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @constraint = args[:constraint] if args.key?(:constraint)
+          @governed_assets = args[:governed_assets] if args.key?(:governed_assets)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # The response message for AssetService.AnalyzeOrgPolicyGovernedContainers.
+      class AnalyzeOrgPolicyGovernedContainersResponse
+        include Google::Apis::Core::Hashable
+      
+        # The organization policy constraint definition.
+        # Corresponds to the JSON property `constraint`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicyConstraint]
+        attr_accessor :constraint
+      
+        # The list of the analyzed governed containers.
+        # Corresponds to the JSON property `governedContainers`
+        # @return [Array<Google::Apis::CloudassetV1::GoogleCloudAssetV1GovernedContainer>]
+        attr_accessor :governed_containers
+      
+        # The page token to fetch the next page for
+        # AnalyzeOrgPolicyGovernedContainersResponse.governed_containers.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @constraint = args[:constraint] if args.key?(:constraint)
+          @governed_containers = args[:governed_containers] if args.key?(:governed_containers)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # This organization policy message is a modified version of the one defined in
+      # the Organization Policy system. This message contains several fields defined
+      # in the original organization policy with some new fields for analysis purpose.
+      class AnalyzerOrgPolicy
+        include Google::Apis::Core::Hashable
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of an organization/folder/project resource where this
+        # organization policy applies to. For any user defined org policies, this field
+        # has the same value as the [attached_resource] field. Only for default policy,
+        # this field has the different value.
+        # Corresponds to the JSON property `appliedResource`
+        # @return [String]
+        attr_accessor :applied_resource
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of an organization/folder/project resource where this
+        # organization policy is set. Notice that some type of constraints are defined
+        # with default policy. This field will be empty for them.
+        # Corresponds to the JSON property `attachedResource`
+        # @return [String]
+        attr_accessor :attached_resource
+      
+        # If `inherit_from_parent` is true, Rules set higher up in the hierarchy (up to
+        # the closest root) are inherited and present in the effective policy. If it is
+        # false, then no rules are inherited, and this policy becomes the effective root
+        # for evaluation.
+        # Corresponds to the JSON property `inheritFromParent`
+        # @return [Boolean]
+        attr_accessor :inherit_from_parent
+        alias_method :inherit_from_parent?, :inherit_from_parent
+      
+        # Ignores policies set above this resource and restores the default behavior of
+        # the constraint at this resource. This field can be set in policies for either
+        # list or boolean constraints. If set, `rules` must be empty and `
+        # inherit_from_parent` must be set to false.
+        # Corresponds to the JSON property `reset`
+        # @return [Boolean]
+        attr_accessor :reset
+        alias_method :reset?, :reset
+      
+        # List of rules for this organization policy.
+        # Corresponds to the JSON property `rules`
+        # @return [Array<Google::Apis::CloudassetV1::GoogleCloudAssetV1Rule>]
+        attr_accessor :rules
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @applied_resource = args[:applied_resource] if args.key?(:applied_resource)
+          @attached_resource = args[:attached_resource] if args.key?(:attached_resource)
+          @inherit_from_parent = args[:inherit_from_parent] if args.key?(:inherit_from_parent)
+          @reset = args[:reset] if args.key?(:reset)
+          @rules = args[:rules] if args.key?(:rules)
+        end
+      end
+      
+      # The organization policy constraint definition.
+      class AnalyzerOrgPolicyConstraint
+        include Google::Apis::Core::Hashable
+      
+        # The definition of a custom constraint.
+        # Corresponds to the JSON property `customConstraint`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1CustomConstraint]
+        attr_accessor :custom_constraint
+      
+        # The definition of a constraint.
+        # Corresponds to the JSON property `googleDefinedConstraint`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1Constraint]
+        attr_accessor :google_defined_constraint
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @custom_constraint = args[:custom_constraint] if args.key?(:custom_constraint)
+          @google_defined_constraint = args[:google_defined_constraint] if args.key?(:google_defined_constraint)
+        end
+      end
+      
       # An asset in Google Cloud. An asset can be any resource in the Google Cloud [
       # resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-
       # platform-resource-hierarchy), a resource outside the Google Cloud resource
       # hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy
-      # (e.g. Cloud IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
+      # (e.g. IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
       # relationship). See [Supported asset types](https://cloud.google.com/asset-
       # inventory/docs/supported-asset-types) for more information.
       class Asset
@@ -208,31 +406,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `iamPolicy`
         # @return [Google::Apis::CloudassetV1::Policy]
         attr_accessor :iam_policy
@@ -262,7 +460,20 @@ module Google
         # @return [Google::Apis::CloudassetV1::Inventory]
         attr_accessor :os_inventory
       
-        # The detailed related assets with the `relationship_type`.
+        # An asset identifier in Google Cloud which contains its name, type and
+        # ancestors. An asset can be any resource in the Google Cloud [resource
+        # hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-
+        # resource-hierarchy), a resource outside the Google Cloud resource hierarchy (
+        # such as Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+        # policy). See [Supported asset types](https://cloud.google.com/asset-inventory/
+        # docs/supported-asset-types) for more information.
+        # Corresponds to the JSON property `relatedAsset`
+        # @return [Google::Apis::CloudassetV1::RelatedAsset]
+        attr_accessor :related_asset
+      
+        # DEPRECATED. This message only presents for the purpose of backward-
+        # compatibility. The server will never populate this message in responses. The
+        # detailed related assets with the `relationship_type`.
         # Corresponds to the JSON property `relatedAssets`
         # @return [Google::Apis::CloudassetV1::RelatedAssets]
         attr_accessor :related_assets
@@ -278,9 +489,10 @@ module Google
         # has a target outside of the `ServicePerimeter`, the request will be blocked.
         # Otherwise the request is allowed. There are two types of Service Perimeter -
         # Regular and Bridge. Regular Service Perimeters cannot overlap, a single Google
-        # Cloud project can only belong to a single regular Service Perimeter. Service
-        # Perimeter Bridges can contain only Google Cloud projects as members, a single
-        # Google Cloud project may belong to multiple Service Perimeter Bridges.
+        # Cloud project or VPC network can only belong to a single regular Service
+        # Perimeter. Service Perimeter Bridges can contain only Google Cloud projects as
+        # members, a single Google Cloud project may belong to multiple Service
+        # Perimeter Bridges.
         # Corresponds to the JSON property `servicePerimeter`
         # @return [Google::Apis::CloudassetV1::GoogleIdentityAccesscontextmanagerV1ServicePerimeter]
         attr_accessor :service_perimeter
@@ -305,6 +517,7 @@ module Google
           @name = args[:name] if args.key?(:name)
           @org_policy = args[:org_policy] if args.key?(:org_policy)
           @os_inventory = args[:os_inventory] if args.key?(:os_inventory)
+          @related_asset = args[:related_asset] if args.key?(:related_asset)
           @related_assets = args[:related_assets] if args.key?(:related_assets)
           @resource = args[:resource] if args.key?(:resource)
           @service_perimeter = args[:service_perimeter] if args.key?(:service_perimeter)
@@ -356,8 +569,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -433,13 +646,38 @@ module Google
         end
       end
       
+      # A response message for AssetService.BatchGetEffectiveIamPolicies.
+      class BatchGetEffectiveIamPoliciesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The effective policies for a batch of resources. Note that the results order
+        # is the same as the order of BatchGetEffectiveIamPoliciesRequest.names. When a
+        # resource does not have any effective IAM policies, its corresponding
+        # policy_result will contain empty EffectiveIamPolicy.policies.
+        # Corresponds to the JSON property `policyResults`
+        # @return [Array<Google::Apis::CloudassetV1::EffectiveIamPolicy>]
+        attr_accessor :policy_results
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @policy_results = args[:policy_results] if args.key?(:policy_results)
+        end
+      end
+      
       # A BigQuery destination for exporting assets to.
       class BigQueryDestination
         include Google::Apis::Core::Hashable
       
         # Required. The BigQuery dataset in format "projects/projectId/datasets/
         # datasetId", to which the snapshot result should be exported. If this dataset
-        # does not exist, the export call returns an INVALID_ARGUMENT error.
+        # does not exist, the export call returns an INVALID_ARGUMENT error. Setting the
+        # `contentType` for `exportAssets` determines the [schema](/asset-inventory/docs/
+        # exporting-to-bigquery#bigquery-schema) of the BigQuery table. Setting `
+        # separateTablesPerAssetType` to `TRUE` also influences the schema.
         # Corresponds to the JSON property `dataset`
         # @return [String]
         attr_accessor :dataset
@@ -504,7 +742,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -527,38 +765,43 @@ module Google
         # @return [Google::Apis::CloudassetV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -647,11 +890,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -685,11 +928,44 @@ module Google
         end
       end
       
+      # The effective IAM policies on one resource.
+      class EffectiveIamPolicy
+        include Google::Apis::Core::Hashable
+      
+        # The [full_resource_name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) for which the policies are computed. This is one of the
+        # BatchGetEffectiveIamPoliciesRequest.names the caller provides in the request.
+        # Corresponds to the JSON property `fullResourceName`
+        # @return [String]
+        attr_accessor :full_resource_name
+      
+        # The effective policies for the full_resource_name. These policies include the
+        # policy set on the full_resource_name and those set on its parents and
+        # ancestors up to the BatchGetEffectiveIamPoliciesRequest.scope. Note that these
+        # policies are not filtered according to the resource type of the
+        # full_resource_name. These policies are hierarchically ordered by PolicyInfo.
+        # attached_resource starting from full_resource_name itself to its parents and
+        # ancestors, such that policies[i]'s PolicyInfo.attached_resource is the child
+        # of policies[i+1]'s PolicyInfo.attached_resource, if policies[i+1] exists.
+        # Corresponds to the JSON property `policies`
+        # @return [Array<Google::Apis::CloudassetV1::PolicyInfo>]
+        attr_accessor :policies
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @full_resource_name = args[:full_resource_name] if args.key?(:full_resource_name)
+          @policies = args[:policies] if args.key?(:policies)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -861,8 +1137,8 @@ module Google
         # either or both of asset_names and asset_types. Only asset updates matching
         # specified asset_names or asset_types are exported to the feed. Example: `//
         # compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`
-        # . See [Resource Names](https://cloud.google.com/apis/design/resource_names#
-        # full_resource_name) for more info.
+        # . For a list of the full names for supported asset types, see [Resource name
+        # format](/asset-inventory/docs/resource-name-format).
         # Corresponds to the JSON property `assetNames`
         # @return [Array<String>]
         attr_accessor :asset_names
@@ -870,8 +1146,8 @@ module Google
         # A list of types of the assets to receive updates. You must specify either or
         # both of asset_names and asset_types. Only asset updates matching specified
         # asset_names or asset_types are exported to the feed. Example: `"compute.
-        # googleapis.com/Disk"` See [this topic](https://cloud.google.com/asset-
-        # inventory/docs/supported-asset-types) for a list of all supported asset types.
+        # googleapis.com/Disk"` For a list of all supported asset types, see [Supported
+        # asset types](/asset-inventory/docs/supported-asset-types).
         # Corresponds to the JSON property `assetTypes`
         # @return [Array<String>]
         attr_accessor :asset_types
@@ -970,7 +1246,7 @@ module Google
       class GcsDestination
         include Google::Apis::Core::Hashable
       
-        # The uri of the Cloud Storage object. It's the same uri that is used by gsutil.
+        # The URI of the Cloud Storage object. It's the same URI that is used by gsutil.
         # Example: "gs://bucket_name/object_name". See [Viewing and Editing Object
         # Metadata](https://cloud.google.com/storage/docs/viewing-editing-metadata) for
         # more information. If the specified Cloud Storage object already exists and
@@ -980,8 +1256,8 @@ module Google
         # @return [String]
         attr_accessor :uri
       
-        # The uri prefix of all generated Cloud Storage objects. Example: "gs://
-        # bucket_name/object_name_prefix". Each object uri is in format: "gs://
+        # The URI prefix of all generated Cloud Storage objects. Example: "gs://
+        # bucket_name/object_name_prefix". Each object URI is in format: "gs://
         # bucket_name/object_name_prefix// and only contains assets for that type.
         # starts from 0. Example: "gs://bucket_name/object_name_prefix/compute.
         # googleapis.com/Disk/0" is the first shard of output objects containing all
@@ -1088,6 +1364,184 @@ module Google
         end
       end
       
+      # Represents a Google Cloud asset(resource or IAM policy) governed by the
+      # organization policies of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+      class GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset
+        include Google::Apis::Core::Hashable
+      
+        # This organization policy message is a modified version of the one defined in
+        # the Organization Policy system. This message contains several fields defined
+        # in the original organization policy with some new fields for analysis purpose.
+        # Corresponds to the JSON property `consolidatedPolicy`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicy]
+        attr_accessor :consolidated_policy
+      
+        # The IAM policies governed by the organization policies of the
+        # AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+        # Corresponds to the JSON property `governedIamPolicy`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy]
+        attr_accessor :governed_iam_policy
+      
+        # The Google Cloud resources governed by the organization policies of the
+        # AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+        # Corresponds to the JSON property `governedResource`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource]
+        attr_accessor :governed_resource
+      
+        # The ordered list of all organization policies from the
+        # AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.
+        # attached_resource to the scope specified in the request. If the constraint is
+        # defined with default policy, it will also appear in the list.
+        # Corresponds to the JSON property `policyBundle`
+        # @return [Array<Google::Apis::CloudassetV1::AnalyzerOrgPolicy>]
+        attr_accessor :policy_bundle
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consolidated_policy = args[:consolidated_policy] if args.key?(:consolidated_policy)
+          @governed_iam_policy = args[:governed_iam_policy] if args.key?(:governed_iam_policy)
+          @governed_resource = args[:governed_resource] if args.key?(:governed_resource)
+          @policy_bundle = args[:policy_bundle] if args.key?(:policy_bundle)
+        end
+      end
+      
+      # The IAM policies governed by the organization policies of the
+      # AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+      class GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy
+        include Google::Apis::Core::Hashable
+      
+        # The full resource name of the resource associated with this IAM policy.
+        # Example: `//compute.googleapis.com/projects/my_project_123/zones/zone1/
+        # instances/instance1`. See [Cloud Asset Inventory Resource Name Format](https://
+        # cloud.google.com/asset-inventory/docs/resource-name-format) for more
+        # information.
+        # Corresponds to the JSON property `attachedResource`
+        # @return [String]
+        attr_accessor :attached_resource
+      
+        # The folder(s) that this IAM policy belongs to, in the form of folders/`
+        # FOLDER_NUMBER`. This field is available when the IAM policy belongs(directly
+        # or cascadingly) to one or more folders.
+        # Corresponds to the JSON property `folders`
+        # @return [Array<String>]
+        attr_accessor :folders
+      
+        # The organization that this IAM policy belongs to, in the form of organizations/
+        # `ORGANIZATION_NUMBER`. This field is available when the IAM policy belongs(
+        # directly or cascadingly) to an organization.
+        # Corresponds to the JSON property `organization`
+        # @return [String]
+        attr_accessor :organization
+      
+        # An Identity and Access Management (IAM) policy, which specifies access
+        # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
+        # Corresponds to the JSON property `policy`
+        # @return [Google::Apis::CloudassetV1::Policy]
+        attr_accessor :policy
+      
+        # The project that this IAM policy belongs to, in the form of projects/`
+        # PROJECT_NUMBER`. This field is available when the IAM policy belongs to a
+        # project.
+        # Corresponds to the JSON property `project`
+        # @return [String]
+        attr_accessor :project
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @attached_resource = args[:attached_resource] if args.key?(:attached_resource)
+          @folders = args[:folders] if args.key?(:folders)
+          @organization = args[:organization] if args.key?(:organization)
+          @policy = args[:policy] if args.key?(:policy)
+          @project = args[:project] if args.key?(:project)
+        end
+      end
+      
+      # The Google Cloud resources governed by the organization policies of the
+      # AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
+      class GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource
+        include Google::Apis::Core::Hashable
+      
+        # The folder(s) that this resource belongs to, in the form of folders/`
+        # FOLDER_NUMBER`. This field is available when the resource belongs(directly or
+        # cascadingly) to one or more folders.
+        # Corresponds to the JSON property `folders`
+        # @return [Array<String>]
+        attr_accessor :folders
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of the Google Cloud resource.
+        # Corresponds to the JSON property `fullResourceName`
+        # @return [String]
+        attr_accessor :full_resource_name
+      
+        # The organization that this resource belongs to, in the form of organizations/`
+        # ORGANIZATION_NUMBER`. This field is available when the resource belongs(
+        # directly or cascadingly) to an organization.
+        # Corresponds to the JSON property `organization`
+        # @return [String]
+        attr_accessor :organization
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of the parent of AnalyzeOrgPolicyGovernedAssetsResponse.
+        # GovernedResource.full_resource_name.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # The project that this resource belongs to, in the form of projects/`
+        # PROJECT_NUMBER`. This field is available when the resource belongs to a
+        # project.
+        # Corresponds to the JSON property `project`
+        # @return [String]
+        attr_accessor :project
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @folders = args[:folders] if args.key?(:folders)
+          @full_resource_name = args[:full_resource_name] if args.key?(:full_resource_name)
+          @organization = args[:organization] if args.key?(:organization)
+          @parent = args[:parent] if args.key?(:parent)
+          @project = args[:project] if args.key?(:project)
+        end
+      end
+      
       # A BigQuery destination.
       class GoogleCloudAssetV1BigQueryDestination
         include Google::Apis::Core::Hashable
@@ -1140,6 +1594,136 @@ module Google
         end
       end
       
+      # A `Constraint` that is either enforced or not. For example a constraint `
+      # constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
+      # instance, serial port connections will not be opened to that instance.
+      class GoogleCloudAssetV1BooleanConstraint
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # The definition of a constraint.
+      class GoogleCloudAssetV1Constraint
+        include Google::Apis::Core::Hashable
+      
+        # A `Constraint` that is either enforced or not. For example a constraint `
+        # constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
+        # instance, serial port connections will not be opened to that instance.
+        # Corresponds to the JSON property `booleanConstraint`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1BooleanConstraint]
+        attr_accessor :boolean_constraint
+      
+        # The evaluation behavior of this constraint in the absence of 'Policy'.
+        # Corresponds to the JSON property `constraintDefault`
+        # @return [String]
+        attr_accessor :constraint_default
+      
+        # Detailed description of what this `Constraint` controls as well as how and
+        # where it is enforced.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # The human readable name of the constraint.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # A `Constraint` that allows or disallows a list of string values, which are
+        # configured by an organization's policy administrator with a `Policy`.
+        # Corresponds to the JSON property `listConstraint`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1ListConstraint]
+        attr_accessor :list_constraint
+      
+        # The unique name of the constraint. Format of the name should be * `constraints/
+        # `constraint_name`` For example, `constraints/compute.disableSerialPortAccess`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @boolean_constraint = args[:boolean_constraint] if args.key?(:boolean_constraint)
+          @constraint_default = args[:constraint_default] if args.key?(:constraint_default)
+          @description = args[:description] if args.key?(:description)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @list_constraint = args[:list_constraint] if args.key?(:list_constraint)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # The definition of a custom constraint.
+      class GoogleCloudAssetV1CustomConstraint
+        include Google::Apis::Core::Hashable
+      
+        # Allow or deny type.
+        # Corresponds to the JSON property `actionType`
+        # @return [String]
+        attr_accessor :action_type
+      
+        # Organization Policy condition/expression. For example: `resource.instanceName.
+        # matches("[production|test]_.*_(\d)+")'` or, `resource.management.auto_upgrade =
+        # = true`
+        # Corresponds to the JSON property `condition`
+        # @return [String]
+        attr_accessor :condition
+      
+        # Detailed information about this custom policy constraint.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # One line display name for the UI.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # All the operations being applied for this constraint.
+        # Corresponds to the JSON property `methodTypes`
+        # @return [Array<String>]
+        attr_accessor :method_types
+      
+        # Name of the constraint. This is unique within the organization. Format of the
+        # name should be * `organizations/`organization_id`/customConstraints/`
+        # custom_constraint_id`` Example : "organizations/123/customConstraints/custom.
+        # createOnlyE2TypeVms"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The Resource Instance type on which this policy applies to. Format will be of
+        # the form : "/" Example: * `compute.googleapis.com/Instance`.
+        # Corresponds to the JSON property `resourceTypes`
+        # @return [Array<String>]
+        attr_accessor :resource_types
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @action_type = args[:action_type] if args.key?(:action_type)
+          @condition = args[:condition] if args.key?(:condition)
+          @description = args[:description] if args.key?(:description)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @method_types = args[:method_types] if args.key?(:method_types)
+          @name = args[:name] if args.key?(:name)
+          @resource_types = args[:resource_types] if args.key?(:resource_types)
+        end
+      end
+      
       # A directional edge.
       class GoogleCloudAssetV1Edge
         include Google::Apis::Core::Hashable
@@ -1171,7 +1755,7 @@ module Google
       class GoogleCloudAssetV1GcsDestination
         include Google::Apis::Core::Hashable
       
-        # Required. The uri of the Cloud Storage object. It's the same uri that is used
+        # Required. The URI of the Cloud Storage object. It's the same URI that is used
         # by gsutil. Example: "gs://bucket_name/object_name". See [Viewing and Editing
         # Object Metadata](https://cloud.google.com/storage/docs/viewing-editing-
         # metadata) for more information. If the specified Cloud Storage object already
@@ -1188,6 +1772,53 @@ module Google
         # Update properties of this object
         def update!(**args)
           @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # The organization/folder/project resource governed by organization policies of
+      # AnalyzeOrgPolicyGovernedContainersRequest.constraint.
+      class GoogleCloudAssetV1GovernedContainer
+        include Google::Apis::Core::Hashable
+      
+        # This organization policy message is a modified version of the one defined in
+        # the Organization Policy system. This message contains several fields defined
+        # in the original organization policy with some new fields for analysis purpose.
+        # Corresponds to the JSON property `consolidatedPolicy`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicy]
+        attr_accessor :consolidated_policy
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of an organization/folder/project resource.
+        # Corresponds to the JSON property `fullResourceName`
+        # @return [String]
+        attr_accessor :full_resource_name
+      
+        # The [full resource name] (https://cloud.google.com/asset-inventory/docs/
+        # resource-name-format) of the parent of
+        # AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.
+        # full_resource_name.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # The ordered list of all organization policies from the
+        # AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.
+        # attached_resource. to the scope specified in the request. If the constraint is
+        # defined with default policy, it will also appear in the list.
+        # Corresponds to the JSON property `policyBundle`
+        # @return [Array<Google::Apis::CloudassetV1::AnalyzerOrgPolicy>]
+        attr_accessor :policy_bundle
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consolidated_policy = args[:consolidated_policy] if args.key?(:consolidated_policy)
+          @full_resource_name = args[:full_resource_name] if args.key?(:full_resource_name)
+          @parent = args[:parent] if args.key?(:parent)
+          @policy_bundle = args[:policy_bundle] if args.key?(:policy_bundle)
         end
       end
       
@@ -1251,6 +1882,77 @@ module Google
         end
       end
       
+      # A `Constraint` that allows or disallows a list of string values, which are
+      # configured by an organization's policy administrator with a `Policy`.
+      class GoogleCloudAssetV1ListConstraint
+        include Google::Apis::Core::Hashable
+      
+        # Indicates whether values grouped into categories can be used in `Policy.
+        # allowed_values` and `Policy.denied_values`. For example, `"in:Python"` would
+        # match any value in the 'Python' group.
+        # Corresponds to the JSON property `supportsIn`
+        # @return [Boolean]
+        attr_accessor :supports_in
+        alias_method :supports_in?, :supports_in
+      
+        # Indicates whether subtrees of Cloud Resource Manager resource hierarchy can be
+        # used in `Policy.allowed_values` and `Policy.denied_values`. For example, `"
+        # under:folders/123"` would match any resource under the 'folders/123' folder.
+        # Corresponds to the JSON property `supportsUnder`
+        # @return [Boolean]
+        attr_accessor :supports_under
+        alias_method :supports_under?, :supports_under
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @supports_in = args[:supports_in] if args.key?(:supports_in)
+          @supports_under = args[:supports_under] if args.key?(:supports_under)
+        end
+      end
+      
+      # BigQuery destination.
+      class GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination
+        include Google::Apis::Core::Hashable
+      
+        # Required. The BigQuery dataset where the query results will be saved. It has
+        # the format of "projects/`projectId`/datasets/`datasetId`".
+        # Corresponds to the JSON property `dataset`
+        # @return [String]
+        attr_accessor :dataset
+      
+        # Required. The BigQuery table where the query results will be saved. If this
+        # table does not exist, a new table with the given name will be created.
+        # Corresponds to the JSON property `table`
+        # @return [String]
+        attr_accessor :table
+      
+        # Specifies the action that occurs if the destination table or partition already
+        # exists. The following values are supported: * WRITE_TRUNCATE: If the table or
+        # partition already exists, BigQuery overwrites the entire table or all the
+        # partitions data. * WRITE_APPEND: If the table or partition already exists,
+        # BigQuery appends the data to the table or the latest partition. * WRITE_EMPTY:
+        # If the table already exists and contains data, a 'duplicate' error is returned
+        # in the job result. The default value is WRITE_EMPTY.
+        # Corresponds to the JSON property `writeDisposition`
+        # @return [String]
+        attr_accessor :write_disposition
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset = args[:dataset] if args.key?(:dataset)
+          @table = args[:table] if args.key?(:table)
+          @write_disposition = args[:write_disposition] if args.key?(:write_disposition)
+        end
+      end
+      
       # A Google Cloud resource under analysis.
       class GoogleCloudAssetV1Resource
         include Google::Apis::Core::Hashable
@@ -1278,12 +1980,100 @@ module Google
         end
       end
       
+      # Represents a rule defined in an organization policy
+      class GoogleCloudAssetV1Rule
+        include Google::Apis::Core::Hashable
+      
+        # Setting this to true means that all values are allowed. This field can be set
+        # only in Policies for list constraints.
+        # Corresponds to the JSON property `allowAll`
+        # @return [Boolean]
+        attr_accessor :allow_all
+        alias_method :allow_all?, :allow_all
+      
+        # Represents a textual expression in the Common Expression Language (CEL) syntax.
+        # CEL is a C-like expression language. The syntax and semantics of CEL are
+        # documented at https://github.com/google/cel-spec. Example (Comparison): title:
+        # "Summary size limit" description: "Determines if a summary is less than 100
+        # chars" expression: "document.summary.size() < 100" Example (Equality): title: "
+        # Requestor is owner" description: "Determines if requestor is the document
+        # owner" expression: "document.owner == request.auth.claims.email" Example (
+        # Logic): title: "Public documents" description: "Determine whether the document
+        # should be publicly visible" expression: "document.type != 'private' &&
+        # document.type != 'internal'" Example (Data Manipulation): title: "Notification
+        # string" description: "Create a notification string with a timestamp."
+        # expression: "'New message received at ' + string(document.create_time)" The
+        # exact variables and functions that may be referenced within an expression are
+        # determined by the service that evaluates it. See the service documentation for
+        # additional information.
+        # Corresponds to the JSON property `condition`
+        # @return [Google::Apis::CloudassetV1::Expr]
+        attr_accessor :condition
+      
+        # Setting this to true means that all values are denied. This field can be set
+        # only in Policies for list constraints.
+        # Corresponds to the JSON property `denyAll`
+        # @return [Boolean]
+        attr_accessor :deny_all
+        alias_method :deny_all?, :deny_all
+      
+        # If `true`, then the `Policy` is enforced. If `false`, then any configuration
+        # is acceptable. This field can be set only in Policies for boolean constraints.
+        # Corresponds to the JSON property `enforce`
+        # @return [Boolean]
+        attr_accessor :enforce
+        alias_method :enforce?, :enforce
+      
+        # The string values for the list constraints.
+        # Corresponds to the JSON property `values`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1StringValues]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @allow_all = args[:allow_all] if args.key?(:allow_all)
+          @condition = args[:condition] if args.key?(:condition)
+          @deny_all = args[:deny_all] if args.key?(:deny_all)
+          @enforce = args[:enforce] if args.key?(:enforce)
+          @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # The string values for the list constraints.
+      class GoogleCloudAssetV1StringValues
+        include Google::Apis::Core::Hashable
+      
+        # List of values allowed at this resource.
+        # Corresponds to the JSON property `allowedValues`
+        # @return [Array<String>]
+        attr_accessor :allowed_values
+      
+        # List of values denied at this resource.
+        # Corresponds to the JSON property `deniedValues`
+        # @return [Array<String>]
+        attr_accessor :denied_values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @allowed_values = args[:allowed_values] if args.key?(:allowed_values)
+          @denied_values = args[:denied_values] if args.key?(:denied_values)
+        end
+      end
+      
       # An asset in Google Cloud. An asset can be any resource in the Google Cloud [
       # resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-
       # platform-resource-hierarchy), a resource outside the Google Cloud resource
       # hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy
-      # (e.g. Cloud IAM policy). See [Supported asset types](https://cloud.google.com/
-      # asset-inventory/docs/supported-asset-types) for more information.
+      # (e.g. IAM policy). See [Supported asset types](https://cloud.google.com/asset-
+      # inventory/docs/supported-asset-types) for more information.
       class GoogleCloudAssetV1p7beta1Asset
         include Google::Apis::Core::Hashable
       
@@ -1322,31 +2112,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `iamPolicy`
         # @return [Google::Apis::CloudassetV1::Policy]
         attr_accessor :iam_policy
@@ -1383,9 +2173,10 @@ module Google
         # has a target outside of the `ServicePerimeter`, the request will be blocked.
         # Otherwise the request is allowed. There are two types of Service Perimeter -
         # Regular and Bridge. Regular Service Perimeters cannot overlap, a single Google
-        # Cloud project can only belong to a single regular Service Perimeter. Service
-        # Perimeter Bridges can contain only Google Cloud projects as members, a single
-        # Google Cloud project may belong to multiple Service Perimeter Bridges.
+        # Cloud project or VPC network can only belong to a single regular Service
+        # Perimeter. Service Perimeter Bridges can contain only Google Cloud projects as
+        # members, a single Google Cloud project may belong to multiple Service
+        # Perimeter Bridges.
         # Corresponds to the JSON property `servicePerimeter`
         # @return [Google::Apis::CloudassetV1::GoogleIdentityAccesscontextmanagerV1ServicePerimeter]
         attr_accessor :service_perimeter
@@ -1420,9 +2211,9 @@ module Google
       # An asset can be any resource in the Google Cloud [resource hierarchy](https://
       # cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy), a
       # resource outside the Google Cloud resource hierarchy (such as Google
-      # Kubernetes Engine clusters and objects), or a policy (e.g. Cloud IAM policy).
-      # See [Supported asset types](https://cloud.google.com/asset-inventory/docs/
-      # supported-asset-types) for more information.
+      # Kubernetes Engine clusters and objects), or a policy (e.g. IAM policy). See [
+      # Supported asset types](https://cloud.google.com/asset-inventory/docs/supported-
+      # asset-types) for more information.
       class GoogleCloudAssetV1p7beta1RelatedAsset
         include Google::Apis::Core::Hashable
       
@@ -1561,7 +2352,7 @@ module Google
         # The full name of the immediate parent of this resource. See [Resource Names](
         # https://cloud.google.com/apis/design/resource_names#full_resource_name) for
         # more information. For Google Cloud assets, this value is the parent resource
-        # defined in the [Cloud IAM policy hierarchy](https://cloud.google.com/iam/docs/
+        # defined in the [IAM policy hierarchy](https://cloud.google.com/iam/docs/
         # overview#policy_hierarchy). Example: `//cloudresourcemanager.googleapis.com/
         # projects/my_project_123` For third-party assets, this field may be set
         # differently.
@@ -1899,10 +2690,10 @@ module Google
         # @return [String]
         attr_accessor :description
       
-        # Required. Resource name for the Access Level. The `short_name` component must
-        # begin with a letter and only include alphanumeric and '_'. Format: `
-        # accessPolicies/`access_policy`/accessLevels/`access_level``. The maximum
-        # length of the `access_level` component is 50 characters.
+        # Resource name for the `AccessLevel`. Format: `accessPolicies/`access_policy`/
+        # accessLevels/`access_level``. The `access_level` component must begin with a
+        # letter, followed by alphanumeric characters or `_`. Its maximum length is 50
+        # characters. After you create an `AccessLevel`, you cannot change its `name`.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1954,6 +2745,21 @@ module Google
         # @return [String]
         attr_accessor :parent
       
+        # The scopes of a policy define which resources an ACM policy can restrict, and
+        # where ACM resources can be referenced. For example, a policy with scopes=["
+        # folders/123"] has the following behavior: - vpcsc perimeters can only restrict
+        # projects within folders/123 - access levels can only be referenced by
+        # resources within folders/123. If empty, there are no limitations on which
+        # resources can be restricted by an ACM policy, and there are no limitations on
+        # where ACM resources can be referenced. Only one policy can include a given
+        # scope (attempting to create a second policy which includes "folders/123" will
+        # result in an error). Currently, scopes cannot be modified after a policy is
+        # created. Currently, policies can only have a single scope. Format: list of `
+        # folders/`folder_number`` or `projects/`project_number``
+        # Corresponds to the JSON property `scopes`
+        # @return [Array<String>]
+        attr_accessor :scopes
+      
         # Required. Human readable title. Does not affect behavior.
         # Corresponds to the JSON property `title`
         # @return [String]
@@ -1968,6 +2774,7 @@ module Google
           @etag = args[:etag] if args.key?(:etag)
           @name = args[:name] if args.key?(:name)
           @parent = args[:parent] if args.key?(:parent)
+          @scopes = args[:scopes] if args.key?(:scopes)
           @title = args[:title] if args.key?(:title)
         end
       end
@@ -2290,6 +3097,16 @@ module Google
       class GoogleIdentityAccesscontextmanagerV1EgressTo
         include Google::Apis::Core::Hashable
       
+        # A list of external resources that are allowed to be accessed. Only AWS and
+        # Azure resources are supported. For Amazon S3, the supported format is s3://
+        # BUCKET_NAME. For Azure Storage, the supported format is azure://myaccount.blob.
+        # core.windows.net/CONTAINER_NAME. A request matches if it contains an external
+        # resource in this list (Example: s3://bucket/path). Currently '*' is not
+        # allowed.
+        # Corresponds to the JSON property `externalResources`
+        # @return [Array<String>]
+        attr_accessor :external_resources
+      
         # A list of ApiOperations allowed to be performed by the sources specified in
         # the corresponding EgressFrom. A request matches if it uses an operation/
         # service in this list.
@@ -2312,6 +3129,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @external_resources = args[:external_resources] if args.key?(:external_resources)
           @operations = args[:operations] if args.key?(:operations)
           @resources = args[:resources] if args.key?(:resources)
         end
@@ -2413,10 +3231,11 @@ module Google
       
         # A Google Cloud resource that is allowed to ingress the perimeter. Requests
         # from these resources will be allowed to access perimeter data. Currently only
-        # projects are allowed. Format: `projects/`project_number`` The project may be
-        # in any Google Cloud organization, not just the organization that the perimeter
-        # is defined in. `*` is not allowed, the case of allowing all Google Cloud
-        # resources only is not supported.
+        # projects and VPCs are allowed. Project format: `projects/`project_number`` VPC
+        # network format: `//compute.googleapis.com/projects/`PROJECT_ID`/global/
+        # networks/`NAME``. The project may be in any Google Cloud organization, not
+        # just the organization that the perimeter is defined in. `*` is not allowed,
+        # the case of allowing all Google Cloud resources only is not supported.
         # Corresponds to the JSON property `resource`
         # @return [String]
         attr_accessor :resource
@@ -2535,9 +3354,10 @@ module Google
       # has a target outside of the `ServicePerimeter`, the request will be blocked.
       # Otherwise the request is allowed. There are two types of Service Perimeter -
       # Regular and Bridge. Regular Service Perimeters cannot overlap, a single Google
-      # Cloud project can only belong to a single regular Service Perimeter. Service
-      # Perimeter Bridges can contain only Google Cloud projects as members, a single
-      # Google Cloud project may belong to multiple Service Perimeter Bridges.
+      # Cloud project or VPC network can only belong to a single regular Service
+      # Perimeter. Service Perimeter Bridges can contain only Google Cloud projects as
+      # members, a single Google Cloud project may belong to multiple Service
+      # Perimeter Bridges.
       class GoogleIdentityAccesscontextmanagerV1ServicePerimeter
         include Google::Apis::Core::Hashable
       
@@ -2546,18 +3366,19 @@ module Google
         # @return [String]
         attr_accessor :description
       
-        # Required. Resource name for the ServicePerimeter. The `short_name` component
-        # must begin with a letter and only include alphanumeric and '_'. Format: `
-        # accessPolicies/`access_policy`/servicePerimeters/`service_perimeter``
+        # Resource name for the `ServicePerimeter`. Format: `accessPolicies/`
+        # access_policy`/servicePerimeters/`service_perimeter``. The `service_perimeter`
+        # component must begin with a letter, followed by alphanumeric characters or `_`.
+        # After you create a `ServicePerimeter`, you cannot change its `name`.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # Perimeter type indicator. A single project is allowed to be a member of single
-        # regular perimeter, but multiple service perimeter bridges. A project cannot be
-        # a included in a perimeter bridge without being included in regular perimeter.
-        # For perimeter bridges, the restricted service list as well as access level
-        # lists must be empty.
+        # Perimeter type indicator. A single project or VPC network is allowed to be a
+        # member of single regular perimeter, but multiple service perimeter bridges. A
+        # project cannot be a included in a perimeter bridge without being included in
+        # regular perimeter. For perimeter bridges, the restricted service list as well
+        # as access level lists must be empty.
         # Corresponds to the JSON property `perimeterType`
         # @return [String]
         attr_accessor :perimeter_type
@@ -2640,7 +3461,9 @@ module Google
         attr_accessor :ingress_policies
       
         # A list of Google Cloud resources that are inside of the service perimeter.
-        # Currently only projects are allowed. Format: `projects/`project_number``
+        # Currently only projects and VPCs are allowed. Project format: `projects/`
+        # project_number`` VPC network format: `//compute.googleapis.com/projects/`
+        # PROJECT_ID`/global/networks/`NAME``.
         # Corresponds to the JSON property `resources`
         # @return [Array<String>]
         attr_accessor :resources
@@ -2706,7 +3529,7 @@ module Google
       class IamPolicyAnalysis
         include Google::Apis::Core::Hashable
       
-        # ## IAM policy analysis query message.
+        # IAM policy analysis query message.
         # Corresponds to the JSON property `analysisQuery`
         # @return [Google::Apis::CloudassetV1::IamPolicyAnalysisQuery]
         attr_accessor :analysis_query
@@ -2767,7 +3590,7 @@ module Google
         end
       end
       
-      # ## IAM policy analysis query message.
+      # IAM policy analysis query message.
       class IamPolicyAnalysisQuery
         include Google::Apis::Core::Hashable
       
@@ -2854,7 +3677,7 @@ module Google
         attr_accessor :fully_explored
         alias_method :fully_explored?, :fully_explored
       
-        # Associates `members` with a `role`.
+        # Associates `members`, or principals, with a `role`.
         # Corresponds to the JSON property `iamBinding`
         # @return [Google::Apis::CloudassetV1::Binding]
         attr_accessor :iam_binding
@@ -2944,37 +3767,37 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::CloudassetV1::Policy]
         attr_accessor :policy
       
-        # The project that the associated GCP resource belongs to, in the form of
-        # projects/`PROJECT_NUMBER`. If an IAM policy is set on a resource (like VM
+        # The project that the associated Google Cloud resource belongs to, in the form
+        # of projects/`PROJECT_NUMBER`. If an IAM policy is set on a resource (like VM
         # instance, Cloud Storage bucket), the project field will indicate the project
         # that contains the resource. If an IAM policy is set on a folder or orgnization,
         # this field will be empty. To search against the `project`: * specify the `
@@ -3015,8 +3838,8 @@ module Google
       class IdentitySelector
         include Google::Apis::Core::Hashable
       
-        # Required. The identity appear in the form of members in [IAM policy binding](
-        # https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of
+        # Required. The identity appear in the form of principals in [IAM policy binding]
+        # (https://cloud.google.com/iam/reference/rest/v1/Binding). The examples of
         # supported forms are: "user:mike@example.com", "group:admins@example.com", "
         # domain:google.com", "serviceAccount:my-project-id@appspot.gserviceaccount.com".
         # Notice that wildcard characters (such as * and ?) are not supported. You must
@@ -3186,6 +4009,32 @@ module Google
         end
       end
       
+      # Response of listing saved queries.
+      class ListSavedQueriesResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # A list of savedQueries.
+        # Corresponds to the JSON property `savedQueries`
+        # @return [Array<Google::Apis::CloudassetV1::SavedQuery>]
+        attr_accessor :saved_queries
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @saved_queries = args[:saved_queries] if args.key?(:saved_queries)
+        end
+      end
+      
       # A message to group the analysis information.
       class MoveAnalysis
         include Google::Apis::Core::Hashable
@@ -3195,7 +4044,7 @@ module Google
         # @return [Google::Apis::CloudassetV1::MoveAnalysisResult]
         attr_accessor :analysis
       
-        # The user friendly display name of the analysis. E.g. IAM, Organization Policy
+        # The user friendly display name of the analysis. E.g. IAM, organization policy
         # etc.
         # Corresponds to the JSON property `displayName`
         # @return [String]
@@ -3339,20 +4188,24 @@ module Google
         # Optional. If true, the response will include access analysis from identities
         # to resources via service account impersonation. This is a very expensive
         # operation, because many derived queries will be executed. We highly recommend
-        # you use AssetService.AnalyzeIamPolicyLongrunning rpc instead. For example, if
+        # you use AssetService.AnalyzeIamPolicyLongrunning RPC instead. For example, if
         # the request analyzes for which resources user A has permission P, and there's
         # an IAM policy states user A has iam.serviceAccounts.getAccessToken permission
         # to a service account SA, and there's another IAM policy states service account
-        # SA has permission P to a GCP folder F, then user A potentially has access to
-        # the GCP folder F. And those advanced analysis results will be included in
-        # AnalyzeIamPolicyResponse.service_account_impersonation_analysis. Another
-        # example, if the request analyzes for who has permission P to a GCP folder F,
-        # and there's an IAM policy states user A has iam.serviceAccounts.actAs
-        # permission to a service account SA, and there's another IAM policy states
-        # service account SA has permission P to the GCP folder F, then user A
-        # potentially has access to the GCP folder F. And those advanced analysis
-        # results will be included in AnalyzeIamPolicyResponse.
-        # service_account_impersonation_analysis. Default is false.
+        # SA has permission P to a Google Cloud folder F, then user A potentially has
+        # access to the Google Cloud folder F. And those advanced analysis results will
+        # be included in AnalyzeIamPolicyResponse.service_account_impersonation_analysis.
+        # Another example, if the request analyzes for who has permission P to a Google
+        # Cloud folder F, and there's an IAM policy states user A has iam.
+        # serviceAccounts.actAs permission to a service account SA, and there's another
+        # IAM policy states service account SA has permission P to the Google Cloud
+        # folder F, then user A potentially has access to the Google Cloud folder F. And
+        # those advanced analysis results will be included in AnalyzeIamPolicyResponse.
+        # service_account_impersonation_analysis. Only the following permissions are
+        # considered in this analysis: * `iam.serviceAccounts.actAs` * `iam.
+        # serviceAccounts.signBlob` * `iam.serviceAccounts.signJwt` * `iam.
+        # serviceAccounts.getAccessToken` * `iam.serviceAccounts.getOpenIdToken` * `iam.
+        # serviceAccounts.implicitDelegation` Default is false.
         # Corresponds to the JSON property `analyzeServiceAccountImpersonation`
         # @return [Boolean]
         attr_accessor :analyze_service_account_impersonation
@@ -3361,7 +4214,9 @@ module Google
         # Optional. If true, the identities section of the result will expand any Google
         # groups appearing in an IAM policy binding. If IamPolicyAnalysisQuery.
         # identity_selector is specified, the identity in the result will be determined
-        # by the selector, and this flag is not allowed to set. Default is false.
+        # by the selector, and this flag is not allowed to set. If true, the default max
+        # expansion per group is 1000 for AssetService.AnalyzeIamPolicy][]. Default is
+        # false.
         # Corresponds to the JSON property `expandGroups`
         # @return [Boolean]
         attr_accessor :expand_groups
@@ -3371,15 +4226,18 @@ module Google
         # specified, the resource section of the result will expand any resource
         # attached to an IAM policy to include resources lower in the resource hierarchy.
         # For example, if the request analyzes for which resources user A has
-        # permission P, and the results include an IAM policy with P on a GCP folder,
-        # the results will also include resources in that folder with permission P. If
-        # true and IamPolicyAnalysisQuery.resource_selector is specified, the resource
-        # section of the result will expand the specified resource to include resources
-        # lower in the resource hierarchy. Only project or lower resources are supported.
-        # Folder and organization resource cannot be used together with this option.
-        # For example, if the request analyzes for which users have permission P on a
-        # GCP project with this option enabled, the results will include all users who
-        # have permission P on that project or any lower resource. Default is false.
+        # permission P, and the results include an IAM policy with P on a Google Cloud
+        # folder, the results will also include resources in that folder with permission
+        # P. If true and IamPolicyAnalysisQuery.resource_selector is specified, the
+        # resource section of the result will expand the specified resource to include
+        # resources lower in the resource hierarchy. Only project or lower resources are
+        # supported. Folder and organization resources cannot be used together with this
+        # option. For example, if the request analyzes for which users have permission P
+        # on a Google Cloud project with this option enabled, the results will include
+        # all users who have permission P on that project or any lower resource. If true,
+        # the default max expansion per resource is 1000 for AssetService.
+        # AnalyzeIamPolicy][] and 100000 for AssetService.AnalyzeIamPolicyLongrunning][].
+        # Default is false.
         # Corresponds to the JSON property `expandResources`
         # @return [Boolean]
         attr_accessor :expand_resources
@@ -3395,15 +4253,16 @@ module Google
         attr_accessor :expand_roles
         alias_method :expand_roles?, :expand_roles
       
-        # Optional. If true, the result will output group identity edges, starting from
-        # the binding's group members, to any expanded identities. Default is false.
+        # Optional. If true, the result will output the relevant membership
+        # relationships between groups and other groups, and between groups and
+        # principals. Default is false.
         # Corresponds to the JSON property `outputGroupEdges`
         # @return [Boolean]
         attr_accessor :output_group_edges
         alias_method :output_group_edges?, :output_group_edges
       
-        # Optional. If true, the result will output resource edges, starting from the
-        # policy attached resource, to any expanded resources. Default is false.
+        # Optional. If true, the result will output the relevant parent/child
+        # relationships between resources. Default is false.
         # Corresponds to the JSON property `outputResourceEdges`
         # @return [Boolean]
         attr_accessor :output_resource_edges
@@ -3421,6 +4280,36 @@ module Google
           @expand_roles = args[:expand_roles] if args.key?(:expand_roles)
           @output_group_edges = args[:output_group_edges] if args.key?(:output_group_edges)
           @output_resource_edges = args[:output_resource_edges] if args.key?(:output_resource_edges)
+        end
+      end
+      
+      # The organization policy result to the query.
+      class OrgPolicyResult
+        include Google::Apis::Core::Hashable
+      
+        # This organization policy message is a modified version of the one defined in
+        # the Organization Policy system. This message contains several fields defined
+        # in the original organization policy with some new fields for analysis purpose.
+        # Corresponds to the JSON property `consolidatedPolicy`
+        # @return [Google::Apis::CloudassetV1::AnalyzerOrgPolicy]
+        attr_accessor :consolidated_policy
+      
+        # The ordered list of all organization policies from the
+        # AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.
+        # attached_resource. to the scope specified in the request. If the constraint is
+        # defined with default policy, it will also appear in the list.
+        # Corresponds to the JSON property `policyBundle`
+        # @return [Array<Google::Apis::CloudassetV1::AnalyzerOrgPolicy>]
+        attr_accessor :policy_bundle
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consolidated_policy = args[:consolidated_policy] if args.key?(:consolidated_policy)
+          @policy_bundle = args[:policy_bundle] if args.key?(:policy_bundle)
         end
       end
       
@@ -3551,31 +4440,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -3584,9 +4473,14 @@ module Google
         # @return [Array<Google::Apis::CloudassetV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::CloudassetV1::Binding>]
         attr_accessor :bindings
@@ -3639,6 +4533,57 @@ module Google
         end
       end
       
+      # The IAM policy and its attached resource.
+      class PolicyInfo
+        include Google::Apis::Core::Hashable
+      
+        # The full resource name the policy is directly attached to.
+        # Corresponds to the JSON property `attachedResource`
+        # @return [String]
+        attr_accessor :attached_resource
+      
+        # An Identity and Access Management (IAM) policy, which specifies access
+        # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
+        # Corresponds to the JSON property `policy`
+        # @return [Google::Apis::CloudassetV1::Policy]
+        attr_accessor :policy
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @attached_resource = args[:attached_resource] if args.key?(:attached_resource)
+          @policy = args[:policy] if args.key?(:policy)
+        end
+      end
+      
       # A Pub/Sub destination.
       class PubsubDestination
         include Google::Apis::Core::Hashable
@@ -3659,13 +4604,219 @@ module Google
         end
       end
       
+      # Output configuration query assets.
+      class QueryAssetsOutputConfig
+        include Google::Apis::Core::Hashable
+      
+        # BigQuery destination.
+        # Corresponds to the JSON property `bigqueryDestination`
+        # @return [Google::Apis::CloudassetV1::GoogleCloudAssetV1QueryAssetsOutputConfigBigQueryDestination]
+        attr_accessor :bigquery_destination
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bigquery_destination = args[:bigquery_destination] if args.key?(:bigquery_destination)
+        end
+      end
+      
+      # QueryAssets request.
+      class QueryAssetsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Reference to the query job, which is from the `QueryAssetsResponse`
+        # of previous `QueryAssets` call.
+        # Corresponds to the JSON property `jobReference`
+        # @return [String]
+        attr_accessor :job_reference
+      
+        # Output configuration query assets.
+        # Corresponds to the JSON property `outputConfig`
+        # @return [Google::Apis::CloudassetV1::QueryAssetsOutputConfig]
+        attr_accessor :output_config
+      
+        # Optional. The maximum number of rows to return in the results. Responses are
+        # limited to 10 MB and 1000 rows. By default, the maximum row count is 1000.
+        # When the byte or row count limit is reached, the rest of the query results
+        # will be paginated. The field will be ignored when [output_config] is specified.
+        # Corresponds to the JSON property `pageSize`
+        # @return [Fixnum]
+        attr_accessor :page_size
+      
+        # Optional. A page token received from previous `QueryAssets`. The field will be
+        # ignored when [output_config] is specified.
+        # Corresponds to the JSON property `pageToken`
+        # @return [String]
+        attr_accessor :page_token
+      
+        # Optional. Queries cloud assets as they appeared at the specified point in time.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
+        # A time window specified by its `start_time` and `end_time`.
+        # Corresponds to the JSON property `readTimeWindow`
+        # @return [Google::Apis::CloudassetV1::TimeWindow]
+        attr_accessor :read_time_window
+      
+        # Optional. A SQL statement that's compatible with [BigQuery Standard SQL](http:/
+        # /cloud/bigquery/docs/reference/standard-sql/enabling-standard-sql).
+        # Corresponds to the JSON property `statement`
+        # @return [String]
+        attr_accessor :statement
+      
+        # Optional. Specifies the maximum amount of time that the client is willing to
+        # wait for the query to complete. By default, this limit is 5 min for the first
+        # query, and 1 minute for the following queries. If the query is complete, the `
+        # done` field in the `QueryAssetsResponse` is true, otherwise false. Like
+        # BigQuery [jobs.query API](https://cloud.google.com/bigquery/docs/reference/
+        # rest/v2/jobs/query#queryrequest) The call is not guaranteed to wait for the
+        # specified timeout; it typically returns after around 200 seconds (200,000
+        # milliseconds), even if the query is not complete. The field will be ignored
+        # when [output_config] is specified.
+        # Corresponds to the JSON property `timeout`
+        # @return [String]
+        attr_accessor :timeout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @job_reference = args[:job_reference] if args.key?(:job_reference)
+          @output_config = args[:output_config] if args.key?(:output_config)
+          @page_size = args[:page_size] if args.key?(:page_size)
+          @page_token = args[:page_token] if args.key?(:page_token)
+          @read_time = args[:read_time] if args.key?(:read_time)
+          @read_time_window = args[:read_time_window] if args.key?(:read_time_window)
+          @statement = args[:statement] if args.key?(:statement)
+          @timeout = args[:timeout] if args.key?(:timeout)
+        end
+      end
+      
+      # QueryAssets response.
+      class QueryAssetsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The query response, which can be either an `error` or a valid `response`. If `
+        # done` == `false` and the query result is being saved in a output, the
+        # output_config field will be set. If `done` == `true`, exactly one of `error`, `
+        # query_result` or `output_config` will be set.
+        # Corresponds to the JSON property `done`
+        # @return [Boolean]
+        attr_accessor :done
+        alias_method :done?, :done
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `error`
+        # @return [Google::Apis::CloudassetV1::Status]
+        attr_accessor :error
+      
+        # Reference to a query job.
+        # Corresponds to the JSON property `jobReference`
+        # @return [String]
+        attr_accessor :job_reference
+      
+        # Output configuration query assets.
+        # Corresponds to the JSON property `outputConfig`
+        # @return [Google::Apis::CloudassetV1::QueryAssetsOutputConfig]
+        attr_accessor :output_config
+      
+        # Execution results of the query. The result is formatted as rows represented by
+        # BigQuery compatible [schema]. When pagination is necessary, it will contains
+        # the page token to retrieve the results of following pages.
+        # Corresponds to the JSON property `queryResult`
+        # @return [Google::Apis::CloudassetV1::QueryResult]
+        attr_accessor :query_result
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @done = args[:done] if args.key?(:done)
+          @error = args[:error] if args.key?(:error)
+          @job_reference = args[:job_reference] if args.key?(:job_reference)
+          @output_config = args[:output_config] if args.key?(:output_config)
+          @query_result = args[:query_result] if args.key?(:query_result)
+        end
+      end
+      
+      # The query content.
+      class QueryContent
+        include Google::Apis::Core::Hashable
+      
+        # IAM policy analysis query message.
+        # Corresponds to the JSON property `iamPolicyAnalysisQuery`
+        # @return [Google::Apis::CloudassetV1::IamPolicyAnalysisQuery]
+        attr_accessor :iam_policy_analysis_query
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @iam_policy_analysis_query = args[:iam_policy_analysis_query] if args.key?(:iam_policy_analysis_query)
+        end
+      end
+      
+      # Execution results of the query. The result is formatted as rows represented by
+      # BigQuery compatible [schema]. When pagination is necessary, it will contains
+      # the page token to retrieve the results of following pages.
+      class QueryResult
+        include Google::Apis::Core::Hashable
+      
+        # Token to retrieve the next page of the results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Each row hold a query result in the format of `Struct`.
+        # Corresponds to the JSON property `rows`
+        # @return [Array<Hash<String,Object>>]
+        attr_accessor :rows
+      
+        # BigQuery Compatible table schema.
+        # Corresponds to the JSON property `schema`
+        # @return [Google::Apis::CloudassetV1::TableSchema]
+        attr_accessor :schema
+      
+        # Total rows of the whole query results.
+        # Corresponds to the JSON property `totalRows`
+        # @return [Fixnum]
+        attr_accessor :total_rows
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @rows = args[:rows] if args.key?(:rows)
+          @schema = args[:schema] if args.key?(:schema)
+          @total_rows = args[:total_rows] if args.key?(:total_rows)
+        end
+      end
+      
       # An asset identifier in Google Cloud which contains its name, type and
       # ancestors. An asset can be any resource in the Google Cloud [resource
       # hierarchy](https://cloud.google.com/resource-manager/docs/cloud-platform-
       # resource-hierarchy), a resource outside the Google Cloud resource hierarchy (
-      # such as Google Kubernetes Engine clusters and objects), or a policy (e.g.
-      # Cloud IAM policy). See [Supported asset types](https://cloud.google.com/asset-
-      # inventory/docs/supported-asset-types) for more information.
+      # such as Google Kubernetes Engine clusters and objects), or a policy (e.g. IAM
+      # policy). See [Supported asset types](https://cloud.google.com/asset-inventory/
+      # docs/supported-asset-types) for more information.
       class RelatedAsset
         include Google::Apis::Core::Hashable
       
@@ -3693,6 +4844,12 @@ module Google
         # @return [String]
         attr_accessor :asset_type
       
+        # The unique identifier of the relationship type. Example: `
+        # INSTANCE_TO_INSTANCEGROUP`
+        # Corresponds to the JSON property `relationshipType`
+        # @return [String]
+        attr_accessor :relationship_type
+      
         def initialize(**args)
            update!(**args)
         end
@@ -3702,10 +4859,13 @@ module Google
           @ancestors = args[:ancestors] if args.key?(:ancestors)
           @asset = args[:asset] if args.key?(:asset)
           @asset_type = args[:asset_type] if args.key?(:asset_type)
+          @relationship_type = args[:relationship_type] if args.key?(:relationship_type)
         end
       end
       
-      # The detailed related assets with the `relationship_type`.
+      # DEPRECATED. This message only presents for the purpose of backward-
+      # compatibility. The server will never populate this message in responses. The
+      # detailed related assets with the `relationship_type`.
       class RelatedAssets
         include Google::Apis::Core::Hashable
       
@@ -3714,7 +4874,9 @@ module Google
         # @return [Array<Google::Apis::CloudassetV1::RelatedAsset>]
         attr_accessor :assets
       
-        # The relationship attributes which include `type`, `source_resource_type`, `
+        # DEPRECATED. This message only presents for the purpose of backward-
+        # compatibility. The server will never populate this message in responses. The
+        # relationship attributes which include `type`, `source_resource_type`, `
         # target_resource_type` and `action`.
         # Corresponds to the JSON property `relationshipAttributes`
         # @return [Google::Apis::CloudassetV1::RelationshipAttributes]
@@ -3776,7 +4938,9 @@ module Google
         end
       end
       
-      # The relationship attributes which include `type`, `source_resource_type`, `
+      # DEPRECATED. This message only presents for the purpose of backward-
+      # compatibility. The server will never populate this message in responses. The
+      # relationship attributes which include `type`, `source_resource_type`, `
       # target_resource_type` and `action`.
       class RelationshipAttributes
         include Google::Apis::Core::Hashable
@@ -3849,7 +5013,7 @@ module Google
         # The full name of the immediate parent of this resource. See [Resource Names](
         # https://cloud.google.com/apis/design/resource_names#full_resource_name) for
         # more information. For Google Cloud assets, this value is the parent resource
-        # defined in the [Cloud IAM policy hierarchy](https://cloud.google.com/iam/docs/
+        # defined in the [IAM policy hierarchy](https://cloud.google.com/iam/docs/
         # overview#policy_hierarchy). Example: `//cloudresourcemanager.googleapis.com/
         # projects/my_project_123` For third-party assets, this field may be set
         # differently.
@@ -3886,7 +5050,8 @@ module Google
         end
       end
       
-      # A result of Resource Search, containing information of a cloud resource.
+      # A result of Resource Search, containing information of a cloud resource. Next
+      # ID: 32
       class ResourceSearchResult
         include Google::Apis::Core::Hashable
       
@@ -3894,21 +5059,21 @@ module Google
         # from one resource type to another. Examples: `projectId` for Project, `dnsName`
         # for DNS ManagedZone. This field contains a subset of the resource metadata
         # fields that are returned by the List or Get APIs provided by the corresponding
-        # GCP service (e.g., Compute Engine). see [API references and supported
+        # Google Cloud service (e.g., Compute Engine). see [API references and supported
         # searchable attributes](https://cloud.google.com/asset-inventory/docs/supported-
         # asset-types#searchable_asset_types) to see which fields are included. You can
         # search values of these fields through free text search. However, you should
         # not consume the field programically as the field names and values may change
-        # as the GCP service updates to a new incompatible API version. To search
-        # against the `additional_attributes`: * use a free text query to match the
-        # attributes values. Example: to search `additional_attributes = ` dnsName: "
+        # as the Google Cloud service updates to a new incompatible API version. To
+        # search against the `additional_attributes`: * Use a free text query to match
+        # the attributes values. Example: to search `additional_attributes = ` dnsName: "
         # foobar" ``, you can issue a query `foobar`.
         # Corresponds to the JSON property `additionalAttributes`
         # @return [Hash<String,Object>]
         attr_accessor :additional_attributes
       
         # The type of this resource. Example: `compute.googleapis.com/Disk`. To search
-        # against the `asset_type`: * specify the `asset_type` field in your search
+        # against the `asset_type`: * Specify the `asset_type` field in your search
         # request.
         # Corresponds to the JSON property `assetType`
         # @return [String]
@@ -3926,7 +5091,7 @@ module Google
         # The create timestamp of this resource, at which the resource was created. The
         # granularity is in seconds. Timestamp.nanos will always be 0. This field is
         # available only when the resource's Protobuf contains it. To search against `
-        # create_time`: * use a field query. - value in seconds since unix epoch.
+        # create_time`: * Use a field query. - value in seconds since unix epoch.
         # Example: `createTime > 1609459200` - value in date string. Example: `
         # createTime > 2021-01-01` - value in date-time string (must be quoted). Example:
         # `createTime > "2021-01-01T00:00:00"`
@@ -3936,16 +5101,16 @@ module Google
       
         # One or more paragraphs of text description of this resource. Maximum length
         # could be up to 1M bytes. This field is available only when the resource's
-        # Protobuf contains it. To search against the `description`: * use a field query.
-        # Example: `description:"important instance"` * use a free text query. Example:
+        # Protobuf contains it. To search against the `description`: * Use a field query.
+        # Example: `description:"important instance"` * Use a free text query. Example:
         # `"important instance"`
         # Corresponds to the JSON property `description`
         # @return [String]
         attr_accessor :description
       
         # The display name of this resource. This field is available only when the
-        # resource's Protobuf contains it. To search against the `display_name`: * use a
-        # field query. Example: `displayName:"My Instance"` * use a free text query.
+        # resource's Protobuf contains it. To search against the `display_name`: * Use a
+        # field query. Example: `displayName:"My Instance"` * Use a free text query.
         # Example: `"My Instance"`
         # Corresponds to the JSON property `displayName`
         # @return [String]
@@ -3953,8 +5118,8 @@ module Google
       
         # The folder(s) that this resource belongs to, in the form of folders/`
         # FOLDER_NUMBER`. This field is available when the resource belongs to one or
-        # more folders. To search against `folders`: * use a field query. Example: `
-        # folders:(123 OR 456)` * use a free text query. Example: `123` * specify the `
+        # more folders. To search against `folders`: * Use a field query. Example: `
+        # folders:(123 OR 456)` * Use a free text query. Example: `123` * Specify the `
         # scope` field as this folder in your search request.
         # Corresponds to the JSON property `folders`
         # @return [Array<String>]
@@ -3963,20 +5128,35 @@ module Google
         # The Cloud KMS [CryptoKey](https://cloud.google.com/kms/docs/reference/rest/v1/
         # projects.locations.keyRings.cryptoKeys) name or [CryptoKeyVersion](https://
         # cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.
-        # cryptoKeys.cryptoKeyVersions) name. This field is available only when the
-        # resource's Protobuf contains it. To search against the `kms_key`: * use a
-        # field query. Example: `kmsKey:key` * use a free text query. Example: `key`
+        # cryptoKeys.cryptoKeyVersions) name. This field only presents for the purpose
+        # of backward compatibility. Please use the `kms_keys` field to retrieve Cloud
+        # KMS key information. This field is available only when the resource's Protobuf
+        # contains it and will only be populated for [these resource types](https://
+        # cloud.google.com/asset-inventory/docs/legacy-field-names#
+        # resource_types_with_the_to_be_deprecated_kmskey_field) for backward compatible
+        # purposes. To search against the `kms_key`: * Use a field query. Example: `
+        # kmsKey:key` * Use a free text query. Example: `key`
         # Corresponds to the JSON property `kmsKey`
         # @return [String]
         attr_accessor :kms_key
       
-        # Labels associated with this resource. See [Labelling and grouping GCP
+        # The Cloud KMS [CryptoKey](https://cloud.google.com/kms/docs/reference/rest/v1/
+        # projects.locations.keyRings.cryptoKeys) names or [CryptoKeyVersion](https://
+        # cloud.google.com/kms/docs/reference/rest/v1/projects.locations.keyRings.
+        # cryptoKeys.cryptoKeyVersions) names. This field is available only when the
+        # resource's Protobuf contains it. To search against the `kms_keys`: * Use a
+        # field query. Example: `kmsKeys:key` * Use a free text query. Example: `key`
+        # Corresponds to the JSON property `kmsKeys`
+        # @return [Array<String>]
+        attr_accessor :kms_keys
+      
+        # Labels associated with this resource. See [Labelling and grouping Google Cloud
         # resources](https://cloud.google.com/blog/products/gcp/labelling-and-grouping-
         # your-google-cloud-platform-resources) for more information. This field is
         # available only when the resource's Protobuf contains it. To search against the
-        # `labels`: * use a field query: - query on any label's key or value. Example: `
+        # `labels`: * Use a field query: - query on any label's key or value. Example: `
         # labels:prod` - query by a given label. Example: `labels.env:prod` - query by a
-        # given label's existence. Example: `labels.env:*` * use a free text query.
+        # given label's existence. Example: `labels.env:*` * Use a free text query.
         # Example: `prod`
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
@@ -3984,8 +5164,8 @@ module Google
       
         # Location can be `global`, regional like `us-east1`, or zonal like `us-west1-b`.
         # This field is available only when the resource's Protobuf contains it. To
-        # search against the `location`: * use a field query. Example: `location:us-west*
-        # ` * use a free text query. Example: `us-west*`
+        # search against the `location`: * Use a field query. Example: `location:us-west*
+        # ` * Use a free text query. Example: `us-west*`
         # Corresponds to the JSON property `location`
         # @return [String]
         attr_accessor :location
@@ -3994,43 +5174,43 @@ module Google
         # projects/my_project_123/zones/zone1/instances/instance1`. See [Cloud Asset
         # Inventory Resource Name Format](https://cloud.google.com/asset-inventory/docs/
         # resource-name-format) for more information. To search against the `name`: *
-        # use a field query. Example: `name:instance1` * use a free text query. Example:
+        # Use a field query. Example: `name:instance1` * Use a free text query. Example:
         # `instance1`
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
         # Network tags associated with this resource. Like labels, network tags are a
-        # type of annotations used to group GCP resources. See [Labelling GCP resources](
-        # https://cloud.google.com/blog/products/gcp/labelling-and-grouping-your-google-
-        # cloud-platform-resources) for more information. This field is available only
-        # when the resource's Protobuf contains it. To search against the `network_tags`:
-        # * use a field query. Example: `networkTags:internal` * use a free text query.
-        # Example: `internal`
+        # type of annotations used to group Google Cloud resources. See [Labelling
+        # Google Cloud resources](https://cloud.google.com/blog/products/gcp/labelling-
+        # and-grouping-your-google-cloud-platform-resources) for more information. This
+        # field is available only when the resource's Protobuf contains it. To search
+        # against the `network_tags`: * Use a field query. Example: `networkTags:
+        # internal` * Use a free text query. Example: `internal`
         # Corresponds to the JSON property `networkTags`
         # @return [Array<String>]
         attr_accessor :network_tags
       
         # The organization that this resource belongs to, in the form of organizations/`
         # ORGANIZATION_NUMBER`. This field is available when the resource belongs to an
-        # organization. To search against `organization`: * use a field query. Example: `
-        # organization:123` * use a free text query. Example: `123` * specify the `scope`
+        # organization. To search against `organization`: * Use a field query. Example: `
+        # organization:123` * Use a free text query. Example: `123` * Specify the `scope`
         # field as this organization in your search request.
         # Corresponds to the JSON property `organization`
         # @return [String]
         attr_accessor :organization
       
         # The type of this resource's immediate parent, if there is one. To search
-        # against the `parent_asset_type`: * use a field query. Example: `
-        # parentAssetType:"cloudresourcemanager.googleapis.com/Project"` * use a free
+        # against the `parent_asset_type`: * Use a field query. Example: `
+        # parentAssetType:"cloudresourcemanager.googleapis.com/Project"` * Use a free
         # text query. Example: `cloudresourcemanager.googleapis.com/Project`
         # Corresponds to the JSON property `parentAssetType`
         # @return [String]
         attr_accessor :parent_asset_type
       
         # The full resource name of this resource's parent, if it has one. To search
-        # against the `parent_full_resource_name`: * use a field query. Example: `
-        # parentFullResourceName:"project-name"` * use a free text query. Example: `
+        # against the `parent_full_resource_name`: * Use a field query. Example: `
+        # parentFullResourceName:"project-name"` * Use a free text query. Example: `
         # project-name`
         # Corresponds to the JSON property `parentFullResourceName`
         # @return [String]
@@ -4038,8 +5218,8 @@ module Google
       
         # The project that this resource belongs to, in the form of projects/`
         # PROJECT_NUMBER`. This field is available when the resource belongs to a
-        # project. To search against `project`: * use a field query. Example: `project:
-        # 12345` * use a free text query. Example: `12345` * specify the `scope` field
+        # project. To search against `project`: * Use a field query. Example: `project:
+        # 12345` * Use a free text query. Example: `12345` * Specify the `scope` field
         # as this project in your search request.
         # Corresponds to the JSON property `project`
         # @return [String]
@@ -4061,20 +5241,44 @@ module Google
         # include PROVISIONING, STAGING, RUNNING, STOPPING, SUSPENDING, SUSPENDED,
         # REPAIRING, and TERMINATED. See `status` definition in [API Reference](https://
         # cloud.google.com/compute/docs/reference/rest/v1/instances). If the resource is
-        # a project provided by Cloud Resource Manager, its state will include
+        # a project provided by Resource Manager, its state will include
         # LIFECYCLE_STATE_UNSPECIFIED, ACTIVE, DELETE_REQUESTED and DELETE_IN_PROGRESS.
         # See `lifecycleState` definition in [API Reference](https://cloud.google.com/
         # resource-manager/reference/rest/v1/projects). To search against the `state`: *
-        # use a field query. Example: `state:RUNNING` * use a free text query. Example: `
+        # Use a field query. Example: `state:RUNNING` * Use a free text query. Example: `
         # RUNNING`
         # Corresponds to the JSON property `state`
         # @return [String]
         attr_accessor :state
       
+        # TagKey namespaced names, in the format of `ORG_ID`/`TAG_KEY_SHORT_NAME`. To
+        # search against the `tagKeys`: * Use a field query. Example: - `tagKeys:"
+        # 123456789/env*"` - `tagKeys="123456789/env"` - `tagKeys:"env"` * Use a free
+        # text query. Example: - `env`
+        # Corresponds to the JSON property `tagKeys`
+        # @return [Array<String>]
+        attr_accessor :tag_keys
+      
+        # TagValue IDs, in the format of tagValues/`TAG_VALUE_ID`. To search against the
+        # `tagValueIds`: * Use a field query. Example: - `tagValueIds:"456"` - `
+        # tagValueIds="tagValues/456"` * Use a free text query. Example: - `456`
+        # Corresponds to the JSON property `tagValueIds`
+        # @return [Array<String>]
+        attr_accessor :tag_value_ids
+      
+        # TagValue namespaced names, in the format of `ORG_ID`/`TAG_KEY_SHORT_NAME`/`
+        # TAG_VALUE_SHORT_NAME`. To search against the `tagValues`: * Use a field query.
+        # Example: - `tagValues:"env"` - `tagValues:"env/prod"` - `tagValues:"123456789/
+        # env/prod*"` - `tagValues="123456789/env/prod"` * Use a free text query.
+        # Example: - `prod`
+        # Corresponds to the JSON property `tagValues`
+        # @return [Array<String>]
+        attr_accessor :tag_values
+      
         # The last update timestamp of this resource, at which the resource was last
         # modified or deleted. The granularity is in seconds. Timestamp.nanos will
         # always be 0. This field is available only when the resource's Protobuf
-        # contains it. To search against `update_time`: * use a field query. - value in
+        # contains it. To search against `update_time`: * Use a field query. - value in
         # seconds since unix epoch. Example: `updateTime < 1609459200` - value in date
         # string. Example: `updateTime < 2021-01-01` - value in date-time string (must
         # be quoted). Example: `updateTime < "2021-01-01T00:00:00"`
@@ -4105,6 +5309,7 @@ module Google
           @display_name = args[:display_name] if args.key?(:display_name)
           @folders = args[:folders] if args.key?(:folders)
           @kms_key = args[:kms_key] if args.key?(:kms_key)
+          @kms_keys = args[:kms_keys] if args.key?(:kms_keys)
           @labels = args[:labels] if args.key?(:labels)
           @location = args[:location] if args.key?(:location)
           @name = args[:name] if args.key?(:name)
@@ -4115,6 +5320,9 @@ module Google
           @project = args[:project] if args.key?(:project)
           @relationships = args[:relationships] if args.key?(:relationships)
           @state = args[:state] if args.key?(:state)
+          @tag_keys = args[:tag_keys] if args.key?(:tag_keys)
+          @tag_value_ids = args[:tag_value_ids] if args.key?(:tag_value_ids)
+          @tag_values = args[:tag_values] if args.key?(:tag_values)
           @update_time = args[:update_time] if args.key?(:update_time)
           @versioned_resources = args[:versioned_resources] if args.key?(:versioned_resources)
         end
@@ -4144,6 +5352,74 @@ module Google
         end
       end
       
+      # A saved query which can be shared with others or used later.
+      class SavedQuery
+        include Google::Apis::Core::Hashable
+      
+        # The query content.
+        # Corresponds to the JSON property `content`
+        # @return [Google::Apis::CloudassetV1::QueryContent]
+        attr_accessor :content
+      
+        # Output only. The create time of this saved query.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The account's email address who has created this saved query.
+        # Corresponds to the JSON property `creator`
+        # @return [String]
+        attr_accessor :creator
+      
+        # The description of this saved query. This value should be fewer than 255
+        # characters.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Labels applied on the resource. This value should not contain more than 10
+        # entries. The key and value of each entry must be non-empty and fewer than 64
+        # characters.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # Output only. The last update time of this saved query.
+        # Corresponds to the JSON property `lastUpdateTime`
+        # @return [String]
+        attr_accessor :last_update_time
+      
+        # Output only. The account's email address who has updated this saved query most
+        # recently.
+        # Corresponds to the JSON property `lastUpdater`
+        # @return [String]
+        attr_accessor :last_updater
+      
+        # The resource name of the saved query. The format must be: * projects/
+        # project_number/savedQueries/saved_query_id * folders/folder_number/
+        # savedQueries/saved_query_id * organizations/organization_number/savedQueries/
+        # saved_query_id
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content = args[:content] if args.key?(:content)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @creator = args[:creator] if args.key?(:creator)
+          @description = args[:description] if args.key?(:description)
+          @labels = args[:labels] if args.key?(:labels)
+          @last_update_time = args[:last_update_time] if args.key?(:last_update_time)
+          @last_updater = args[:last_updater] if args.key?(:last_updater)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # Search all IAM policies response.
       class SearchAllIamPoliciesResponse
         include Google::Apis::Core::Hashable
@@ -4155,8 +5431,8 @@ module Google
         # @return [String]
         attr_accessor :next_page_token
       
-        # A list of IamPolicy that match the search query. Related information such as
-        # the associated resource is returned along with the policy.
+        # A list of IAM policies that match the search query. Related information such
+        # as the associated resource is returned along with the policy.
         # Corresponds to the JSON property `results`
         # @return [Array<Google::Apis::CloudassetV1::IamPolicySearchResult>]
         attr_accessor :results
@@ -4230,8 +5506,8 @@ module Google
         attr_accessor :qfe_package
       
         # Contains information about a Windows application that is retrieved from the
-        # Windows Registry. For more information about these fields, see Windows
-        # Installer Properties for the Uninstall Registry.
+        # Windows Registry. For more information about these fields, see: https://docs.
+        # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
         # Corresponds to the JSON property `windowsApplication`
         # @return [Google::Apis::CloudassetV1::WindowsApplication]
         attr_accessor :windows_application
@@ -4318,6 +5594,68 @@ module Google
         end
       end
       
+      # A field in TableSchema.
+      class TableFieldSchema
+        include Google::Apis::Core::Hashable
+      
+        # The field name. The name must contain only letters (a-z, A-Z), numbers (0-9),
+        # or underscores (_), and must start with a letter or underscore. The maximum
+        # length is 128 characters.
+        # Corresponds to the JSON property `field`
+        # @return [String]
+        attr_accessor :field
+      
+        # Describes the nested schema fields if the type property is set to RECORD.
+        # Corresponds to the JSON property `fields`
+        # @return [Array<Google::Apis::CloudassetV1::TableFieldSchema>]
+        attr_accessor :fields
+      
+        # The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The
+        # default value is NULLABLE.
+        # Corresponds to the JSON property `mode`
+        # @return [String]
+        attr_accessor :mode
+      
+        # The field data type. Possible values include * STRING * BYTES * INTEGER *
+        # FLOAT * BOOLEAN * TIMESTAMP * DATE * TIME * DATETIME * GEOGRAPHY, * NUMERIC, *
+        # BIGNUMERIC, * RECORD (where RECORD indicates that the field contains a nested
+        # schema).
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @field = args[:field] if args.key?(:field)
+          @fields = args[:fields] if args.key?(:fields)
+          @mode = args[:mode] if args.key?(:mode)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # BigQuery Compatible table schema.
+      class TableSchema
+        include Google::Apis::Core::Hashable
+      
+        # Describes the fields in a table.
+        # Corresponds to the JSON property `fields`
+        # @return [Array<Google::Apis::CloudassetV1::TableFieldSchema>]
+        attr_accessor :fields
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @fields = args[:fields] if args.key?(:fields)
+        end
+      end
+      
       # An asset in Google Cloud and its temporal metadata, including the time window
       # when it was observed and its status during that window.
       class TemporalAsset
@@ -4327,7 +5665,7 @@ module Google
         # resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-
         # platform-resource-hierarchy), a resource outside the Google Cloud resource
         # hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy
-        # (e.g. Cloud IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
+        # (e.g. IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
         # relationship). See [Supported asset types](https://cloud.google.com/asset-
         # inventory/docs/supported-asset-types) for more information.
         # Corresponds to the JSON property `asset`
@@ -4344,7 +5682,7 @@ module Google
         # resource hierarchy](https://cloud.google.com/resource-manager/docs/cloud-
         # platform-resource-hierarchy), a resource outside the Google Cloud resource
         # hierarchy (such as Google Kubernetes Engine clusters and objects), or a policy
-        # (e.g. Cloud IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
+        # (e.g. IAM policy), or a relationship (e.g. an INSTANCE_TO_INSTANCEGROUP
         # relationship). See [Supported asset types](https://cloud.google.com/asset-
         # inventory/docs/supported-asset-types) for more information.
         # Corresponds to the JSON property `priorAsset`
@@ -4498,8 +5836,8 @@ module Google
       end
       
       # Contains information about a Windows application that is retrieved from the
-      # Windows Registry. For more information about these fields, see Windows
-      # Installer Properties for the Uninstall Registry.
+      # Windows Registry. For more information about these fields, see: https://docs.
+      # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
       class WindowsApplication
         include Google::Apis::Core::Hashable
       
@@ -4521,11 +5859,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `installDate`
         # @return [Google::Apis::CloudassetV1::Date]
         attr_accessor :install_date

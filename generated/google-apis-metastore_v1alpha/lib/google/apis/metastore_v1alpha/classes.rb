@@ -22,6 +22,46 @@ module Google
   module Apis
     module MetastoreV1alpha
       
+      # Request message for DataprocMetastore.AlterMetadataResourceLocation.
+      class AlterMetadataResourceLocationRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The new location URI for the metadata resource.
+        # Corresponds to the JSON property `locationUri`
+        # @return [String]
+        attr_accessor :location_uri
+      
+        # Required. The relative metadata resource name in the following format.
+        # databases/`database_id` or databases/`database_id`/tables/`table_id` or
+        # databases/`database_id`/tables/`table_id`/partitions/`partition_id`
+        # Corresponds to the JSON property `resourceName`
+        # @return [String]
+        attr_accessor :resource_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @location_uri = args[:location_uri] if args.key?(:location_uri)
+          @resource_name = args[:resource_name] if args.key?(:resource_name)
+        end
+      end
+      
+      # Response message for DataprocMetastore.AlterMetadataResourceLocation.
+      class AlterMetadataResourceLocationResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Specifies the audit configuration for a service. The configuration determines
       # which permission types are logged, and what identities, if any, are exempted
       # from logging. An AuditConfig must have one or more AuditLogConfigs.If there
@@ -93,6 +133,70 @@ module Google
         end
       end
       
+      # Configuration information for the auxiliary service versions.
+      class AuxiliaryVersionConfig
+        include Google::Apis::Core::Hashable
+      
+        # A mapping of Hive metastore configuration key-value pairs to apply to the
+        # auxiliary Hive metastore (configured in hive-site.xml) in addition to the
+        # primary version's overrides. If keys are present in both the auxiliary version'
+        # s overrides and the primary version's overrides, the value from the auxiliary
+        # version's overrides takes precedence.
+        # Corresponds to the JSON property `configOverrides`
+        # @return [Hash<String,String>]
+        attr_accessor :config_overrides
+      
+        # Network configuration for the Dataproc Metastore service.
+        # Corresponds to the JSON property `networkConfig`
+        # @return [Google::Apis::MetastoreV1alpha::NetworkConfig]
+        attr_accessor :network_config
+      
+        # The Hive metastore version of the auxiliary service. It must be less than the
+        # primary Hive metastore service's version.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @config_overrides = args[:config_overrides] if args.key?(:config_overrides)
+          @network_config = args[:network_config] if args.key?(:network_config)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Represents a backend metastore for the federation.
+      class BackendMetastore
+        include Google::Apis::Core::Hashable
+      
+        # The type of the backend metastore.
+        # Corresponds to the JSON property `metastoreType`
+        # @return [String]
+        attr_accessor :metastore_type
+      
+        # The relative resource name of the metastore that is being federated. The
+        # formats of the relative resource names for the currently supported metastores
+        # are listed below: BigQuery projects/`project_id` Dataproc Metastore projects/`
+        # project_id`/locations/`location`/services/`service_id`
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metastore_type = args[:metastore_type] if args.key?(:metastore_type)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # The details of a backup resource.
       class Backup
         include Google::Apis::Core::Hashable
@@ -150,7 +254,7 @@ module Google
         end
       end
       
-      # Associates members with a role.
+      # Associates members, or principals, with a role.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -173,37 +277,42 @@ module Google
         # @return [Google::Apis::MetastoreV1alpha::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource.
+        # Specifies the principals requesting access for a Google Cloud resource.
         # members can have the following values: allUsers: A special identifier that
         # represents anyone who is on the internet; with or without a Google account.
         # allAuthenticatedUsers: A special identifier that represents anyone who is
-        # authenticated with a Google account or a service account. user:`emailid`: An
-        # email address that represents a specific Google account. For example, alice@
-        # example.com . serviceAccount:`emailid`: An email address that represents a
-        # service account. For example, my-other-app@appspot.gserviceaccount.com. group:`
+        # authenticated with a Google account or a service account. Does not include
+        # identities that come from external identity providers (IdPs) through identity
+        # federation. user:`emailid`: An email address that represents a specific Google
+        # account. For example, alice@example.com . serviceAccount:`emailid`: An email
+        # address that represents a Google service account. For example, my-other-app@
+        # appspot.gserviceaccount.com. serviceAccount:`projectid`.svc.id.goog[`namespace`
+        # /`kubernetes-sa`]: An identifier for a Kubernetes service account (https://
+        # cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+        # For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa]. group:`
         # emailid`: An email address that represents a Google group. For example, admins@
-        # example.com. deleted:user:`emailid`?uid=`uniqueid`: An email address (plus
-        # unique identifier) representing a user that has been recently deleted. For
-        # example, alice@example.com?uid=123456789012345678901. If the user is recovered,
-        # this value reverts to user:`emailid` and the recovered user retains the role
-        # in the binding. deleted:serviceAccount:`emailid`?uid=`uniqueid`: An email
-        # address (plus unique identifier) representing a service account that has been
-        # recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=
-        # 123456789012345678901. If the service account is undeleted, this value reverts
-        # to serviceAccount:`emailid` and the undeleted service account retains the role
-        # in the binding. deleted:group:`emailid`?uid=`uniqueid`: An email address (plus
-        # unique identifier) representing a Google group that has been recently deleted.
-        # For example, admins@example.com?uid=123456789012345678901. If the group is
+        # example.com. domain:`domain`: The G Suite domain (primary) that represents all
+        # the users of that domain. For example, google.com or example.com. deleted:user:
+        # `emailid`?uid=`uniqueid`: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, alice@example.
+        # com?uid=123456789012345678901. If the user is recovered, this value reverts to
+        # user:`emailid` and the recovered user retains the role in the binding. deleted:
+        # serviceAccount:`emailid`?uid=`uniqueid`: An email address (plus unique
+        # identifier) representing a service account that has been recently deleted. For
+        # example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901.
+        # If the service account is undeleted, this value reverts to serviceAccount:`
+        # emailid` and the undeleted service account retains the role in the binding.
+        # deleted:group:`emailid`?uid=`uniqueid`: An email address (plus unique
+        # identifier) representing a Google group that has been recently deleted. For
+        # example, admins@example.com?uid=123456789012345678901. If the group is
         # recovered, this value reverts to group:`emailid` and the recovered group
-        # retains the role in the binding. domain:`domain`: The G Suite domain (primary)
-        # that represents all the users of that domain. For example, google.com or
-        # example.com.
+        # retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to members. For example, roles/viewer, roles/editor, or
-        # roles/owner.
+        # Role that is assigned to the list of members, or principals. For example,
+        # roles/viewer, roles/editor, or roles/owner.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -217,6 +326,49 @@ module Google
           @condition = args[:condition] if args.key?(:condition)
           @members = args[:members] if args.key?(:members)
           @role = args[:role] if args.key?(:role)
+        end
+      end
+      
+      # The request message for Operations.CancelOperation.
+      class CancelOperationRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Contains information of the customer's network configurations.
+      class Consumer
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The URI of the endpoint used to access the metastore service.
+        # Corresponds to the JSON property `endpointUri`
+        # @return [String]
+        attr_accessor :endpoint_uri
+      
+        # Immutable. The subnetwork of the customer project from which an IP address is
+        # reserved and used as the Dataproc Metastore service's endpoint. It is
+        # accessible to hosts in the subnet and to all hosts in a subnet in the same
+        # region and same network. There must be at least one IP address available in
+        # the subnet's primary range. The subnet is specified in the following form:
+        # projects/`project_number`/regions/`region_id`/subnetworks/`subnetwork_id`
+        # Corresponds to the JSON property `subnetwork`
+        # @return [String]
+        attr_accessor :subnetwork
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @endpoint_uri = args[:endpoint_uri] if args.key?(:endpoint_uri)
+          @subnetwork = args[:subnetwork] if args.key?(:subnetwork)
         end
       end
       
@@ -306,8 +458,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -434,14 +585,109 @@ module Google
         end
       end
       
+      # Represents a federation of multiple backend metastores.
+      class Federation
+        include Google::Apis::Core::Hashable
+      
+        # A map from BackendMetastore rank to BackendMetastores from which the
+        # federation service serves metadata at query time. The map key represents the
+        # order in which BackendMetastores should be evaluated to resolve database names
+        # at query time and should be greater than or equal to zero. A BackendMetastore
+        # with a lower number will be evaluated before a BackendMetastore with a higher
+        # number.
+        # Corresponds to the JSON property `backendMetastores`
+        # @return [Hash<String,Google::Apis::MetastoreV1alpha::BackendMetastore>]
+        attr_accessor :backend_metastores
+      
+        # Output only. The time when the metastore federation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The federation endpoint.
+        # Corresponds to the JSON property `endpointUri`
+        # @return [String]
+        attr_accessor :endpoint_uri
+      
+        # User-defined labels for the metastore federation.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # Immutable. The relative resource name of the federation, of the form: projects/
+        # `project_number`/locations/`location_id`/federations/`federation_id``.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. The current state of the federation.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # Output only. Additional information about the current state of the metastore
+        # federation, if available.
+        # Corresponds to the JSON property `stateMessage`
+        # @return [String]
+        attr_accessor :state_message
+      
+        # Output only. The globally unique resource identifier of the metastore
+        # federation.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        # Output only. The time when the metastore federation was last updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # Immutable. The Apache Hive metastore version of the federation. All backend
+        # metastore versions must be compatible with the federation version.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @backend_metastores = args[:backend_metastores] if args.key?(:backend_metastores)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @endpoint_uri = args[:endpoint_uri] if args.key?(:endpoint_uri)
+          @labels = args[:labels] if args.key?(:labels)
+          @name = args[:name] if args.key?(:name)
+          @state = args[:state] if args.key?(:state)
+          @state_message = args[:state_message] if args.key?(:state_message)
+          @uid = args[:uid] if args.key?(:uid)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
       # Specifies configuration information specific to running Hive metastore
       # software as the metastore service.
       class HiveMetastoreConfig
         include Google::Apis::Core::Hashable
       
+        # A mapping of Hive metastore version to the auxiliary version configuration.
+        # When specified, a secondary Hive metastore service is created along with the
+        # primary service. All auxiliary versions must be less than the service's
+        # primary version. The key is the auxiliary service name and it must match the
+        # regular expression a-z?. This means that the first character must be a
+        # lowercase letter, and all the following characters must be hyphens, lowercase
+        # letters, or digits, except the last character, which cannot be a hyphen.
+        # Corresponds to the JSON property `auxiliaryVersions`
+        # @return [Hash<String,Google::Apis::MetastoreV1alpha::AuxiliaryVersionConfig>]
+        attr_accessor :auxiliary_versions
+      
         # A mapping of Hive metastore configuration key-value pairs to apply to the Hive
         # metastore (configured in hive-site.xml). The mappings override system defaults
-        # (some keys cannot be overridden).
+        # (some keys cannot be overridden). These overrides are also applied to
+        # auxiliary versions and can be further customized in the auxiliary version's
+        # AuxiliaryVersionConfig.
         # Corresponds to the JSON property `configOverrides`
         # @return [Hash<String,String>]
         attr_accessor :config_overrides
@@ -468,6 +714,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @auxiliary_versions = args[:auxiliary_versions] if args.key?(:auxiliary_versions)
           @config_overrides = args[:config_overrides] if args.key?(:config_overrides)
           @endpoint_protocol = args[:endpoint_protocol] if args.key?(:endpoint_protocol)
           @kerberos_config = args[:kerberos_config] if args.key?(:kerberos_config)
@@ -584,6 +831,38 @@ module Google
         # Update properties of this object
         def update!(**args)
           @backups = args[:backups] if args.key?(:backups)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @unreachable = args[:unreachable] if args.key?(:unreachable)
+        end
+      end
+      
+      # Response message for ListFederations
+      class ListFederationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The services in the specified location.
+        # Corresponds to the JSON property `federations`
+        # @return [Array<Google::Apis::MetastoreV1alpha::Federation>]
+        attr_accessor :federations
+      
+        # A token that can be sent as page_token to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Locations that could not be reached.
+        # Corresponds to the JSON property `unreachable`
+        # @return [Array<String>]
+        attr_accessor :unreachable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @federations = args[:federations] if args.key?(:federations)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @unreachable = args[:unreachable] if args.key?(:unreachable)
         end
@@ -951,6 +1230,70 @@ module Google
         end
       end
       
+      # Request message for DataprocMetastore.MoveTableToDatabase.
+      class MoveTableToDatabaseRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The name of the database where the table resides.
+        # Corresponds to the JSON property `dbName`
+        # @return [String]
+        attr_accessor :db_name
+      
+        # Required. The name of the database where the table should be moved.
+        # Corresponds to the JSON property `destinationDbName`
+        # @return [String]
+        attr_accessor :destination_db_name
+      
+        # Required. The name of the table to be moved.
+        # Corresponds to the JSON property `tableName`
+        # @return [String]
+        attr_accessor :table_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @db_name = args[:db_name] if args.key?(:db_name)
+          @destination_db_name = args[:destination_db_name] if args.key?(:destination_db_name)
+          @table_name = args[:table_name] if args.key?(:table_name)
+        end
+      end
+      
+      # Response message for DataprocMetastore.MoveTableToDatabase.
+      class MoveTableToDatabaseResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Network configuration for the Dataproc Metastore service.
+      class NetworkConfig
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. The consumer-side network configuration for the Dataproc Metastore
+        # instance.
+        # Corresponds to the JSON property `consumers`
+        # @return [Array<Google::Apis::MetastoreV1alpha::Consumer>]
+        attr_accessor :consumers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consumers = args[:consumers] if args.key?(:consumers)
+        end
+      end
+      
       # This resource represents a long-running operation that is the result of a
       # network API call.
       class Operation
@@ -1074,16 +1417,16 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources.A Policy is a collection of bindings. A
-      # binding binds one or more members to a single role. Members can be user
-      # accounts, service accounts, Google groups, and domains (such as G Suite). A
-      # role is a named list of permissions; each role can be an IAM predefined role
-      # or a user-created custom role.For some types of Google Cloud resources, a
-      # binding can also specify a condition, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to true. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the IAM documentation (https://cloud.google.com/iam/help/conditions/
-      # resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
+      # binding binds one or more members, or principals, to a single role. Principals
+      # can be user accounts, service accounts, Google groups, and domains (such as G
+      # Suite). A role is a named list of permissions; each role can be an IAM
+      # predefined role or a user-created custom role.For some types of Google Cloud
+      # resources, a binding can also specify a condition, which is a logical
+      # expression that allows access to a resource only if the expression evaluates
+      # to true. A condition can add constraints based on attributes of the request,
+      # the resource, or both. To learn which resources support conditions in their
+      # IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/
+      # conditions/resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
       # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
       # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
       # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
@@ -1107,9 +1450,14 @@ module Google
         # @return [Array<Google::Apis::MetastoreV1alpha::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of members to a role. Optionally, may specify a condition
-        # that determines how and when the bindings are applied. Each of the bindings
-        # must contain at least one member.
+        # Associates a list of members, or principals, with a role. Optionally, may
+        # specify a condition that determines how and when the bindings are applied.
+        # Each of the bindings must contain at least one principal.The bindings in a
+        # Policy can refer to up to 1,500 principals; up to 250 of these principals can
+        # be Google groups. Each occurrence of a principal counts towards these limits.
+        # For example, if the bindings grant 50 different roles to user:alice@example.
+        # com, and not to any other principal, then you can add another 1,450 principals
+        # to the bindings in the Policy.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::MetastoreV1alpha::Binding>]
         attr_accessor :bindings
@@ -1157,6 +1505,89 @@ module Google
           @bindings = args[:bindings] if args.key?(:bindings)
           @etag = args[:etag] if args.key?(:etag)
           @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Request message for DataprocMetastore.QueryMetadata.
+      class QueryMetadataRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. A read-only SQL query to execute against the metadata database. The
+        # query cannot change or mutate the data.
+        # Corresponds to the JSON property `query`
+        # @return [String]
+        attr_accessor :query
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @query = args[:query] if args.key?(:query)
+        end
+      end
+      
+      # Response message for DataprocMetastore.QueryMetadata.
+      class QueryMetadataResponse
+        include Google::Apis::Core::Hashable
+      
+        # The manifest URI is link to a JSON instance in Cloud Storage. This instance
+        # manifests immediately along with QueryMetadataResponse. The content of the URI
+        # is not retriable until the long-running operation query against the metadata
+        # finishes.
+        # Corresponds to the JSON property `resultManifestUri`
+        # @return [String]
+        attr_accessor :result_manifest_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @result_manifest_uri = args[:result_manifest_uri] if args.key?(:result_manifest_uri)
+        end
+      end
+      
+      # Request message for DataprocMetastore.RemoveIamPolicy.
+      class RemoveIamPolicyRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Removes IAM policy attached to database or table asynchronously when
+        # it is set. The default is false.
+        # Corresponds to the JSON property `asynchronous`
+        # @return [Boolean]
+        attr_accessor :asynchronous
+        alias_method :asynchronous?, :asynchronous
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @asynchronous = args[:asynchronous] if args.key?(:asynchronous)
+        end
+      end
+      
+      # Response message for DataprocMetastore.RemoveIamPolicy.
+      class RemoveIamPolicyResponse
+        include Google::Apis::Core::Hashable
+      
+        # True if the policy is successfully removed.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @success = args[:success] if args.key?(:success)
         end
       end
       
@@ -1288,6 +1719,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Immutable. The database type that the Metastore service stores its data.
+        # Corresponds to the JSON property `databaseType`
+        # @return [String]
+        attr_accessor :database_type
+      
         # Encryption settings for the service.
         # Corresponds to the JSON property `encryptionConfig`
         # @return [Google::Apis::MetastoreV1alpha::EncryptionConfig]
@@ -1325,8 +1761,9 @@ module Google
         # @return [Google::Apis::MetastoreV1alpha::MetadataManagementActivity]
         attr_accessor :metadata_management_activity
       
-        # Immutable. The relative resource name of the metastore service, of the form:
-        # projects/`project_number`/locations/`location_id`/services/`service_id`.
+        # Immutable. The relative resource name of the metastore service, in the
+        # following format:projects/`project_number`/locations/`location_id`/services/`
+        # service_id`.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1337,6 +1774,11 @@ module Google
         # Corresponds to the JSON property `network`
         # @return [String]
         attr_accessor :network
+      
+        # Network configuration for the Dataproc Metastore service.
+        # Corresponds to the JSON property `networkConfig`
+        # @return [Google::Apis::MetastoreV1alpha::NetworkConfig]
+        attr_accessor :network_config
       
         # The TCP port at which the metastore service is reached. Default: 9083.
         # Corresponds to the JSON property `port`
@@ -1359,6 +1801,11 @@ module Google
         # Corresponds to the JSON property `stateMessage`
         # @return [String]
         attr_accessor :state_message
+      
+        # Telemetry Configuration for the Dataproc Metastore service.
+        # Corresponds to the JSON property `telemetryConfig`
+        # @return [Google::Apis::MetastoreV1alpha::TelemetryConfig]
+        attr_accessor :telemetry_config
       
         # The tier of the service.
         # Corresponds to the JSON property `tier`
@@ -1383,6 +1830,7 @@ module Google
         def update!(**args)
           @artifact_gcs_uri = args[:artifact_gcs_uri] if args.key?(:artifact_gcs_uri)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @database_type = args[:database_type] if args.key?(:database_type)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
           @endpoint_uri = args[:endpoint_uri] if args.key?(:endpoint_uri)
           @hive_metastore_config = args[:hive_metastore_config] if args.key?(:hive_metastore_config)
@@ -1392,10 +1840,12 @@ module Google
           @metadata_management_activity = args[:metadata_management_activity] if args.key?(:metadata_management_activity)
           @name = args[:name] if args.key?(:name)
           @network = args[:network] if args.key?(:network)
+          @network_config = args[:network_config] if args.key?(:network_config)
           @port = args[:port] if args.key?(:port)
           @release_channel = args[:release_channel] if args.key?(:release_channel)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
+          @telemetry_config = args[:telemetry_config] if args.key?(:telemetry_config)
           @tier = args[:tier] if args.key?(:tier)
           @uid = args[:uid] if args.key?(:uid)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -1408,16 +1858,16 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources.A Policy is a collection of bindings. A
-        # binding binds one or more members to a single role. Members can be user
-        # accounts, service accounts, Google groups, and domains (such as G Suite). A
-        # role is a named list of permissions; each role can be an IAM predefined role
-        # or a user-created custom role.For some types of Google Cloud resources, a
-        # binding can also specify a condition, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to true. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the IAM documentation (https://cloud.google.com/iam/help/conditions/
-        # resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
+        # binding binds one or more members, or principals, to a single role. Principals
+        # can be user accounts, service accounts, Google groups, and domains (such as G
+        # Suite). A role is a named list of permissions; each role can be an IAM
+        # predefined role or a user-created custom role.For some types of Google Cloud
+        # resources, a binding can also specify a condition, which is a logical
+        # expression that allows access to a resource only if the expression evaluates
+        # to true. A condition can add constraints based on attributes of the request,
+        # the resource, or both. To learn which resources support conditions in their
+        # IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/
+        # conditions/resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
         # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
         # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
         # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
@@ -1494,13 +1944,32 @@ module Google
         end
       end
       
+      # Telemetry Configuration for the Dataproc Metastore service.
+      class TelemetryConfig
+        include Google::Apis::Core::Hashable
+      
+        # The output format of the Dataproc Metastore service's logs.
+        # Corresponds to the JSON property `logFormat`
+        # @return [String]
+        attr_accessor :log_format
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @log_format = args[:log_format] if args.key?(:log_format)
+        end
+      end
+      
       # Request message for TestIamPermissions method.
       class TestIamPermissionsRequest
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the resource. Permissions with wildcards (
-        # such as '*' or 'storage.*') are not allowed. For more information see IAM
-        # Overview (https://cloud.google.com/iam/docs/overview#permissions).
+        # such as * or storage.*) are not allowed. For more information see IAM Overview
+        # (https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
         attr_accessor :permissions

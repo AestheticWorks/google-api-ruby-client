@@ -52,8 +52,9 @@ module Google
         
         # Filters an organization's assets and groups them by their specified properties.
         # @param [String] parent
-        #   Required. Name of the organization to groupBy. Its format is "organizations/[
-        #   organization_id], folders/[folder_id], or projects/[project_id]".
+        #   Required. The name of the parent to group the assets by. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Google::Apis::SecuritycenterV1::GroupAssetsRequest] group_assets_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -86,9 +87,10 @@ module Google
         
         # Lists an organization's assets.
         # @param [String] parent
-        #   Required. Name of the organization assets should belong to. Its format is "
-        #   organizations/[organization_id], folders/[folder_id], or projects/[project_id]"
-        #   .
+        #   Required. The name of the parent resource that contains the assets. The value
+        #   that you can specify on parent depends on the method in which you specify
+        #   parent. You can specify one of the following values: "organizations/[
+        #   organization_id]", "folders/[folder_id]", or "projects/[project_id]".
         # @param [String] compare_duration
         #   When compare_duration is set, the ListAssetsResult's "state_change" attribute
         #   is updated to indicate whether the asset was added, removed, or remained
@@ -211,7 +213,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -247,11 +250,613 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a BigQuery export.
+        # @param [String] parent
+        #   Required. The name of the parent resource of the new BigQuery export. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", or "
+        #   projects/[project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] big_query_export_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_folder_big_query_export(parent, google_cloud_securitycenter_v1_big_query_export_object = nil, big_query_export_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/bigQueryExports', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bigQueryExportId'] = big_query_export_id unless big_query_export_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing BigQuery export.
+        # @param [String] name
+        #   Required. The name of the BigQuery export to delete. Its format is
+        #   organizations/`organization`/bigQueryExports/`export_id`, folders/`folder`/
+        #   bigQueryExports/`export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_folder_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a BigQuery export.
+        # @param [String] name
+        #   Required. Name of the BigQuery export to retrieve. Its format is organizations/
+        #   `organization`/bigQueryExports/`export_id`, folders/`folder`/bigQueryExports/`
+        #   export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists BigQuery exports. Note that when requesting BigQuery exports at a given
+        # level all exports under that level are also returned e.g. if requesting
+        # BigQuery exports under a folder, then all BigQuery exports immediately under
+        # the folder plus the ones created under the projects within the folder are
+        # returned.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of BigQuery exports. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListBigQueryExports` call. Provide
+        #   this to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListBigQueryExports` must match the call that provided the page
+        #   token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_folder_big_query_exports(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/bigQueryExports', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a BigQuery export.
+        # @param [String] name
+        #   The relative resource name of this export. See: https://cloud.google.com/apis/
+        #   design/resource_names#relative_resource_name. Example format: "organizations/`
+        #   organization_id`/bigQueryExports/`export_id`" Example format: "folders/`
+        #   folder_id`/bigQueryExports/`export_id`" Example format: "projects/`project_id`/
+        #   bigQueryExports/`export_id`" This field is provided in responses, and is
+        #   ignored when provided in create requests.
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_folder_big_query_export(name, google_cloud_securitycenter_v1_big_query_export_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Kicks off an LRO to bulk mute findings for a parent based on a filter. The
+        # parent can be either an organization, folder or project. The findings matched
+        # by the filter will be muted after the LRO is done.
+        # @param [String] parent
+        #   Required. The parent, at which bulk action needs to be applied. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", "projects/[project_id]
+        #   ".
+        # @param [Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest] bulk_mute_findings_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def bulk_folder_finding_mute(parent, bulk_mute_findings_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/findings:bulkMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest::Representation
+          command.request_object = bulk_mute_findings_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Operation::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a mute config.
+        # @param [String] parent
+        #   Required. Resource name of the new mute configs's parent. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] mute_config_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_folder_mute_config(parent, google_cloud_securitycenter_v1_mute_config_object = nil, mute_config_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/muteConfigs', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['parent'] = parent unless parent.nil?
+          command.query['muteConfigId'] = mute_config_id unless mute_config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to delete. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_folder_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to retrieve. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists mute configs.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of mute configs. Its format is
+        #   "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListMuteConfigs` call. Provide this to
+        #   retrieve the subsequent page. When paginating, all other parameters provided
+        #   to `ListMuteConfigs` must match the call that provided the page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_folder_mute_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/muteConfigs', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a mute config.
+        # @param [String] name
+        #   This field will be ignored if provided on config creation. Format "
+        #   organizations/`organization`/muteConfigs/`mute_config`" "folders/`folder`/
+        #   muteConfigs/`mute_config`" "projects/`project`/muteConfigs/`mute_config`"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_folder_mute_config(name, google_cloud_securitycenter_v1_mute_config_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a notification config.
+        # @param [String] parent
+        #   Required. Resource name of the new notification config's parent. Its format is
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
+        # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
+        # @param [String] config_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must be between 1 and 128 characters and contain alphanumeric characters,
+        #   underscores, or hyphens only.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_folder_notification_config(parent, notification_config_object = nil, config_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/notificationConfigs', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.request_object = notification_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['parent'] = parent unless parent.nil?
+          command.query['configId'] = config_id unless config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a notification config.
+        # @param [String] name
+        #   Required. Name of the notification config to delete. Its format is "
+        #   organizations/[organization_id]/notificationConfigs/[config_id]", "folders/[
+        #   folder_id]/notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_folder_notification_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a notification config.
+        # @param [String] name
+        #   Required. Name of the notification config to get. Its format is "organizations/
+        #   [organization_id]/notificationConfigs/[config_id]", "folders/[folder_id]/
+        #   notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_notification_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists notification configs.
+        # @param [String] parent
+        #   Required. The name of the parent in which to list the notification
+        #   configurations. Its format is "organizations/[organization_id]", "folders/[
+        #   folder_id]", or "projects/[project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of results to return in a single response. Default is 10,
+        #   minimum is 1, maximum is 1000.
+        # @param [String] page_token
+        #   The value returned by the last `ListNotificationConfigsResponse`; indicates
+        #   that this is a continuation of a prior `ListNotificationConfigs` call, and
+        #   that the system should return the next page of data.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_folder_notification_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/notificationConfigs', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a notification config. The following update fields are allowed:
+        # description, pubsub_topic, streaming_config.filter
+        # @param [String] name
+        #   The relative resource name of this notification config. See: https://cloud.
+        #   google.com/apis/design/resource_names#relative_resource_name Example: "
+        #   organizations/`organization_id`/notificationConfigs/notify_public_bucket", "
+        #   folders/`folder_id`/notificationConfigs/notify_public_bucket", or "projects/`
+        #   project_id`/notificationConfigs/notify_public_bucket".
+        # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
+        # @param [String] update_mask
+        #   The FieldMask to use when updating the notification config. If empty all
+        #   mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_folder_notification_config(name, notification_config_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.request_object = notification_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Lists all sources belonging to an organization.
         # @param [String] parent
         #   Required. Resource name of the parent of sources to list. Its format should be
-        #   "organizations/[organization_id], folders/[folder_id], or projects/[project_id]
-        #   ".
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Fixnum] page_size
         #   The maximum number of results to return in a single response. Default is 10,
         #   minimum is 1, maximum is 1000.
@@ -387,7 +992,7 @@ module Google
         #   my_property : ""` * resource: * resource.name: `=`, `:` * resource.parent_name:
         #   `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`
         #   , `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` *
-        #   resource.folders.resource_folder: `=`, `:`
+        #   resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`
         # @param [String] order_by
         #   Expression that defines what fields and order to use for sorting. The string
         #   value should follow SQL syntax: comma separated list of fields. For example: "
@@ -486,11 +1091,50 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates the mute state of a finding.
+        # @param [String] name
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
+        # @param [Google::Apis::SecuritycenterV1::SetMuteRequest] set_mute_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Finding] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Finding]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_folder_source_finding_mute(name, set_mute_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:setMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::SetMuteRequest::Representation
+          command.request_object = set_mute_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Finding::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Finding
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Updates the state of a finding.
         # @param [String] name
-        #   Required. The relative resource name of the finding. See: https://cloud.google.
-        #   com/apis/design/resource_names#relative_resource_name Example: "organizations/`
-        #   organization_id`/sources/`source_id`/finding/`finding_id`".
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
         # @param [Google::Apis::SecuritycenterV1::SetFindingStateRequest] set_finding_state_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -531,7 +1175,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -561,6 +1206,46 @@ module Google
           command.response_class = Google::Apis::SecuritycenterV1::SecurityMarks
           command.params['name'] = name unless name.nil?
           command.query['startTime'] = start_time unless start_time.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates external system. This is for a given finding.
+        # @param [String] name
+        #   Full resource name of the external system, for example: "organizations/1234/
+        #   sources/5678/findings/123456/externalSystems/jira", "folders/1234/sources/5678/
+        #   findings/123456/externalSystems/jira", "projects/1234/sources/5678/findings/
+        #   123456/externalSystems/jira"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] google_cloud_securitycenter_v1_external_system_object
+        # @param [String] update_mask
+        #   The FieldMask to use when updating the external system resource. If empty all
+        #   mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_folder_source_finding_external_system(name, google_cloud_securitycenter_v1_external_system_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.request_object = google_cloud_securitycenter_v1_external_system_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem
+          command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -639,8 +1324,9 @@ module Google
         
         # Filters an organization's assets and groups them by their specified properties.
         # @param [String] parent
-        #   Required. Name of the organization to groupBy. Its format is "organizations/[
-        #   organization_id], folders/[folder_id], or projects/[project_id]".
+        #   Required. The name of the parent to group the assets by. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Google::Apis::SecuritycenterV1::GroupAssetsRequest] group_assets_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -673,9 +1359,10 @@ module Google
         
         # Lists an organization's assets.
         # @param [String] parent
-        #   Required. Name of the organization assets should belong to. Its format is "
-        #   organizations/[organization_id], folders/[folder_id], or projects/[project_id]"
-        #   .
+        #   Required. The name of the parent resource that contains the assets. The value
+        #   that you can specify on parent depends on the method in which you specify
+        #   parent. You can specify one of the following values: "organizations/[
+        #   organization_id]", "folders/[folder_id]", or "projects/[project_id]".
         # @param [String] compare_duration
         #   When compare_duration is set, the ListAssetsResult's "state_change" attribute
         #   is updated to indicate whether the asset was added, removed, or remained
@@ -834,7 +1521,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -870,15 +1558,429 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a BigQuery export.
+        # @param [String] parent
+        #   Required. The name of the parent resource of the new BigQuery export. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", or "
+        #   projects/[project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] big_query_export_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_big_query_export(parent, google_cloud_securitycenter_v1_big_query_export_object = nil, big_query_export_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/bigQueryExports', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bigQueryExportId'] = big_query_export_id unless big_query_export_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing BigQuery export.
+        # @param [String] name
+        #   Required. The name of the BigQuery export to delete. Its format is
+        #   organizations/`organization`/bigQueryExports/`export_id`, folders/`folder`/
+        #   bigQueryExports/`export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a BigQuery export.
+        # @param [String] name
+        #   Required. Name of the BigQuery export to retrieve. Its format is organizations/
+        #   `organization`/bigQueryExports/`export_id`, folders/`folder`/bigQueryExports/`
+        #   export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists BigQuery exports. Note that when requesting BigQuery exports at a given
+        # level all exports under that level are also returned e.g. if requesting
+        # BigQuery exports under a folder, then all BigQuery exports immediately under
+        # the folder plus the ones created under the projects within the folder are
+        # returned.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of BigQuery exports. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListBigQueryExports` call. Provide
+        #   this to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListBigQueryExports` must match the call that provided the page
+        #   token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_big_query_exports(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/bigQueryExports', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a BigQuery export.
+        # @param [String] name
+        #   The relative resource name of this export. See: https://cloud.google.com/apis/
+        #   design/resource_names#relative_resource_name. Example format: "organizations/`
+        #   organization_id`/bigQueryExports/`export_id`" Example format: "folders/`
+        #   folder_id`/bigQueryExports/`export_id`" Example format: "projects/`project_id`/
+        #   bigQueryExports/`export_id`" This field is provided in responses, and is
+        #   ignored when provided in create requests.
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_organization_big_query_export(name, google_cloud_securitycenter_v1_big_query_export_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Kicks off an LRO to bulk mute findings for a parent based on a filter. The
+        # parent can be either an organization, folder or project. The findings matched
+        # by the filter will be muted after the LRO is done.
+        # @param [String] parent
+        #   Required. The parent, at which bulk action needs to be applied. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", "projects/[project_id]
+        #   ".
+        # @param [Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest] bulk_mute_findings_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def bulk_organization_finding_mute(parent, bulk_mute_findings_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/findings:bulkMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest::Representation
+          command.request_object = bulk_mute_findings_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Operation::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a mute config.
+        # @param [String] parent
+        #   Required. Resource name of the new mute configs's parent. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] mute_config_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_mute_config(parent, google_cloud_securitycenter_v1_mute_config_object = nil, mute_config_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/muteConfigs', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['parent'] = parent unless parent.nil?
+          command.query['muteConfigId'] = mute_config_id unless mute_config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to delete. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to retrieve. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists mute configs.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of mute configs. Its format is
+        #   "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListMuteConfigs` call. Provide this to
+        #   retrieve the subsequent page. When paginating, all other parameters provided
+        #   to `ListMuteConfigs` must match the call that provided the page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_mute_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/muteConfigs', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a mute config.
+        # @param [String] name
+        #   This field will be ignored if provided on config creation. Format "
+        #   organizations/`organization`/muteConfigs/`mute_config`" "folders/`folder`/
+        #   muteConfigs/`mute_config`" "projects/`project`/muteConfigs/`mute_config`"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_organization_mute_config(name, google_cloud_securitycenter_v1_mute_config_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a notification config.
         # @param [String] parent
         #   Required. Resource name of the new notification config's parent. Its format is
-        #   "organizations/[organization_id]".
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
         # @param [String] config_id
         #   Required. Unique identifier provided by the client within the parent scope. It
-        #   must be between 1 and 128 characters, and contains alphanumeric characters,
-        #   underscores or hyphens only.
+        #   must be between 1 and 128 characters and contain alphanumeric characters,
+        #   underscores, or hyphens only.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -912,7 +2014,9 @@ module Google
         # Deletes a notification config.
         # @param [String] name
         #   Required. Name of the notification config to delete. Its format is "
-        #   organizations/[organization_id]/notificationConfigs/[config_id]".
+        #   organizations/[organization_id]/notificationConfigs/[config_id]", "folders/[
+        #   folder_id]/notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -943,7 +2047,9 @@ module Google
         # Gets a notification config.
         # @param [String] name
         #   Required. Name of the notification config to get. Its format is "organizations/
-        #   [organization_id]/notificationConfigs/[config_id]".
+        #   [organization_id]/notificationConfigs/[config_id]", "folders/[folder_id]/
+        #   notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -973,8 +2079,9 @@ module Google
         
         # Lists notification configs.
         # @param [String] parent
-        #   Required. Name of the organization to list notification configs. Its format is
-        #   "organizations/[organization_id]".
+        #   Required. The name of the parent in which to list the notification
+        #   configurations. Its format is "organizations/[organization_id]", "folders/[
+        #   folder_id]", or "projects/[project_id]".
         # @param [Fixnum] page_size
         #   The maximum number of results to return in a single response. Default is 10,
         #   minimum is 1, maximum is 1000.
@@ -1016,7 +2123,9 @@ module Google
         # @param [String] name
         #   The relative resource name of this notification config. See: https://cloud.
         #   google.com/apis/design/resource_names#relative_resource_name Example: "
-        #   organizations/`organization_id`/notificationConfigs/notify_public_bucket".
+        #   organizations/`organization_id`/notificationConfigs/notify_public_bucket", "
+        #   folders/`folder_id`/notificationConfigs/notify_public_bucket", or "projects/`
+        #   project_id`/notificationConfigs/notify_public_bucket".
         # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
         # @param [String] update_mask
         #   The FieldMask to use when updating the notification config. If empty all
@@ -1265,8 +2374,9 @@ module Google
         
         # Gets the access control policy on the specified Source.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::SecuritycenterV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1300,8 +2410,8 @@ module Google
         # Lists all sources belonging to an organization.
         # @param [String] parent
         #   Required. Resource name of the parent of sources to list. Its format should be
-        #   "organizations/[organization_id], folders/[folder_id], or projects/[project_id]
-        #   ".
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Fixnum] page_size
         #   The maximum number of results to return in a single response. Default is 10,
         #   minimum is 1, maximum is 1000.
@@ -1379,8 +2489,9 @@ module Google
         
         # Sets the access control policy on the specified Source.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::SecuritycenterV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1413,8 +2524,9 @@ module Google
         
         # Returns the permissions that a caller has on the specified source.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::SecuritycenterV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1584,7 +2696,7 @@ module Google
         #   my_property : ""` * resource: * resource.name: `=`, `:` * resource.parent_name:
         #   `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`
         #   , `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` *
-        #   resource.folders.resource_folder: `=`, `:`
+        #   resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`
         # @param [String] order_by
         #   Expression that defines what fields and order to use for sorting. The string
         #   value should follow SQL syntax: comma separated list of fields. For example: "
@@ -1683,11 +2795,50 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates the mute state of a finding.
+        # @param [String] name
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
+        # @param [Google::Apis::SecuritycenterV1::SetMuteRequest] set_mute_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Finding] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Finding]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_organization_source_finding_mute(name, set_mute_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:setMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::SetMuteRequest::Representation
+          command.request_object = set_mute_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Finding::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Finding
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Updates the state of a finding.
         # @param [String] name
-        #   Required. The relative resource name of the finding. See: https://cloud.google.
-        #   com/apis/design/resource_names#relative_resource_name Example: "organizations/`
-        #   organization_id`/sources/`source_id`/finding/`finding_id`".
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
         # @param [Google::Apis::SecuritycenterV1::SetFindingStateRequest] set_finding_state_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1728,7 +2879,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -1764,10 +2916,51 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates external system. This is for a given finding.
+        # @param [String] name
+        #   Full resource name of the external system, for example: "organizations/1234/
+        #   sources/5678/findings/123456/externalSystems/jira", "folders/1234/sources/5678/
+        #   findings/123456/externalSystems/jira", "projects/1234/sources/5678/findings/
+        #   123456/externalSystems/jira"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] google_cloud_securitycenter_v1_external_system_object
+        # @param [String] update_mask
+        #   The FieldMask to use when updating the external system resource. If empty all
+        #   mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_organization_source_finding_external_system(name, google_cloud_securitycenter_v1_external_system_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.request_object = google_cloud_securitycenter_v1_external_system_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Filters an organization's assets and groups them by their specified properties.
         # @param [String] parent
-        #   Required. Name of the organization to groupBy. Its format is "organizations/[
-        #   organization_id], folders/[folder_id], or projects/[project_id]".
+        #   Required. The name of the parent to group the assets by. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Google::Apis::SecuritycenterV1::GroupAssetsRequest] group_assets_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1800,9 +2993,10 @@ module Google
         
         # Lists an organization's assets.
         # @param [String] parent
-        #   Required. Name of the organization assets should belong to. Its format is "
-        #   organizations/[organization_id], folders/[folder_id], or projects/[project_id]"
-        #   .
+        #   Required. The name of the parent resource that contains the assets. The value
+        #   that you can specify on parent depends on the method in which you specify
+        #   parent. You can specify one of the following values: "organizations/[
+        #   organization_id]", "folders/[folder_id]", or "projects/[project_id]".
         # @param [String] compare_duration
         #   When compare_duration is set, the ListAssetsResult's "state_change" attribute
         #   is updated to indicate whether the asset was added, removed, or remained
@@ -1925,7 +3119,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -1961,11 +3156,613 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a BigQuery export.
+        # @param [String] parent
+        #   Required. The name of the parent resource of the new BigQuery export. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", or "
+        #   projects/[project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] big_query_export_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_big_query_export(parent, google_cloud_securitycenter_v1_big_query_export_object = nil, big_query_export_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/bigQueryExports', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bigQueryExportId'] = big_query_export_id unless big_query_export_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing BigQuery export.
+        # @param [String] name
+        #   Required. The name of the BigQuery export to delete. Its format is
+        #   organizations/`organization`/bigQueryExports/`export_id`, folders/`folder`/
+        #   bigQueryExports/`export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a BigQuery export.
+        # @param [String] name
+        #   Required. Name of the BigQuery export to retrieve. Its format is organizations/
+        #   `organization`/bigQueryExports/`export_id`, folders/`folder`/bigQueryExports/`
+        #   export_id`, or projects/`project`/bigQueryExports/`export_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_big_query_export(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists BigQuery exports. Note that when requesting BigQuery exports at a given
+        # level all exports under that level are also returned e.g. if requesting
+        # BigQuery exports under a folder, then all BigQuery exports immediately under
+        # the folder plus the ones created under the projects within the folder are
+        # returned.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of BigQuery exports. Its
+        #   format is "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListBigQueryExports` call. Provide
+        #   this to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListBigQueryExports` must match the call that provided the page
+        #   token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_big_query_exports(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/bigQueryExports', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListBigQueryExportsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a BigQuery export.
+        # @param [String] name
+        #   The relative resource name of this export. See: https://cloud.google.com/apis/
+        #   design/resource_names#relative_resource_name. Example format: "organizations/`
+        #   organization_id`/bigQueryExports/`export_id`" Example format: "folders/`
+        #   folder_id`/bigQueryExports/`export_id`" Example format: "projects/`project_id`/
+        #   bigQueryExports/`export_id`" This field is provided in responses, and is
+        #   ignored when provided in create requests.
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] google_cloud_securitycenter_v1_big_query_export_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_big_query_export(name, google_cloud_securitycenter_v1_big_query_export_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.request_object = google_cloud_securitycenter_v1_big_query_export_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1BigQueryExport
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Kicks off an LRO to bulk mute findings for a parent based on a filter. The
+        # parent can be either an organization, folder or project. The findings matched
+        # by the filter will be muted after the LRO is done.
+        # @param [String] parent
+        #   Required. The parent, at which bulk action needs to be applied. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", "projects/[project_id]
+        #   ".
+        # @param [Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest] bulk_mute_findings_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def bulk_project_finding_mute(parent, bulk_mute_findings_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/findings:bulkMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::BulkMuteFindingsRequest::Representation
+          command.request_object = bulk_mute_findings_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Operation::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a mute config.
+        # @param [String] parent
+        #   Required. Resource name of the new mute configs's parent. Its format is "
+        #   organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] mute_config_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must consist of lower case letters, numbers, and hyphen, with the first
+        #   character a letter, the last a letter or a number, and a 63 character maximum.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_mute_config(parent, google_cloud_securitycenter_v1_mute_config_object = nil, mute_config_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/muteConfigs', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['parent'] = parent unless parent.nil?
+          command.query['muteConfigId'] = mute_config_id unless mute_config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an existing mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to delete. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a mute config.
+        # @param [String] name
+        #   Required. Name of the mute config to retrieve. Its format is organizations/`
+        #   organization`/muteConfigs/`config_id`, folders/`folder`/muteConfigs/`config_id`
+        #   , or projects/`project`/muteConfigs/`config_id`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_mute_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists mute configs.
+        # @param [String] parent
+        #   Required. The parent, which owns the collection of mute configs. Its format is
+        #   "organizations/[organization_id]", "folders/[folder_id]", "projects/[
+        #   project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of configs to return. The service may return fewer than
+        #   this value. If unspecified, at most 10 configs will be returned. The maximum
+        #   value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListMuteConfigs` call. Provide this to
+        #   retrieve the subsequent page. When paginating, all other parameters provided
+        #   to `ListMuteConfigs` must match the call that provided the page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListMuteConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_mute_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/muteConfigs', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListMuteConfigsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a mute config.
+        # @param [String] name
+        #   This field will be ignored if provided on config creation. Format "
+        #   organizations/`organization`/muteConfigs/`mute_config`" "folders/`folder`/
+        #   muteConfigs/`mute_config`" "projects/`project`/muteConfigs/`mute_config`"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] google_cloud_securitycenter_v1_mute_config_object
+        # @param [String] update_mask
+        #   The list of fields to be updated. If empty all mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_mute_config(name, google_cloud_securitycenter_v1_mute_config_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.request_object = google_cloud_securitycenter_v1_mute_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1MuteConfig
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a notification config.
+        # @param [String] parent
+        #   Required. Resource name of the new notification config's parent. Its format is
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
+        # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
+        # @param [String] config_id
+        #   Required. Unique identifier provided by the client within the parent scope. It
+        #   must be between 1 and 128 characters and contain alphanumeric characters,
+        #   underscores, or hyphens only.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_notification_config(parent, notification_config_object = nil, config_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/notificationConfigs', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.request_object = notification_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['parent'] = parent unless parent.nil?
+          command.query['configId'] = config_id unless config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a notification config.
+        # @param [String] name
+        #   Required. Name of the notification config to delete. Its format is "
+        #   organizations/[organization_id]/notificationConfigs/[config_id]", "folders/[
+        #   folder_id]/notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_notification_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::Empty::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a notification config.
+        # @param [String] name
+        #   Required. Name of the notification config to get. Its format is "organizations/
+        #   [organization_id]/notificationConfigs/[config_id]", "folders/[folder_id]/
+        #   notificationConfigs/[config_id]", or "projects/[project_id]/
+        #   notificationConfigs/[config_id]".
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_notification_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists notification configs.
+        # @param [String] parent
+        #   Required. The name of the parent in which to list the notification
+        #   configurations. Its format is "organizations/[organization_id]", "folders/[
+        #   folder_id]", or "projects/[project_id]".
+        # @param [Fixnum] page_size
+        #   The maximum number of results to return in a single response. Default is 10,
+        #   minimum is 1, maximum is 1000.
+        # @param [String] page_token
+        #   The value returned by the last `ListNotificationConfigsResponse`; indicates
+        #   that this is a continuation of a prior `ListNotificationConfigs` call, and
+        #   that the system should return the next page of data.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_notification_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/notificationConfigs', options)
+          command.response_representation = Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::ListNotificationConfigsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a notification config. The following update fields are allowed:
+        # description, pubsub_topic, streaming_config.filter
+        # @param [String] name
+        #   The relative resource name of this notification config. See: https://cloud.
+        #   google.com/apis/design/resource_names#relative_resource_name Example: "
+        #   organizations/`organization_id`/notificationConfigs/notify_public_bucket", "
+        #   folders/`folder_id`/notificationConfigs/notify_public_bucket", or "projects/`
+        #   project_id`/notificationConfigs/notify_public_bucket".
+        # @param [Google::Apis::SecuritycenterV1::NotificationConfig] notification_config_object
+        # @param [String] update_mask
+        #   The FieldMask to use when updating the notification config. If empty all
+        #   mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::NotificationConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::NotificationConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_notification_config(name, notification_config_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.request_object = notification_config_object
+          command.response_representation = Google::Apis::SecuritycenterV1::NotificationConfig::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::NotificationConfig
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Lists all sources belonging to an organization.
         # @param [String] parent
         #   Required. Resource name of the parent of sources to list. Its format should be
-        #   "organizations/[organization_id], folders/[folder_id], or projects/[project_id]
-        #   ".
+        #   "organizations/[organization_id]", "folders/[folder_id]", or "projects/[
+        #   project_id]".
         # @param [Fixnum] page_size
         #   The maximum number of results to return in a single response. Default is 10,
         #   minimum is 1, maximum is 1000.
@@ -2101,7 +3898,7 @@ module Google
         #   my_property : ""` * resource: * resource.name: `=`, `:` * resource.parent_name:
         #   `=`, `:` * resource.parent_display_name: `=`, `:` * resource.project_name: `=`
         #   , `:` * resource.project_display_name: `=`, `:` * resource.type: `=`, `:` *
-        #   resource.folders.resource_folder: `=`, `:`
+        #   resource.folders.resource_folder: `=`, `:` * resource.display_name: `=`, `:`
         # @param [String] order_by
         #   Expression that defines what fields and order to use for sorting. The string
         #   value should follow SQL syntax: comma separated list of fields. For example: "
@@ -2200,11 +3997,50 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates the mute state of a finding.
+        # @param [String] name
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
+        # @param [Google::Apis::SecuritycenterV1::SetMuteRequest] set_mute_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::Finding] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::Finding]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_project_source_finding_mute(name, set_mute_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:setMute', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::SetMuteRequest::Representation
+          command.request_object = set_mute_request_object
+          command.response_representation = Google::Apis::SecuritycenterV1::Finding::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::Finding
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Updates the state of a finding.
         # @param [String] name
-        #   Required. The relative resource name of the finding. See: https://cloud.google.
-        #   com/apis/design/resource_names#relative_resource_name Example: "organizations/`
-        #   organization_id`/sources/`source_id`/finding/`finding_id`".
+        #   Required. The [relative resource name](https://cloud.google.com/apis/design/
+        #   resource_names#relative_resource_name) of the finding. Example: "organizations/
+        #   `organization_id`/sources/`source_id`/findings/`finding_id`", "folders/`
+        #   folder_id`/sources/`source_id`/findings/`finding_id`", "projects/`project_id`/
+        #   sources/`source_id`/findings/`finding_id`".
         # @param [Google::Apis::SecuritycenterV1::SetFindingStateRequest] set_finding_state_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2245,7 +4081,8 @@ module Google
         # @param [String] start_time
         #   The time at which the updated SecurityMarks take effect. If not set uses
         #   current server time. Updates will be applied to the SecurityMarks that are
-        #   active immediately preceding this time.
+        #   active immediately preceding this time. Must be earlier or equal to the server
+        #   time.
         # @param [String] update_mask
         #   The FieldMask to use when updating the security marks resource. The field mask
         #   must not contain duplicate fields. If empty or set to "marks", all marks will
@@ -2275,6 +4112,46 @@ module Google
           command.response_class = Google::Apis::SecuritycenterV1::SecurityMarks
           command.params['name'] = name unless name.nil?
           command.query['startTime'] = start_time unless start_time.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates external system. This is for a given finding.
+        # @param [String] name
+        #   Full resource name of the external system, for example: "organizations/1234/
+        #   sources/5678/findings/123456/externalSystems/jira", "folders/1234/sources/5678/
+        #   findings/123456/externalSystems/jira", "projects/1234/sources/5678/findings/
+        #   123456/externalSystems/jira"
+        # @param [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] google_cloud_securitycenter_v1_external_system_object
+        # @param [String] update_mask
+        #   The FieldMask to use when updating the external system resource. If empty all
+        #   mutable fields will be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_source_finding_external_system(name, google_cloud_securitycenter_v1_external_system_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.request_object = google_cloud_securitycenter_v1_external_system_object
+          command.response_representation = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem::Representation
+          command.response_class = Google::Apis::SecuritycenterV1::GoogleCloudSecuritycenterV1ExternalSystem
+          command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?

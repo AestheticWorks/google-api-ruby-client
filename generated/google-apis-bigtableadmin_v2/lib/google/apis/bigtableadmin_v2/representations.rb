@@ -40,6 +40,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AutoscalingLimits
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AutoscalingTargets
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Backup
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -76,6 +88,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ClusterAutoscalingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ClusterConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ClusterState
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -83,6 +107,24 @@ module Google
       end
       
       class ColumnFamily
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ColumnFamilyStats
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CopyBackupMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CopyBackupRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -154,18 +196,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class FailureTrace
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class Frame
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class GcRule
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -196,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class HotTablet
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Instance
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -221,6 +257,12 @@ module Google
       end
       
       class ListClustersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListHotTabletsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -292,6 +334,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PartialUpdateClusterMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PartialUpdateClusterRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PartialUpdateInstanceRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -358,6 +412,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TableStats
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class TestIamPermissionsRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -365,6 +425,18 @@ module Google
       end
       
       class TestIamPermissionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UndeleteTableMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UndeleteTableRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -389,6 +461,12 @@ module Google
       end
       
       class UpdateInstanceMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UpdateTableMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -424,6 +502,22 @@ module Google
         end
       end
       
+      class AutoscalingLimits
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :max_serve_nodes, as: 'maxServeNodes'
+          property :min_serve_nodes, as: 'minServeNodes'
+        end
+      end
+      
+      class AutoscalingTargets
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cpu_utilization_percent, as: 'cpuUtilizationPercent'
+          property :storage_utilization_gib_per_node, as: 'storageUtilizationGibPerNode'
+        end
+      end
+      
       class Backup
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -433,6 +527,7 @@ module Google
           property :expire_time, as: 'expireTime'
           property :name, as: 'name'
           property :size_bytes, :numeric_string => true, as: 'sizeBytes'
+          property :source_backup, as: 'sourceBackup'
           property :source_table, as: 'sourceTable'
           property :start_time, as: 'startTime'
           property :state, as: 'state'
@@ -444,6 +539,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :backup, as: 'backup'
           property :end_time, as: 'endTime'
+          property :source_backup, as: 'sourceBackup'
           property :source_table, as: 'sourceTable'
           property :start_time, as: 'startTime'
         end
@@ -476,6 +572,8 @@ module Google
       class Cluster
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_config, as: 'clusterConfig', class: Google::Apis::BigtableadminV2::ClusterConfig, decorator: Google::Apis::BigtableadminV2::ClusterConfig::Representation
+      
           property :default_storage_type, as: 'defaultStorageType'
           property :encryption_config, as: 'encryptionConfig', class: Google::Apis::BigtableadminV2::EncryptionConfig, decorator: Google::Apis::BigtableadminV2::EncryptionConfig::Representation
       
@@ -483,6 +581,24 @@ module Google
           property :name, as: 'name'
           property :serve_nodes, as: 'serveNodes'
           property :state, as: 'state'
+        end
+      end
+      
+      class ClusterAutoscalingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :autoscaling_limits, as: 'autoscalingLimits', class: Google::Apis::BigtableadminV2::AutoscalingLimits, decorator: Google::Apis::BigtableadminV2::AutoscalingLimits::Representation
+      
+          property :autoscaling_targets, as: 'autoscalingTargets', class: Google::Apis::BigtableadminV2::AutoscalingTargets, decorator: Google::Apis::BigtableadminV2::AutoscalingTargets::Representation
+      
+        end
+      end
+      
+      class ClusterConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_autoscaling_config, as: 'clusterAutoscalingConfig', class: Google::Apis::BigtableadminV2::ClusterAutoscalingConfig, decorator: Google::Apis::BigtableadminV2::ClusterAutoscalingConfig::Representation
+      
         end
       end
       
@@ -500,6 +616,37 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :gc_rule, as: 'gcRule', class: Google::Apis::BigtableadminV2::GcRule, decorator: Google::Apis::BigtableadminV2::GcRule::Representation
       
+          property :stats, as: 'stats', class: Google::Apis::BigtableadminV2::ColumnFamilyStats, decorator: Google::Apis::BigtableadminV2::ColumnFamilyStats::Representation
+      
+        end
+      end
+      
+      class ColumnFamilyStats
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :average_cells_per_column, as: 'averageCellsPerColumn'
+          property :average_columns_per_row, as: 'averageColumnsPerRow'
+          property :logical_data_bytes, :numeric_string => true, as: 'logicalDataBytes'
+        end
+      end
+      
+      class CopyBackupMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :progress, as: 'progress', class: Google::Apis::BigtableadminV2::OperationProgress, decorator: Google::Apis::BigtableadminV2::OperationProgress::Representation
+      
+          property :source_backup_info, as: 'sourceBackupInfo', class: Google::Apis::BigtableadminV2::BackupInfo, decorator: Google::Apis::BigtableadminV2::BackupInfo::Representation
+      
+        end
+      end
+      
+      class CopyBackupRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :backup_id, as: 'backupId'
+          property :expire_time, as: 'expireTime'
+          property :source_backup, as: 'sourceBackup'
         end
       end
       
@@ -609,23 +756,6 @@ module Google
         end
       end
       
-      class FailureTrace
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          collection :frames, as: 'frames', class: Google::Apis::BigtableadminV2::Frame, decorator: Google::Apis::BigtableadminV2::Frame::Representation
-      
-        end
-      end
-      
-      class Frame
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :target_name, as: 'targetName'
-          property :workflow_guid, as: 'workflowGuid'
-          property :zone_id, as: 'zoneId'
-        end
-      end
-      
       class GcRule
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -666,6 +796,19 @@ module Google
         end
       end
       
+      class HotTablet
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_key, as: 'endKey'
+          property :end_time, as: 'endTime'
+          property :name, as: 'name'
+          property :node_cpu_usage_percent, as: 'nodeCpuUsagePercent'
+          property :start_key, as: 'startKey'
+          property :start_time, as: 'startTime'
+          property :table_name, as: 'tableName'
+        end
+      end
+      
       class Instance
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -673,6 +816,7 @@ module Google
           property :display_name, as: 'displayName'
           hash :labels, as: 'labels'
           property :name, as: 'name'
+          property :satisfies_pzs, as: 'satisfiesPzs'
           property :state, as: 'state'
           property :type, as: 'type'
         end
@@ -711,6 +855,15 @@ module Google
           collection :clusters, as: 'clusters', class: Google::Apis::BigtableadminV2::Cluster, decorator: Google::Apis::BigtableadminV2::Cluster::Representation
       
           collection :failed_locations, as: 'failedLocations'
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListHotTabletsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :hot_tablets, as: 'hotTablets', class: Google::Apis::BigtableadminV2::HotTablet, decorator: Google::Apis::BigtableadminV2::HotTablet::Representation
+      
           property :next_page_token, as: 'nextPageToken'
         end
       end
@@ -786,6 +939,7 @@ module Google
       class MultiClusterRoutingUseAny
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :cluster_ids, as: 'clusterIds'
         end
       end
       
@@ -816,6 +970,25 @@ module Google
           property :name, as: 'name'
           property :progress, as: 'progress', class: Google::Apis::BigtableadminV2::OperationProgress, decorator: Google::Apis::BigtableadminV2::OperationProgress::Representation
       
+        end
+      end
+      
+      class PartialUpdateClusterMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :finish_time, as: 'finishTime'
+          property :original_request, as: 'originalRequest', class: Google::Apis::BigtableadminV2::PartialUpdateClusterRequest, decorator: Google::Apis::BigtableadminV2::PartialUpdateClusterRequest::Representation
+      
+          property :request_time, as: 'requestTime'
+        end
+      end
+      
+      class PartialUpdateClusterRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster, as: 'cluster', class: Google::Apis::BigtableadminV2::Cluster, decorator: Google::Apis::BigtableadminV2::Cluster::Representation
+      
+          property :update_mask, as: 'updateMask'
         end
       end
       
@@ -910,9 +1083,12 @@ module Google
       
           hash :column_families, as: 'columnFamilies', class: Google::Apis::BigtableadminV2::ColumnFamily, decorator: Google::Apis::BigtableadminV2::ColumnFamily::Representation
       
+          property :deletion_protection, as: 'deletionProtection'
           property :granularity, as: 'granularity'
           property :name, as: 'name'
           property :restore_info, as: 'restoreInfo', class: Google::Apis::BigtableadminV2::RestoreInfo, decorator: Google::Apis::BigtableadminV2::RestoreInfo::Representation
+      
+          property :stats, as: 'stats', class: Google::Apis::BigtableadminV2::TableStats, decorator: Google::Apis::BigtableadminV2::TableStats::Representation
       
         end
       end
@@ -923,6 +1099,16 @@ module Google
           property :estimated_copied_bytes, :numeric_string => true, as: 'estimatedCopiedBytes'
           property :estimated_size_bytes, :numeric_string => true, as: 'estimatedSizeBytes'
           property :state, as: 'state'
+        end
+      end
+      
+      class TableStats
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :average_cells_per_column, as: 'averageCellsPerColumn'
+          property :average_columns_per_row, as: 'averageColumnsPerRow'
+          property :logical_data_bytes, :numeric_string => true, as: 'logicalDataBytes'
+          property :row_count, :numeric_string => true, as: 'rowCount'
         end
       end
       
@@ -937,6 +1123,21 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :permissions, as: 'permissions'
+        end
+      end
+      
+      class UndeleteTableMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :name, as: 'name'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class UndeleteTableRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -971,6 +1172,15 @@ module Google
           property :original_request, as: 'originalRequest', class: Google::Apis::BigtableadminV2::PartialUpdateInstanceRequest, decorator: Google::Apis::BigtableadminV2::PartialUpdateInstanceRequest::Representation
       
           property :request_time, as: 'requestTime'
+        end
+      end
+      
+      class UpdateTableMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :name, as: 'name'
+          property :start_time, as: 'startTime'
         end
       end
     end

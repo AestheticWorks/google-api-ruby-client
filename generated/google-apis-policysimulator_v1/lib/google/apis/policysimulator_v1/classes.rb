@@ -22,13 +22,13 @@ module Google
   module Apis
     module PolicysimulatorV1
       
-      # A summary and comparison of the member's access under the current (baseline)
+      # A summary and comparison of the principal's access under the current (baseline)
       # policies and the proposed (simulated) policies for a single access tuple.
       class GoogleCloudPolicysimulatorV1AccessStateDiff
         include Google::Apis::Core::Hashable
       
-        # How the member's access, specified in the AccessState field, changed between
-        # the current (baseline) policies and proposed (simulated) policies.
+        # How the principal's access, specified in the AccessState field, changed
+        # between the current (baseline) policies and proposed (simulated) policies.
         # Corresponds to the JSON property `accessChange`
         # @return [String]
         attr_accessor :access_change
@@ -57,7 +57,7 @@ module Google
         end
       end
       
-      # Information about the member, resource, and permission to check.
+      # Information about the principal, resource, and permission to check.
       class GoogleCloudPolicysimulatorV1AccessTuple
         include Google::Apis::Core::Hashable
       
@@ -69,7 +69,7 @@ module Google
         # @return [String]
         attr_accessor :full_resource_name
       
-        # Required. The IAM permission to check for the specified member and resource.
+        # Required. The IAM permission to check for the specified principal and resource.
         # For a complete list of IAM permissions, see https://cloud.google.com/iam/help/
         # permissions/reference. For a complete list of predefined IAM roles and the
         # permissions in each role, see https://cloud.google.com/iam/help/roles/
@@ -78,11 +78,11 @@ module Google
         # @return [String]
         attr_accessor :permission
       
-        # Required. The member, or principal, whose access you want to check, in the
-        # form of the email address that represents that member. For example, `alice@
-        # example.com` or `my-service-account@my-project.iam.gserviceaccount.com`. The
-        # member must be a Google Account or a service account. Other types of members
-        # are not supported.
+        # Required. The principal whose access you want to check, in the form of the
+        # email address that represents that principal. For example, `alice@example.com`
+        # or `my-service-account@my-project.iam.gserviceaccount.com`. The principal must
+        # be a Google Account or a service account. Other types of principals are not
+        # supported.
         # Corresponds to the JSON property `principal`
         # @return [String]
         attr_accessor :principal
@@ -99,17 +99,17 @@ module Google
         end
       end
       
-      # Details about how a binding in a policy affects a member's ability to use a
+      # Details about how a binding in a policy affects a principal's ability to use a
       # permission.
       class GoogleCloudPolicysimulatorV1BindingExplanation
         include Google::Apis::Core::Hashable
       
         # Required. Indicates whether _this binding_ provides the specified permission
-        # to the specified member for the specified resource. This field does _not_
-        # indicate whether the member actually has the permission for the resource.
+        # to the specified principal for the specified resource. This field does _not_
+        # indicate whether the principal actually has the permission for the resource.
         # There might be another binding that overrides this binding. To determine
-        # whether the member actually has the permission, use the `access` field in the
-        # TroubleshootIamPolicyResponse.
+        # whether the principal actually has the permission, use the `access` field in
+        # the TroubleshootIamPolicyResponse.
         # Corresponds to the JSON property `access`
         # @return [String]
         attr_accessor :access
@@ -133,17 +133,18 @@ module Google
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeExpr]
         attr_accessor :condition
       
-        # Indicates whether each member in the binding includes the member specified in
-        # the request, either directly or indirectly. Each key identifies a member in
-        # the binding, and each value indicates whether the member in the binding
-        # includes the member in the request. For example, suppose that a binding
-        # includes the following members: * `user:alice@example.com` * `group:product-
-        # eng@example.com` The member in the replayed access tuple is `user:bob@example.
-        # com`. This user is a member of the group `group:product-eng@example.com`. For
-        # the first member in the binding, the key is `user:alice@example.com`, and the `
-        # membership` field in the value is set to `MEMBERSHIP_NOT_INCLUDED`. For the
-        # second member in the binding, the key is `group:product-eng@example.com`, and
-        # the `membership` field in the value is set to `MEMBERSHIP_INCLUDED`.
+        # Indicates whether each principal in the binding includes the principal
+        # specified in the request, either directly or indirectly. Each key identifies a
+        # principal in the binding, and each value indicates whether the principal in
+        # the binding includes the principal in the request. For example, suppose that a
+        # binding includes the following principals: * `user:alice@example.com` * `group:
+        # product-eng@example.com` The principal in the replayed access tuple is `user:
+        # bob@example.com`. This user is a principal of the group `group:product-eng@
+        # example.com`. For the first principal in the binding, the key is `user:alice@
+        # example.com`, and the `membership` field in the value is set to `
+        # MEMBERSHIP_NOT_INCLUDED`. For the second principal in the binding, the key is `
+        # group:product-eng@example.com`, and the `membership` field in the value is set
+        # to `MEMBERSHIP_INCLUDED`.
         # Corresponds to the JSON property `memberships`
         # @return [Hash<String,Google::Apis::PolicysimulatorV1::GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership>]
         attr_accessor :memberships
@@ -189,16 +190,16 @@ module Google
         end
       end
       
-      # Details about whether the binding includes the member.
+      # Details about whether the binding includes the principal.
       class GoogleCloudPolicysimulatorV1BindingExplanationAnnotatedMembership
         include Google::Apis::Core::Hashable
       
-        # Indicates whether the binding includes the member.
+        # Indicates whether the binding includes the principal.
         # Corresponds to the JSON property `membership`
         # @return [String]
         attr_accessor :membership
       
-        # The relevance of the member's status to the overall determination for the
+        # The relevance of the principal's status to the overall determination for the
         # binding.
         # Corresponds to the JSON property `relevance`
         # @return [String]
@@ -220,8 +221,8 @@ module Google
       class GoogleCloudPolicysimulatorV1ExplainedAccess
         include Google::Apis::Core::Hashable
       
-        # Whether the member in the access tuple has permission to access the resource
-        # in the access tuple under the given policies.
+        # Whether the principal in the access tuple has permission to access the
+        # resource in the access tuple under the given policies.
         # Corresponds to the JSON property `accessState`
         # @return [String]
         attr_accessor :access_state
@@ -257,18 +258,18 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Indicates whether _this policy_ provides the specified permission to the
-        # specified member for the specified resource. This field does _not_ indicate
-        # whether the member actually has the permission for the resource. There might
-        # be another policy that overrides this policy. To determine whether the member
-        # actually has the permission, use the `access` field in the
+        # specified principal for the specified resource. This field does _not_ indicate
+        # whether the principal actually has the permission for the resource. There
+        # might be another policy that overrides this policy. To determine whether the
+        # principal actually has the permission, use the `access` field in the
         # TroubleshootIamPolicyResponse.
         # Corresponds to the JSON property `access`
         # @return [String]
         attr_accessor :access
       
-        # Details about how each binding in the policy affects the member's ability, or
-        # inability, to use the permission for the resource. If the user who created the
-        # Replay does not have access to the policy, this field is omitted.
+        # Details about how each binding in the policy affects the principal's ability,
+        # or inability, to use the permission for the resource. If the user who created
+        # the Replay does not have access to the policy, this field is omitted.
         # Corresponds to the JSON property `bindingExplanations`
         # @return [Array<Google::Apis::PolicysimulatorV1::GoogleCloudPolicysimulatorV1BindingExplanation>]
         attr_accessor :binding_explanations
@@ -285,31 +286,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::PolicysimulatorV1::GoogleIamV1Policy]
         attr_accessor :policy
@@ -437,12 +438,12 @@ module Google
       
       # The difference between the results of evaluating an access tuple under the
       # current (baseline) policies and under the proposed (simulated) policies. This
-      # difference explains how a member's access could change if the proposed
+      # difference explains how a principal's access could change if the proposed
       # policies were applied.
       class GoogleCloudPolicysimulatorV1ReplayDiff
         include Google::Apis::Core::Hashable
       
-        # A summary and comparison of the member's access under the current (baseline)
+        # A summary and comparison of the principal's access under the current (baseline)
         # policies and the proposed (simulated) policies for a single access tuple.
         # Corresponds to the JSON property `accessDiff`
         # @return [Google::Apis::PolicysimulatorV1::GoogleCloudPolicysimulatorV1AccessStateDiff]
@@ -481,14 +482,14 @@ module Google
       class GoogleCloudPolicysimulatorV1ReplayResult
         include Google::Apis::Core::Hashable
       
-        # Information about the member, resource, and permission to check.
+        # Information about the principal, resource, and permission to check.
         # Corresponds to the JSON property `accessTuple`
         # @return [Google::Apis::PolicysimulatorV1::GoogleCloudPolicysimulatorV1AccessTuple]
         attr_accessor :access_tuple
       
         # The difference between the results of evaluating an access tuple under the
         # current (baseline) policies and under the proposed (simulated) policies. This
-        # difference explains how a member's access could change if the proposed
+        # difference explains how a principal's access could change if the proposed
         # policies were applied.
         # Corresponds to the JSON property `diff`
         # @return [Google::Apis::PolicysimulatorV1::GoogleCloudPolicysimulatorV1ReplayDiff]
@@ -507,11 +508,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `lastSeenDate`
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeDate]
         attr_accessor :last_seen_date
@@ -569,11 +570,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `newestDate`
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeDate]
         attr_accessor :newest_date
@@ -581,11 +582,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `oldestDate`
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeDate]
         attr_accessor :oldest_date
@@ -727,11 +728,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `newestDate`
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeDate]
         attr_accessor :newest_date
@@ -739,11 +740,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `oldestDate`
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeDate]
         attr_accessor :oldest_date
@@ -782,8 +783,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class GoogleIamV1AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -840,7 +841,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class GoogleIamV1Binding
         include Google::Apis::Core::Hashable
       
@@ -863,38 +864,43 @@ module Google
         # @return [Google::Apis::PolicysimulatorV1::GoogleTypeExpr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -913,31 +919,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class GoogleIamV1Policy
         include Google::Apis::Core::Hashable
       
@@ -946,9 +952,14 @@ module Google
         # @return [Array<Google::Apis::PolicysimulatorV1::GoogleIamV1AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::PolicysimulatorV1::GoogleIamV1Binding>]
         attr_accessor :bindings
@@ -1130,11 +1141,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class GoogleTypeDate
         include Google::Apis::Core::Hashable
       

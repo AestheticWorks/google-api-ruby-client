@@ -655,6 +655,25 @@ module Google
         end
       end
       
+      # Response message for create enrollment token.
+      class CreateEnrollmentTokenResponse
+        include Google::Apis::Core::Hashable
+      
+        # Enrollment token.
+        # Corresponds to the JSON property `enrollmentToken`
+        # @return [String]
+        attr_accessor :enrollment_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enrollment_token = args[:enrollment_token] if args.key?(:enrollment_token)
+        end
+      end
+      
       # A Devices resource represents a mobile device managed by the EMM and belonging
       # to a specific enterprise user.
       class Device
@@ -665,6 +684,22 @@ module Google
         # Corresponds to the JSON property `androidId`
         # @return [String]
         attr_accessor :android_id
+      
+        # The internal hardware codename of the device. This comes from android.os.Build.
+        # DEVICE. (field named "device" per logs/wireless/android/android_checkin.proto)
+        # Corresponds to the JSON property `device`
+        # @return [String]
+        attr_accessor :device
+      
+        # The build fingerprint of the device if known.
+        # Corresponds to the JSON property `latestBuildFingerprint`
+        # @return [String]
+        attr_accessor :latest_build_fingerprint
+      
+        # The manufacturer of the device. This comes from android.os.Build.MANUFACTURER.
+        # Corresponds to the JSON property `maker`
+        # @return [String]
+        attr_accessor :maker
       
         # Identifies the extent to which the device is controlled by a managed Google
         # Play EMM in various deployment configurations. Possible values include: - "
@@ -679,16 +714,37 @@ module Google
         # @return [String]
         attr_accessor :management_type
       
+        # The model name of the device. This comes from android.os.Build.MODEL.
+        # Corresponds to the JSON property `model`
+        # @return [String]
+        attr_accessor :model
+      
         # The device policy for a given managed device.
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::AndroidenterpriseV1::Policy]
         attr_accessor :policy
+      
+        # The product name of the device. This comes from android.os.Build.PRODUCT.
+        # Corresponds to the JSON property `product`
+        # @return [String]
+        attr_accessor :product
       
         # Device report updated with the latest app states for managed apps on the
         # device.
         # Corresponds to the JSON property `report`
         # @return [Google::Apis::AndroidenterpriseV1::DeviceReport]
         attr_accessor :report
+      
+        # Retail brand for the device, if set. See https://developer.android.com/
+        # reference/android/os/Build.html#BRAND
+        # Corresponds to the JSON property `retailBrand`
+        # @return [String]
+        attr_accessor :retail_brand
+      
+        # API compatibility version.
+        # Corresponds to the JSON property `sdkVersion`
+        # @return [Fixnum]
+        attr_accessor :sdk_version
       
         def initialize(**args)
            update!(**args)
@@ -697,9 +753,16 @@ module Google
         # Update properties of this object
         def update!(**args)
           @android_id = args[:android_id] if args.key?(:android_id)
+          @device = args[:device] if args.key?(:device)
+          @latest_build_fingerprint = args[:latest_build_fingerprint] if args.key?(:latest_build_fingerprint)
+          @maker = args[:maker] if args.key?(:maker)
           @management_type = args[:management_type] if args.key?(:management_type)
+          @model = args[:model] if args.key?(:model)
           @policy = args[:policy] if args.key?(:policy)
+          @product = args[:product] if args.key?(:product)
           @report = args[:report] if args.key?(:report)
+          @retail_brand = args[:retail_brand] if args.key?(:retail_brand)
+          @sdk_version = args[:sdk_version] if args.key?(:sdk_version)
         end
       end
       
@@ -825,6 +888,11 @@ module Google
         # @return [Array<Google::Apis::AndroidenterpriseV1::Administrator>]
         attr_accessor :administrator
       
+        # Contains settings for Google-provided user authentication.
+        # Corresponds to the JSON property `googleAuthenticationSettings`
+        # @return [Google::Apis::AndroidenterpriseV1::GoogleAuthenticationSettings]
+        attr_accessor :google_authentication_settings
+      
         # The unique ID for the enterprise.
         # Corresponds to the JSON property `id`
         # @return [String]
@@ -847,6 +915,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @administrator = args[:administrator] if args.key?(:administrator)
+          @google_authentication_settings = args[:google_authentication_settings] if args.key?(:google_authentication_settings)
           @id = args[:id] if args.key?(:id)
           @name = args[:name] if args.key?(:name)
           @primary_domain = args[:primary_domain] if args.key?(:primary_domain)
@@ -870,6 +939,26 @@ module Google
         # Update properties of this object
         def update!(**args)
           @account_email = args[:account_email] if args.key?(:account_email)
+        end
+      end
+      
+      # An authentication URL configuration for the authenticator app of an identity
+      # provider.
+      class EnterpriseAuthenticationAppLinkConfig
+        include Google::Apis::Core::Hashable
+      
+        # An authentication url.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       
@@ -981,6 +1070,31 @@ module Google
         # Update properties of this object
         def update!(**args)
           @entitlement = args[:entitlement] if args.key?(:entitlement)
+        end
+      end
+      
+      # Contains settings for Google-provided user authentication.
+      class GoogleAuthenticationSettings
+        include Google::Apis::Core::Hashable
+      
+        # Whether dedicated devices are allowed.
+        # Corresponds to the JSON property `dedicatedDevicesAllowed`
+        # @return [String]
+        attr_accessor :dedicated_devices_allowed
+      
+        # Whether Google authentication is required.
+        # Corresponds to the JSON property `googleAuthenticationRequired`
+        # @return [String]
+        attr_accessor :google_authentication_required
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dedicated_devices_allowed = args[:dedicated_devices_allowed] if args.key?(:dedicated_devices_allowed)
+          @google_authentication_required = args[:google_authentication_required] if args.key?(:google_authentication_required)
         end
       end
       
@@ -1805,7 +1919,8 @@ module Google
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Deprecated. Use autoUpdateMode instead. When autoUpdateMode is set to
+        # Recommended alternative: autoUpdateMode which is set per app, provides greater
+        # flexibility around update frequency. When autoUpdateMode is set to
         # AUTO_UPDATE_POSTPONED or AUTO_UPDATE_HIGH_PRIORITY, this field has no effect. "
         # choiceToTheUser" allows the device's user to configure the app update policy. "
         # always" enables auto updates. "never" disables auto updates. "wifiOnly"
@@ -1865,6 +1980,12 @@ module Google
       # basic representation of the product within an EMM user interface.
       class Product
         include Google::Apis::Core::Hashable
+      
+        # Represents the list of app restrictions available to be pre-configured for the
+        # product.
+        # Corresponds to the JSON property `appRestrictionsSchema`
+        # @return [Google::Apis::AndroidenterpriseV1::AppRestrictionsSchema]
+        attr_accessor :app_restrictions_schema
       
         # The tracks visible to the enterprise.
         # Corresponds to the JSON property `appTracks`
@@ -2005,6 +2126,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @app_restrictions_schema = args[:app_restrictions_schema] if args.key?(:app_restrictions_schema)
           @app_tracks = args[:app_tracks] if args.key?(:app_tracks)
           @app_version = args[:app_version] if args.key?(:app_version)
           @author_name = args[:author_name] if args.key?(:author_name)
@@ -2154,6 +2276,16 @@ module Google
         # @return [String]
         attr_accessor :auto_update_mode
       
+        # An authentication URL configuration for the authenticator app of an identity
+        # provider. This helps to launch the identity provider's authenticator app
+        # during the authentication happening in a private app using Android WebView.
+        # Authenticator app should already be the [default handler](https://developer.
+        # android.com/training/app-links/verify-site-associations) for the
+        # authentication url on the device.
+        # Corresponds to the JSON property `enterpriseAuthenticationAppLinkConfigs`
+        # @return [Array<Google::Apis::AndroidenterpriseV1::EnterpriseAuthenticationAppLinkConfig>]
+        attr_accessor :enterprise_authentication_app_link_configs
+      
         # A managed configuration resource contains the set of managed properties
         # defined by the app developer in the app's managed configurations schema, as
         # well as any configuration variables defined for the user.
@@ -2186,6 +2318,7 @@ module Google
         def update!(**args)
           @auto_install_policy = args[:auto_install_policy] if args.key?(:auto_install_policy)
           @auto_update_mode = args[:auto_update_mode] if args.key?(:auto_update_mode)
+          @enterprise_authentication_app_link_configs = args[:enterprise_authentication_app_link_configs] if args.key?(:enterprise_authentication_app_link_configs)
           @managed_configuration = args[:managed_configuration] if args.key?(:managed_configuration)
           @product_id = args[:product_id] if args.key?(:product_id)
           @track_ids = args[:track_ids] if args.key?(:track_ids)

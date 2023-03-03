@@ -42,7 +42,64 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Configuration for a BigQuery subscription.
+      class BigQueryConfig
+        include Google::Apis::Core::Hashable
+      
+        # When true and use_topic_schema is true, any fields that are a part of the
+        # topic schema that are not part of the BigQuery table schema are dropped when
+        # writing to BigQuery. Otherwise, the schemas must be kept in sync and any
+        # messages with extra fields are not written and remain in the subscription's
+        # backlog.
+        # Corresponds to the JSON property `dropUnknownFields`
+        # @return [Boolean]
+        attr_accessor :drop_unknown_fields
+        alias_method :drop_unknown_fields?, :drop_unknown_fields
+      
+        # Output only. An output-only field that indicates whether or not the
+        # subscription can receive messages.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # The name of the table to which to write data, of the form `projectId`.`
+        # datasetId`.`tableId`
+        # Corresponds to the JSON property `table`
+        # @return [String]
+        attr_accessor :table
+      
+        # When true, use the topic's schema as the columns to write to in BigQuery, if
+        # it exists.
+        # Corresponds to the JSON property `useTopicSchema`
+        # @return [Boolean]
+        attr_accessor :use_topic_schema
+        alias_method :use_topic_schema?, :use_topic_schema
+      
+        # When true, write the subscription name, message_id, publish_time, attributes,
+        # and ordering_key to additional columns in the table. The subscription name,
+        # message_id, and publish_time fields are put in their own columns while all
+        # other message properties (other than data) are written to a JSON object in the
+        # attributes column.
+        # Corresponds to the JSON property `writeMetadata`
+        # @return [Boolean]
+        attr_accessor :write_metadata
+        alias_method :write_metadata?, :write_metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @drop_unknown_fields = args[:drop_unknown_fields] if args.key?(:drop_unknown_fields)
+          @state = args[:state] if args.key?(:state)
+          @table = args[:table] if args.key?(:table)
+          @use_topic_schema = args[:use_topic_schema] if args.key?(:use_topic_schema)
+          @write_metadata = args[:write_metadata] if args.key?(:write_metadata)
+        end
+      end
+      
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -65,38 +122,43 @@ module Google
         # @return [Google::Apis::PubsubV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -113,11 +175,31 @@ module Google
         end
       end
       
+      # Request for CommitSchema method.
+      class CommitSchemaRequest
+        include Google::Apis::Core::Hashable
+      
+        # A schema resource.
+        # Corresponds to the JSON property `schema`
+        # @return [Google::Apis::PubsubV1::Schema]
+        attr_accessor :schema
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @schema = args[:schema] if args.key?(:schema)
+        end
+      end
+      
       # Request for the `CreateSnapshot` method.
       class CreateSnapshotRequest
         include Google::Apis::Core::Hashable
       
-        # See Creating and managing labels.
+        # See [Creating and managing labels](https://cloud.google.com/pubsub/docs/labels)
+        # .
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
         attr_accessor :labels
@@ -200,8 +282,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -289,6 +370,32 @@ module Google
           @expression = args[:expression] if args.key?(:expression)
           @location = args[:location] if args.key?(:location)
           @title = args[:title] if args.key?(:title)
+        end
+      end
+      
+      # Response for the `ListSchemaRevisions` method.
+      class ListSchemaRevisionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token that can be sent as `page_token` to retrieve the next page. If this
+        # field is empty, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The revisions of the schema.
+        # Corresponds to the JSON property `schemas`
+        # @return [Array<Google::Apis::PubsubV1::Schema>]
+        attr_accessor :schemas
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @schemas = args[:schemas] if args.key?(:schemas)
         end
       end
       
@@ -526,7 +633,10 @@ module Google
       end
       
       # Contains information needed for generating an [OpenID Connect token](https://
-      # developers.google.com/identity/protocols/OpenIDConnect).
+      # developers.google.com/identity/protocols/OpenIDConnect). [Service account
+      # email](https://cloud.google.com/iam/docs/service-accounts) used for generating
+      # the OIDC token. For more information on setting up authentication, see [Push
+      # subscriptions](https://cloud.google.com/pubsub/docs/push).
       class OidcToken
         include Google::Apis::Core::Hashable
       
@@ -540,10 +650,7 @@ module Google
         # @return [String]
         attr_accessor :audience
       
-        # [Service account email](https://cloud.google.com/iam/docs/service-accounts) to
-        # be used for generating the OIDC token. The caller (for CreateSubscription,
-        # UpdateSubscription, and ModifyPushConfig RPCs) must have the iam.
-        # serviceAccounts.actAs permission for the service account.
+        # 
         # Corresponds to the JSON property `serviceAccountEmail`
         # @return [String]
         attr_accessor :service_account_email
@@ -561,37 +668,42 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::PubsubV1::Binding>]
         attr_accessor :bindings
@@ -718,7 +830,8 @@ module Google
         # messages published with the same non-empty `ordering_key` value will be
         # delivered to subscribers in the order in which they are received by the Pub/
         # Sub system. All `PubsubMessage`s published in a given `PublishRequest` must
-        # specify the same `ordering_key` value.
+        # specify the same `ordering_key` value. For more information, see [ordering
+        # messages](https://cloud.google.com/pubsub/docs/ordering).
         # Corresponds to the JSON property `orderingKey`
         # @return [String]
         attr_accessor :ordering_key
@@ -783,9 +896,10 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Received Pub/Sub messages. The list will be empty if there are no more
-        # messages available in the backlog. For JSON, the response can be entirely
-        # empty. The Pub/Sub system may return fewer than the `maxMessages` requested
-        # even if there are more messages available in the backlog.
+        # messages available in the backlog, or if no messages could be returned before
+        # the request timeout. For JSON, the response can be entirely empty. The Pub/Sub
+        # system may return fewer than the `maxMessages` requested even if there are
+        # more messages available in the backlog.
         # Corresponds to the JSON property `receivedMessages`
         # @return [Array<Google::Apis::PubsubV1::ReceivedMessage>]
         attr_accessor :received_messages
@@ -816,13 +930,16 @@ module Google
         # without this attribute. The only supported values for the `x-goog-version`
         # attribute are: * `v1beta1`: uses the push format defined in the v1beta1 Pub/
         # Sub API. * `v1` or `v1beta2`: uses the push format defined in the v1 Pub/Sub
-        # API. For example: attributes ` "x-goog-version": "v1" `
+        # API. For example: `attributes ` "x-goog-version": "v1" ``
         # Corresponds to the JSON property `attributes`
         # @return [Hash<String,String>]
         attr_accessor :attributes
       
         # Contains information needed for generating an [OpenID Connect token](https://
-        # developers.google.com/identity/protocols/OpenIDConnect).
+        # developers.google.com/identity/protocols/OpenIDConnect). [Service account
+        # email](https://cloud.google.com/iam/docs/service-accounts) used for generating
+        # the OIDC token. For more information on setting up authentication, see [Push
+        # subscriptions](https://cloud.google.com/pubsub/docs/push).
         # Corresponds to the JSON property `oidcToken`
         # @return [Google::Apis::PubsubV1::OidcToken]
         attr_accessor :oidc_token
@@ -924,6 +1041,26 @@ module Google
         end
       end
       
+      # Request for the `RollbackSchema` method.
+      class RollbackSchemaRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The revision ID to roll back to. It must be a revision of the same
+        # schema. Example: c7cfa2a8
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
+        end
+      end
+      
       # A schema resource.
       class Schema
         include Google::Apis::Core::Hashable
@@ -940,6 +1077,16 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Output only. The timestamp that the revision was created.
+        # Corresponds to the JSON property `revisionCreateTime`
+        # @return [String]
+        attr_accessor :revision_create_time
+      
+        # Output only. Immutable. The revision ID of the schema.
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
         # The type of the schema definition.
         # Corresponds to the JSON property `type`
         # @return [String]
@@ -953,6 +1100,8 @@ module Google
         def update!(**args)
           @definition = args[:definition] if args.key?(:definition)
           @name = args[:name] if args.key?(:name)
+          @revision_create_time = args[:revision_create_time] if args.key?(:revision_create_time)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
           @type = args[:type] if args.key?(:type)
         end
       end
@@ -965,6 +1114,20 @@ module Google
         # Corresponds to the JSON property `encoding`
         # @return [String]
         attr_accessor :encoding
+      
+        # The minimum (inclusive) revision allowed for validating messages. If empty or
+        # not present, allow any revision to be validated against last_revision or any
+        # revision created before.
+        # Corresponds to the JSON property `firstRevisionId`
+        # @return [String]
+        attr_accessor :first_revision_id
+      
+        # The maximum (inclusive) revision allowed for validating messages. If empty or
+        # not present, allow any revision to be validated against first_revision or any
+        # revision created after.
+        # Corresponds to the JSON property `lastRevisionId`
+        # @return [String]
+        attr_accessor :last_revision_id
       
         # Required. The name of the schema that messages published should be validated
         # against. Format is `projects/`project`/schemas/`schema``. The value of this
@@ -980,6 +1143,8 @@ module Google
         # Update properties of this object
         def update!(**args)
           @encoding = args[:encoding] if args.key?(:encoding)
+          @first_revision_id = args[:first_revision_id] if args.key?(:first_revision_id)
+          @last_revision_id = args[:last_revision_id] if args.key?(:last_revision_id)
           @schema = args[:schema] if args.key?(:schema)
         end
       end
@@ -1037,31 +1202,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::PubsubV1::Policy]
         attr_accessor :policy
@@ -1126,14 +1291,16 @@ module Google
         end
       end
       
-      # A subscription resource.
+      # A subscription resource. If none of `push_config` or `bigquery_config` is set,
+      # then the subscriber will pull and ack messages using API methods. At most one
+      # of these fields may be set.
       class Subscription
         include Google::Apis::Core::Hashable
       
         # The approximate amount of time (on a best-effort basis) Pub/Sub waits for the
         # subscriber to acknowledge receipt before resending the message. In the
         # interval after the message is delivered and before it is acknowledged, it is
-        # considered to be *outstanding*. During that time period, the message will not
+        # considered to be _outstanding_. During that time period, the message will not
         # be redelivered (on a best-effort basis). For pull subscriptions, this value is
         # used as the initial value for the ack deadline. To override this value for a
         # given message, call `ModifyAckDeadline` with the corresponding `ack_id` if
@@ -1148,6 +1315,11 @@ module Google
         # Corresponds to the JSON property `ackDeadlineSeconds`
         # @return [Fixnum]
         attr_accessor :ack_deadline_seconds
+      
+        # Configuration for a BigQuery subscription.
+        # Corresponds to the JSON property `bigqueryConfig`
+        # @return [Google::Apis::PubsubV1::BigQueryConfig]
+        attr_accessor :bigquery_config
       
         # Dead lettering is done on a best effort basis. The same message might be dead
         # lettered multiple times. If validation on any of the fields fails at
@@ -1166,6 +1338,19 @@ module Google
         # @return [Boolean]
         attr_accessor :detached
         alias_method :detached?, :detached
+      
+        # If true, Pub/Sub provides the following guarantees for the delivery of a
+        # message with a given value of `message_id` on this subscription: * The message
+        # sent to a subscriber is guaranteed not to be resent before the message's
+        # acknowledgement deadline expires. * An acknowledged message will not be resent
+        # to a subscriber. Note that subscribers may still receive multiple copies of a
+        # message when `enable_exactly_once_delivery` is true if the message was
+        # published multiple times by a publisher client. These copies are considered
+        # distinct by Pub/Sub and have distinct `message_id` values.
+        # Corresponds to the JSON property `enableExactlyOnceDelivery`
+        # @return [Boolean]
+        attr_accessor :enable_exactly_once_delivery
+        alias_method :enable_exactly_once_delivery?, :enable_exactly_once_delivery
       
         # If true, messages published with the same `ordering_key` in `PubsubMessage`
         # will be delivered to the subscribers in the order in which they are received
@@ -1189,7 +1374,8 @@ module Google
         # @return [String]
         attr_accessor :filter
       
-        # See Creating and managing labels.
+        # See [Creating and managing labels](https://cloud.google.com/pubsub/docs/labels)
+        # .
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
         attr_accessor :labels
@@ -1240,6 +1426,12 @@ module Google
         # @return [Google::Apis::PubsubV1::RetryPolicy]
         attr_accessor :retry_policy
       
+        # Output only. An output-only field indicating whether or not the subscription
+        # can receive messages.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
         # Required. The name of the topic from which this subscription is receiving
         # messages. Format is `projects/`project`/topics/`topic``. The value of this
         # field will be `_deleted-topic_` if the topic has been deleted.
@@ -1264,8 +1456,10 @@ module Google
         # Update properties of this object
         def update!(**args)
           @ack_deadline_seconds = args[:ack_deadline_seconds] if args.key?(:ack_deadline_seconds)
+          @bigquery_config = args[:bigquery_config] if args.key?(:bigquery_config)
           @dead_letter_policy = args[:dead_letter_policy] if args.key?(:dead_letter_policy)
           @detached = args[:detached] if args.key?(:detached)
+          @enable_exactly_once_delivery = args[:enable_exactly_once_delivery] if args.key?(:enable_exactly_once_delivery)
           @enable_message_ordering = args[:enable_message_ordering] if args.key?(:enable_message_ordering)
           @expiration_policy = args[:expiration_policy] if args.key?(:expiration_policy)
           @filter = args[:filter] if args.key?(:filter)
@@ -1275,6 +1469,7 @@ module Google
           @push_config = args[:push_config] if args.key?(:push_config)
           @retain_acked_messages = args[:retain_acked_messages] if args.key?(:retain_acked_messages)
           @retry_policy = args[:retry_policy] if args.key?(:retry_policy)
+          @state = args[:state] if args.key?(:state)
           @topic = args[:topic] if args.key?(:topic)
           @topic_message_retention_duration = args[:topic_message_retention_duration] if args.key?(:topic_message_retention_duration)
         end
@@ -1285,7 +1480,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -1344,7 +1539,7 @@ module Google
         # google.com/pubsub/docs/replay-overview#seek_to_a_time) that is up to `
         # message_retention_duration` in the past. If this field is not set, message
         # retention is controlled by settings on individual subscriptions. Cannot be
-        # more than 7 days or less than 10 minutes.
+        # more than 31 days or less than 10 minutes.
         # Corresponds to the JSON property `messageRetentionDuration`
         # @return [String]
         attr_accessor :message_retention_duration
@@ -1424,7 +1619,9 @@ module Google
       class UpdateSubscriptionRequest
         include Google::Apis::Core::Hashable
       
-        # A subscription resource.
+        # A subscription resource. If none of `push_config` or `bigquery_config` is set,
+        # then the subscriber will pull and ack messages using API methods. At most one
+        # of these fields may be set.
         # Corresponds to the JSON property `subscription`
         # @return [Google::Apis::PubsubV1::Subscription]
         attr_accessor :subscription

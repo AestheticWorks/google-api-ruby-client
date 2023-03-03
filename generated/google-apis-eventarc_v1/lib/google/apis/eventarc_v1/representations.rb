@@ -40,6 +40,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Channel
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ChannelConnection
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CloudRun
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -64,7 +76,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class EventType
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Expr
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FilteringAttribute
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Gke
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleChannelConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -94,7 +130,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListChannelConnectionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListChannelsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListLocationsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListProvidersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -124,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Provider
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Pubsub
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -131,6 +191,12 @@ module Google
       end
       
       class SetIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StateCondition
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -187,6 +253,33 @@ module Google
         end
       end
       
+      class Channel
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :activation_token, as: 'activationToken'
+          property :create_time, as: 'createTime'
+          property :crypto_key_name, as: 'cryptoKeyName'
+          property :name, as: 'name'
+          property :provider, as: 'provider'
+          property :pubsub_topic, as: 'pubsubTopic'
+          property :state, as: 'state'
+          property :uid, as: 'uid'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class ChannelConnection
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :activation_token, as: 'activationToken'
+          property :channel, as: 'channel'
+          property :create_time, as: 'createTime'
+          property :name, as: 'name'
+          property :uid, as: 'uid'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
       class CloudRun
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -199,8 +292,12 @@ module Google
       class Destination
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :cloud_function, as: 'cloudFunction'
           property :cloud_run, as: 'cloudRun', class: Google::Apis::EventarcV1::CloudRun, decorator: Google::Apis::EventarcV1::CloudRun::Representation
       
+          property :gke, as: 'gke', class: Google::Apis::EventarcV1::Gke, decorator: Google::Apis::EventarcV1::Gke::Representation
+      
+          property :workflow, as: 'workflow'
         end
       end
       
@@ -214,7 +311,19 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :attribute, as: 'attribute'
+          property :operator, as: 'operator'
           property :value, as: 'value'
+        end
+      end
+      
+      class EventType
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :event_schema_uri, as: 'eventSchemaUri'
+          collection :filtering_attributes, as: 'filteringAttributes', class: Google::Apis::EventarcV1::FilteringAttribute, decorator: Google::Apis::EventarcV1::FilteringAttribute::Representation
+      
+          property :type, as: 'type'
         end
       end
       
@@ -225,6 +334,36 @@ module Google
           property :expression, as: 'expression'
           property :location, as: 'location'
           property :title, as: 'title'
+        end
+      end
+      
+      class FilteringAttribute
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :attribute, as: 'attribute'
+          property :description, as: 'description'
+          property :path_pattern_supported, as: 'pathPatternSupported'
+          property :required, as: 'required'
+        end
+      end
+      
+      class Gke
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster, as: 'cluster'
+          property :location, as: 'location'
+          property :namespace, as: 'namespace'
+          property :path, as: 'path'
+          property :service, as: 'service'
+        end
+      end
+      
+      class GoogleChannelConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :crypto_key_name, as: 'cryptoKeyName'
+          property :name, as: 'name'
+          property :update_time, as: 'updateTime'
         end
       end
       
@@ -264,12 +403,42 @@ module Google
         end
       end
       
+      class ListChannelConnectionsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :channel_connections, as: 'channelConnections', class: Google::Apis::EventarcV1::ChannelConnection, decorator: Google::Apis::EventarcV1::ChannelConnection::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          collection :unreachable, as: 'unreachable'
+        end
+      end
+      
+      class ListChannelsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :channels, as: 'channels', class: Google::Apis::EventarcV1::Channel, decorator: Google::Apis::EventarcV1::Channel::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          collection :unreachable, as: 'unreachable'
+        end
+      end
+      
       class ListLocationsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :locations, as: 'locations', class: Google::Apis::EventarcV1::Location, decorator: Google::Apis::EventarcV1::Location::Representation
       
           property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListProvidersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :providers, as: 'providers', class: Google::Apis::EventarcV1::Provider, decorator: Google::Apis::EventarcV1::Provider::Representation
+      
+          collection :unreachable, as: 'unreachable'
         end
       end
       
@@ -319,6 +488,16 @@ module Google
         end
       end
       
+      class Provider
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          collection :event_types, as: 'eventTypes', class: Google::Apis::EventarcV1::EventType, decorator: Google::Apis::EventarcV1::EventType::Representation
+      
+          property :name, as: 'name'
+        end
+      end
+      
       class Pubsub
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -333,6 +512,14 @@ module Google
           property :policy, as: 'policy', class: Google::Apis::EventarcV1::Policy, decorator: Google::Apis::EventarcV1::Policy::Representation
       
           property :update_mask, as: 'updateMask'
+        end
+      end
+      
+      class StateCondition
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          property :message, as: 'message'
         end
       end
       
@@ -361,6 +548,9 @@ module Google
       class Trigger
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :channel, as: 'channel'
+          hash :conditions, as: 'conditions', class: Google::Apis::EventarcV1::StateCondition, decorator: Google::Apis::EventarcV1::StateCondition::Representation
+      
           property :create_time, as: 'createTime'
           property :destination, as: 'destination', class: Google::Apis::EventarcV1::Destination, decorator: Google::Apis::EventarcV1::Destination::Representation
       

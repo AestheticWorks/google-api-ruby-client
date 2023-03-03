@@ -34,7 +34,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AllowedDomainsSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ApplicationSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AttributePropagationSettings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -118,6 +130,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListTunnelDestGroupsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class OAuthSettings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -137,6 +155,12 @@ module Google
       end
       
       class PolicyName
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ReauthSettings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -172,17 +196,26 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TunnelDestGroup
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AccessDeniedPageSettings
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :access_denied_page_uri, as: 'accessDeniedPageUri'
           property :generate_troubleshooting_uri, as: 'generateTroubleshootingUri'
+          property :remediation_token_generation_enabled, as: 'remediationTokenGenerationEnabled'
         end
       end
       
       class AccessSettings
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :allowed_domains_settings, as: 'allowedDomainsSettings', class: Google::Apis::IapV1::AllowedDomainsSettings, decorator: Google::Apis::IapV1::AllowedDomainsSettings::Representation
+      
           property :cors_settings, as: 'corsSettings', class: Google::Apis::IapV1::CorsSettings, decorator: Google::Apis::IapV1::CorsSettings::Representation
       
           property :gcip_settings, as: 'gcipSettings', class: Google::Apis::IapV1::GcipSettings, decorator: Google::Apis::IapV1::GcipSettings::Representation
@@ -191,6 +224,16 @@ module Google
       
           property :policy_delegation_settings, as: 'policyDelegationSettings', class: Google::Apis::IapV1::PolicyDelegationSettings, decorator: Google::Apis::IapV1::PolicyDelegationSettings::Representation
       
+          property :reauth_settings, as: 'reauthSettings', class: Google::Apis::IapV1::ReauthSettings, decorator: Google::Apis::IapV1::ReauthSettings::Representation
+      
+        end
+      end
+      
+      class AllowedDomainsSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :domains, as: 'domains'
+          property :enable, as: 'enable'
         end
       end
       
@@ -199,9 +242,20 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :access_denied_page_settings, as: 'accessDeniedPageSettings', class: Google::Apis::IapV1::AccessDeniedPageSettings, decorator: Google::Apis::IapV1::AccessDeniedPageSettings::Representation
       
+          property :attribute_propagation_settings, as: 'attributePropagationSettings', class: Google::Apis::IapV1::AttributePropagationSettings, decorator: Google::Apis::IapV1::AttributePropagationSettings::Representation
+      
           property :cookie_domain, as: 'cookieDomain'
           property :csm_settings, as: 'csmSettings', class: Google::Apis::IapV1::CsmSettings, decorator: Google::Apis::IapV1::CsmSettings::Representation
       
+        end
+      end
+      
+      class AttributePropagationSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enable, as: 'enable'
+          property :expression, as: 'expression'
+          collection :output_credentials, as: 'outputCredentials'
         end
       end
       
@@ -315,6 +369,15 @@ module Google
         end
       end
       
+      class ListTunnelDestGroupsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :tunnel_dest_groups, as: 'tunnelDestGroups', class: Google::Apis::IapV1::TunnelDestGroup, decorator: Google::Apis::IapV1::TunnelDestGroup::Representation
+      
+        end
+      end
+      
       class OAuthSettings
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -353,6 +416,15 @@ module Google
         end
       end
       
+      class ReauthSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :max_age, as: 'maxAge'
+          property :method_prop, as: 'method'
+          property :policy_type, as: 'policyType'
+        end
+      end
+      
       class ResetIdentityAwareProxyClientSecretRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -388,6 +460,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :permissions, as: 'permissions'
+        end
+      end
+      
+      class TunnelDestGroup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :cidrs, as: 'cidrs'
+          collection :fqdns, as: 'fqdns'
+          property :name, as: 'name'
         end
       end
     end

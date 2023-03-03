@@ -61,10 +61,21 @@ module Google
         # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1CostProjection]
         attr_accessor :cost_projection
       
+        # Contains information on the impact of a reliability recommendation.
+        # Corresponds to the JSON property `reliabilityProjection`
+        # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1ReliabilityProjection]
+        attr_accessor :reliability_projection
+      
         # Contains various ways of describing the impact on Security.
         # Corresponds to the JSON property `securityProjection`
         # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1SecurityProjection]
         attr_accessor :security_projection
+      
+        # Contains metadata about how much sustainability a recommendation can save or
+        # incur.
+        # Corresponds to the JSON property `sustainabilityProjection`
+        # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1SustainabilityProjection]
+        attr_accessor :sustainability_projection
       
         def initialize(**args)
            update!(**args)
@@ -74,12 +85,14 @@ module Google
         def update!(**args)
           @category = args[:category] if args.key?(:category)
           @cost_projection = args[:cost_projection] if args.key?(:cost_projection)
+          @reliability_projection = args[:reliability_projection] if args.key?(:reliability_projection)
           @security_projection = args[:security_projection] if args.key?(:security_projection)
+          @sustainability_projection = args[:sustainability_projection] if args.key?(:sustainability_projection)
         end
       end
       
       # An insight along with the information used to derive the insight. The insight
-      # may have associated recomendations as well.
+      # may have associated recommendations as well.
       class GoogleCloudRecommenderV1Insight
         include Google::Apis::Core::Hashable
       
@@ -213,6 +226,93 @@ module Google
         end
       end
       
+      # Configuration for an InsightType.
+      class GoogleCloudRecommenderV1InsightTypeConfig
+        include Google::Apis::Core::Hashable
+      
+        # Allows clients to store small amounts of arbitrary data. Annotations must
+        # follow the Kubernetes syntax. The total size of all keys and values combined
+        # is limited to 256k. Key can have 2 segments: prefix (optional) and name (
+        # required), separated by a slash (/). Prefix must be a DNS subdomain. Name must
+        # be 63 characters or less, begin and end with alphanumerics, with dashes (-),
+        # underscores (_), dots (.), and alphanumerics between.
+        # Corresponds to the JSON property `annotations`
+        # @return [Hash<String,String>]
+        attr_accessor :annotations
+      
+        # A user-settable field to provide a human-readable name to be used in user
+        # interfaces.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Fingerprint of the InsightTypeConfig. Provides optimistic locking when
+        # updating.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # A configuration to customize the generation of insights. Eg, customizing the
+        # lookback period considered when generating a insight.
+        # Corresponds to the JSON property `insightTypeGenerationConfig`
+        # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1InsightTypeGenerationConfig]
+        attr_accessor :insight_type_generation_config
+      
+        # Name of insight type config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]
+        # /insightTypes/[INSIGHT_TYPE_ID]/config
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Immutable. The revision ID of the config. A new revision is
+        # committed whenever the config is changed in any way. The format is an 8-
+        # character hexadecimal string.
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
+        # Last time when the config was updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @annotations = args[:annotations] if args.key?(:annotations)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
+          @insight_type_generation_config = args[:insight_type_generation_config] if args.key?(:insight_type_generation_config)
+          @name = args[:name] if args.key?(:name)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # A configuration to customize the generation of insights. Eg, customizing the
+      # lookback period considered when generating a insight.
+      class GoogleCloudRecommenderV1InsightTypeGenerationConfig
+        include Google::Apis::Core::Hashable
+      
+        # Parameters for this InsightTypeGenerationConfig. These configs can be used by
+        # or are applied to all subtypes.
+        # Corresponds to the JSON property `params`
+        # @return [Hash<String,Object>]
+        attr_accessor :params
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @params = args[:params] if args.key?(:params)
+        end
+      end
+      
       # Response to the `ListInsights` method.
       class GoogleCloudRecommenderV1ListInsightsResponse
         include Google::Apis::Core::Hashable
@@ -301,8 +401,8 @@ module Google
         attr_accessor :etag
       
         # State properties to include with this state. Overwrites any existing `
-        # state_metadata`. Keys must match the regex /^a-z0-9`0,62`$/. Values must match
-        # the regex /^[a-zA-Z0-9_./-]`0,255`$/.
+        # state_metadata`. Keys must match the regex `/^a-z0-9`0,62`$/`. Values must
+        # match the regex `/^[a-zA-Z0-9_./-]`0,255`$/`.
         # Corresponds to the JSON property `stateMetadata`
         # @return [Hash<String,String>]
         attr_accessor :state_metadata
@@ -318,6 +418,25 @@ module Google
         end
       end
       
+      # Request for the `MarkRecommendationDismissed` Method.
+      class GoogleCloudRecommenderV1MarkRecommendationDismissedRequest
+        include Google::Apis::Core::Hashable
+      
+        # Fingerprint of the Recommendation. Provides optimistic locking.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @etag = args[:etag] if args.key?(:etag)
+        end
+      end
+      
       # Request for the `MarkRecommendationFailed` Method.
       class GoogleCloudRecommenderV1MarkRecommendationFailedRequest
         include Google::Apis::Core::Hashable
@@ -328,8 +447,8 @@ module Google
         attr_accessor :etag
       
         # State properties to include with this state. Overwrites any existing `
-        # state_metadata`. Keys must match the regex /^a-z0-9`0,62`$/. Values must match
-        # the regex /^[a-zA-Z0-9_./-]`0,255`$/.
+        # state_metadata`. Keys must match the regex `/^a-z0-9`0,62`$/`. Values must
+        # match the regex `/^[a-zA-Z0-9_./-]`0,255`$/`.
         # Corresponds to the JSON property `stateMetadata`
         # @return [Hash<String,String>]
         attr_accessor :state_metadata
@@ -355,8 +474,8 @@ module Google
         attr_accessor :etag
       
         # State properties to include with this state. Overwrites any existing `
-        # state_metadata`. Keys must match the regex /^a-z0-9`0,62`$/. Values must match
-        # the regex /^[a-zA-Z0-9_./-]`0,255`$/.
+        # state_metadata`. Keys must match the regex `/^a-z0-9`0,62`$/`. Values must
+        # match the regex `/^[a-zA-Z0-9_./-]`0,255`$/`.
         # Corresponds to the JSON property `stateMetadata`
         # @return [Hash<String,String>]
         attr_accessor :state_metadata
@@ -397,12 +516,12 @@ module Google
         # Set of filters to apply if `path` refers to array elements or nested array
         # elements in order to narrow down to a single unique element that is being
         # tested/modified. This is intended to be an exact match per filter. To perform
-        # advanced matching, use path_value_matchers. * Example: ` "/versions/*/name" : "
-        # it-123" "/versions/*/targetSize/percent": 20 ` * Example: ` "/bindings/*/role":
-        # "roles/owner" "/bindings/*/condition" : null ` * Example: ` "/bindings/*/role"
-        # : "roles/owner" "/bindings/*/members/*" : ["x@example.com", "y@example.com"] `
-        # When both path_filters and path_value_matchers are set, an implicit AND must
-        # be performed.
+        # advanced matching, use path_value_matchers. * Example: ``` ` "/versions/*/name"
+        # : "it-123" "/versions/*/targetSize/percent": 20 ` ``` * Example: ``` ` "/
+        # bindings/*/role": "roles/owner" "/bindings/*/condition" : null ` ``` * Example:
+        # ``` ` "/bindings/*/role": "roles/owner" "/bindings/*/members/*" : ["x@example.
+        # com", "y@example.com"] ` ``` When both path_filters and path_value_matchers
+        # are set, an implicit AND must be performed.
         # Corresponds to the JSON property `pathFilters`
         # @return [Hash<String,Object>]
         attr_accessor :path_filters
@@ -563,6 +682,14 @@ module Google
         # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1RecommendationStateInfo]
         attr_accessor :state_info
       
+        # Corresponds to a mutually exclusive group ID within a recommender. A non-empty
+        # ID indicates that the recommendation belongs to a mutually exclusive group.
+        # This means that only one recommendation within the group is suggested to be
+        # applied.
+        # Corresponds to the JSON property `xorGroupId`
+        # @return [String]
+        attr_accessor :xor_group_id
+      
         def initialize(**args)
            update!(**args)
         end
@@ -580,6 +707,7 @@ module Google
           @priority = args[:priority] if args.key?(:priority)
           @recommender_subtype = args[:recommender_subtype] if args.key?(:recommender_subtype)
           @state_info = args[:state_info] if args.key?(:state_info)
+          @xor_group_id = args[:xor_group_id] if args.key?(:xor_group_id)
         end
       end
       
@@ -655,6 +783,118 @@ module Google
         end
       end
       
+      # Configuration for a Recommender.
+      class GoogleCloudRecommenderV1RecommenderConfig
+        include Google::Apis::Core::Hashable
+      
+        # Allows clients to store small amounts of arbitrary data. Annotations must
+        # follow the Kubernetes syntax. The total size of all keys and values combined
+        # is limited to 256k. Key can have 2 segments: prefix (optional) and name (
+        # required), separated by a slash (/). Prefix must be a DNS subdomain. Name must
+        # be 63 characters or less, begin and end with alphanumerics, with dashes (-),
+        # underscores (_), dots (.), and alphanumerics between.
+        # Corresponds to the JSON property `annotations`
+        # @return [Hash<String,String>]
+        attr_accessor :annotations
+      
+        # A user-settable field to provide a human-readable name to be used in user
+        # interfaces.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Fingerprint of the RecommenderConfig. Provides optimistic locking when
+        # updating.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Name of recommender config. Eg, projects/[PROJECT_NUMBER]/locations/[LOCATION]/
+        # recommenders/[RECOMMENDER_ID]/config
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # A Configuration to customize the generation of recommendations. Eg,
+        # customizing the lookback period considered when generating a recommendation.
+        # Corresponds to the JSON property `recommenderGenerationConfig`
+        # @return [Google::Apis::RecommenderV1::GoogleCloudRecommenderV1RecommenderGenerationConfig]
+        attr_accessor :recommender_generation_config
+      
+        # Output only. Immutable. The revision ID of the config. A new revision is
+        # committed whenever the config is changed in any way. The format is an 8-
+        # character hexadecimal string.
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
+        # Last time when the config was updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @annotations = args[:annotations] if args.key?(:annotations)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @etag = args[:etag] if args.key?(:etag)
+          @name = args[:name] if args.key?(:name)
+          @recommender_generation_config = args[:recommender_generation_config] if args.key?(:recommender_generation_config)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # A Configuration to customize the generation of recommendations. Eg,
+      # customizing the lookback period considered when generating a recommendation.
+      class GoogleCloudRecommenderV1RecommenderGenerationConfig
+        include Google::Apis::Core::Hashable
+      
+        # Parameters for this RecommenderGenerationConfig. These configs can be used by
+        # or are applied to all subtypes.
+        # Corresponds to the JSON property `params`
+        # @return [Hash<String,Object>]
+        attr_accessor :params
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @params = args[:params] if args.key?(:params)
+        end
+      end
+      
+      # Contains information on the impact of a reliability recommendation.
+      class GoogleCloudRecommenderV1ReliabilityProjection
+        include Google::Apis::Core::Hashable
+      
+        # Per-recommender projection.
+        # Corresponds to the JSON property `details`
+        # @return [Hash<String,Object>]
+        attr_accessor :details
+      
+        # Reliability risks mitigated by this recommendation.
+        # Corresponds to the JSON property `risks`
+        # @return [Array<String>]
+        attr_accessor :risks
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @details = args[:details] if args.key?(:details)
+          @risks = args[:risks] if args.key?(:risks)
+        end
+      end
+      
       # Contains various ways of describing the impact on Security.
       class GoogleCloudRecommenderV1SecurityProjection
         include Google::Apis::Core::Hashable
@@ -671,6 +911,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @details = args[:details] if args.key?(:details)
+        end
+      end
+      
+      # Contains metadata about how much sustainability a recommendation can save or
+      # incur.
+      class GoogleCloudRecommenderV1SustainabilityProjection
+        include Google::Apis::Core::Hashable
+      
+        # Duration for which this sustainability applies.
+        # Corresponds to the JSON property `duration`
+        # @return [String]
+        attr_accessor :duration
+      
+        # Carbon Footprint generated in kg of CO2 equivalent. Chose kg_c_o2e so that the
+        # name renders correctly in camelCase (kgCO2e).
+        # Corresponds to the JSON property `kgCO2e`
+        # @return [Float]
+        attr_accessor :kg_co2e
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @duration = args[:duration] if args.key?(:duration)
+          @kg_co2e = args[:kg_co2e] if args.key?(:kg_co2e)
         end
       end
       

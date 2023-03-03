@@ -51,8 +51,9 @@ module Google
           @batch_path = 'batch'
         end
         
-        # Checks whether an item is accessible by specified principal. **Note:** This
-        # API requires an admin account to execute.
+        # Checks whether an item is accessible by specified principal. Principal must be
+        # a user; groups and domain values aren't supported. **Note:** This API requires
+        # an admin account to execute.
         # @param [String] name
         #   Item name, format: datasources/`source_id`/items/`item_id`
         # @param [Google::Apis::CloudsearchV1::Principal] principal_object
@@ -259,7 +260,7 @@ module Google
         # Deletes the schema of a data source. **Note:** This API requires an admin or
         # service account to execute.
         # @param [String] name
-        #   Name of the data source to delete Schema. Format: datasources/`source_id`
+        #   The name of the data source to delete Schema. Format: datasources/`source_id`
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -294,7 +295,7 @@ module Google
         # Gets the schema of a data source. **Note:** This API requires an admin or
         # service account to execute.
         # @param [String] name
-        #   Name of the data source to get Schema. Format: datasources/`source_id`
+        #   The name of the data source to get Schema. Format: datasources/`source_id`
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -331,7 +332,7 @@ module Google
         # the entire schema. **Note:** This API requires an admin or service account to
         # execute.
         # @param [String] name
-        #   Name of the data source to update Schema. Format: datasources/`source_id`
+        #   The name of the data source to update Schema. Format: datasources/`source_id`
         # @param [Google::Apis::CloudsearchV1::UpdateSchemaRequest] update_schema_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -366,11 +367,11 @@ module Google
         # admin or service account to execute. The service account used is the one
         # whitelisted in the corresponding data source.
         # @param [String] name
-        #   Required. Name of the item to delete. Format: datasources/`source_id`/items/`
-        #   item_id`
+        #   Required. The name of the item to delete. Format: datasources/`source_id`/
+        #   items/`item_id`
         # @param [String] connector_name
-        #   Name of connector making this call. Format: datasources/`source_id`/connectors/
-        #   `ID`
+        #   The name of connector making this call. Format: datasources/`source_id`/
+        #   connectors/`ID`
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -382,7 +383,10 @@ module Google
         #   compares the Item version in the index to the version of the queued Item using
         #   lexical ordering. Cloud Search Indexing won't delete any queued item with a
         #   version value that is less than or equal to the version of the currently
-        #   indexed item. The maximum length for this field is 1024 bytes.
+        #   indexed item. The maximum length for this field is 1024 bytes. For information
+        #   on how item version affects the deletion process, refer to [Handle revisions
+        #   after manual deletes](https://developers.google.com/cloud-search/docs/guides/
+        #   operations).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -418,7 +422,7 @@ module Google
         # This API requires an admin or service account to execute. The service account
         # used is the one whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the Data Source to delete items in a queue. Format: datasources/`
+        #   The name of the Data Source to delete items in a queue. Format: datasources/`
         #   source_id`
         # @param [Google::Apis::CloudsearchV1::DeleteQueueItemsRequest] delete_queue_items_request_object
         # @param [String] fields
@@ -454,10 +458,11 @@ module Google
         # to execute. The service account used is the one whitelisted in the
         # corresponding data source.
         # @param [String] name
-        #   Name of the item to get info. Format: datasources/`source_id`/items/`item_id`
+        #   The name of the item to get info. Format: datasources/`source_id`/items/`
+        #   item_id`
         # @param [String] connector_name
-        #   Name of connector making this call. Format: datasources/`source_id`/connectors/
-        #   `ID`
+        #   The name of connector making this call. Format: datasources/`source_id`/
+        #   connectors/`ID`
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -496,8 +501,8 @@ module Google
         # an admin or service account to execute. The service account used is the one
         # whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the Item. Format: datasources/`source_id`/items/`item_id` This is a
-        #   required field. The maximum length is 1536 characters.
+        #   The name of the Item. Format: datasources/`source_id`/items/`item_id` This is
+        #   a required field. The maximum length is 1536 characters.
         # @param [Google::Apis::CloudsearchV1::IndexItemRequest] index_item_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -532,7 +537,7 @@ module Google
         # account to execute. The service account used is the one whitelisted in the
         # corresponding data source.
         # @param [String] name
-        #   Name of the Data Source to list Items. Format: datasources/`source_id`
+        #   The name of the Data Source to list Items. Format: datasources/`source_id`
         # @param [Boolean] brief
         #   When set to true, the indexing system only populates the following fields:
         #   name, version, queue. metadata.hash, metadata.title, metadata.
@@ -542,8 +547,8 @@ module Google
         #   itemStatus.repositoryError.type, If this value is false, then all the fields
         #   are populated in Item.
         # @param [String] connector_name
-        #   Name of connector making this call. Format: datasources/`source_id`/connectors/
-        #   `ID`
+        #   The name of connector making this call. Format: datasources/`source_id`/
+        #   connectors/`ID`
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -595,7 +600,7 @@ module Google
         # admin or service account to execute. The service account used is the one
         # whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the Data Source to poll items. Format: datasources/`source_id`
+        #   The name of the Data Source to poll items. Format: datasources/`source_id`
         # @param [Google::Apis::CloudsearchV1::PollItemsRequest] poll_items_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -630,7 +635,7 @@ module Google
         # an admin or service account to execute. The service account used is the one
         # whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the item to push into the indexing queue. Format: datasources/`
+        #   The name of the item to push into the indexing queue. Format: datasources/`
         #   source_id`/items/`ID` This is a required field. The maximum length is 1536
         #   characters.
         # @param [Google::Apis::CloudsearchV1::PushItemRequest] push_item_request_object
@@ -668,7 +673,8 @@ module Google
         # restarted. This API requires an admin or service account to execute. The
         # service account used is the one whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the Data Source to unreserve all items. Format: datasources/`source_id`
+        #   The name of the Data Source to unreserve all items. Format: datasources/`
+        #   source_id`
         # @param [Google::Apis::CloudsearchV1::UnreserveItemsRequest] unreserve_items_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -704,8 +710,8 @@ module Google
         # API requires an admin or service account to execute. The service account used
         # is the one whitelisted in the corresponding data source.
         # @param [String] name
-        #   Name of the Item to start a resumable upload. Format: datasources/`source_id`/
-        #   items/`item_id`. The maximum length is 1536 bytes.
+        #   The name of the Item to start a resumable upload. Format: datasources/`
+        #   source_id`/items/`item_id`. The maximum length is 1536 bytes.
         # @param [Google::Apis::CloudsearchV1::StartUploadItemRequest] start_upload_item_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -955,9 +961,9 @@ module Google
         #   translations. Set this field using the language set in browser or for the page.
         #   In the event that the user's language preference is known, set this field to
         #   the known user language. When specified, the documents in search results are
-        #   biased towards the specified language. The suggest API does not use this
-        #   parameter. Instead, suggest autocompletes only based on characters in the
-        #   query.
+        #   biased towards the specified language. From Suggest API perspective, for 3p
+        #   suggest this is used as a hint while making predictions to add language
+        #   boosting.
         # @param [String] request_options_search_application_id
         #   The ID generated when you create a search application using the [admin console]
         #   (https://support.google.com/a/answer/9043922).
@@ -1095,7 +1101,7 @@ module Google
         
         # Deletes a datasource. **Note:** This API requires an admin account to execute.
         # @param [String] name
-        #   Name of the datasource. Format: datasources/`source_id`.
+        #   The name of the datasource. Format: datasources/`source_id`.
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -1129,7 +1135,7 @@ module Google
         
         # Gets a datasource. **Note:** This API requires an admin account to execute.
         # @param [String] name
-        #   Name of the datasource resource. Format: datasources/`source_id`.
+        #   The name of the datasource resource. Format: datasources/`source_id`.
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -1166,8 +1172,8 @@ module Google
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
         # @param [Fixnum] page_size
-        #   Maximum number of datasources to fetch in a request. The max value is 100. The
-        #   default value is 10
+        #   Maximum number of datasources to fetch in a request. The max value is 1000.
+        #   The default value is 1000.
         # @param [String] page_token
         #   Starting index of the results.
         # @param [String] fields
@@ -1201,8 +1207,56 @@ module Google
         
         # Updates a datasource. **Note:** This API requires an admin account to execute.
         # @param [String] name
-        #   Name of the datasource resource. Format: datasources/`source_id`. The name is
-        #   ignored when creating a datasource.
+        #   The name of the datasource resource. Format: datasources/`source_id`. The name
+        #   is ignored when creating a datasource.
+        # @param [Google::Apis::CloudsearchV1::DataSource] data_source_object
+        # @param [Boolean] debug_options_enable_debugging
+        #   If you are asked by Google to help with debugging, set this field. Otherwise,
+        #   ignore this field.
+        # @param [String] update_mask
+        #   Only applies to [`settings.datasources.patch`](https://developers.google.com/
+        #   cloud-search/docs/reference/rest/v1/settings.datasources/patch). Update mask
+        #   to control which fields to update. Example field paths: `name`, `displayName`.
+        #   * If `update_mask` is non-empty, then only the fields specified in the `
+        #   update_mask` are updated. * If you specify a field in the `update_mask`, but
+        #   don't specify its value in the source, that field is cleared. * If the `
+        #   update_mask` is not present or empty or has the value `*`, then all fields are
+        #   updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudsearchV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudsearchV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_setting_datasource(name, data_source_object = nil, debug_options_enable_debugging: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/settings/{+name}', options)
+          command.request_representation = Google::Apis::CloudsearchV1::DataSource::Representation
+          command.request_object = data_source_object
+          command.response_representation = Google::Apis::CloudsearchV1::Operation::Representation
+          command.response_class = Google::Apis::CloudsearchV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['debugOptions.enableDebugging'] = debug_options_enable_debugging unless debug_options_enable_debugging.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a datasource. **Note:** This API requires an admin account to execute.
+        # @param [String] name
+        #   The name of the datasource resource. Format: datasources/`source_id`. The name
+        #   is ignored when creating a datasource.
         # @param [Google::Apis::CloudsearchV1::UpdateDataSourceRequest] update_data_source_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1303,7 +1357,8 @@ module Google
         # Gets the specified search application. **Note:** This API requires an admin
         # account to execute.
         # @param [String] name
-        #   Name of the search application. Format: searchapplications/`application_id`.
+        #   The name of the search application. Format: searchapplications/`application_id`
+        #   .
         # @param [Boolean] debug_options_enable_debugging
         #   If you are asked by Google to help with debugging, set this field. Otherwise,
         #   ignore this field.
@@ -1374,6 +1429,51 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a search application. **Note:** This API requires an admin account to
+        # execute.
+        # @param [String] name
+        #   The name of the Search Application. Format: searchapplications/`application_id`
+        #   .
+        # @param [Google::Apis::CloudsearchV1::SearchApplication] search_application_object
+        # @param [String] update_mask
+        #   Only applies to [`settings.searchapplications.patch`](https://developers.
+        #   google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/
+        #   patch). Update mask to control which fields to update. Example field paths: `
+        #   search_application.name`, `search_application.displayName`. * If `update_mask`
+        #   is non-empty, then only the fields specified in the `update_mask` are updated.
+        #   * If you specify a field in the `update_mask`, but don't specify its value in
+        #   the `search_application`, then that field is cleared. * If the `update_mask`
+        #   is not present or empty or has the value `*`, then all fields are updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudsearchV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudsearchV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_setting_searchapplication(name, search_application_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/settings/{+name}', options)
+          command.request_representation = Google::Apis::CloudsearchV1::SearchApplication::Representation
+          command.request_object = search_application_object
+          command.response_representation = Google::Apis::CloudsearchV1::Operation::Representation
+          command.response_class = Google::Apis::CloudsearchV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Resets a search application to default settings. This will return an empty
         # response. **Note:** This API requires an admin account to execute.
         # @param [String] name
@@ -1412,8 +1512,18 @@ module Google
         # Updates a search application. **Note:** This API requires an admin account to
         # execute.
         # @param [String] name
-        #   Name of the Search Application. Format: searchapplications/`application_id`.
+        #   The name of the Search Application. Format: searchapplications/`application_id`
+        #   .
         # @param [Google::Apis::CloudsearchV1::SearchApplication] search_application_object
+        # @param [String] update_mask
+        #   Only applies to [`settings.searchapplications.patch`](https://developers.
+        #   google.com/cloud-search/docs/reference/rest/v1/settings.searchapplications/
+        #   patch). Update mask to control which fields to update. Example field paths: `
+        #   search_application.name`, `search_application.displayName`. * If `update_mask`
+        #   is non-empty, then only the fields specified in the `update_mask` are updated.
+        #   * If you specify a field in the `update_mask`, but don't specify its value in
+        #   the `search_application`, then that field is cleared. * If the `update_mask`
+        #   is not present or empty or has the value `*`, then all fields are updated.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1431,13 +1541,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def update_setting_searchapplication(name, search_application_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+        def update_setting_searchapplication(name, search_application_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:put, 'v1/settings/{+name}', options)
           command.request_representation = Google::Apis::CloudsearchV1::SearchApplication::Representation
           command.request_object = search_application_object
           command.response_representation = Google::Apis::CloudsearchV1::Operation::Representation
           command.response_class = Google::Apis::CloudsearchV1::Operation
           command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1532,6 +1643,52 @@ module Google
           command.query['toDate.day'] = to_date_day unless to_date_day.nil?
           command.query['toDate.month'] = to_date_month unless to_date_month.nil?
           command.query['toDate.year'] = to_date_year unless to_date_year.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get search application stats for customer. **Note:** This API requires a
+        # standard end user account to execute.
+        # @param [Fixnum] end_date_day
+        #   Day of month. Must be from 1 to 31 and valid for the year and month.
+        # @param [Fixnum] end_date_month
+        #   Month of date. Must be from 1 to 12.
+        # @param [Fixnum] end_date_year
+        #   Year of date. Must be from 1 to 9999.
+        # @param [Fixnum] start_date_day
+        #   Day of month. Must be from 1 to 31 and valid for the year and month.
+        # @param [Fixnum] start_date_month
+        #   Month of date. Must be from 1 to 12.
+        # @param [Fixnum] start_date_year
+        #   Year of date. Must be from 1 to 9999.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudsearchV1::GetCustomerSearchApplicationStatsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudsearchV1::GetCustomerSearchApplicationStatsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_stat_searchapplication(end_date_day: nil, end_date_month: nil, end_date_year: nil, start_date_day: nil, start_date_month: nil, start_date_year: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/stats/searchapplication', options)
+          command.response_representation = Google::Apis::CloudsearchV1::GetCustomerSearchApplicationStatsResponse::Representation
+          command.response_class = Google::Apis::CloudsearchV1::GetCustomerSearchApplicationStatsResponse
+          command.query['endDate.day'] = end_date_day unless end_date_day.nil?
+          command.query['endDate.month'] = end_date_month unless end_date_month.nil?
+          command.query['endDate.year'] = end_date_year unless end_date_year.nil?
+          command.query['startDate.day'] = start_date_day unless start_date_day.nil?
+          command.query['startDate.month'] = start_date_month unless start_date_month.nil?
+          command.query['startDate.year'] = start_date_year unless start_date_year.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1826,6 +1983,37 @@ module Google
           command.query['toDate.day'] = to_date_day unless to_date_day.nil?
           command.query['toDate.month'] = to_date_month unless to_date_month.nil?
           command.query['toDate.year'] = to_date_year unless to_date_year.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Enables `third party` support in Google Cloud Search. **Note:** This API
+        # requires an admin account to execute.
+        # @param [Google::Apis::CloudsearchV1::InitializeCustomerRequest] initialize_customer_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudsearchV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudsearchV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def initialize_customer(initialize_customer_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1:initializeCustomer', options)
+          command.request_representation = Google::Apis::CloudsearchV1::InitializeCustomerRequest::Representation
+          command.request_object = initialize_customer_request_object
+          command.response_representation = Google::Apis::CloudsearchV1::Operation::Representation
+          command.response_class = Google::Apis::CloudsearchV1::Operation
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

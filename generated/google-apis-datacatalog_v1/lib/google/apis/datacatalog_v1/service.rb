@@ -275,8 +275,9 @@ module Google
         # templates. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
         # groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -398,8 +399,9 @@ module Google
         # set policies on tag templates. - `datacatalog.entryGroups.setIamPolicy` to set
         # policies on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -437,8 +439,9 @@ module Google
         # external Google Cloud Platform resources ingested into Data Catalog. No Google
         # IAM permissions are required to call this method.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -589,8 +592,9 @@ module Google
         # templates. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
         # groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -616,6 +620,47 @@ module Google
           command.response_representation = Google::Apis::DatacatalogV1::Policy::Representation
           command.response_class = Google::Apis::DatacatalogV1::Policy
           command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Imports entries from a source, such as data previously dumped into a Cloud
+        # Storage bucket, into Data Catalog. Import of entries is a sync operation that
+        # reconciles the state of the third-party system with the Data Catalog. `
+        # ImportEntries` accepts source data snapshots of a third-party system. Snapshot
+        # should be delivered as a .wire or base65-encoded .txt file containing a
+        # sequence of Protocol Buffer messages of DumpItem type. `ImportEntries` returns
+        # a long-running operation resource that can be queried with Operations.
+        # GetOperation to return ImportEntriesMetadata and an ImportEntriesResponse
+        # message.
+        # @param [String] parent
+        #   Required. Target entry group for ingested entries.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ImportEntriesRequest] google_cloud_datacatalog_v1_import_entries_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_project_location_entry_group_entry(parent, google_cloud_datacatalog_v1_import_entries_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/entries:import', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ImportEntriesRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_import_entries_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::Operation::Representation
+          command.response_class = Google::Apis::DatacatalogV1::Operation
+          command.params['parent'] = parent unless parent.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -661,6 +706,76 @@ module Google
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Modifies contacts, part of the business context of an Entry. To call this
+        # method, you must have the `datacatalog.entries.updateContacts` IAM permission
+        # on the corresponding project.
+        # @param [String] name
+        #   Required. The full resource name of the entry.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ModifyEntryContactsRequest] google_cloud_datacatalog_v1_modify_entry_contacts_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1Contacts] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1Contacts]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def modify_project_location_entry_group_entry_entry_contacts(name, google_cloud_datacatalog_v1_modify_entry_contacts_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:modifyEntryContacts', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ModifyEntryContactsRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_modify_entry_contacts_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1Contacts::Representation
+          command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1Contacts
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Modifies entry overview, part of the business context of an Entry. To call
+        # this method, you must have the `datacatalog.entries.updateOverview` IAM
+        # permission on the corresponding project.
+        # @param [String] name
+        #   Required. The full resource name of the entry.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ModifyEntryOverviewRequest] google_cloud_datacatalog_v1_modify_entry_overview_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1EntryOverview] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1EntryOverview]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def modify_project_location_entry_group_entry_entry_overview(name, google_cloud_datacatalog_v1_modify_entry_overview_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:modifyEntryOverview', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ModifyEntryOverviewRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_modify_entry_overview_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1EntryOverview::Representation
+          command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1EntryOverview
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -715,6 +830,40 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Marks an Entry as starred by the current user. Starring information is private
+        # to each user.
+        # @param [String] name
+        #   Required. The name of the entry to mark as starred.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryRequest] google_cloud_datacatalog_v1_star_entry_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def star_project_location_entry_group_entry(name, google_cloud_datacatalog_v1_star_entry_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:star', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_star_entry_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryResponse::Representation
+          command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1StarEntryResponse
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets your permissions on a resource. Returns an empty set of permissions if
         # the resource doesn't exist. Supported resources are: - Tag templates - Entry
         # groups Note: This method gets policies only within Data Catalog and can't be
@@ -722,8 +871,9 @@ module Google
         # external Google Cloud Platform resources ingested into Data Catalog. No Google
         # IAM permissions are required to call this method.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -754,14 +904,48 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a tag and assigns it to: * An Entry if the method name is ``projects.
-        # locations.entryGroups.entries.tags.create``. * Or EntryGroupif the method name
-        # is ``projects.locations.entryGroups.tags.create``. Note: The project
-        # identified by the `parent` parameter for the [tag] (https://cloud.google.com/
-        # data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.
-        # tags/create#path-parameters) and the [tag template] (https://cloud.google.com/
-        # data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#
-        # path-parameters) used to create the tag must be in the same organization.
+        # Marks an Entry as NOT starred by the current user. Starring information is
+        # private to each user.
+        # @param [String] name
+        #   Required. The name of the entry to mark as **not** starred.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryRequest] google_cloud_datacatalog_v1_unstar_entry_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def unstar_project_location_entry_group_entry(name, google_cloud_datacatalog_v1_unstar_entry_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:unstar', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_unstar_entry_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryResponse::Representation
+          command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1UnstarEntryResponse
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a tag and assigns it to: * An Entry if the method name is `projects.
+        # locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name
+        # is `projects.locations.entryGroups.tags.create`. Note: The project identified
+        # by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/
+        # docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-
+        # parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/
+        # reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used
+        # to create the tag must be in the same organization.
         # @param [String] parent
         #   Required. The name of the resource to attach this tag to. Tags can be attached
         #   to entries or entry groups. An entry can have up to 1000 attached tags. Note:
@@ -827,7 +1011,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists tags assigned to an Entry.
+        # Lists tags assigned to an Entry. The columns in the response are lowercased.
         # @param [String] parent
         #   Required. The name of the Data Catalog resource to list the tags of. The
         #   resource can be an Entry or an EntryGroup (without `/entries/`entries`` at the
@@ -907,14 +1091,52 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a tag and assigns it to: * An Entry if the method name is ``projects.
-        # locations.entryGroups.entries.tags.create``. * Or EntryGroupif the method name
-        # is ``projects.locations.entryGroups.tags.create``. Note: The project
-        # identified by the `parent` parameter for the [tag] (https://cloud.google.com/
-        # data-catalog/docs/reference/rest/v1/projects.locations.entryGroups.entries.
-        # tags/create#path-parameters) and the [tag template] (https://cloud.google.com/
-        # data-catalog/docs/reference/rest/v1/projects.locations.tagTemplates/create#
-        # path-parameters) used to create the tag must be in the same organization.
+        # `ReconcileTags` creates or updates a list of tags on the entry. If the
+        # ReconcileTagsRequest.force_delete_missing parameter is set, the operation
+        # deletes tags not included in the input tag list. `ReconcileTags` returns a
+        # long-running operation resource that can be queried with Operations.
+        # GetOperation to return ReconcileTagsMetadata and a ReconcileTagsResponse
+        # message.
+        # @param [String] parent
+        #   Required. Name of Entry to be tagged.
+        # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ReconcileTagsRequest] google_cloud_datacatalog_v1_reconcile_tags_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def reconcile_project_location_entry_group_entry_tag(parent, google_cloud_datacatalog_v1_reconcile_tags_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/tags:reconcile', options)
+          command.request_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ReconcileTagsRequest::Representation
+          command.request_object = google_cloud_datacatalog_v1_reconcile_tags_request_object
+          command.response_representation = Google::Apis::DatacatalogV1::Operation::Representation
+          command.response_class = Google::Apis::DatacatalogV1::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a tag and assigns it to: * An Entry if the method name is `projects.
+        # locations.entryGroups.entries.tags.create`. * Or EntryGroupif the method name
+        # is `projects.locations.entryGroups.tags.create`. Note: The project identified
+        # by the `parent` parameter for the [tag] (https://cloud.google.com/data-catalog/
+        # docs/reference/rest/v1/projects.locations.entryGroups.entries.tags/create#path-
+        # parameters) and the [tag template] (https://cloud.google.com/data-catalog/docs/
+        # reference/rest/v1/projects.locations.tagTemplates/create#path-parameters) used
+        # to create the tag must be in the same organization.
         # @param [String] parent
         #   Required. The name of the resource to attach this tag to. Tags can be attached
         #   to entries or entry groups. An entry can have up to 1000 attached tags. Note:
@@ -980,7 +1202,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists tags assigned to an Entry.
+        # Lists tags assigned to an Entry. The columns in the response are lowercased.
         # @param [String] parent
         #   Required. The name of the Data Catalog resource to list the tags of. The
         #   resource can be an Entry or an EntryGroup (without `/entries/`entries`` at the
@@ -1055,6 +1277,153 @@ module Google
           command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1Tag
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Starts asynchronous cancellation on a long-running operation. The server makes
+        # a best effort to cancel the operation, but success is not guaranteed. If the
+        # server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+        # Clients can use Operations.GetOperation or other methods to check whether the
+        # cancellation succeeded or whether the operation completed despite cancellation.
+        # On successful cancellation, the operation is not deleted; instead, it becomes
+        # an operation with an Operation.error value with a google.rpc.Status.code of 1,
+        # corresponding to `Code.CANCELLED`.
+        # @param [String] name
+        #   The name of the operation resource to be cancelled.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def cancel_project_location_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:cancel', options)
+          command.response_representation = Google::Apis::DatacatalogV1::Empty::Representation
+          command.response_class = Google::Apis::DatacatalogV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a long-running operation. This method indicates that the client is no
+        # longer interested in the operation result. It does not cancel the operation.
+        # If the server doesn't support this method, it returns `google.rpc.Code.
+        # UNIMPLEMENTED`.
+        # @param [String] name
+        #   The name of the operation resource to be deleted.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_location_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::DatacatalogV1::Empty::Representation
+          command.response_class = Google::Apis::DatacatalogV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::DatacatalogV1::Operation::Representation
+          command.response_class = Google::Apis::DatacatalogV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists operations that match the specified filter in the request. If the server
+        # doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name`
+        # binding allows API services to override the binding to use different resource
+        # name schemes, such as `users/*/operations`. To override the binding, API
+        # services can add a binding such as `"/v1/`name=users/*`/operations"` to their
+        # service configuration. For backwards compatibility, the default name includes
+        # the operations collection id, however overriding users must ensure the name
+        # binding is the parent resource, without the operations collection id.
+        # @param [String] name
+        #   The name of the operation's parent resource.
+        # @param [String] filter
+        #   The standard list filter.
+        # @param [Fixnum] page_size
+        #   The standard list page size.
+        # @param [String] page_token
+        #   The standard list page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DatacatalogV1::ListOperationsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DatacatalogV1::ListOperationsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_operations(name, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}/operations', options)
+          command.response_representation = Google::Apis::DatacatalogV1::ListOperationsResponse::Representation
+          command.response_class = Google::Apis::DatacatalogV1::ListOperationsResponse
+          command.params['name'] = name unless name.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1180,8 +1549,9 @@ module Google
         # templates. - `datacatalog.entryGroups.getIamPolicy` to get policies on entry
         # groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1225,9 +1595,11 @@ module Google
         # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1TagTemplate] google_cloud_datacatalog_v1_tag_template_object
         # @param [String] update_mask
         #   Names of fields whose values to overwrite on a tag template. Currently, only `
-        #   display_name` can be overwritten. If this parameter is absent or empty, all
-        #   modifiable fields are overwritten. If such fields are non-required and omitted
-        #   in the request body, their values are emptied.
+        #   display_name` and `is_publicly_readable` can be overwritten. If this parameter
+        #   is absent or empty, all modifiable fields are overwritten. If such fields are
+        #   non-required and omitted in the request body, their values are emptied. Note:
+        #   Updating the `is_publicly_readable` field may require up to 12 hours to take
+        #   effect in search results.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1267,8 +1639,9 @@ module Google
         # set policies on tag templates. - `datacatalog.entryGroups.setIamPolicy` to set
         # policies on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1306,8 +1679,9 @@ module Google
         # external Google Cloud Platform resources ingested into Data Catalog. No Google
         # IAM permissions are required to call this method.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1472,7 +1846,7 @@ module Google
         # Catalog resource project] (https://cloud.google.com/data-catalog/docs/concepts/
         # resource-project).
         # @param [String] name
-        #   Required. The name of the tag template.
+        #   Required. The name of the tag template field.
         # @param [Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1RenameTagTemplateFieldRequest] google_cloud_datacatalog_v1_rename_tag_template_field_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1675,8 +2049,9 @@ module Google
         
         # Gets the IAM policy for a policy tag or a taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1748,6 +2123,9 @@ module Google
         # permission to view.
         # @param [String] parent
         #   Required. Resource name of the project to list the taxonomies of.
+        # @param [String] filter
+        #   Supported field for filter is 'service' and value is 'dataplex'. Eg: service=
+        #   dataplex.
         # @param [Fixnum] page_size
         #   The maximum number of items to return. Must be a value between 1 and 1000
         #   inclusively. If not set, defaults to 50.
@@ -1771,11 +2149,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_taxonomies(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_taxonomies(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+parent}/taxonomies', options)
           command.response_representation = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ListTaxonomiesResponse::Representation
           command.response_class = Google::Apis::DatacatalogV1::GoogleCloudDatacatalogV1ListTaxonomiesResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -1864,8 +2243,9 @@ module Google
         
         # Sets the IAM policy for a policy tag or a taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1898,8 +2278,9 @@ module Google
         
         # Returns your permissions on a specified policy tag or taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2029,8 +2410,9 @@ module Google
         
         # Gets the IAM policy for a policy tag or a taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2142,8 +2524,9 @@ module Google
         
         # Sets the IAM policy for a policy tag or a taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2176,8 +2559,9 @@ module Google
         
         # Returns your permissions on a specified policy tag or taxonomy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.

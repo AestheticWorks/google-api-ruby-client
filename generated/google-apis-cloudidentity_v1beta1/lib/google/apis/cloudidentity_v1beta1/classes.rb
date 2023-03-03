@@ -22,6 +22,40 @@ module Google
   module Apis
     module CloudidentityV1beta1
       
+      # LRO response metadata for InboundSamlSsoProfilesService.AddIdpCredential.
+      class AddIdpCredentialOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # The request for creating an IdpCredential with its associated payload. An
+      # InboundSamlSsoProfile can own up to 2 credentials.
+      class AddIdpCredentialRequest
+        include Google::Apis::Core::Hashable
+      
+        # PEM encoded x509 certificate containing the public key for verifying IdP
+        # signatures.
+        # Corresponds to the JSON property `pemData`
+        # @return [String]
+        attr_accessor :pem_data
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @pem_data = args[:pem_data] if args.key?(:pem_data)
+        end
+      end
+      
       # Resource representing the Android specific attributes of a Device.
       class AndroidAttributes
         include Google::Apis::Core::Hashable
@@ -70,12 +104,22 @@ module Google
       class ApproveDeviceUserRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
         end
       end
       
@@ -103,12 +147,22 @@ module Google
       class BlockDeviceUserRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
         end
       end
       
@@ -149,12 +203,22 @@ module Google
       class CancelWipeDeviceRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
         end
       end
       
@@ -183,12 +247,22 @@ module Google
       class CancelWipeDeviceUserRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
         end
       end
       
@@ -209,6 +283,105 @@ module Google
         # Update properties of this object
         def update!(**args)
           @device_user = args[:device_user] if args.key?(:device_user)
+        end
+      end
+      
+      # Stores information about a certificate.
+      class CertificateAttributes
+        include Google::Apis::Core::Hashable
+      
+        # CertificateTemplate (v3 Extension in X.509).
+        # Corresponds to the JSON property `certificateTemplate`
+        # @return [Google::Apis::CloudidentityV1beta1::CertificateTemplate]
+        attr_accessor :certificate_template
+      
+        # The encoded certificate fingerprint.
+        # Corresponds to the JSON property `fingerprint`
+        # @return [String]
+        attr_accessor :fingerprint
+      
+        # The name of the issuer of this certificate.
+        # Corresponds to the JSON property `issuer`
+        # @return [String]
+        attr_accessor :issuer
+      
+        # Serial number of the certificate, Example: "123456789".
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        # The subject name of this certificate.
+        # Corresponds to the JSON property `subject`
+        # @return [String]
+        attr_accessor :subject
+      
+        # The certificate thumbprint.
+        # Corresponds to the JSON property `thumbprint`
+        # @return [String]
+        attr_accessor :thumbprint
+      
+        # Validation state of this certificate.
+        # Corresponds to the JSON property `validationState`
+        # @return [String]
+        attr_accessor :validation_state
+      
+        # Certificate not valid at or after this timestamp.
+        # Corresponds to the JSON property `validityExpirationTime`
+        # @return [String]
+        attr_accessor :validity_expiration_time
+      
+        # Certificate not valid before this timestamp.
+        # Corresponds to the JSON property `validityStartTime`
+        # @return [String]
+        attr_accessor :validity_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @certificate_template = args[:certificate_template] if args.key?(:certificate_template)
+          @fingerprint = args[:fingerprint] if args.key?(:fingerprint)
+          @issuer = args[:issuer] if args.key?(:issuer)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+          @subject = args[:subject] if args.key?(:subject)
+          @thumbprint = args[:thumbprint] if args.key?(:thumbprint)
+          @validation_state = args[:validation_state] if args.key?(:validation_state)
+          @validity_expiration_time = args[:validity_expiration_time] if args.key?(:validity_expiration_time)
+          @validity_start_time = args[:validity_start_time] if args.key?(:validity_start_time)
+        end
+      end
+      
+      # CertificateTemplate (v3 Extension in X.509).
+      class CertificateTemplate
+        include Google::Apis::Core::Hashable
+      
+        # The template id of the template. Example: "1.3.6.1.4.1.311.21.8.15608621.
+        # 11768144.5720724.16068415.6889630.81.2472537.7784047".
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # The Major version of the template. Example: 100.
+        # Corresponds to the JSON property `majorVersion`
+        # @return [Fixnum]
+        attr_accessor :major_version
+      
+        # The minor version of the template. Example: 12.
+        # Corresponds to the JSON property `minorVersion`
+        # @return [Fixnum]
+        attr_accessor :minor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+          @major_version = args[:major_version] if args.key?(:major_version)
+          @minor_version = args[:minor_version] if args.key?(:minor_version)
         end
       end
       
@@ -332,6 +505,15 @@ module Google
       class CreateDeviceRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         # A Device within the Cloud Identity Devices API. Represents a Device known to
         # Google Cloud, independent of the device ownership, type, and whether it is
         # assigned or in use by a user.
@@ -345,7 +527,36 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
           @device = args[:device] if args.key?(:device)
+        end
+      end
+      
+      # LRO response metadata for InboundSamlSsoProfilesService.
+      # CreateInboundSamlSsoProfile.
+      class CreateInboundSamlSsoProfileOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # LRO response metadata for InboundSsoAssignmentsService.
+      # CreateInboundSsoAssignment.
+      class CreateInboundSsoAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -378,6 +589,47 @@ module Google
           @bool_value = args[:bool_value] if args.key?(:bool_value)
           @number_value = args[:number_value] if args.key?(:number_value)
           @string_value = args[:string_value] if args.key?(:string_value)
+        end
+      end
+      
+      # LRO response metadata for InboundSamlSsoProfilesService.DeleteIdpCredential.
+      class DeleteIdpCredentialOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # LRO response metadata for InboundSamlSsoProfilesService.
+      # DeleteInboundSamlSsoProfile.
+      class DeleteInboundSamlSsoProfileOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # LRO response metadata for InboundSsoAssignmentsService.
+      # DeleteInboundSsoAssignment.
+      class DeleteInboundSsoAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -417,6 +669,11 @@ module Google
         # @return [String]
         attr_accessor :build_number
       
+        # List of the clients the device is reporting to.
+        # Corresponds to the JSON property `clientTypes`
+        # @return [Array<String>]
+        attr_accessor :client_types
+      
         # Output only. Represents whether the Device is compromised.
         # Corresponds to the JSON property `compromisedState`
         # @return [String]
@@ -427,6 +684,11 @@ module Google
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
+      
+        # Unique identifier for the device.
+        # Corresponds to the JSON property `deviceId`
+        # @return [String]
+        attr_accessor :device_id
       
         # Output only. Type of device.
         # Corresponds to the JSON property `deviceType`
@@ -449,6 +711,17 @@ module Google
         # Corresponds to the JSON property `encryptionState`
         # @return [String]
         attr_accessor :encryption_state
+      
+        # Resource representing the Endpoint Verification-specific attributes of a
+        # Device. https://cloud.google.com/endpoint-verification/docs/overview
+        # Corresponds to the JSON property `endpointVerificationSpecificAttributes`
+        # @return [Google::Apis::CloudidentityV1beta1::EndpointVerificationSpecificAttributes]
+        attr_accessor :endpoint_verification_specific_attributes
+      
+        # Host name of the device.
+        # Corresponds to the JSON property `hostname`
+        # @return [String]
+        attr_accessor :hostname
       
         # Output only. IMEI number of device if GSM device; empty otherwise.
         # Corresponds to the JSON property `imei`
@@ -548,12 +821,16 @@ module Google
           @bootloader_version = args[:bootloader_version] if args.key?(:bootloader_version)
           @brand = args[:brand] if args.key?(:brand)
           @build_number = args[:build_number] if args.key?(:build_number)
+          @client_types = args[:client_types] if args.key?(:client_types)
           @compromised_state = args[:compromised_state] if args.key?(:compromised_state)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @device_id = args[:device_id] if args.key?(:device_id)
           @device_type = args[:device_type] if args.key?(:device_type)
           @enabled_developer_options = args[:enabled_developer_options] if args.key?(:enabled_developer_options)
           @enabled_usb_debugging = args[:enabled_usb_debugging] if args.key?(:enabled_usb_debugging)
           @encryption_state = args[:encryption_state] if args.key?(:encryption_state)
+          @endpoint_verification_specific_attributes = args[:endpoint_verification_specific_attributes] if args.key?(:endpoint_verification_specific_attributes)
+          @hostname = args[:hostname] if args.key?(:hostname)
           @imei = args[:imei] if args.key?(:imei)
           @kernel_version = args[:kernel_version] if args.key?(:kernel_version)
           @last_sync_time = args[:last_sync_time] if args.key?(:last_sync_time)
@@ -650,6 +927,25 @@ module Google
         end
       end
       
+      # Information of a DSA public key.
+      class DsaPublicKeyInfo
+        include Google::Apis::Core::Hashable
+      
+        # Key size in bits (size of parameter P).
+        # Corresponds to the JSON property `keySize`
+        # @return [Fixnum]
+        attr_accessor :key_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @key_size = args[:key_size] if args.key?(:key_size)
+        end
+      end
+      
       # Dynamic group metadata like queries and status.
       class DynamicGroupMetadata
         include Google::Apis::Core::Hashable
@@ -733,6 +1029,26 @@ module Google
         def update!(**args)
           @status = args[:status] if args.key?(:status)
           @status_time = args[:status_time] if args.key?(:status_time)
+        end
+      end
+      
+      # Resource representing the Endpoint Verification-specific attributes of a
+      # Device. https://cloud.google.com/endpoint-verification/docs/overview
+      class EndpointVerificationSpecificAttributes
+        include Google::Apis::Core::Hashable
+      
+        # Details of certificates.
+        # Corresponds to the JSON property `certificateAttributes`
+        # @return [Array<Google::Apis::CloudidentityV1beta1::CertificateAttributes>]
+        attr_accessor :certificate_attributes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @certificate_attributes = args[:certificate_attributes] if args.key?(:certificate_attributes)
         end
       end
       
@@ -1217,6 +1533,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Unique identifier for the device.
+        # Corresponds to the JSON property `deviceId`
+        # @return [String]
+        attr_accessor :device_id
+      
         # Output only. Type of device.
         # Corresponds to the JSON property `deviceType`
         # @return [String]
@@ -1339,6 +1660,7 @@ module Google
           @build_number = args[:build_number] if args.key?(:build_number)
           @compromised_state = args[:compromised_state] if args.key?(:compromised_state)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @device_id = args[:device_id] if args.key?(:device_id)
           @device_type = args[:device_type] if args.key?(:device_type)
           @enabled_developer_options = args[:enabled_developer_options] if args.key?(:enabled_developer_options)
           @enabled_usb_debugging = args[:enabled_usb_debugging] if args.key?(:enabled_usb_debugging)
@@ -1564,11 +1886,6 @@ module Google
       class Group
         include Google::Apis::Core::Hashable
       
-        # Additional entity key aliases for a Group.
-        # Corresponds to the JSON property `additionalGroupKeys`
-        # @return [Array<Google::Apis::CloudidentityV1beta1::EntityKey>]
-        attr_accessor :additional_group_keys
-      
         # Output only. The time when the `Group` was created.
         # Corresponds to the JSON property `createTime`
         # @return [String]
@@ -1620,9 +1937,11 @@ module Google
       
         # Required. Immutable. The resource name of the entity under which this `Group`
         # resides in the Cloud Identity resource hierarchy. Must be of the form `
-        # identitysources/`identity_source_id`` for external- identity-mapped groups or `
-        # customers/`customer_id`` for Google Groups. The `customer_id` must begin with "
-        # C" (for example, 'C046psxkn').
+        # identitysources/`identity_source`` for external [identity-mapped groups](https:
+        # //support.google.com/a/answer/9039510) or `customers/`customer_id`` for Google
+        # Groups. The `customer_id` must begin with "C" (for example, 'C046psxkn'). [
+        # Find your customer ID.] (https://support.google.com/cloudidentity/answer/
+        # 10070793)
         # Corresponds to the JSON property `parent`
         # @return [String]
         attr_accessor :parent
@@ -1643,7 +1962,6 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @additional_group_keys = args[:additional_group_keys] if args.key?(:additional_group_keys)
           @create_time = args[:create_time] if args.key?(:create_time)
           @description = args[:description] if args.key?(:description)
           @display_name = args[:display_name] if args.key?(:display_name)
@@ -1706,6 +2024,153 @@ module Google
           @labels = args[:labels] if args.key?(:labels)
           @relation_type = args[:relation_type] if args.key?(:relation_type)
           @roles = args[:roles] if args.key?(:roles)
+        end
+      end
+      
+      # Credential for verifying signatures produced by the Identity Provider.
+      class IdpCredential
+        include Google::Apis::Core::Hashable
+      
+        # Information of a DSA public key.
+        # Corresponds to the JSON property `dsaKeyInfo`
+        # @return [Google::Apis::CloudidentityV1beta1::DsaPublicKeyInfo]
+        attr_accessor :dsa_key_info
+      
+        # Output only. [Resource name](https://cloud.google.com/apis/design/
+        # resource_names) of the credential.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Information of a RSA public key.
+        # Corresponds to the JSON property `rsaKeyInfo`
+        # @return [Google::Apis::CloudidentityV1beta1::RsaPublicKeyInfo]
+        attr_accessor :rsa_key_info
+      
+        # Output only. Time when the `IdpCredential` was last updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dsa_key_info = args[:dsa_key_info] if args.key?(:dsa_key_info)
+          @name = args[:name] if args.key?(:name)
+          @rsa_key_info = args[:rsa_key_info] if args.key?(:rsa_key_info)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # A [SAML 2.0](https://www.oasis-open.org/standards#samlv2.0) federation between
+      # a Google enterprise customer and a SAML identity provider.
+      class InboundSamlSsoProfile
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. The customer. For example: `customers/C0123abc`.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
+        # Human-readable name of the SAML SSO profile.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # SAML IDP (identity provider) configuration.
+        # Corresponds to the JSON property `idpConfig`
+        # @return [Google::Apis::CloudidentityV1beta1::SamlIdpConfig]
+        attr_accessor :idp_config
+      
+        # Output only. [Resource name](https://cloud.google.com/apis/design/
+        # resource_names) of the SAML SSO profile.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # SAML SP (service provider) configuration.
+        # Corresponds to the JSON property `spConfig`
+        # @return [Google::Apis::CloudidentityV1beta1::SamlSpConfig]
+        attr_accessor :sp_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @idp_config = args[:idp_config] if args.key?(:idp_config)
+          @name = args[:name] if args.key?(:name)
+          @sp_config = args[:sp_config] if args.key?(:sp_config)
+        end
+      end
+      
+      # Targets with "set" SSO assignments and their respective assignments.
+      class InboundSsoAssignment
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. The customer. For example: `customers/C0123abc`.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
+        # Output only. [Resource name](https://cloud.google.com/apis/design/
+        # resource_names) of the Inbound SSO Assignment.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Must be zero (which is the default value so it can be omitted) for assignments
+        # with `target_org_unit` set and must be greater-than-or-equal-to one for
+        # assignments with `target_group` set.
+        # Corresponds to the JSON property `rank`
+        # @return [Fixnum]
+        attr_accessor :rank
+      
+        # Details that are applicable when `sso_mode` == `SAML_SSO`.
+        # Corresponds to the JSON property `samlSsoInfo`
+        # @return [Google::Apis::CloudidentityV1beta1::SamlSsoInfo]
+        attr_accessor :saml_sso_info
+      
+        # Controls sign-in behavior.
+        # Corresponds to the JSON property `signInBehavior`
+        # @return [Google::Apis::CloudidentityV1beta1::SignInBehavior]
+        attr_accessor :sign_in_behavior
+      
+        # Inbound SSO behavior.
+        # Corresponds to the JSON property `ssoMode`
+        # @return [String]
+        attr_accessor :sso_mode
+      
+        # Immutable. Must be of the form `groups/`group``.
+        # Corresponds to the JSON property `targetGroup`
+        # @return [String]
+        attr_accessor :target_group
+      
+        # Immutable. Must be of the form `orgUnits/`org_unit``.
+        # Corresponds to the JSON property `targetOrgUnit`
+        # @return [String]
+        attr_accessor :target_org_unit
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
+          @name = args[:name] if args.key?(:name)
+          @rank = args[:rank] if args.key?(:rank)
+          @saml_sso_info = args[:saml_sso_info] if args.key?(:saml_sso_info)
+          @sign_in_behavior = args[:sign_in_behavior] if args.key?(:sign_in_behavior)
+          @sso_mode = args[:sso_mode] if args.key?(:sso_mode)
+          @target_group = args[:target_group] if args.key?(:target_group)
+          @target_org_unit = args[:target_org_unit] if args.key?(:target_org_unit)
         end
       end
       
@@ -1830,6 +2295,85 @@ module Google
         end
       end
       
+      # Response of the InboundSamlSsoProfilesService.ListIdpCredentials method.
+      class ListIdpCredentialsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The IdpCredentials from the specified InboundSamlSsoProfile.
+        # Corresponds to the JSON property `idpCredentials`
+        # @return [Array<Google::Apis::CloudidentityV1beta1::IdpCredential>]
+        attr_accessor :idp_credentials
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @idp_credentials = args[:idp_credentials] if args.key?(:idp_credentials)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response of the InboundSamlSsoProfilesService.ListInboundSamlSsoProfiles
+      # method.
+      class ListInboundSamlSsoProfilesResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of InboundSamlSsoProfiles.
+        # Corresponds to the JSON property `inboundSamlSsoProfiles`
+        # @return [Array<Google::Apis::CloudidentityV1beta1::InboundSamlSsoProfile>]
+        attr_accessor :inbound_saml_sso_profiles
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_saml_sso_profiles = args[:inbound_saml_sso_profiles] if args.key?(:inbound_saml_sso_profiles)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response of the InboundSsoAssignmentsService.ListInboundSsoAssignments method.
+      class ListInboundSsoAssignmentsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The assignments.
+        # Corresponds to the JSON property `inboundSsoAssignments`
+        # @return [Array<Google::Apis::CloudidentityV1beta1::InboundSsoAssignment>]
+        attr_accessor :inbound_sso_assignments
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_sso_assignments = args[:inbound_sso_assignments] if args.key?(:inbound_sso_assignments)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
       # The response message for MembershipsService.ListMemberships.
       class ListMembershipsResponse
         include Google::Apis::Core::Hashable
@@ -1853,6 +2397,32 @@ module Google
         def update!(**args)
           @memberships = args[:memberships] if args.key?(:memberships)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # The response message for OrgMembershipsService.ListOrgMemberships.
+      class ListOrgMembershipsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is empty, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The non-vacuous membership in an orgUnit.
+        # Corresponds to the JSON property `orgMemberships`
+        # @return [Array<Google::Apis::CloudidentityV1beta1::OrgMembership>]
+        attr_accessor :org_memberships
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @org_memberships = args[:org_memberships] if args.key?(:org_memberships)
         end
       end
       
@@ -1930,8 +2500,8 @@ module Google
       class LookupSelfDeviceUsersResponse
         include Google::Apis::Core::Hashable
       
-        # The obfuscated customer Id that may be passed back to other Devices API
-        # methods such as List, Get, etc.
+        # The customer Id that may be passed back to other Devices API methods such as
+        # List, Get, etc.
         # Corresponds to the JSON property `customer`
         # @return [String]
         attr_accessor :customer
@@ -1976,7 +2546,7 @@ module Google
         # @return [Array<Google::Apis::CloudidentityV1beta1::EntityKey>]
         attr_accessor :preferred_member_key
       
-        # The relation between the group and the transitive member.
+        # The relation between the group and the transitive membership.
         # Corresponds to the JSON property `relationType`
         # @return [String]
         attr_accessor :relation_type
@@ -2238,6 +2808,39 @@ module Google
         end
       end
       
+      # The request message for OrgMembershipsService.MoveOrgMembership.
+      class MoveOrgMembershipRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. Immutable. Customer on whose membership change is made. All
+        # authorization will happen on the role assignments of this customer. Format:
+        # customers/`$customerId` where `$customerId` is the `id` from the [Admin SDK `
+        # Customer` resource](https://developers.google.com/admin-sdk/directory/
+        # reference/rest/v1/customers). You may also use `customers/my_customer` to
+        # specify your own organization.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
+        # Required. Immutable. OrgUnit where the membership will be moved to. Format:
+        # orgUnits/`$orgUnitId` where `$orgUnitId` is the `orgUnitId` from the [Admin
+        # SDK `OrgUnit` resource](https://developers.google.com/admin-sdk/directory/
+        # reference/rest/v1/orgunits).
+        # Corresponds to the JSON property `destinationOrgUnit`
+        # @return [String]
+        attr_accessor :destination_org_unit
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
+          @destination_org_unit = args[:destination_org_unit] if args.key?(:destination_org_unit)
+        end
+      end
+      
       # This resource represents a long-running operation that is the result of a
       # network API call.
       class Operation
@@ -2297,6 +2900,60 @@ module Google
           @metadata = args[:metadata] if args.key?(:metadata)
           @name = args[:name] if args.key?(:name)
           @response = args[:response] if args.key?(:response)
+        end
+      end
+      
+      # A membership in an OrgUnit. An `OrgMembership` defines a relationship between
+      # an `OrgUnit` and an entity belonging to that `OrgUnit`, referred to as a "
+      # member".
+      class OrgMembership
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. Org member id as full resource name. Format for shared drive
+        # resource: //drive.googleapis.com/drives/`$memberId` where `$memberId` is the `
+        # id` from [Drive API (V3) `Drive` resource](https://developers.google.com/drive/
+        # api/v3/reference/drives#resource).
+        # Corresponds to the JSON property `member`
+        # @return [String]
+        attr_accessor :member
+      
+        # Uri with which you can read the member. This follows https://aip.dev/122
+        # Format for shared drive resource: https://drive.googleapis.com/drive/v3/drives/
+        # `$memberId` where `$memberId` is the `id` from [Drive API (V3) `Drive`
+        # resource](https://developers.google.com/drive/api/v3/reference/drives#resource)
+        # .
+        # Corresponds to the JSON property `memberUri`
+        # @return [String]
+        attr_accessor :member_uri
+      
+        # Required. Immutable. The [resource name](https://cloud.google.com/apis/design/
+        # resource_names) of the OrgMembership. Format: orgUnits/`$orgUnitId`/
+        # memberships/`$membership` The `$orgUnitId` is the `orgUnitId` from the [Admin
+        # SDK `OrgUnit` resource](https://developers.google.com/admin-sdk/directory/
+        # reference/rest/v1/orgunits). The `$membership` shall be of the form ``$
+        # entityType`;`$memberId``, where `$entityType` is the enum value of [
+        # OrgMembership.EntityType], and `memberId` is the `id` from [Drive API (V3) `
+        # Drive` resource](https://developers.google.com/drive/api/v3/reference/drives#
+        # resource) for OrgMembership.EntityType.SHARED_DRIVE.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Immutable. Entity type for the org member.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @member = args[:member] if args.key?(:member)
+          @member_uri = args[:member_uri] if args.key?(:member_uri)
+          @name = args[:name] if args.key?(:name)
+          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -2370,6 +3027,117 @@ module Google
         end
       end
       
+      # Information of a RSA public key.
+      class RsaPublicKeyInfo
+        include Google::Apis::Core::Hashable
+      
+        # Key size in bits (size of the modulus).
+        # Corresponds to the JSON property `keySize`
+        # @return [Fixnum]
+        attr_accessor :key_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @key_size = args[:key_size] if args.key?(:key_size)
+        end
+      end
+      
+      # SAML IDP (identity provider) configuration.
+      class SamlIdpConfig
+        include Google::Apis::Core::Hashable
+      
+        # The **Change Password URL** of the identity provider. Users will be sent to
+        # this URL when changing their passwords at `myaccount.google.com`. This takes
+        # precedence over the change password URL configured at customer-level. Must use
+        # `HTTPS`.
+        # Corresponds to the JSON property `changePasswordUri`
+        # @return [String]
+        attr_accessor :change_password_uri
+      
+        # Required. The SAML **Entity ID** of the identity provider.
+        # Corresponds to the JSON property `entityId`
+        # @return [String]
+        attr_accessor :entity_id
+      
+        # The **Logout Redirect URL** (sign-out page URL) of the identity provider. When
+        # a user clicks the sign-out link on a Google page, they will be redirected to
+        # this URL. This is a pure redirect with no attached SAML `LogoutRequest` i.e.
+        # SAML single logout is currently not supported. Must use `HTTPS`.
+        # Corresponds to the JSON property `logoutRedirectUri`
+        # @return [String]
+        attr_accessor :logout_redirect_uri
+      
+        # Required. The `SingleSignOnService` endpoint location (sign-in page URL) of
+        # the identity provider. This is the URL where the `AuthnRequest` will be sent.
+        # Must use `HTTPS`. Currently assumed to accept the `HTTP-Redirect` binding.
+        # Corresponds to the JSON property `singleSignOnServiceUri`
+        # @return [String]
+        attr_accessor :single_sign_on_service_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @change_password_uri = args[:change_password_uri] if args.key?(:change_password_uri)
+          @entity_id = args[:entity_id] if args.key?(:entity_id)
+          @logout_redirect_uri = args[:logout_redirect_uri] if args.key?(:logout_redirect_uri)
+          @single_sign_on_service_uri = args[:single_sign_on_service_uri] if args.key?(:single_sign_on_service_uri)
+        end
+      end
+      
+      # SAML SP (service provider) configuration.
+      class SamlSpConfig
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The SAML **Assertion Consumer Service (ACS) URL** to be used for
+        # the IDP-initiated login. Currently assumed to accept response messages via the
+        # `HTTP-POST` binding.
+        # Corresponds to the JSON property `assertionConsumerServiceUri`
+        # @return [String]
+        attr_accessor :assertion_consumer_service_uri
+      
+        # Output only. The SAML **Entity ID** for this service provider.
+        # Corresponds to the JSON property `entityId`
+        # @return [String]
+        attr_accessor :entity_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @assertion_consumer_service_uri = args[:assertion_consumer_service_uri] if args.key?(:assertion_consumer_service_uri)
+          @entity_id = args[:entity_id] if args.key?(:entity_id)
+        end
+      end
+      
+      # Details that are applicable when `sso_mode` == `SAML_SSO`.
+      class SamlSsoInfo
+        include Google::Apis::Core::Hashable
+      
+        # Required. Name of the `InboundSamlSsoProfile` to use. Must be of the form `
+        # inboundSamlSsoProfiles/`inbound_saml_sso_profile``.
+        # Corresponds to the JSON property `inboundSamlSsoProfile`
+        # @return [String]
+        attr_accessor :inbound_saml_sso_profile
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_saml_sso_profile = args[:inbound_saml_sso_profile] if args.key?(:inbound_saml_sso_profile)
+        end
+      end
+      
       # The response message for GroupsService.SearchGroups.
       class SearchGroupsResponse
         include Google::Apis::Core::Hashable
@@ -2426,7 +3194,7 @@ module Google
       class SearchTransitiveMembershipsResponse
         include Google::Apis::Core::Hashable
       
-        # List of transitive members satisfying the query.
+        # List of transitive memberships satisfying the query.
         # Corresponds to the JSON property `memberships`
         # @return [Array<Google::Apis::CloudidentityV1beta1::MemberRelation>]
         attr_accessor :memberships
@@ -2485,6 +3253,25 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # Controls sign-in behavior.
+      class SignInBehavior
+        include Google::Apis::Core::Hashable
+      
+        # When to redirect sign-ins to the IdP.
+        # Corresponds to the JSON property `redirectCondition`
+        # @return [String]
+        attr_accessor :redirect_condition
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @redirect_condition = args[:redirect_condition] if args.key?(:redirect_condition)
         end
       end
       
@@ -2547,6 +3334,34 @@ module Google
         end
       end
       
+      # LRO response metadata for InboundSamlSsoProfilesService.
+      # UpdateInboundSamlSsoProfile.
+      class UpdateInboundSamlSsoProfileOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # LRO response metadata for InboundSsoAssignmentsService.
+      # UpdateInboundSsoAssignment.
+      class UpdateInboundSsoAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # The details of an update to a `MembershipRole`.
       class UpdateMembershipRolesParams
         include Google::Apis::Core::Hashable
@@ -2575,7 +3390,7 @@ module Google
       end
       
       # The `UserInvitation` resource represents an email that can be sent to an
-      # unmanaged user account inviting them to join the customer’s Google Workspace
+      # unmanaged user account inviting them to join the customer's Google Workspace
       # or Cloud Identity account. An unmanaged account shares an email address domain
       # with the Google Workspace or Cloud Identity account but is not managed by it
       # yet. If the user accepts the `UserInvitation`, the user account will become
@@ -2621,6 +3436,15 @@ module Google
       class WipeDeviceRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         # Optional. Specifies if a user is able to factory reset a device after a Device
         # Wipe. On iOS, this is called "Activation Lock", while on Android, this is
         # known as "Factory Reset Protection". If true, this protection will be removed
@@ -2637,6 +3461,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
           @remove_reset_lock = args[:remove_reset_lock] if args.key?(:remove_reset_lock)
         end
       end
@@ -2666,12 +3491,22 @@ module Google
       class WipeDeviceUserRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. [Resource name](https://cloud.google.com/apis/design/resource_names)
+        # of the customer. If you're using this API for your own organization, use `
+        # customers/my_customer` If you're using this API to manage another organization,
+        # use `customers/`customer_id``, where customer_id is the customer to whom the
+        # device belongs.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
         end
       end
       

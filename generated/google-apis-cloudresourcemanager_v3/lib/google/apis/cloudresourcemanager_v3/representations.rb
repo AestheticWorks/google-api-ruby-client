@@ -118,6 +118,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class EffectiveTag
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Empty
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -166,6 +172,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListEffectiveTagsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListFoldersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -185,6 +197,12 @@ module Google
       end
       
       class ListTagBindingsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListTagHoldsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -287,6 +305,12 @@ module Google
       end
       
       class TagBinding
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TagHold
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -488,6 +512,18 @@ module Google
         end
       end
       
+      class EffectiveTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :inherited, as: 'inherited'
+          property :namespaced_tag_key, as: 'namespacedTagKey'
+          property :namespaced_tag_value, as: 'namespacedTagValue'
+          property :tag_key, as: 'tagKey'
+          property :tag_key_parent_name, as: 'tagKeyParentName'
+          property :tag_value, as: 'tagValue'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -562,6 +598,15 @@ module Google
         end
       end
       
+      class ListEffectiveTagsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :effective_tags, as: 'effectiveTags', class: Google::Apis::CloudresourcemanagerV3::EffectiveTag, decorator: Google::Apis::CloudresourcemanagerV3::EffectiveTag::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
       class ListFoldersResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -594,6 +639,15 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :next_page_token, as: 'nextPageToken'
           collection :tag_bindings, as: 'tagBindings', class: Google::Apis::CloudresourcemanagerV3::TagBinding, decorator: Google::Apis::CloudresourcemanagerV3::TagBinding::Representation
+      
+        end
+      end
+      
+      class ListTagHoldsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :tag_holds, as: 'tagHolds', class: Google::Apis::CloudresourcemanagerV3::TagHold, decorator: Google::Apis::CloudresourcemanagerV3::TagHold::Representation
       
         end
       end
@@ -762,6 +816,17 @@ module Google
         end
       end
       
+      class TagHold
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :help_link, as: 'helpLink'
+          property :holder, as: 'holder'
+          property :name, as: 'name'
+          property :origin, as: 'origin'
+        end
+      end
+      
       class TagKey
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -771,6 +836,8 @@ module Google
           property :name, as: 'name'
           property :namespaced_name, as: 'namespacedName'
           property :parent, as: 'parent'
+          property :purpose, as: 'purpose'
+          hash :purpose_data, as: 'purposeData'
           property :short_name, as: 'shortName'
           property :update_time, as: 'updateTime'
         end

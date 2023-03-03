@@ -85,7 +85,8 @@ module Google
         
         # Gets the settings associated with a project, folder, or organization.
         # @param [String] name
-        #   Name of the AccessApprovalSettings to retrieve.
+        #   The name of the AccessApprovalSettings to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/accessApprovalSettings"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -107,6 +108,37 @@ module Google
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalSettings::Representation
           command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves the service account that is used by Access Approval to access KMS
+        # keys for signing approved approval requests.
+        # @param [String] name
+        #   Name of the AccessApprovalServiceAccount to retrieve.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_service_account(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -232,7 +264,8 @@ module Google
         
         # Gets an approval request. Returns NOT_FOUND if the request does not exist.
         # @param [String] name
-        #   Name of the approval request to retrieve.
+        #   The name of the approval request to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/approvalRequests/`approval_request`"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -252,6 +285,42 @@ module Google
         # @raise [Google::Apis::AuthorizationError] Authorization is required
         def get_folder_approval_request(name, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest.
+        # NOTE: This does not deny access to the resource if another request has been
+        # made and approved. It only invalidates a single approval. Returns
+        # FAILED_PRECONDITION if the request exists but is not in an approved state.
+        # @param [String] name
+        #   Name of the ApprovalRequest to invalidate.
+        # @param [Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage] invalidate_approval_request_message_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::ApprovalRequest] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::ApprovalRequest]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def invalidate_folder_approval_request(name, invalidate_approval_request_message_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:invalidate', options)
+          command.request_representation = Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage::Representation
+          command.request_object = invalidate_approval_request_message_object
           command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
           command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
           command.params['name'] = name unless name.nil?
@@ -344,7 +413,8 @@ module Google
         
         # Gets the settings associated with a project, folder, or organization.
         # @param [String] name
-        #   Name of the AccessApprovalSettings to retrieve.
+        #   The name of the AccessApprovalSettings to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/accessApprovalSettings"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -366,6 +436,37 @@ module Google
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalSettings::Representation
           command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves the service account that is used by Access Approval to access KMS
+        # keys for signing approved approval requests.
+        # @param [String] name
+        #   Name of the AccessApprovalServiceAccount to retrieve.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_service_account(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -491,7 +592,8 @@ module Google
         
         # Gets an approval request. Returns NOT_FOUND if the request does not exist.
         # @param [String] name
-        #   Name of the approval request to retrieve.
+        #   The name of the approval request to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/approvalRequests/`approval_request`"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -511,6 +613,42 @@ module Google
         # @raise [Google::Apis::AuthorizationError] Authorization is required
         def get_organization_approval_request(name, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest.
+        # NOTE: This does not deny access to the resource if another request has been
+        # made and approved. It only invalidates a single approval. Returns
+        # FAILED_PRECONDITION if the request exists but is not in an approved state.
+        # @param [String] name
+        #   Name of the ApprovalRequest to invalidate.
+        # @param [Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage] invalidate_approval_request_message_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::ApprovalRequest] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::ApprovalRequest]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def invalidate_organization_approval_request(name, invalidate_approval_request_message_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:invalidate', options)
+          command.request_representation = Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage::Representation
+          command.request_object = invalidate_approval_request_message_object
           command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
           command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
           command.params['name'] = name unless name.nil?
@@ -603,7 +741,8 @@ module Google
         
         # Gets the settings associated with a project, folder, or organization.
         # @param [String] name
-        #   Name of the AccessApprovalSettings to retrieve.
+        #   The name of the AccessApprovalSettings to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/accessApprovalSettings"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -625,6 +764,37 @@ module Google
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalSettings::Representation
           command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves the service account that is used by Access Approval to access KMS
+        # keys for signing approved approval requests.
+        # @param [String] name
+        #   Name of the AccessApprovalServiceAccount to retrieve.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_service_account(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::AccessApprovalServiceAccount
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -750,7 +920,8 @@ module Google
         
         # Gets an approval request. Returns NOT_FOUND if the request does not exist.
         # @param [String] name
-        #   Name of the approval request to retrieve.
+        #   The name of the approval request to retrieve. Format: "`projects|folders|
+        #   organizations`/`id`/approvalRequests/`approval_request`"
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -770,6 +941,42 @@ module Google
         # @raise [Google::Apis::AuthorizationError] Authorization is required
         def get_project_approval_request(name, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
+          command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Invalidates an existing ApprovalRequest. Returns the updated ApprovalRequest.
+        # NOTE: This does not deny access to the resource if another request has been
+        # made and approved. It only invalidates a single approval. Returns
+        # FAILED_PRECONDITION if the request exists but is not in an approved state.
+        # @param [String] name
+        #   Name of the ApprovalRequest to invalidate.
+        # @param [Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage] invalidate_approval_request_message_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AccessapprovalV1::ApprovalRequest] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AccessapprovalV1::ApprovalRequest]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def invalidate_project_approval_request(name, invalidate_approval_request_message_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:invalidate', options)
+          command.request_representation = Google::Apis::AccessapprovalV1::InvalidateApprovalRequestMessage::Representation
+          command.request_object = invalidate_approval_request_message_object
           command.response_representation = Google::Apis::AccessapprovalV1::ApprovalRequest::Representation
           command.response_class = Google::Apis::AccessapprovalV1::ApprovalRequest
           command.params['name'] = name unless name.nil?

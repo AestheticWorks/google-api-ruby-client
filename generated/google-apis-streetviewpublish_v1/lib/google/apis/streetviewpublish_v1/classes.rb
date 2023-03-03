@@ -143,8 +143,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -154,6 +153,111 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # Details related to ProcessingFailureReason#GPS_DATA_GAP. If there are multiple
+      # GPS data gaps, only the one with the largest duration is reported here.
+      class GpsDataGapFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # The duration of the gap in GPS data that was found.
+        # Corresponds to the JSON property `gapDuration`
+        # @return [String]
+        attr_accessor :gap_duration
+      
+        # Relative time (from the start of the video stream) when the gap started.
+        # Corresponds to the JSON property `gapStartTime`
+        # @return [String]
+        attr_accessor :gap_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gap_duration = args[:gap_duration] if args.key?(:gap_duration)
+          @gap_start_time = args[:gap_start_time] if args.key?(:gap_start_time)
+        end
+      end
+      
+      # IMU data from the device sensors.
+      class Imu
+        include Google::Apis::Core::Hashable
+      
+        # The accelerometer measurements in meters/sec^2 with increasing timestamps from
+        # devices.
+        # Corresponds to the JSON property `accelMpsps`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Measurement3d>]
+        attr_accessor :accel_mpsps
+      
+        # The gyroscope measurements in radians/sec with increasing timestamps from
+        # devices.
+        # Corresponds to the JSON property `gyroRps`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Measurement3d>]
+        attr_accessor :gyro_rps
+      
+        # The magnetometer measurements of the magnetic field in microtesla (uT) with
+        # increasing timestamps from devices.
+        # Corresponds to the JSON property `magUt`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Measurement3d>]
+        attr_accessor :mag_ut
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @accel_mpsps = args[:accel_mpsps] if args.key?(:accel_mpsps)
+          @gyro_rps = args[:gyro_rps] if args.key?(:gyro_rps)
+          @mag_ut = args[:mag_ut] if args.key?(:mag_ut)
+        end
+      end
+      
+      # Details related to ProcessingFailureReason#IMU_DATA_GAP. If there are multiple
+      # IMU data gaps, only the one with the largest duration is reported here.
+      class ImuDataGapFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # The duration of the gap in IMU data that was found.
+        # Corresponds to the JSON property `gapDuration`
+        # @return [String]
+        attr_accessor :gap_duration
+      
+        # Relative time (from the start of the video stream) when the gap started.
+        # Corresponds to the JSON property `gapStartTime`
+        # @return [String]
+        attr_accessor :gap_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gap_duration = args[:gap_duration] if args.key?(:gap_duration)
+          @gap_start_time = args[:gap_start_time] if args.key?(:gap_start_time)
+        end
+      end
+      
+      # Details related to ProcessingFailureReason#INSUFFICIENT_GPS.
+      class InsufficientGpsFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # The number of GPS points that were found in the video.
+        # Corresponds to the JSON property `gpsPointsFound`
+        # @return [Fixnum]
+        attr_accessor :gps_points_found
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gps_points_found = args[:gps_points_found] if args.key?(:gps_points_found)
         end
       end
       
@@ -185,6 +289,37 @@ module Google
         end
       end
       
+      # A rectangle in geographical coordinates.
+      class LatLngBounds
+        include Google::Apis::Core::Hashable
+      
+        # An object that represents a latitude/longitude pair. This is expressed as a
+        # pair of doubles to represent degrees latitude and degrees longitude. Unless
+        # specified otherwise, this object must conform to the WGS84 standard. Values
+        # must be within normalized ranges.
+        # Corresponds to the JSON property `northeast`
+        # @return [Google::Apis::StreetviewpublishV1::LatLng]
+        attr_accessor :northeast
+      
+        # An object that represents a latitude/longitude pair. This is expressed as a
+        # pair of doubles to represent degrees latitude and degrees longitude. Unless
+        # specified otherwise, this object must conform to the WGS84 standard. Values
+        # must be within normalized ranges.
+        # Corresponds to the JSON property `southwest`
+        # @return [Google::Apis::StreetviewpublishV1::LatLng]
+        attr_accessor :southwest
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @northeast = args[:northeast] if args.key?(:northeast)
+          @southwest = args[:southwest] if args.key?(:southwest)
+        end
+      end
+      
       # Level information containing level number and its corresponding name.
       class Level
         include Google::Apis::Core::Hashable
@@ -196,9 +331,9 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Floor number, used for ordering. 0 indicates the ground level, 1 indicates the
-        # first level above ground level, -1 indicates the first level under ground
-        # level. Non-integer values are OK.
+        # Optional. Floor number, used for ordering. 0 indicates the ground level, 1
+        # indicates the first level above ground level, -1 indicates the first level
+        # under ground level. Non-integer values are OK.
         # Corresponds to the JSON property `number`
         # @return [Float]
         attr_accessor :number
@@ -211,6 +346,38 @@ module Google
         def update!(**args)
           @name = args[:name] if args.key?(:name)
           @number = args[:number] if args.key?(:number)
+        end
+      end
+      
+      # Response to list all photo sequences that belong to a user.
+      class ListPhotoSequencesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Token to retrieve the next page of results, or empty if there are no more
+        # results in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # List of photo sequences via Operation interface. The maximum number of items
+        # returned is based on the pageSize field in the request. Each item in the list
+        # can have three possible states, * `Operation.done` = false, if the processing
+        # of PhotoSequence is not finished yet. * `Operation.done` = true and `Operation.
+        # error` is populated, if there was an error in processing. * `Operation.done` =
+        # true and `Operation.response` contains a PhotoSequence message, In each
+        # sequence, only Id is populated.
+        # Corresponds to the JSON property `photoSequences`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Operation>]
+        attr_accessor :photo_sequences
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @photo_sequences = args[:photo_sequences] if args.key?(:photo_sequences)
         end
       end
       
@@ -238,6 +405,101 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @photos = args[:photos] if args.key?(:photos)
+        end
+      end
+      
+      # A Generic 3d measurement sample.
+      class Measurement3d
+        include Google::Apis::Core::Hashable
+      
+        # The timestamp of the IMU measurement.
+        # Corresponds to the JSON property `captureTime`
+        # @return [String]
+        attr_accessor :capture_time
+      
+        # The sensor measurement in the x axis.
+        # Corresponds to the JSON property `x`
+        # @return [Float]
+        attr_accessor :x
+      
+        # The sensor measurement in the y axis.
+        # Corresponds to the JSON property `y`
+        # @return [Float]
+        attr_accessor :y
+      
+        # The sensor measurement in the z axis.
+        # Corresponds to the JSON property `z`
+        # @return [Float]
+        attr_accessor :z
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @capture_time = args[:capture_time] if args.key?(:capture_time)
+          @x = args[:x] if args.key?(:x)
+          @y = args[:y] if args.key?(:y)
+          @z = args[:z] if args.key?(:z)
+        end
+      end
+      
+      # Details related to PhotoSequenceProcessingFailureReason#NO_OVERLAP_GPS.
+      class NoOverlapGpsFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # Time of last recorded GPS point.
+        # Corresponds to the JSON property `gpsEndTime`
+        # @return [String]
+        attr_accessor :gps_end_time
+      
+        # Time of first recorded GPS point.
+        # Corresponds to the JSON property `gpsStartTime`
+        # @return [String]
+        attr_accessor :gps_start_time
+      
+        # End time of video.
+        # Corresponds to the JSON property `videoEndTime`
+        # @return [String]
+        attr_accessor :video_end_time
+      
+        # Start time of video.
+        # Corresponds to the JSON property `videoStartTime`
+        # @return [String]
+        attr_accessor :video_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gps_end_time = args[:gps_end_time] if args.key?(:gps_end_time)
+          @gps_start_time = args[:gps_start_time] if args.key?(:gps_start_time)
+          @video_end_time = args[:video_end_time] if args.key?(:video_end_time)
+          @video_start_time = args[:video_start_time] if args.key?(:video_start_time)
+        end
+      end
+      
+      # Details related to ProcessingFailureReason#NOT_OUTDOORS. If there are multiple
+      # indoor frames found, the first frame is recorded here.
+      class NotOutdoorsFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # Relative time (from the start of the video stream) when an indoor frame was
+        # found.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @start_time = args[:start_time] if args.key?(:start_time)
         end
       end
       
@@ -307,14 +569,14 @@ module Google
       class Photo
         include Google::Apis::Core::Hashable
       
-        # Absolute time when the photo was captured. When the photo has no exif
-        # timestamp, this is used to set a timestamp in the photo metadata.
+        # Optional. Absolute time when the photo was captured. When the photo has no
+        # exif timestamp, this is used to set a timestamp in the photo metadata.
         # Corresponds to the JSON property `captureTime`
         # @return [String]
         attr_accessor :capture_time
       
-        # Connections to other photos. A connection represents the link from this photo
-        # to another photo.
+        # Optional. Connections to other photos. A connection represents the link from
+        # this photo to another photo.
         # Corresponds to the JSON property `connections`
         # @return [Array<Google::Apis::StreetviewpublishV1::Connection>]
         attr_accessor :connections
@@ -326,7 +588,7 @@ module Google
         attr_accessor :download_url
       
         # Output only. Status in Google Maps, whether this photo was published or
-        # rejected. Not currently populated.
+        # rejected.
         # Corresponds to the JSON property `mapsPublishStatus`
         # @return [String]
         attr_accessor :maps_publish_status
@@ -336,7 +598,7 @@ module Google
         # @return [Google::Apis::StreetviewpublishV1::PhotoId]
         attr_accessor :photo_id
       
-        # Places where this photo belongs.
+        # Optional. Places where this photo belongs.
         # Corresponds to the JSON property `places`
         # @return [Array<Google::Apis::StreetviewpublishV1::Place>]
         attr_accessor :places
@@ -366,7 +628,7 @@ module Google
         # @return [Google::Apis::StreetviewpublishV1::UploadRef]
         attr_accessor :upload_reference
       
-        # Time when the image was uploaded.
+        # Output only. Time when the image was uploaded.
         # Corresponds to the JSON property `uploadTime`
         # @return [String]
         attr_accessor :upload_time
@@ -402,7 +664,7 @@ module Google
       class PhotoId
         include Google::Apis::Core::Hashable
       
-        # Required. A unique identifier for a photo.
+        # A unique identifier for a photo.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -448,17 +710,136 @@ module Google
         end
       end
       
+      # A sequence of 360 photos along with metadata.
+      class PhotoSequence
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Absolute time when the photo sequence starts to be captured. If the
+        # photo sequence is a video, this is the start time of the video. If this field
+        # is populated in input, it overrides the capture time in the video or XDM file.
+        # Corresponds to the JSON property `captureTimeOverride`
+        # @return [String]
+        attr_accessor :capture_time_override
+      
+        # Output only. The computed distance of the photo sequence in meters.
+        # Corresponds to the JSON property `distanceMeters`
+        # @return [Float]
+        attr_accessor :distance_meters
+      
+        # Additional details to accompany the ProcessingFailureReason enum. This message
+        # is always expected to be used in conjunction with ProcessingFailureReason, and
+        # the oneof value set in this message should match the FailureReason.
+        # Corresponds to the JSON property `failureDetails`
+        # @return [Google::Apis::StreetviewpublishV1::ProcessingFailureDetails]
+        attr_accessor :failure_details
+      
+        # Output only. If this sequence has processing_state = FAILED, this will contain
+        # the reason why it failed. If the processing_state is any other value, this
+        # field will be unset.
+        # Corresponds to the JSON property `failureReason`
+        # @return [String]
+        attr_accessor :failure_reason
+      
+        # Output only. The filename of the upload. Does not include the directory path.
+        # Only available if the sequence was uploaded on a platform that provides the
+        # filename.
+        # Corresponds to the JSON property `filename`
+        # @return [String]
+        attr_accessor :filename
+      
+        # Input only. If both raw_gps_timeline and the Camera Motion Metadata Track (
+        # CAMM) contain GPS measurements, indicate which takes precedence.
+        # Corresponds to the JSON property `gpsSource`
+        # @return [String]
+        attr_accessor :gps_source
+      
+        # Output only. Unique identifier for the photo sequence. This also acts as a
+        # long running operation ID if uploading is performed asynchronously.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # IMU data from the device sensors.
+        # Corresponds to the JSON property `imu`
+        # @return [Google::Apis::StreetviewpublishV1::Imu]
+        attr_accessor :imu
+      
+        # Output only. Photos with increasing timestamps.
+        # Corresponds to the JSON property `photos`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Photo>]
+        attr_accessor :photos
+      
+        # Output only. The processing state of this sequence.
+        # Corresponds to the JSON property `processingState`
+        # @return [String]
+        attr_accessor :processing_state
+      
+        # Input only. Raw GPS measurements with increasing timestamps from the device
+        # that aren't time synced with each photo. These raw measurements will be used
+        # to infer the pose of each frame. Required in input when InputType is VIDEO and
+        # raw GPS measurements are not in Camera Motion Metadata Track (CAMM). User can
+        # indicate which takes precedence using gps_source if raw GPS measurements are
+        # provided in both raw_gps_timeline and Camera Motion Metadata Track (CAMM).
+        # Corresponds to the JSON property `rawGpsTimeline`
+        # @return [Array<Google::Apis::StreetviewpublishV1::Pose>]
+        attr_accessor :raw_gps_timeline
+      
+        # A rectangle in geographical coordinates.
+        # Corresponds to the JSON property `sequenceBounds`
+        # @return [Google::Apis::StreetviewpublishV1::LatLngBounds]
+        attr_accessor :sequence_bounds
+      
+        # Upload reference for media files.
+        # Corresponds to the JSON property `uploadReference`
+        # @return [Google::Apis::StreetviewpublishV1::UploadRef]
+        attr_accessor :upload_reference
+      
+        # Output only. The time this photo sequence was created in uSV Store service.
+        # Corresponds to the JSON property `uploadTime`
+        # @return [String]
+        attr_accessor :upload_time
+      
+        # Output only. The total number of views that all the published images in this
+        # PhotoSequence have received.
+        # Corresponds to the JSON property `viewCount`
+        # @return [Fixnum]
+        attr_accessor :view_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @capture_time_override = args[:capture_time_override] if args.key?(:capture_time_override)
+          @distance_meters = args[:distance_meters] if args.key?(:distance_meters)
+          @failure_details = args[:failure_details] if args.key?(:failure_details)
+          @failure_reason = args[:failure_reason] if args.key?(:failure_reason)
+          @filename = args[:filename] if args.key?(:filename)
+          @gps_source = args[:gps_source] if args.key?(:gps_source)
+          @id = args[:id] if args.key?(:id)
+          @imu = args[:imu] if args.key?(:imu)
+          @photos = args[:photos] if args.key?(:photos)
+          @processing_state = args[:processing_state] if args.key?(:processing_state)
+          @raw_gps_timeline = args[:raw_gps_timeline] if args.key?(:raw_gps_timeline)
+          @sequence_bounds = args[:sequence_bounds] if args.key?(:sequence_bounds)
+          @upload_reference = args[:upload_reference] if args.key?(:upload_reference)
+          @upload_time = args[:upload_time] if args.key?(:upload_time)
+          @view_count = args[:view_count] if args.key?(:view_count)
+        end
+      end
+      
       # Place metadata for an entity.
       class Place
         include Google::Apis::Core::Hashable
       
-        # Output-only. The language_code that the name is localized with. This should be
+        # Output only. The language_code that the name is localized with. This should be
         # the language_code specified in the request, but may be a fallback.
         # Corresponds to the JSON property `languageCode`
         # @return [String]
         attr_accessor :language_code
       
-        # Output-only. The name of the place, localized to the language_code.
+        # Output only. The name of the place, localized to the language_code.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -500,8 +881,15 @@ module Google
         # @return [Float]
         attr_accessor :altitude
       
-        # Compass heading, measured at the center of the photo in degrees clockwise from
-        # North. Value must be >=0 and <360. NaN indicates an unmeasured quantity.
+        # Time of the GPS record since UTC epoch.
+        # Corresponds to the JSON property `gpsRecordTimestampUnixEpoch`
+        # @return [String]
+        attr_accessor :gps_record_timestamp_unix_epoch
+      
+        # The following pose parameters pertain to the center of the photo. They match
+        # https://developers.google.com/streetview/spherical-metadata. Compass heading,
+        # measured at the center of the photo in degrees clockwise from North. Value
+        # must be >=0 and <360. NaN indicates an unmeasured quantity.
         # Corresponds to the JSON property `heading`
         # @return [Float]
         attr_accessor :heading
@@ -540,11 +928,60 @@ module Google
         def update!(**args)
           @accuracy_meters = args[:accuracy_meters] if args.key?(:accuracy_meters)
           @altitude = args[:altitude] if args.key?(:altitude)
+          @gps_record_timestamp_unix_epoch = args[:gps_record_timestamp_unix_epoch] if args.key?(:gps_record_timestamp_unix_epoch)
           @heading = args[:heading] if args.key?(:heading)
           @lat_lng_pair = args[:lat_lng_pair] if args.key?(:lat_lng_pair)
           @level = args[:level] if args.key?(:level)
           @pitch = args[:pitch] if args.key?(:pitch)
           @roll = args[:roll] if args.key?(:roll)
+        end
+      end
+      
+      # Additional details to accompany the ProcessingFailureReason enum. This message
+      # is always expected to be used in conjunction with ProcessingFailureReason, and
+      # the oneof value set in this message should match the FailureReason.
+      class ProcessingFailureDetails
+        include Google::Apis::Core::Hashable
+      
+        # Details related to ProcessingFailureReason#GPS_DATA_GAP. If there are multiple
+        # GPS data gaps, only the one with the largest duration is reported here.
+        # Corresponds to the JSON property `gpsDataGapDetails`
+        # @return [Google::Apis::StreetviewpublishV1::GpsDataGapFailureDetails]
+        attr_accessor :gps_data_gap_details
+      
+        # Details related to ProcessingFailureReason#IMU_DATA_GAP. If there are multiple
+        # IMU data gaps, only the one with the largest duration is reported here.
+        # Corresponds to the JSON property `imuDataGapDetails`
+        # @return [Google::Apis::StreetviewpublishV1::ImuDataGapFailureDetails]
+        attr_accessor :imu_data_gap_details
+      
+        # Details related to ProcessingFailureReason#INSUFFICIENT_GPS.
+        # Corresponds to the JSON property `insufficientGpsDetails`
+        # @return [Google::Apis::StreetviewpublishV1::InsufficientGpsFailureDetails]
+        attr_accessor :insufficient_gps_details
+      
+        # Details related to PhotoSequenceProcessingFailureReason#NO_OVERLAP_GPS.
+        # Corresponds to the JSON property `noOverlapGpsDetails`
+        # @return [Google::Apis::StreetviewpublishV1::NoOverlapGpsFailureDetails]
+        attr_accessor :no_overlap_gps_details
+      
+        # Details related to ProcessingFailureReason#NOT_OUTDOORS. If there are multiple
+        # indoor frames found, the first frame is recorded here.
+        # Corresponds to the JSON property `notOutdoorsDetails`
+        # @return [Google::Apis::StreetviewpublishV1::NotOutdoorsFailureDetails]
+        attr_accessor :not_outdoors_details
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gps_data_gap_details = args[:gps_data_gap_details] if args.key?(:gps_data_gap_details)
+          @imu_data_gap_details = args[:imu_data_gap_details] if args.key?(:imu_data_gap_details)
+          @insufficient_gps_details = args[:insufficient_gps_details] if args.key?(:insufficient_gps_details)
+          @no_overlap_gps_details = args[:no_overlap_gps_details] if args.key?(:no_overlap_gps_details)
+          @not_outdoors_details = args[:not_outdoors_details] if args.key?(:not_outdoors_details)
         end
       end
       
@@ -602,7 +1039,7 @@ module Google
         # metadata in this request. The update fails if invalid fields are specified.
         # Multiple fields can be specified in a comma-delimited list. The following
         # fields are valid: * `pose.heading` * `pose.latLngPair` * `pose.pitch` * `pose.
-        # roll` * `pose.level` * `pose.altitude` * `connections` * `places` *Note:* When
+        # roll` * `pose.level` * `pose.altitude` * `connections` * `places` > Note: When
         # updateMask contains repeated fields, the entire set of repeated values get
         # replaced with the new contents. For example, if updateMask contains `
         # connections` and `UpdatePhotoRequest.photo.connections` is empty, all

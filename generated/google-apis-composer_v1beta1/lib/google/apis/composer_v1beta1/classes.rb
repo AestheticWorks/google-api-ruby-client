@@ -57,18 +57,22 @@ module Google
       
         # The version of the software running in the environment. This encapsulates both
         # the version of Cloud Composer functionality and the version of Apache Airflow.
-        # It must match the regular expression `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-
-        # airflow-[0-9]+\.[0-9]+(\.[0-9]+.*)?`. When used as input, the server also
-        # checks if the provided version is supported and denies the request for an
-        # unsupported version. The Cloud Composer portion of the version is a [semantic
-        # version](https://semver.org) or `latest`. When the patch version is omitted,
-        # the current Cloud Composer patch version is selected. When `latest` is
-        # provided instead of an explicit version number, the server replaces `latest`
-        # with the current Cloud Composer version and stores that version number in the
-        # same field. The portion of the image version that follows `airflow-` is an
-        # official Apache Airflow repository [release name](https://github.com/apache/
-        # incubator-airflow/releases). See also [Version List] (/composer/docs/concepts/
-        # versioning/composer-versions).
+        # It must match the regular expression `composer-([0-9]+(\.[0-9]+\.[0-9]+(-
+        # preview\.[0-9]+)?)?|latest)-airflow-([0-9]+(\.[0-9]+(\.[0-9]+)?)?)`. When used
+        # as input, the server also checks if the provided version is supported and
+        # denies the request for an unsupported version. The Cloud Composer portion of
+        # the image version is a full [semantic version](https://semver.org), or an
+        # alias in the form of major version number or `latest`. When an alias is
+        # provided, the server replaces it with the current Cloud Composer version that
+        # satisfies the alias. The Apache Airflow portion of the image version is a full
+        # semantic version that points to one of the supported Apache Airflow versions,
+        # or an alias in the form of only major or major.minor versions specified. When
+        # an alias is provided, the server replaces it with the latest Apache Airflow
+        # version that satisfies the alias and is supported in the given Cloud Composer
+        # version. In all cases, the resolved image version is stored in the same field.
+        # See also [version list](/composer/docs/concepts/versioning/composer-versions)
+        # and [versioning overview](/composer/docs/concepts/versioning/composer-
+        # versioning-overview).
         # Corresponds to the JSON property `imageVersion`
         # @return [String]
         attr_accessor :image_version
@@ -128,15 +132,60 @@ module Google
         end
       end
       
+      # CIDR block with an optional name.
+      class CidrBlock
+        include Google::Apis::Core::Hashable
+      
+        # CIDR block that must be specified in CIDR notation.
+        # Corresponds to the JSON property `cidrBlock`
+        # @return [String]
+        attr_accessor :cidr_block
+      
+        # User-defined name that identifies the CIDR block.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cidr_block = args[:cidr_block] if args.key?(:cidr_block)
+          @display_name = args[:display_name] if args.key?(:display_name)
+        end
+      end
+      
+      # Configuration for Cloud Data Lineage integration.
+      class CloudDataLineageIntegration
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Whether or not Cloud Data Lineage integration is enabled.
+        # Corresponds to the JSON property `enabled`
+        # @return [Boolean]
+        attr_accessor :enabled
+        alias_method :enabled?, :enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enabled = args[:enabled] if args.key?(:enabled)
+        end
+      end
+      
       # The configuration of Cloud SQL instance that is used by the Apache Airflow
-      # software. Supported for Cloud Composer environments in versions composer-1.*.*-
-      # airflow-*.*.*.
+      # software.
       class DatabaseConfig
         include Google::Apis::Core::Hashable
       
         # Optional. Cloud SQL machine type used by Airflow database. It has to be one of:
         # db-n1-standard-2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. If
-        # not specified, db-n1-standard-2 will be used.
+        # not specified, db-n1-standard-2 will be used. Supported for Cloud Composer
+        # environments in versions composer-1.*.*-airflow-*.*.*.
         # Corresponds to the JSON property `machineType`
         # @return [String]
         attr_accessor :machine_type
@@ -154,11 +203,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -195,8 +244,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -315,8 +363,7 @@ module Google
         attr_accessor :dag_gcs_prefix
       
         # The configuration of Cloud SQL instance that is used by the Apache Airflow
-        # software. Supported for Cloud Composer environments in versions composer-1.*.*-
-        # airflow-*.*.*.
+        # software.
         # Corresponds to the JSON property `databaseConfig`
         # @return [Google::Apis::ComposerV1beta1::DatabaseConfig]
         attr_accessor :database_config
@@ -341,13 +388,21 @@ module Google
         attr_accessor :gke_cluster
       
         # The configuration settings for Cloud Composer maintenance window. The
-        # following example: ` "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-
-        # 01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" ` would define a
+        # following example: ``` ` "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-
+        # 01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" ` ``` would define a
         # maintenance window between 01 and 07 hours UTC during each Tuesday and
         # Wednesday.
         # Corresponds to the JSON property `maintenanceWindow`
         # @return [Google::Apis::ComposerV1beta1::MaintenanceWindow]
         attr_accessor :maintenance_window
+      
+        # Configuration options for the master authorized networks feature. Enabled
+        # master authorized networks will disallow all external traffic to access
+        # Kubernetes master through HTTPS except traffic from the given CIDR blocks,
+        # Google Compute Engine Public IPs and Google Prod IPs.
+        # Corresponds to the JSON property `masterAuthorizedNetworksConfig`
+        # @return [Google::Apis::ComposerV1beta1::MasterAuthorizedNetworksConfig]
+        attr_accessor :master_authorized_networks_config
       
         # The configuration information for the Kubernetes Engine nodes running the
         # Apache Airflow software.
@@ -368,6 +423,11 @@ module Google
         # @return [Google::Apis::ComposerV1beta1::PrivateEnvironmentConfig]
         attr_accessor :private_environment_config
       
+        # The Recovery settings of an environment.
+        # Corresponds to the JSON property `recoveryConfig`
+        # @return [Google::Apis::ComposerV1beta1::RecoveryConfig]
+        attr_accessor :recovery_config
+      
         # Specifies the selection and configuration of software inside the environment.
         # Corresponds to the JSON property `softwareConfig`
         # @return [Google::Apis::ComposerV1beta1::SoftwareConfig]
@@ -380,8 +440,7 @@ module Google
         # @return [Google::Apis::ComposerV1beta1::WebServerConfig]
         attr_accessor :web_server_config
       
-        # Network-level access control policy for the Airflow web server. Supported for
-        # Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+        # Network-level access control policy for the Airflow web server.
         # Corresponds to the JSON property `webServerNetworkAccessControl`
         # @return [Google::Apis::ComposerV1beta1::WebServerNetworkAccessControl]
         attr_accessor :web_server_network_access_control
@@ -406,13 +465,77 @@ module Google
           @environment_size = args[:environment_size] if args.key?(:environment_size)
           @gke_cluster = args[:gke_cluster] if args.key?(:gke_cluster)
           @maintenance_window = args[:maintenance_window] if args.key?(:maintenance_window)
+          @master_authorized_networks_config = args[:master_authorized_networks_config] if args.key?(:master_authorized_networks_config)
           @node_config = args[:node_config] if args.key?(:node_config)
           @node_count = args[:node_count] if args.key?(:node_count)
           @private_environment_config = args[:private_environment_config] if args.key?(:private_environment_config)
+          @recovery_config = args[:recovery_config] if args.key?(:recovery_config)
           @software_config = args[:software_config] if args.key?(:software_config)
           @web_server_config = args[:web_server_config] if args.key?(:web_server_config)
           @web_server_network_access_control = args[:web_server_network_access_control] if args.key?(:web_server_network_access_control)
           @workloads_config = args[:workloads_config] if args.key?(:workloads_config)
+        end
+      end
+      
+      # Response to ExecuteAirflowCommandRequest.
+      class ExecuteAirflowCommandResponse
+        include Google::Apis::Core::Hashable
+      
+        # Error message. Empty if there was no error.
+        # Corresponds to the JSON property `error`
+        # @return [String]
+        attr_accessor :error
+      
+        # The unique ID of the command execution for polling.
+        # Corresponds to the JSON property `executionId`
+        # @return [String]
+        attr_accessor :execution_id
+      
+        # The name of the pod where the command is executed.
+        # Corresponds to the JSON property `pod`
+        # @return [String]
+        attr_accessor :pod
+      
+        # The namespace of the pod where the command is executed.
+        # Corresponds to the JSON property `podNamespace`
+        # @return [String]
+        attr_accessor :pod_namespace
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @error = args[:error] if args.key?(:error)
+          @execution_id = args[:execution_id] if args.key?(:execution_id)
+          @pod = args[:pod] if args.key?(:pod)
+          @pod_namespace = args[:pod_namespace] if args.key?(:pod_namespace)
+        end
+      end
+      
+      # Information about how a command ended.
+      class ExitInfo
+        include Google::Apis::Core::Hashable
+      
+        # Error message. Empty if there was no error.
+        # Corresponds to the JSON property `error`
+        # @return [String]
+        attr_accessor :error
+      
+        # The exit code from the command execution.
+        # Corresponds to the JSON property `exitCode`
+        # @return [Fixnum]
+        attr_accessor :exit_code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @error = args[:error] if args.key?(:error)
+          @exit_code = args[:exit_code] if args.key?(:exit_code)
         end
       end
       
@@ -498,7 +621,7 @@ module Google
         alias_method :creation_disabled?, :creation_disabled
       
         # The string identifier of the ImageVersion, in the form: "composer-x.y.z-
-        # airflow-a.b(.c)"
+        # airflow-a.b.c"
         # Corresponds to the JSON property `imageVersionId`
         # @return [String]
         attr_accessor :image_version_id
@@ -513,11 +636,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `releaseDate`
         # @return [Google::Apis::ComposerV1beta1::Date]
         attr_accessor :release_date
@@ -546,6 +669,31 @@ module Google
           @release_date = args[:release_date] if args.key?(:release_date)
           @supported_python_versions = args[:supported_python_versions] if args.key?(:supported_python_versions)
           @upgrade_disabled = args[:upgrade_disabled] if args.key?(:upgrade_disabled)
+        end
+      end
+      
+      # Contains information about a single line from logs.
+      class Line
+        include Google::Apis::Core::Hashable
+      
+        # Text content of the log line.
+        # Corresponds to the JSON property `content`
+        # @return [String]
+        attr_accessor :content
+      
+        # Number of the line.
+        # Corresponds to the JSON property `lineNumber`
+        # @return [Fixnum]
+        attr_accessor :line_number
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content = args[:content] if args.key?(:content)
+          @line_number = args[:line_number] if args.key?(:line_number)
         end
       end
       
@@ -624,9 +772,74 @@ module Google
         end
       end
       
+      # Request to load a snapshot into a Cloud Composer environment.
+      class LoadSnapshotRequest
+        include Google::Apis::Core::Hashable
+      
+        # Whether or not to skip setting Airflow overrides when loading the environment'
+        # s state.
+        # Corresponds to the JSON property `skipAirflowOverridesSetting`
+        # @return [Boolean]
+        attr_accessor :skip_airflow_overrides_setting
+        alias_method :skip_airflow_overrides_setting?, :skip_airflow_overrides_setting
+      
+        # Whether or not to skip setting environment variables when loading the
+        # environment's state.
+        # Corresponds to the JSON property `skipEnvironmentVariablesSetting`
+        # @return [Boolean]
+        attr_accessor :skip_environment_variables_setting
+        alias_method :skip_environment_variables_setting?, :skip_environment_variables_setting
+      
+        # Whether or not to skip copying Cloud Storage data when loading the environment'
+        # s state.
+        # Corresponds to the JSON property `skipGcsDataCopying`
+        # @return [Boolean]
+        attr_accessor :skip_gcs_data_copying
+        alias_method :skip_gcs_data_copying?, :skip_gcs_data_copying
+      
+        # Whether or not to skip installing Pypi packages when loading the environment's
+        # state.
+        # Corresponds to the JSON property `skipPypiPackagesInstallation`
+        # @return [Boolean]
+        attr_accessor :skip_pypi_packages_installation
+        alias_method :skip_pypi_packages_installation?, :skip_pypi_packages_installation
+      
+        # A Cloud Storage path to a snapshot to load, e.g.: "gs://my-bucket/snapshots/
+        # project_location_environment_timestamp".
+        # Corresponds to the JSON property `snapshotPath`
+        # @return [String]
+        attr_accessor :snapshot_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @skip_airflow_overrides_setting = args[:skip_airflow_overrides_setting] if args.key?(:skip_airflow_overrides_setting)
+          @skip_environment_variables_setting = args[:skip_environment_variables_setting] if args.key?(:skip_environment_variables_setting)
+          @skip_gcs_data_copying = args[:skip_gcs_data_copying] if args.key?(:skip_gcs_data_copying)
+          @skip_pypi_packages_installation = args[:skip_pypi_packages_installation] if args.key?(:skip_pypi_packages_installation)
+          @snapshot_path = args[:snapshot_path] if args.key?(:snapshot_path)
+        end
+      end
+      
+      # Response to LoadSnapshotRequest.
+      class LoadSnapshotResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # The configuration settings for Cloud Composer maintenance window. The
-      # following example: ` "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-
-      # 01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" ` would define a
+      # following example: ``` ` "startTime":"2019-08-01T01:00:00Z" "endTime":"2019-08-
+      # 01T07:00:00Z" "recurrence":"FREQ=WEEKLY;BYDAY=TU,WE" ` ``` would define a
       # maintenance window between 01 and 07 hours UTC during each Tuesday and
       # Wednesday.
       class MaintenanceWindow
@@ -664,12 +877,62 @@ module Google
         end
       end
       
+      # Configuration options for the master authorized networks feature. Enabled
+      # master authorized networks will disallow all external traffic to access
+      # Kubernetes master through HTTPS except traffic from the given CIDR blocks,
+      # Google Compute Engine Public IPs and Google Prod IPs.
+      class MasterAuthorizedNetworksConfig
+        include Google::Apis::Core::Hashable
+      
+        # Up to 50 external networks that could access Kubernetes master through HTTPS.
+        # Corresponds to the JSON property `cidrBlocks`
+        # @return [Array<Google::Apis::ComposerV1beta1::CidrBlock>]
+        attr_accessor :cidr_blocks
+      
+        # Whether or not master authorized networks feature is enabled.
+        # Corresponds to the JSON property `enabled`
+        # @return [Boolean]
+        attr_accessor :enabled
+        alias_method :enabled?, :enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cidr_blocks = args[:cidr_blocks] if args.key?(:cidr_blocks)
+          @enabled = args[:enabled] if args.key?(:enabled)
+        end
+      end
+      
+      # Configuration options for networking connections in the Composer 2 environment.
+      class NetworkingConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Indicates the user requested specifc connection type between Tenant
+        # and Customer projects. You cannot set networking connection type in public IP
+        # environment.
+        # Corresponds to the JSON property `connectionType`
+        # @return [String]
+        attr_accessor :connection_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @connection_type = args[:connection_type] if args.key?(:connection_type)
+        end
+      end
+      
       # The configuration information for the Kubernetes Engine nodes running the
       # Apache Airflow software.
       class NodeConfig
         include Google::Apis::Core::Hashable
       
-        # Optional. The disk size in GB used for node VMs. Minimum size is 20GB. If
+        # Optional. The disk size in GB used for node VMs. Minimum size is 30GB. If
         # unspecified, defaults to 100GB. Cannot be updated. This field is supported for
         # Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
         # Corresponds to the JSON property `diskSizeGb`
@@ -779,8 +1042,7 @@ module Google
         # Optional. The list of instance tags applied to all node VMs. Tags are used to
         # identify valid sources or targets for network firewalls. Each tag within the
         # list must comply with [RFC1035](https://www.ietf.org/rfc/rfc1035.txt). Cannot
-        # be updated. This field is supported for Cloud Composer environments in
-        # versions composer-1.*.*-airflow-*.*.*.
+        # be updated.
         # Corresponds to the JSON property `tags`
         # @return [Array<String>]
         attr_accessor :tags
@@ -918,6 +1180,39 @@ module Google
         end
       end
       
+      # Response to PollAirflowCommandRequest.
+      class PollAirflowCommandResponse
+        include Google::Apis::Core::Hashable
+      
+        # Information about how a command ended.
+        # Corresponds to the JSON property `exitInfo`
+        # @return [Google::Apis::ComposerV1beta1::ExitInfo]
+        attr_accessor :exit_info
+      
+        # Output from the command execution. It may not contain the full output and the
+        # caller may need to poll for more lines.
+        # Corresponds to the JSON property `output`
+        # @return [Array<Google::Apis::ComposerV1beta1::Line>]
+        attr_accessor :output
+      
+        # Whether the command execution has finished and there is no more output.
+        # Corresponds to the JSON property `outputEnd`
+        # @return [Boolean]
+        attr_accessor :output_end
+        alias_method :output_end?, :output_end
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @exit_info = args[:exit_info] if args.key?(:exit_info)
+          @output = args[:output] if args.key?(:output)
+          @output_end = args[:output_end] if args.key?(:output_end)
+        end
+      end
+      
       # Configuration options for the private GKE cluster in a Cloud Composer
       # environment.
       class PrivateClusterConfig
@@ -962,6 +1257,14 @@ module Google
       class PrivateEnvironmentConfig
         include Google::Apis::Core::Hashable
       
+        # Optional. When specified, the environment will use Private Service Connect
+        # instead of VPC peerings to connect to Cloud SQL in the Tenant Project, and the
+        # PSC endpoint in the Customer Project will use an IP address from this
+        # subnetwork.
+        # Corresponds to the JSON property `cloudComposerConnectionSubnetwork`
+        # @return [String]
+        attr_accessor :cloud_composer_connection_subnetwork
+      
         # Optional. The CIDR block from which IP range for Cloud Composer Network in
         # tenant project will be reserved. Needs to be disjoint from
         # private_cluster_config.master_ipv4_cidr_block and cloud_sql_ipv4_cidr_block.
@@ -1000,6 +1303,11 @@ module Google
         attr_accessor :enable_privately_used_public_ips
         alias_method :enable_privately_used_public_ips?, :enable_privately_used_public_ips
       
+        # Configuration options for networking connections in the Composer 2 environment.
+        # Corresponds to the JSON property `networkingConfig`
+        # @return [Google::Apis::ComposerV1beta1::NetworkingConfig]
+        attr_accessor :networking_config
+      
         # Configuration options for the private GKE cluster in a Cloud Composer
         # environment.
         # Corresponds to the JSON property `privateClusterConfig`
@@ -1027,14 +1335,35 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cloud_composer_connection_subnetwork = args[:cloud_composer_connection_subnetwork] if args.key?(:cloud_composer_connection_subnetwork)
           @cloud_composer_network_ipv4_cidr_block = args[:cloud_composer_network_ipv4_cidr_block] if args.key?(:cloud_composer_network_ipv4_cidr_block)
           @cloud_composer_network_ipv4_reserved_range = args[:cloud_composer_network_ipv4_reserved_range] if args.key?(:cloud_composer_network_ipv4_reserved_range)
           @cloud_sql_ipv4_cidr_block = args[:cloud_sql_ipv4_cidr_block] if args.key?(:cloud_sql_ipv4_cidr_block)
           @enable_private_environment = args[:enable_private_environment] if args.key?(:enable_private_environment)
           @enable_privately_used_public_ips = args[:enable_privately_used_public_ips] if args.key?(:enable_privately_used_public_ips)
+          @networking_config = args[:networking_config] if args.key?(:networking_config)
           @private_cluster_config = args[:private_cluster_config] if args.key?(:private_cluster_config)
           @web_server_ipv4_cidr_block = args[:web_server_ipv4_cidr_block] if args.key?(:web_server_ipv4_cidr_block)
           @web_server_ipv4_reserved_range = args[:web_server_ipv4_reserved_range] if args.key?(:web_server_ipv4_reserved_range)
+        end
+      end
+      
+      # The Recovery settings of an environment.
+      class RecoveryConfig
+        include Google::Apis::Core::Hashable
+      
+        # The configuration for scheduled snapshot creation mechanism.
+        # Corresponds to the JSON property `scheduledSnapshotsConfig`
+        # @return [Google::Apis::ComposerV1beta1::ScheduledSnapshotsConfig]
+        attr_accessor :scheduled_snapshots_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @scheduled_snapshots_config = args[:scheduled_snapshots_config] if args.key?(:scheduled_snapshots_config)
         end
       end
       
@@ -1048,6 +1377,89 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # Request to create a snapshot of a Cloud Composer environment.
+      class SaveSnapshotRequest
+        include Google::Apis::Core::Hashable
+      
+        # Location in a Cloud Storage where the snapshot is going to be stored, e.g.: "
+        # gs://my-bucket/snapshots".
+        # Corresponds to the JSON property `snapshotLocation`
+        # @return [String]
+        attr_accessor :snapshot_location
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @snapshot_location = args[:snapshot_location] if args.key?(:snapshot_location)
+        end
+      end
+      
+      # Response to SaveSnapshotRequest.
+      class SaveSnapshotResponse
+        include Google::Apis::Core::Hashable
+      
+        # The fully-resolved Cloud Storage path of the created snapshot, e.g.: "gs://my-
+        # bucket/snapshots/project_location_environment_timestamp". This field is
+        # populated only if the snapshot creation was successful.
+        # Corresponds to the JSON property `snapshotPath`
+        # @return [String]
+        attr_accessor :snapshot_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @snapshot_path = args[:snapshot_path] if args.key?(:snapshot_path)
+        end
+      end
+      
+      # The configuration for scheduled snapshot creation mechanism.
+      class ScheduledSnapshotsConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Whether scheduled snapshots creation is enabled.
+        # Corresponds to the JSON property `enabled`
+        # @return [Boolean]
+        attr_accessor :enabled
+        alias_method :enabled?, :enabled
+      
+        # Optional. The cron expression representing the time when snapshots creation
+        # mechanism runs. This field is subject to additional validation around
+        # frequency of execution.
+        # Corresponds to the JSON property `snapshotCreationSchedule`
+        # @return [String]
+        attr_accessor :snapshot_creation_schedule
+      
+        # Optional. The Cloud Storage location for storing automatically created
+        # snapshots.
+        # Corresponds to the JSON property `snapshotLocation`
+        # @return [String]
+        attr_accessor :snapshot_location
+      
+        # Optional. Time zone that sets the context to interpret
+        # snapshot_creation_schedule.
+        # Corresponds to the JSON property `timeZone`
+        # @return [String]
+        attr_accessor :time_zone
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enabled = args[:enabled] if args.key?(:enabled)
+          @snapshot_creation_schedule = args[:snapshot_creation_schedule] if args.key?(:snapshot_creation_schedule)
+          @snapshot_location = args[:snapshot_location] if args.key?(:snapshot_location)
+          @time_zone = args[:time_zone] if args.key?(:time_zone)
         end
       end
       
@@ -1108,6 +1520,11 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :airflow_config_overrides
       
+        # Configuration for Cloud Data Lineage integration.
+        # Corresponds to the JSON property `cloudDataLineageIntegration`
+        # @return [Google::Apis::ComposerV1beta1::CloudDataLineageIntegration]
+        attr_accessor :cloud_data_lineage_integration
+      
         # Optional. Additional environment variables to provide to the Apache Airflow
         # scheduler, worker, and webserver processes. Environment variable names must
         # match the regular expression `a-zA-Z_*`. They cannot specify Apache Airflow
@@ -1123,18 +1540,22 @@ module Google
       
         # The version of the software running in the environment. This encapsulates both
         # the version of Cloud Composer functionality and the version of Apache Airflow.
-        # It must match the regular expression `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-
-        # airflow-[0-9]+\.[0-9]+(\.[0-9]+.*)?`. When used as input, the server also
-        # checks if the provided version is supported and denies the request for an
-        # unsupported version. The Cloud Composer portion of the version is a [semantic
-        # version](https://semver.org) or `latest`. When the patch version is omitted,
-        # the current Cloud Composer patch version is selected. When `latest` is
-        # provided instead of an explicit version number, the server replaces `latest`
-        # with the current Cloud Composer version and stores that version number in the
-        # same field. The portion of the image version that follows *airflow-* is an
-        # official Apache Airflow repository [release name](https://github.com/apache/
-        # incubator-airflow/releases). See also [Version List](/composer/docs/concepts/
-        # versioning/composer-versions).
+        # It must match the regular expression `composer-([0-9]+(\.[0-9]+\.[0-9]+(-
+        # preview\.[0-9]+)?)?|latest)-airflow-([0-9]+(\.[0-9]+(\.[0-9]+)?)?)`. When used
+        # as input, the server also checks if the provided version is supported and
+        # denies the request for an unsupported version. The Cloud Composer portion of
+        # the image version is a full [semantic version](https://semver.org), or an
+        # alias in the form of major version number or `latest`. When an alias is
+        # provided, the server replaces it with the current Cloud Composer version that
+        # satisfies the alias. The Apache Airflow portion of the image version is a full
+        # semantic version that points to one of the supported Apache Airflow versions,
+        # or an alias in the form of only major or major.minor versions specified. When
+        # an alias is provided, the server replaces it with the latest Apache Airflow
+        # version that satisfies the alias and is supported in the given Cloud Composer
+        # version. In all cases, the resolved image version is stored in the same field.
+        # See also [version list](/composer/docs/concepts/versioning/composer-versions)
+        # and [versioning overview](/composer/docs/concepts/versioning/composer-
+        # versioning-overview).
         # Corresponds to the JSON property `imageVersion`
         # @return [String]
         attr_accessor :image_version
@@ -1170,6 +1591,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @airflow_config_overrides = args[:airflow_config_overrides] if args.key?(:airflow_config_overrides)
+          @cloud_data_lineage_integration = args[:cloud_data_lineage_integration] if args.key?(:cloud_data_lineage_integration)
           @env_variables = args[:env_variables] if args.key?(:env_variables)
           @image_version = args[:image_version] if args.key?(:image_version)
           @pypi_packages = args[:pypi_packages] if args.key?(:pypi_packages)
@@ -1217,6 +1639,37 @@ module Google
         end
       end
       
+      # Configuration for resources used by Airflow triggerers.
+      class TriggererResource
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The number of triggerers.
+        # Corresponds to the JSON property `count`
+        # @return [Fixnum]
+        attr_accessor :count
+      
+        # Optional. CPU request and limit for a single Airflow triggerer replica.
+        # Corresponds to the JSON property `cpu`
+        # @return [Float]
+        attr_accessor :cpu
+      
+        # Optional. Memory (GB) request and limit for a single Airflow triggerer replica.
+        # Corresponds to the JSON property `memoryGb`
+        # @return [Float]
+        attr_accessor :memory_gb
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @count = args[:count] if args.key?(:count)
+          @cpu = args[:cpu] if args.key?(:cpu)
+          @memory_gb = args[:memory_gb] if args.key?(:memory_gb)
+        end
+      end
+      
       # The configuration settings for the Airflow web server App Engine instance.
       # Supported for Cloud Composer environments in versions composer-1.*.*-airflow-*.
       # *.*.
@@ -1242,8 +1695,7 @@ module Google
         end
       end
       
-      # Network-level access control policy for the Airflow web server. Supported for
-      # Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*.
+      # Network-level access control policy for the Airflow web server.
       class WebServerNetworkAccessControl
         include Google::Apis::Core::Hashable
       
@@ -1347,6 +1799,11 @@ module Google
         # @return [Google::Apis::ComposerV1beta1::SchedulerResource]
         attr_accessor :scheduler
       
+        # Configuration for resources used by Airflow triggerers.
+        # Corresponds to the JSON property `triggerer`
+        # @return [Google::Apis::ComposerV1beta1::TriggererResource]
+        attr_accessor :triggerer
+      
         # Configuration for resources used by Airflow web server.
         # Corresponds to the JSON property `webServer`
         # @return [Google::Apis::ComposerV1beta1::WebServerResource]
@@ -1364,6 +1821,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @scheduler = args[:scheduler] if args.key?(:scheduler)
+          @triggerer = args[:triggerer] if args.key?(:triggerer)
           @web_server = args[:web_server] if args.key?(:web_server)
           @worker = args[:worker] if args.key?(:worker)
         end

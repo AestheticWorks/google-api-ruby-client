@@ -344,12 +344,13 @@ module Google
         # @return [String]
         attr_accessor :image_uri
       
-        # Optional. A list of keys of filterable Job.custom_attributes, whose
-        # corresponding `string_values` are used in keyword search. Jobs with `
-        # string_values` under these specified field keys are returned if any of the
-        # values matches the search keyword. Custom field values with parenthesis,
-        # brackets and special symbols won't be properly searchable, and those keyword
-        # queries need to be surrounded by quotes.
+        # Optional. This field is deprecated. Please set the searchability of the custom
+        # attribute in the Job.custom_attributes going forward. A list of keys of
+        # filterable Job.custom_attributes, whose corresponding `string_values` are used
+        # in keyword search. Jobs with `string_values` under these specified field keys
+        # are returned if any of the values matches the search keyword. Custom field
+        # values with parenthesis, brackets and special symbols won't be properly
+        # searchable, and those keyword queries need to be surrounded by quotes.
         # Corresponds to the JSON property `keywordSearchableJobCustomAttributes`
         # @return [Array<String>]
         attr_accessor :keyword_searchable_job_custom_attributes
@@ -900,8 +901,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1365,11 +1365,19 @@ module Google
         # @return [Google::Apis::JobsV3::CommuteFilter]
         attr_accessor :commute_filter
       
-        # Optional. This filter specifies the exact company display name of the jobs to
-        # search against. If a value isn't specified, jobs within the search results are
-        # associated with any company. If multiple values are specified, jobs within the
-        # search results may be associated with any of the specified companies. At most
-        # 20 company display name filters are allowed.
+        # Optional. This filter specifies the company Company.display_name of the jobs
+        # to search against. The company name must match the value exactly.
+        # Alternatively, the value being searched for can be wrapped in different match
+        # operators. `SUBSTRING_MATCH([value])` The company name must contain a case
+        # insensitive substring match of the value. Using this function may increase
+        # latency. Sample Value: `SUBSTRING_MATCH(google)` `MULTI_WORD_TOKEN_MATCH([
+        # value])` The value will be treated as a multi word token and the company name
+        # must contain a case insensitive match of the value. Using this function may
+        # increase latency. Sample Value: `MULTI_WORD_TOKEN_MATCH(google)` If a value
+        # isn't specified, jobs within the search results are associated with any
+        # company. If multiple values are specified, jobs within the search results may
+        # be associated with any of the specified companies. At most 20 company display
+        # name filters are allowed.
         # Corresponds to the JSON property `companyDisplayNames`
         # @return [Array<String>]
         attr_accessor :company_display_names
@@ -1612,11 +1620,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `postalAddress`
         # @return [Google::Apis::JobsV3::PostalAddress]
         attr_accessor :postal_address
@@ -1683,16 +1691,18 @@ module Google
       
         # Optional. Allows the client to return jobs without a set location,
         # specifically, telecommuting jobs (telecommuting is considered by the service
-        # as a special location. Job.posting_region indicates if a job permits
+        # as a special location). Job.posting_region indicates if a job permits
         # telecommuting. If this field is set to TelecommutePreference.
         # TELECOMMUTE_ALLOWED, telecommuting jobs are searched, and address and lat_lng
         # are ignored. If not set or set to TelecommutePreference.TELECOMMUTE_EXCLUDED,
-        # telecommute job are not searched. This filter can be used by itself to search
-        # exclusively for telecommuting jobs, or it can be combined with another
-        # location filter to search for a combination of job locations, such as "
-        # Mountain View" or "telecommuting" jobs. However, when used in combination with
-        # other location filters, telecommuting jobs can be treated as less relevant
-        # than other jobs in the search response.
+        # the telecommute status of the jobs is ignored. Jobs that have PostingRegion.
+        # TELECOMMUTE and have additional Job.addresses may still be matched based on
+        # other location filters using address or latlng. This filter can be used by
+        # itself to search exclusively for telecommuting jobs, or it can be combined
+        # with another location filter to search for a combination of job locations,
+        # such as "Mountain View" or "telecommuting" jobs. However, when used in
+        # combination with other location filters, telecommuting jobs can be treated as
+        # less relevant than other jobs in the search response.
         # Corresponds to the JSON property `telecommutePreference`
         # @return [String]
         attr_accessor :telecommute_preference
@@ -1824,7 +1834,7 @@ module Google
         end
       end
       
-      # Next ID: 15
+      # Next ID: 16
       class NamespacedDebugInput
         include Google::Apis::Core::Hashable
       
@@ -1868,7 +1878,8 @@ module Google
         # If true, disable automatic enrollment selection (at all diversion points).
         # Automatic enrollment selection means experiment selection process based on the
         # experiment's automatic enrollment condition. This does not disable selection
-        # of forced experiments.
+        # of forced experiments. Setting this field to false does not change anything in
+        # the experiment selection process.
         # Corresponds to the JSON property `disableAutomaticEnrollmentSelection`
         # @return [Boolean]
         attr_accessor :disable_automatic_enrollment_selection
@@ -1906,7 +1917,8 @@ module Google
         # If true, disable manual enrollment selection (at all diversion points). Manual
         # enrollment selection means experiment selection process based on the request's
         # manual enrollment states (a.k.a. opt-in experiments). This does not disable
-        # selection of forced experiments.
+        # selection of forced experiments. Setting this field to false does not change
+        # anything in the experiment selection process.
         # Corresponds to the JSON property `disableManualEnrollmentSelection`
         # @return [Boolean]
         attr_accessor :disable_manual_enrollment_selection
@@ -1918,6 +1930,8 @@ module Google
         # of forced experiments. This is useful in cases when it is not known whether
         # experiment selection behavior is responsible for a error or breakage.
         # Disabling organic selection may help to isolate the cause of a given problem.
+        # Setting this field to false does not change anything in the experiment
+        # selection process.
         # Corresponds to the JSON property `disableOrganicSelection`
         # @return [Boolean]
         attr_accessor :disable_organic_selection
@@ -1934,6 +1948,12 @@ module Google
         # Corresponds to the JSON property `forcedRollouts`
         # @return [Hash<String,Boolean>]
         attr_accessor :forced_rollouts
+      
+        # Sets different testing modes. See the documentation in the TestingMode message
+        # for more information.
+        # Corresponds to the JSON property `testingMode`
+        # @return [String]
+        attr_accessor :testing_mode
       
         def initialize(**args)
            update!(**args)
@@ -1955,6 +1975,7 @@ module Google
           @disable_organic_selection = args[:disable_organic_selection] if args.key?(:disable_organic_selection)
           @forced_flags = args[:forced_flags] if args.key?(:forced_flags)
           @forced_rollouts = args[:forced_rollouts] if args.key?(:forced_rollouts)
+          @testing_mode = args[:testing_mode] if args.key?(:testing_mode)
         end
       end
       
@@ -2028,11 +2049,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -2107,8 +2128,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]

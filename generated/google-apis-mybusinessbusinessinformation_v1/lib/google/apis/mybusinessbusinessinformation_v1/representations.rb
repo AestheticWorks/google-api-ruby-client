@@ -584,6 +584,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :can_delete, as: 'canDelete'
+          property :can_have_business_calls, as: 'canHaveBusinessCalls'
           property :can_have_food_menus, as: 'canHaveFoodMenus'
           property :can_modify_service_list, as: 'canModifyServiceList'
           property :can_operate_health_data, as: 'canOperateHealthData'
@@ -592,6 +593,7 @@ module Google
           property :duplicate_location, as: 'duplicateLocation'
           property :has_google_updated, as: 'hasGoogleUpdated'
           property :has_pending_edits, as: 'hasPendingEdits'
+          property :has_voice_of_merchant, as: 'hasVoiceOfMerchant'
           property :maps_uri, as: 'mapsUri'
           property :new_review_uri, as: 'newReviewUri'
           property :place_id, as: 'placeId'

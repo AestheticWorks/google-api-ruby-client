@@ -28,6 +28,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AnalysisCompleted
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AnalyzePackagesMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -83,6 +89,12 @@ module Google
       end
       
       class BuilderConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Cvss
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -160,6 +172,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FileLocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Fingerprint
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -173,6 +191,48 @@ module Google
       end
       
       class GitSourceContext
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1FileLocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -214,7 +274,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class LanguagePackageDependency
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Layer
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class License
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -233,6 +305,12 @@ module Google
       end
       
       class Location
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Material
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -310,6 +388,42 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SlsaBuilder
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaCompleteness
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaProvenance
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaProvenanceZeroTwo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SlsaRecipe
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Source
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -369,6 +483,13 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :kind, as: 'kind'
           property :name, as: 'name'
+        end
+      end
+      
+      class AnalysisCompleted
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :analysis_type, as: 'analysisType'
         end
       end
       
@@ -437,6 +558,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :intoto_provenance, as: 'intotoProvenance', class: Google::Apis::OndemandscanningV1::InTotoProvenance, decorator: Google::Apis::OndemandscanningV1::InTotoProvenance::Representation
       
+          property :intoto_statement, as: 'intotoStatement', class: Google::Apis::OndemandscanningV1::InTotoStatement, decorator: Google::Apis::OndemandscanningV1::InTotoStatement::Representation
+      
           property :provenance, as: 'provenance', class: Google::Apis::OndemandscanningV1::BuildProvenance, decorator: Google::Apis::OndemandscanningV1::BuildProvenance::Representation
       
           property :provenance_bytes, as: 'provenanceBytes'
@@ -469,6 +592,24 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :id, as: 'id'
+        end
+      end
+      
+      class Cvss
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :attack_complexity, as: 'attackComplexity'
+          property :attack_vector, as: 'attackVector'
+          property :authentication, as: 'authentication'
+          property :availability_impact, as: 'availabilityImpact'
+          property :base_score, as: 'baseScore'
+          property :confidentiality_impact, as: 'confidentialityImpact'
+          property :exploitability_score, as: 'exploitabilityScore'
+          property :impact_score, as: 'impactScore'
+          property :integrity_impact, as: 'integrityImpact'
+          property :privileges_required, as: 'privilegesRequired'
+          property :scope, as: 'scope'
+          property :user_interaction, as: 'userInteraction'
         end
       end
       
@@ -547,9 +688,14 @@ module Google
       class DiscoveryOccurrence
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :analysis_completed, as: 'analysisCompleted', class: Google::Apis::OndemandscanningV1::AnalysisCompleted, decorator: Google::Apis::OndemandscanningV1::AnalysisCompleted::Representation
+      
+          collection :analysis_error, as: 'analysisError', class: Google::Apis::OndemandscanningV1::Status, decorator: Google::Apis::OndemandscanningV1::Status::Representation
+      
           property :analysis_status, as: 'analysisStatus'
           property :analysis_status_error, as: 'analysisStatusError', class: Google::Apis::OndemandscanningV1::Status, decorator: Google::Apis::OndemandscanningV1::Status::Representation
       
+          property :archive_time, as: 'archiveTime'
           property :continuous_analysis, as: 'continuousAnalysis'
           property :cpe, as: 'cpe'
           property :last_scan_time, as: 'lastScanTime'
@@ -588,6 +734,13 @@ module Google
         end
       end
       
+      class FileLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_path, as: 'filePath'
+        end
+      end
+      
       class Fingerprint
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -613,6 +766,68 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :revision_id, as: 'revisionId'
           property :url, as: 'url'
+        end
+      end
+      
+      class GrafeasV1FileLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :file_path, as: 'filePath'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :environment, as: 'environment'
+          property :materials, as: 'materials'
+          property :parameters, as: 'parameters'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :entry_point, as: 'entryPoint'
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config_source, as: 'configSource', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource::Representation
+      
+          hash :environment, as: 'environment'
+          hash :parameters, as: 'parameters'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :build_finished_on, as: 'buildFinishedOn'
+          property :build_invocation_id, as: 'buildInvocationId'
+          property :build_started_on, as: 'buildStartedOn'
+          property :completeness, as: 'completeness', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness::Representation
+      
+          property :reproducible, as: 'reproducible'
         end
       end
       
@@ -660,12 +875,16 @@ module Google
       class InTotoStatement
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :_type, as: '_type'
           property :predicate_type, as: 'predicateType'
           property :provenance, as: 'provenance', class: Google::Apis::OndemandscanningV1::InTotoProvenance, decorator: Google::Apis::OndemandscanningV1::InTotoProvenance::Representation
       
+          property :slsa_provenance, as: 'slsaProvenance', class: Google::Apis::OndemandscanningV1::SlsaProvenance, decorator: Google::Apis::OndemandscanningV1::SlsaProvenance::Representation
+      
+          property :slsa_provenance_zero_two, as: 'slsaProvenanceZeroTwo', class: Google::Apis::OndemandscanningV1::SlsaProvenanceZeroTwo, decorator: Google::Apis::OndemandscanningV1::SlsaProvenanceZeroTwo::Representation
+      
           collection :subject, as: 'subject', class: Google::Apis::OndemandscanningV1::Subject, decorator: Google::Apis::OndemandscanningV1::Subject::Representation
       
-          property :type, as: 'type'
         end
       end
       
@@ -676,11 +895,27 @@ module Google
         end
       end
       
+      class LanguagePackageDependency
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :package, as: 'package'
+          property :version, as: 'version'
+        end
+      end
+      
       class Layer
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :arguments, as: 'arguments'
           property :directive, as: 'directive'
+        end
+      end
+      
+      class License
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :comments, as: 'comments'
+          property :expression, as: 'expression'
         end
       end
       
@@ -709,6 +944,14 @@ module Google
           property :path, as: 'path'
           property :version, as: 'version', class: Google::Apis::OndemandscanningV1::Version, decorator: Google::Apis::OndemandscanningV1::Version::Representation
       
+        end
+      end
+      
+      class Material
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :digest, as: 'digest'
+          property :uri, as: 'uri'
         end
       end
       
@@ -784,10 +1027,16 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cpe_uri, as: 'cpeUri'
+          collection :dependency_chain, as: 'dependencyChain', class: Google::Apis::OndemandscanningV1::LanguagePackageDependency, decorator: Google::Apis::OndemandscanningV1::LanguagePackageDependency::Representation
+      
+          collection :file_location, as: 'fileLocation', class: Google::Apis::OndemandscanningV1::FileLocation, decorator: Google::Apis::OndemandscanningV1::FileLocation::Representation
+      
+          property :hash_digest, as: 'hashDigest'
           property :os, as: 'os'
           property :os_version, as: 'osVersion'
           property :package, as: 'package'
           property :package_type, as: 'packageType'
+          collection :patched_cve, as: 'patchedCve'
           property :unused, as: 'unused'
           property :version, as: 'version'
         end
@@ -801,6 +1050,8 @@ module Google
           property :affected_version, as: 'affectedVersion', class: Google::Apis::OndemandscanningV1::Version, decorator: Google::Apis::OndemandscanningV1::Version::Representation
       
           property :effective_severity, as: 'effectiveSeverity'
+          collection :file_location, as: 'fileLocation', class: Google::Apis::OndemandscanningV1::GrafeasV1FileLocation, decorator: Google::Apis::OndemandscanningV1::GrafeasV1FileLocation::Representation
+      
           property :fix_available, as: 'fixAvailable'
           property :fixed_cpe_uri, as: 'fixedCpeUri'
           property :fixed_package, as: 'fixedPackage'
@@ -813,9 +1064,16 @@ module Google
       class PackageOccurrence
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :architecture, as: 'architecture'
+          property :cpe_uri, as: 'cpeUri'
+          property :license, as: 'license', class: Google::Apis::OndemandscanningV1::License, decorator: Google::Apis::OndemandscanningV1::License::Representation
+      
           collection :location, as: 'location', class: Google::Apis::OndemandscanningV1::Location, decorator: Google::Apis::OndemandscanningV1::Location::Representation
       
           property :name, as: 'name'
+          property :package_type, as: 'packageType'
+          property :version, as: 'version', class: Google::Apis::OndemandscanningV1::Version, decorator: Google::Apis::OndemandscanningV1::Version::Representation
+      
         end
       end
       
@@ -860,6 +1118,75 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :public_key_id, as: 'publicKeyId'
           property :signature, :base64 => true, as: 'signature'
+        end
+      end
+      
+      class SlsaBuilder
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+        end
+      end
+      
+      class SlsaCompleteness
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :arguments, as: 'arguments'
+          property :environment, as: 'environment'
+          property :materials, as: 'materials'
+        end
+      end
+      
+      class SlsaMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :build_finished_on, as: 'buildFinishedOn'
+          property :build_invocation_id, as: 'buildInvocationId'
+          property :build_started_on, as: 'buildStartedOn'
+          property :completeness, as: 'completeness', class: Google::Apis::OndemandscanningV1::SlsaCompleteness, decorator: Google::Apis::OndemandscanningV1::SlsaCompleteness::Representation
+      
+          property :reproducible, as: 'reproducible'
+        end
+      end
+      
+      class SlsaProvenance
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :builder, as: 'builder', class: Google::Apis::OndemandscanningV1::SlsaBuilder, decorator: Google::Apis::OndemandscanningV1::SlsaBuilder::Representation
+      
+          collection :materials, as: 'materials', class: Google::Apis::OndemandscanningV1::Material, decorator: Google::Apis::OndemandscanningV1::Material::Representation
+      
+          property :metadata, as: 'metadata', class: Google::Apis::OndemandscanningV1::SlsaMetadata, decorator: Google::Apis::OndemandscanningV1::SlsaMetadata::Representation
+      
+          property :recipe, as: 'recipe', class: Google::Apis::OndemandscanningV1::SlsaRecipe, decorator: Google::Apis::OndemandscanningV1::SlsaRecipe::Representation
+      
+        end
+      end
+      
+      class SlsaProvenanceZeroTwo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :build_config, as: 'buildConfig'
+          property :build_type, as: 'buildType'
+          property :builder, as: 'builder', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder::Representation
+      
+          property :invocation, as: 'invocation', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation::Representation
+      
+          collection :materials, as: 'materials', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial::Representation
+      
+          property :metadata, as: 'metadata', class: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata, decorator: Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata::Representation
+      
+        end
+      end
+      
+      class SlsaRecipe
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :arguments, as: 'arguments'
+          property :defined_in_material, :numeric_string => true, as: 'definedInMaterial'
+          property :entry_point, as: 'entryPoint'
+          hash :environment, as: 'environment'
+          property :type, as: 'type'
         end
       end
       
@@ -945,6 +1272,11 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cvss_score, as: 'cvssScore'
+          property :cvss_v2, as: 'cvssV2', class: Google::Apis::OndemandscanningV1::Cvss, decorator: Google::Apis::OndemandscanningV1::Cvss::Representation
+      
+          property :cvss_version, as: 'cvssVersion'
+          property :cvssv3, as: 'cvssv3', class: Google::Apis::OndemandscanningV1::Cvss, decorator: Google::Apis::OndemandscanningV1::Cvss::Representation
+      
           property :effective_severity, as: 'effectiveSeverity'
           property :fix_available, as: 'fixAvailable'
           property :long_description, as: 'longDescription'

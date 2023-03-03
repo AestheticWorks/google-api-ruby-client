@@ -22,7 +22,7 @@ module Google
   module Apis
     module FileV1
       
-      # A Cloud Filestore backup.
+      # A Filestore backup.
       class Backup
         include Google::Apis::Core::Hashable
       
@@ -49,6 +49,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :download_bytes
       
+        # Immutable. KMS key name used for data encryption.
+        # Corresponds to the JSON property `kmsKey`
+        # @return [String]
+        attr_accessor :kms_key
+      
         # Resource labels to represent user provided metadata.
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
@@ -66,20 +71,20 @@ module Google
         attr_accessor :satisfies_pzs
         alias_method :satisfies_pzs?, :satisfies_pzs
       
-        # Name of the file share in the source Cloud Filestore instance that the backup
-        # is created from.
+        # Name of the file share in the source Filestore instance that the backup is
+        # created from.
         # Corresponds to the JSON property `sourceFileShare`
         # @return [String]
         attr_accessor :source_file_share
       
-        # The resource name of the source Cloud Filestore instance, in the format `
-        # projects/`project_number`/locations/`location_id`/instances/`instance_id``,
-        # used to create this backup.
+        # The resource name of the source Filestore instance, in the format `projects/`
+        # project_number`/locations/`location_id`/instances/`instance_id``, used to
+        # create this backup.
         # Corresponds to the JSON property `sourceInstance`
         # @return [String]
         attr_accessor :source_instance
       
-        # Output only. The service tier of the source Cloud Filestore instance that this
+        # Output only. The service tier of the source Filestore instance that this
         # backup is created from.
         # Corresponds to the JSON property `sourceInstanceTier`
         # @return [String]
@@ -106,6 +111,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @description = args[:description] if args.key?(:description)
           @download_bytes = args[:download_bytes] if args.key?(:download_bytes)
+          @kms_key = args[:kms_key] if args.key?(:kms_key)
           @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
           @satisfies_pzs = args[:satisfies_pzs] if args.key?(:satisfies_pzs)
@@ -160,11 +166,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -206,11 +212,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::FileV1::Date]
         attr_accessor :end_date
@@ -218,11 +224,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::FileV1::Date]
         attr_accessor :start_date
@@ -249,8 +255,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -267,8 +272,7 @@ module Google
       class FileShareConfig
         include Google::Apis::Core::Hashable
       
-        # File share capacity in gigabytes (GB). Cloud Filestore defines 1 GB as 1024^3
-        # bytes.
+        # File share capacity in gigabytes (GB). Filestore defines 1 GB as 1024^3 bytes.
         # Corresponds to the JSON property `capacityGb`
         # @return [Fixnum]
         attr_accessor :capacity_gb
@@ -303,14 +307,30 @@ module Google
         end
       end
       
-      # 
+      # Instance represents the interface for SLM services to actuate the state of
+      # control plane resources. Example Instance in JSON, where consumer-project-
+      # number=123456, producer-project-id=cloud-sql: ```json Instance: ` "name": "
+      # projects/123456/locations/us-east1/instances/prod-instance", "create_time": ` "
+      # seconds": 1526406431, `, "labels": ` "env": "prod", "foo": "bar" `, "state":
+      # READY, "software_versions": ` "software_update": "cloud-sql-09-28-2018", `, "
+      # maintenance_policy_names": ` "UpdatePolicy": "projects/123456/locations/us-
+      # east1/maintenancePolicies/prod-update-policy", ` "tenant_project_id": "cloud-
+      # sql-test-tenant", "producer_metadata": ` "cloud-sql-tier": "basic", "cloud-sql-
+      # instance-size": "1G", `, "provisioned_resources": [ ` "resource-type": "
+      # compute-instance", "resource-url": "https://www.googleapis.com/compute/v1/
+      # projects/cloud-sql/zones/us-east1-b/instances/vm-1", ` ], "
+      # maintenance_schedules": ` "csa_rollout": ` "start_time": ` "seconds":
+      # 1526406431, `, "end_time": ` "seconds": 1535406431, `, `, "ncsa_rollout": ` "
+      # start_time": ` "seconds": 1526406431, `, "end_time": ` "seconds": 1535406431, `
+      # , ` `, "consumer_defined_name": "my-sql-instance1", ` ``` LINT.IfChange
       class GoogleCloudSaasacceleratorManagementProvidersV1Instance
         include Google::Apis::Core::Hashable
       
-        # consumer_defined_name is the name that is set by the consumer. On the other
-        # hand Name field represents system-assigned id of an instance so consumers are
-        # not necessarily aware of it. consumer_defined_name is used for notification/UI
-        # purposes for consumer to recognize their instances.
+        # consumer_defined_name is the name of the instance set by the service consumers.
+        # Generally this is different from the `name` field which reperesents the
+        # system-assigned id of the instance which the service consumers do not
+        # recognize. This is a required field for tenants onboarding to Maintenance
+        # Window notifications (go/slm-rollout-maintenance-policies#prerequisites).
         # Corresponds to the JSON property `consumerDefinedName`
         # @return [String]
         attr_accessor :consumer_defined_name
@@ -320,6 +340,16 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Optional. The instance_type of this instance of format: projects/`
+        # project_number`/locations/`location_id`/instanceTypes/`instance_type_id`.
+        # Instance Type represents a high-level tier or SKU of the service that this
+        # instance belong to. When enabled(eg: Maintenance Rollout), Rollout uses '
+        # instance_type' along with 'software_versions' to determine whether instance
+        # needs an update or not.
+        # Corresponds to the JSON property `instanceType`
+        # @return [String]
+        attr_accessor :instance_type
+      
         # Optional. Resource labels to represent user provided metadata. Each label is a
         # key-value pair, where both the key and the value are arbitrary strings
         # provided by the user.
@@ -327,10 +357,11 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :labels
       
-        # Deprecated. The MaintenancePolicies that have been attached to the instance.
-        # The key must be of the type name of the oneof policy name defined in
+        # Optional. The MaintenancePolicies that have been attached to the instance. The
+        # key must be of the type name of the oneof policy name defined in
         # MaintenancePolicy, and the referenced policy must define the same policy type.
-        # For complete details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
+        # For details, please refer to go/cloud-saas-mw-ug. Should not be set if
+        # maintenance_settings.maintenance_policies is set.
         # Corresponds to the JSON property `maintenancePolicyNames`
         # @return [Hash<String,String>]
         attr_accessor :maintenance_policy_names
@@ -347,13 +378,22 @@ module Google
         # @return [Google::Apis::FileV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings]
         attr_accessor :maintenance_settings
       
-        # Unique name of the resource. It uses the form: `projects/`project_id|
-        # project_number`/locations/`location_id`/instances/`instance_id`` Note: Either
-        # project_id or project_number can be used, but keep it consistent with other
-        # APIs (e.g. RescheduleUpdate)
+        # Unique name of the resource. It uses the form: `projects/`project_number`/
+        # locations/`location_id`/instances/`instance_id`` Note: This name is passed,
+        # stored and logged across the rollout system. So use of consumer project_id or
+        # any other consumer PII in the name is strongly discouraged for wipeout (go/
+        # wipeout) compliance. See go/elysium/project_ids#storage-guidance for more
+        # details.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Optional. notification_parameter are information that service producers may
+        # like to include that is not relevant to Rollout. This parameter will only be
+        # passed to Gamma and Cloud Logging for notification/logging purpose.
+        # Corresponds to the JSON property `notificationParameters`
+        # @return [Hash<String,Google::Apis::FileV1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter>]
+        attr_accessor :notification_parameters
       
         # Output only. Custom string attributes used primarily to expose producer-
         # specific information in monitoring dashboards. See go/get-instance-metadata.
@@ -412,11 +452,13 @@ module Google
         def update!(**args)
           @consumer_defined_name = args[:consumer_defined_name] if args.key?(:consumer_defined_name)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @instance_type = args[:instance_type] if args.key?(:instance_type)
           @labels = args[:labels] if args.key?(:labels)
           @maintenance_policy_names = args[:maintenance_policy_names] if args.key?(:maintenance_policy_names)
           @maintenance_schedules = args[:maintenance_schedules] if args.key?(:maintenance_schedules)
           @maintenance_settings = args[:maintenance_settings] if args.key?(:maintenance_settings)
           @name = args[:name] if args.key?(:name)
+          @notification_parameters = args[:notification_parameters] if args.key?(:notification_parameters)
           @producer_metadata = args[:producer_metadata] if args.key?(:producer_metadata)
           @provisioned_resources = args[:provisioned_resources] if args.key?(:provisioned_resources)
           @slm_instance_template = args[:slm_instance_template] if args.key?(:slm_instance_template)
@@ -502,9 +544,9 @@ module Google
         # Optional. The MaintenancePolicies that have been attached to the instance. The
         # key must be of the type name of the oneof policy name defined in
         # MaintenancePolicy, and the embedded policy must define the same policy type.
-        # For complete details of MaintenancePolicy, please refer to go/cloud-saas-mw-ug.
-        # If only the name is needed (like in the deprecated Instance.
-        # maintenance_policy_names field) then only populate MaintenancePolicy.name.
+        # For details, please refer to go/cloud-saas-mw-ug. Should not be set if
+        # maintenance_policy_names is set. If only the name is needed, then only
+        # populate MaintenancePolicy.name.
         # Corresponds to the JSON property `maintenancePolicies`
         # @return [Hash<String,Google::Apis::FileV1::MaintenancePolicy>]
         attr_accessor :maintenance_policies
@@ -552,6 +594,25 @@ module Google
           @location = args[:location] if args.key?(:location)
           @node_id = args[:node_id] if args.key?(:node_id)
           @per_sli_eligibility = args[:per_sli_eligibility] if args.key?(:per_sli_eligibility)
+        end
+      end
+      
+      # Contains notification related data.
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Array of string values. e.g. instance's replica information.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @values = args[:values] if args.key?(:values)
         end
       end
       
@@ -680,7 +741,7 @@ module Google
         end
       end
       
-      # A Cloud Filestore instance.
+      # A Filestore instance.
       class Instance
         include Google::Apis::Core::Hashable
       
@@ -705,6 +766,11 @@ module Google
         # Corresponds to the JSON property `fileShares`
         # @return [Array<Google::Apis::FileV1::FileShareConfig>]
         attr_accessor :file_shares
+      
+        # KMS key name used for data encryption.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
       
         # Resource labels to represent user provided metadata.
         # Corresponds to the JSON property `labels`
@@ -739,6 +805,12 @@ module Google
         # @return [String]
         attr_accessor :status_message
       
+        # Output only. Field indicates all the reasons the instance is in "SUSPENDED"
+        # state.
+        # Corresponds to the JSON property `suspensionReasons`
+        # @return [Array<String>]
+        attr_accessor :suspension_reasons
+      
         # The service tier of the instance.
         # Corresponds to the JSON property `tier`
         # @return [String]
@@ -754,12 +826,14 @@ module Google
           @description = args[:description] if args.key?(:description)
           @etag = args[:etag] if args.key?(:etag)
           @file_shares = args[:file_shares] if args.key?(:file_shares)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
           @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
           @networks = args[:networks] if args.key?(:networks)
           @satisfies_pzs = args[:satisfies_pzs] if args.key?(:satisfies_pzs)
           @state = args[:state] if args.key?(:state)
           @status_message = args[:status_message] if args.key?(:status_message)
+          @suspension_reasons = args[:suspension_reasons] if args.key?(:suspension_reasons)
           @tier = args[:tier] if args.key?(:tier)
         end
       end
@@ -886,6 +960,32 @@ module Google
         end
       end
       
+      # ListSnapshotsResponse is the result of ListSnapshotsRequest.
+      class ListSnapshotsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The token you can use to retrieve the next page of results. Not returned if
+        # there are no more results in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # A list of snapshots in the project for the specified instance.
+        # Corresponds to the JSON property `snapshots`
+        # @return [Array<Google::Apis::FileV1::Snapshot>]
+        attr_accessor :snapshots
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @snapshots = args[:snapshots] if args.key?(:snapshots)
+        end
+      end
+      
       # A resource that represents Google Cloud Platform location.
       class Location
         include Google::Apis::Core::Hashable
@@ -933,7 +1033,7 @@ module Google
         end
       end
       
-      # Defines policies to service maintenance events.
+      # LINT.IfChange Defines policies to service maintenance events.
       class MaintenancePolicy
         include Google::Apis::Core::Hashable
       
@@ -1024,6 +1124,12 @@ module Google
       class NetworkConfig
         include Google::Apis::Core::Hashable
       
+        # The network connect mode of the Filestore instance. If not provided, the
+        # connect mode defaults to DIRECT_PEERING.
+        # Corresponds to the JSON property `connectMode`
+        # @return [String]
+        attr_accessor :connect_mode
+      
         # Output only. IPv4 addresses in the format ``octet1`.`octet2`.`octet3`.`octet4``
         # or IPv6 addresses in the format ``block1`:`block2`:`block3`:`block4`:`block5`:
         # `block6`:`block7`:`block8``.
@@ -1043,12 +1149,20 @@ module Google
         # @return [String]
         attr_accessor :network
       
-        # A /29 CIDR block in one of the [internal IP address ranges](https://www.arin.
-        # net/reference/research/statistics/address_filters/) that identifies the range
-        # of IP addresses reserved for this instance. For example, 10.0.0.0/29 or 192.
-        # 168.0.0/29. The range you specify can't overlap with either existing subnets
-        # or assigned IP address ranges for other Cloud Filestore instances in the
-        # selected VPC network.
+        # Optional, reserved_ip_range can have one of the following two types of values.
+        # * CIDR range value when using DIRECT_PEERING connect mode. * [Allocated IP
+        # address range](https://cloud.google.com/compute/docs/ip-addresses/reserve-
+        # static-internal-ip-address) when using PRIVATE_SERVICE_ACCESS connect mode.
+        # When the name of an allocated IP address range is specified, it must be one of
+        # the ranges associated with the private service access connection. When
+        # specified as a direct CIDR value, it must be a /29 CIDR block for Basic tier,
+        # a /24 CIDR block for High Scale tier, or a /26 CIDR block for Enterprise tier
+        # in one of the [internal IP address ranges](https://www.arin.net/reference/
+        # research/statistics/address_filters/) that identifies the range of IP
+        # addresses reserved for this instance. For example, 10.0.0.0/29, 192.168.0.0/24
+        # or 192.168.0.0/26, respectively. The range you specify can't overlap with
+        # either existing subnets or assigned IP address ranges for other Filestore
+        # instances in the selected VPC network.
         # Corresponds to the JSON property `reservedIpRange`
         # @return [String]
         attr_accessor :reserved_ip_range
@@ -1059,6 +1173,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @connect_mode = args[:connect_mode] if args.key?(:connect_mode)
           @ip_addresses = args[:ip_addresses] if args.key?(:ip_addresses)
           @modes = args[:modes] if args.key?(:modes)
           @network = args[:network] if args.key?(:network)
@@ -1242,13 +1357,13 @@ module Google
         end
       end
       
-      # RestoreInstanceRequest restores an existing instances's file share from a
+      # RestoreInstanceRequest restores an existing instance's file share from a
       # backup.
       class RestoreInstanceRequest
         include Google::Apis::Core::Hashable
       
-        # Required. Name of the file share in the Cloud Filestore instance that the
-        # backup is being restored to.
+        # Required. Name of the file share in the Filestore instance that the backup is
+        # being restored to.
         # Corresponds to the JSON property `fileShare`
         # @return [String]
         attr_accessor :file_share
@@ -1300,6 +1415,59 @@ module Google
           @day = args[:day] if args.key?(:day)
           @duration = args[:duration] if args.key?(:duration)
           @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
+      # A Filestore snapshot.
+      class Snapshot
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time when the snapshot was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # A description of the snapshot with 2048 characters or less. Requests with
+        # longer descriptions will be rejected.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. The amount of bytes needed to allocate a full copy of the
+        # snapshot content
+        # Corresponds to the JSON property `filesystemUsedBytes`
+        # @return [Fixnum]
+        attr_accessor :filesystem_used_bytes
+      
+        # Resource labels to represent user provided metadata.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # Output only. The resource name of the snapshot, in the format `projects/`
+        # project_id`/locations/`location_id`/instances/`instance_id`/snapshots/`
+        # snapshot_id``.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. The snapshot state.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @description = args[:description] if args.key?(:description)
+          @filesystem_used_bytes = args[:filesystem_used_bytes] if args.key?(:filesystem_used_bytes)
+          @labels = args[:labels] if args.key?(:labels)
+          @name = args[:name] if args.key?(:name)
+          @state = args[:state] if args.key?(:state)
         end
       end
       

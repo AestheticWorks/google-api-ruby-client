@@ -352,6 +352,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Cuepoint
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Entity
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -496,7 +502,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class LiveChatGiftMembershipReceivedDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LiveChatMemberMilestoneChatDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LiveChatMembershipGiftingDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -881,6 +899,12 @@ module Google
       end
       
       class ThirdPartyLink
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ThirdPartyLinkListResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1652,6 +1676,7 @@ module Google
       class ChannelToStoreLinkDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :merchant_id, :numeric_string => true, as: 'merchantId'
           property :store_name, as: 'storeName'
           property :store_url, as: 'storeUrl'
         end
@@ -1849,6 +1874,18 @@ module Google
           property :smsa_rating, as: 'smsaRating'
           property :tvpg_rating, as: 'tvpgRating'
           property :yt_rating, as: 'ytRating'
+        end
+      end
+      
+      class Cuepoint
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cue_type, as: 'cueType'
+          property :duration_secs, as: 'durationSecs'
+          property :etag, as: 'etag'
+          property :id, as: 'id'
+          property :insertion_offset_time_ms, :numeric_string => true, as: 'insertionOffsetTimeMs'
+          property :walltime_ms, :numeric_string => true, as: 'walltimeMs'
         end
       end
       
@@ -2106,6 +2143,7 @@ module Google
       class LiveBroadcastStatistics
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :concurrent_viewers, :numeric_string => true, as: 'concurrentViewers'
           property :total_chat_count, :numeric_string => true, as: 'totalChatCount'
         end
       end
@@ -2154,12 +2192,29 @@ module Google
         end
       end
       
+      class LiveChatGiftMembershipReceivedDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :associated_membership_gifting_message_id, as: 'associatedMembershipGiftingMessageId'
+          property :gifter_channel_id, as: 'gifterChannelId'
+          property :member_level_name, as: 'memberLevelName'
+        end
+      end
+      
       class LiveChatMemberMilestoneChatDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :member_level_name, as: 'memberLevelName'
           property :member_month, as: 'memberMonth'
           property :user_comment, as: 'userComment'
+        end
+      end
+      
+      class LiveChatMembershipGiftingDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gift_memberships_count, as: 'giftMembershipsCount'
+          property :gift_memberships_level_name, as: 'giftMembershipsLevelName'
         end
       end
       
@@ -2231,9 +2286,13 @@ module Google
           property :display_message, as: 'displayMessage'
           property :fan_funding_event_details, as: 'fanFundingEventDetails', class: Google::Apis::YoutubeV3::LiveChatFanFundingEventDetails, decorator: Google::Apis::YoutubeV3::LiveChatFanFundingEventDetails::Representation
       
+          property :gift_membership_received_details, as: 'giftMembershipReceivedDetails', class: Google::Apis::YoutubeV3::LiveChatGiftMembershipReceivedDetails, decorator: Google::Apis::YoutubeV3::LiveChatGiftMembershipReceivedDetails::Representation
+      
           property :has_display_content, as: 'hasDisplayContent'
           property :live_chat_id, as: 'liveChatId'
           property :member_milestone_chat_details, as: 'memberMilestoneChatDetails', class: Google::Apis::YoutubeV3::LiveChatMemberMilestoneChatDetails, decorator: Google::Apis::YoutubeV3::LiveChatMemberMilestoneChatDetails::Representation
+      
+          property :membership_gifting_details, as: 'membershipGiftingDetails', class: Google::Apis::YoutubeV3::LiveChatMembershipGiftingDetails, decorator: Google::Apis::YoutubeV3::LiveChatMembershipGiftingDetails::Representation
       
           property :message_deleted_details, as: 'messageDeletedDetails', class: Google::Apis::YoutubeV3::LiveChatMessageDeletedDetails, decorator: Google::Apis::YoutubeV3::LiveChatMessageDeletedDetails::Representation
       
@@ -2942,6 +3001,16 @@ module Google
       
           property :status, as: 'status', class: Google::Apis::YoutubeV3::ThirdPartyLinkStatus, decorator: Google::Apis::YoutubeV3::ThirdPartyLinkStatus::Representation
       
+        end
+      end
+      
+      class ThirdPartyLinkListResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :etag, as: 'etag'
+          collection :items, as: 'items', class: Google::Apis::YoutubeV3::ThirdPartyLink, decorator: Google::Apis::YoutubeV3::ThirdPartyLink::Representation
+      
+          property :kind, as: 'kind'
         end
       end
       

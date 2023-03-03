@@ -22,10 +22,7 @@ module Google
     module LoggingV2
       # Cloud Logging API
       #
-      # Writes log entries and manages your Cloud Logging configuration. The table
-      #  entries below are presented in alphabetical order, not in order of common use.
-      #  For explanations of the concepts found in the table entries, read the
-      #  documentation at https://cloud.google.com/logging/docs.
+      # Writes log entries and manages your Cloud Logging configuration.
       #
       # @example
       #    require 'google/apis/logging_v2'
@@ -52,14 +49,20 @@ module Google
           @batch_path = 'batch'
         end
         
-        # Gets a log bucket.
+        # Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log
+        # Router can be configured for Google Cloud projects, folders, organizations and
+        # billing accounts. Once configured for an organization, it applies to all
+        # projects and folders in the Google Cloud organization.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
         # @param [String] name
-        #   Required. The resource name of the bucket: "projects/[PROJECT_ID]/locations/[
-        #   LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[ORGANIZATION_ID]/locations/[
-        #   LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]/
-        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[FOLDER_ID]/locations/[
-        #   LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/my-project/locations/
-        #   global/buckets/my-bucket"
+        #   Required. The resource for which to retrieve CMEK settings. "projects/[
+        #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
+        #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
+        #   Log Router can be configured for Google Cloud projects, folders, organizations
+        #   and billing accounts. Once configured for an organization, it applies to all
+        #   projects and folders in the Google Cloud organization.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -69,29 +72,39 @@ module Google
         #   Request-specific options
         #
         # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::LoggingV2::LogBucket] parsed result object
+        # @yieldparam result [Google::Apis::LoggingV2::CmekSettings] parsed result object
         # @yieldparam err [StandardError] error object if request failed
         #
-        # @return [Google::Apis::LoggingV2::LogBucket]
+        # @return [Google::Apis::LoggingV2::CmekSettings]
         #
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def get_billing_account_bucket(name, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v2/{+name}', options)
-          command.response_representation = Google::Apis::LoggingV2::LogBucket::Representation
-          command.response_class = Google::Apis::LoggingV2::LogBucket
+        def get_billing_account_cmek_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/cmekSettings', options)
+          command.response_representation = Google::Apis::LoggingV2::CmekSettings::Representation
+          command.response_class = Google::Apis::LoggingV2::CmekSettings
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
         end
         
-        # Gets a view on a log bucket..
+        # Gets the Log Router settings for the given resource.Note: Settings for the Log
+        # Router can be get for Google Cloud projects, folders, organizations and
+        # billing accounts. Currently it can only be configured for organizations. Once
+        # configured for an organization, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
         # @param [String] name
-        #   Required. The resource name of the policy: "projects/[PROJECT_ID]/locations/[
-        #   LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"projects/my-
-        #   project/locations/global/buckets/my-bucket/views/my-view"
+        #   Required. The resource for which to retrieve settings. "projects/[PROJECT_ID]/
+        #   settings" "organizations/[ORGANIZATION_ID]/settings" "billingAccounts/[
+        #   BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings" For example:"
+        #   organizations/12345/settings"Note: Settings for the Log Router can be get for
+        #   Google Cloud projects, folders, organizations and billing accounts. Currently
+        #   it can only be configured for organizations. Once configured for an
+        #   organization, it applies to all projects and folders in the Google Cloud
+        #   organization.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -101,27 +114,27 @@ module Google
         #   Request-specific options
         #
         # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::LoggingV2::LogView] parsed result object
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
         # @yieldparam err [StandardError] error object if request failed
         #
-        # @return [Google::Apis::LoggingV2::LogView]
+        # @return [Google::Apis::LoggingV2::Settings]
         #
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def get_billing_account_bucket_view(name, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v2/{+name}', options)
-          command.response_representation = Google::Apis::LoggingV2::LogView::Representation
-          command.response_class = Google::Apis::LoggingV2::LogView
+        def get_billing_account_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/settings', options)
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new exclusion in a specified parent resource. Only log entries
-        # belonging to that resource can be excluded. You can have up to 10 exclusions
-        # in a resource.
+        # Creates a new exclusion in the _Default sink in a specified parent resource.
+        # Only log entries belonging to that resource can be excluded. You can have up
+        # to 10 exclusions in a resource.
         # @param [String] parent
         #   Required. The parent resource in which to create the exclusion: "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -157,7 +170,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an exclusion.
+        # Deletes an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion to delete: "projects/[
         #   PROJECT_ID]/exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/
@@ -191,7 +204,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the description of an exclusion.
+        # Gets the description of an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -225,7 +238,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all the exclusions in a parent resource.
+        # Lists all the exclusions on the _Default sink in a parent resource.
         # @param [String] parent
         #   Required. The parent resource whose exclusions are to be listed. "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -268,7 +281,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Changes one or more properties of an existing exclusion.
+        # Changes one or more properties of an existing exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of the exclusion to update: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -427,6 +440,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a log bucket asynchronously that can be used to store log entries.
+        # After a bucket has been created, the bucket's location cannot be changed.
+        # @param [String] parent
+        #   Required. The resource in which to create the log bucket: "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        #   locations/global"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] bucket_id
+        #   Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_billing_account_location_bucket_async(parent, log_bucket_object = nil, bucket_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/buckets:createAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bucketId'] = bucket_id unless bucket_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Deletes a log bucket.Changes the bucket's lifecycle_state to the
         # DELETE_REQUESTED state. After 7 days, the bucket will be purged and all log
         # entries in the bucket will be permanently deleted.
@@ -458,6 +512,41 @@ module Google
           command = make_simple_command(:delete, 'v2/{+name}', options)
           command.response_representation = Google::Apis::LoggingV2::Empty::Representation
           command.response_class = Google::Apis::LoggingV2::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a log bucket.
+        # @param [String] name
+        #   Required. The resource name of the bucket: "projects/[PROJECT_ID]/locations/[
+        #   LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[ORGANIZATION_ID]/locations/[
+        #   LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/[BILLING_ACCOUNT_ID]/
+        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[FOLDER_ID]/locations/[
+        #   LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/my-project/locations/
+        #   global/buckets/my-bucket"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::LogBucket] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::LogBucket]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_billing_account_location_bucket(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.response_class = Google::Apis::LoggingV2::LogBucket
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -510,11 +599,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a log bucket. This method replaces the following fields in the
-        # existing bucket with values from the new bucket: retention_periodIf the
-        # retention period is decreased and the bucket is locked, FAILED_PRECONDITION
-        # will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then
-        # FAILED_PRECONDITION will be returned.After a bucket has been created, the
+        # Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED,
+        # then FAILED_PRECONDITION will be returned.After a bucket has been created, the
         # bucket's location cannot be changed.
         # @param [String] name
         #   Required. The full resource name of the bucket to update. "projects/[
@@ -600,6 +686,210 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a log bucket asynchronously.If the bucket has a lifecycle_state of
+        # DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has
+        # been created, the bucket's location cannot be changed.
+        # @param [String] name
+        #   Required. The full resource name of the bucket to update. "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        #   my-project/locations/global/buckets/my-bucket"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] update_mask
+        #   Required. Field mask that specifies the fields in bucket that need an update.
+        #   A bucket field will be overwritten if, and only if, it is in the update mask.
+        #   name and output only fields cannot be updated.For a detailed FieldMask
+        #   definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        #   google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        #   retention_days
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_billing_account_location_bucket_async(name, log_bucket_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:updateAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Asynchronously creates linked dataset in BigQuery which makes it possible to
+        # use BugQuery to read the logs stored in the bucket. A bucket may currently
+        # only contain one link.
+        # @param [String] parent
+        #   Required. The full resource name of the bucket to create a link for. "projects/
+        #   [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # @param [Google::Apis::LoggingV2::Link] link_object
+        # @param [String] link_id
+        #   Required. The ID to use for the link. The link_id can have up to 100
+        #   characters. A valid link_id must only have alphanumeric characters and
+        #   underscores within it.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_billing_account_location_bucket_link(parent, link_object = nil, link_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/links', options)
+          command.request_representation = Google::Apis::LoggingV2::Link::Representation
+          command.request_object = link_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['linkId'] = link_id unless link_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a link. This will also delete the corresponding BigQuery linked
+        # dataset.
+        # @param [String] name
+        #   Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_billing_account_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a link.
+        # @param [String] name
+        #   Required. The resource name of the link:"projects/PROJECT_ID/locations/
+        #   LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/ORGANIZATION_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Link] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Link]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_billing_account_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Link::Representation
+          command.response_class = Google::Apis::LoggingV2::Link
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists links.
+        # @param [String] parent
+        #   Required. The parent resource whose links are to be listed:"projects/
+        #   PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "folders/
+        #   FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLinksResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLinksResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_billing_account_location_bucket_links(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/links', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLinksResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLinksResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a view over log entries in a log bucket. A bucket may contain a
         # maximum of 30 views.
         # @param [String] parent
@@ -608,7 +898,9 @@ module Google
         #   locations/global/buckets/my-bucket"
         # @param [Google::Apis::LoggingV2::LogView] log_view_object
         # @param [String] view_id
-        #   Required. The id to use for this view.
+        #   Required. A client-assigned identifier such as "my-view". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -639,7 +931,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a view on a log bucket.
+        # Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this
+        # indicates that system is not in a state where it can delete the view. If this
+        # occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to delete: "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -665,6 +959,38 @@ module Google
           command = make_simple_command(:delete, 'v2/{+name}', options)
           command.response_representation = Google::Apis::LoggingV2::Empty::Representation
           command.response_class = Google::Apis::LoggingV2::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a view on a log bucket..
+        # @param [String] name
+        #   Required. The resource name of the policy: "projects/[PROJECT_ID]/locations/[
+        #   LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"projects/my-
+        #   project/locations/global/buckets/my-bucket/views/my-view"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::LogView] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::LogView]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_billing_account_location_bucket_view(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::LogView::Representation
+          command.response_class = Google::Apis::LoggingV2::LogView
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -714,7 +1040,9 @@ module Google
         end
         
         # Updates a view on a log bucket. This method replaces the following fields in
-        # the existing view with values from the new view: filter.
+        # the existing view with values from the new view: filter. If an UNAVAILABLE
+        # error is returned, this indicates that system is not in a state where it can
+        # update the view. If this occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to update "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -756,6 +1084,60 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Lists the logs in projects, organizations, folders, or billing accounts. Only
+        # logs that have entries are listed.
+        # @param [String] parent
+        #   Required. The resource name that owns the logs: projects/[PROJECT_ID]
+        #   organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[
+        #   FOLDER_ID]
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request. Non-
+        #   positive values are ignored. The presence of nextPageToken in the response
+        #   indicates that more results might be available.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response. The values of other method parameters should be
+        #   identical to those in the previous call.
+        # @param [Array<String>, String] resource_names
+        #   Optional. The resource name that owns the logs: projects/[PROJECT_ID]/
+        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+        #   BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/
+        #   [BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be:
+        #   projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[
+        #   BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLogsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLogsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_billing_account_location_bucket_view_logs(parent, page_size: nil, page_token: nil, resource_names: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/logs', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLogsResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLogsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['resourceNames'] = resource_names unless resource_names.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Starts asynchronous cancellation on a long-running operation. The server makes
         # a best effort to cancel the operation, but success is not guaranteed. If the
         # server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED.
@@ -790,6 +1172,37 @@ module Google
           command.request_object = cancel_operation_request_object
           command.response_representation = Google::Apis::LoggingV2::Empty::Representation
           command.response_class = Google::Apis::LoggingV2::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_billing_account_location_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -929,37 +1342,6 @@ module Google
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['resourceNames'] = resource_names unless resource_names.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
-        # Gets the latest state of a long-running operation. Clients can use this method
-        # to poll the operation result at intervals as recommended by the API service.
-        # @param [String] name
-        #   The name of the operation resource.
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::LoggingV2::Operation]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def get_billing_account_operation(name, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v2/{+name}', options)
-          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
-          command.response_class = Google::Apis::LoggingV2::Operation
-          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1373,9 +1755,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new exclusion in a specified parent resource. Only log entries
-        # belonging to that resource can be excluded. You can have up to 10 exclusions
-        # in a resource.
+        # Creates a new exclusion in the _Default sink in a specified parent resource.
+        # Only log entries belonging to that resource can be excluded. You can have up
+        # to 10 exclusions in a resource.
         # @param [String] parent
         #   Required. The parent resource in which to create the exclusion: "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -1411,7 +1793,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an exclusion.
+        # Deletes an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion to delete: "projects/[
         #   PROJECT_ID]/exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/
@@ -1445,7 +1827,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the description of an exclusion.
+        # Gets the description of an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -1479,7 +1861,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all the exclusions in a parent resource.
+        # Lists all the exclusions on the _Default sink in a parent resource.
         # @param [String] parent
         #   Required. The parent resource whose exclusions are to be listed. "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -1522,7 +1904,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Changes one or more properties of an existing exclusion.
+        # Changes one or more properties of an existing exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of the exclusion to update: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -1567,9 +1949,143 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new exclusion in a specified parent resource. Only log entries
-        # belonging to that resource can be excluded. You can have up to 10 exclusions
-        # in a resource.
+        # Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log
+        # Router can be configured for Google Cloud projects, folders, organizations and
+        # billing accounts. Once configured for an organization, it applies to all
+        # projects and folders in the Google Cloud organization.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve CMEK settings. "projects/[
+        #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
+        #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
+        #   Log Router can be configured for Google Cloud projects, folders, organizations
+        #   and billing accounts. Once configured for an organization, it applies to all
+        #   projects and folders in the Google Cloud organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::CmekSettings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::CmekSettings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_cmek_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/cmekSettings', options)
+          command.response_representation = Google::Apis::LoggingV2::CmekSettings::Representation
+          command.response_class = Google::Apis::LoggingV2::CmekSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the Log Router settings for the given resource.Note: Settings for the Log
+        # Router can be get for Google Cloud projects, folders, organizations and
+        # billing accounts. Currently it can only be configured for organizations. Once
+        # configured for an organization, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve settings. "projects/[PROJECT_ID]/
+        #   settings" "organizations/[ORGANIZATION_ID]/settings" "billingAccounts/[
+        #   BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings" For example:"
+        #   organizations/12345/settings"Note: Settings for the Log Router can be get for
+        #   Google Cloud projects, folders, organizations and billing accounts. Currently
+        #   it can only be configured for organizations. Once configured for an
+        #   organization, it applies to all projects and folders in the Google Cloud
+        #   organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/settings', options)
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the Log Router settings for the given resource.Note: Settings for the
+        # Log Router can currently only be configured for Google Cloud organizations.
+        # Once configured, it applies to all projects and folders in the Google Cloud
+        # organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the
+        # associated service account does not have the required roles/cloudkms.
+        # cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key
+        # is disabled. 4) location_id is not supported by Logging. 5) location_id
+        # violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/
+        # logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource name for the settings to update. "organizations/[
+        #   ORGANIZATION_ID]/settings" For example:"organizations/12345/settings"Note:
+        #   Settings for the Log Router can currently only be configured for Google Cloud
+        #   organizations. Once configured, it applies to all projects and folders in the
+        #   Google Cloud organization.
+        # @param [Google::Apis::LoggingV2::Settings] settings_object
+        # @param [String] update_mask
+        #   Optional. Field mask identifying which fields from settings should be updated.
+        #   A field will be overwritten if and only if it is in the update mask. Output
+        #   only fields cannot be updated.See FieldMask for more information.For example: "
+        #   updateMask=kmsKeyName"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_folder_settings(name, settings_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v2/{+name}/settings', options)
+          command.request_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.request_object = settings_object
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new exclusion in the _Default sink in a specified parent resource.
+        # Only log entries belonging to that resource can be excluded. You can have up
+        # to 10 exclusions in a resource.
         # @param [String] parent
         #   Required. The parent resource in which to create the exclusion: "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -1605,7 +2121,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an exclusion.
+        # Deletes an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion to delete: "projects/[
         #   PROJECT_ID]/exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/
@@ -1639,7 +2155,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the description of an exclusion.
+        # Gets the description of an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -1673,7 +2189,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all the exclusions in a parent resource.
+        # Lists all the exclusions on the _Default sink in a parent resource.
         # @param [String] parent
         #   Required. The parent resource whose exclusions are to be listed. "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -1716,7 +2232,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Changes one or more properties of an existing exclusion.
+        # Changes one or more properties of an existing exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of the exclusion to update: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -1875,6 +2391,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a log bucket asynchronously that can be used to store log entries.
+        # After a bucket has been created, the bucket's location cannot be changed.
+        # @param [String] parent
+        #   Required. The resource in which to create the log bucket: "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        #   locations/global"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] bucket_id
+        #   Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_folder_location_bucket_async(parent, log_bucket_object = nil, bucket_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/buckets:createAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bucketId'] = bucket_id unless bucket_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Deletes a log bucket.Changes the bucket's lifecycle_state to the
         # DELETE_REQUESTED state. After 7 days, the bucket will be purged and all log
         # entries in the bucket will be permanently deleted.
@@ -1993,11 +2550,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a log bucket. This method replaces the following fields in the
-        # existing bucket with values from the new bucket: retention_periodIf the
-        # retention period is decreased and the bucket is locked, FAILED_PRECONDITION
-        # will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then
-        # FAILED_PRECONDITION will be returned.After a bucket has been created, the
+        # Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED,
+        # then FAILED_PRECONDITION will be returned.After a bucket has been created, the
         # bucket's location cannot be changed.
         # @param [String] name
         #   Required. The full resource name of the bucket to update. "projects/[
@@ -2083,6 +2637,210 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a log bucket asynchronously.If the bucket has a lifecycle_state of
+        # DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has
+        # been created, the bucket's location cannot be changed.
+        # @param [String] name
+        #   Required. The full resource name of the bucket to update. "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        #   my-project/locations/global/buckets/my-bucket"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] update_mask
+        #   Required. Field mask that specifies the fields in bucket that need an update.
+        #   A bucket field will be overwritten if, and only if, it is in the update mask.
+        #   name and output only fields cannot be updated.For a detailed FieldMask
+        #   definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        #   google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        #   retention_days
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_folder_location_bucket_async(name, log_bucket_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:updateAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Asynchronously creates linked dataset in BigQuery which makes it possible to
+        # use BugQuery to read the logs stored in the bucket. A bucket may currently
+        # only contain one link.
+        # @param [String] parent
+        #   Required. The full resource name of the bucket to create a link for. "projects/
+        #   [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # @param [Google::Apis::LoggingV2::Link] link_object
+        # @param [String] link_id
+        #   Required. The ID to use for the link. The link_id can have up to 100
+        #   characters. A valid link_id must only have alphanumeric characters and
+        #   underscores within it.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_folder_location_bucket_link(parent, link_object = nil, link_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/links', options)
+          command.request_representation = Google::Apis::LoggingV2::Link::Representation
+          command.request_object = link_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['linkId'] = link_id unless link_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a link. This will also delete the corresponding BigQuery linked
+        # dataset.
+        # @param [String] name
+        #   Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_folder_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a link.
+        # @param [String] name
+        #   Required. The resource name of the link:"projects/PROJECT_ID/locations/
+        #   LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/ORGANIZATION_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Link] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Link]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_folder_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Link::Representation
+          command.response_class = Google::Apis::LoggingV2::Link
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists links.
+        # @param [String] parent
+        #   Required. The parent resource whose links are to be listed:"projects/
+        #   PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "folders/
+        #   FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLinksResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLinksResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_folder_location_bucket_links(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/links', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLinksResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLinksResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a view over log entries in a log bucket. A bucket may contain a
         # maximum of 30 views.
         # @param [String] parent
@@ -2091,7 +2849,9 @@ module Google
         #   locations/global/buckets/my-bucket"
         # @param [Google::Apis::LoggingV2::LogView] log_view_object
         # @param [String] view_id
-        #   Required. The id to use for this view.
+        #   Required. A client-assigned identifier such as "my-view". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2122,7 +2882,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a view on a log bucket.
+        # Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this
+        # indicates that system is not in a state where it can delete the view. If this
+        # occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to delete: "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -2229,7 +2991,9 @@ module Google
         end
         
         # Updates a view on a log bucket. This method replaces the following fields in
-        # the existing view with values from the new view: filter.
+        # the existing view with values from the new view: filter. If an UNAVAILABLE
+        # error is returned, this indicates that system is not in a state where it can
+        # update the view. If this occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to update "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -2266,6 +3030,60 @@ module Google
           command.response_class = Google::Apis::LoggingV2::LogView
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the logs in projects, organizations, folders, or billing accounts. Only
+        # logs that have entries are listed.
+        # @param [String] parent
+        #   Required. The resource name that owns the logs: projects/[PROJECT_ID]
+        #   organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[
+        #   FOLDER_ID]
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request. Non-
+        #   positive values are ignored. The presence of nextPageToken in the response
+        #   indicates that more results might be available.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response. The values of other method parameters should be
+        #   identical to those in the previous call.
+        # @param [Array<String>, String] resource_names
+        #   Optional. The resource name that owns the logs: projects/[PROJECT_ID]/
+        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+        #   BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/
+        #   [BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be:
+        #   projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[
+        #   BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLogsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLogsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_folder_location_bucket_view_logs(parent, page_size: nil, page_token: nil, resource_names: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/logs', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLogsResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLogsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['resourceNames'] = resource_names unless resource_names.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -2875,6 +3693,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a log bucket asynchronously that can be used to store log entries.
+        # After a bucket has been created, the bucket's location cannot be changed.
+        # @param [String] parent
+        #   Required. The resource in which to create the log bucket: "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        #   locations/global"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] bucket_id
+        #   Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_location_bucket_async(parent, log_bucket_object = nil, bucket_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/buckets:createAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bucketId'] = bucket_id unless bucket_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Deletes a log bucket.Changes the bucket's lifecycle_state to the
         # DELETE_REQUESTED state. After 7 days, the bucket will be purged and all log
         # entries in the bucket will be permanently deleted.
@@ -2993,11 +3852,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a log bucket. This method replaces the following fields in the
-        # existing bucket with values from the new bucket: retention_periodIf the
-        # retention period is decreased and the bucket is locked, FAILED_PRECONDITION
-        # will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then
-        # FAILED_PRECONDITION will be returned.After a bucket has been created, the
+        # Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED,
+        # then FAILED_PRECONDITION will be returned.After a bucket has been created, the
         # bucket's location cannot be changed.
         # @param [String] name
         #   Required. The full resource name of the bucket to update. "projects/[
@@ -3083,6 +3939,210 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a log bucket asynchronously.If the bucket has a lifecycle_state of
+        # DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has
+        # been created, the bucket's location cannot be changed.
+        # @param [String] name
+        #   Required. The full resource name of the bucket to update. "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        #   my-project/locations/global/buckets/my-bucket"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] update_mask
+        #   Required. Field mask that specifies the fields in bucket that need an update.
+        #   A bucket field will be overwritten if, and only if, it is in the update mask.
+        #   name and output only fields cannot be updated.For a detailed FieldMask
+        #   definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        #   google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        #   retention_days
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_location_bucket_async(name, log_bucket_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:updateAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Asynchronously creates linked dataset in BigQuery which makes it possible to
+        # use BugQuery to read the logs stored in the bucket. A bucket may currently
+        # only contain one link.
+        # @param [String] parent
+        #   Required. The full resource name of the bucket to create a link for. "projects/
+        #   [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # @param [Google::Apis::LoggingV2::Link] link_object
+        # @param [String] link_id
+        #   Required. The ID to use for the link. The link_id can have up to 100
+        #   characters. A valid link_id must only have alphanumeric characters and
+        #   underscores within it.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_location_bucket_link(parent, link_object = nil, link_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/links', options)
+          command.request_representation = Google::Apis::LoggingV2::Link::Representation
+          command.request_object = link_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['linkId'] = link_id unless link_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a link. This will also delete the corresponding BigQuery linked
+        # dataset.
+        # @param [String] name
+        #   Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a link.
+        # @param [String] name
+        #   Required. The resource name of the link:"projects/PROJECT_ID/locations/
+        #   LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/ORGANIZATION_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Link] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Link]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Link::Representation
+          command.response_class = Google::Apis::LoggingV2::Link
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists links.
+        # @param [String] parent
+        #   Required. The parent resource whose links are to be listed:"projects/
+        #   PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "folders/
+        #   FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLinksResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLinksResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_location_bucket_links(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/links', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLinksResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLinksResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a view over log entries in a log bucket. A bucket may contain a
         # maximum of 30 views.
         # @param [String] parent
@@ -3091,7 +4151,9 @@ module Google
         #   locations/global/buckets/my-bucket"
         # @param [Google::Apis::LoggingV2::LogView] log_view_object
         # @param [String] view_id
-        #   Required. The id to use for this view.
+        #   Required. A client-assigned identifier such as "my-view". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3122,7 +4184,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a view on a log bucket.
+        # Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this
+        # indicates that system is not in a state where it can delete the view. If this
+        # occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to delete: "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -3229,7 +4293,9 @@ module Google
         end
         
         # Updates a view on a log bucket. This method replaces the following fields in
-        # the existing view with values from the new view: filter.
+        # the existing view with values from the new view: filter. If an UNAVAILABLE
+        # error is returned, this indicates that system is not in a state where it can
+        # update the view. If this occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to update "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -3518,18 +4584,20 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the
-        # Logs Router can currently only be configured for GCP organizations. Once
-        # configured, it applies to all projects and folders in the GCP organization.See
-        # Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/
-        # managed-encryption) for more information.
+        # Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log
+        # Router can be configured for Google Cloud projects, folders, organizations and
+        # billing accounts. Once configured for an organization, it applies to all
+        # projects and folders in the Google Cloud organization.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
         # @param [String] name
         #   Required. The resource for which to retrieve CMEK settings. "projects/[
         #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
         #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
         #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
-        #   Logs Router can currently only be configured for GCP organizations. Once
-        #   configured, it applies to all projects and folders in the GCP organization.
+        #   Log Router can be configured for Google Cloud projects, folders, organizations
+        #   and billing accounts. Once configured for an organization, it applies to all
+        #   projects and folders in the Google Cloud organization.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3557,21 +4625,64 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates the Logs Router CMEK settings for the given resource.Note: CMEK for
-        # the Logs Router can currently only be configured for GCP organizations. Once
-        # configured, it applies to all projects and folders in the GCP organization.
-        # UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the
-        # associated service account does not have the required roles/cloudkms.
+        # Gets the Log Router settings for the given resource.Note: Settings for the Log
+        # Router can be get for Google Cloud projects, folders, organizations and
+        # billing accounts. Currently it can only be configured for organizations. Once
+        # configured for an organization, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve settings. "projects/[PROJECT_ID]/
+        #   settings" "organizations/[ORGANIZATION_ID]/settings" "billingAccounts/[
+        #   BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings" For example:"
+        #   organizations/12345/settings"Note: Settings for the Log Router can be get for
+        #   Google Cloud projects, folders, organizations and billing accounts. Currently
+        #   it can only be configured for organizations. Once configured for an
+        #   organization, it applies to all projects and folders in the Google Cloud
+        #   organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/settings', options)
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the Log Router CMEK settings for the given resource.Note: CMEK for the
+        # Log Router can currently only be configured for Google Cloud organizations.
+        # Once configured, it applies to all projects and folders in the Google Cloud
+        # organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2)
+        # the associated service account does not have the required roles/cloudkms.
         # cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key
-        # is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/
-        # logging/docs/routing/managed-encryption) for more information.
+        # is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/
+        # docs/routing/managed-encryption) for more information.
         # @param [String] name
         #   Required. The resource name for the CMEK settings to update. "projects/[
         #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
         #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
         #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
-        #   Logs Router can currently only be configured for GCP organizations. Once
-        #   configured, it applies to all projects and folders in the GCP organization.
+        #   Log Router can currently only be configured for Google Cloud organizations.
+        #   Once configured, it applies to all projects and folders in the Google Cloud
+        #   organization.
         # @param [Google::Apis::LoggingV2::CmekSettings] cmek_settings_object
         # @param [String] update_mask
         #   Optional. Field mask identifying which fields from cmek_settings should be
@@ -3608,9 +4719,60 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new exclusion in a specified parent resource. Only log entries
-        # belonging to that resource can be excluded. You can have up to 10 exclusions
-        # in a resource.
+        # Updates the Log Router settings for the given resource.Note: Settings for the
+        # Log Router can currently only be configured for Google Cloud organizations.
+        # Once configured, it applies to all projects and folders in the Google Cloud
+        # organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the
+        # associated service account does not have the required roles/cloudkms.
+        # cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key
+        # is disabled. 4) location_id is not supported by Logging. 5) location_id
+        # violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/
+        # logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource name for the settings to update. "organizations/[
+        #   ORGANIZATION_ID]/settings" For example:"organizations/12345/settings"Note:
+        #   Settings for the Log Router can currently only be configured for Google Cloud
+        #   organizations. Once configured, it applies to all projects and folders in the
+        #   Google Cloud organization.
+        # @param [Google::Apis::LoggingV2::Settings] settings_object
+        # @param [String] update_mask
+        #   Optional. Field mask identifying which fields from settings should be updated.
+        #   A field will be overwritten if and only if it is in the update mask. Output
+        #   only fields cannot be updated.See FieldMask for more information.For example: "
+        #   updateMask=kmsKeyName"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_organization_settings(name, settings_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v2/{+name}/settings', options)
+          command.request_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.request_object = settings_object
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new exclusion in the _Default sink in a specified parent resource.
+        # Only log entries belonging to that resource can be excluded. You can have up
+        # to 10 exclusions in a resource.
         # @param [String] parent
         #   Required. The parent resource in which to create the exclusion: "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -3646,7 +4808,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an exclusion.
+        # Deletes an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion to delete: "projects/[
         #   PROJECT_ID]/exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/
@@ -3680,7 +4842,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the description of an exclusion.
+        # Gets the description of an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -3714,7 +4876,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all the exclusions in a parent resource.
+        # Lists all the exclusions on the _Default sink in a parent resource.
         # @param [String] parent
         #   Required. The parent resource whose exclusions are to be listed. "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -3757,7 +4919,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Changes one or more properties of an existing exclusion.
+        # Changes one or more properties of an existing exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of the exclusion to update: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -3916,6 +5078,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a log bucket asynchronously that can be used to store log entries.
+        # After a bucket has been created, the bucket's location cannot be changed.
+        # @param [String] parent
+        #   Required. The resource in which to create the log bucket: "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        #   locations/global"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] bucket_id
+        #   Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_location_bucket_async(parent, log_bucket_object = nil, bucket_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/buckets:createAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bucketId'] = bucket_id unless bucket_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Deletes a log bucket.Changes the bucket's lifecycle_state to the
         # DELETE_REQUESTED state. After 7 days, the bucket will be purged and all log
         # entries in the bucket will be permanently deleted.
@@ -4034,11 +5237,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a log bucket. This method replaces the following fields in the
-        # existing bucket with values from the new bucket: retention_periodIf the
-        # retention period is decreased and the bucket is locked, FAILED_PRECONDITION
-        # will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then
-        # FAILED_PRECONDITION will be returned.After a bucket has been created, the
+        # Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED,
+        # then FAILED_PRECONDITION will be returned.After a bucket has been created, the
         # bucket's location cannot be changed.
         # @param [String] name
         #   Required. The full resource name of the bucket to update. "projects/[
@@ -4124,6 +5324,210 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a log bucket asynchronously.If the bucket has a lifecycle_state of
+        # DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has
+        # been created, the bucket's location cannot be changed.
+        # @param [String] name
+        #   Required. The full resource name of the bucket to update. "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        #   my-project/locations/global/buckets/my-bucket"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] update_mask
+        #   Required. Field mask that specifies the fields in bucket that need an update.
+        #   A bucket field will be overwritten if, and only if, it is in the update mask.
+        #   name and output only fields cannot be updated.For a detailed FieldMask
+        #   definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        #   google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        #   retention_days
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_organization_location_bucket_async(name, log_bucket_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:updateAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Asynchronously creates linked dataset in BigQuery which makes it possible to
+        # use BugQuery to read the logs stored in the bucket. A bucket may currently
+        # only contain one link.
+        # @param [String] parent
+        #   Required. The full resource name of the bucket to create a link for. "projects/
+        #   [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # @param [Google::Apis::LoggingV2::Link] link_object
+        # @param [String] link_id
+        #   Required. The ID to use for the link. The link_id can have up to 100
+        #   characters. A valid link_id must only have alphanumeric characters and
+        #   underscores within it.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_location_bucket_link(parent, link_object = nil, link_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/links', options)
+          command.request_representation = Google::Apis::LoggingV2::Link::Representation
+          command.request_object = link_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['linkId'] = link_id unless link_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a link. This will also delete the corresponding BigQuery linked
+        # dataset.
+        # @param [String] name
+        #   Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a link.
+        # @param [String] name
+        #   Required. The resource name of the link:"projects/PROJECT_ID/locations/
+        #   LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/ORGANIZATION_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Link] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Link]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Link::Representation
+          command.response_class = Google::Apis::LoggingV2::Link
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists links.
+        # @param [String] parent
+        #   Required. The parent resource whose links are to be listed:"projects/
+        #   PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "folders/
+        #   FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLinksResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLinksResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_location_bucket_links(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/links', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLinksResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLinksResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a view over log entries in a log bucket. A bucket may contain a
         # maximum of 30 views.
         # @param [String] parent
@@ -4132,7 +5536,9 @@ module Google
         #   locations/global/buckets/my-bucket"
         # @param [Google::Apis::LoggingV2::LogView] log_view_object
         # @param [String] view_id
-        #   Required. The id to use for this view.
+        #   Required. A client-assigned identifier such as "my-view". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -4163,7 +5569,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a view on a log bucket.
+        # Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this
+        # indicates that system is not in a state where it can delete the view. If this
+        # occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to delete: "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -4270,7 +5678,9 @@ module Google
         end
         
         # Updates a view on a log bucket. This method replaces the following fields in
-        # the existing view with values from the new view: filter.
+        # the existing view with values from the new view: filter. If an UNAVAILABLE
+        # error is returned, this indicates that system is not in a state where it can
+        # update the view. If this occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to update "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -4307,6 +5717,60 @@ module Google
           command.response_class = Google::Apis::LoggingV2::LogView
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the logs in projects, organizations, folders, or billing accounts. Only
+        # logs that have entries are listed.
+        # @param [String] parent
+        #   Required. The resource name that owns the logs: projects/[PROJECT_ID]
+        #   organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[
+        #   FOLDER_ID]
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request. Non-
+        #   positive values are ignored. The presence of nextPageToken in the response
+        #   indicates that more results might be available.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response. The values of other method parameters should be
+        #   identical to those in the previous call.
+        # @param [Array<String>, String] resource_names
+        #   Optional. The resource name that owns the logs: projects/[PROJECT_ID]/
+        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+        #   BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/
+        #   [BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be:
+        #   projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[
+        #   BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLogsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLogsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_location_bucket_view_logs(parent, page_size: nil, page_token: nil, resource_names: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/logs', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLogsResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLogsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['resourceNames'] = resource_names unless resource_names.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -4802,9 +6266,92 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new exclusion in a specified parent resource. Only log entries
-        # belonging to that resource can be excluded. You can have up to 10 exclusions
-        # in a resource.
+        # Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log
+        # Router can be configured for Google Cloud projects, folders, organizations and
+        # billing accounts. Once configured for an organization, it applies to all
+        # projects and folders in the Google Cloud organization.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve CMEK settings. "projects/[
+        #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
+        #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
+        #   Log Router can be configured for Google Cloud projects, folders, organizations
+        #   and billing accounts. Once configured for an organization, it applies to all
+        #   projects and folders in the Google Cloud organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::CmekSettings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::CmekSettings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_cmek_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/cmekSettings', options)
+          command.response_representation = Google::Apis::LoggingV2::CmekSettings::Representation
+          command.response_class = Google::Apis::LoggingV2::CmekSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the Log Router settings for the given resource.Note: Settings for the Log
+        # Router can be get for Google Cloud projects, folders, organizations and
+        # billing accounts. Currently it can only be configured for organizations. Once
+        # configured for an organization, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve settings. "projects/[PROJECT_ID]/
+        #   settings" "organizations/[ORGANIZATION_ID]/settings" "billingAccounts/[
+        #   BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings" For example:"
+        #   organizations/12345/settings"Note: Settings for the Log Router can be get for
+        #   Google Cloud projects, folders, organizations and billing accounts. Currently
+        #   it can only be configured for organizations. Once configured for an
+        #   organization, it applies to all projects and folders in the Google Cloud
+        #   organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/settings', options)
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new exclusion in the _Default sink in a specified parent resource.
+        # Only log entries belonging to that resource can be excluded. You can have up
+        # to 10 exclusions in a resource.
         # @param [String] parent
         #   Required. The parent resource in which to create the exclusion: "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -4840,7 +6387,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an exclusion.
+        # Deletes an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion to delete: "projects/[
         #   PROJECT_ID]/exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/
@@ -4874,7 +6421,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the description of an exclusion.
+        # Gets the description of an exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of an existing exclusion: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -4908,7 +6455,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all the exclusions in a parent resource.
+        # Lists all the exclusions on the _Default sink in a parent resource.
         # @param [String] parent
         #   Required. The parent resource whose exclusions are to be listed. "projects/[
         #   PROJECT_ID]" "organizations/[ORGANIZATION_ID]" "billingAccounts/[
@@ -4951,7 +6498,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Changes one or more properties of an existing exclusion.
+        # Changes one or more properties of an existing exclusion in the _Default sink.
         # @param [String] name
         #   Required. The resource name of the exclusion to update: "projects/[PROJECT_ID]/
         #   exclusions/[EXCLUSION_ID]" "organizations/[ORGANIZATION_ID]/exclusions/[
@@ -5110,6 +6657,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a log bucket asynchronously that can be used to store log entries.
+        # After a bucket has been created, the bucket's location cannot be changed.
+        # @param [String] parent
+        #   Required. The resource in which to create the log bucket: "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        #   locations/global"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] bucket_id
+        #   Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_location_bucket_async(parent, log_bucket_object = nil, bucket_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/buckets:createAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['bucketId'] = bucket_id unless bucket_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Deletes a log bucket.Changes the bucket's lifecycle_state to the
         # DELETE_REQUESTED state. After 7 days, the bucket will be purged and all log
         # entries in the bucket will be permanently deleted.
@@ -5228,11 +6816,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a log bucket. This method replaces the following fields in the
-        # existing bucket with values from the new bucket: retention_periodIf the
-        # retention period is decreased and the bucket is locked, FAILED_PRECONDITION
-        # will be returned.If the bucket has a lifecycle_state of DELETE_REQUESTED, then
-        # FAILED_PRECONDITION will be returned.After a bucket has been created, the
+        # Updates a log bucket.If the bucket has a lifecycle_state of DELETE_REQUESTED,
+        # then FAILED_PRECONDITION will be returned.After a bucket has been created, the
         # bucket's location cannot be changed.
         # @param [String] name
         #   Required. The full resource name of the bucket to update. "projects/[
@@ -5318,6 +6903,210 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates a log bucket asynchronously.If the bucket has a lifecycle_state of
+        # DELETE_REQUESTED, then FAILED_PRECONDITION will be returned.After a bucket has
+        # been created, the bucket's location cannot be changed.
+        # @param [String] name
+        #   Required. The full resource name of the bucket to update. "projects/[
+        #   PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        #   my-project/locations/global/buckets/my-bucket"
+        # @param [Google::Apis::LoggingV2::LogBucket] log_bucket_object
+        # @param [String] update_mask
+        #   Required. Field mask that specifies the fields in bucket that need an update.
+        #   A bucket field will be overwritten if, and only if, it is in the update mask.
+        #   name and output only fields cannot be updated.For a detailed FieldMask
+        #   definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        #   google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        #   retention_days
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_project_location_bucket_async(name, log_bucket_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:updateAsync', options)
+          command.request_representation = Google::Apis::LoggingV2::LogBucket::Representation
+          command.request_object = log_bucket_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Asynchronously creates linked dataset in BigQuery which makes it possible to
+        # use BugQuery to read the logs stored in the bucket. A bucket may currently
+        # only contain one link.
+        # @param [String] parent
+        #   Required. The full resource name of the bucket to create a link for. "projects/
+        #   [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        #   [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        #   FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # @param [Google::Apis::LoggingV2::Link] link_object
+        # @param [String] link_id
+        #   Required. The ID to use for the link. The link_id can have up to 100
+        #   characters. A valid link_id must only have alphanumeric characters and
+        #   underscores within it.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_location_bucket_link(parent, link_object = nil, link_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/links', options)
+          command.request_representation = Google::Apis::LoggingV2::Link::Representation
+          command.request_object = link_object
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['linkId'] = link_id unless link_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a link. This will also delete the corresponding BigQuery linked
+        # dataset.
+        # @param [String] name
+        #   Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        #   links/LINK_ID"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Operation::Representation
+          command.response_class = Google::Apis::LoggingV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a link.
+        # @param [String] name
+        #   Required. The resource name of the link:"projects/PROJECT_ID/locations/
+        #   LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/ORGANIZATION_ID/
+        #   locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        #   folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Link] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Link]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_bucket_link(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::LoggingV2::Link::Representation
+          command.response_class = Google::Apis::LoggingV2::Link
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists links.
+        # @param [String] parent
+        #   Required. The parent resource whose links are to be listed:"projects/
+        #   PROJECT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/" "organizations/
+        #   ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "billingAccounts/
+        #   BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/" "folders/
+        #   FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLinksResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLinksResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_bucket_links(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/links', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLinksResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLinksResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a view over log entries in a log bucket. A bucket may contain a
         # maximum of 30 views.
         # @param [String] parent
@@ -5326,7 +7115,9 @@ module Google
         #   locations/global/buckets/my-bucket"
         # @param [Google::Apis::LoggingV2::LogView] log_view_object
         # @param [String] view_id
-        #   Required. The id to use for this view.
+        #   Required. A client-assigned identifier such as "my-view". Identifiers are
+        #   limited to 100 characters and can include only letters, digits, underscores,
+        #   hyphens, and periods.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -5357,7 +7148,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a view on a log bucket.
+        # Deletes a view on a log bucket. If an UNAVAILABLE error is returned, this
+        # indicates that system is not in a state where it can delete the view. If this
+        # occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to delete: "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -5464,7 +7257,9 @@ module Google
         end
         
         # Updates a view on a log bucket. This method replaces the following fields in
-        # the existing view with values from the new view: filter.
+        # the existing view with values from the new view: filter. If an UNAVAILABLE
+        # error is returned, this indicates that system is not in a state where it can
+        # update the view. If this occurs, please try again in a few minutes.
         # @param [String] name
         #   Required. The full resource name of the view to update "projects/[PROJECT_ID]/
         #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]" For example:"
@@ -5501,6 +7296,60 @@ module Google
           command.response_class = Google::Apis::LoggingV2::LogView
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the logs in projects, organizations, folders, or billing accounts. Only
+        # logs that have entries are listed.
+        # @param [String] parent
+        #   Required. The resource name that owns the logs: projects/[PROJECT_ID]
+        #   organizations/[ORGANIZATION_ID] billingAccounts/[BILLING_ACCOUNT_ID] folders/[
+        #   FOLDER_ID]
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return from this request. Non-
+        #   positive values are ignored. The presence of nextPageToken in the response
+        #   indicates that more results might be available.
+        # @param [String] page_token
+        #   Optional. If present, then retrieve the next batch of results from the
+        #   preceding call to this method. pageToken must be the value of nextPageToken
+        #   from the previous response. The values of other method parameters should be
+        #   identical to those in the previous call.
+        # @param [Array<String>, String] resource_names
+        #   Optional. The resource name that owns the logs: projects/[PROJECT_ID]/
+        #   locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] organizations/[
+        #   ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]
+        #   billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[
+        #   BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/
+        #   [BUCKET_ID]/views/[VIEW_ID]To support legacy queries, it could also be:
+        #   projects/[PROJECT_ID] organizations/[ORGANIZATION_ID] billingAccounts/[
+        #   BILLING_ACCOUNT_ID] folders/[FOLDER_ID]
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::ListLogsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::ListLogsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_bucket_view_logs(parent, page_size: nil, page_token: nil, resource_names: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/logs', options)
+          command.response_representation = Google::Apis::LoggingV2::ListLogsResponse::Representation
+          command.response_class = Google::Apis::LoggingV2::ListLogsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['resourceNames'] = resource_names unless resource_names.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -6391,18 +8240,20 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets the Logs Router CMEK settings for the given resource.Note: CMEK for the
-        # Logs Router can currently only be configured for GCP organizations. Once
-        # configured, it applies to all projects and folders in the GCP organization.See
-        # Enabling CMEK for Logs Router (https://cloud.google.com/logging/docs/routing/
-        # managed-encryption) for more information.
+        # Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log
+        # Router can be configured for Google Cloud projects, folders, organizations and
+        # billing accounts. Once configured for an organization, it applies to all
+        # projects and folders in the Google Cloud organization.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
         # @param [String] name
         #   Required. The resource for which to retrieve CMEK settings. "projects/[
         #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
         #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
         #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
-        #   Logs Router can currently only be configured for GCP organizations. Once
-        #   configured, it applies to all projects and folders in the GCP organization.
+        #   Log Router can be configured for Google Cloud projects, folders, organizations
+        #   and billing accounts. Once configured for an organization, it applies to all
+        #   projects and folders in the Google Cloud organization.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -6430,21 +8281,64 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates the Logs Router CMEK settings for the given resource.Note: CMEK for
-        # the Logs Router can currently only be configured for GCP organizations. Once
-        # configured, it applies to all projects and folders in the GCP organization.
-        # UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the
-        # associated service account does not have the required roles/cloudkms.
+        # Gets the Log Router settings for the given resource.Note: Settings for the Log
+        # Router can be get for Google Cloud projects, folders, organizations and
+        # billing accounts. Currently it can only be configured for organizations. Once
+        # configured for an organization, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource for which to retrieve settings. "projects/[PROJECT_ID]/
+        #   settings" "organizations/[ORGANIZATION_ID]/settings" "billingAccounts/[
+        #   BILLING_ACCOUNT_ID]/settings" "folders/[FOLDER_ID]/settings" For example:"
+        #   organizations/12345/settings"Note: Settings for the Log Router can be get for
+        #   Google Cloud projects, folders, organizations and billing accounts. Currently
+        #   it can only be configured for organizations. Once configured for an
+        #   organization, it applies to all projects and folders in the Google Cloud
+        #   organization.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}/settings', options)
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the Log Router CMEK settings for the given resource.Note: CMEK for the
+        # Log Router can currently only be configured for Google Cloud organizations.
+        # Once configured, it applies to all projects and folders in the Google Cloud
+        # organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2)
+        # the associated service account does not have the required roles/cloudkms.
         # cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key
-        # is disabled.See Enabling CMEK for Logs Router (https://cloud.google.com/
-        # logging/docs/routing/managed-encryption) for more information.
+        # is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/
+        # docs/routing/managed-encryption) for more information.
         # @param [String] name
         #   Required. The resource name for the CMEK settings to update. "projects/[
         #   PROJECT_ID]/cmekSettings" "organizations/[ORGANIZATION_ID]/cmekSettings" "
         #   billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings" "folders/[FOLDER_ID]/
         #   cmekSettings" For example:"organizations/12345/cmekSettings"Note: CMEK for the
-        #   Logs Router can currently only be configured for GCP organizations. Once
-        #   configured, it applies to all projects and folders in the GCP organization.
+        #   Log Router can currently only be configured for Google Cloud organizations.
+        #   Once configured, it applies to all projects and folders in the Google Cloud
+        #   organization.
         # @param [Google::Apis::LoggingV2::CmekSettings] cmek_settings_object
         # @param [String] update_mask
         #   Optional. Field mask identifying which fields from cmek_settings should be
@@ -6474,6 +8368,57 @@ module Google
           command.request_object = cmek_settings_object
           command.response_representation = Google::Apis::LoggingV2::CmekSettings::Representation
           command.response_class = Google::Apis::LoggingV2::CmekSettings
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the Log Router settings for the given resource.Note: Settings for the
+        # Log Router can currently only be configured for Google Cloud organizations.
+        # Once configured, it applies to all projects and folders in the Google Cloud
+        # organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the
+        # associated service account does not have the required roles/cloudkms.
+        # cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key
+        # is disabled. 4) location_id is not supported by Logging. 5) location_id
+        # violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/
+        # logging/docs/routing/managed-encryption) for more information.
+        # @param [String] name
+        #   Required. The resource name for the settings to update. "organizations/[
+        #   ORGANIZATION_ID]/settings" For example:"organizations/12345/settings"Note:
+        #   Settings for the Log Router can currently only be configured for Google Cloud
+        #   organizations. Once configured, it applies to all projects and folders in the
+        #   Google Cloud organization.
+        # @param [Google::Apis::LoggingV2::Settings] settings_object
+        # @param [String] update_mask
+        #   Optional. Field mask identifying which fields from settings should be updated.
+        #   A field will be overwritten if and only if it is in the update mask. Output
+        #   only fields cannot be updated.See FieldMask for more information.For example: "
+        #   updateMask=kmsKeyName"
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::LoggingV2::Settings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::LoggingV2::Settings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_settings(name, settings_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v2/{+name}/settings', options)
+          command.request_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.request_object = settings_object
+          command.response_representation = Google::Apis::LoggingV2::Settings::Representation
+          command.response_class = Google::Apis::LoggingV2::Settings
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?

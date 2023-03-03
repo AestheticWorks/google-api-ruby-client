@@ -88,7 +88,7 @@ module Google
         # cloud.google.com/apigee/docs/api-platform/get-started/create-org).
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1Organization] google_cloud_apigee_v1_organization_object
         # @param [String] parent
-        #   Required. Name of the GCP project in which to associate the Apigee
+        #   Required. Name of the Google Cloud project in which to associate the Apigee
         #   organization. Pass the information as a query parameter using the following
         #   structure in your request: `projects/`
         # @param [String] fields
@@ -120,10 +120,20 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete an Apigee organization. Only supported for SubscriptionType TRIAL.
+        # Delete an Apigee organization. For organizations with BillingType EVALUATION,
+        # an immediate deletion is performed. For paid organizations, a soft-deletion is
+        # performed. The organization can be restored within the soft-deletion period
+        # which can be controlled using the retention field in the request.
         # @param [String] name
         #   Required. Name of the organization. Use the following structure in your
         #   request: `organizations/`org``
+        # @param [String] retention
+        #   Optional. This setting is applicable only for organizations that are soft-
+        #   deleted (i.e., BillingType is not EVALUATION). It controls how long
+        #   Organization data will be retained after the initial delete operation
+        #   completes. During this period, the Organization may be restored to its last
+        #   known state. After this period, the Organization will no longer be able to be
+        #   restored.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -141,11 +151,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def delete_organization(name, fields: nil, quota_user: nil, options: nil, &block)
+        def delete_organization(name, retention: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:delete, 'v1/{+name}', options)
           command.response_representation = Google::Apis::ApigeeV1::GoogleLongrunningOperation::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleLongrunningOperation
           command.params['name'] = name unless name.nil?
+          command.query['retention'] = retention unless retention.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -214,6 +225,37 @@ module Google
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1IngressConfig
           command.params['name'] = name unless name.nil?
           command.query['view'] = view unless view.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the project ID and region for an Apigee organization.
+        # @param [String] name
+        #   Required. Apigee organization name in the following format: `organizations/`
+        #   org``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1OrganizationProjectMapping] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1OrganizationProjectMapping]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_project_mapping(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}:getProjectMapping', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1OrganizationProjectMapping::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1OrganizationProjectMapping
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -292,9 +334,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists the Apigee organizations and associated GCP projects that you have
-        # permission to access. See [Understanding organizations](https://cloud.google.
-        # com/apigee/docs/api-platform/fundamentals/organization-structure).
+        # Lists the Apigee organizations and associated Google Cloud projects that you
+        # have permission to access. See [Understanding organizations](https://cloud.
+        # google.com/apigee/docs/api-platform/fundamentals/organization-structure).
         # @param [String] parent
         #   Required. Use the following structure in your request: `organizations`
         # @param [String] fields
@@ -1454,10 +1496,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a key value map in an api proxy.
+        # Creates a key value map in an API proxy.
         # @param [String] parent
-        #   Required. The name of the environment in which to create the key value map.
-        #   Must be of the form `organizations/`organization`/apis/`api``.
+        #   Required. Name of the environment in which to create the key value map. Use
+        #   the following structure in your request: `organizations/`org`/apis/`api``
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap] google_cloud_apigee_v1_key_value_map_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1488,10 +1530,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a key value map in an api proxy.
+        # Deletes a key value map from an API proxy.
         # @param [String] name
-        #   Required. The name of the key value map. Must be of the form `organizations/`
-        #   organization`/apis/`api`/keyvaluemaps/`keyvaluemap``.
+        #   Required. Name of the key value map. Use the following structure in your
+        #   request: `organizations/`org`/apis/`api`/keyvaluemaps/`keyvaluemap``
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1514,6 +1556,165 @@ module Google
           command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates key value entries in a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to create the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `
+        #   organizations/`organization`/environments/`environment`/keyvaluemaps/`
+        #   keyvaluemap`` * `organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] google_cloud_apigee_v1_key_value_entry_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_api_keyvaluemap_entry(parent, google_cloud_apigee_v1_key_value_entry_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/entries', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.request_object = google_cloud_apigee_v1_key_value_entry_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a key value entry from a key value map scoped to an organization,
+        # environment, or API proxy. **Notes:** * After you delete the key value entry,
+        # the policy consuming the entry will continue to function with its cached
+        # values for a few minutes. This is expected behavior. * Supported for Apigee
+        # hybrid 1.8.x and higher.
+        # @param [String] name
+        #   Required. Scope as indicated by the URI in which to delete the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_api_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get the key value entry value for a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] name
+        #   Required. Scope as indicated by the URI in which to fetch the key value map
+        #   entry/value. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_api_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists key value entries for key values maps scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to list key value maps. Use **
+        #   one** of the following structures in your request: * `organizations/`
+        #   organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `organizations/`
+        #   organization`/environments/`environment`/keyvaluemaps/`keyvaluemap`` * `
+        #   organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of key value entries to return. If unspecified, at
+        #   most 100 entries will be returned.
+        # @param [String] page_token
+        #   Optional. Page token. If provides, must be a valid key value entry returned
+        #   from a previous call that can be used to retrieve the next page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_api_keyvaluemap_entries(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/entries', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1767,7 +1968,8 @@ module Google
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1DataCollector] google_cloud_apigee_v1_data_collector_object
         # @param [String] data_collector_id
         #   ID of the data collector. Overrides any ID in the data collector resource.
-        #   Must begin with `dc_`.
+        #   Must be a string beginning with `dc_` that contains only letters, numbers, and
+        #   underscores.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2478,26 +2680,25 @@ module Google
         # Manages access to a developer app by enabling you to: * Approve or revoke a
         # developer app * Generate a new consumer key and secret for a developer app To
         # approve or revoke a developer app, set the `action` query parameter to `
-        # approved` or `revoked`, respectively, and the `Content-Type` header to `
+        # approve` or `revoke`, respectively, and the `Content-Type` header to `
         # application/octet-stream`. If a developer app is revoked, none of its API keys
-        # are valid for API calls even though the keys are still `approved`. If
-        # successful, the API call returns the following HTTP status code: `204 No
-        # Content` To generate a new consumer key and secret for a developer app, pass
-        # the new key/secret details. Rather than replace an existing key, this API
-        # generates a new key. In this case, multiple key pairs may be associated with a
-        # single developer app. Each key pair has an independent status (`approved` or `
-        # revoked`) and expiration time. Any approved, non-expired key can be used in an
-        # API call. For example, if you're using API key rotation, you can generate new
-        # keys with expiration times that overlap keys that are going to expire. You
-        # might also generate a new consumer key/secret if the security of the original
-        # key/secret is compromised. The `keyExpiresIn` property defines the expiration
-        # time for the API key in milliseconds. If you don't set this property or set it
-        # to `-1`, the API key never expires. **Notes**: * When generating a new key/
-        # secret, this API replaces the existing attributes, notes, and callback URLs
-        # with those specified in the request. Include or exclude any existing
-        # information that you want to retain or delete, respectively. * To migrate
-        # existing consumer keys and secrets to hybrid from another system, see the
-        # CreateDeveloperAppKey API.
+        # are valid for API calls even though the keys are still approved. If successful,
+        # the API call returns the following HTTP status code: `204 No Content` To
+        # generate a new consumer key and secret for a developer app, pass the new key/
+        # secret details. Rather than replace an existing key, this API generates a new
+        # key. In this case, multiple key pairs may be associated with a single
+        # developer app. Each key pair has an independent status (`approve` or `revoke`)
+        # and expiration time. Any approved, non-expired key can be used in an API call.
+        # For example, if you're using API key rotation, you can generate new keys with
+        # expiration times that overlap keys that are going to expire. You might also
+        # generate a new consumer key/secret if the security of the original key/secret
+        # is compromised. The `keyExpiresIn` property defines the expiration time for
+        # the API key in milliseconds. If you don't set this property or set it to `-1`,
+        # the API key never expires. **Notes**: * When generating a new key/secret, this
+        # API replaces the existing attributes, notes, and callback URLs with those
+        # specified in the request. Include or exclude any existing information that you
+        # want to retain or delete, respectively. * To migrate existing consumer keys
+        # and secrets to hybrid from another system, see the CreateDeveloperAppKey API.
         # @param [String] name
         #   Required. Name of the developer app. Use the following structure in your
         #   request: `organizations/`org`/developers/`developer_email`/apps/`app``
@@ -2970,7 +3171,8 @@ module Google
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1DeveloperAppKey] google_cloud_apigee_v1_developer_app_key_object
         # @param [String] action
         #   Approve or revoke the consumer key by setting this value to `approve` or `
-        #   revoke`, respectively.
+        #   revoke`, respectively. The `Content-Type` header must be set to `application/
+        #   octet-stream`.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3256,6 +3458,41 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Adjust the prepaid balance for the developer. This API will be used in
+        # scenarios where the developer has been under-charged or over-charged.
+        # @param [String] name
+        #   Required. Account balance for the developer. Use the following structure in
+        #   your request: `organizations/`org`/developers/`developer`/balance`
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1AdjustDeveloperBalanceRequest] google_cloud_apigee_v1_adjust_developer_balance_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1DeveloperBalance] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1DeveloperBalance]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def adjust_organization_developer_balance(name, google_cloud_apigee_v1_adjust_developer_balance_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:adjust', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1AdjustDeveloperBalanceRequest::Representation
+          command.request_object = google_cloud_apigee_v1_adjust_developer_balance_request_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1DeveloperBalance::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1DeveloperBalance
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Credits the account balance for the developer.
         # @param [String] name
         #   Required. Account balance for the developer. Use the following structure in
@@ -3434,6 +3671,145 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates an endpoint attachment. **Note:** Not supported for Apigee hybrid.
+        # @param [String] parent
+        #   Required. Organization the endpoint attachment will be created in.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment] google_cloud_apigee_v1_endpoint_attachment_object
+        # @param [String] endpoint_attachment_id
+        #   ID to use for the endpoint attachment. ID must start with a lowercase letter
+        #   followed by up to 31 lowercase letters, numbers, or hyphens, and cannot end
+        #   with a hyphen. The minimum length is 2.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_endpoint_attachment(parent, google_cloud_apigee_v1_endpoint_attachment_object = nil, endpoint_attachment_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/endpointAttachments', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment::Representation
+          command.request_object = google_cloud_apigee_v1_endpoint_attachment_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['endpointAttachmentId'] = endpoint_attachment_id unless endpoint_attachment_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes an endpoint attachment.
+        # @param [String] name
+        #   Required. Name of the endpoint attachment. Use the following structure in your
+        #   request: `organizations/`org`/endpointAttachments/`endpoint_attachment``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_endpoint_attachment(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the endpoint attachment.
+        # @param [String] name
+        #   Required. Name of the endpoint attachment. Use the following structure in your
+        #   request: `organizations/`org`/endpointAttachments/`endpoint_attachment``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_endpoint_attachment(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EndpointAttachment
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the endpoint attachments in an organization.
+        # @param [String] parent
+        #   Required. Name of the organization for which to list endpoint attachments. Use
+        #   the following structure in your request: `organizations/`org``
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of endpoint attachments to return. If unspecified, at
+        #   most 25 attachments will be returned.
+        # @param [String] page_token
+        #   Optional. Page token, returned from a previous `ListEndpointAttachments` call,
+        #   that you can use to retrieve the next page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListEndpointAttachmentsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListEndpointAttachmentsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_endpoint_attachments(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/endpointAttachments', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListEndpointAttachmentsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListEndpointAttachmentsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a new environment group.
         # @param [String] parent
         #   Required. Name of the organization in which to create the environment group in
@@ -3529,6 +3905,42 @@ module Google
           command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroup::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroup
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the deployed ingress configuration for an environment group.
+        # @param [String] name
+        #   Required. Name of the deployed configuration for the environment group in the
+        #   following format: 'organizations/`org`/envgroups/`envgroup`/
+        #   deployedIngressConfig'.
+        # @param [String] view
+        #   When set to FULL, additional details about the specific deployments receiving
+        #   traffic will be included in the IngressConfig response's RoutingRules.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroupConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroupConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_envgroup_deployed_ingress_config(name, view: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroupConfig::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1EnvironmentGroupConfig
+          command.params['name'] = name unless name.nil?
+          command.query['view'] = view unless view.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3750,8 +4162,7 @@ module Google
         #   Use the following structure in your request: `organizations/`org``
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1Environment] google_cloud_apigee_v1_environment_object
         # @param [String] name
-        #   Optional. Name of the environment. Alternatively, the name may be specified in
-        #   the request body in the name field.
+        #   Optional. Name of the environment.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3782,7 +4193,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an environment from an organization.
+        # Deletes an environment from an organization. **Warning: You must delete all
+        # key value maps and key value entries before you delete an environment.**
+        # Otherwise, if you re-create the environment the key value map entry operations
+        # will encounter encryption/decryption discrepancies.
         # @param [String] name
         #   Required. Name of the environment. Use the following structure in your request:
         #   `organizations/`org`/environments/`env``
@@ -3838,6 +4252,40 @@ module Google
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1Environment::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1Environment
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the API Security runtime configuration for an environment. This named
+        # ApiSecurityRuntimeConfig to prevent conflicts with ApiSecurityConfig from
+        # addon config.
+        # @param [String] name
+        #   Required. Name of the environment API Security Runtime configuration resource.
+        #   Use the following structure in your request: `organizations/`org`/environments/
+        #   `env`/apiSecurityRuntimeConfig`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ApiSecurityRuntimeConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ApiSecurityRuntimeConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_api_security_runtime_config(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ApiSecurityRuntimeConfig::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ApiSecurityRuntimeConfig
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -3912,16 +4360,20 @@ module Google
         # api-platform/system-administration/manage-users-roles). You must have the `
         # apigee.environments.getIamPolicy` permission to call this API.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3981,14 +4433,53 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates properties for an Apigee environment with patch semantics using a
+        # field mask. **Note:** Not supported for Apigee hybrid.
+        # @param [String] name
+        #   Required. Name of the environment. Use the following structure in your request:
+        #   `organizations/`org`/environments/`environment``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1Environment] google_cloud_apigee_v1_environment_object
+        # @param [String] update_mask
+        #   List of fields to be updated. Fields that can be updated: node_config.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def modify_organization_environment_environment(name, google_cloud_apigee_v1_environment_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1Environment::Representation
+          command.request_object = google_cloud_apigee_v1_environment_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Sets the IAM policy on an environment, if the policy already exists it will be
         # replaced. For more information, see [Manage users, roles, and permissions
         # using the API](https://cloud.google.com/apigee/docs/api-platform/system-
         # administration/manage-users-roles). You must have the `apigee.environments.
         # setIamPolicy` permission to call this API.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ApigeeV1::GoogleIamV1SetIamPolicyRequest] google_iam_v1_set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -4056,8 +4547,9 @@ module Google
         # permissions that the user has on the environment. If the environment does not
         # exist, an empty permission set is returned (a NOT_FOUND error is not returned).
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ApigeeV1::GoogleIamV1TestIamPermissionsRequest] google_iam_v1_test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -4126,7 +4618,8 @@ module Google
         # existing properties to the API, even if they are not being changed. If you
         # omit properties from the payload, the properties are removed. To get the
         # current list of properties for the environment, use the [Get Environment API](
-        # get).
+        # get). **Note**: Both `PUT` and `POST` methods are supported for updating an
+        # existing environment.
         # @param [String] name
         #   Required. Name of the environment. Use the following structure in your request:
         #   `organizations/`org`/environments/`env``
@@ -4205,7 +4698,8 @@ module Google
         # existing properties to the API, even if they are not being changed. If you
         # omit properties from the payload, the properties are removed. To get the
         # current list of properties for the environment, use the [Get Environment API](
-        # get).
+        # get). **Note**: Both `PUT` and `POST` methods are supported for updating an
+        # existing environment.
         # @param [String] name
         #   Required. Name of the environment. Use the following structure in your request:
         #   `organizations/`org`/environments/`env``
@@ -4472,18 +4966,18 @@ module Google
         #   deployment is rejected if other revisions of the API proxy are deployed in the
         #   environment.
         # @param [Boolean] sequenced_rollout
-        #   Flag that specifies whether to enable sequenced rollout. If set to `true`, a
-        #   best-effort attempt will be made to roll out the routing rules corresponding
-        #   to this deployment and the environment changes to add this deployment in a
-        #   safe order. This reduces the risk of downtime that could be caused by changing
-        #   the environment group's routing before the new destination for the affected
-        #   traffic is ready to receive it. This should only be necessary if the new
-        #   deployment will be capturing traffic from another environment under a shared
-        #   environment group or if traffic will be rerouted to a different environment
-        #   due to a base path removal. The [GenerateDeployChangeReport API](
-        #   GenerateDeployChangeReport) may be used to examine routing changes before
-        #   issuing the deployment request, and its response will indicate if a sequenced
-        #   rollout is recommended for the deployment.
+        #   Flag that specifies whether to enable sequenced rollout. If set to `true`, the
+        #   routing rules for this deployment and the environment changes to add the
+        #   deployment will be rolled out in a safe order. This reduces the risk of
+        #   downtime that could be caused by changing the environment group's routing
+        #   before the new destination for the affected traffic is ready to receive it.
+        #   This should only be necessary if the new deployment will be capturing traffic
+        #   from another environment under a shared environment group or if traffic will
+        #   be rerouted to a different environment due to a base path removal. The [
+        #   GenerateDeployChangeReport API](GenerateDeployChangeReport) may be used to
+        #   examine routing changes before issuing the deployment request, and its
+        #   response will indicate if a sequenced rollout is recommended for the
+        #   deployment.
         # @param [String] service_account
         #   Google Cloud IAM service account. The service account represents the identity
         #   of the deployed proxy, and determines what permissions it has. The format must
@@ -4560,15 +5054,15 @@ module Google
         #   Required. Name of the API proxy revision deployment in the following format: `
         #   organizations/`org`/environments/`env`/apis/`api`/revisions/`rev``
         # @param [Boolean] sequenced_rollout
-        #   Flag that specifies whether to enable sequenced rollout. If set to `true`, a
-        #   best-effort attempt will be made to remove the environment group routing rules
-        #   corresponding to this deployment before removing the deployment from the
-        #   runtime. This is likely to be a rare use case; it is only needed when the
-        #   intended effect of undeploying this proxy is to cause the traffic it currently
-        #   handles to be rerouted to some other existing proxy in the environment group.
-        #   The [GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be
-        #   used to examine routing changes before issuing the undeployment request, and
-        #   its response will indicate if a sequenced rollout is recommended for the
+        #   Flag that specifies whether to enable sequenced rollout. If set to `true`, the
+        #   environment group routing rules corresponding to this deployment will be
+        #   removed before removing the deployment from the runtime. This is likely to be
+        #   a rare use case; it is only needed when the intended effect of undeploying
+        #   this proxy is to cause the traffic it currently handles to be rerouted to some
+        #   other existing proxy in the environment group. The [
+        #   GenerateUndeployChangeReport API](GenerateUndeployChangeReport) may be used to
+        #   examine routing changes before issuing the undeployment request, and its
+        #   response will indicate if a sequenced rollout is recommended for the
         #   undeployment.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -5622,8 +6116,9 @@ module Google
         
         # Creates a key value map in an environment.
         # @param [String] parent
-        #   Required. The name of the environment in which to create the key value map.
-        #   Must be of the form `organizations/`organization`/environments/`environment``.
+        #   Required. Name of the environment in which to create the key value map. Use
+        #   the following structure in your request: `organizations/`org`/environments/`
+        #   env``
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap] google_cloud_apigee_v1_key_value_map_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -5654,10 +6149,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a key value map in an environment.
+        # Deletes a key value map from an environment.
         # @param [String] name
-        #   Required. The name of the key value map. Must be of the form `organizations/`
-        #   organization`/environments/`environment`/keyvaluemaps/`keyvaluemap``.
+        #   Required. Name of the key value map. Use the following structure in your
+        #   request: `organizations/`org`/environments/`env`/keyvaluemaps/`keyvaluemap``
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -5685,58 +6180,214 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # This api is similar to GetStats except that the response is less verbose. In
-        # the current scheme, a query parameter _optimized instructs Edge Analytics to
-        # change the response but since this behavior is not possible with protocol
-        # buffer and since this parameter is predominantly used by Edge UI, we are
-        # introducing a separate api.
+        # Creates key value entries in a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to create the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `
+        #   organizations/`organization`/environments/`environment`/keyvaluemaps/`
+        #   keyvaluemap`` * `organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] google_cloud_apigee_v1_key_value_entry_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_environment_keyvaluemap_entry(parent, google_cloud_apigee_v1_key_value_entry_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/entries', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.request_object = google_cloud_apigee_v1_key_value_entry_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a key value entry from a key value map scoped to an organization,
+        # environment, or API proxy. **Notes:** * After you delete the key value entry,
+        # the policy consuming the entry will continue to function with its cached
+        # values for a few minutes. This is expected behavior. * Supported for Apigee
+        # hybrid 1.8.x and higher.
         # @param [String] name
-        #   Required. The resource name for which the interactive query will be executed.
-        #   Must be of the form `organizations/`organization_id`/environments/`
-        #   environment_id/optimizedStats/`dimensions`` Dimensions let you view metrics in
-        #   meaningful groupings. E.g. apiproxy, target_host. The value of dimensions
-        #   should be comma separated list as shown below `organizations/`org`/
-        #   environments/`env`/optimizedStats/apiproxy,request_verb`
+        #   Required. Scope as indicated by the URI in which to delete the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_environment_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get the key value entry value for a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] name
+        #   Required. Scope as indicated by the URI in which to fetch the key value map
+        #   entry/value. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists key value entries for key values maps scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to list key value maps. Use **
+        #   one** of the following structures in your request: * `organizations/`
+        #   organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `organizations/`
+        #   organization`/environments/`environment`/keyvaluemaps/`keyvaluemap`` * `
+        #   organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of key value entries to return. If unspecified, at
+        #   most 100 entries will be returned.
+        # @param [String] page_token
+        #   Optional. Page token. If provides, must be a valid key value entry returned
+        #   from a previous call that can be used to retrieve the next page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_environment_keyvaluemap_entries(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/entries', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Similar to GetStats except that the response is less verbose.
+        # @param [String] name
+        #   Required. Resource name for which the interactive query will be executed. Use
+        #   the following format in your request: `organizations/`org`/environments/`env`/
+        #   optimizedStats/`dimensions`` Dimensions let you view metrics in meaningful
+        #   groupings, such as `apiproxy`, `target_host`. The value of `dimensions` should
+        #   be a comma-separated list as shown below: `organizations/`org`/environments/`
+        #   env`/optimizedStats/apiproxy,request_verb`
         # @param [String] accuracy
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] agg_table
-        #   If customers want to query custom aggregate tables, then this parameter can be
-        #   used to specify the table name. If this parameter is skipped, then Edge Query
-        #   will try to retrieve the data from fact tables which will be expensive.
+        #   Table name used to query custom aggregate tables. If this parameter is skipped,
+        #   then Apigee will try to retrieve the data from fact tables which will be
+        #   expensive.
         # @param [String] filter
-        #   Enables drill-down on specific dimension values.
+        #   Filter that enables you to drill-down on specific dimension values.
         # @param [String] limit
-        #   This parameter is used to limit the number of result items. Default and the
-        #   max value is 14400.
+        #   Maximum number of result items to return. The default and maximum value that
+        #   can be returned is 14400.
         # @param [String] offset
-        #   Use offset with limit to enable pagination of results. For example, to display
-        #   results 11-20, set limit to '10' and offset to '10'.
+        #   Offset value. Use `offset` with `limit` to enable pagination of results. For
+        #   example, to display results 11-20, set limit to `10` and offset to `10`.
         # @param [Boolean] realtime
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] select
-        #   Required. The select parameter contains a comma separated list of metrics. E.g.
-        #   sum(message_count),sum(error_count)
+        #   Required. Comma-separated list of metrics. For example: `sum(message_count),
+        #   sum(error_count)`
         # @param [Boolean] sonar
-        #   This parameter routes the query to api monitoring service for last hour.
+        #   Routes the query to API Monitoring for the last hour.
         # @param [String] sort
-        #   This parameter specifies if the sort order should be ascending or descending
-        #   Supported values are DESC and ASC.
+        #   Flag that specifies whether the sort order should be ascending or descending.
+        #   Valid values include `DESC` and `ASC`.
         # @param [String] sortby
-        #   Comma separated list of columns to sort the final result.
+        #   Comma-separated list of columns to sort the final result.
         # @param [String] time_range
-        #   Required. Time interval for the interactive query. Time range is specified as
-        #   start~end E.g. 04/15/2017 00:00~05/15/2017 23:59
+        #   Required. Time interval for the interactive query. Time range is specified in
+        #   GMT as `start~end`. For example: `04/15/2017 00:00~05/15/2017 23:59`
         # @param [String] time_unit
-        #   A value of second, minute, hour, day, week, month. Time Unit specifies the
-        #   granularity of metrics returned.
+        #   Granularity of metrics returned. Valid values include: `second`, `minute`, `
+        #   hour`, `day`, `week`, or `month`.
         # @param [String] topk
-        #   Take 'top k' results from results, for example, to return the top 5 results '
-        #   topk=5'.
+        #   Top number of results to return. For example, to return the top 5 results, set
+        #   `topk=5`.
         # @param [Boolean] ts_ascending
-        #   Lists timestamps in ascending order if set to true. Recommend setting this
-        #   value to true if you are using sortby with sort=DESC.
+        #   Flag that specifies whether to list timestamps in ascending (`true`) or
+        #   descending (`false`) order. Apigee recommends setting this value to `true` if
+        #   you are using `sortby` with `sort=DESC`.
         # @param [String] tzo
-        #   This parameters contains the timezone offset value.
+        #   Timezone offset value.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -5878,6 +6529,39 @@ module Google
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::ApigeeV1::GoogleApiHttpBody::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleApiHttpBody
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # After the query is completed, use this API to retrieve the results. If the
+        # request succeeds, and there is a non-zero result set, the result is sent to
+        # the client as a list of urls to JSON files.
+        # @param [String] name
+        #   Required. Name of the asynchronous query result to get. Must be of the form `
+        #   organizations/`org`/environments/`env`/queries/`queryId`/resulturl`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_query_resulturl(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1GetAsyncQueryResultUrlResponse
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
@@ -6309,6 +6993,263 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Submit a report request to be processed in the background. If the submission
+        # succeeds, the API returns a 200 status and an ID that refer to the report
+        # request. In addition to the HTTP status 200, the `state` of "enqueued" means
+        # that the request succeeded.
+        # @param [String] parent
+        #   Required. The parent resource name. Must be of the form `organizations/`org`/
+        #   environments/`env``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportQuery] google_cloud_apigee_v1_security_report_query_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_environment_security_report(parent, google_cloud_apigee_v1_security_report_query_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/securityReports', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportQuery::Representation
+          command.request_object = google_cloud_apigee_v1_security_report_query_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get security report status If the query is still in progress, the `state` is
+        # set to "running" After the query has completed successfully, `state` is set to
+        # "completed"
+        # @param [String] name
+        #   Required. Name of the security report to get. Must be of the form `
+        #   organizations/`org`/environments/`env`/securityReports/`reportId``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_security_report(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # After the query is completed, use this API to retrieve the results as file. If
+        # the request succeeds, and there is a non-zero result set, the result is
+        # downloaded to the client as a zipped JSON file. The name of the downloaded
+        # file will be: OfflineQueryResult-.zip Example: `OfflineQueryResult-9cfc0d85-
+        # 0f30-46d6-ae6f-318d0cb961bd.zip`
+        # @param [String] name
+        #   Required. Name of the security report result to get. Must be of the form `
+        #   organizations/`org`/environments/`env`/securityReports/`reportId`/result`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleApiHttpBody] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleApiHttpBody]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_security_report_result(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleApiHttpBody::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleApiHttpBody
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # After the query is completed, use this API to view the query result when
+        # result size is small.
+        # @param [String] name
+        #   Required. Name of the security report result view to get. Must be of the form `
+        #   organizations/`org`/environments/`env`/securityReports/`reportId`/resultView`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_environment_security_report_result_view(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Return a list of Security Reports
+        # @param [String] parent
+        #   Required. The parent resource name. Must be of the form `organizations/`org`/
+        #   environments/`env``.
+        # @param [String] dataset
+        #   Filter response list by dataset. Example: `api`, `mint`
+        # @param [String] from
+        #   Filter response list by returning security reports that created after this
+        #   date time. Time must be in ISO date-time format like '2011-12-03T10:15:30Z'.
+        # @param [Fixnum] page_size
+        #   The maximum number of security report to return in the list response.
+        # @param [String] page_token
+        #   Token returned from the previous list response to fetch the next page.
+        # @param [String] status
+        #   Filter response list by security reports status.
+        # @param [String] submitted_by
+        #   Filter response list by user who submitted queries.
+        # @param [String] to
+        #   Filter response list by returning security reports that created before this
+        #   date time. Time must be in ISO date-time format like '2011-12-03T10:16:30Z'.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_environment_security_reports(parent, dataset: nil, from: nil, page_size: nil, page_token: nil, status: nil, submitted_by: nil, to: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/securityReports', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['dataset'] = dataset unless dataset.nil?
+          command.query['from'] = from unless from.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['status'] = status unless status.nil?
+          command.query['submittedBy'] = submitted_by unless submitted_by.nil?
+          command.query['to'] = to unless to.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieve security statistics as tabular rows.
+        # @param [String] orgenv
+        #   Required. Should be of the form organizations//environments/.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsRequest] google_cloud_apigee_v1_query_tabular_stats_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def query_organization_environment_security_stat_tabular_stats(orgenv, google_cloud_apigee_v1_query_tabular_stats_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+orgenv}/securityStats:queryTabularStats', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsRequest::Representation
+          command.request_object = google_cloud_apigee_v1_query_tabular_stats_request_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTabularStatsResponse
+          command.params['orgenv'] = orgenv unless orgenv.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieve security statistics as a collection of time series.
+        # @param [String] orgenv
+        #   Required. Should be of the form organizations//environments/.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsRequest] google_cloud_apigee_v1_query_time_series_stats_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def query_organization_environment_security_stat_time_series_stats(orgenv, google_cloud_apigee_v1_query_time_series_stats_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+orgenv}/securityStats:queryTimeSeriesStats', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsRequest::Representation
+          command.request_object = google_cloud_apigee_v1_query_time_series_stats_request_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1QueryTimeSeriesStatsResponse
+          command.params['orgenv'] = orgenv unless orgenv.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Lists all deployments of a shared flow in an environment.
         # @param [String] parent
         #   Required. Name representing a shared flow in an environment in the following
@@ -6464,58 +7405,58 @@ module Google
         
         # Retrieve metrics grouped by dimensions. The types of metrics you can retrieve
         # include traffic, message counts, API call latency, response size, and cache
-        # hits and counts. Dimensions let you view metrics in meaningful groups. The
-        # stats api does accept dimensions as path params. The dimensions are optional
-        # in which case the metrics are computed on the entire data for the given
-        # timerange.
+        # hits and counts. Dimensions let you view metrics in meaningful groups. You can
+        # optionally pass dimensions as path parameters to the `stats` API. If
+        # dimensions are not specified, the metrics are computed on the entire set of
+        # data for the given time range.
         # @param [String] name
-        #   Required. The resource name for which the interactive query will be executed.
-        #   Must be of the form `organizations/`organization_id`/environments/`
-        #   environment_id/stats/`dimensions`` Dimensions let you view metrics in
-        #   meaningful groupings. E.g. apiproxy, target_host. The value of dimensions
-        #   should be comma separated list as shown below `organizations/`org`/
-        #   environments/`env`/stats/apiproxy,request_verb`
+        #   Required. Resource name for which the interactive query will be executed. Use
+        #   the following format in your request: `organizations/`org`/environments/`env`/
+        #   stats/`dimensions`` Dimensions let you view metrics in meaningful groupings,
+        #   such as `apiproxy` or `target_host`. The value of dimensions should be a comma-
+        #   separated list, as shown below: `organizations/`org`/environments/`env`/stats/
+        #   apiproxy,request_verb`
         # @param [String] accuracy
-        #   Legacy field: not used anymore. This field is present to support UI calls
-        #   which still use this parameter.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] agg_table
-        #   If customers want to query custom aggregate tables, then this parameter can be
-        #   used to specify the table name. If this parameter is skipped, then Edge Query
-        #   will try to retrieve the data from fact tables which will be expensive.
+        #   Table name used to query custom aggregate tables. If this parameter is skipped,
+        #   then Apigee will try to retrieve the data from fact tables which will be
+        #   expensive.
         # @param [String] filter
-        #   Enables drill-down on specific dimension values
+        #   Filter that enables you to drill down on specific dimension values.
         # @param [String] limit
-        #   This parameter is used to limit the number of result items. Default and the
-        #   max value is 14400.
+        #   Maximum number of result items to return. The default and maximum value that
+        #   can be returned is 14400.
         # @param [String] offset
-        #   Use offset with limit to enable pagination of results. For example, to display
-        #   results 11-20, set limit to '10' and offset to '10'.
+        #   Offset value. Use `offset` with `limit` to enable pagination of results. For
+        #   example, to display results 11-20, set limit to `10` and offset to `10`.
         # @param [Boolean] realtime
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] select
-        #   The select parameter contains a comma separated list of metrics. E.g. sum(
-        #   message_count),sum(error_count)
+        #   Comma-separated list of metrics. For example: `sum(message_count),sum(
+        #   error_count)`
         # @param [Boolean] sonar
-        #   This parameter routes the query to api monitoring service for last hour.
+        #   Routes the query to API Monitoring for the last hour.
         # @param [String] sort
-        #   This parameter specifies if the sort order should be ascending or descending
-        #   Supported values are DESC and ASC.
+        #   Flag that specifies whether the sort order should be ascending or descending.
+        #   Valid values include: `DESC` and `ASC`.
         # @param [String] sortby
-        #   Comma separated list of columns to sort the final result.
+        #   Comma-separated list of columns to sort the final result.
         # @param [String] time_range
-        #   Time interval for the interactive query. Time range is specified as start~end
-        #   E.g. 04/15/2017 00:00~05/15/2017 23:59
+        #   Time interval for the interactive query. Time range is specified in GMT as `
+        #   start~end`. For example: `04/15/2017 00:00~05/15/2017 23:59`
         # @param [String] time_unit
-        #   A value of second, minute, hour, day, week, month. Time Unit specifies the
-        #   granularity of metrics returned.
+        #   Granularity of metrics returned. Valid values include: `second`, `minute`, `
+        #   hour`, `day`, `week`, or` month`.
         # @param [String] topk
-        #   Take 'top k' results from results, for example, to return the top 5 results '
-        #   topk=5'.
+        #   Top number of results to return. For example, to return the top 5 results, set
+        #   `topk=5`.
         # @param [Boolean] ts_ascending
-        #   Lists timestamps in ascending order if set to true. Recommend setting this
-        #   value to true if you are using sortby with sort=DESC.
+        #   Flag that specifies whether to list timestamps in ascending (`true`) or
+        #   descending (`false`) order. Apigee recommends that you set this value to `true`
+        #   if you are using `sortby` with `sort=DESC`.
         # @param [String] tzo
-        #   This parameters contains the timezone offset value.
+        #   Timezone offset value.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -7067,54 +8008,247 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Submit a query at host level to be processed in the background. If the
+        # submission of the query succeeds, the API returns a 201 status and an ID that
+        # refer to the query. In addition to the HTTP status 201, the `state` of "
+        # enqueued" means that the request succeeded.
+        # @param [String] parent
+        #   Required. The parent resource name. Must be of the form `organizations/`org``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportQuery] google_cloud_apigee_v1_security_report_query_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_host_security_report(parent, google_cloud_apigee_v1_security_report_query_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/hostSecurityReports', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportQuery::Representation
+          command.request_object = google_cloud_apigee_v1_security_report_query_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get status of a query submitted at host level. If the query is still in
+        # progress, the `state` is set to "running" After the query has completed
+        # successfully, `state` is set to "completed"
+        # @param [String] name
+        #   Required. Name of the security report to get. Must be of the form `
+        #   organizations/`org`/securityReports/`reportId``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_host_security_report(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # After the query is completed, use this API to retrieve the results. If the
+        # request succeeds, and there is a non-zero result set, the result is downloaded
+        # to the client as a zipped JSON file. The name of the downloaded file will be:
+        # OfflineQueryResult-.zip Example: `OfflineQueryResult-9cfc0d85-0f30-46d6-ae6f-
+        # 318d0cb961bd.zip`
+        # @param [String] name
+        #   Required. Name of the security report result to get. Must be of the form `
+        #   organizations/`org`/securityReports/`reportId`/result`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleApiHttpBody] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleApiHttpBody]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_host_security_report_result(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleApiHttpBody::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleApiHttpBody
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # After the query is completed, use this API to view the query result when
+        # result size is small.
+        # @param [String] name
+        #   Required. Name of the security report result view to get. Must be of the form `
+        #   organizations/`org`/securityReports/`reportId`/resultView`.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_host_security_report_result_view(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityReportResultView
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Return a list of Security Reports at host level.
+        # @param [String] parent
+        #   Required. The parent resource name. Must be of the form `organizations/`org``.
+        # @param [String] dataset
+        #   Filter response list by dataset. Example: `api`, `mint`
+        # @param [String] envgroup_hostname
+        #   Required. Filter response list by hostname.
+        # @param [String] from
+        #   Filter response list by returning security reports that created after this
+        #   date time. Time must be in ISO date-time format like '2011-12-03T10:15:30Z'.
+        # @param [Fixnum] page_size
+        #   The maximum number of security report to return in the list response.
+        # @param [String] page_token
+        #   Token returned from the previous list response to fetch the next page.
+        # @param [String] status
+        #   Filter response list by security report status.
+        # @param [String] submitted_by
+        #   Filter response list by user who submitted queries.
+        # @param [String] to
+        #   Filter response list by returning security reports that created before this
+        #   date time. Time must be in ISO date-time format like '2011-12-03T10:16:30Z'.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_host_security_reports(parent, dataset: nil, envgroup_hostname: nil, from: nil, page_size: nil, page_token: nil, status: nil, submitted_by: nil, to: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/hostSecurityReports', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityReportsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['dataset'] = dataset unless dataset.nil?
+          command.query['envgroupHostname'] = envgroup_hostname unless envgroup_hostname.nil?
+          command.query['from'] = from unless from.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['status'] = status unless status.nil?
+          command.query['submittedBy'] = submitted_by unless submitted_by.nil?
+          command.query['to'] = to unless to.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Retrieve metrics grouped by dimensions in host level. The types of metrics you
         # can retrieve include traffic, message counts, API call latency, response size,
         # and cache hits and counts. Dimensions let you view metrics in meaningful
-        # groups. The stats api does accept dimensions as path params. The dimensions
-        # are optional in which case the metrics are computed on the entire data for the
-        # given timerange.
+        # groups. You can optionally pass dimensions as path parameters to the `stats`
+        # API. If dimensions are not specified, the metrics are computed on the entire
+        # set of data for the given time range.
         # @param [String] name
-        #   Required. The resource name for which the interactive query will be executed.
-        #   Must be of the form `organizations/`organization_id`/hostStats/`dimensions``.
-        #   Dimensions let you view metrics in meaningful groupings. E.g. apiproxy,
-        #   target_host. The value of dimensions should be comma separated list as shown
-        #   below `organizations/`org`/hostStats/apiproxy,request_verb`
+        #   Required. Resource name for which the interactive query will be executed. Use
+        #   the following format in your request: `organizations/`org`/hostStats/`
+        #   dimensions`` Dimensions let you view metrics in meaningful groupings, such as `
+        #   apiproxy`, `target_host`. The value of dimensions should be a comma-separated
+        #   list as shown below `organizations/`org`/hostStats/apiproxy,request_verb`
         # @param [String] accuracy
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] envgroup_hostname
-        #   Required. The hostname for which the interactive query will be executed.
+        #   Required. Hostname for which the interactive query will be executed.
         # @param [String] filter
-        #   Enables drill-down on specific dimension values.
+        #   Flag that enables drill-down on specific dimension values.
         # @param [String] limit
-        #   This parameter is used to limit the number of result items. Default and the
-        #   max value is 14400.
+        #   Maximum number of result items to return. The default and maximum value that
+        #   can be returned is 14400.
         # @param [String] offset
-        #   Use offset with limit to enable pagination of results. For example, to display
-        #   results 11-20, set limit to '10' and offset to '10'.
+        #   Offset value. Use `offset` with `limit` to enable pagination of results. For
+        #   example, to display results 11-20, set limit to `10` and offset to `10`.
         # @param [Boolean] realtime
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] select
-        #   The select parameter contains a comma separated list of metrics. E.g. sum(
-        #   message_count),sum(error_count)
+        #   Comma-separated list of metrics. For example: `sum(message_count),sum(
+        #   error_count)`
         # @param [String] sort
-        #   This parameter specifies if the sort order should be ascending or descending
-        #   Supported values are DESC and ASC.
+        #   Flag that specifies if the sort order should be ascending or descending. Valid
+        #   values are `DESC` and `ASC`.
         # @param [String] sortby
-        #   Comma separated list of columns to sort the final result.
+        #   Comma-separated list of columns to sort the final result.
         # @param [String] time_range
-        #   Time interval for the interactive query. Time range is specified as start~end
-        #   E.g. 04/15/2017 00:00~05/15/2017 23:59
+        #   Time interval for the interactive query. Time range is specified in GMT as `
+        #   start~end`. For example: `04/15/2017 00:00~05/15/2017 23:59`
         # @param [String] time_unit
-        #   A value of second, minute, hour, day, week, month. Time Unit specifies the
-        #   granularity of metrics returned.
+        #   Granularity of metrics returned. Valid values include: `second`, `minute`, `
+        #   hour`, `day`, `week`, or `month`.
         # @param [String] topk
-        #   Take 'top k' results from results, for example, to return the top 5 results '
-        #   topk=5'.
+        #   Top number of results to return. For example, to return the top 5 results, set
+        #   `topk=5`.
         # @param [Boolean] ts_ascending
-        #   Lists timestamps in ascending order if set to true. Recommend setting this
-        #   value to true if you are using sortby with sort=DESC.
+        #   Flag that specifies whether to list timestamps in ascending (`true`) or
+        #   descending (`false`) order. Apigee recommends that you set this value to `true`
+        #   if you are using `sortby` with `sort=DESC`.
         # @param [String] tzo
-        #   This parameters contains the timezone offset value.
+        #   Timezone offset value.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -7747,8 +8881,8 @@ module Google
         
         # Creates a key value map in an organization.
         # @param [String] parent
-        #   Required. The name of the organization in which to create the key value map
-        #   file. Must be of the form `organizations/`organization``.
+        #   Required. Name of the organization in which to create the key value map file.
+        #   Use the following structure in your request: `organizations/`org``
         # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap] google_cloud_apigee_v1_key_value_map_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -7779,10 +8913,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a key value map in an organization.
+        # Deletes a key value map from an organization.
         # @param [String] name
-        #   Required. The name of the key value map. Must be of the form `organizations/`
-        #   organization`/keyvaluemaps/`keyvaluemap``.
+        #   Required. Name of the key value map. Use the following structure in your
+        #   request: `organizations/`org`/keyvaluemaps/`keyvaluemap``
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -7805,6 +8939,165 @@ module Google
           command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueMap
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates key value entries in a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to create the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `
+        #   organizations/`organization`/environments/`environment`/keyvaluemaps/`
+        #   keyvaluemap`` * `organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] google_cloud_apigee_v1_key_value_entry_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_keyvaluemap_entry(parent, google_cloud_apigee_v1_key_value_entry_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/entries', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.request_object = google_cloud_apigee_v1_key_value_entry_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a key value entry from a key value map scoped to an organization,
+        # environment, or API proxy. **Notes:** * After you delete the key value entry,
+        # the policy consuming the entry will continue to function with its cached
+        # values for a few minutes. This is expected behavior. * Supported for Apigee
+        # hybrid 1.8.x and higher.
+        # @param [String] name
+        #   Required. Scope as indicated by the URI in which to delete the key value map
+        #   entry. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get the key value entry value for a key value map scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] name
+        #   Required. Scope as indicated by the URI in which to fetch the key value map
+        #   entry/value. Use **one** of the following structures in your request: * `
+        #   organizations/`organization`/apis/`api`/keyvaluemaps/`keyvaluemap`/entries/`
+        #   entry``. * `organizations/`organization`/environments/`environment`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry`` * `organizations/`organization`/
+        #   keyvaluemaps/`keyvaluemap`/entries/`entry``.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_keyvaluemap_entry(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1KeyValueEntry
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists key value entries for key values maps scoped to an organization,
+        # environment, or API proxy. **Note**: Supported for Apigee hybrid 1.8.x and
+        # higher.
+        # @param [String] parent
+        #   Required. Scope as indicated by the URI in which to list key value maps. Use **
+        #   one** of the following structures in your request: * `organizations/`
+        #   organization`/apis/`api`/keyvaluemaps/`keyvaluemap``. * `organizations/`
+        #   organization`/environments/`environment`/keyvaluemaps/`keyvaluemap`` * `
+        #   organizations/`organization`/keyvaluemaps/`keyvaluemap``.
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of key value entries to return. If unspecified, at
+        #   most 100 entries will be returned.
+        # @param [String] page_token
+        #   Optional. Page token. If provides, must be a valid key value entry returned
+        #   from a previous call that can be used to retrieve the next page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_keyvaluemap_entries(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/entries', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListKeyValueEntriesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -7887,49 +9180,51 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # This api is similar to GetHostStats except that the response is less verbose.
+        # Similar to GetHostStats except that the response is less verbose.
         # @param [String] name
-        #   Required. The resource name for which the interactive query will be executed.
-        #   Must be of the form `organizations/`organization_id`/optimizedHostStats/`
-        #   dimensions``. Dimensions let you view metrics in meaningful groupings. E.g.
-        #   apiproxy, target_host. The value of dimensions should be comma separated list
-        #   as shown below `organizations/`org`/optimizedHostStats/apiproxy,request_verb`
+        #   Required. Resource name for which the interactive query will be executed. Use
+        #   the following format in your request: `organizations/`organization_id`/
+        #   optimizedHostStats/`dimensions`` Dimensions let you view metrics in meaningful
+        #   groupings, such as `apiproxy`, `target_host`. The value of dimensions should
+        #   be a comma-separated list as shown below: `organizations/`org`/
+        #   optimizedHostStats/apiproxy,request_verb`
         # @param [String] accuracy
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] envgroup_hostname
-        #   Required. The hostname for which the interactive query will be executed.
+        #   Required. Hostname for which the interactive query will be executed.
         # @param [String] filter
-        #   Enables drill-down on specific dimension values.
+        #   Filter that enables you to drill-down on specific dimension values.
         # @param [String] limit
-        #   This parameter is used to limit the number of result items. Default and the
-        #   max value is 14400.
+        #   Maximum number of result items to return. The default and maximum value that
+        #   can be returned is 14400.
         # @param [String] offset
-        #   Use offset with limit to enable pagination of results. For example, to display
-        #   results 11-20, set limit to '10' and offset to '10'.
+        #   Offset value. Use `offset` with `limit` to enable pagination of results. For
+        #   example, to display results 11-20, set limit to `10` and offset to `10`.
         # @param [Boolean] realtime
-        #   Legacy field: not used anymore.
+        #   No longer used by Apigee. Supported for backwards compatibility.
         # @param [String] select
-        #   Required. The select parameter contains a comma separated list of metrics. E.g.
-        #   sum(message_count),sum(error_count)
+        #   Required. Comma-separated list of metrics. For example: `sum(message_count),
+        #   sum(error_count)`
         # @param [String] sort
-        #   This parameter specifies if the sort order should be ascending or descending
-        #   Supported values are DESC and ASC.
+        #   Flag that specifies whether the sort order should be ascending or descending.
+        #   Valid values include `DESC` and `ASC`.
         # @param [String] sortby
-        #   Comma separated list of columns to sort the final result.
+        #   Comma-separated list of columns used to sort the final result.
         # @param [String] time_range
-        #   Required. Time interval for the interactive query. Time range is specified as
-        #   start~end. E.g 04/15/2017 00:00~05/15/2017 23:59.
+        #   Required. Time interval for the interactive query. Time range is specified in
+        #   GMT as `start~end`. For example: `04/15/2017 00:00~05/15/2017 23:59`.
         # @param [String] time_unit
-        #   A value of second, minute, hour, day, week, month. Time Unit specifies the
-        #   granularity of metrics returned.
+        #   Granularity of metrics returned. Valid values include: `second`, `minute`, `
+        #   hour`, `day`, `week`, or `month`.
         # @param [String] topk
-        #   Take 'top k' results from results, for example, to return the top 5 results '
-        #   topk=5'.
+        #   Top number of results to return. For example, to return the top 5 results, set
+        #   `topk=5`.
         # @param [Boolean] ts_ascending
-        #   Lists timestamps in ascending order if set to true. Recommend setting this
-        #   value to true if you are using sortby with sort=DESC.
+        #   Flag that specifies whether to list timestamps in ascending (`true`) or
+        #   descending (`false`) order. Apigee recommends that you set this value to `true`
+        #   if you are using `sortby` with `sort=DESC`.
         # @param [String] tzo
-        #   This parameters contains the timezone offset value.
+        #   Timezone offset value.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -8135,6 +9430,222 @@ module Google
           command.request_object = google_cloud_apigee_v1_custom_report_object
           command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1CustomReport::Representation
           command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1CustomReport
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # GetSecurityProfile gets the specified security profile. Returns NOT_FOUND if
+        # security profile is not present for the specified organization.
+        # @param [String] name
+        #   Required. Security profile in the following format: `organizations/`org`/
+        #   securityProfiles/`profile`'. Profile may optionally contain revision ID. If
+        #   revision ID is not provided, the response will contain latest revision by
+        #   default. Example: organizations/testOrg/securityProfiles/testProfile@5
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfile] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfile]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_organization_security_profile(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfile::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfile
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # ListSecurityProfiles lists all the security profiles associated with the org
+        # including attached and unattached profiles.
+        # @param [String] parent
+        #   Required. For a specific organization, list of all the security profiles.
+        #   Format: `organizations/`org``
+        # @param [Fixnum] page_size
+        #   The maximum number of profiles to return. The service may return fewer than
+        #   this value. If unspecified, at most 50 profiles will be returned.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListSecurityProfiles` call. Provide
+        #   this to retrieve the subsequent page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfilesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfilesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_security_profiles(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/securityProfiles', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfilesResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfilesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # ListSecurityProfileRevisions lists all the revisions of the security profile.
+        # @param [String] name
+        #   Required. For a specific profile, list all the revisions. Format: `
+        #   organizations/`org`/securityProfiles/`profile``
+        # @param [Fixnum] page_size
+        #   The maximum number of profile revisions to return. The service may return
+        #   fewer than this value. If unspecified, at most 50 revisions will be returned.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListSecurityProfileRevisions` call.
+        #   Provide this to retrieve the subsequent page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_organization_security_profile_revisions(name, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}:listRevisions', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ListSecurityProfileRevisionsResponse
+          command.params['name'] = name unless name.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # ComputeEnvironmentScores calculates scores for requested time range for the
+        # specified security profile and environment.
+        # @param [String] profile_environment
+        #   Required. Name of organization and environment and profile id for which score
+        #   needs to be computed. Format: organizations/`org`/securityProfiles/`profile`/
+        #   environments/`env`
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresRequest] google_cloud_apigee_v1_compute_environment_scores_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def compute_organization_security_profile_environment_environment_scores(profile_environment, google_cloud_apigee_v1_compute_environment_scores_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+profileEnvironment}:computeEnvironmentScores', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresRequest::Representation
+          command.request_object = google_cloud_apigee_v1_compute_environment_scores_request_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresResponse::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1ComputeEnvironmentScoresResponse
+          command.params['profileEnvironment'] = profile_environment unless profile_environment.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # CreateSecurityProfileEnvironmentAssociation creates profile environment
+        # association i.e. attaches environment to security profile.
+        # @param [String] parent
+        #   Required. Name of organization and security profile ID. Format: organizations/`
+        #   org`/securityProfiles/`profile`
+        # @param [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation] google_cloud_apigee_v1_security_profile_environment_association_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_organization_security_profile_environment(parent, google_cloud_apigee_v1_security_profile_environment_association_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/environments', options)
+          command.request_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation::Representation
+          command.request_object = google_cloud_apigee_v1_security_profile_environment_association_object
+          command.response_representation = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # DeleteSecurityProfileEnvironmentAssociation removes profile environment
+        # association i.e. detaches environment from security profile.
+        # @param [String] name
+        #   Required. The name of the environment attachment to delete. Format:
+        #   organizations/`org`/securityProfiles/`profile`/environments/`env`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ApigeeV1::GoogleProtobufEmpty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ApigeeV1::GoogleProtobufEmpty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_organization_security_profile_environment(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ApigeeV1::GoogleProtobufEmpty::Representation
+          command.response_class = Google::Apis::ApigeeV1::GoogleProtobufEmpty
           command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?

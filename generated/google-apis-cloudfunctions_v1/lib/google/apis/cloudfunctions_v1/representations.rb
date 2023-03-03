@@ -100,6 +100,60 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudFunctionsV2OperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2Stage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2StateMessage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2alphaOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2alphaStage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2alphaStateMessage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2betaOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2betaStage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudFunctionsV2betaStateMessage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class HttpsTrigger
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -254,6 +308,8 @@ module Google
           property :build_name, as: 'buildName'
           property :build_worker_pool, as: 'buildWorkerPool'
           property :description, as: 'description'
+          property :docker_registry, as: 'dockerRegistry'
+          property :docker_repository, as: 'dockerRepository'
           property :entry_point, as: 'entryPoint'
           hash :environment_variables, as: 'environmentVariables'
           property :event_trigger, as: 'eventTrigger', class: Google::Apis::CloudfunctionsV1::EventTrigger, decorator: Google::Apis::CloudfunctionsV1::EventTrigger::Representation
@@ -261,6 +317,7 @@ module Google
           property :https_trigger, as: 'httpsTrigger', class: Google::Apis::CloudfunctionsV1::HttpsTrigger, decorator: Google::Apis::CloudfunctionsV1::HttpsTrigger::Representation
       
           property :ingress_settings, as: 'ingressSettings'
+          property :kms_key_name, as: 'kmsKeyName'
           hash :labels, as: 'labels'
           property :max_instances, as: 'maxInstances'
           property :min_instances, as: 'minInstances'
@@ -332,6 +389,7 @@ module Google
       class GenerateUploadUrlRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :kms_key_name, as: 'kmsKeyName'
         end
       end
       
@@ -339,6 +397,120 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :upload_url, as: 'uploadUrl'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2OperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_version, as: 'apiVersion'
+          property :cancel_requested, as: 'cancelRequested'
+          property :create_time, as: 'createTime'
+          property :end_time, as: 'endTime'
+          hash :request_resource, as: 'requestResource'
+          collection :stages, as: 'stages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2Stage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2Stage::Representation
+      
+          property :status_detail, as: 'statusDetail'
+          property :target, as: 'target'
+          property :verb, as: 'verb'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2Stage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :name, as: 'name'
+          property :resource, as: 'resource'
+          property :resource_uri, as: 'resourceUri'
+          property :state, as: 'state'
+          collection :state_messages, as: 'stateMessages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2StateMessage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2StateMessage::Representation
+      
+        end
+      end
+      
+      class GoogleCloudFunctionsV2StateMessage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :severity, as: 'severity'
+          property :type, as: 'type'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2alphaOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_version, as: 'apiVersion'
+          property :cancel_requested, as: 'cancelRequested'
+          property :create_time, as: 'createTime'
+          property :end_time, as: 'endTime'
+          hash :request_resource, as: 'requestResource'
+          collection :stages, as: 'stages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStage::Representation
+      
+          property :status_detail, as: 'statusDetail'
+          property :target, as: 'target'
+          property :verb, as: 'verb'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2alphaStage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :name, as: 'name'
+          property :resource, as: 'resource'
+          property :resource_uri, as: 'resourceUri'
+          property :state, as: 'state'
+          collection :state_messages, as: 'stateMessages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStateMessage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStateMessage::Representation
+      
+        end
+      end
+      
+      class GoogleCloudFunctionsV2alphaStateMessage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :severity, as: 'severity'
+          property :type, as: 'type'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2betaOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_version, as: 'apiVersion'
+          property :cancel_requested, as: 'cancelRequested'
+          property :create_time, as: 'createTime'
+          property :end_time, as: 'endTime'
+          hash :request_resource, as: 'requestResource'
+          collection :stages, as: 'stages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStage::Representation
+      
+          property :status_detail, as: 'statusDetail'
+          property :target, as: 'target'
+          property :verb, as: 'verb'
+        end
+      end
+      
+      class GoogleCloudFunctionsV2betaStage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :name, as: 'name'
+          property :resource, as: 'resource'
+          property :resource_uri, as: 'resourceUri'
+          property :state, as: 'state'
+          collection :state_messages, as: 'stateMessages', class: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStateMessage, decorator: Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStateMessage::Representation
+      
+        end
+      end
+      
+      class GoogleCloudFunctionsV2betaStateMessage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :message, as: 'message'
+          property :severity, as: 'severity'
+          property :type, as: 'type'
         end
       end
       

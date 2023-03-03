@@ -1446,6 +1446,12 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # The organizational unit of this shared drive. This field is only populated on
+        # drives.list responses when the useDomainAdminAccess parameter is set to true.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
         # A set of restrictions that apply to this shared drive or items inside this
         # shared drive.
         # Corresponds to the JSON property `restrictions`
@@ -1476,6 +1482,7 @@ module Google
           @id = args[:id] if args.key?(:id)
           @kind = args[:kind] if args.key?(:kind)
           @name = args[:name] if args.key?(:name)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
           @restrictions = args[:restrictions] if args.key?(:restrictions)
           @theme_id = args[:theme_id] if args.key?(:theme_id)
         end
@@ -1567,6 +1574,13 @@ module Google
           attr_accessor :can_change_drive_members_only_restriction
           alias_method :can_change_drive_members_only_restriction?, :can_change_drive_members_only_restriction
         
+          # Whether the current user can change the
+          # sharingFoldersRequiresOrganizerPermission restriction of this shared drive.
+          # Corresponds to the JSON property `canChangeSharingFoldersRequiresOrganizerPermissionRestriction`
+          # @return [Boolean]
+          attr_accessor :can_change_sharing_folders_requires_organizer_permission_restriction
+          alias_method :can_change_sharing_folders_requires_organizer_permission_restriction?, :can_change_sharing_folders_requires_organizer_permission_restriction
+        
           # Whether the current user can comment on files in this shared drive.
           # Corresponds to the JSON property `canComment`
           # @return [Boolean]
@@ -1637,6 +1651,12 @@ module Google
           attr_accessor :can_rename_drive
           alias_method :can_rename_drive?, :can_rename_drive
         
+          # Whether the current user can reset the shared drive restrictions to defaults.
+          # Corresponds to the JSON property `canResetDriveRestrictions`
+          # @return [Boolean]
+          attr_accessor :can_reset_drive_restrictions
+          alias_method :can_reset_drive_restrictions?, :can_reset_drive_restrictions
+        
           # Whether the current user can share files or folders in this shared drive.
           # Corresponds to the JSON property `canShare`
           # @return [Boolean]
@@ -1660,6 +1680,7 @@ module Google
             @can_change_domain_users_only_restriction = args[:can_change_domain_users_only_restriction] if args.key?(:can_change_domain_users_only_restriction)
             @can_change_drive_background = args[:can_change_drive_background] if args.key?(:can_change_drive_background)
             @can_change_drive_members_only_restriction = args[:can_change_drive_members_only_restriction] if args.key?(:can_change_drive_members_only_restriction)
+            @can_change_sharing_folders_requires_organizer_permission_restriction = args[:can_change_sharing_folders_requires_organizer_permission_restriction] if args.key?(:can_change_sharing_folders_requires_organizer_permission_restriction)
             @can_comment = args[:can_comment] if args.key?(:can_comment)
             @can_copy = args[:can_copy] if args.key?(:can_copy)
             @can_delete_children = args[:can_delete_children] if args.key?(:can_delete_children)
@@ -1671,6 +1692,7 @@ module Google
             @can_read_revisions = args[:can_read_revisions] if args.key?(:can_read_revisions)
             @can_rename = args[:can_rename] if args.key?(:can_rename)
             @can_rename_drive = args[:can_rename_drive] if args.key?(:can_rename_drive)
+            @can_reset_drive_restrictions = args[:can_reset_drive_restrictions] if args.key?(:can_reset_drive_restrictions)
             @can_share = args[:can_share] if args.key?(:can_share)
             @can_trash_children = args[:can_trash_children] if args.key?(:can_trash_children)
           end
@@ -1712,6 +1734,13 @@ module Google
           attr_accessor :drive_members_only
           alias_method :drive_members_only?, :drive_members_only
         
+          # If true, only users with the organizer role can share folders. If false, users
+          # with either the organizer role or the file organizer role can share folders.
+          # Corresponds to the JSON property `sharingFoldersRequiresOrganizerPermission`
+          # @return [Boolean]
+          attr_accessor :sharing_folders_requires_organizer_permission
+          alias_method :sharing_folders_requires_organizer_permission?, :sharing_folders_requires_organizer_permission
+        
           def initialize(**args)
              update!(**args)
           end
@@ -1722,6 +1751,7 @@ module Google
             @copy_requires_writer_permission = args[:copy_requires_writer_permission] if args.key?(:copy_requires_writer_permission)
             @domain_users_only = args[:domain_users_only] if args.key?(:domain_users_only)
             @drive_members_only = args[:drive_members_only] if args.key?(:drive_members_only)
+            @sharing_folders_requires_organizer_permission = args[:sharing_folders_requires_organizer_permission] if args.key?(:sharing_folders_requires_organizer_permission)
           end
         end
       end
@@ -1830,7 +1860,7 @@ module Google
         attr_accessor :description
       
         # Short lived download URL for the file. This field is only populated for files
-        # with content stored in Google Drive; it is not populated for Docs Editors or
+        # with content stored in Google Drive; it isn't populated for Docs Editors or
         # shortcut files.
         # Corresponds to the JSON property `downloadUrl`
         # @return [String]
@@ -1872,15 +1902,15 @@ module Google
       
         # The final component of fullFileExtension with trailing text that does not
         # appear to be part of the extension removed. This field is only populated for
-        # files with content stored in Google Drive; it is not populated for Docs
-        # Editors or shortcut files.
+        # files with content stored in Google Drive; it isn't populated for Docs Editors
+        # or shortcut files.
         # Corresponds to the JSON property `fileExtension`
         # @return [String]
         attr_accessor :file_extension
       
-        # The size of the file in bytes. This field is populated for files with content
-        # stored in Google Drive and for files in Docs Editors; it is not populated for
-        # shortcut files.
+        # The size of the file's content in bytes. This field is populated for files
+        # with binary content stored in Google Drive and for Docs Editors files; it is
+        # not populated for shortcuts or folders.
         # Corresponds to the JSON property `fileSize`
         # @return [Fixnum]
         attr_accessor :file_size
@@ -1897,7 +1927,7 @@ module Google
         # concatenated extensions, such as "tar.gz". Removing an extension from the
         # title does not clear this field; however, changing the extension on the title
         # does update this field. This field is only populated for files with content
-        # stored in Google Drive; it is not populated for Docs Editors or shortcut files.
+        # stored in Google Drive; it isn't populated for Docs Editors or shortcut files.
         # Corresponds to the JSON property `fullFileExtension`
         # @return [String]
         attr_accessor :full_file_extension
@@ -1918,7 +1948,7 @@ module Google
         alias_method :has_thumbnail?, :has_thumbnail
       
         # The ID of the file's head revision. This field is only populated for files
-        # with content stored in Google Drive; it is not populated for Docs Editors or
+        # with content stored in Google Drive; it isn't populated for Docs Editors or
         # shortcut files.
         # Corresponds to the JSON property `headRevisionId`
         # @return [String]
@@ -1940,7 +1970,8 @@ module Google
         # @return [Google::Apis::DriveV2::File::ImageMediaMetadata]
         attr_accessor :image_media_metadata
       
-        # Indexable text attributes for the file (can only be written)
+        # Indexable text attributes for the file (can only be written). For more
+        # information, see Manage file metadata.
         # Corresponds to the JSON property `indexableText`
         # @return [Google::Apis::DriveV2::File::IndexableText]
         attr_accessor :indexable_text
@@ -1955,6 +1986,11 @@ module Google
         # Corresponds to the JSON property `kind`
         # @return [String]
         attr_accessor :kind
+      
+        # An overview of the labels on the file.
+        # Corresponds to the JSON property `labelInfo`
+        # @return [Google::Apis::DriveV2::File::LabelInfo]
+        attr_accessor :label_info
       
         # A group of labels for the file.
         # Corresponds to the JSON property `labels`
@@ -1988,8 +2024,8 @@ module Google
         attr_accessor :marked_viewed_by_me_date
       
         # An MD5 checksum for the content of this file. This field is only populated for
-        # files with content stored in Google Drive; it is not populated for Docs
-        # Editors or shortcut files.
+        # files with content stored in Google Drive; it isn't populated for Docs Editors
+        # or shortcut files.
         # Corresponds to the JSON property `md5Checksum`
         # @return [String]
         attr_accessor :md5_checksum
@@ -2085,6 +2121,20 @@ module Google
         # Corresponds to the JSON property `selfLink`
         # @return [String]
         attr_accessor :self_link
+      
+        # The SHA1 checksum associated with this file, if available. This field is only
+        # populated for files with content stored in Google Drive; it isn't populated
+        # for Docs Editors or shortcut files.
+        # Corresponds to the JSON property `sha1Checksum`
+        # @return [String]
+        attr_accessor :sha1_checksum
+      
+        # The SHA256 checksum associated with this file, if available. This field is
+        # only populated for files with content stored in Google Drive; it isn't
+        # populated for Docs Editors or shortcut files.
+        # Corresponds to the JSON property `sha256Checksum`
+        # @return [String]
+        attr_accessor :sha256_checksum
       
         # Deprecated: use capabilities/canShare.
         # Corresponds to the JSON property `shareable`
@@ -2237,6 +2287,7 @@ module Google
           @indexable_text = args[:indexable_text] if args.key?(:indexable_text)
           @is_app_authorized = args[:is_app_authorized] if args.key?(:is_app_authorized)
           @kind = args[:kind] if args.key?(:kind)
+          @label_info = args[:label_info] if args.key?(:label_info)
           @labels = args[:labels] if args.key?(:labels)
           @last_modifying_user = args[:last_modifying_user] if args.key?(:last_modifying_user)
           @last_modifying_user_name = args[:last_modifying_user_name] if args.key?(:last_modifying_user_name)
@@ -2259,6 +2310,8 @@ module Google
           @quota_bytes_used = args[:quota_bytes_used] if args.key?(:quota_bytes_used)
           @resource_key = args[:resource_key] if args.key?(:resource_key)
           @self_link = args[:self_link] if args.key?(:self_link)
+          @sha1_checksum = args[:sha1_checksum] if args.key?(:sha1_checksum)
+          @sha256_checksum = args[:sha256_checksum] if args.key?(:sha256_checksum)
           @shareable = args[:shareable] if args.key?(:shareable)
           @shared = args[:shared] if args.key?(:shared)
           @shared_with_me_date = args[:shared_with_me_date] if args.key?(:shared_with_me_date)
@@ -2284,6 +2337,13 @@ module Google
         # a fine-grained action that a user may take.
         class Capabilities
           include Google::Apis::Core::Hashable
+        
+          # Whether the current user is the pending owner of the file. Not populated for
+          # shared drive files.
+          # Corresponds to the JSON property `canAcceptOwnership`
+          # @return [Boolean]
+          attr_accessor :can_accept_ownership
+          alias_method :can_accept_ownership?, :can_accept_ownership
         
           # Whether the current user can add children to this folder. This is always false
           # when the item is not a folder.
@@ -2387,6 +2447,12 @@ module Google
           attr_accessor :can_modify_content_restriction
           alias_method :can_modify_content_restriction?, :can_modify_content_restriction
         
+          # Whether the current user can modify the labels on this file.
+          # Corresponds to the JSON property `canModifyLabels`
+          # @return [Boolean]
+          attr_accessor :can_modify_labels
+          alias_method :can_modify_labels?, :can_modify_labels
+        
           # Whether the current user can move children of this folder outside of the
           # shared drive. This is false when the item is not a folder. Only populated for
           # items in shared drives.
@@ -2463,9 +2529,15 @@ module Google
           attr_accessor :can_read_drive
           alias_method :can_read_drive?, :can_read_drive
         
+          # Whether the current user can read the labels on this file.
+          # Corresponds to the JSON property `canReadLabels`
+          # @return [Boolean]
+          attr_accessor :can_read_labels
+          alias_method :can_read_labels?, :can_read_labels
+        
           # Whether the current user can read the revisions resource of this file. For a
           # shared drive item, whether revisions of non-folder descendants of this item,
-          # or this item itself if it is not a folder, can be read.
+          # or this item itself if it isn't a folder, can be read.
           # Corresponds to the JSON property `canReadRevisions`
           # @return [Boolean]
           attr_accessor :can_read_revisions
@@ -2529,6 +2601,7 @@ module Google
         
           # Update properties of this object
           def update!(**args)
+            @can_accept_ownership = args[:can_accept_ownership] if args.key?(:can_accept_ownership)
             @can_add_children = args[:can_add_children] if args.key?(:can_add_children)
             @can_add_folder_from_another_drive = args[:can_add_folder_from_another_drive] if args.key?(:can_add_folder_from_another_drive)
             @can_add_my_drive_parent = args[:can_add_my_drive_parent] if args.key?(:can_add_my_drive_parent)
@@ -2544,6 +2617,7 @@ module Google
             @can_list_children = args[:can_list_children] if args.key?(:can_list_children)
             @can_modify_content = args[:can_modify_content] if args.key?(:can_modify_content)
             @can_modify_content_restriction = args[:can_modify_content_restriction] if args.key?(:can_modify_content_restriction)
+            @can_modify_labels = args[:can_modify_labels] if args.key?(:can_modify_labels)
             @can_move_children_out_of_drive = args[:can_move_children_out_of_drive] if args.key?(:can_move_children_out_of_drive)
             @can_move_children_out_of_team_drive = args[:can_move_children_out_of_team_drive] if args.key?(:can_move_children_out_of_team_drive)
             @can_move_children_within_drive = args[:can_move_children_within_drive] if args.key?(:can_move_children_within_drive)
@@ -2555,6 +2629,7 @@ module Google
             @can_move_item_within_team_drive = args[:can_move_item_within_team_drive] if args.key?(:can_move_item_within_team_drive)
             @can_move_team_drive_item = args[:can_move_team_drive_item] if args.key?(:can_move_team_drive_item)
             @can_read_drive = args[:can_read_drive] if args.key?(:can_read_drive)
+            @can_read_labels = args[:can_read_labels] if args.key?(:can_read_labels)
             @can_read_revisions = args[:can_read_revisions] if args.key?(:can_read_revisions)
             @can_read_team_drive = args[:can_read_team_drive] if args.key?(:can_read_team_drive)
             @can_remove_children = args[:can_remove_children] if args.key?(:can_remove_children)
@@ -2741,7 +2816,8 @@ module Google
           end
         end
         
-        # Indexable text attributes for the file (can only be written)
+        # Indexable text attributes for the file (can only be written). For more
+        # information, see Manage file metadata.
         class IndexableText
           include Google::Apis::Core::Hashable
         
@@ -2757,6 +2833,26 @@ module Google
           # Update properties of this object
           def update!(**args)
             @text = args[:text] if args.key?(:text)
+          end
+        end
+        
+        # An overview of the labels on the file.
+        class LabelInfo
+          include Google::Apis::Core::Hashable
+        
+          # The set of labels on the file as requested by the label IDs in the
+          # includeLabels parameter. By default, no labels are returned.
+          # Corresponds to the JSON property `labels`
+          # @return [Array<Google::Apis::DriveV2::Label>]
+          attr_accessor :labels
+        
+          def initialize(**args)
+             update!(**args)
+          end
+        
+          # Update properties of this object
+          def update!(**args)
+            @labels = args[:labels] if args.key?(:labels)
           end
         end
         
@@ -3036,6 +3132,300 @@ module Google
         end
       end
       
+      # Representation of a label and its fields.
+      class Label
+        include Google::Apis::Core::Hashable
+      
+        # A map of the label's fields keyed by the field ID.
+        # Corresponds to the JSON property `fields`
+        # @return [Hash<String,Google::Apis::DriveV2::LabelField>]
+        attr_accessor :fields
+      
+        # The ID of the label.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # This is always drive#label
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The revision ID of the label.
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @fields = args[:fields] if args.key?(:fields)
+          @id = args[:id] if args.key?(:id)
+          @kind = args[:kind] if args.key?(:kind)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
+        end
+      end
+      
+      # Representation of a label field.
+      class LabelField
+        include Google::Apis::Core::Hashable
+      
+        # Only present if valueType is dateString. RFC 3339 formatted date: YYYY-MM-DD.
+        # Corresponds to the JSON property `dateString`
+        # @return [Array<Date>]
+        attr_accessor :date_string
+      
+        # The identifier of this field.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Only present if valueType is integer.
+        # Corresponds to the JSON property `integer`
+        # @return [Array<Fixnum>]
+        attr_accessor :integer
+      
+        # This is always drive#labelField.
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # Only present if valueType is selection.
+        # Corresponds to the JSON property `selection`
+        # @return [Array<String>]
+        attr_accessor :selection
+      
+        # Only present if valueType is text.
+        # Corresponds to the JSON property `text`
+        # @return [Array<String>]
+        attr_accessor :text
+      
+        # Only present if valueType is user.
+        # Corresponds to the JSON property `user`
+        # @return [Array<Google::Apis::DriveV2::User>]
+        attr_accessor :user
+      
+        # The field type. While new values may be supported in the future, the following
+        # are currently allowed:
+        # - dateString
+        # - integer
+        # - selection
+        # - text
+        # - user
+        # Corresponds to the JSON property `valueType`
+        # @return [String]
+        attr_accessor :value_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @date_string = args[:date_string] if args.key?(:date_string)
+          @id = args[:id] if args.key?(:id)
+          @integer = args[:integer] if args.key?(:integer)
+          @kind = args[:kind] if args.key?(:kind)
+          @selection = args[:selection] if args.key?(:selection)
+          @text = args[:text] if args.key?(:text)
+          @user = args[:user] if args.key?(:user)
+          @value_type = args[:value_type] if args.key?(:value_type)
+        end
+      end
+      
+      # A modification to a label's field.
+      class LabelFieldModification
+        include Google::Apis::Core::Hashable
+      
+        # The ID of the field to be modified.
+        # Corresponds to the JSON property `fieldId`
+        # @return [String]
+        attr_accessor :field_id
+      
+        # This is always drive#labelFieldModification.
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # Replaces a dateString field with these new values. The values must be strings
+        # in the RFC 3339 full-date format: YYYY-MM-DD.
+        # Corresponds to the JSON property `setDateValues`
+        # @return [Array<Date>]
+        attr_accessor :set_date_values
+      
+        # Replaces an integer field with these new values.
+        # Corresponds to the JSON property `setIntegerValues`
+        # @return [Array<Fixnum>]
+        attr_accessor :set_integer_values
+      
+        # Replaces a selection field with these new values.
+        # Corresponds to the JSON property `setSelectionValues`
+        # @return [Array<String>]
+        attr_accessor :set_selection_values
+      
+        # Replaces a text field with these new values.
+        # Corresponds to the JSON property `setTextValues`
+        # @return [Array<String>]
+        attr_accessor :set_text_values
+      
+        # Replaces a user field with these new values. The values must be valid email
+        # addresses.
+        # Corresponds to the JSON property `setUserValues`
+        # @return [Array<String>]
+        attr_accessor :set_user_values
+      
+        # Unsets the values for this field.
+        # Corresponds to the JSON property `unsetValues`
+        # @return [Boolean]
+        attr_accessor :unset_values
+        alias_method :unset_values?, :unset_values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @field_id = args[:field_id] if args.key?(:field_id)
+          @kind = args[:kind] if args.key?(:kind)
+          @set_date_values = args[:set_date_values] if args.key?(:set_date_values)
+          @set_integer_values = args[:set_integer_values] if args.key?(:set_integer_values)
+          @set_selection_values = args[:set_selection_values] if args.key?(:set_selection_values)
+          @set_text_values = args[:set_text_values] if args.key?(:set_text_values)
+          @set_user_values = args[:set_user_values] if args.key?(:set_user_values)
+          @unset_values = args[:unset_values] if args.key?(:unset_values)
+        end
+      end
+      
+      # A list of labels.
+      class LabelList
+        include Google::Apis::Core::Hashable
+      
+        # The list of labels.
+        # Corresponds to the JSON property `items`
+        # @return [Array<Google::Apis::DriveV2::Label>]
+        attr_accessor :items
+      
+        # This is always drive#labelList
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The page token for the next page of labels. This field will be absent if the
+        # end of the list has been reached. If the token is rejected for any reason, it
+        # should be discarded, and pagination should be restarted from the first page of
+        # results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @items = args[:items] if args.key?(:items)
+          @kind = args[:kind] if args.key?(:kind)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # A modification to a label on a file. A LabelModification can be used to apply
+      # a label to a file, update an existing label on a file, or remove a label from
+      # a file.
+      class LabelModification
+        include Google::Apis::Core::Hashable
+      
+        # The list of modifications to this label's fields.
+        # Corresponds to the JSON property `fieldModifications`
+        # @return [Array<Google::Apis::DriveV2::LabelFieldModification>]
+        attr_accessor :field_modifications
+      
+        # This is always drive#labelModification.
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The ID of the label to modify.
+        # Corresponds to the JSON property `labelId`
+        # @return [String]
+        attr_accessor :label_id
+      
+        # If true, the label will be removed from the file.
+        # Corresponds to the JSON property `removeLabel`
+        # @return [Boolean]
+        attr_accessor :remove_label
+        alias_method :remove_label?, :remove_label
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @field_modifications = args[:field_modifications] if args.key?(:field_modifications)
+          @kind = args[:kind] if args.key?(:kind)
+          @label_id = args[:label_id] if args.key?(:label_id)
+          @remove_label = args[:remove_label] if args.key?(:remove_label)
+        end
+      end
+      
+      # A request to modify the set of labels on a file. This request may contain many
+      # modifications that will either all succeed or all fail transactionally.
+      class ModifyLabelsRequest
+        include Google::Apis::Core::Hashable
+      
+        # This is always drive#modifyLabelsRequest
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The list of modifications to apply to the labels on the file.
+        # Corresponds to the JSON property `labelModifications`
+        # @return [Array<Google::Apis::DriveV2::LabelModification>]
+        attr_accessor :label_modifications
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @kind = args[:kind] if args.key?(:kind)
+          @label_modifications = args[:label_modifications] if args.key?(:label_modifications)
+        end
+      end
+      
+      # Response to a ModifyLabels request. This contains only those labels which were
+      # added or updated by the request.
+      class ModifyLabelsResponse
+        include Google::Apis::Core::Hashable
+      
+        # This is always drive#modifyLabelsResponse
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The list of labels which were added or updated by the request.
+        # Corresponds to the JSON property `modifiedLabels`
+        # @return [Array<Google::Apis::DriveV2::Label>]
+        attr_accessor :modified_labels
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @kind = args[:kind] if args.key?(:kind)
+          @modified_labels = args[:modified_labels] if args.key?(:modified_labels)
+        end
+      end
+      
       # A list of a file's parents.
       class ParentList
         include Google::Apis::Core::Hashable
@@ -3162,8 +3552,6 @@ module Google
         # - They can only be set on user and group permissions
         # - The date must be in the future
         # - The date cannot be more than a year in the future
-        # - The date can only be set on drive.permissions.update or drive.permissions.
-        # patch requests
         # Corresponds to the JSON property `expirationDate`
         # @return [DateTime]
         attr_accessor :expiration_date
@@ -3185,6 +3573,13 @@ module Google
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Whether the account associated with this permission is a pending owner. Only
+        # populated for user type permissions for files that are not in a shared drive.
+        # Corresponds to the JSON property `pendingOwner`
+        # @return [Boolean]
+        attr_accessor :pending_owner
+        alias_method :pending_owner?, :pending_owner
       
         # Details of whether the permissions on this shared drive item are inherited or
         # directly on this item. This is an output-only field which is present only for
@@ -3264,6 +3659,7 @@ module Google
           @id = args[:id] if args.key?(:id)
           @kind = args[:kind] if args.key?(:kind)
           @name = args[:name] if args.key?(:name)
+          @pending_owner = args[:pending_owner] if args.key?(:pending_owner)
           @permission_details = args[:permission_details] if args.key?(:permission_details)
           @photo_link = args[:photo_link] if args.key?(:photo_link)
           @role = args[:role] if args.key?(:role)
@@ -3804,6 +4200,12 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # The organizational unit of this shared drive. This field is only populated on
+        # drives.list responses when the useDomainAdminAccess parameter is set to true.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
         # A set of restrictions that apply to this Team Drive or items inside this Team
         # Drive.
         # Corresponds to the JSON property `restrictions`
@@ -3834,6 +4236,7 @@ module Google
           @id = args[:id] if args.key?(:id)
           @kind = args[:kind] if args.key?(:kind)
           @name = args[:name] if args.key?(:name)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
           @restrictions = args[:restrictions] if args.key?(:restrictions)
           @theme_id = args[:theme_id] if args.key?(:theme_id)
         end
@@ -3911,6 +4314,13 @@ module Google
           # @return [Boolean]
           attr_accessor :can_change_domain_users_only_restriction
           alias_method :can_change_domain_users_only_restriction?, :can_change_domain_users_only_restriction
+        
+          # Whether the current user can change the
+          # sharingFoldersRequiresOrganizerPermission restriction of this Team Drive.
+          # Corresponds to the JSON property `canChangeSharingFoldersRequiresOrganizerPermissionRestriction`
+          # @return [Boolean]
+          attr_accessor :can_change_sharing_folders_requires_organizer_permission_restriction
+          alias_method :can_change_sharing_folders_requires_organizer_permission_restriction?, :can_change_sharing_folders_requires_organizer_permission_restriction
         
           # Whether the current user can change the background of this Team Drive.
           # Corresponds to the JSON property `canChangeTeamDriveBackground`
@@ -4000,6 +4410,12 @@ module Google
           attr_accessor :can_rename_team_drive
           alias_method :can_rename_team_drive?, :can_rename_team_drive
         
+          # Whether the current user can reset the Team Drive restrictions to defaults.
+          # Corresponds to the JSON property `canResetTeamDriveRestrictions`
+          # @return [Boolean]
+          attr_accessor :can_reset_team_drive_restrictions
+          alias_method :can_reset_team_drive_restrictions?, :can_reset_team_drive_restrictions
+        
           # Whether the current user can share files or folders in this Team Drive.
           # Corresponds to the JSON property `canShare`
           # @return [Boolean]
@@ -4021,6 +4437,7 @@ module Google
             @can_add_children = args[:can_add_children] if args.key?(:can_add_children)
             @can_change_copy_requires_writer_permission_restriction = args[:can_change_copy_requires_writer_permission_restriction] if args.key?(:can_change_copy_requires_writer_permission_restriction)
             @can_change_domain_users_only_restriction = args[:can_change_domain_users_only_restriction] if args.key?(:can_change_domain_users_only_restriction)
+            @can_change_sharing_folders_requires_organizer_permission_restriction = args[:can_change_sharing_folders_requires_organizer_permission_restriction] if args.key?(:can_change_sharing_folders_requires_organizer_permission_restriction)
             @can_change_team_drive_background = args[:can_change_team_drive_background] if args.key?(:can_change_team_drive_background)
             @can_change_team_members_only_restriction = args[:can_change_team_members_only_restriction] if args.key?(:can_change_team_members_only_restriction)
             @can_comment = args[:can_comment] if args.key?(:can_comment)
@@ -4035,6 +4452,7 @@ module Google
             @can_remove_children = args[:can_remove_children] if args.key?(:can_remove_children)
             @can_rename = args[:can_rename] if args.key?(:can_rename)
             @can_rename_team_drive = args[:can_rename_team_drive] if args.key?(:can_rename_team_drive)
+            @can_reset_team_drive_restrictions = args[:can_reset_team_drive_restrictions] if args.key?(:can_reset_team_drive_restrictions)
             @can_share = args[:can_share] if args.key?(:can_share)
             @can_trash_children = args[:can_trash_children] if args.key?(:can_trash_children)
           end
@@ -4070,6 +4488,13 @@ module Google
           attr_accessor :domain_users_only
           alias_method :domain_users_only?, :domain_users_only
         
+          # If true, only users with the organizer role can share folders. If false, users
+          # with either the organizer role or the file organizer role can share folders.
+          # Corresponds to the JSON property `sharingFoldersRequiresOrganizerPermission`
+          # @return [Boolean]
+          attr_accessor :sharing_folders_requires_organizer_permission
+          alias_method :sharing_folders_requires_organizer_permission?, :sharing_folders_requires_organizer_permission
+        
           # Whether access to items inside this Team Drive is restricted to members of
           # this Team Drive.
           # Corresponds to the JSON property `teamMembersOnly`
@@ -4086,6 +4511,7 @@ module Google
             @admin_managed_restrictions = args[:admin_managed_restrictions] if args.key?(:admin_managed_restrictions)
             @copy_requires_writer_permission = args[:copy_requires_writer_permission] if args.key?(:copy_requires_writer_permission)
             @domain_users_only = args[:domain_users_only] if args.key?(:domain_users_only)
+            @sharing_folders_requires_organizer_permission = args[:sharing_folders_requires_organizer_permission] if args.key?(:sharing_folders_requires_organizer_permission)
             @team_members_only = args[:team_members_only] if args.key?(:team_members_only)
           end
         end

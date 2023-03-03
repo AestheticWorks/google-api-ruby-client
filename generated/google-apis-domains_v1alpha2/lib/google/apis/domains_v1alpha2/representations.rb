@@ -88,6 +88,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Domain
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DsRecord
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -113,6 +119,12 @@ module Google
       end
       
       class GoogleDomainsDns
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ImportDomainRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -202,7 +214,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RetrieveImportableDomainsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RetrieveRegisterParametersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RetrieveTransferParametersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -233,6 +257,18 @@ module Google
       end
       
       class TestIamPermissionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TransferDomainRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TransferParameters
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -347,6 +383,16 @@ module Google
         end
       end
       
+      class Domain
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :domain_name, as: 'domainName'
+          property :resource_state, as: 'resourceState'
+          property :yearly_price, as: 'yearlyPrice', class: Google::Apis::DomainsV1alpha2::Money, decorator: Google::Apis::DomainsV1alpha2::Money::Representation
+      
+        end
+      end
+      
       class DsRecord
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -389,6 +435,14 @@ module Google
       
           property :ds_state, as: 'dsState'
           collection :name_servers, as: 'nameServers'
+        end
+      end
+      
+      class ImportDomainRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :domain_name, as: 'domainName'
+          hash :labels, as: 'labels'
         end
       end
       
@@ -542,8 +596,10 @@ module Google
           property :name, as: 'name'
           property :pending_contact_settings, as: 'pendingContactSettings', class: Google::Apis::DomainsV1alpha2::ContactSettings, decorator: Google::Apis::DomainsV1alpha2::ContactSettings::Representation
       
+          property :register_failure_reason, as: 'registerFailureReason'
           property :state, as: 'state'
           collection :supported_privacy, as: 'supportedPrivacy'
+          property :transfer_failure_reason, as: 'transferFailureReason'
         end
       end
       
@@ -553,10 +609,27 @@ module Google
         end
       end
       
+      class RetrieveImportableDomainsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :domains, as: 'domains', class: Google::Apis::DomainsV1alpha2::Domain, decorator: Google::Apis::DomainsV1alpha2::Domain::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
       class RetrieveRegisterParametersResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :register_parameters, as: 'registerParameters', class: Google::Apis::DomainsV1alpha2::RegisterParameters, decorator: Google::Apis::DomainsV1alpha2::RegisterParameters::Representation
+      
+        end
+      end
+      
+      class RetrieveTransferParametersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :transfer_parameters, as: 'transferParameters', class: Google::Apis::DomainsV1alpha2::TransferParameters, decorator: Google::Apis::DomainsV1alpha2::TransferParameters::Representation
       
         end
       end
@@ -598,6 +671,34 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :permissions, as: 'permissions'
+        end
+      end
+      
+      class TransferDomainRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :authorization_code, as: 'authorizationCode', class: Google::Apis::DomainsV1alpha2::AuthorizationCode, decorator: Google::Apis::DomainsV1alpha2::AuthorizationCode::Representation
+      
+          collection :contact_notices, as: 'contactNotices'
+          property :registration, as: 'registration', class: Google::Apis::DomainsV1alpha2::Registration, decorator: Google::Apis::DomainsV1alpha2::Registration::Representation
+      
+          property :validate_only, as: 'validateOnly'
+          property :yearly_price, as: 'yearlyPrice', class: Google::Apis::DomainsV1alpha2::Money, decorator: Google::Apis::DomainsV1alpha2::Money::Representation
+      
+        end
+      end
+      
+      class TransferParameters
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :current_registrar, as: 'currentRegistrar'
+          property :current_registrar_uri, as: 'currentRegistrarUri'
+          property :domain_name, as: 'domainName'
+          collection :name_servers, as: 'nameServers'
+          collection :supported_privacy, as: 'supportedPrivacy'
+          property :transfer_lock_state, as: 'transferLockState'
+          property :yearly_price, as: 'yearlyPrice', class: Google::Apis::DomainsV1alpha2::Money, decorator: Google::Apis::DomainsV1alpha2::Money::Representation
+      
         end
       end
     end

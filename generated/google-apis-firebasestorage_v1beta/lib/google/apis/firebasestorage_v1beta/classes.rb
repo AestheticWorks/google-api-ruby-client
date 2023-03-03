@@ -39,22 +39,10 @@ module Google
       class Bucket
         include Google::Apis::Core::Hashable
       
-        # Output only. Location of the storage bucket.
-        # Corresponds to the JSON property `location`
-        # @return [String]
-        attr_accessor :location
-      
         # Resource name of the bucket.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
-      
-        # Output only. Represents whether a bucket is being moved to a new location, in
-        # which case reconciling is set to true.
-        # Corresponds to the JSON property `reconciling`
-        # @return [Boolean]
-        attr_accessor :reconciling
-        alias_method :reconciling?, :reconciling
       
         def initialize(**args)
            update!(**args)
@@ -62,17 +50,14 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @location = args[:location] if args.key?(:location)
           @name = args[:name] if args.key?(:name)
-          @reconciling = args[:reconciling] if args.key?(:reconciling)
         end
       end
       
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       

@@ -3536,7 +3536,8 @@ module Google
         attr_accessor :max_results
       
         # Model to use for the feature. Supported values: "builtin/stable" (the default
-        # if unset) and "builtin/latest".
+        # if unset) and "builtin/latest". `DOCUMENT_TEXT_DETECTION` and `TEXT_DETECTION`
+        # also support "builtin/weekly" for the bleeding edge release updated weekly.
         # Corresponds to the JSON property `model`
         # @return [String]
         attr_accessor :model
@@ -4618,6 +4619,11 @@ module Google
       class GoogleCloudVisionV1p2beta1TextDetectionParams
         include Google::Apis::Core::Hashable
       
+        # A list of advanced OCR options to fine-tune OCR behavior.
+        # Corresponds to the JSON property `advancedOcrOptions`
+        # @return [Array<String>]
+        attr_accessor :advanced_ocr_options
+      
         # By default, Cloud Vision API only includes confidence score for
         # DOCUMENT_TEXT_DETECTION result. Set the flag to true to include confidence
         # score for TEXT_DETECTION as well.
@@ -4632,6 +4638,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @advanced_ocr_options = args[:advanced_ocr_options] if args.key?(:advanced_ocr_options)
           @enable_text_detection_confidence_score = args[:enable_text_detection_confidence_score] if args.key?(:enable_text_detection_confidence_score)
         end
       end

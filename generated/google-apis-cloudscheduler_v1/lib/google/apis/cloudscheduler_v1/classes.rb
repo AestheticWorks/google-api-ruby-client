@@ -58,10 +58,13 @@ module Google
         # Google; (+http://code.google.com/appengine)"`. This header can be modified,
         # but Cloud Scheduler will append `"AppEngine-Google; (+http://code.google.com/
         # appengine)"` to the modified `User-Agent`. * `X-CloudScheduler`: This header
-        # will be set to true. If the job has an body, Cloud Scheduler sets the
-        # following headers: * `Content-Type`: By default, the `Content-Type` header is
-        # set to `"application/octet-stream"`. The default can be overridden by
-        # explictly setting `Content-Type` to a particular media type when the job is
+        # will be set to true. * `X-CloudScheduler-JobName`: This header will contain
+        # the job name. * `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs
+        # specified in the unix-cron format, this header will contain the job schedule
+        # time in RFC3339 UTC "Zulu" format. If the job has an body, Cloud Scheduler
+        # sets the following headers: * `Content-Type`: By default, the `Content-Type`
+        # header is set to `"application/octet-stream"`. The default can be overridden
+        # by explictly setting `Content-Type` to a particular media type when the job is
         # created. For example, `Content-Type` can be set to `"application/json"`. * `
         # Content-Length`: This is computed by Cloud Scheduler. This value is output
         # only. It cannot be changed. The headers below are output only. They cannot be
@@ -140,7 +143,7 @@ module Google
         # App instance. By default, the job is sent to an instance which is available
         # when the job is attempted. Requests can only be sent to a specific instance if
         # [manual scaling is used in App Engine Standard](https://cloud.google.com/
-        # appengine/docs/python/an-overview-of-app-engine?hl=en_US#
+        # appengine/docs/python/an-overview-of-app-engine?#
         # scaling_types_and_instance_classes). App Engine Flex does not support
         # instances. For more information, see [App Engine Standard request routing](
         # https://cloud.google.com/appengine/docs/standard/python/how-requests-are-
@@ -178,8 +181,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -217,7 +219,11 @@ module Google
         # Scheduler and derived from uri. * `Content-Length`: This will be computed by
         # Cloud Scheduler. * `User-Agent`: This will be set to `"Google-Cloud-Scheduler"`
         # . * `X-Google-*`: Google internal use only. * `X-AppEngine-*`: Google internal
-        # use only. The total size of headers must be less than 80KB.
+        # use only. * `X-CloudScheduler`: This header will be set to true. * `X-
+        # CloudScheduler-JobName`: This header will contain the job name. * `X-
+        # CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified in the unix-
+        # cron format, this header will contain the job schedule time in RFC3339 UTC "
+        # Zulu" format. The total size of headers must be less than 80KB.
         # Corresponds to the JSON property `headers`
         # @return [Hash<String,String>]
         attr_accessor :headers
@@ -266,7 +272,7 @@ module Google
         end
       end
       
-      # Configuration for a job. The maximum allowed size for a job is 100KB.
+      # Configuration for a job. The maximum allowed size for a job is 1MB.
       class Job
         include Google::Apis::Core::Hashable
       
@@ -284,9 +290,15 @@ module Google
         # The deadline for job attempts. If the request handler does not respond by this
         # deadline then the request is cancelled and the attempt is marked as a `
         # DEADLINE_EXCEEDED` failure. The failed attempt can be viewed in execution logs.
-        # Cloud Scheduler will retry the job according to the RetryConfig. The allowed
-        # duration for this deadline is: * For HTTP targets, between 15 seconds and 30
-        # minutes. * For App Engine HTTP targets, between 15 seconds and 24 hours.
+        # Cloud Scheduler will retry the job according to the RetryConfig. The default
+        # and the allowed values depend on the type of target: * For HTTP targets, the
+        # default is 3 minutes. The deadline must be in the interval [15 seconds, 30
+        # minutes]. * For App Engine HTTP targets, 0 indicates that the request has the
+        # default deadline. The default deadline depends on the scaling type of the
+        # service: 10 minutes for standard apps with automatic scaling, 24 hours for
+        # standard apps with manual and basic scaling, and 60 minutes for flex apps. If
+        # the request deadline is set, it must be in the interval [15 seconds, 24 hours
+        # 15 seconds]. * For Pub/Sub targets, this field is ignored.
         # Corresponds to the JSON property `attemptDeadline`
         # @return [String]
         attr_accessor :attempt_deadline
@@ -341,8 +353,8 @@ module Google
       
         # Required, except when used with UpdateJob. Describes the schedule on which the
         # job will be executed. The schedule can be either of the following types: * [
-        # Crontab](http://en.wikipedia.org/wiki/Cron#Overview) * English-like [schedule](
-        # https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules) As a
+        # Crontab](https://en.wikipedia.org/wiki/Cron#Overview) * English-like [schedule]
+        # (https://cloud.google.com/scheduler/docs/configuring/cron-job-schedules) As a
         # general rule, execution `n + 1` of a job will not begin until execution `n`
         # has finished. Cloud Scheduler will never allow two simultaneously outstanding
         # executions. For example, this implies that if the `n+1`th execution is
@@ -628,7 +640,8 @@ module Google
         # messages published with the same non-empty `ordering_key` value will be
         # delivered to subscribers in the order in which they are received by the Pub/
         # Sub system. All `PubsubMessage`s published in a given `PublishRequest` must
-        # specify the same `ordering_key` value.
+        # specify the same `ordering_key` value. For more information, see [ordering
+        # messages](https://cloud.google.com/pubsub/docs/ordering).
         # Corresponds to the JSON property `orderingKey`
         # @return [String]
         attr_accessor :ordering_key
@@ -674,7 +687,7 @@ module Google
       
         # Required. The name of the Cloud Pub/Sub topic to which messages will be
         # published when a job is delivered. The topic name must be in the same format
-        # as required by PubSub's [PublishRequest.name](https://cloud.google.com/pubsub/
+        # as required by Pub/Sub's [PublishRequest.name](https://cloud.google.com/pubsub/
         # docs/reference/rpc/google.pubsub.v1#publishrequest), for example `projects/
         # PROJECT_ID/topics/TOPIC_ID`. The topic must be in the same project as the
         # Cloud Scheduler job.

@@ -24,7 +24,7 @@ module Google
       #
       # The Certificate Authority Service API is a highly-available, scalable service
       #  that enables you to simplify and automate the management of private
-      #  certificate authorities (CAs) while staying in control of your private keys."
+      #  certificate authorities (CAs) while staying in control of your private keys.
       #
       # @example
       #    require 'google/apis/privateca_v1'
@@ -86,8 +86,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -137,7 +137,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -183,7 +183,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -286,16 +286,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -381,7 +385,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -424,8 +428,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -462,8 +467,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -544,7 +550,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -593,12 +599,16 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
         #   commitments. The request ID must be a valid UUID with the exception that zero
         #   UUID is not supported (00000000-0000-0000-0000-000000000000).
+        # @param [Boolean] skip_grace_period
+        #   Optional. If this flag is set, the Certificate Authority will be deleted as
+        #   soon as possible without a 30-day grace period where undeletion would have
+        #   been allowed. If you proceed, there will be no way to recover this CA.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -616,13 +626,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def delete_project_location_ca_pool_certificate_authority(name, ignore_active_certificates: nil, request_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def delete_project_location_ca_pool_certificate_authority(name, ignore_active_certificates: nil, request_id: nil, skip_grace_period: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:delete, 'v1/{+name}', options)
           command.response_representation = Google::Apis::PrivatecaV1::Operation::Representation
           command.response_class = Google::Apis::PrivatecaV1::Operation
           command.params['name'] = name unless name.nil?
           command.query['ignoreActiveCertificates'] = ignore_active_certificates unless ignore_active_certificates.nil?
           command.query['requestId'] = request_id unless request_id.nil?
+          command.query['skipGracePeriod'] = skip_grace_period unless skip_grace_period.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -819,7 +830,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -925,16 +936,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1023,7 +1038,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -1066,8 +1081,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1104,8 +1120,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1299,7 +1316,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -1385,7 +1402,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -1431,7 +1448,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -1498,16 +1515,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1593,7 +1614,7 @@ module Google
         #   you must retry your request, the server will know to ignore the request if it
         #   has already been completed. The server will guarantee that for at least 60
         #   minutes since the first request. For example, consider a situation where you
-        #   make an initial request and t he request times out. If you make the request
+        #   make an initial request and the request times out. If you make the request
         #   again with the same request ID, the server can check if original operation
         #   with the same request ID was received, and if so, will ignore the second
         #   request. This prevents clients from accidentally creating duplicate
@@ -1636,8 +1657,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1674,8 +1696,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::PrivatecaV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.

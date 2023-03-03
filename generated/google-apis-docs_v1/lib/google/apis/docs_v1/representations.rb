@@ -544,6 +544,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PinTableHeaderRowsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PositionedObject
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -1857,6 +1863,7 @@ module Google
           property :keep_with_next, as: 'keepWithNext'
           property :line_spacing, as: 'lineSpacing'
           property :named_style_type, as: 'namedStyleType'
+          property :page_break_before, as: 'pageBreakBefore'
           property :shading, as: 'shading', class: Google::Apis::DocsV1::Shading, decorator: Google::Apis::DocsV1::Shading::Representation
       
           property :space_above, as: 'spaceAbove', class: Google::Apis::DocsV1::Dimension, decorator: Google::Apis::DocsV1::Dimension::Representation
@@ -1888,6 +1895,7 @@ module Google
           property :keep_with_next_suggested, as: 'keepWithNextSuggested'
           property :line_spacing_suggested, as: 'lineSpacingSuggested'
           property :named_style_type_suggested, as: 'namedStyleTypeSuggested'
+          property :page_break_before_suggested, as: 'pageBreakBeforeSuggested'
           property :shading_suggestion_state, as: 'shadingSuggestionState', class: Google::Apis::DocsV1::ShadingSuggestionState, decorator: Google::Apis::DocsV1::ShadingSuggestionState::Representation
       
           property :space_above_suggested, as: 'spaceAboveSuggested'
@@ -1916,6 +1924,15 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :email, as: 'email'
           property :name, as: 'name'
+        end
+      end
+      
+      class PinTableHeaderRowsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :pinned_header_rows_count, as: 'pinnedHeaderRowsCount'
+          property :table_start_location, as: 'tableStartLocation', class: Google::Apis::DocsV1::Location, decorator: Google::Apis::DocsV1::Location::Representation
+      
         end
       end
       
@@ -2059,6 +2076,8 @@ module Google
           property :insert_text, as: 'insertText', class: Google::Apis::DocsV1::InsertTextRequest, decorator: Google::Apis::DocsV1::InsertTextRequest::Representation
       
           property :merge_table_cells, as: 'mergeTableCells', class: Google::Apis::DocsV1::MergeTableCellsRequest, decorator: Google::Apis::DocsV1::MergeTableCellsRequest::Representation
+      
+          property :pin_table_header_rows, as: 'pinTableHeaderRows', class: Google::Apis::DocsV1::PinTableHeaderRowsRequest, decorator: Google::Apis::DocsV1::PinTableHeaderRowsRequest::Representation
       
           property :replace_all_text, as: 'replaceAllText', class: Google::Apis::DocsV1::ReplaceAllTextRequest, decorator: Google::Apis::DocsV1::ReplaceAllTextRequest::Representation
       
@@ -2517,6 +2536,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :min_row_height, as: 'minRowHeight', class: Google::Apis::DocsV1::Dimension, decorator: Google::Apis::DocsV1::Dimension::Representation
       
+          property :prevent_overflow, as: 'preventOverflow'
+          property :table_header, as: 'tableHeader'
         end
       end
       

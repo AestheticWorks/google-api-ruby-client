@@ -201,6 +201,315 @@ module Google
         end
       end
       
+      # Status data for storage. * This field is telemetry information and this will
+      # change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDeviceAudioStatus](https://chromeenterprise.
+      # google/policies/#ReportDeviceAudioStatus) * Data Collection Frequency: 10
+      # minutes * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1AudioStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Active input device's name.
+        # Corresponds to the JSON property `inputDevice`
+        # @return [String]
+        attr_accessor :input_device
+      
+        # Output only. Active input device's gain in [0, 100].
+        # Corresponds to the JSON property `inputGain`
+        # @return [Fixnum]
+        attr_accessor :input_gain
+      
+        # Output only. Is active input device mute or not.
+        # Corresponds to the JSON property `inputMute`
+        # @return [Boolean]
+        attr_accessor :input_mute
+        alias_method :input_mute?, :input_mute
+      
+        # Output only. Active output device's name.
+        # Corresponds to the JSON property `outputDevice`
+        # @return [String]
+        attr_accessor :output_device
+      
+        # Output only. Is active output device mute or not.
+        # Corresponds to the JSON property `outputMute`
+        # @return [Boolean]
+        attr_accessor :output_mute
+        alias_method :output_mute?, :output_mute
+      
+        # Output only. Active output device's volume in [0, 100].
+        # Corresponds to the JSON property `outputVolume`
+        # @return [Fixnum]
+        attr_accessor :output_volume
+      
+        # Output only. Timestamp of when the sample was collected on device.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @input_device = args[:input_device] if args.key?(:input_device)
+          @input_gain = args[:input_gain] if args.key?(:input_gain)
+          @input_mute = args[:input_mute] if args.key?(:input_mute)
+          @output_device = args[:output_device] if args.key?(:output_device)
+          @output_mute = args[:output_mute] if args.key?(:output_mute)
+          @output_volume = args[:output_volume] if args.key?(:output_volume)
+          @report_time = args[:report_time] if args.key?(:report_time)
+        end
+      end
+      
+      # Information about the battery. * This field provides device information, which
+      # is static and will not change over time. * Data for this field is controlled
+      # via policy: [ReportDevicePowerStatus](https://chromeenterprise.google/policies/
+      # #ReportDevicePowerStatus) * Data Collection Frequency: Only at Upload *
+      # Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache: If
+      # the device is offline, the collected data is stored locally, and will be
+      # reported when the device is next online: No * Reported for affiliated users
+      # only: N/A
+      class GoogleChromeManagementV1BatteryInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Design capacity (mAmpere-hours).
+        # Corresponds to the JSON property `designCapacity`
+        # @return [Fixnum]
+        attr_accessor :design_capacity
+      
+        # Output only. Designed minimum output voltage (mV)
+        # Corresponds to the JSON property `designMinVoltage`
+        # @return [Fixnum]
+        attr_accessor :design_min_voltage
+      
+        # Represents a whole or partial calendar date, such as a birthday. The time of
+        # day and time zone are either specified elsewhere or are insignificant. The
+        # date is relative to the Gregorian Calendar. This can represent one of the
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
+        # Corresponds to the JSON property `manufactureDate`
+        # @return [Google::Apis::ChromemanagementV1::GoogleTypeDate]
+        attr_accessor :manufacture_date
+      
+        # Output only. Battery manufacturer.
+        # Corresponds to the JSON property `manufacturer`
+        # @return [String]
+        attr_accessor :manufacturer
+      
+        # Output only. Battery serial number.
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        # Output only. Technology of the battery. Example: Li-ion
+        # Corresponds to the JSON property `technology`
+        # @return [String]
+        attr_accessor :technology
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @design_capacity = args[:design_capacity] if args.key?(:design_capacity)
+          @design_min_voltage = args[:design_min_voltage] if args.key?(:design_min_voltage)
+          @manufacture_date = args[:manufacture_date] if args.key?(:manufacture_date)
+          @manufacturer = args[:manufacturer] if args.key?(:manufacturer)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+          @technology = args[:technology] if args.key?(:technology)
+        end
+      end
+      
+      # Sampling data for battery. * This field is telemetry information and this will
+      # change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDevicePowerStatus](https://chromeenterprise.
+      # google/policies/#ReportDevicePowerStatus) * Data Collection Frequency: Only at
+      # Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1BatterySampleReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Battery charge percentage.
+        # Corresponds to the JSON property `chargeRate`
+        # @return [Fixnum]
+        attr_accessor :charge_rate
+      
+        # Output only. Battery current (mA).
+        # Corresponds to the JSON property `current`
+        # @return [Fixnum]
+        attr_accessor :current
+      
+        # Output only. The battery discharge rate measured in mW. Positive if the
+        # battery is being discharged, negative if it's being charged.
+        # Corresponds to the JSON property `dischargeRate`
+        # @return [Fixnum]
+        attr_accessor :discharge_rate
+      
+        # Output only. Battery remaining capacity (mAmpere-hours).
+        # Corresponds to the JSON property `remainingCapacity`
+        # @return [Fixnum]
+        attr_accessor :remaining_capacity
+      
+        # Output only. Timestamp of when the sample was collected on device
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Output only. Battery status read from sysfs. Example: Discharging
+        # Corresponds to the JSON property `status`
+        # @return [String]
+        attr_accessor :status
+      
+        # Output only. Temperature in Celsius degrees.
+        # Corresponds to the JSON property `temperature`
+        # @return [Fixnum]
+        attr_accessor :temperature
+      
+        # Output only. Battery voltage (millivolt).
+        # Corresponds to the JSON property `voltage`
+        # @return [Fixnum]
+        attr_accessor :voltage
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @charge_rate = args[:charge_rate] if args.key?(:charge_rate)
+          @current = args[:current] if args.key?(:current)
+          @discharge_rate = args[:discharge_rate] if args.key?(:discharge_rate)
+          @remaining_capacity = args[:remaining_capacity] if args.key?(:remaining_capacity)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @status = args[:status] if args.key?(:status)
+          @temperature = args[:temperature] if args.key?(:temperature)
+          @voltage = args[:voltage] if args.key?(:voltage)
+        end
+      end
+      
+      # Status data for battery. * This field is telemetry information and this will
+      # change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDevicePowerStatus](https://chromeenterprise.
+      # google/policies/#ReportDevicePowerStatus) * Data Collection Frequency: Only at
+      # Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1BatteryStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Battery health.
+        # Corresponds to the JSON property `batteryHealth`
+        # @return [String]
+        attr_accessor :battery_health
+      
+        # Output only. Cycle count.
+        # Corresponds to the JSON property `cycleCount`
+        # @return [Fixnum]
+        attr_accessor :cycle_count
+      
+        # Output only. Full charge capacity (mAmpere-hours).
+        # Corresponds to the JSON property `fullChargeCapacity`
+        # @return [Fixnum]
+        attr_accessor :full_charge_capacity
+      
+        # Output only. Timestamp of when the sample was collected on device
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Output only. Sampling data for the battery sorted in a decreasing order of
+        # report_time.
+        # Corresponds to the JSON property `sample`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1BatterySampleReport>]
+        attr_accessor :sample
+      
+        # Output only. Battery serial number.
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @battery_health = args[:battery_health] if args.key?(:battery_health)
+          @cycle_count = args[:cycle_count] if args.key?(:cycle_count)
+          @full_charge_capacity = args[:full_charge_capacity] if args.key?(:full_charge_capacity)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @sample = args[:sample] if args.key?(:sample)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+        end
+      end
+      
+      # Boot performance report of a device. * This field is telemetry information and
+      # this will change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDeviceBootMode](https://chromeenterprise.google/
+      # policies/#ReportDeviceBootMode) * Data Collection Frequency: On every boot up
+      # event * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: Yes * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1BootPerformanceReport
+        include Google::Apis::Core::Hashable
+      
+        # Total time to boot up.
+        # Corresponds to the JSON property `bootUpDuration`
+        # @return [String]
+        attr_accessor :boot_up_duration
+      
+        # The timestamp when power came on.
+        # Corresponds to the JSON property `bootUpTime`
+        # @return [String]
+        attr_accessor :boot_up_time
+      
+        # Timestamp when the report was collected.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Total time since shutdown start to power off.
+        # Corresponds to the JSON property `shutdownDuration`
+        # @return [String]
+        attr_accessor :shutdown_duration
+      
+        # The shutdown reason.
+        # Corresponds to the JSON property `shutdownReason`
+        # @return [String]
+        attr_accessor :shutdown_reason
+      
+        # The timestamp when shutdown.
+        # Corresponds to the JSON property `shutdownTime`
+        # @return [String]
+        attr_accessor :shutdown_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @boot_up_duration = args[:boot_up_duration] if args.key?(:boot_up_duration)
+          @boot_up_time = args[:boot_up_time] if args.key?(:boot_up_time)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @shutdown_duration = args[:shutdown_duration] if args.key?(:shutdown_duration)
+          @shutdown_reason = args[:shutdown_reason] if args.key?(:shutdown_reason)
+          @shutdown_time = args[:shutdown_time] if args.key?(:shutdown_time)
+        end
+      end
+      
       # Describes a browser version and its install count.
       class GoogleChromeManagementV1BrowserVersion
         include Google::Apis::Core::Hashable
@@ -263,11 +572,29 @@ module Google
         attr_accessor :is_cws_hosted
         alias_method :is_cws_hosted?, :is_cws_hosted
       
+        # Output only. Whether an app supports policy for extensions.
+        # Corresponds to the JSON property `isExtensionPolicySupported`
+        # @return [Boolean]
+        attr_accessor :is_extension_policy_supported
+        alias_method :is_extension_policy_supported?, :is_extension_policy_supported
+      
+        # Output only. Whether the app is only for Kiosk mode on ChromeOS devices
+        # Corresponds to the JSON property `isKioskOnly`
+        # @return [Boolean]
+        attr_accessor :is_kiosk_only
+        alias_method :is_kiosk_only?, :is_kiosk_only
+      
         # Output only. Whether the app or extension is a theme.
         # Corresponds to the JSON property `isTheme`
         # @return [Boolean]
         attr_accessor :is_theme
         alias_method :is_theme?, :is_theme
+      
+        # Output only. Whether this app is enabled for Kiosk mode on ChromeOS devices
+        # Corresponds to the JSON property `kioskEnabled`
+        # @return [Boolean]
+        attr_accessor :kiosk_enabled
+        alias_method :kiosk_enabled?, :kiosk_enabled
       
         # Output only. The minimum number of users using this app.
         # Corresponds to the JSON property `minUserCount`
@@ -295,6 +622,11 @@ module Google
         attr_accessor :support_enabled
         alias_method :support_enabled?, :support_enabled
       
+        # Output only. Types of an item in the Chrome Web Store
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
         def initialize(**args)
            update!(**args)
         end
@@ -303,11 +635,15 @@ module Google
         def update!(**args)
           @google_owned = args[:google_owned] if args.key?(:google_owned)
           @is_cws_hosted = args[:is_cws_hosted] if args.key?(:is_cws_hosted)
+          @is_extension_policy_supported = args[:is_extension_policy_supported] if args.key?(:is_extension_policy_supported)
+          @is_kiosk_only = args[:is_kiosk_only] if args.key?(:is_kiosk_only)
           @is_theme = args[:is_theme] if args.key?(:is_theme)
+          @kiosk_enabled = args[:kiosk_enabled] if args.key?(:kiosk_enabled)
           @min_user_count = args[:min_user_count] if args.key?(:min_user_count)
           @permissions = args[:permissions] if args.key?(:permissions)
           @site_access = args[:site_access] if args.key?(:site_access)
           @support_enabled = args[:support_enabled] if args.key?(:support_enabled)
+          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -345,6 +681,63 @@ module Google
         end
       end
       
+      # Details of an app installation request.
+      class GoogleChromeManagementV1ChromeAppRequest
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Format: app_details=customers/`customer_id`/apps/chrome/`app_id`
+        # Corresponds to the JSON property `appDetails`
+        # @return [String]
+        attr_accessor :app_details
+      
+        # Output only. Unique store identifier for the app. Example: "
+        # gmbmikajjgmnabiglmofipeabaddhgne" for the Save to Google Drive Chrome
+        # extension.
+        # Corresponds to the JSON property `appId`
+        # @return [String]
+        attr_accessor :app_id
+      
+        # Output only. The uri for the detail page of the item.
+        # Corresponds to the JSON property `detailUri`
+        # @return [String]
+        attr_accessor :detail_uri
+      
+        # Output only. App's display name.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. A link to an image that can be used as an icon for the product.
+        # Corresponds to the JSON property `iconUri`
+        # @return [String]
+        attr_accessor :icon_uri
+      
+        # Output only. The timestamp of the most recently made request for this app.
+        # Corresponds to the JSON property `latestRequestTime`
+        # @return [String]
+        attr_accessor :latest_request_time
+      
+        # Output only. Total count of requests for this app.
+        # Corresponds to the JSON property `requestCount`
+        # @return [Fixnum]
+        attr_accessor :request_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @app_details = args[:app_details] if args.key?(:app_details)
+          @app_id = args[:app_id] if args.key?(:app_id)
+          @detail_uri = args[:detail_uri] if args.key?(:detail_uri)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @icon_uri = args[:icon_uri] if args.key?(:icon_uri)
+          @latest_request_time = args[:latest_request_time] if args.key?(:latest_request_time)
+          @request_count = args[:request_count] if args.key?(:request_count)
+        end
+      end
+      
       # Represent one host permission.
       class GoogleChromeManagementV1ChromeAppSiteAccess
         include Google::Apis::Core::Hashable
@@ -362,6 +755,175 @@ module Google
         # Update properties of this object
         def update!(**args)
           @host_match = args[:host_match] if args.key?(:host_match)
+        end
+      end
+      
+      # Response containing summary of requested app installations.
+      class GoogleChromeManagementV1CountChromeAppRequestsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Token to specify the next page in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Count of requested apps matching request.
+        # Corresponds to the JSON property `requestedApps`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ChromeAppRequest>]
+        attr_accessor :requested_apps
+      
+        # Total number of matching app requests.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @requested_apps = args[:requested_apps] if args.key?(:requested_apps)
+          @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # Response containing counts for browsers that need attention.
+      class GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse
+        include Google::Apis::Core::Hashable
+      
+        # Number of browsers that haven’t had any recent activity
+        # Corresponds to the JSON property `noRecentActivityCount`
+        # @return [Fixnum]
+        attr_accessor :no_recent_activity_count
+      
+        # Number of browsers that are pending an OS update
+        # Corresponds to the JSON property `pendingBrowserUpdateCount`
+        # @return [Fixnum]
+        attr_accessor :pending_browser_update_count
+      
+        # Number of browsers that have been recently enrolled
+        # Corresponds to the JSON property `recentlyEnrolledCount`
+        # @return [Fixnum]
+        attr_accessor :recently_enrolled_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @no_recent_activity_count = args[:no_recent_activity_count] if args.key?(:no_recent_activity_count)
+          @pending_browser_update_count = args[:pending_browser_update_count] if args.key?(:pending_browser_update_count)
+          @recently_enrolled_count = args[:recently_enrolled_count] if args.key?(:recently_enrolled_count)
+        end
+      end
+      
+      # Response containing a list of devices expiring in each month of a selected
+      # time frame. Counts are grouped by model and Auto Update Expiration date.
+      class GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of reports sorted by auto update expiration date in ascending order.
+        # Corresponds to the JSON property `deviceAueCountReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DeviceAueCountReport>]
+        attr_accessor :device_aue_count_reports
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_aue_count_reports = args[:device_aue_count_reports] if args.key?(:device_aue_count_reports)
+        end
+      end
+      
+      # Response containing counts for devices that need attention.
+      class GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse
+        include Google::Apis::Core::Hashable
+      
+        # Number of ChromeOS devices have not synced policies in the past 28 days.
+        # Corresponds to the JSON property `noRecentPolicySyncCount`
+        # @return [Fixnum]
+        attr_accessor :no_recent_policy_sync_count
+      
+        # Number of ChromeOS devices that have not seen any user activity in the past 28
+        # days.
+        # Corresponds to the JSON property `noRecentUserActivityCount`
+        # @return [Fixnum]
+        attr_accessor :no_recent_user_activity_count
+      
+        # Number of devices whose OS version is not compliant.
+        # Corresponds to the JSON property `osVersionNotCompliantCount`
+        # @return [Fixnum]
+        attr_accessor :os_version_not_compliant_count
+      
+        # Number of devices that are pending an OS update.
+        # Corresponds to the JSON property `pendingUpdate`
+        # @return [Fixnum]
+        attr_accessor :pending_update
+      
+        # Number of devices that are unable to apply a policy due to an OS version
+        # mismatch.
+        # Corresponds to the JSON property `unsupportedPolicyCount`
+        # @return [Fixnum]
+        attr_accessor :unsupported_policy_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @no_recent_policy_sync_count = args[:no_recent_policy_sync_count] if args.key?(:no_recent_policy_sync_count)
+          @no_recent_user_activity_count = args[:no_recent_user_activity_count] if args.key?(:no_recent_user_activity_count)
+          @os_version_not_compliant_count = args[:os_version_not_compliant_count] if args.key?(:os_version_not_compliant_count)
+          @pending_update = args[:pending_update] if args.key?(:pending_update)
+          @unsupported_policy_count = args[:unsupported_policy_count] if args.key?(:unsupported_policy_count)
+        end
+      end
+      
+      # Response containing a list of devices with a specific type of hardware
+      # specification from the requested hardware type.
+      class GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The DeviceHardwareCountReport for device cpu type (for example Intel(R) Core(
+        # TM) i7-10610U CPU @ 1.80GHz).
+        # Corresponds to the JSON property `cpuReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DeviceHardwareCountReport>]
+        attr_accessor :cpu_reports
+      
+        # The DeviceHardwareCountReport for device memory amount in gigabytes (for
+        # example 16).
+        # Corresponds to the JSON property `memoryReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DeviceHardwareCountReport>]
+        attr_accessor :memory_reports
+      
+        # The DeviceHardwareCountReport for device model type (for example Acer C7
+        # Chromebook).
+        # Corresponds to the JSON property `modelReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DeviceHardwareCountReport>]
+        attr_accessor :model_reports
+      
+        # The DeviceHardwareCountReport for device storage amount in gigabytes (for
+        # example 128).
+        # Corresponds to the JSON property `storageReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DeviceHardwareCountReport>]
+        attr_accessor :storage_reports
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cpu_reports = args[:cpu_reports] if args.key?(:cpu_reports)
+          @memory_reports = args[:memory_reports] if args.key?(:memory_reports)
+          @model_reports = args[:model_reports] if args.key?(:model_reports)
+          @storage_reports = args[:storage_reports] if args.key?(:storage_reports)
         end
       end
       
@@ -427,6 +989,209 @@ module Google
         end
       end
       
+      # Response containing a summary printing report for each printer from the
+      # specified organizational unit for the requested time interval.
+      class GoogleChromeManagementV1CountPrintJobsByPrinterResponse
+        include Google::Apis::Core::Hashable
+      
+        # Pagination token for requesting the next page.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # List of PrinterReports matching request.
+        # Corresponds to the JSON property `printerReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1PrinterReport>]
+        attr_accessor :printer_reports
+      
+        # Total number of printers matching request.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @printer_reports = args[:printer_reports] if args.key?(:printer_reports)
+          @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # Response containing a summary printing report for each user that has initiated
+      # a print job with a printer from the specified organizational unit during the
+      # requested time interval.
+      class GoogleChromeManagementV1CountPrintJobsByUserResponse
+        include Google::Apis::Core::Hashable
+      
+        # Pagination token for requesting the next page.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Total number of users matching request.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        # List of UserPrintReports matching request.
+        # Corresponds to the JSON property `userPrintReports`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1UserPrintReport>]
+        attr_accessor :user_print_reports
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @total_size = args[:total_size] if args.key?(:total_size)
+          @user_print_reports = args[:user_print_reports] if args.key?(:user_print_reports)
+        end
+      end
+      
+      # CPU specifications for the device * This field provides device information,
+      # which is static and will not change over time. * Data for this field is
+      # controlled via policy: [ReportDeviceCpuInfo](https://chromeenterprise.google/
+      # policies/#ReportDeviceCpuInfo) * Data Collection Frequency: Only at Upload *
+      # Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache: If
+      # the device is offline, the collected data is stored locally, and will be
+      # reported when the device is next online: No * Reported for affiliated users
+      # only: N/A
+      class GoogleChromeManagementV1CpuInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Architecture type for the CPU. * This field provides device
+        # information, which is static and will not change over time. * Data for this
+        # field is controlled via policy: [ReportDeviceCpuInfo](https://chromeenterprise.
+        # google/policies/#ReportDeviceCpuInfo) * Data Collection Frequency: Only at
+        # Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes *
+        # Cache: If the device is offline, the collected data is stored locally, and
+        # will be reported when the device is next online: No * Reported for affiliated
+        # users only: N/A
+        # Corresponds to the JSON property `architecture`
+        # @return [String]
+        attr_accessor :architecture
+      
+        # Output only. Whether keylocker is configured.`TRUE` = Enabled; `FALSE` =
+        # disabled. Only reported if keylockerSupported = `TRUE`.
+        # Corresponds to the JSON property `keylockerConfigured`
+        # @return [Boolean]
+        attr_accessor :keylocker_configured
+        alias_method :keylocker_configured?, :keylocker_configured
+      
+        # Output only. Whether keylocker is supported.
+        # Corresponds to the JSON property `keylockerSupported`
+        # @return [Boolean]
+        attr_accessor :keylocker_supported
+        alias_method :keylocker_supported?, :keylocker_supported
+      
+        # Output only. The max CPU clock speed in kHz.
+        # Corresponds to the JSON property `maxClockSpeed`
+        # @return [Fixnum]
+        attr_accessor :max_clock_speed
+      
+        # Output only. The CPU model name. Example: Intel(R) Core(TM) i5-8250U CPU @ 1.
+        # 60GHz
+        # Corresponds to the JSON property `model`
+        # @return [String]
+        attr_accessor :model
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @architecture = args[:architecture] if args.key?(:architecture)
+          @keylocker_configured = args[:keylocker_configured] if args.key?(:keylocker_configured)
+          @keylocker_supported = args[:keylocker_supported] if args.key?(:keylocker_supported)
+          @max_clock_speed = args[:max_clock_speed] if args.key?(:max_clock_speed)
+          @model = args[:model] if args.key?(:model)
+        end
+      end
+      
+      # Provides information about the status of the CPU. * This field is telemetry
+      # information and this will change over time as the device is utilized. * Data
+      # for this field is controlled via policy: [ReportDeviceCpuInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceCpuInfo) * Data Collection
+      # Frequency: Every 10 minutes * Default Data Reporting Frequency: 3 hours -
+      # Policy Controlled: Yes * Cache: If the device is offline, the collected data
+      # is stored locally, and will be reported when the device is next online: No *
+      # Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1CpuStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. CPU temperature sample info per CPU core in Celsius
+        # Corresponds to the JSON property `cpuTemperatureInfo`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CpuTemperatureInfo>]
+        attr_accessor :cpu_temperature_info
+      
+        # Output only. Sample of CPU utilization (0-100 percent).
+        # Corresponds to the JSON property `cpuUtilizationPct`
+        # @return [Fixnum]
+        attr_accessor :cpu_utilization_pct
+      
+        # Output only. The timestamp in milliseconds representing time at which this
+        # report was sampled.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Output only. Frequency the report is sampled.
+        # Corresponds to the JSON property `sampleFrequency`
+        # @return [String]
+        attr_accessor :sample_frequency
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cpu_temperature_info = args[:cpu_temperature_info] if args.key?(:cpu_temperature_info)
+          @cpu_utilization_pct = args[:cpu_utilization_pct] if args.key?(:cpu_utilization_pct)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @sample_frequency = args[:sample_frequency] if args.key?(:sample_frequency)
+        end
+      end
+      
+      # CPU temperature of a device. Sampled per CPU core in Celsius. * This field is
+      # telemetry information and this will change over time as the device is utilized.
+      # * Data for this field is controlled via policy: [ReportDeviceCpuInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceCpuInfo) * Data Collection
+      # Frequency: Every 10 minutes * Default Data Reporting Frequency: 3 hours -
+      # Policy Controlled: Yes * Cache: If the device is offline, the collected data
+      # is stored locally, and will be reported when the device is next online: No *
+      # Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1CpuTemperatureInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. CPU label. Example: Core 0
+        # Corresponds to the JSON property `label`
+        # @return [String]
+        attr_accessor :label
+      
+        # Output only. CPU temperature in Celsius.
+        # Corresponds to the JSON property `temperatureCelsius`
+        # @return [Fixnum]
+        attr_accessor :temperature_celsius
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @label = args[:label] if args.key?(:label)
+          @temperature_celsius = args[:temperature_celsius] if args.key?(:temperature_celsius)
+        end
+      end
+      
       # Describes a device reporting Chrome browser information.
       class GoogleChromeManagementV1Device
         include Google::Apis::Core::Hashable
@@ -450,6 +1215,278 @@ module Google
         def update!(**args)
           @device_id = args[:device_id] if args.key?(:device_id)
           @machine = args[:machine] if args.key?(:machine)
+        end
+      end
+      
+      # Report for CountChromeDevicesPerAueDateResponse, contains the count of devices
+      # of a specific model and auto update expiration range.
+      class GoogleChromeManagementV1DeviceAueCountReport
+        include Google::Apis::Core::Hashable
+      
+        # Enum value of month corresponding to the auto update expiration date in UTC
+        # time zone. If the device is already expired, this field is empty.
+        # Corresponds to the JSON property `aueMonth`
+        # @return [String]
+        attr_accessor :aue_month
+      
+        # Int value of year corresponding to the Auto Update Expiration date in UTC time
+        # zone. If the device is already expired, this field is empty.
+        # Corresponds to the JSON property `aueYear`
+        # @return [Fixnum]
+        attr_accessor :aue_year
+      
+        # Count of devices of this model.
+        # Corresponds to the JSON property `count`
+        # @return [Fixnum]
+        attr_accessor :count
+      
+        # Boolean value for whether or not the device has already expired.
+        # Corresponds to the JSON property `expired`
+        # @return [Boolean]
+        attr_accessor :expired
+        alias_method :expired?, :expired
+      
+        # Public model name of the devices.
+        # Corresponds to the JSON property `model`
+        # @return [String]
+        attr_accessor :model
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aue_month = args[:aue_month] if args.key?(:aue_month)
+          @aue_year = args[:aue_year] if args.key?(:aue_year)
+          @count = args[:count] if args.key?(:count)
+          @expired = args[:expired] if args.key?(:expired)
+          @model = args[:model] if args.key?(:model)
+        end
+      end
+      
+      # Report for CountChromeDevicesPerHardwareSpecResponse, contains the count of
+      # devices with a unique hardware specification.
+      class GoogleChromeManagementV1DeviceHardwareCountReport
+        include Google::Apis::Core::Hashable
+      
+        # Public name of the hardware specification.
+        # Corresponds to the JSON property `bucket`
+        # @return [String]
+        attr_accessor :bucket
+      
+        # Count of devices with a unique hardware specification.
+        # Corresponds to the JSON property `count`
+        # @return [Fixnum]
+        attr_accessor :count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bucket = args[:bucket] if args.key?(:bucket)
+          @count = args[:count] if args.key?(:count)
+        end
+      end
+      
+      # Status of the single storage device.
+      class GoogleChromeManagementV1DiskInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Number of bytes read since last boot.
+        # Corresponds to the JSON property `bytesReadThisSession`
+        # @return [Fixnum]
+        attr_accessor :bytes_read_this_session
+      
+        # Output only. Number of bytes written since last boot.
+        # Corresponds to the JSON property `bytesWrittenThisSession`
+        # @return [Fixnum]
+        attr_accessor :bytes_written_this_session
+      
+        # Output only. Time spent discarding since last boot. Discarding is writing to
+        # clear blocks which are no longer in use. Supported on kernels 4.18+.
+        # Corresponds to the JSON property `discardTimeThisSession`
+        # @return [String]
+        attr_accessor :discard_time_this_session
+      
+        # Output only. Disk health.
+        # Corresponds to the JSON property `health`
+        # @return [String]
+        attr_accessor :health
+      
+        # Output only. Counts the time the disk and queue were busy, so unlike the
+        # fields above, parallel requests are not counted multiple times.
+        # Corresponds to the JSON property `ioTimeThisSession`
+        # @return [String]
+        attr_accessor :io_time_this_session
+      
+        # Output only. Disk manufacturer.
+        # Corresponds to the JSON property `manufacturer`
+        # @return [String]
+        attr_accessor :manufacturer
+      
+        # Output only. Disk model.
+        # Corresponds to the JSON property `model`
+        # @return [String]
+        attr_accessor :model
+      
+        # Output only. Time spent reading from disk since last boot.
+        # Corresponds to the JSON property `readTimeThisSession`
+        # @return [String]
+        attr_accessor :read_time_this_session
+      
+        # Output only. Disk serial number.
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        # Output only. Disk size.
+        # Corresponds to the JSON property `sizeBytes`
+        # @return [Fixnum]
+        attr_accessor :size_bytes
+      
+        # Output only. Disk type: eMMC / NVMe / ATA / SCSI.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        # Output only. Disk volumes.
+        # Corresponds to the JSON property `volumeIds`
+        # @return [Array<String>]
+        attr_accessor :volume_ids
+      
+        # Output only. Time spent writing to disk since last boot.
+        # Corresponds to the JSON property `writeTimeThisSession`
+        # @return [String]
+        attr_accessor :write_time_this_session
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bytes_read_this_session = args[:bytes_read_this_session] if args.key?(:bytes_read_this_session)
+          @bytes_written_this_session = args[:bytes_written_this_session] if args.key?(:bytes_written_this_session)
+          @discard_time_this_session = args[:discard_time_this_session] if args.key?(:discard_time_this_session)
+          @health = args[:health] if args.key?(:health)
+          @io_time_this_session = args[:io_time_this_session] if args.key?(:io_time_this_session)
+          @manufacturer = args[:manufacturer] if args.key?(:manufacturer)
+          @model = args[:model] if args.key?(:model)
+          @read_time_this_session = args[:read_time_this_session] if args.key?(:read_time_this_session)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+          @size_bytes = args[:size_bytes] if args.key?(:size_bytes)
+          @type = args[:type] if args.key?(:type)
+          @volume_ids = args[:volume_ids] if args.key?(:volume_ids)
+          @write_time_this_session = args[:write_time_this_session] if args.key?(:write_time_this_session)
+        end
+      end
+      
+      # Information of a display device.
+      class GoogleChromeManagementV1DisplayDevice
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Display height in millimeters.
+        # Corresponds to the JSON property `displayHeightMm`
+        # @return [Fixnum]
+        attr_accessor :display_height_mm
+      
+        # Output only. Display device name.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. Display width in millimeters.
+        # Corresponds to the JSON property `displayWidthMm`
+        # @return [Fixnum]
+        attr_accessor :display_width_mm
+      
+        # Output only. Is display internal or not.
+        # Corresponds to the JSON property `internal`
+        # @return [Boolean]
+        attr_accessor :internal
+        alias_method :internal?, :internal
+      
+        # Output only. Year of manufacture.
+        # Corresponds to the JSON property `manufactureYear`
+        # @return [Fixnum]
+        attr_accessor :manufacture_year
+      
+        # Output only. Three letter manufacturer ID.
+        # Corresponds to the JSON property `manufacturerId`
+        # @return [String]
+        attr_accessor :manufacturer_id
+      
+        # Output only. Manufacturer product code.
+        # Corresponds to the JSON property `modelId`
+        # @return [Fixnum]
+        attr_accessor :model_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_height_mm = args[:display_height_mm] if args.key?(:display_height_mm)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @display_width_mm = args[:display_width_mm] if args.key?(:display_width_mm)
+          @internal = args[:internal] if args.key?(:internal)
+          @manufacture_year = args[:manufacture_year] if args.key?(:manufacture_year)
+          @manufacturer_id = args[:manufacturer_id] if args.key?(:manufacturer_id)
+          @model_id = args[:model_id] if args.key?(:model_id)
+        end
+      end
+      
+      # Information for a display.
+      class GoogleChromeManagementV1DisplayInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Represents the graphics card device id.
+        # Corresponds to the JSON property `deviceId`
+        # @return [Fixnum]
+        attr_accessor :device_id
+      
+        # Output only. Display device name.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. Indicates if display is internal or not.
+        # Corresponds to the JSON property `isInternal`
+        # @return [Boolean]
+        attr_accessor :is_internal
+        alias_method :is_internal?, :is_internal
+      
+        # Output only. Refresh rate in Hz.
+        # Corresponds to the JSON property `refreshRate`
+        # @return [Fixnum]
+        attr_accessor :refresh_rate
+      
+        # Output only. Resolution height in pixels.
+        # Corresponds to the JSON property `resolutionHeight`
+        # @return [Fixnum]
+        attr_accessor :resolution_height
+      
+        # Output only. Resolution width in pixels.
+        # Corresponds to the JSON property `resolutionWidth`
+        # @return [Fixnum]
+        attr_accessor :resolution_width
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_id = args[:device_id] if args.key?(:device_id)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @is_internal = args[:is_internal] if args.key?(:is_internal)
+          @refresh_rate = args[:refresh_rate] if args.key?(:refresh_rate)
+          @resolution_height = args[:resolution_height] if args.key?(:resolution_height)
+          @resolution_width = args[:resolution_width] if args.key?(:resolution_width)
         end
       end
       
@@ -482,6 +1519,142 @@ module Google
           @devices = args[:devices] if args.key?(:devices)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # Information of a graphics adapter (GPU).
+      class GoogleChromeManagementV1GraphicsAdapterInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Adapter name. Example: Mesa DRI Intel(R) UHD Graphics 620 (
+        # Kabylake GT2).
+        # Corresponds to the JSON property `adapter`
+        # @return [String]
+        attr_accessor :adapter
+      
+        # Output only. Represents the graphics card device id.
+        # Corresponds to the JSON property `deviceId`
+        # @return [Fixnum]
+        attr_accessor :device_id
+      
+        # Output only. Version of the GPU driver.
+        # Corresponds to the JSON property `driverVersion`
+        # @return [String]
+        attr_accessor :driver_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @adapter = args[:adapter] if args.key?(:adapter)
+          @device_id = args[:device_id] if args.key?(:device_id)
+          @driver_version = args[:driver_version] if args.key?(:driver_version)
+        end
+      end
+      
+      # Information of the graphics subsystem. * This field provides device
+      # information, which is static and will not change over time. * Data for this
+      # field is controlled via policy: [ReportDeviceGraphicsStatus](https://
+      # chromeenterprise.google/policies/#ReportDeviceGraphicsStatus) * Data
+      # Collection Frequency: Only at Upload * Default Data Reporting Frequency: 3
+      # hours - Policy Controlled: Yes * Cache: If the device is offline, the
+      # collected data is stored locally, and will be reported when the device is next
+      # online: No * Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1GraphicsInfo
+        include Google::Apis::Core::Hashable
+      
+        # Information of a graphics adapter (GPU).
+        # Corresponds to the JSON property `adapterInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1GraphicsAdapterInfo]
+        attr_accessor :adapter_info
+      
+        # Output only. Information about the display(s) of the device.
+        # Corresponds to the JSON property `displayDevices`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DisplayDevice>]
+        attr_accessor :display_devices
+      
+        # Output only. Is ePrivacy screen supported or not.
+        # Corresponds to the JSON property `eprivacySupported`
+        # @return [Boolean]
+        attr_accessor :eprivacy_supported
+        alias_method :eprivacy_supported?, :eprivacy_supported
+      
+        # Information on the device touch screen.
+        # Corresponds to the JSON property `touchScreenInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TouchScreenInfo]
+        attr_accessor :touch_screen_info
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @adapter_info = args[:adapter_info] if args.key?(:adapter_info)
+          @display_devices = args[:display_devices] if args.key?(:display_devices)
+          @eprivacy_supported = args[:eprivacy_supported] if args.key?(:eprivacy_supported)
+          @touch_screen_info = args[:touch_screen_info] if args.key?(:touch_screen_info)
+        end
+      end
+      
+      # Information of the graphics subsystem. * This field is telemetry information
+      # and this will change over time as the device is utilized. * Data for this
+      # field is controlled via policy: [ReportDeviceGraphicsInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceGraphicsInfo) * Data Collection
+      # Frequency: 3 hours. * Default Data Reporting Frequency: 3 hours - Policy
+      # Controlled: Yes * Cache: If the device is offline, the collected data is
+      # stored locally, and will be reported when the device is next online: No *
+      # Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1GraphicsStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Information about the displays for the device.
+        # Corresponds to the JSON property `displays`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DisplayInfo>]
+        attr_accessor :displays
+      
+        # Output only. Time at which the graphics data was reported.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @displays = args[:displays] if args.key?(:displays)
+          @report_time = args[:report_time] if args.key?(:report_time)
+        end
+      end
+      
+      # Data that describes the result of the HTTPS latency diagnostics routine, with
+      # the HTTPS requests issued to Google websites.
+      class GoogleChromeManagementV1HttpsLatencyRoutineData
+        include Google::Apis::Core::Hashable
+      
+        # Output only. HTTPS latency if routine succeeded or failed because of
+        # HIGH_LATENCY or VERY_HIGH_LATENCY.
+        # Corresponds to the JSON property `latency`
+        # @return [String]
+        attr_accessor :latency
+      
+        # Output only. HTTPS latency routine problem if a problem occurred.
+        # Corresponds to the JSON property `problem`
+        # @return [String]
+        attr_accessor :problem
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @latency = args[:latency] if args.key?(:latency)
+          @problem = args[:problem] if args.key?(:problem)
         end
       end
       
@@ -567,6 +1740,1318 @@ module Google
         end
       end
       
+      # 
+      class GoogleChromeManagementV1ListTelemetryDevicesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Telemetry devices returned in the response.
+        # Corresponds to the JSON property `devices`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDevice>]
+        attr_accessor :devices
+      
+        # Token to specify next page in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @devices = args[:devices] if args.key?(:devices)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response message for listing telemetry events for a customer.
+      class GoogleChromeManagementV1ListTelemetryEventsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Token to specify next page in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Telemetry events returned in the response.
+        # Corresponds to the JSON property `telemetryEvents`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryEvent>]
+        attr_accessor :telemetry_events
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @telemetry_events = args[:telemetry_events] if args.key?(:telemetry_events)
+        end
+      end
+      
+      # Response message for listing telemetry users for a customer.
+      class GoogleChromeManagementV1ListTelemetryUsersResponse
+        include Google::Apis::Core::Hashable
+      
+        # Token to specify next page in the list.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Telemetry users returned in the response.
+        # Corresponds to the JSON property `telemetryUsers`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUser>]
+        attr_accessor :telemetry_users
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @telemetry_users = args[:telemetry_users] if args.key?(:telemetry_users)
+        end
+      end
+      
+      # Memory information of a device. * This field has both telemetry and device
+      # information: - `totalRamBytes` - Device information - `availableRamBytes` -
+      # Telemetry information - `totalMemoryEncryption` - Device information * Data
+      # for this field is controlled via policy: [ReportDeviceMemoryInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceMemoryInfo) * Data Collection
+      # Frequency: - `totalRamBytes` - Only at upload - `availableRamBytes` - Every 10
+      # minutes - `totalMemoryEncryption` - at device startup * Default Data Reporting
+      # Frequency: - `totalRamBytes` - 3 hours - `availableRamBytes` - 3 hours - `
+      # totalMemoryEncryption` - at device startup - Policy Controlled: Yes * Cache:
+      # If the device is offline, the collected data is stored locally, and will be
+      # reported when the device is next online: only for `totalMemoryEncryption` *
+      # Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1MemoryInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Amount of available RAM in bytes.
+        # Corresponds to the JSON property `availableRamBytes`
+        # @return [Fixnum]
+        attr_accessor :available_ram_bytes
+      
+        # Memory encryption information of a device. * This field provides device
+        # information, which is static and will not change over time. * Data for this
+        # field is controlled via policy: [ReportDeviceMemoryInfo](https://
+        # chromeenterprise.google/policies/#ReportDeviceMemoryInfo) * Data Collection
+        # Frequency: At device startup * Default Data Reporting Frequency: At device
+        # startup - Policy Controlled: Yes * Cache: If the device is offline, the
+        # collected data is stored locally, and will be reported when the device is next
+        # online: Yes * Reported for affiliated users only: N/A
+        # Corresponds to the JSON property `totalMemoryEncryption`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TotalMemoryEncryptionInfo]
+        attr_accessor :total_memory_encryption
+      
+        # Output only. Total RAM in bytes.
+        # Corresponds to the JSON property `totalRamBytes`
+        # @return [Fixnum]
+        attr_accessor :total_ram_bytes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @available_ram_bytes = args[:available_ram_bytes] if args.key?(:available_ram_bytes)
+          @total_memory_encryption = args[:total_memory_encryption] if args.key?(:total_memory_encryption)
+          @total_ram_bytes = args[:total_ram_bytes] if args.key?(:total_ram_bytes)
+        end
+      end
+      
+      # Contains samples of memory status reports. * This field is telemetry
+      # information and this will change over time as the device is utilized. * Data
+      # for this field is controlled via policy: [ReportDeviceMemoryInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceMemoryInfo) * Data Collection
+      # Frequency: Only at upload, SystemRamFreeByes is collected every 10 minutes *
+      # Default Data Reporting Frequency: Every 3 hours - Policy Controlled: Yes *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1MemoryStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Number of page faults during this collection
+        # Corresponds to the JSON property `pageFaults`
+        # @return [Fixnum]
+        attr_accessor :page_faults
+      
+        # Output only. The timestamp in milliseconds representing time at which this
+        # report was sampled.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Output only. Frequency the report is sampled.
+        # Corresponds to the JSON property `sampleFrequency`
+        # @return [String]
+        attr_accessor :sample_frequency
+      
+        # Output only. Amount of free RAM in bytes (unreliable due to Garbage Collection)
+        # .
+        # Corresponds to the JSON property `systemRamFreeBytes`
+        # @return [Fixnum]
+        attr_accessor :system_ram_free_bytes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @page_faults = args[:page_faults] if args.key?(:page_faults)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @sample_frequency = args[:sample_frequency] if args.key?(:sample_frequency)
+          @system_ram_free_bytes = args[:system_ram_free_bytes] if args.key?(:system_ram_free_bytes)
+        end
+      end
+      
+      # Details about the network device. * This field provides device information,
+      # which is static and will not change over time. * Data for this field is
+      # controlled via policy: [ReportNetworkDeviceConfiguration](https://
+      # chromeenterprise.google/policies/#ReportNetworkDeviceConfiguration) * Data
+      # Collection Frequency: At device startup * Default Data Reporting Frequency: At
+      # device startup - Policy Controlled: Yes * Cache: If the device is offline, the
+      # collected data is stored locally, and will be reported when the device is next
+      # online: Yes * Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1NetworkDevice
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The integrated circuit card ID associated with the device's sim
+        # card.
+        # Corresponds to the JSON property `iccid`
+        # @return [String]
+        attr_accessor :iccid
+      
+        # Output only. IMEI (if applicable) of the corresponding network device.
+        # Corresponds to the JSON property `imei`
+        # @return [String]
+        attr_accessor :imei
+      
+        # Output only. MAC address (if applicable) of the corresponding network device.
+        # Corresponds to the JSON property `macAddress`
+        # @return [String]
+        attr_accessor :mac_address
+      
+        # Output only. The mobile directory number associated with the device's sim card.
+        # Corresponds to the JSON property `mdn`
+        # @return [String]
+        attr_accessor :mdn
+      
+        # Output only. MEID (if applicable) of the corresponding network device.
+        # Corresponds to the JSON property `meid`
+        # @return [String]
+        attr_accessor :meid
+      
+        # Output only. Network device type.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @iccid = args[:iccid] if args.key?(:iccid)
+          @imei = args[:imei] if args.key?(:imei)
+          @mac_address = args[:mac_address] if args.key?(:mac_address)
+          @mdn = args[:mdn] if args.key?(:mdn)
+          @meid = args[:meid] if args.key?(:meid)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # Network testing results to determine the health of the device's network
+      # connection, for example whether the HTTPS latency is high or normal.
+      class GoogleChromeManagementV1NetworkDiagnosticsReport
+        include Google::Apis::Core::Hashable
+      
+        # Data that describes the result of the HTTPS latency diagnostics routine, with
+        # the HTTPS requests issued to Google websites.
+        # Corresponds to the JSON property `httpsLatencyData`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1HttpsLatencyRoutineData]
+        attr_accessor :https_latency_data
+      
+        # Output only. Timestamp of when the diagnostics were collected.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @https_latency_data = args[:https_latency_data] if args.key?(:https_latency_data)
+          @report_time = args[:report_time] if args.key?(:report_time)
+        end
+      end
+      
+      # Network device information. * This field provides device information, which is
+      # static and will not change over time. * Data for this field is controlled via
+      # policy: [ReportNetworkDeviceConfiguration](https://chromeenterprise.google/
+      # policies/#ReportNetworkDeviceConfiguration) * Data Collection Frequency: At
+      # device startup * Default Data Reporting Frequency: At device startup - Policy
+      # Controlled: Yes * Cache: If the device is offline, the collected data is
+      # stored locally, and will be reported when the device is next online: Yes *
+      # Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1NetworkInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. List of network devices.
+        # Corresponds to the JSON property `networkDevices`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1NetworkDevice>]
+        attr_accessor :network_devices
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @network_devices = args[:network_devices] if args.key?(:network_devices)
+        end
+      end
+      
+      # State of visible/configured networks. * This field is telemetry information
+      # and this will change over time as the device is utilized. * Data for this
+      # field is controlled via policy: [ReportNetworkStatus](https://chromeenterprise.
+      # google/policies/#ReportNetworkStatus) * Data Collection Frequency: 60 minutes *
+      # Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes * Cache:
+      # If the device is offline, the collected data is stored locally, and will be
+      # reported when the device is next online: Yes * Reported for affiliated users
+      # only: Yes
+      class GoogleChromeManagementV1NetworkStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Current connection state of the network.
+        # Corresponds to the JSON property `connectionState`
+        # @return [String]
+        attr_accessor :connection_state
+      
+        # Output only. Network connection type.
+        # Corresponds to the JSON property `connectionType`
+        # @return [String]
+        attr_accessor :connection_type
+      
+        # Output only. Whether the wifi encryption key is turned off.
+        # Corresponds to the JSON property `encryptionOn`
+        # @return [Boolean]
+        attr_accessor :encryption_on
+        alias_method :encryption_on?, :encryption_on
+      
+        # Output only. Gateway IP address.
+        # Corresponds to the JSON property `gatewayIpAddress`
+        # @return [String]
+        attr_accessor :gateway_ip_address
+      
+        # Output only. Network connection guid.
+        # Corresponds to the JSON property `guid`
+        # @return [String]
+        attr_accessor :guid
+      
+        # Output only. LAN IP address.
+        # Corresponds to the JSON property `lanIpAddress`
+        # @return [String]
+        attr_accessor :lan_ip_address
+      
+        # Output only. Receiving bit rate measured in Megabits per second.
+        # Corresponds to the JSON property `receivingBitRateMbps`
+        # @return [Fixnum]
+        attr_accessor :receiving_bit_rate_mbps
+      
+        # Output only. Time at which the network state was reported.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Output only. Frequency the report is sampled.
+        # Corresponds to the JSON property `sampleFrequency`
+        # @return [String]
+        attr_accessor :sample_frequency
+      
+        # Output only. Signal strength for wireless networks measured in decibels.
+        # Corresponds to the JSON property `signalStrengthDbm`
+        # @return [Fixnum]
+        attr_accessor :signal_strength_dbm
+      
+        # Output only. Transmission bit rate measured in Megabits per second.
+        # Corresponds to the JSON property `transmissionBitRateMbps`
+        # @return [Fixnum]
+        attr_accessor :transmission_bit_rate_mbps
+      
+        # Output only. Transmission power measured in decibels.
+        # Corresponds to the JSON property `transmissionPowerDbm`
+        # @return [Fixnum]
+        attr_accessor :transmission_power_dbm
+      
+        # Output only. Wifi link quality. Value ranges from [0, 70]. 0 indicates no
+        # signal and 70 indicates a strong signal.
+        # Corresponds to the JSON property `wifiLinkQuality`
+        # @return [Fixnum]
+        attr_accessor :wifi_link_quality
+      
+        # Output only. Wifi power management enabled
+        # Corresponds to the JSON property `wifiPowerManagementEnabled`
+        # @return [Boolean]
+        attr_accessor :wifi_power_management_enabled
+        alias_method :wifi_power_management_enabled?, :wifi_power_management_enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @connection_state = args[:connection_state] if args.key?(:connection_state)
+          @connection_type = args[:connection_type] if args.key?(:connection_type)
+          @encryption_on = args[:encryption_on] if args.key?(:encryption_on)
+          @gateway_ip_address = args[:gateway_ip_address] if args.key?(:gateway_ip_address)
+          @guid = args[:guid] if args.key?(:guid)
+          @lan_ip_address = args[:lan_ip_address] if args.key?(:lan_ip_address)
+          @receiving_bit_rate_mbps = args[:receiving_bit_rate_mbps] if args.key?(:receiving_bit_rate_mbps)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @sample_frequency = args[:sample_frequency] if args.key?(:sample_frequency)
+          @signal_strength_dbm = args[:signal_strength_dbm] if args.key?(:signal_strength_dbm)
+          @transmission_bit_rate_mbps = args[:transmission_bit_rate_mbps] if args.key?(:transmission_bit_rate_mbps)
+          @transmission_power_dbm = args[:transmission_power_dbm] if args.key?(:transmission_power_dbm)
+          @wifi_link_quality = args[:wifi_link_quality] if args.key?(:wifi_link_quality)
+          @wifi_power_management_enabled = args[:wifi_power_management_enabled] if args.key?(:wifi_power_management_enabled)
+        end
+      end
+      
+      # Contains information regarding the current OS update status. * This field is
+      # telemetry information and this will change over time as the device is utilized.
+      # * Data for this field is controlled via policy: [ReportDeviceOsUpdateStatus](
+      # https://chromeenterprise.google/policies/#ReportDeviceOsUpdateStatus) * Data
+      # Collection Frequency: Only at Upload * Default Data Reporting Frequency: 3
+      # hours - Policy Controlled: Yes * Cache: If the device is offline, the
+      # collected data is stored locally, and will be reported when the device is next
+      # online: No * Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1OsUpdateStatus
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Timestamp of the last reboot.
+        # Corresponds to the JSON property `lastRebootTime`
+        # @return [String]
+        attr_accessor :last_reboot_time
+      
+        # Output only. Timestamp of the last update check.
+        # Corresponds to the JSON property `lastUpdateCheckTime`
+        # @return [String]
+        attr_accessor :last_update_check_time
+      
+        # Output only. Timestamp of the last successful update.
+        # Corresponds to the JSON property `lastUpdateTime`
+        # @return [String]
+        attr_accessor :last_update_time
+      
+        # Output only. New platform version of the os image being downloaded and applied.
+        # It is only set when update status is OS_IMAGE_DOWNLOAD_IN_PROGRESS or
+        # OS_UPDATE_NEED_REBOOT. Note this could be a dummy "0.0.0.0" for
+        # OS_UPDATE_NEED_REBOOT status for some edge cases, e.g. update engine is
+        # restarted without a reboot.
+        # Corresponds to the JSON property `newPlatformVersion`
+        # @return [String]
+        attr_accessor :new_platform_version
+      
+        # Output only. New requested platform version from the pending updated kiosk app.
+        # Corresponds to the JSON property `newRequestedPlatformVersion`
+        # @return [String]
+        attr_accessor :new_requested_platform_version
+      
+        # Output only. Current state of the os update.
+        # Corresponds to the JSON property `updateState`
+        # @return [String]
+        attr_accessor :update_state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @last_reboot_time = args[:last_reboot_time] if args.key?(:last_reboot_time)
+          @last_update_check_time = args[:last_update_check_time] if args.key?(:last_update_check_time)
+          @last_update_time = args[:last_update_time] if args.key?(:last_update_time)
+          @new_platform_version = args[:new_platform_version] if args.key?(:new_platform_version)
+          @new_requested_platform_version = args[:new_requested_platform_version] if args.key?(:new_requested_platform_version)
+          @update_state = args[:update_state] if args.key?(:update_state)
+        end
+      end
+      
+      # Peripherals report.
+      class GoogleChromeManagementV1PeripheralsReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Timestamp of when the report was collected.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # Reports of all usb connected devices.
+        # Corresponds to the JSON property `usbPeripheralReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1UsbPeripheralReport>]
+        attr_accessor :usb_peripheral_report
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @usb_peripheral_report = args[:usb_peripheral_report] if args.key?(:usb_peripheral_report)
+        end
+      end
+      
+      # Report for CountPrintJobsByPrinter, contains statistics on printer usage.
+      # Contains the total number of print jobs initiated with this printer, the
+      # number of users and the number of devices that have initiated at least one
+      # print job with this printer.
+      class GoogleChromeManagementV1PrinterReport
+        include Google::Apis::Core::Hashable
+      
+        # Number of chrome devices that have been used to send print jobs to the
+        # specified printer.
+        # Corresponds to the JSON property `deviceCount`
+        # @return [Fixnum]
+        attr_accessor :device_count
+      
+        # Number of print jobs sent to the printer.
+        # Corresponds to the JSON property `jobCount`
+        # @return [Fixnum]
+        attr_accessor :job_count
+      
+        # Printer name.
+        # Corresponds to the JSON property `printer`
+        # @return [String]
+        attr_accessor :printer
+      
+        # Printer API ID.
+        # Corresponds to the JSON property `printerId`
+        # @return [String]
+        attr_accessor :printer_id
+      
+        # Printer model.
+        # Corresponds to the JSON property `printerModel`
+        # @return [String]
+        attr_accessor :printer_model
+      
+        # Number of users that have sent print jobs to the printer.
+        # Corresponds to the JSON property `userCount`
+        # @return [Fixnum]
+        attr_accessor :user_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_count = args[:device_count] if args.key?(:device_count)
+          @job_count = args[:job_count] if args.key?(:job_count)
+          @printer = args[:printer] if args.key?(:printer)
+          @printer_id = args[:printer_id] if args.key?(:printer_id)
+          @printer_model = args[:printer_model] if args.key?(:printer_model)
+          @user_count = args[:user_count] if args.key?(:user_count)
+        end
+      end
+      
+      # Status data for storage. * This field is telemetry information and this will
+      # change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDeviceStorageStatus](https://chromeenterprise.
+      # google/policies/#ReportDeviceStorageStatus) * Data Collection Frequency: Only
+      # at Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes
+      # * Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1StorageInfo
+        include Google::Apis::Core::Hashable
+      
+        # The available space for user data storage in the device in bytes.
+        # Corresponds to the JSON property `availableDiskBytes`
+        # @return [Fixnum]
+        attr_accessor :available_disk_bytes
+      
+        # The total space for user data storage in the device in bytes.
+        # Corresponds to the JSON property `totalDiskBytes`
+        # @return [Fixnum]
+        attr_accessor :total_disk_bytes
+      
+        # Information for disk volumes
+        # Corresponds to the JSON property `volume`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1StorageInfoDiskVolume>]
+        attr_accessor :volume
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @available_disk_bytes = args[:available_disk_bytes] if args.key?(:available_disk_bytes)
+          @total_disk_bytes = args[:total_disk_bytes] if args.key?(:total_disk_bytes)
+          @volume = args[:volume] if args.key?(:volume)
+        end
+      end
+      
+      # Information for disk volumes
+      class GoogleChromeManagementV1StorageInfoDiskVolume
+        include Google::Apis::Core::Hashable
+      
+        # Free storage space in bytes.
+        # Corresponds to the JSON property `storageFreeBytes`
+        # @return [Fixnum]
+        attr_accessor :storage_free_bytes
+      
+        # Total storage space in bytes.
+        # Corresponds to the JSON property `storageTotalBytes`
+        # @return [Fixnum]
+        attr_accessor :storage_total_bytes
+      
+        # Disk volume id.
+        # Corresponds to the JSON property `volumeId`
+        # @return [String]
+        attr_accessor :volume_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @storage_free_bytes = args[:storage_free_bytes] if args.key?(:storage_free_bytes)
+          @storage_total_bytes = args[:storage_total_bytes] if args.key?(:storage_total_bytes)
+          @volume_id = args[:volume_id] if args.key?(:volume_id)
+        end
+      end
+      
+      # Status data for storage. * This field is telemetry information and this will
+      # change over time as the device is utilized. * Data for this field is
+      # controlled via policy: [ReportDeviceStorageStatus](https://chromeenterprise.
+      # google/policies/#ReportDeviceStorageStatus) * Data Collection Frequency: Only
+      # at Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes
+      # * Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: No * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1StorageStatusReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Reports on disk.
+        # Corresponds to the JSON property `disk`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1DiskInfo>]
+        attr_accessor :disk
+      
+        # Output only. Timestamp of when the sample was collected on device
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @disk = args[:disk] if args.key?(:disk)
+          @report_time = args[:report_time] if args.key?(:report_time)
+        end
+      end
+      
+      # `TelemetryAudioSevereUnderrunEvent` is triggered when a audio devices run out
+      # of buffer data for more than 5 seconds.
+      class GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Telemetry data collected from a managed device.
+      class GoogleChromeManagementV1TelemetryDevice
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Audio reports collected periodically sorted in a decreasing order
+        # of report_time.
+        # Corresponds to the JSON property `audioStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1AudioStatusReport>]
+        attr_accessor :audio_status_report
+      
+        # Output only. Information on battery specs for the device.
+        # Corresponds to the JSON property `batteryInfo`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1BatteryInfo>]
+        attr_accessor :battery_info
+      
+        # Output only. Battery reports collected periodically.
+        # Corresponds to the JSON property `batteryStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1BatteryStatusReport>]
+        attr_accessor :battery_status_report
+      
+        # Output only. Boot performance reports of the device.
+        # Corresponds to the JSON property `bootPerformanceReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1BootPerformanceReport>]
+        attr_accessor :boot_performance_report
+      
+        # Output only. Information regarding CPU specs for the device.
+        # Corresponds to the JSON property `cpuInfo`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CpuInfo>]
+        attr_accessor :cpu_info
+      
+        # Output only. CPU status reports collected periodically sorted in a decreasing
+        # order of report_time.
+        # Corresponds to the JSON property `cpuStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CpuStatusReport>]
+        attr_accessor :cpu_status_report
+      
+        # Output only. Google Workspace Customer whose enterprise enrolled the device.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
+        # Output only. The unique Directory API ID of the device. This value is the same
+        # as the Admin Console's Directory API ID in the ChromeOS Devices tab
+        # Corresponds to the JSON property `deviceId`
+        # @return [String]
+        attr_accessor :device_id
+      
+        # Information of the graphics subsystem. * This field provides device
+        # information, which is static and will not change over time. * Data for this
+        # field is controlled via policy: [ReportDeviceGraphicsStatus](https://
+        # chromeenterprise.google/policies/#ReportDeviceGraphicsStatus) * Data
+        # Collection Frequency: Only at Upload * Default Data Reporting Frequency: 3
+        # hours - Policy Controlled: Yes * Cache: If the device is offline, the
+        # collected data is stored locally, and will be reported when the device is next
+        # online: No * Reported for affiliated users only: N/A
+        # Corresponds to the JSON property `graphicsInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1GraphicsInfo]
+        attr_accessor :graphics_info
+      
+        # Output only. Graphics reports collected periodically.
+        # Corresponds to the JSON property `graphicsStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1GraphicsStatusReport>]
+        attr_accessor :graphics_status_report
+      
+        # Memory information of a device. * This field has both telemetry and device
+        # information: - `totalRamBytes` - Device information - `availableRamBytes` -
+        # Telemetry information - `totalMemoryEncryption` - Device information * Data
+        # for this field is controlled via policy: [ReportDeviceMemoryInfo](https://
+        # chromeenterprise.google/policies/#ReportDeviceMemoryInfo) * Data Collection
+        # Frequency: - `totalRamBytes` - Only at upload - `availableRamBytes` - Every 10
+        # minutes - `totalMemoryEncryption` - at device startup * Default Data Reporting
+        # Frequency: - `totalRamBytes` - 3 hours - `availableRamBytes` - 3 hours - `
+        # totalMemoryEncryption` - at device startup - Policy Controlled: Yes * Cache:
+        # If the device is offline, the collected data is stored locally, and will be
+        # reported when the device is next online: only for `totalMemoryEncryption` *
+        # Reported for affiliated users only: N/A
+        # Corresponds to the JSON property `memoryInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1MemoryInfo]
+        attr_accessor :memory_info
+      
+        # Output only. Memory status reports collected periodically sorted decreasing by
+        # report_time.
+        # Corresponds to the JSON property `memoryStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1MemoryStatusReport>]
+        attr_accessor :memory_status_report
+      
+        # Output only. Resource name of the device.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Network diagnostics collected periodically.
+        # Corresponds to the JSON property `networkDiagnosticsReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1NetworkDiagnosticsReport>]
+        attr_accessor :network_diagnostics_report
+      
+        # Network device information. * This field provides device information, which is
+        # static and will not change over time. * Data for this field is controlled via
+        # policy: [ReportNetworkDeviceConfiguration](https://chromeenterprise.google/
+        # policies/#ReportNetworkDeviceConfiguration) * Data Collection Frequency: At
+        # device startup * Default Data Reporting Frequency: At device startup - Policy
+        # Controlled: Yes * Cache: If the device is offline, the collected data is
+        # stored locally, and will be reported when the device is next online: Yes *
+        # Reported for affiliated users only: N/A
+        # Corresponds to the JSON property `networkInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1NetworkInfo]
+        attr_accessor :network_info
+      
+        # Output only. Network specs collected periodically.
+        # Corresponds to the JSON property `networkStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1NetworkStatusReport>]
+        attr_accessor :network_status_report
+      
+        # Output only. Organization unit ID of the device.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
+        # Output only. Contains relevant information regarding ChromeOS update status.
+        # Corresponds to the JSON property `osUpdateStatus`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1OsUpdateStatus>]
+        attr_accessor :os_update_status
+      
+        # Output only. Peripherals reports collected periodically sorted in a decreasing
+        # order of report_time.
+        # Corresponds to the JSON property `peripheralsReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1PeripheralsReport>]
+        attr_accessor :peripherals_report
+      
+        # Output only. Device serial number. This value is the same as the Admin Console'
+        # s Serial Number in the ChromeOS Devices tab.
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        # Status data for storage. * This field is telemetry information and this will
+        # change over time as the device is utilized. * Data for this field is
+        # controlled via policy: [ReportDeviceStorageStatus](https://chromeenterprise.
+        # google/policies/#ReportDeviceStorageStatus) * Data Collection Frequency: Only
+        # at Upload * Default Data Reporting Frequency: 3 hours - Policy Controlled: Yes
+        # * Cache: If the device is offline, the collected data is stored locally, and
+        # will be reported when the device is next online: No * Reported for affiliated
+        # users only: N/A
+        # Corresponds to the JSON property `storageInfo`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1StorageInfo]
+        attr_accessor :storage_info
+      
+        # Output only. Storage reports collected periodically.
+        # Corresponds to the JSON property `storageStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1StorageStatusReport>]
+        attr_accessor :storage_status_report
+      
+        # Output only. Information on Thunderbolt bus.
+        # Corresponds to the JSON property `thunderboltInfo`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ThunderboltInfo>]
+        attr_accessor :thunderbolt_info
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_status_report = args[:audio_status_report] if args.key?(:audio_status_report)
+          @battery_info = args[:battery_info] if args.key?(:battery_info)
+          @battery_status_report = args[:battery_status_report] if args.key?(:battery_status_report)
+          @boot_performance_report = args[:boot_performance_report] if args.key?(:boot_performance_report)
+          @cpu_info = args[:cpu_info] if args.key?(:cpu_info)
+          @cpu_status_report = args[:cpu_status_report] if args.key?(:cpu_status_report)
+          @customer = args[:customer] if args.key?(:customer)
+          @device_id = args[:device_id] if args.key?(:device_id)
+          @graphics_info = args[:graphics_info] if args.key?(:graphics_info)
+          @graphics_status_report = args[:graphics_status_report] if args.key?(:graphics_status_report)
+          @memory_info = args[:memory_info] if args.key?(:memory_info)
+          @memory_status_report = args[:memory_status_report] if args.key?(:memory_status_report)
+          @name = args[:name] if args.key?(:name)
+          @network_diagnostics_report = args[:network_diagnostics_report] if args.key?(:network_diagnostics_report)
+          @network_info = args[:network_info] if args.key?(:network_info)
+          @network_status_report = args[:network_status_report] if args.key?(:network_status_report)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
+          @os_update_status = args[:os_update_status] if args.key?(:os_update_status)
+          @peripherals_report = args[:peripherals_report] if args.key?(:peripherals_report)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+          @storage_info = args[:storage_info] if args.key?(:storage_info)
+          @storage_status_report = args[:storage_status_report] if args.key?(:storage_status_report)
+          @thunderbolt_info = args[:thunderbolt_info] if args.key?(:thunderbolt_info)
+        end
+      end
+      
+      # Information about a device associated with telemetry data.
+      class GoogleChromeManagementV1TelemetryDeviceInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The unique Directory API ID of the device. This value is the same
+        # as the Admin Console's Directory API ID in the ChromeOS Devices tab.
+        # Corresponds to the JSON property `deviceId`
+        # @return [String]
+        attr_accessor :device_id
+      
+        # Output only. Organization unit ID of the device.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_id = args[:device_id] if args.key?(:device_id)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
+        end
+      end
+      
+      # Telemetry data reported by a managed device.
+      class GoogleChromeManagementV1TelemetryEvent
+        include Google::Apis::Core::Hashable
+      
+        # `TelemetryAudioSevereUnderrunEvent` is triggered when a audio devices run out
+        # of buffer data for more than 5 seconds.
+        # Corresponds to the JSON property `audioSevereUnderrunEvent`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryAudioSevereUnderrunEvent]
+        attr_accessor :audio_severe_underrun_event
+      
+        # Information about a device associated with telemetry data.
+        # Corresponds to the JSON property `device`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDeviceInfo]
+        attr_accessor :device
+      
+        # The event type of the current event.
+        # Corresponds to the JSON property `eventType`
+        # @return [String]
+        attr_accessor :event_type
+      
+        # Https latency routine is run periodically and `
+        # TelemetryHttpsLatencyChangeEvent` is triggered if a latency problem was
+        # detected or if the device has recovered from a latency problem..
+        # Corresponds to the JSON property `httpsLatencyChangeEvent`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent]
+        attr_accessor :https_latency_change_event
+      
+        # Output only. Resource name of the event.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Timestamp that represents when the event was reported.
+        # Corresponds to the JSON property `reportTime`
+        # @return [String]
+        attr_accessor :report_time
+      
+        # `TelemetryUsbPeripheralsEvent` is triggered USB devices are either added or
+        # removed.
+        # Corresponds to the JSON property `usbPeripheralsEvent`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUsbPeripheralsEvent]
+        attr_accessor :usb_peripherals_event
+      
+        # Information about a user associated with telemetry data.
+        # Corresponds to the JSON property `user`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUserInfo]
+        attr_accessor :user
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_severe_underrun_event = args[:audio_severe_underrun_event] if args.key?(:audio_severe_underrun_event)
+          @device = args[:device] if args.key?(:device)
+          @event_type = args[:event_type] if args.key?(:event_type)
+          @https_latency_change_event = args[:https_latency_change_event] if args.key?(:https_latency_change_event)
+          @name = args[:name] if args.key?(:name)
+          @report_time = args[:report_time] if args.key?(:report_time)
+          @usb_peripherals_event = args[:usb_peripherals_event] if args.key?(:usb_peripherals_event)
+          @user = args[:user] if args.key?(:user)
+        end
+      end
+      
+      # Https latency routine is run periodically and `
+      # TelemetryHttpsLatencyChangeEvent` is triggered if a latency problem was
+      # detected or if the device has recovered from a latency problem..
+      class GoogleChromeManagementV1TelemetryHttpsLatencyChangeEvent
+        include Google::Apis::Core::Hashable
+      
+        # Data that describes the result of the HTTPS latency diagnostics routine, with
+        # the HTTPS requests issued to Google websites.
+        # Corresponds to the JSON property `httpsLatencyRoutineData`
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1HttpsLatencyRoutineData]
+        attr_accessor :https_latency_routine_data
+      
+        # Current HTTPS latency state.
+        # Corresponds to the JSON property `httpsLatencyState`
+        # @return [String]
+        attr_accessor :https_latency_state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @https_latency_routine_data = args[:https_latency_routine_data] if args.key?(:https_latency_routine_data)
+          @https_latency_state = args[:https_latency_state] if args.key?(:https_latency_state)
+        end
+      end
+      
+      # `TelemetryUsbPeripheralsEvent` is triggered USB devices are either added or
+      # removed.
+      class GoogleChromeManagementV1TelemetryUsbPeripheralsEvent
+        include Google::Apis::Core::Hashable
+      
+        # List of usb devices that were either added or removed.
+        # Corresponds to the JSON property `usbPeripheralReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1UsbPeripheralReport>]
+        attr_accessor :usb_peripheral_report
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @usb_peripheral_report = args[:usb_peripheral_report] if args.key?(:usb_peripheral_report)
+        end
+      end
+      
+      # Telemetry data collected from a managed user.
+      class GoogleChromeManagementV1TelemetryUser
+        include Google::Apis::Core::Hashable
+      
+        # G Suite Customer whose enterprise enrolled the device.
+        # Corresponds to the JSON property `customer`
+        # @return [String]
+        attr_accessor :customer
+      
+        # Resource name of the user.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Organization unit of the user.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
+        # Telemetry data collected from a managed user and device.
+        # Corresponds to the JSON property `userDevice`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUserDevice>]
+        attr_accessor :user_device
+      
+        # Email address of the user.
+        # Corresponds to the JSON property `userEmail`
+        # @return [String]
+        attr_accessor :user_email
+      
+        # Directory ID of the user.
+        # Corresponds to the JSON property `userId`
+        # @return [String]
+        attr_accessor :user_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @customer = args[:customer] if args.key?(:customer)
+          @name = args[:name] if args.key?(:name)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
+          @user_device = args[:user_device] if args.key?(:user_device)
+          @user_email = args[:user_email] if args.key?(:user_email)
+          @user_id = args[:user_id] if args.key?(:user_id)
+        end
+      end
+      
+      # Telemetry data collected for a managed user and device.
+      class GoogleChromeManagementV1TelemetryUserDevice
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Audio reports collected periodically sorted in a decreasing order
+        # of report_time.
+        # Corresponds to the JSON property `audioStatusReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1AudioStatusReport>]
+        attr_accessor :audio_status_report
+      
+        # The unique Directory API ID of the device. This value is the same as the Admin
+        # Console's Directory API ID in the ChromeOS Devices tab.
+        # Corresponds to the JSON property `deviceId`
+        # @return [String]
+        attr_accessor :device_id
+      
+        # Output only. Peripherals reports collected periodically sorted in a decreasing
+        # order of report_time.
+        # Corresponds to the JSON property `peripheralsReport`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1PeripheralsReport>]
+        attr_accessor :peripherals_report
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @audio_status_report = args[:audio_status_report] if args.key?(:audio_status_report)
+          @device_id = args[:device_id] if args.key?(:device_id)
+          @peripherals_report = args[:peripherals_report] if args.key?(:peripherals_report)
+        end
+      end
+      
+      # Information about a user associated with telemetry data.
+      class GoogleChromeManagementV1TelemetryUserInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. User's email.
+        # Corresponds to the JSON property `email`
+        # @return [String]
+        attr_accessor :email
+      
+        # Output only. Organization unit ID of the user.
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @email = args[:email] if args.key?(:email)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
+        end
+      end
+      
+      # Thunderbolt bus info. * This field provides device information, which is
+      # static and will not change over time. * Data for this field is controlled via
+      # policy: [ReportDeviceSecurityStatus](https://chromeenterprise.google/policies/#
+      # ReportDeviceSecurityStatus) * Data Collection Frequency: At device startup *
+      # Default Data Reporting Frequency: At device startup - Policy Controlled: No *
+      # Cache: If the device is offline, the collected data is stored locally, and
+      # will be reported when the device is next online: Yes * Reported for affiliated
+      # users only: N/A
+      class GoogleChromeManagementV1ThunderboltInfo
+        include Google::Apis::Core::Hashable
+      
+        # Security level of the Thunderbolt bus.
+        # Corresponds to the JSON property `securityLevel`
+        # @return [String]
+        attr_accessor :security_level
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @security_level = args[:security_level] if args.key?(:security_level)
+        end
+      end
+      
+      # Memory encryption information of a device. * This field provides device
+      # information, which is static and will not change over time. * Data for this
+      # field is controlled via policy: [ReportDeviceMemoryInfo](https://
+      # chromeenterprise.google/policies/#ReportDeviceMemoryInfo) * Data Collection
+      # Frequency: At device startup * Default Data Reporting Frequency: At device
+      # startup - Policy Controlled: Yes * Cache: If the device is offline, the
+      # collected data is stored locally, and will be reported when the device is next
+      # online: Yes * Reported for affiliated users only: N/A
+      class GoogleChromeManagementV1TotalMemoryEncryptionInfo
+        include Google::Apis::Core::Hashable
+      
+        # Memory encryption algorithm.
+        # Corresponds to the JSON property `encryptionAlgorithm`
+        # @return [String]
+        attr_accessor :encryption_algorithm
+      
+        # The state of memory encryption on the device.
+        # Corresponds to the JSON property `encryptionState`
+        # @return [String]
+        attr_accessor :encryption_state
+      
+        # The length of the encryption keys.
+        # Corresponds to the JSON property `keyLength`
+        # @return [Fixnum]
+        attr_accessor :key_length
+      
+        # The maximum number of keys that can be used for encryption.
+        # Corresponds to the JSON property `maxKeys`
+        # @return [Fixnum]
+        attr_accessor :max_keys
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @encryption_algorithm = args[:encryption_algorithm] if args.key?(:encryption_algorithm)
+          @encryption_state = args[:encryption_state] if args.key?(:encryption_state)
+          @key_length = args[:key_length] if args.key?(:key_length)
+          @max_keys = args[:max_keys] if args.key?(:max_keys)
+        end
+      end
+      
+      # Information of an internal touch screen device.
+      class GoogleChromeManagementV1TouchScreenDevice
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Touch screen device display name.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. Touch screen device is stylus capable or not.
+        # Corresponds to the JSON property `stylusCapable`
+        # @return [Boolean]
+        attr_accessor :stylus_capable
+        alias_method :stylus_capable?, :stylus_capable
+      
+        # Output only. Number of touch points supported on the device.
+        # Corresponds to the JSON property `touchPointCount`
+        # @return [Fixnum]
+        attr_accessor :touch_point_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @stylus_capable = args[:stylus_capable] if args.key?(:stylus_capable)
+          @touch_point_count = args[:touch_point_count] if args.key?(:touch_point_count)
+        end
+      end
+      
+      # Information on the device touch screen.
+      class GoogleChromeManagementV1TouchScreenInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. List of the internal touch screen devices.
+        # Corresponds to the JSON property `devices`
+        # @return [Array<Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TouchScreenDevice>]
+        attr_accessor :devices
+      
+        # Output only. Touchpad library name used by the input stack.
+        # Corresponds to the JSON property `touchpadLibrary`
+        # @return [String]
+        attr_accessor :touchpad_library
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @devices = args[:devices] if args.key?(:devices)
+          @touchpad_library = args[:touchpad_library] if args.key?(:touchpad_library)
+        end
+      end
+      
+      # USB connected peripheral report.
+      class GoogleChromeManagementV1UsbPeripheralReport
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Categories the device belongs to https://www.usb.org/defined-
+        # class-codes
+        # Corresponds to the JSON property `categories`
+        # @return [Array<String>]
+        attr_accessor :categories
+      
+        # Output only. Class ID https://www.usb.org/defined-class-codes
+        # Corresponds to the JSON property `classId`
+        # @return [Fixnum]
+        attr_accessor :class_id
+      
+        # Output only. Firmware version
+        # Corresponds to the JSON property `firmwareVersion`
+        # @return [String]
+        attr_accessor :firmware_version
+      
+        # Output only. Device name, model name, or product name
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Product ID
+        # Corresponds to the JSON property `pid`
+        # @return [Fixnum]
+        attr_accessor :pid
+      
+        # Output only. Subclass ID https://www.usb.org/defined-class-codes
+        # Corresponds to the JSON property `subclassId`
+        # @return [Fixnum]
+        attr_accessor :subclass_id
+      
+        # Output only. Vendor name
+        # Corresponds to the JSON property `vendor`
+        # @return [String]
+        attr_accessor :vendor
+      
+        # Output only. Vendor ID
+        # Corresponds to the JSON property `vid`
+        # @return [Fixnum]
+        attr_accessor :vid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @categories = args[:categories] if args.key?(:categories)
+          @class_id = args[:class_id] if args.key?(:class_id)
+          @firmware_version = args[:firmware_version] if args.key?(:firmware_version)
+          @name = args[:name] if args.key?(:name)
+          @pid = args[:pid] if args.key?(:pid)
+          @subclass_id = args[:subclass_id] if args.key?(:subclass_id)
+          @vendor = args[:vendor] if args.key?(:vendor)
+          @vid = args[:vid] if args.key?(:vid)
+        end
+      end
+      
+      # Report for CountPrintJobsByUser, contains printing statistics for a user.
+      # Contains the number of printers, the number of devices used to initiate print
+      # jobs, and the number of print jobs initiated.
+      class GoogleChromeManagementV1UserPrintReport
+        include Google::Apis::Core::Hashable
+      
+        # Number of chrome devices that have been used to initiate print jobs by the
+        # user.
+        # Corresponds to the JSON property `deviceCount`
+        # @return [Fixnum]
+        attr_accessor :device_count
+      
+        # Number of print jobs initiated by the user.
+        # Corresponds to the JSON property `jobCount`
+        # @return [Fixnum]
+        attr_accessor :job_count
+      
+        # Number of printers used by the user.
+        # Corresponds to the JSON property `printerCount`
+        # @return [Fixnum]
+        attr_accessor :printer_count
+      
+        # The primary e-mail address of the user.
+        # Corresponds to the JSON property `userEmail`
+        # @return [String]
+        attr_accessor :user_email
+      
+        # The unique Directory API ID of the user.
+        # Corresponds to the JSON property `userId`
+        # @return [String]
+        attr_accessor :user_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_count = args[:device_count] if args.key?(:device_count)
+          @job_count = args[:job_count] if args.key?(:job_count)
+          @printer_count = args[:printer_count] if args.key?(:printer_count)
+          @user_email = args[:user_email] if args.key?(:user_email)
+          @user_id = args[:user_id] if args.key?(:user_id)
+        end
+      end
+      
       # The `Status` type defines a logical error model that is suitable for different
       # programming environments, including REST APIs and RPC APIs. It is used by [
       # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
@@ -603,6 +3088,47 @@ module Google
           @code = args[:code] if args.key?(:code)
           @details = args[:details] if args.key?(:details)
           @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # Represents a whole or partial calendar date, such as a birthday. The time of
+      # day and time zone are either specified elsewhere or are insignificant. The
+      # date is relative to the Gregorian Calendar. This can represent one of the
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
+      class GoogleTypeDate
+        include Google::Apis::Core::Hashable
+      
+        # Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to
+        # specify a year by itself or a year and month where the day isn't significant.
+        # Corresponds to the JSON property `day`
+        # @return [Fixnum]
+        attr_accessor :day
+      
+        # Month of a year. Must be from 1 to 12, or 0 to specify a year without a month
+        # and day.
+        # Corresponds to the JSON property `month`
+        # @return [Fixnum]
+        attr_accessor :month
+      
+        # Year of the date. Must be from 1 to 9999, or 0 to specify a date without a
+        # year.
+        # Corresponds to the JSON property `year`
+        # @return [Fixnum]
+        attr_accessor :year
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @day = args[:day] if args.key?(:day)
+          @month = args[:month] if args.key?(:month)
+          @year = args[:year] if args.key?(:year)
         end
       end
     end

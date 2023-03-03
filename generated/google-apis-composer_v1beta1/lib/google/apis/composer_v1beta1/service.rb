@@ -216,6 +216,42 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Loads a snapshot of a Cloud Composer environment. As a result of this
+        # operation, a snapshot of environment's specified in LoadSnapshotRequest is
+        # loaded into the environment.
+        # @param [String] environment
+        #   The resource name of the target environment in the form: "projects/`projectId`/
+        #   locations/`locationId`/environments/`environmentId`"
+        # @param [Google::Apis::ComposerV1beta1::LoadSnapshotRequest] load_snapshot_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ComposerV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ComposerV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def load_environment_snapshot(environment, load_snapshot_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+environment}:loadSnapshot', options)
+          command.request_representation = Google::Apis::ComposerV1beta1::LoadSnapshotRequest::Representation
+          command.request_object = load_snapshot_request_object
+          command.response_representation = Google::Apis::ComposerV1beta1::Operation::Representation
+          command.response_class = Google::Apis::ComposerV1beta1::Operation
+          command.params['environment'] = environment unless environment.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Update an environment.
         # @param [String] name
         #   The relative resource name of the environment to update, in the form: "
@@ -267,12 +303,11 @@ module Google
         #   provided in the `config.nodeCount` field. Supported for Cloud Composer
         #   environments in versions composer-1.*.*-airflow-*.*.*. * `config.
         #   webServerNetworkAccessControl` * Replace the environment's current
-        #   WebServerNetworkAccessControl. Supported for Cloud Composer environments in
-        #   versions composer-1.*.*-airflow-*.*.*. * `config.softwareConfig.
-        #   airflowConfigOverrides` * Replace all Apache Airflow config overrides. If a
-        #   replacement config overrides map is not included in `environment`, all config
-        #   overrides are cleared. It is an error to provide both this mask and a mask
-        #   specifying one or more individual config overrides. * `config.softwareConfig.
+        #   WebServerNetworkAccessControl. * `config.softwareConfig.airflowConfigOverrides`
+        #   * Replace all Apache Airflow config overrides. If a replacement config
+        #   overrides map is not included in `environment`, all config overrides are
+        #   cleared. It is an error to provide both this mask and a mask specifying one or
+        #   more individual config overrides. * `config.softwareConfig.
         #   airflowConfigOverrides.`section-name * Override the Apache Airflow config
         #   property *name* in the section named *section*, preserving other properties.
         #   To delete the property override, include it in `updateMask` and omit its
@@ -280,33 +315,33 @@ module Google
         #   an error to provide both a mask of this form and the `config.softwareConfig.
         #   airflowConfigOverrides` mask. * `config.softwareConfig.envVariables` * Replace
         #   all environment variables. If a replacement environment variable map is not
-        #   included in `environment`, all custom environment variables are cleared. It is
-        #   an error to provide both this mask and a mask specifying one or more
-        #   individual environment variables. * `config.softwareConfig.imageVersion` *
-        #   Upgrade the version of the environment in-place. Refer to `SoftwareConfig.
-        #   image_version` for information on how to format the new image version.
-        #   Additionally, the new image version cannot effect a version downgrade and must
-        #   match the current image version's Composer major version and Airflow major and
-        #   minor versions. Consult the [Cloud Composer Version List](https://cloud.google.
-        #   com/composer/docs/concepts/versioning/composer-versions) for valid values. * `
+        #   included in `environment`, all custom environment variables are cleared. * `
+        #   config.softwareConfig.imageVersion` * Upgrade the version of the environment
+        #   in-place. Refer to `SoftwareConfig.image_version` for information on how to
+        #   format the new image version. Additionally, the new image version cannot
+        #   effect a version downgrade, and must match the current image version's
+        #   Composer and Airflow major versions. Consult the [Cloud Composer version list](
+        #   /composer/docs/concepts/versioning/composer-versions) for valid values. * `
         #   config.softwareConfig.schedulerCount` * Horizontally scale the number of
         #   schedulers in Airflow. A positive integer not greater than the number of nodes
         #   must be provided in the `config.softwareConfig.schedulerCount` field.
         #   Supported for Cloud Composer environments in versions composer-1.*.*-airflow-2.
-        #   *.*. * `config.databaseConfig.machineType` * Cloud SQL machine type used by
-        #   Airflow database. It has to be one of: db-n1-standard-2, db-n1-standard-4, db-
-        #   n1-standard-8 or db-n1-standard-16. Supported for Cloud Composer environments
-        #   in versions composer-1.*.*-airflow-*.*.*. * `config.webServerConfig.
-        #   machineType` * Machine type on which Airflow web server is running. It has to
-        #   be one of: composer-n1-webserver-2, composer-n1-webserver-4 or composer-n1-
-        #   webserver-8. Supported for Cloud Composer environments in versions composer-1.*
-        #   .*-airflow-*.*.*. * `config.maintenanceWindow` * Maintenance window during
-        #   which Cloud Composer components may be under maintenance. * `config.
-        #   workloadsConfig` * The workloads configuration settings for the GKE cluster
-        #   associated with the Cloud Composer environment. Supported for Cloud Composer
-        #   environments in versions composer-2.*.*-airflow-*.*.* and newer. * `config.
-        #   environmentSize` * The size of the Cloud Composer environment. Supported for
-        #   Cloud Composer environments in versions composer-2.*.*-airflow-*.*.* and newer.
+        #   *.*. * `config.softwareConfig.cloudDataLineageIntegration` * Configuration for
+        #   Cloud Data Lineage integration. * `config.databaseConfig.machineType` * Cloud
+        #   SQL machine type used by Airflow database. It has to be one of: db-n1-standard-
+        #   2, db-n1-standard-4, db-n1-standard-8 or db-n1-standard-16. Supported for
+        #   Cloud Composer environments in versions composer-1.*.*-airflow-*.*.*. * `
+        #   config.webServerConfig.machineType` * Machine type on which Airflow web server
+        #   is running. It has to be one of: composer-n1-webserver-2, composer-n1-
+        #   webserver-4 or composer-n1-webserver-8. Supported for Cloud Composer
+        #   environments in versions composer-1.*.*-airflow-*.*.*. * `config.
+        #   maintenanceWindow` * Maintenance window during which Cloud Composer components
+        #   may be under maintenance. * `config.workloadsConfig` * The workloads
+        #   configuration settings for the GKE cluster associated with the Cloud Composer
+        #   environment. Supported for Cloud Composer environments in versions composer-2.*
+        #   .*-airflow-*.*.* and newer. * `config.environmentSize` * The size of the Cloud
+        #   Composer environment. Supported for Cloud Composer environments in versions
+        #   composer-2.*.*-airflow-*.*.* and newer.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -367,6 +402,42 @@ module Google
           command.response_representation = Google::Apis::ComposerV1beta1::Operation::Representation
           command.response_class = Google::Apis::ComposerV1beta1::Operation
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a snapshots of a Cloud Composer environment. As a result of this
+        # operation, snapshot of environment's state is stored in a location specified
+        # in the SaveSnapshotRequest.
+        # @param [String] environment
+        #   The resource name of the source environment in the form: "projects/`projectId`/
+        #   locations/`locationId`/environments/`environmentId`"
+        # @param [Google::Apis::ComposerV1beta1::SaveSnapshotRequest] save_snapshot_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ComposerV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ComposerV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def save_environment_snapshot(environment, save_snapshot_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+environment}:saveSnapshot', options)
+          command.request_representation = Google::Apis::ComposerV1beta1::SaveSnapshotRequest::Representation
+          command.request_object = save_snapshot_request_object
+          command.response_representation = Google::Apis::ComposerV1beta1::Operation::Representation
+          command.response_class = Google::Apis::ComposerV1beta1::Operation
+          command.params['environment'] = environment unless environment.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

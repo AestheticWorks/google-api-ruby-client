@@ -49,6 +49,44 @@ module Google
           @batch_path = 'batch'
         end
         
+        # Update queue list by uploading a queue.yaml file. The queue.yaml file is
+        # supplied in the request body as a YAML encoded string. This method was added
+        # to support gcloud clients versions before 322.0.0. New clients should use
+        # CreateQueue instead of this method.
+        # @param [Google::Apis::CloudtasksV2beta2::HttpBody] http_body_object
+        # @param [String] app_id
+        #   Required. The App ID is supplied as an HTTP parameter. Unlike internal usage
+        #   of App ID, it does not include a region prefix. Rather, the App ID represents
+        #   the Project ID against which to make the request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudtasksV2beta2::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudtasksV2beta2::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_api_queue(http_body_object = nil, app_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'api/queue/update', options)
+          command.request_representation = Google::Apis::CloudtasksV2beta2::HttpBody::Representation
+          command.request_object = http_body_object
+          command.response_representation = Google::Apis::CloudtasksV2beta2::Empty::Representation
+          command.response_class = Google::Apis::CloudtasksV2beta2::Empty
+          command.query['appId'] = app_id unless app_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets information about a location.
         # @param [String] name
         #   Resource name for the location.
@@ -84,8 +122,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -241,8 +279,9 @@ module Google
         # following [Google IAM](https://cloud.google.com/iam) permission on the
         # specified resource parent: * `cloudtasks.queues.getIamPolicy`
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::CloudtasksV2beta2::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -503,8 +542,9 @@ module Google
         # requires the following [Google IAM](https://cloud.google.com/iam) permission
         # on the specified resource parent: * `cloudtasks.queues.setIamPolicy`
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::CloudtasksV2beta2::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -541,8 +581,9 @@ module Google
         # and command-line tools, not for authorization checking. This operation may "
         # fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::CloudtasksV2beta2::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -607,6 +648,52 @@ module Google
           command.response_representation = Google::Apis::CloudtasksV2beta2::Empty::Representation
           command.response_class = Google::Apis::CloudtasksV2beta2::Empty
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates and buffers a new task without the need to explicitly define a Task
+        # message. The queue must have HTTP target. To create the task with a custom ID,
+        # use the following format and set TASK_ID to your desired ID: projects/
+        # PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To
+        # create the task with an automatically generated ID, use the following format:
+        # projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer. Note:
+        # This feature is in its experimental stage. You must request access to the API
+        # through the [Cloud Tasks BufferTask Experiment Signup form](https://forms.gle/
+        # X8Zr5hiXH5tTGFqh8).
+        # @param [String] queue
+        #   Required. The parent queue name. For example: projects/PROJECT_ID/locations/
+        #   LOCATION_ID/queues/QUEUE_ID` The queue must already exist.
+        # @param [String] task_id
+        #   Optional. Task ID for the task being created. If not provided, a random task
+        #   ID is assigned to the task.
+        # @param [Google::Apis::CloudtasksV2beta2::BufferTaskRequest] buffer_task_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::CloudtasksV2beta2::BufferTaskResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::CloudtasksV2beta2::BufferTaskResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def buffer_task(queue, task_id, buffer_task_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2beta2/{+queue}/tasks/{taskId}:buffer', options)
+          command.request_representation = Google::Apis::CloudtasksV2beta2::BufferTaskRequest::Representation
+          command.request_object = buffer_task_request_object
+          command.response_representation = Google::Apis::CloudtasksV2beta2::BufferTaskResponse::Representation
+          command.response_class = Google::Apis::CloudtasksV2beta2::BufferTaskResponse
+          command.params['queue'] = queue unless queue.nil?
+          command.params['taskId'] = task_id unless task_id.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

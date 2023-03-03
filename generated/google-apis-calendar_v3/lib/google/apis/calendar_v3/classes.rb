@@ -673,8 +673,7 @@ module Google
         attr_accessor :parameters
       
         # The signature of the conference data.
-        # Generated on server side. Must be preserved while copying the conference data
-        # between events, otherwise the conference data will not be copied.
+        # Generated on server side.
         # Unset for a conference with a failed create request.
         # Optional for a conference with a pending create request.
         # Corresponds to the JSON property `signature`
@@ -1039,8 +1038,7 @@ module Google
         attr_accessor :anyone_can_add_self
         alias_method :anyone_can_add_self?, :anyone_can_add_self
       
-        # File attachments for the event. Currently only Google Drive attachments are
-        # supported.
+        # File attachments for the event.
         # In order to modify attachments the supportsAttachments request parameter
         # should be set to true.
         # There can be at most 25 attachments per event,
@@ -1115,6 +1113,8 @@ module Google
         # Specific type of the event. Read-only. Possible values are:
         # - "default" - A regular event or not further specified.
         # - "outOfOffice" - An out-of-office event.
+        # - "focusTime" - A focus-time event.
+        # - "workingLocation" - A working location event.
         # Corresponds to the JSON property `eventType`
         # @return [String]
         attr_accessor :event_type
@@ -1164,10 +1164,12 @@ module Google
         # Event unique identifier as defined in RFC5545. It is used to uniquely identify
         # events accross calendaring systems and must be supplied when importing events
         # via the import method.
-        # Note that the icalUID and the id are not identical and only one of them should
+        # Note that the iCalUID and the id are not identical and only one of them should
         # be supplied at event creation time. One difference in their semantics is that
         # in recurring events, all occurrences of one event have different ids while
-        # they all share the same icalUIDs.
+        # they all share the same iCalUIDs. To retrieve an event using its iCalUID, call
+        # the events.list method using the iCalUID parameter. To retrieve an event using
+        # its id, call the events.get method.
         # Corresponds to the JSON property `iCalUID`
         # @return [String]
         attr_accessor :i_cal_uid
@@ -1332,6 +1334,11 @@ module Google
         # @return [String]
         attr_accessor :visibility
       
+        # Working Location event data. Read-only.
+        # Corresponds to the JSON property `workingLocationProperties`
+        # @return [Google::Apis::CalendarV3::EventWorkingLocationProperties]
+        attr_accessor :working_location_properties
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1377,6 +1384,7 @@ module Google
           @transparency = args[:transparency] if args.key?(:transparency)
           @updated = args[:updated] if args.key?(:updated)
           @visibility = args[:visibility] if args.key?(:visibility)
+          @working_location_properties = args[:working_location_properties] if args.key?(:working_location_properties)
         end
         
         # The creator of the event. Read-only.
@@ -1629,7 +1637,8 @@ module Google
         # @return [String]
         attr_accessor :file_url
       
-        # URL link to the attachment's icon. Read-only.
+        # URL link to the attachment's icon. This field can only be modified for custom
+        # third-party attachments.
         # Corresponds to the JSON property `iconLink`
         # @return [String]
         attr_accessor :icon_link
@@ -1711,10 +1720,15 @@ module Google
         alias_method :resource?, :resource
       
         # The attendee's response status. Possible values are:
-        # - "needsAction" - The attendee has not responded to the invitation.
+        # - "needsAction" - The attendee has not responded to the invitation (
+        # recommended for new events).
         # - "declined" - The attendee has declined the invitation.
         # - "tentative" - The attendee has tentatively accepted the invitation.
-        # - "accepted" - The attendee has accepted the invitation.
+        # - "accepted" - The attendee has accepted the invitation.  Warning: If you add
+        # an event using the values declined, tentative, or accepted, attendees with the
+        # "Add invitations to my calendar" setting set to "When I respond to invitation
+        # in email" won't see an event on their calendar unless they choose to change
+        # their invitation response in the event invitation email.
         # Corresponds to the JSON property `responseStatus`
         # @return [String]
         attr_accessor :response_status
@@ -1809,6 +1823,100 @@ module Google
         def update!(**args)
           @reminder_method = args[:reminder_method] if args.key?(:reminder_method)
           @minutes = args[:minutes] if args.key?(:minutes)
+        end
+      end
+      
+      # 
+      class EventWorkingLocationProperties
+        include Google::Apis::Core::Hashable
+      
+        # If present, specifies that the user is working from a custom location.
+        # Corresponds to the JSON property `customLocation`
+        # @return [Google::Apis::CalendarV3::EventWorkingLocationProperties::CustomLocation]
+        attr_accessor :custom_location
+      
+        # If present, specifies that the user is working at home.
+        # Corresponds to the JSON property `homeOffice`
+        # @return [Object]
+        attr_accessor :home_office
+      
+        # If present, specifies that the user is working from an office.
+        # Corresponds to the JSON property `officeLocation`
+        # @return [Google::Apis::CalendarV3::EventWorkingLocationProperties::OfficeLocation]
+        attr_accessor :office_location
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @custom_location = args[:custom_location] if args.key?(:custom_location)
+          @home_office = args[:home_office] if args.key?(:home_office)
+          @office_location = args[:office_location] if args.key?(:office_location)
+        end
+        
+        # If present, specifies that the user is working from a custom location.
+        class CustomLocation
+          include Google::Apis::Core::Hashable
+        
+          # An optional extra label for additional information.
+          # Corresponds to the JSON property `label`
+          # @return [String]
+          attr_accessor :label
+        
+          def initialize(**args)
+             update!(**args)
+          end
+        
+          # Update properties of this object
+          def update!(**args)
+            @label = args[:label] if args.key?(:label)
+          end
+        end
+        
+        # If present, specifies that the user is working from an office.
+        class OfficeLocation
+          include Google::Apis::Core::Hashable
+        
+          # An optional building identifier. This should reference a building ID in the
+          # organization's Resources database.
+          # Corresponds to the JSON property `buildingId`
+          # @return [String]
+          attr_accessor :building_id
+        
+          # An optional arbitrary desk identifier.
+          # Corresponds to the JSON property `deskId`
+          # @return [String]
+          attr_accessor :desk_id
+        
+          # An optional arbitrary floor identifier.
+          # Corresponds to the JSON property `floorId`
+          # @return [String]
+          attr_accessor :floor_id
+        
+          # An optional arbitrary floor section identifier.
+          # Corresponds to the JSON property `floorSectionId`
+          # @return [String]
+          attr_accessor :floor_section_id
+        
+          # An optional extra label for additional information.
+          # Corresponds to the JSON property `label`
+          # @return [String]
+          attr_accessor :label
+        
+          def initialize(**args)
+             update!(**args)
+          end
+        
+          # Update properties of this object
+          def update!(**args)
+            @building_id = args[:building_id] if args.key?(:building_id)
+            @desk_id = args[:desk_id] if args.key?(:desk_id)
+            @floor_id = args[:floor_id] if args.key?(:floor_id)
+            @floor_section_id = args[:floor_section_id] if args.key?(:floor_section_id)
+            @label = args[:label] if args.key?(:label)
+          end
         end
       end
       

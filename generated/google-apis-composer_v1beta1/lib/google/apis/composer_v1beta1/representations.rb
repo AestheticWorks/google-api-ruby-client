@@ -40,6 +40,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CidrBlock
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CloudDataLineageIntegration
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DatabaseConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -76,6 +88,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ExecuteAirflowCommandResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ExitInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class IpAllocationPolicy
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -83,6 +107,12 @@ module Google
       end
       
       class ImageVersion
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Line
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -106,7 +136,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class LoadSnapshotRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LoadSnapshotResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class MaintenanceWindow
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MasterAuthorizedNetworksConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NetworkingConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -130,6 +184,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PollAirflowCommandResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PrivateClusterConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -142,7 +202,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RecoveryConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RestartWebServerRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SaveSnapshotRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SaveSnapshotResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ScheduledSnapshotsConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -161,6 +245,12 @@ module Google
       end
       
       class Status
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TriggererResource
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -222,6 +312,21 @@ module Google
         end
       end
       
+      class CidrBlock
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cidr_block, as: 'cidrBlock'
+          property :display_name, as: 'displayName'
+        end
+      end
+      
+      class CloudDataLineageIntegration
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enabled, as: 'enabled'
+        end
+      end
+      
       class DatabaseConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -278,10 +383,14 @@ module Google
           property :gke_cluster, as: 'gkeCluster'
           property :maintenance_window, as: 'maintenanceWindow', class: Google::Apis::ComposerV1beta1::MaintenanceWindow, decorator: Google::Apis::ComposerV1beta1::MaintenanceWindow::Representation
       
+          property :master_authorized_networks_config, as: 'masterAuthorizedNetworksConfig', class: Google::Apis::ComposerV1beta1::MasterAuthorizedNetworksConfig, decorator: Google::Apis::ComposerV1beta1::MasterAuthorizedNetworksConfig::Representation
+      
           property :node_config, as: 'nodeConfig', class: Google::Apis::ComposerV1beta1::NodeConfig, decorator: Google::Apis::ComposerV1beta1::NodeConfig::Representation
       
           property :node_count, as: 'nodeCount'
           property :private_environment_config, as: 'privateEnvironmentConfig', class: Google::Apis::ComposerV1beta1::PrivateEnvironmentConfig, decorator: Google::Apis::ComposerV1beta1::PrivateEnvironmentConfig::Representation
+      
+          property :recovery_config, as: 'recoveryConfig', class: Google::Apis::ComposerV1beta1::RecoveryConfig, decorator: Google::Apis::ComposerV1beta1::RecoveryConfig::Representation
       
           property :software_config, as: 'softwareConfig', class: Google::Apis::ComposerV1beta1::SoftwareConfig, decorator: Google::Apis::ComposerV1beta1::SoftwareConfig::Representation
       
@@ -291,6 +400,24 @@ module Google
       
           property :workloads_config, as: 'workloadsConfig', class: Google::Apis::ComposerV1beta1::WorkloadsConfig, decorator: Google::Apis::ComposerV1beta1::WorkloadsConfig::Representation
       
+        end
+      end
+      
+      class ExecuteAirflowCommandResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error, as: 'error'
+          property :execution_id, as: 'executionId'
+          property :pod, as: 'pod'
+          property :pod_namespace, as: 'podNamespace'
+        end
+      end
+      
+      class ExitInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error, as: 'error'
+          property :exit_code, as: 'exitCode'
         end
       end
       
@@ -315,6 +442,14 @@ module Google
       
           collection :supported_python_versions, as: 'supportedPythonVersions'
           property :upgrade_disabled, as: 'upgradeDisabled'
+        end
+      end
+      
+      class Line
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content, as: 'content'
+          property :line_number, as: 'lineNumber'
         end
       end
       
@@ -345,12 +480,45 @@ module Google
         end
       end
       
+      class LoadSnapshotRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :skip_airflow_overrides_setting, as: 'skipAirflowOverridesSetting'
+          property :skip_environment_variables_setting, as: 'skipEnvironmentVariablesSetting'
+          property :skip_gcs_data_copying, as: 'skipGcsDataCopying'
+          property :skip_pypi_packages_installation, as: 'skipPypiPackagesInstallation'
+          property :snapshot_path, as: 'snapshotPath'
+        end
+      end
+      
+      class LoadSnapshotResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class MaintenanceWindow
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :end_time, as: 'endTime'
           property :recurrence, as: 'recurrence'
           property :start_time, as: 'startTime'
+        end
+      end
+      
+      class MasterAuthorizedNetworksConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :cidr_blocks, as: 'cidrBlocks', class: Google::Apis::ComposerV1beta1::CidrBlock, decorator: Google::Apis::ComposerV1beta1::CidrBlock::Representation
+      
+          property :enabled, as: 'enabled'
+        end
+      end
+      
+      class NetworkingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :connection_type, as: 'connectionType'
         end
       end
       
@@ -396,6 +564,17 @@ module Google
         end
       end
       
+      class PollAirflowCommandResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :exit_info, as: 'exitInfo', class: Google::Apis::ComposerV1beta1::ExitInfo, decorator: Google::Apis::ComposerV1beta1::ExitInfo::Representation
+      
+          collection :output, as: 'output', class: Google::Apis::ComposerV1beta1::Line, decorator: Google::Apis::ComposerV1beta1::Line::Representation
+      
+          property :output_end, as: 'outputEnd'
+        end
+      end
+      
       class PrivateClusterConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -408,11 +587,14 @@ module Google
       class PrivateEnvironmentConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :cloud_composer_connection_subnetwork, as: 'cloudComposerConnectionSubnetwork'
           property :cloud_composer_network_ipv4_cidr_block, as: 'cloudComposerNetworkIpv4CidrBlock'
           property :cloud_composer_network_ipv4_reserved_range, as: 'cloudComposerNetworkIpv4ReservedRange'
           property :cloud_sql_ipv4_cidr_block, as: 'cloudSqlIpv4CidrBlock'
           property :enable_private_environment, as: 'enablePrivateEnvironment'
           property :enable_privately_used_public_ips, as: 'enablePrivatelyUsedPublicIps'
+          property :networking_config, as: 'networkingConfig', class: Google::Apis::ComposerV1beta1::NetworkingConfig, decorator: Google::Apis::ComposerV1beta1::NetworkingConfig::Representation
+      
           property :private_cluster_config, as: 'privateClusterConfig', class: Google::Apis::ComposerV1beta1::PrivateClusterConfig, decorator: Google::Apis::ComposerV1beta1::PrivateClusterConfig::Representation
       
           property :web_server_ipv4_cidr_block, as: 'webServerIpv4CidrBlock'
@@ -420,9 +602,41 @@ module Google
         end
       end
       
+      class RecoveryConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :scheduled_snapshots_config, as: 'scheduledSnapshotsConfig', class: Google::Apis::ComposerV1beta1::ScheduledSnapshotsConfig, decorator: Google::Apis::ComposerV1beta1::ScheduledSnapshotsConfig::Representation
+      
+        end
+      end
+      
       class RestartWebServerRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class SaveSnapshotRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :snapshot_location, as: 'snapshotLocation'
+        end
+      end
+      
+      class SaveSnapshotResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :snapshot_path, as: 'snapshotPath'
+        end
+      end
+      
+      class ScheduledSnapshotsConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enabled, as: 'enabled'
+          property :snapshot_creation_schedule, as: 'snapshotCreationSchedule'
+          property :snapshot_location, as: 'snapshotLocation'
+          property :time_zone, as: 'timeZone'
         end
       end
       
@@ -440,6 +654,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           hash :airflow_config_overrides, as: 'airflowConfigOverrides'
+          property :cloud_data_lineage_integration, as: 'cloudDataLineageIntegration', class: Google::Apis::ComposerV1beta1::CloudDataLineageIntegration, decorator: Google::Apis::ComposerV1beta1::CloudDataLineageIntegration::Representation
+      
           hash :env_variables, as: 'envVariables'
           property :image_version, as: 'imageVersion'
           hash :pypi_packages, as: 'pypiPackages'
@@ -454,6 +670,15 @@ module Google
           property :code, as: 'code'
           collection :details, as: 'details'
           property :message, as: 'message'
+        end
+      end
+      
+      class TriggererResource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :count, as: 'count'
+          property :cpu, as: 'cpu'
+          property :memory_gb, as: 'memoryGb'
         end
       end
       
@@ -496,6 +721,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :scheduler, as: 'scheduler', class: Google::Apis::ComposerV1beta1::SchedulerResource, decorator: Google::Apis::ComposerV1beta1::SchedulerResource::Representation
+      
+          property :triggerer, as: 'triggerer', class: Google::Apis::ComposerV1beta1::TriggererResource, decorator: Google::Apis::ComposerV1beta1::TriggererResource::Representation
       
           property :web_server, as: 'webServer', class: Google::Apis::ComposerV1beta1::WebServerResource, decorator: Google::Apis::ComposerV1beta1::WebServerResource::Representation
       

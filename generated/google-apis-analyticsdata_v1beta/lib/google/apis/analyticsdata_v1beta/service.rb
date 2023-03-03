@@ -138,10 +138,7 @@ module Google
         #   A Google Analytics GA4 property identifier whose events are tracked. To learn
         #   more, see [where to find your Property ID](https://developers.google.com/
         #   analytics/devguides/reporting/data/v1/property-id). `property` should be the
-        #   same value as in your `runReport` request. Example: properties/1234 Set the
-        #   Property ID to 0 for compatibility checking on dimensions and metrics common
-        #   to all properties. In this special mode, this method will not return custom
-        #   dimensions and metrics.
+        #   same value as in your `runReport` request. Example: properties/1234
         # @param [Google::Apis::AnalyticsdataV1beta::CheckCompatibilityRequest] check_compatibility_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -256,9 +253,13 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # The Google Analytics Realtime API returns a customized report of realtime
-        # event data for your property. These reports show events and usage from the
-        # last 30 minutes.
+        # Returns a customized report of realtime event data for your property. Events
+        # appear in realtime reports seconds after they have been sent to the Google
+        # Analytics. Realtime reports show events and usage data for the periods of time
+        # ranging from the present moment to 30 minutes ago (up to 60 minutes for Google
+        # Analytics 360 properties). For a guide to constructing realtime requests &
+        # understanding responses, see [Creating a Realtime Report](https://developers.
+        # google.com/analytics/devguides/reporting/data/v1/realtime-basics).
         # @param [String] property
         #   A Google Analytics GA4 property identifier whose events are tracked. Specified
         #   in the URL path and not the body. To learn more, see [where to find your
@@ -300,7 +301,9 @@ module Google
         # the requested dimensions and metrics. Metrics are individual measurements of
         # user activity on your property, such as active users or event count.
         # Dimensions break down metrics across some common criteria, such as country or
-        # event name.
+        # event name. For a guide to constructing requests & understanding responses,
+        # see [Creating a Report](https://developers.google.com/analytics/devguides/
+        # reporting/data/v1/basics).
         # @param [String] property
         #   A Google Analytics GA4 property identifier whose events are tracked. Specified
         #   in the URL path and not the body. To learn more, see [where to find your

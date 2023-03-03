@@ -120,6 +120,153 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Starts asynchronous cancellation on a long-running operation. The server makes
+        # a best effort to cancel the operation, but success is not guaranteed. If the
+        # server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+        # Clients can use Operations.GetOperation or other methods to check whether the
+        # cancellation succeeded or whether the operation completed despite cancellation.
+        # On successful cancellation, the operation is not deleted; instead, it becomes
+        # an operation with an Operation.error value with a google.rpc.Status.code of 1,
+        # corresponding to `Code.CANCELLED`.
+        # @param [String] name
+        #   The name of the operation resource to be cancelled.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def cancel_project_instance_config_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:cancel', options)
+          command.response_representation = Google::Apis::SpannerV1::Empty::Representation
+          command.response_class = Google::Apis::SpannerV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a long-running operation. This method indicates that the client is no
+        # longer interested in the operation result. It does not cancel the operation.
+        # If the server doesn't support this method, it returns `google.rpc.Code.
+        # UNIMPLEMENTED`.
+        # @param [String] name
+        #   The name of the operation resource to be deleted.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_instance_config_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SpannerV1::Empty::Representation
+          command.response_class = Google::Apis::SpannerV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_instance_config_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SpannerV1::Operation::Representation
+          command.response_class = Google::Apis::SpannerV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists operations that match the specified filter in the request. If the server
+        # doesn't support this method, it returns `UNIMPLEMENTED`. NOTE: the `name`
+        # binding allows API services to override the binding to use different resource
+        # name schemes, such as `users/*/operations`. To override the binding, API
+        # services can add a binding such as `"/v1/`name=users/*`/operations"` to their
+        # service configuration. For backwards compatibility, the default name includes
+        # the operations collection id, however overriding users must ensure the name
+        # binding is the parent resource, without the operations collection id.
+        # @param [String] name
+        #   The name of the operation's parent resource.
+        # @param [String] filter
+        #   The standard list filter.
+        # @param [Fixnum] page_size
+        #   The standard list page size.
+        # @param [String] page_token
+        #   The standard list page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::ListOperationsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::ListOperationsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_instance_config_operations(name, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::SpannerV1::ListOperationsResponse::Representation
+          command.response_class = Google::Apis::SpannerV1::ListOperationsResponse
+          command.params['name'] = name unless name.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates an instance and begins preparing it to begin serving. The returned
         # long-running operation can be used to track the progress of preparing the new
         # instance. The instance name is assigned by the caller. If the named instance
@@ -482,20 +629,38 @@ module Google
         #   long-running operation * `done` - False if the operation is in progress, else
         #   true. * `metadata.@type` - the type of metadata. For example, the type string
         #   for CreateBackupMetadata is `type.googleapis.com/google.spanner.admin.database.
-        #   v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. * `
+        #   v1.CreateBackupMetadata`. * `metadata.` - any field in metadata.value. `
+        #   metadata.@type` must be specified first if filtering on metadata fields. * `
         #   error` - Error associated with the long-running operation. * `response.@type` -
         #   the type of response. * `response.` - any field in response.value. You can
         #   combine multiple expressions by enclosing each expression in parentheses. By
         #   default, expressions are combined with AND logic, but you can specify AND, OR,
         #   and NOT logic explicitly. Here are a few examples: * `done:true` - The
-        #   operation is complete. * `metadata.database:prod` - The database the backup
-        #   was taken from has a name containing the string "prod". * `(metadata.@type=
-        #   type.googleapis.com/google.spanner.admin.database.v1.CreateBackupMetadata) AND`
-        #   \ `(metadata.name:howl) AND` \ `(metadata.progress.start_time < \"2018-03-
-        #   28T14:50:00Z\") AND` \ `(error:*)` - Returns operations where: * The operation'
-        #   s metadata type is CreateBackupMetadata. * The backup name contains the string
-        #   "howl". * The operation started before 2018-03-28T14:50:00Z. * The operation
-        #   resulted in an error.
+        #   operation is complete. * `(metadata.@type=type.googleapis.com/google.spanner.
+        #   admin.database.v1.CreateBackupMetadata) AND` \ `metadata.database:prod` -
+        #   Returns operations where: * The operation's metadata type is
+        #   CreateBackupMetadata. * The source database name of backup contains the string
+        #   "prod". * `(metadata.@type=type.googleapis.com/google.spanner.admin.database.
+        #   v1.CreateBackupMetadata) AND` \ `(metadata.name:howl) AND` \ `(metadata.
+        #   progress.start_time < \"2018-03-28T14:50:00Z\") AND` \ `(error:*)` - Returns
+        #   operations where: * The operation's metadata type is CreateBackupMetadata. *
+        #   The backup name contains the string "howl". * The operation started before
+        #   2018-03-28T14:50:00Z. * The operation resulted in an error. * `(metadata.@type=
+        #   type.googleapis.com/google.spanner.admin.database.v1.CopyBackupMetadata) AND` \
+        #   `(metadata.source_backup:test) AND` \ `(metadata.progress.start_time < \"2022-
+        #   01-18T14:50:00Z\") AND` \ `(error:*)` - Returns operations where: * The
+        #   operation's metadata type is CopyBackupMetadata. * The source backup name
+        #   contains the string "test". * The operation started before 2022-01-18T14:50:
+        #   00Z. * The operation resulted in an error. * `((metadata.@type=type.googleapis.
+        #   com/google.spanner.admin.database.v1.CreateBackupMetadata) AND` \ `(metadata.
+        #   database:test_db)) OR` \ `((metadata.@type=type.googleapis.com/google.spanner.
+        #   admin.database.v1.CopyBackupMetadata) AND` \ `(metadata.source_backup:test_bkp)
+        #   ) AND` \ `(error:*)` - Returns operations where: * The operation's metadata
+        #   matches either of criteria: * The operation's metadata type is
+        #   CreateBackupMetadata AND the source database name of the backup contains the
+        #   string "test_db" * The operation's metadata type is CopyBackupMetadata AND the
+        #   source backup name contains the string "test_bkp" * The operation resulted in
+        #   an error.
         # @param [Fixnum] page_size
         #   Number of operations to be returned in the response. If 0 or less, defaults to
         #   the server's maximum allowed page size.
@@ -527,6 +692,46 @@ module Google
           command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Starts copying a Cloud Spanner Backup. The returned backup long-running
+        # operation will have a name of the format `projects//instances//backups//
+        # operations/` and can be used to track copying of the backup. The operation is
+        # associated with the destination backup. The metadata field type is
+        # CopyBackupMetadata. The response field type is Backup, if successful.
+        # Cancelling the returned operation will stop the copying and delete the backup.
+        # Concurrent CopyBackup requests can run on the same source backup.
+        # @param [String] parent
+        #   Required. The name of the destination instance that will contain the backup
+        #   copy. Values are of the form: `projects//instances/`.
+        # @param [Google::Apis::SpannerV1::CopyBackupRequest] copy_backup_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def copy_backup(parent, copy_backup_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/backups:copy', options)
+          command.request_representation = Google::Apis::SpannerV1::CopyBackupRequest::Representation
+          command.request_object = copy_backup_request_object
+          command.response_representation = Google::Apis::SpannerV1::Operation::Representation
+          command.response_class = Google::Apis::SpannerV1::Operation
+          command.params['parent'] = parent unless parent.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1041,7 +1246,8 @@ module Google
         #   true. * `metadata.@type` - the type of metadata. For example, the type string
         #   for RestoreDatabaseMetadata is `type.googleapis.com/google.spanner.admin.
         #   database.v1.RestoreDatabaseMetadata`. * `metadata.` - any field in metadata.
-        #   value. * `error` - Error associated with the long-running operation. * `
+        #   value. `metadata.@type` must be specified first, if filtering on metadata
+        #   fields. * `error` - Error associated with the long-running operation. * `
         #   response.@type` - the type of response. * `response.` - any field in response.
         #   value. You can combine multiple expressions by enclosing each expression in
         #   parentheses. By default, expressions are combined with AND logic. However, you
@@ -1129,7 +1335,9 @@ module Google
         end
         
         # Drops (aka deletes) a Cloud Spanner database. Completed backups for the
-        # database will be retained according to their `expire_time`.
+        # database will be retained according to their `expire_time`. Note: Cloud
+        # Spanner might continue to accept requests for a few seconds after the database
+        # has been deleted.
         # @param [String] database
         #   Required. The database to be dropped.
         # @param [String] fields
@@ -1504,6 +1712,86 @@ module Google
           command.response_representation = Google::Apis::SpannerV1::Operation::Representation
           command.response_class = Google::Apis::SpannerV1::Operation
           command.params['database'] = database unless database.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists Cloud Spanner database roles.
+        # @param [String] parent
+        #   Required. The database whose roles should be listed. Values are of the form `
+        #   projects//instances//databases/`.
+        # @param [Fixnum] page_size
+        #   Number of database roles to be returned in the response. If 0 or less,
+        #   defaults to the server's maximum allowed page size.
+        # @param [String] page_token
+        #   If non-empty, `page_token` should contain a next_page_token from a previous
+        #   ListDatabaseRolesResponse.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::ListDatabaseRolesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::ListDatabaseRolesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_instance_database_database_roles(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/databaseRoles', options)
+          command.response_representation = Google::Apis::SpannerV1::ListDatabaseRolesResponse::Representation
+          command.response_class = Google::Apis::SpannerV1::ListDatabaseRolesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns permissions that the caller has on the specified database or backup
+        # resource. Attempting this RPC on a non-existent Cloud Spanner database will
+        # result in a NOT_FOUND error if the user has `spanner.databases.list`
+        # permission on the containing Cloud Spanner instance. Otherwise returns an
+        # empty set of permissions. Calling this method on a backup that does not exist
+        # will result in a NOT_FOUND error if the user has `spanner.backups.list`
+        # permission on the containing instance.
+        # @param [String] resource
+        #   REQUIRED: The Cloud Spanner resource for which permissions are being tested.
+        #   The format is `projects//instances/` for instance resources and `projects//
+        #   instances//databases/` for database resources.
+        # @param [Google::Apis::SpannerV1::TestIamPermissionsRequest] test_iam_permissions_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SpannerV1::TestIamPermissionsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SpannerV1::TestIamPermissionsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def test_database_role_iam_permissions(resource, test_iam_permissions_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+resource}:testIamPermissions', options)
+          command.request_representation = Google::Apis::SpannerV1::TestIamPermissionsRequest::Representation
+          command.request_object = test_iam_permissions_request_object
+          command.response_representation = Google::Apis::SpannerV1::TestIamPermissionsResponse::Representation
+          command.response_class = Google::Apis::SpannerV1::TestIamPermissionsResponse
+          command.params['resource'] = resource unless resource.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

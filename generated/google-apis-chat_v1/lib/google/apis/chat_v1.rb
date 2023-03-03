@@ -21,15 +21,38 @@ module Google
   module Apis
     # Google Chat API
     #
-    # Enables bots to fetch information and perform actions in Google Chat.
-    # Authentication using a service account is a prerequisite for using the Google
-    # Chat REST API.
+    # Enables apps to fetch information and perform actions in Google Chat.
+    # Authentication is a prerequisite for using the Google Chat REST API.
     #
     # @see https://developers.google.com/hangouts/chat
     module ChatV1
       # Version of the Google Chat API this client connects to.
       # This is NOT the gem version.
       VERSION = 'V1'
+
+      # Private Service: https://www.googleapis.com/auth/chat.bot
+      AUTH_CHAT_BOT = 'https://www.googleapis.com/auth/chat.bot'
+
+      # View, add, and remove members from conversations in Google Chat
+      AUTH_CHAT_MEMBERSHIPS = 'https://www.googleapis.com/auth/chat.memberships'
+
+      # View members in Google Chat conversations.
+      AUTH_CHAT_MEMBERSHIPS_READONLY = 'https://www.googleapis.com/auth/chat.memberships.readonly'
+
+      # View, compose, send, update, and delete messages, and add, view, and delete reactions to messages.
+      AUTH_CHAT_MESSAGES = 'https://www.googleapis.com/auth/chat.messages'
+
+      # Compose and send messages in Google Chat
+      AUTH_CHAT_MESSAGES_CREATE = 'https://www.googleapis.com/auth/chat.messages.create'
+
+      # View messages and reactions in Google Chat
+      AUTH_CHAT_MESSAGES_READONLY = 'https://www.googleapis.com/auth/chat.messages.readonly'
+
+      # Create conversations and spaces and view or update metadata (including history settings) in Google Chat
+      AUTH_CHAT_SPACES = 'https://www.googleapis.com/auth/chat.spaces'
+
+      # View chat and spaces in Google Chat
+      AUTH_CHAT_SPACES_READONLY = 'https://www.googleapis.com/auth/chat.spaces.readonly'
     end
   end
 end

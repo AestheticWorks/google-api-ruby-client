@@ -28,6 +28,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AppEngineVersionEndpoint
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AppEngineVersionInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AuditConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -52,6 +64,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CloudFunctionEndpoint
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CloudFunctionInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CloudRunRevisionEndpoint
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CloudRunRevisionInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CloudSqlInstanceInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -71,6 +107,12 @@ module Google
       end
       
       class DropInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EdgeLocation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -262,6 +304,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class VpcConnectorInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class VpnGatewayInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -278,7 +326,25 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cause, as: 'cause'
+          collection :projects_missing_permission, as: 'projectsMissingPermission'
           property :resource_uri, as: 'resourceUri'
+        end
+      end
+      
+      class AppEngineVersionEndpoint
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class AppEngineVersionInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :environment, as: 'environment'
+          property :runtime, as: 'runtime'
+          property :uri, as: 'uri'
         end
       end
       
@@ -312,6 +378,41 @@ module Google
       class CancelOperationRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CloudFunctionEndpoint
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class CloudFunctionInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :location, as: 'location'
+          property :uri, as: 'uri'
+          property :version_id, :numeric_string => true, as: 'versionId'
+        end
+      end
+      
+      class CloudRunRevisionEndpoint
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class CloudRunRevisionInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :location, as: 'location'
+          property :service_name, as: 'serviceName'
+          property :service_uri, as: 'serviceUri'
+          property :uri, as: 'uri'
         end
       end
       
@@ -365,6 +466,13 @@ module Google
         end
       end
       
+      class EdgeLocation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :metropolitan_area, as: 'metropolitanArea'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -374,6 +482,12 @@ module Google
       class Endpoint
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :app_engine_version, as: 'appEngineVersion', class: Google::Apis::NetworkmanagementV1beta1::AppEngineVersionEndpoint, decorator: Google::Apis::NetworkmanagementV1beta1::AppEngineVersionEndpoint::Representation
+      
+          property :cloud_function, as: 'cloudFunction', class: Google::Apis::NetworkmanagementV1beta1::CloudFunctionEndpoint, decorator: Google::Apis::NetworkmanagementV1beta1::CloudFunctionEndpoint::Representation
+      
+          property :cloud_run_revision, as: 'cloudRunRevision', class: Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionEndpoint, decorator: Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionEndpoint::Representation
+      
           property :cloud_sql_instance, as: 'cloudSqlInstance'
           property :gke_master_cluster, as: 'gkeMasterCluster'
           property :instance, as: 'instance'
@@ -392,6 +506,7 @@ module Google
           property :destination_network_uri, as: 'destinationNetworkUri'
           property :destination_port, as: 'destinationPort'
           property :protocol, as: 'protocol'
+          property :source_agent_uri, as: 'sourceAgentUri'
           property :source_ip, as: 'sourceIp'
           property :source_network_uri, as: 'sourceNetworkUri'
           property :source_port, as: 'sourcePort'
@@ -597,6 +712,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :abort_cause, as: 'abortCause'
+          property :destination_egress_location, as: 'destinationEgressLocation', class: Google::Apis::NetworkmanagementV1beta1::EdgeLocation, decorator: Google::Apis::NetworkmanagementV1beta1::EdgeLocation::Representation
+      
           property :endpoint_info, as: 'endpointInfo', class: Google::Apis::NetworkmanagementV1beta1::EndpointInfo, decorator: Google::Apis::NetworkmanagementV1beta1::EndpointInfo::Representation
       
           property :error, as: 'error', class: Google::Apis::NetworkmanagementV1beta1::Status, decorator: Google::Apis::NetworkmanagementV1beta1::Status::Representation
@@ -632,13 +749,17 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :dest_ip_range, as: 'destIpRange'
+          collection :dest_port_ranges, as: 'destPortRanges'
           property :display_name, as: 'displayName'
           collection :instance_tags, as: 'instanceTags'
           property :network_uri, as: 'networkUri'
           property :next_hop, as: 'nextHop'
           property :next_hop_type, as: 'nextHopType'
           property :priority, as: 'priority'
+          collection :protocols, as: 'protocols'
           property :route_type, as: 'routeType'
+          property :src_ip_range, as: 'srcIpRange'
+          collection :src_port_ranges, as: 'srcPortRanges'
           property :uri, as: 'uri'
         end
       end
@@ -666,7 +787,13 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :abort, as: 'abort', class: Google::Apis::NetworkmanagementV1beta1::AbortInfo, decorator: Google::Apis::NetworkmanagementV1beta1::AbortInfo::Representation
       
+          property :app_engine_version, as: 'appEngineVersion', class: Google::Apis::NetworkmanagementV1beta1::AppEngineVersionInfo, decorator: Google::Apis::NetworkmanagementV1beta1::AppEngineVersionInfo::Representation
+      
           property :causes_drop, as: 'causesDrop'
+          property :cloud_function, as: 'cloudFunction', class: Google::Apis::NetworkmanagementV1beta1::CloudFunctionInfo, decorator: Google::Apis::NetworkmanagementV1beta1::CloudFunctionInfo::Representation
+      
+          property :cloud_run_revision, as: 'cloudRunRevision', class: Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionInfo, decorator: Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionInfo::Representation
+      
           property :cloud_sql_instance, as: 'cloudSqlInstance', class: Google::Apis::NetworkmanagementV1beta1::CloudSqlInstanceInfo, decorator: Google::Apis::NetworkmanagementV1beta1::CloudSqlInstanceInfo::Representation
       
           property :deliver, as: 'deliver', class: Google::Apis::NetworkmanagementV1beta1::DeliverInfo, decorator: Google::Apis::NetworkmanagementV1beta1::DeliverInfo::Representation
@@ -694,6 +821,8 @@ module Google
           property :route, as: 'route', class: Google::Apis::NetworkmanagementV1beta1::RouteInfo, decorator: Google::Apis::NetworkmanagementV1beta1::RouteInfo::Representation
       
           property :state, as: 'state'
+          property :vpc_connector, as: 'vpcConnector', class: Google::Apis::NetworkmanagementV1beta1::VpcConnectorInfo, decorator: Google::Apis::NetworkmanagementV1beta1::VpcConnectorInfo::Representation
+      
           property :vpn_gateway, as: 'vpnGateway', class: Google::Apis::NetworkmanagementV1beta1::VpnGatewayInfo, decorator: Google::Apis::NetworkmanagementV1beta1::VpnGatewayInfo::Representation
       
           property :vpn_tunnel, as: 'vpnTunnel', class: Google::Apis::NetworkmanagementV1beta1::VpnTunnelInfo, decorator: Google::Apis::NetworkmanagementV1beta1::VpnTunnelInfo::Representation
@@ -722,6 +851,15 @@ module Google
       
           collection :steps, as: 'steps', class: Google::Apis::NetworkmanagementV1beta1::Step, decorator: Google::Apis::NetworkmanagementV1beta1::Step::Representation
       
+        end
+      end
+      
+      class VpcConnectorInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
+          property :location, as: 'location'
+          property :uri, as: 'uri'
         end
       end
       

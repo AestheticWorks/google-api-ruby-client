@@ -179,9 +179,9 @@ module Google
       
         # Required if the policy exists. The resource name for this policy. The format
         # is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] [
-        # ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is
-        # created. When calling the alertPolicies.create method, do not include the name
-        # field in the alerting policy passed as part of the request.
+        # ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is created.
+        # When calling the alertPolicies.create method, do not include the name field in
+        # the alerting policy passed as part of the request.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -241,7 +241,7 @@ module Google
       class AlertStrategy
         include Google::Apis::Core::Hashable
       
-        # If an alert policy that was active has no data for this log, any open
+        # If an alert policy that was active has no data for this long, any open
         # incidents will close
         # Corresponds to the JSON property `autoClose`
         # @return [String]
@@ -269,8 +269,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The ID of the App Engine module underlying this service. Corresponds to the
-        # module_id resource label in the gae_app monitored resource: https://cloud.
-        # google.com/monitoring/api/resources#tag_gae_app
+        # module_id resource label in the gae_app monitored resource (https://cloud.
+        # google.com/monitoring/api/resources#tag_gae_app).
         # Corresponds to the JSON property `moduleId`
         # @return [String]
         attr_accessor :module_id
@@ -322,6 +322,39 @@ module Google
         def update!(**args)
           @password = args[:password] if args.key?(:password)
           @username = args[:username] if args.key?(:username)
+        end
+      end
+      
+      # A well-known service type, defined by its service type and service labels.
+      # Documentation and examples here (https://cloud.google.com/stackdriver/docs/
+      # solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+      class BasicService
+        include Google::Apis::Core::Hashable
+      
+        # Labels that specify the resource that emits the monitoring data which is used
+        # for SLO reporting of this Service. Documentation and valid values for given
+        # service types here (https://cloud.google.com/stackdriver/docs/solutions/slo-
+        # monitoring/api/api-structures#basic-svc-w-basic-sli).
+        # Corresponds to the JSON property `serviceLabels`
+        # @return [Hash<String,String>]
+        attr_accessor :service_labels
+      
+        # The type of service that this basic service defines, e.g. APP_ENGINE service
+        # type. Documentation and valid values here (https://cloud.google.com/
+        # stackdriver/docs/solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-
+        # sli).
+        # Corresponds to the JSON property `serviceType`
+        # @return [String]
+        attr_accessor :service_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @service_labels = args[:service_labels] if args.key?(:service_labels)
+          @service_type = args[:service_type] if args.key?(:service_type)
         end
       end
       
@@ -444,8 +477,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The name of the Cloud Endpoints service underlying this service. Corresponds
-        # to the service resource label in the api monitored resource: https://cloud.
-        # google.com/monitoring/api/resources#tag_api
+        # to the service resource label in the api monitored resource (https://cloud.
+        # google.com/monitoring/api/resources#tag_api).
         # Corresponds to the JSON property `service`
         # @return [String]
         attr_accessor :service
@@ -457,6 +490,35 @@ module Google
         # Update properties of this object
         def update!(**args)
           @service = args[:service] if args.key?(:service)
+        end
+      end
+      
+      # Cloud Run service. Learn more at https://cloud.google.com/run.
+      class CloudRun
+        include Google::Apis::Core::Hashable
+      
+        # The location the service is run. Corresponds to the location resource label in
+        # the cloud_run_revision monitored resource (https://cloud.google.com/monitoring/
+        # api/resources#tag_cloud_run_revision).
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # The name of the Cloud Run service. Corresponds to the service_name resource
+        # label in the cloud_run_revision monitored resource (https://cloud.google.com/
+        # monitoring/api/resources#tag_cloud_run_revision).
+        # Corresponds to the JSON property `serviceName`
+        # @return [String]
+        attr_accessor :service_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @location = args[:location] if args.key?(:location)
+          @service_name = args[:service_name] if args.key?(:service_name)
         end
       end
       
@@ -708,11 +770,11 @@ module Google
       
         # Required if the condition exists. The unique resource name for this condition.
         # Its format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID]/
-        # conditions/[CONDITION_ID] [CONDITION_ID] is assigned by Stackdriver Monitoring
-        # when the condition is created as part of a new or updated alerting policy.When
+        # conditions/[CONDITION_ID] [CONDITION_ID] is assigned by Cloud Monitoring when
+        # the condition is created as part of a new or updated alerting policy.When
         # calling the alertPolicies.create method, do not include the name field in the
-        # conditions of the requested alerting policy. Stackdriver Monitoring creates
-        # the condition identifiers and includes them in the new policy.When calling the
+        # conditions of the requested alerting policy. Cloud Monitoring creates the
+        # condition identifiers and includes them in the new policy.When calling the
         # alertPolicies.update method to update a policy, including a condition name
         # causes the existing condition to be updated. Conditions without names are
         # added to the updated policy. Existing conditions are deleted if they are not
@@ -746,11 +808,18 @@ module Google
       class ContentMatcher
         include Google::Apis::Core::Hashable
       
-        # String or regex content to match. Maximum 1024 bytes. An empty content string
-        # indicates no content matching is to be performed.
+        # String, regex or JSON content to match. Maximum 1024 bytes. An empty content
+        # string indicates no content matching is to be performed.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
+      
+        # Information needed to perform a JSONPath content match. Used for
+        # ContentMatcherOption::MATCHES_JSON_PATH and ContentMatcherOption::
+        # NOT_MATCHES_JSON_PATH.
+        # Corresponds to the JSON property `jsonPathMatcher`
+        # @return [Google::Apis::MonitoringV3::JsonPathMatcher]
+        attr_accessor :json_path_matcher
       
         # The type of content matcher that will be applied to the server output,
         # compared to the content string when the check is run.
@@ -765,6 +834,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @content = args[:content] if args.key?(:content)
+          @json_path_matcher = args[:json_path_matcher] if args.key?(:json_path_matcher)
           @matcher = args[:matcher] if args.key?(:matcher)
         end
       end
@@ -793,9 +863,9 @@ module Google
         # Information in the labels field identifies the actual resource and its
         # attributes according to the schema. For example, a particular Compute Engine
         # VM instance could be represented by the following object, because the
-        # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-        # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-        # zone": "us-central1-a" ``
+        # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+        # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+        # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
         # Corresponds to the JSON property `resource`
         # @return [Google::Apis::MonitoringV3::MonitoredResource]
         attr_accessor :resource
@@ -895,8 +965,33 @@ module Google
         end
       end
       
-      # Custom view of service telemetry. Currently a place-holder pending final
-      # design.
+      # Criteria specific to the AlertPolicys that this Snooze applies to. The Snooze
+      # will suppress alerts that come from one of the AlertPolicys whose names are
+      # supplied.
+      class Criteria
+        include Google::Apis::Core::Hashable
+      
+        # The specific AlertPolicy names for the alert that should be snoozed. The
+        # format is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[POLICY_ID] There is
+        # a limit of 16 policies per snooze. This limit is checked during snooze
+        # creation.
+        # Corresponds to the JSON property `policies`
+        # @return [Array<String>]
+        attr_accessor :policies
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @policies = args[:policies] if args.key?(:policies)
+        end
+      end
+      
+      # Use a custom service to designate a service that you want to monitor when none
+      # of the other service types (like App Engine, Cloud Run, or a GKE type) matches
+      # your intended service.
       class Custom
         include Google::Apis::Core::Hashable
       
@@ -1034,9 +1129,11 @@ module Google
       class Documentation
         include Google::Apis::Core::Hashable
       
-        # The text of the documentation, interpreted according to mime_type. The content
+        # The body of the documentation, interpreted according to mime_type. The content
         # may not exceed 8,192 Unicode characters and may not exceed more than 10,240
-        # bytes when encoded in UTF-8 format, whichever is smaller.
+        # bytes when encoded in UTF-8 format, whichever is smaller. This text can be
+        # templatized by using variables (https://cloud.google.com/monitoring/alerts/doc-
+        # variables).
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -1092,8 +1189,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1313,6 +1409,29 @@ module Google
         end
       end
       
+      # Options used when forecasting the time series and testing the predicted value
+      # against the threshold.
+      class ForecastOptions
+        include Google::Apis::Core::Hashable
+      
+        # Required. The length of time into the future to forecast whether a time series
+        # will violate the threshold. If the predicted value is found to violate the
+        # threshold, and the violation is observed in all forecasts made for the
+        # configured duration, then the time series is considered to be failing.
+        # Corresponds to the JSON property `forecastHorizon`
+        # @return [String]
+        attr_accessor :forecast_horizon
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @forecast_horizon = args[:forecast_horizon] if args.key?(:forecast_horizon)
+        end
+      end
+      
       # The GetNotificationChannelVerificationCode request.
       class GetNotificationChannelVerificationCodeRequest
         include Google::Apis::Core::Hashable
@@ -1367,6 +1486,148 @@ module Google
         def update!(**args)
           @code = args[:code] if args.key?(:code)
           @expire_time = args[:expire_time] if args.key?(:expire_time)
+        end
+      end
+      
+      # GKE Namespace. The field names correspond to the resource metadata labels on
+      # monitored resources that fall under a namespace (for example, k8s_container or
+      # k8s_pod).
+      class GkeNamespace
+        include Google::Apis::Core::Hashable
+      
+        # The name of the parent cluster.
+        # Corresponds to the JSON property `clusterName`
+        # @return [String]
+        attr_accessor :cluster_name
+      
+        # The location of the parent cluster. This may be a zone or region.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # The name of this namespace.
+        # Corresponds to the JSON property `namespaceName`
+        # @return [String]
+        attr_accessor :namespace_name
+      
+        # Output only. The project this resource lives in. For legacy services migrated
+        # from the Custom type, this may be a distinct project from the one parenting
+        # the service itself.
+        # Corresponds to the JSON property `projectId`
+        # @return [String]
+        attr_accessor :project_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_name = args[:cluster_name] if args.key?(:cluster_name)
+          @location = args[:location] if args.key?(:location)
+          @namespace_name = args[:namespace_name] if args.key?(:namespace_name)
+          @project_id = args[:project_id] if args.key?(:project_id)
+        end
+      end
+      
+      # GKE Service. The "service" here represents a Kubernetes service object (https:/
+      # /kubernetes.io/docs/concepts/services-networking/service). The field names
+      # correspond to the resource labels on k8s_service monitored resources (https://
+      # cloud.google.com/monitoring/api/resources#tag_k8s_service).
+      class GkeService
+        include Google::Apis::Core::Hashable
+      
+        # The name of the parent cluster.
+        # Corresponds to the JSON property `clusterName`
+        # @return [String]
+        attr_accessor :cluster_name
+      
+        # The location of the parent cluster. This may be a zone or region.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # The name of the parent namespace.
+        # Corresponds to the JSON property `namespaceName`
+        # @return [String]
+        attr_accessor :namespace_name
+      
+        # Output only. The project this resource lives in. For legacy services migrated
+        # from the Custom type, this may be a distinct project from the one parenting
+        # the service itself.
+        # Corresponds to the JSON property `projectId`
+        # @return [String]
+        attr_accessor :project_id
+      
+        # The name of this service.
+        # Corresponds to the JSON property `serviceName`
+        # @return [String]
+        attr_accessor :service_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_name = args[:cluster_name] if args.key?(:cluster_name)
+          @location = args[:location] if args.key?(:location)
+          @namespace_name = args[:namespace_name] if args.key?(:namespace_name)
+          @project_id = args[:project_id] if args.key?(:project_id)
+          @service_name = args[:service_name] if args.key?(:service_name)
+        end
+      end
+      
+      # A GKE Workload (Deployment, StatefulSet, etc). The field names correspond to
+      # the metadata labels on monitored resources that fall under a workload (for
+      # example, k8s_container or k8s_pod).
+      class GkeWorkload
+        include Google::Apis::Core::Hashable
+      
+        # The name of the parent cluster.
+        # Corresponds to the JSON property `clusterName`
+        # @return [String]
+        attr_accessor :cluster_name
+      
+        # The location of the parent cluster. This may be a zone or region.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # The name of the parent namespace.
+        # Corresponds to the JSON property `namespaceName`
+        # @return [String]
+        attr_accessor :namespace_name
+      
+        # Output only. The project this resource lives in. For legacy services migrated
+        # from the Custom type, this may be a distinct project from the one parenting
+        # the service itself.
+        # Corresponds to the JSON property `projectId`
+        # @return [String]
+        attr_accessor :project_id
+      
+        # The name of this workload.
+        # Corresponds to the JSON property `topLevelControllerName`
+        # @return [String]
+        attr_accessor :top_level_controller_name
+      
+        # The type of this workload (for example, "Deployment" or "DaemonSet")
+        # Corresponds to the JSON property `topLevelControllerType`
+        # @return [String]
+        attr_accessor :top_level_controller_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_name = args[:cluster_name] if args.key?(:cluster_name)
+          @location = args[:location] if args.key?(:location)
+          @namespace_name = args[:namespace_name] if args.key?(:namespace_name)
+          @project_id = args[:project_id] if args.key?(:project_id)
+          @top_level_controller_name = args[:top_level_controller_name] if args.key?(:top_level_controller_name)
+          @top_level_controller_type = args[:top_level_controller_type] if args.key?(:top_level_controller_type)
         end
       end
       
@@ -1468,6 +1729,13 @@ module Google
       class HttpCheck
         include Google::Apis::Core::Hashable
       
+        # If present, the check will only pass if the HTTP response status code is in
+        # this set of status codes. If empty, the HTTP status code will only pass if the
+        # HTTP status code is 200-299.
+        # Corresponds to the JSON property `acceptedResponseStatusCodes`
+        # @return [Array<Google::Apis::MonitoringV3::ResponseStatusCode>]
+        attr_accessor :accepted_response_status_codes
+      
         # The authentication parameters to provide to the specified resource or URL that
         # requires a username and password. Currently, only Basic HTTP authentication (
         # https://tools.ietf.org/html/rfc7617) is supported in Uptime checks.
@@ -1479,9 +1747,9 @@ module Google
         # URL_ENCODED, the body passed in must be URL-encoded. Users can provide a
         # Content-Length header via the headers field or the API will do so. If the
         # request_method is GET and body is not empty, the API will return an error. The
-        # maximum byte size is 1 megabyte. Note: As with all bytes fields, JSON
-        # representations are base64 encoded. e.g.: "foo=bar" in URL-encoded form is "
-        # foo%3Dbar" and in base64 encoding is "Zm9vJTI1M0RiYXI=".
+        # maximum byte size is 1 megabyte.Note: If client libraries aren't used (which
+        # performs the conversion automatically) base64 encode your body data since the
+        # field is of bytes type.
         # Corresponds to the JSON property `body`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
@@ -1496,6 +1764,15 @@ module Google
         # Corresponds to the JSON property `contentType`
         # @return [String]
         attr_accessor :content_type
+      
+        # A user provided content type header to use for the check. The invalid
+        # configurations outlined in the content_type field apply to custom_content_type,
+        # as well as the following: 1. content_type is URL_ENCODED and
+        # custom_content_type is set. 2. content_type is USER_PROVIDED and
+        # custom_content_type is not set.
+        # Corresponds to the JSON property `customContentType`
+        # @return [String]
+        attr_accessor :custom_content_type
       
         # The list of headers to send as part of the Uptime check request. If two
         # headers have the same key and different values, they should be entered as a
@@ -1525,6 +1802,12 @@ module Google
         # Corresponds to the JSON property `path`
         # @return [String]
         attr_accessor :path
+      
+        # Information involved in sending ICMP pings alongside public HTTP/TCP checks.
+        # For HTTP, the pings are performed for each part of the redirect chain.
+        # Corresponds to the JSON property `pingConfig`
+        # @return [Google::Apis::MonitoringV3::PingConfig]
+        attr_accessor :ping_config
       
         # Optional (defaults to 80 when use_ssl is false, and 443 when use_ssl is true).
         # The TCP port on the HTTP server against which to run the check. Will be
@@ -1560,12 +1843,15 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @accepted_response_status_codes = args[:accepted_response_status_codes] if args.key?(:accepted_response_status_codes)
           @auth_info = args[:auth_info] if args.key?(:auth_info)
           @body = args[:body] if args.key?(:body)
           @content_type = args[:content_type] if args.key?(:content_type)
+          @custom_content_type = args[:custom_content_type] if args.key?(:custom_content_type)
           @headers = args[:headers] if args.key?(:headers)
           @mask_headers = args[:mask_headers] if args.key?(:mask_headers)
           @path = args[:path] if args.key?(:path)
+          @ping_config = args[:ping_config] if args.key?(:ping_config)
           @port = args[:port] if args.key?(:port)
           @request_method = args[:request_method] if args.key?(:request_method)
           @use_ssl = args[:use_ssl] if args.key?(:use_ssl)
@@ -1579,7 +1865,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The checker's human-readable name. The display name should be unique within a
-        # Stackdriver Workspace in order to make it easier to identify; however,
+        # Cloud Monitoring Metrics Scope in order to make it easier to identify; however,
         # uniqueness is not enforced.
         # Corresponds to the JSON property `displayName`
         # @return [String]
@@ -1593,8 +1879,8 @@ module Google
       
         # A unique resource name for this InternalChecker. The format is: projects/[
         # PROJECT_ID_OR_NUMBER]/internalCheckers/[INTERNAL_CHECKER_ID] [
-        # PROJECT_ID_OR_NUMBER] is the Stackdriver Workspace project for the Uptime
-        # check config associated with the internal checker.
+        # PROJECT_ID_OR_NUMBER] is the Cloud Monitoring Metrics Scope project for the
+        # Uptime check config associated with the internal checker.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1606,7 +1892,7 @@ module Google
         attr_accessor :network
       
         # The GCP project ID where the internal checker lives. Not necessary the same as
-        # the Workspace project.
+        # the Metrics Scope project.
         # Corresponds to the JSON property `peerProjectId`
         # @return [String]
         attr_accessor :peer_project_id
@@ -1666,6 +1952,35 @@ module Google
           @canonical_service = args[:canonical_service] if args.key?(:canonical_service)
           @canonical_service_namespace = args[:canonical_service_namespace] if args.key?(:canonical_service_namespace)
           @mesh_uid = args[:mesh_uid] if args.key?(:mesh_uid)
+        end
+      end
+      
+      # Information needed to perform a JSONPath content match. Used for
+      # ContentMatcherOption::MATCHES_JSON_PATH and ContentMatcherOption::
+      # NOT_MATCHES_JSON_PATH.
+      class JsonPathMatcher
+        include Google::Apis::Core::Hashable
+      
+        # The type of JSONPath match that will be applied to the JSON output (
+        # ContentMatcher.content)
+        # Corresponds to the JSON property `jsonMatcher`
+        # @return [String]
+        attr_accessor :json_matcher
+      
+        # JSONPath within the response output pointing to the expected ContentMatcher::
+        # content to match against.
+        # Corresponds to the JSON property `jsonPath`
+        # @return [String]
+        attr_accessor :json_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @json_matcher = args[:json_matcher] if args.key?(:json_matcher)
+          @json_path = args[:json_path] if args.key?(:json_path)
         end
       end
       
@@ -2056,6 +2371,32 @@ module Google
         end
       end
       
+      # The results of a successful ListSnoozes call, containing the matching Snoozes.
+      class ListSnoozesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Page token for repeated calls to ListSnoozes, to fetch additional pages of
+        # results. If this is empty or missing, there are no more pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Snoozes matching this list call.
+        # Corresponds to the JSON property `snoozes`
+        # @return [Array<Google::Apis::MonitoringV3::Snooze>]
+        attr_accessor :snoozes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @snoozes = args[:snoozes] if args.key?(:snoozes)
+        end
+      end
+      
       # The ListTimeSeries response.
       class ListTimeSeriesResponse
         include Google::Apis::Core::Hashable
@@ -2276,7 +2617,7 @@ module Google
         # Specifies the alignment of data points in individual time series as well as
         # how to combine the retrieved time series together (such as when aggregating
         # multiple streams on each resource to a single stream for each resource or when
-        # aggregating streams across all members of a group of resrouces). Multiple
+        # aggregating streams across all members of a group of resources). Multiple
         # aggregations are applied in the order specified.This field is similar to the
         # one in the ListTimeSeries request (https://cloud.google.com/monitoring/api/
         # ref_v3/rest/v3/projects.timeSeries/list). It is advisable to use the
@@ -2536,7 +2877,7 @@ module Google
         # Specifies the alignment of data points in individual time series as well as
         # how to combine the retrieved time series together (such as when aggregating
         # multiple streams on each resource to a single stream for each resource or when
-        # aggregating streams across all members of a group of resrouces). Multiple
+        # aggregating streams across all members of a group of resources). Multiple
         # aggregations are applied in the order specified.This field is similar to the
         # one in the ListTimeSeries request (https://cloud.google.com/monitoring/api/
         # ref_v3/rest/v3/projects.timeSeries/list). It is advisable to use the
@@ -2589,6 +2930,12 @@ module Google
         # @return [String]
         attr_accessor :duration
       
+        # A condition control that determines how metric-threshold conditions are
+        # evaluated when data stops arriving.
+        # Corresponds to the JSON property `evaluationMissingData`
+        # @return [String]
+        attr_accessor :evaluation_missing_data
+      
         # Required. A filter (https://cloud.google.com/monitoring/api/v3/filters) that
         # identifies which time series should be compared with the threshold.The filter
         # is similar to the one that is specified in the ListTimeSeries request (https://
@@ -2600,6 +2947,12 @@ module Google
         # Corresponds to the JSON property `filter`
         # @return [String]
         attr_accessor :filter
+      
+        # Options used when forecasting the time series and testing the predicted value
+        # against the threshold.
+        # Corresponds to the JSON property `forecastOptions`
+        # @return [Google::Apis::MonitoringV3::ForecastOptions]
+        attr_accessor :forecast_options
       
         # A value against which to compare the time series.
         # Corresponds to the JSON property `thresholdValue`
@@ -2623,7 +2976,9 @@ module Google
           @denominator_aggregations = args[:denominator_aggregations] if args.key?(:denominator_aggregations)
           @denominator_filter = args[:denominator_filter] if args.key?(:denominator_filter)
           @duration = args[:duration] if args.key?(:duration)
+          @evaluation_missing_data = args[:evaluation_missing_data] if args.key?(:evaluation_missing_data)
           @filter = args[:filter] if args.key?(:filter)
+          @forecast_options = args[:forecast_options] if args.key?(:forecast_options)
           @threshold_value = args[:threshold_value] if args.key?(:threshold_value)
           @trigger = args[:trigger] if args.key?(:trigger)
         end
@@ -2636,9 +2991,9 @@ module Google
       # Information in the labels field identifies the actual resource and its
       # attributes according to the schema. For example, a particular Compute Engine
       # VM instance could be represented by the following object, because the
-      # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-      # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-      # zone": "us-central1-a" ``
+      # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+      # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+      # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
       class MonitoredResource
         include Google::Apis::Core::Hashable
       
@@ -2789,6 +3144,12 @@ module Google
         # @return [String]
         attr_accessor :duration
       
+        # A condition control that determines how metric-threshold conditions are
+        # evaluated when data stops arriving.
+        # Corresponds to the JSON property `evaluationMissingData`
+        # @return [String]
+        attr_accessor :evaluation_missing_data
+      
         # Monitoring Query Language (https://cloud.google.com/monitoring/mql) query that
         # outputs a boolean stream.
         # Corresponds to the JSON property `query`
@@ -2808,6 +3169,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @duration = args[:duration] if args.key?(:duration)
+          @evaluation_missing_data = args[:evaluation_missing_data] if args.key?(:evaluation_missing_data)
           @query = args[:query] if args.key?(:query)
           @trigger = args[:trigger] if args.key?(:trigger)
         end
@@ -2985,6 +3347,12 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # The tiers that support this notification channel; the project service tier
+        # must be one of the supported_tiers.
+        # Corresponds to the JSON property `supportedTiers`
+        # @return [Array<String>]
+        attr_accessor :supported_tiers
+      
         # The type of notification channel, such as "email" and "sms". To view the full
         # list of channels, see Channel descriptors (https://cloud.google.com/monitoring/
         # alerts/using-channels-api#ncd). Notification channel types are globally unique.
@@ -3003,6 +3371,7 @@ module Google
           @labels = args[:labels] if args.key?(:labels)
           @launch_stage = args[:launch_stage] if args.key?(:launch_stage)
           @name = args[:name] if args.key?(:name)
+          @supported_tiers = args[:supported_tiers] if args.key?(:supported_tiers)
           @type = args[:type] if args.key?(:type)
         end
       end
@@ -3128,16 +3497,39 @@ module Google
         end
       end
       
+      # Information involved in sending ICMP pings alongside public HTTP/TCP checks.
+      # For HTTP, the pings are performed for each part of the redirect chain.
+      class PingConfig
+        include Google::Apis::Core::Hashable
+      
+        # Number of ICMP pings. A maximum of 3 ICMP pings is currently supported.
+        # Corresponds to the JSON property `pingsCount`
+        # @return [Fixnum]
+        attr_accessor :pings_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @pings_count = args[:pings_count] if args.key?(:pings_count)
+        end
+      end
+      
       # A single data point in a time series.
       class Point
         include Google::Apis::Core::Hashable
       
-        # A closed time interval. It extends from the start time to the end time, and
-        # includes both: [startTime, endTime]. Valid time intervals depend on the
-        # MetricKind (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.
-        # metricDescriptors#MetricKind) of the metric value. The end time must not be
-        # earlier than the start time. When writing data points, the start time must not
-        # be more than 25 hours in the past and the end time must not be more than five
+        # Describes a time interval: Reads: A half-open time interval. It includes the
+        # end time but excludes the start time: (startTime, endTime]. The start time
+        # must be specified, must be earlier than the end time, and should be no older
+        # than the data retention period for the metric. Writes: A closed time interval.
+        # It extends from the start time to the end time, and includes both: [startTime,
+        # endTime]. Valid time intervals depend on the MetricKind (https://cloud.google.
+        # com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors#MetricKind) of
+        # the metric value. The end time must not be earlier than the start time, and
+        # the end time must not be more than 25 hours in the past or more than five
         # minutes in the future. For GAUGE metrics, the startTime value is technically
         # optional; if no value is specified, the start time defaults to the value of
         # the end time, and the interval represents a single point in time. If both
@@ -3148,7 +3540,7 @@ module Google
         # specify a non-zero interval, with subsequent points specifying contiguous and
         # non-overlapping intervals. For DELTA metrics, the start time of the next
         # interval must be at least a millisecond after the end time of the previous
-        # interval. For CUMULATIVE metrics, the start time and end time must specify a a
+        # interval. For CUMULATIVE metrics, the start time and end time must specify a
         # non-zero interval, with subsequent points specifying the same start time and
         # increasing end times, until an event resets the cumulative value to zero and
         # sets a new start time for the following points. The new start time must be at
@@ -3184,12 +3576,15 @@ module Google
       class PointData
         include Google::Apis::Core::Hashable
       
-        # A closed time interval. It extends from the start time to the end time, and
-        # includes both: [startTime, endTime]. Valid time intervals depend on the
-        # MetricKind (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.
-        # metricDescriptors#MetricKind) of the metric value. The end time must not be
-        # earlier than the start time. When writing data points, the start time must not
-        # be more than 25 hours in the past and the end time must not be more than five
+        # Describes a time interval: Reads: A half-open time interval. It includes the
+        # end time but excludes the start time: (startTime, endTime]. The start time
+        # must be specified, must be earlier than the end time, and should be no older
+        # than the data retention period for the metric. Writes: A closed time interval.
+        # It extends from the start time to the end time, and includes both: [startTime,
+        # endTime]. Valid time intervals depend on the MetricKind (https://cloud.google.
+        # com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors#MetricKind) of
+        # the metric value. The end time must not be earlier than the start time, and
+        # the end time must not be more than 25 hours in the past or more than five
         # minutes in the future. For GAUGE metrics, the startTime value is technically
         # optional; if no value is specified, the start time defaults to the value of
         # the end time, and the interval represents a single point in time. If both
@@ -3200,7 +3595,7 @@ module Google
         # specify a non-zero interval, with subsequent points specifying contiguous and
         # non-overlapping intervals. For DELTA metrics, the start time of the next
         # interval must be at least a millisecond after the end time of the previous
-        # interval. For CUMULATIVE metrics, the start time and end time must specify a a
+        # interval. For CUMULATIVE metrics, the start time and end time must specify a
         # non-zero interval, with subsequent points specifying the same start time and
         # increasing end times, until an event resets the cumulative value to zero and
         # sets a new start time for the following points. The new start time must be at
@@ -3391,6 +3786,32 @@ module Google
         end
       end
       
+      # A status to accept. Either a status code class like "2xx", or an integer
+      # status code like "200".
+      class ResponseStatusCode
+        include Google::Apis::Core::Hashable
+      
+        # A class of status codes to accept.
+        # Corresponds to the JSON property `statusClass`
+        # @return [String]
+        attr_accessor :status_class
+      
+        # A status code to accept.
+        # Corresponds to the JSON property `statusValue`
+        # @return [Fixnum]
+        attr_accessor :status_value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @status_class = args[:status_class] if args.key?(:status_class)
+          @status_value = args[:status_value] if args.key?(:status_value)
+        end
+      end
+      
       # The SendNotificationChannelVerificationCode request.
       class SendNotificationChannelVerificationCodeRequest
         include Google::Apis::Core::Hashable
@@ -3416,10 +3837,22 @@ module Google
         # @return [Google::Apis::MonitoringV3::AppEngine]
         attr_accessor :app_engine
       
+        # A well-known service type, defined by its service type and service labels.
+        # Documentation and examples here (https://cloud.google.com/stackdriver/docs/
+        # solutions/slo-monitoring/api/api-structures#basic-svc-w-basic-sli).
+        # Corresponds to the JSON property `basicService`
+        # @return [Google::Apis::MonitoringV3::BasicService]
+        attr_accessor :basic_service
+      
         # Cloud Endpoints service. Learn more at https://cloud.google.com/endpoints.
         # Corresponds to the JSON property `cloudEndpoints`
         # @return [Google::Apis::MonitoringV3::CloudEndpoints]
         attr_accessor :cloud_endpoints
+      
+        # Cloud Run service. Learn more at https://cloud.google.com/run.
+        # Corresponds to the JSON property `cloudRun`
+        # @return [Google::Apis::MonitoringV3::CloudRun]
+        attr_accessor :cloud_run
       
         # Istio service scoped to a single Kubernetes cluster. Learn more at https://
         # istio.io. Clusters running OSS Istio will have their services ingested as this
@@ -3428,8 +3861,9 @@ module Google
         # @return [Google::Apis::MonitoringV3::ClusterIstio]
         attr_accessor :cluster_istio
       
-        # Custom view of service telemetry. Currently a place-holder pending final
-        # design.
+        # Use a custom service to designate a service that you want to monitor when none
+        # of the other service types (like App Engine, Cloud Run, or a GKE type) matches
+        # your intended service.
         # Corresponds to the JSON property `custom`
         # @return [Google::Apis::MonitoringV3::Custom]
         attr_accessor :custom
@@ -3438,6 +3872,28 @@ module Google
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # GKE Namespace. The field names correspond to the resource metadata labels on
+        # monitored resources that fall under a namespace (for example, k8s_container or
+        # k8s_pod).
+        # Corresponds to the JSON property `gkeNamespace`
+        # @return [Google::Apis::MonitoringV3::GkeNamespace]
+        attr_accessor :gke_namespace
+      
+        # GKE Service. The "service" here represents a Kubernetes service object (https:/
+        # /kubernetes.io/docs/concepts/services-networking/service). The field names
+        # correspond to the resource labels on k8s_service monitored resources (https://
+        # cloud.google.com/monitoring/api/resources#tag_k8s_service).
+        # Corresponds to the JSON property `gkeService`
+        # @return [Google::Apis::MonitoringV3::GkeService]
+        attr_accessor :gke_service
+      
+        # A GKE Workload (Deployment, StatefulSet, etc). The field names correspond to
+        # the metadata labels on monitored resources that fall under a workload (for
+        # example, k8s_container or k8s_pod).
+        # Corresponds to the JSON property `gkeWorkload`
+        # @return [Google::Apis::MonitoringV3::GkeWorkload]
+        attr_accessor :gke_workload
       
         # Canonical service scoped to an Istio mesh. Anthos clusters running ASM >= 1.6.
         # 8 will have their services ingested as this type.
@@ -3479,10 +3935,15 @@ module Google
         # Update properties of this object
         def update!(**args)
           @app_engine = args[:app_engine] if args.key?(:app_engine)
+          @basic_service = args[:basic_service] if args.key?(:basic_service)
           @cloud_endpoints = args[:cloud_endpoints] if args.key?(:cloud_endpoints)
+          @cloud_run = args[:cloud_run] if args.key?(:cloud_run)
           @cluster_istio = args[:cluster_istio] if args.key?(:cluster_istio)
           @custom = args[:custom] if args.key?(:custom)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @gke_namespace = args[:gke_namespace] if args.key?(:gke_namespace)
+          @gke_service = args[:gke_service] if args.key?(:gke_service)
+          @gke_workload = args[:gke_workload] if args.key?(:gke_workload)
           @istio_canonical_service = args[:istio_canonical_service] if args.key?(:istio_canonical_service)
           @mesh_istio = args[:mesh_istio] if args.key?(:mesh_istio)
           @name = args[:name] if args.key?(:name)
@@ -3620,6 +4081,79 @@ module Google
         end
       end
       
+      # A Snooze will prevent any alerts from being opened, and close any that are
+      # already open. The Snooze will work on alerts that match the criteria defined
+      # in the Snooze. The Snooze will be active from interval.start_time through
+      # interval.end_time.
+      class Snooze
+        include Google::Apis::Core::Hashable
+      
+        # Criteria specific to the AlertPolicys that this Snooze applies to. The Snooze
+        # will suppress alerts that come from one of the AlertPolicys whose names are
+        # supplied.
+        # Corresponds to the JSON property `criteria`
+        # @return [Google::Apis::MonitoringV3::Criteria]
+        attr_accessor :criteria
+      
+        # Required. A display name for the Snooze. This can be, at most, 512 unicode
+        # characters.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Describes a time interval: Reads: A half-open time interval. It includes the
+        # end time but excludes the start time: (startTime, endTime]. The start time
+        # must be specified, must be earlier than the end time, and should be no older
+        # than the data retention period for the metric. Writes: A closed time interval.
+        # It extends from the start time to the end time, and includes both: [startTime,
+        # endTime]. Valid time intervals depend on the MetricKind (https://cloud.google.
+        # com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors#MetricKind) of
+        # the metric value. The end time must not be earlier than the start time, and
+        # the end time must not be more than 25 hours in the past or more than five
+        # minutes in the future. For GAUGE metrics, the startTime value is technically
+        # optional; if no value is specified, the start time defaults to the value of
+        # the end time, and the interval represents a single point in time. If both
+        # start and end times are specified, they must be identical. Such an interval is
+        # valid only for GAUGE metrics, which are point-in-time measurements. The end
+        # time of a new interval must be at least a millisecond after the end time of
+        # the previous interval. For DELTA metrics, the start time and end time must
+        # specify a non-zero interval, with subsequent points specifying contiguous and
+        # non-overlapping intervals. For DELTA metrics, the start time of the next
+        # interval must be at least a millisecond after the end time of the previous
+        # interval. For CUMULATIVE metrics, the start time and end time must specify a
+        # non-zero interval, with subsequent points specifying the same start time and
+        # increasing end times, until an event resets the cumulative value to zero and
+        # sets a new start time for the following points. The new start time must be at
+        # least a millisecond after the end time of the previous interval. The start
+        # time of a new interval must be at least a millisecond after the end time of
+        # the previous interval because intervals are closed. If the start time of a new
+        # interval is the same as the end time of the previous interval, then data
+        # written at the new start time could overwrite data written at the previous end
+        # time.
+        # Corresponds to the JSON property `interval`
+        # @return [Google::Apis::MonitoringV3::TimeInterval]
+        attr_accessor :interval
+      
+        # Required. The name of the Snooze. The format is: projects/[
+        # PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] The ID of the Snooze will be
+        # generated by the system.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @criteria = args[:criteria] if args.key?(:criteria)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @interval = args[:interval] if args.key?(:interval)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # SourceContext represents information about the source of a protobuf element,
       # like the file in which it is defined.
       class SourceContext
@@ -3709,6 +4243,12 @@ module Google
       class TcpCheck
         include Google::Apis::Core::Hashable
       
+        # Information involved in sending ICMP pings alongside public HTTP/TCP checks.
+        # For HTTP, the pings are performed for each part of the redirect chain.
+        # Corresponds to the JSON property `pingConfig`
+        # @return [Google::Apis::MonitoringV3::PingConfig]
+        attr_accessor :ping_config
+      
         # The TCP port on the server against which to run the check. Will be combined
         # with host (specified within the monitored_resource) to construct the full URL.
         # Required.
@@ -3722,6 +4262,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @ping_config = args[:ping_config] if args.key?(:ping_config)
           @port = args[:port] if args.key?(:port)
         end
       end
@@ -3746,12 +4287,15 @@ module Google
         end
       end
       
-      # A closed time interval. It extends from the start time to the end time, and
-      # includes both: [startTime, endTime]. Valid time intervals depend on the
-      # MetricKind (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.
-      # metricDescriptors#MetricKind) of the metric value. The end time must not be
-      # earlier than the start time. When writing data points, the start time must not
-      # be more than 25 hours in the past and the end time must not be more than five
+      # Describes a time interval: Reads: A half-open time interval. It includes the
+      # end time but excludes the start time: (startTime, endTime]. The start time
+      # must be specified, must be earlier than the end time, and should be no older
+      # than the data retention period for the metric. Writes: A closed time interval.
+      # It extends from the start time to the end time, and includes both: [startTime,
+      # endTime]. Valid time intervals depend on the MetricKind (https://cloud.google.
+      # com/monitoring/api/ref_v3/rest/v3/projects.metricDescriptors#MetricKind) of
+      # the metric value. The end time must not be earlier than the start time, and
+      # the end time must not be more than 25 hours in the past or more than five
       # minutes in the future. For GAUGE metrics, the startTime value is technically
       # optional; if no value is specified, the start time defaults to the value of
       # the end time, and the interval represents a single point in time. If both
@@ -3762,7 +4306,7 @@ module Google
       # specify a non-zero interval, with subsequent points specifying contiguous and
       # non-overlapping intervals. For DELTA metrics, the start time of the next
       # interval must be at least a millisecond after the end time of the previous
-      # interval. For CUMULATIVE metrics, the start time and end time must specify a a
+      # interval. For CUMULATIVE metrics, the start time and end time must specify a
       # non-zero interval, with subsequent points specifying the same start time and
       # increasing end times, until an event resets the cumulative value to zero and
       # sets a new start time for the following points. The new start time must be at
@@ -3847,9 +4391,9 @@ module Google
         # Information in the labels field identifies the actual resource and its
         # attributes according to the schema. For example, a particular Compute Engine
         # VM instance could be represented by the following object, because the
-        # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-        # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-        # zone": "us-central1-a" ``
+        # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+        # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+        # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
         # Corresponds to the JSON property `resource`
         # @return [Google::Apis::MonitoringV3::MonitoredResource]
         attr_accessor :resource
@@ -4123,6 +4667,11 @@ module Google
       class UptimeCheckConfig
         include Google::Apis::Core::Hashable
       
+        # The type of checkers to use to execute the Uptime check.
+        # Corresponds to the JSON property `checkerType`
+        # @return [String]
+        attr_accessor :checker_type
+      
         # The content that is expected to appear in the data returned by the target
         # server against which the check is run. Currently, only the first entry in the
         # content_matchers list is supported, and additional entries will be ignored.
@@ -4133,8 +4682,8 @@ module Google
         attr_accessor :content_matchers
       
         # A human-friendly name for the Uptime check configuration. The display name
-        # should be unique within a Stackdriver Workspace in order to make it easier to
-        # identify; however, uniqueness is not enforced. Required.
+        # should be unique within a Cloud Monitoring Workspace in order to make it
+        # easier to identify; however, uniqueness is not enforced. Required.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
@@ -4167,9 +4716,9 @@ module Google
         # Information in the labels field identifies the actual resource and its
         # attributes according to the schema. For example, a particular Compute Engine
         # VM instance could be represented by the following object, because the
-        # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-        # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-        # zone": "us-central1-a" ``
+        # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+        # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+        # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
         # Corresponds to the JSON property `monitoredResource`
         # @return [Google::Apis::MonitoringV3::MonitoredResource]
         attr_accessor :monitored_resource
@@ -4216,12 +4765,22 @@ module Google
         # @return [String]
         attr_accessor :timeout
       
+        # User-supplied key/value data to be used for organizing and identifying the
+        # UptimeCheckConfig objects.The field can contain up to 64 entries. Each key and
+        # value is limited to 63 Unicode characters or 128 bytes, whichever is smaller.
+        # Labels and values can contain only lowercase letters, numerals, underscores,
+        # and dashes. Keys must begin with a letter.
+        # Corresponds to the JSON property `userLabels`
+        # @return [Hash<String,String>]
+        attr_accessor :user_labels
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @checker_type = args[:checker_type] if args.key?(:checker_type)
           @content_matchers = args[:content_matchers] if args.key?(:content_matchers)
           @display_name = args[:display_name] if args.key?(:display_name)
           @http_check = args[:http_check] if args.key?(:http_check)
@@ -4234,6 +4793,7 @@ module Google
           @selected_regions = args[:selected_regions] if args.key?(:selected_regions)
           @tcp_check = args[:tcp_check] if args.key?(:tcp_check)
           @timeout = args[:timeout] if args.key?(:timeout)
+          @user_labels = args[:user_labels] if args.key?(:user_labels)
         end
       end
       

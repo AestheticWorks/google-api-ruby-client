@@ -178,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SasPortalNrqzValidation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SasPortalOperation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -185,6 +191,18 @@ module Google
       end
       
       class SasPortalPolicy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SasPortalProvisionDeploymentRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SasPortalProvisionDeploymentResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -275,8 +293,6 @@ module Google
       class SasPortalDeployment
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
-          collection :allowed_billing_modes, as: 'allowedBillingModes'
-          property :default_billing_mode, as: 'defaultBillingMode'
           property :display_name, as: 'displayName'
           collection :frns, as: 'frns'
           property :name, as: 'name'
@@ -342,6 +358,7 @@ module Google
           property :frequency_range, as: 'frequencyRange', class: Google::Apis::ProdTtSasportalV1alpha1::SasPortalFrequencyRange, decorator: Google::Apis::ProdTtSasportalV1alpha1::SasPortalFrequencyRange::Representation
       
           property :grant_id, as: 'grantId'
+          property :last_heartbeat_transmit_expire_time, as: 'lastHeartbeatTransmitExpireTime'
           property :max_eirp, as: 'maxEirp'
           collection :move_list, as: 'moveList', class: Google::Apis::ProdTtSasportalV1alpha1::SasPortalDpaMoveList, decorator: Google::Apis::ProdTtSasportalV1alpha1::SasPortalDpaMoveList::Representation
       
@@ -356,6 +373,9 @@ module Google
           property :antenna_model, as: 'antennaModel'
           property :common_channel_group, as: 'commonChannelGroup'
           property :interference_coordination_group, as: 'interferenceCoordinationGroup'
+          property :nrqz_validated, as: 'nrqzValidated'
+          property :nrqz_validation, as: 'nrqzValidation', class: Google::Apis::ProdTtSasportalV1alpha1::SasPortalNrqzValidation, decorator: Google::Apis::ProdTtSasportalV1alpha1::SasPortalNrqzValidation::Representation
+      
         end
       end
       
@@ -420,9 +440,11 @@ module Google
           property :antenna_beamwidth, as: 'antennaBeamwidth'
           property :antenna_downtilt, as: 'antennaDowntilt'
           property :antenna_gain, as: 'antennaGain'
+          property :antenna_gain_new_field, as: 'antennaGainNewField'
           property :antenna_model, as: 'antennaModel'
           property :cpe_cbsd_indication, as: 'cpeCbsdIndication'
           property :eirp_capability, as: 'eirpCapability'
+          property :eirp_capability_new_field, as: 'eirpCapabilityNewField'
           property :height, as: 'height'
           property :height_type, as: 'heightType'
           property :horizontal_accuracy, as: 'horizontalAccuracy'
@@ -499,6 +521,17 @@ module Google
         end
       end
       
+      class SasPortalNrqzValidation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :case_id, as: 'caseId'
+          property :cpi_id, as: 'cpiId'
+          property :latitude, as: 'latitude'
+          property :longitude, as: 'longitude'
+          property :state, as: 'state'
+        end
+      end
+      
       class SasPortalOperation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -517,6 +550,19 @@ module Google
           collection :assignments, as: 'assignments', class: Google::Apis::ProdTtSasportalV1alpha1::SasPortalAssignment, decorator: Google::Apis::ProdTtSasportalV1alpha1::SasPortalAssignment::Representation
       
           property :etag, :base64 => true, as: 'etag'
+        end
+      end
+      
+      class SasPortalProvisionDeploymentRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class SasPortalProvisionDeploymentResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error_message, as: 'errorMessage'
         end
       end
       

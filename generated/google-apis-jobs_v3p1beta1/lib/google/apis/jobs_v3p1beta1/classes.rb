@@ -344,12 +344,13 @@ module Google
         # @return [String]
         attr_accessor :image_uri
       
-        # Optional. A list of keys of filterable Job.custom_attributes, whose
-        # corresponding `string_values` are used in keyword search. Jobs with `
-        # string_values` under these specified field keys are returned if any of the
-        # values matches the search keyword. Custom field values with parenthesis,
-        # brackets and special symbols won't be properly searchable, and those keyword
-        # queries need to be surrounded by quotes.
+        # Optional. This field is deprecated. Please set the searchability of the custom
+        # attribute in the Job.custom_attributes going forward. A list of keys of
+        # filterable Job.custom_attributes, whose corresponding `string_values` are used
+        # in keyword search. Jobs with `string_values` under these specified field keys
+        # are returned if any of the values matches the search keyword. Custom field
+        # values with parenthesis, brackets and special symbols won't be properly
+        # searchable, and those keyword queries need to be surrounded by quotes.
         # Corresponds to the JSON property `keywordSearchableJobCustomAttributes`
         # @return [Array<String>]
         attr_accessor :keyword_searchable_job_custom_attributes
@@ -939,8 +940,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -996,43 +996,44 @@ module Google
         # with histogram facets and other options. Available aggregation function calls
         # are: * `count(string_histogram_facet)`: Count the number of matching entity,
         # for each distinct attribute value. * `count(numeric_histogram_facet, list of
-        # buckets)`: Count the number of matching entity within each bucket. Data types:
-        # * Histogram facet: facet names with format a-zA-Z+. * String: string like "any
-        # string with backslash escape for quote(\")." * Number: whole number and
-        # floating point number like 10, -1 and -0.01. * List: list of elements with
-        # comma(,) separator surrounded by square brackets. For example, [1, 2, 3] and ["
-        # one", "two", "three"]. Built-in constants: * MIN (minimum number similar to
-        # java Double.MIN_VALUE) * MAX (maximum number similar to java Double.MAX_VALUE)
-        # Built-in functions: * bucket(start, end[, label]): bucket built-in function
-        # creates a bucket with range of start, end). Note that the end is exclusive.
-        # For example, bucket(1, MAX, "positive number") or bucket(1, 10). Job histogram
-        # facets: * company_id: histogram by [Job.distributor_company_id. *
-        # company_display_name: histogram by Job.company_display_name. * employment_type:
-        # histogram by Job.employment_types. For example, "FULL_TIME", "PART_TIME". *
-        # company_size: histogram by CompanySize, for example, "SMALL", "MEDIUM", "BIG".
-        # * publish_time_in_day: histogram by the Job.publish_time in days. Must specify
-        # list of numeric buckets in spec. * publish_time_in_month: histogram by the Job.
-        # publish_time in months. Must specify list of numeric buckets in spec. *
-        # publish_time_in_year: histogram by the Job.publish_time in years. Must specify
-        # list of numeric buckets in spec. * degree_type: histogram by the Job.
-        # degree_type. For example, "Bachelors", "Masters". * job_level: histogram by
-        # the Job.job_level. For example, "Entry Level". * country: histogram by the
-        # country code of jobs. For example, "US", "FR". * admin1: histogram by the
-        # admin1 code of jobs, which is a global placeholder referring to the state,
-        # province, or the particular term a country uses to define the geographic
-        # structure below the country level. For example, "CA", "IL". * city: histogram
-        # by a combination of the "city name, admin1 code". For example, "Mountain View,
-        # CA", "New York, NY". * admin1_country: histogram by a combination of the "
-        # admin1 code, country". For example, "CA, US", "IL, US". * city_coordinate:
-        # histogram by the city center's GPS coordinates (latitude and longitude). For
-        # example, 37.4038522,-122.0987765. Since the coordinates of a city center can
-        # change, customers may need to refresh them periodically. * locale: histogram
-        # by the Job.language_code. For example, "en-US", "fr-FR". * language: histogram
-        # by the language subtag of the Job.language_code. For example, "en", "fr". *
-        # category: histogram by the JobCategory. For example, "COMPUTER_AND_IT", "
-        # HEALTHCARE". * base_compensation_unit: histogram by the CompensationUnit of
-        # base salary. For example, "WEEKLY", "MONTHLY". * base_compensation: histogram
-        # by the base salary. Must specify list of numeric buckets to group results by. *
+        # buckets)`: Count the number of matching entity within each bucket. A maximum
+        # of 200 histogram buckets are supported. Data types: * Histogram facet: facet
+        # names with format a-zA-Z+. * String: string like "any string with backslash
+        # escape for quote(\")." * Number: whole number and floating point number like
+        # 10, -1 and -0.01. * List: list of elements with comma(,) separator surrounded
+        # by square brackets. For example, [1, 2, 3] and ["one", "two", "three"]. Built-
+        # in constants: * MIN (minimum number similar to java Double.MIN_VALUE) * MAX (
+        # maximum number similar to java Double.MAX_VALUE) Built-in functions: * bucket(
+        # start, end[, label]): bucket built-in function creates a bucket with range of
+        # start, end). Note that the end is exclusive. For example, bucket(1, MAX, "
+        # positive number") or bucket(1, 10). Job histogram facets: * company_id:
+        # histogram by [Job.distributor_company_id. * company_display_name: histogram by
+        # Job.company_display_name. * employment_type: histogram by Job.employment_types.
+        # For example, "FULL_TIME", "PART_TIME". * company_size (DEPRECATED): histogram
+        # by CompanySize, for example, "SMALL", "MEDIUM", "BIG". * publish_time_in_day:
+        # histogram by the Job.publish_time in days. Must specify list of numeric
+        # buckets in spec. * publish_time_in_month: histogram by the Job.publish_time in
+        # months. Must specify list of numeric buckets in spec. * publish_time_in_year:
+        # histogram by the Job.publish_time in years. Must specify list of numeric
+        # buckets in spec. * degree_type: histogram by the Job.degree_type. For example,
+        # "Bachelors", "Masters". * job_level: histogram by the Job.job_level. For
+        # example, "Entry Level". * country: histogram by the country code of jobs. For
+        # example, "US", "FR". * admin1: histogram by the admin1 code of jobs, which is
+        # a global placeholder referring to the state, province, or the particular term
+        # a country uses to define the geographic structure below the country level. For
+        # example, "CA", "IL". * city: histogram by a combination of the "city name,
+        # admin1 code". For example, "Mountain View, CA", "New York, NY". *
+        # admin1_country: histogram by a combination of the "admin1 code, country". For
+        # example, "CA, US", "IL, US". * city_coordinate: histogram by the city center's
+        # GPS coordinates (latitude and longitude). For example, 37.4038522,-122.0987765.
+        # Since the coordinates of a city center can change, customers may need to
+        # refresh them periodically. * locale: histogram by the Job.language_code. For
+        # example, "en-US", "fr-FR". * language: histogram by the language subtag of the
+        # Job.language_code. For example, "en", "fr". * category: histogram by the
+        # JobCategory. For example, "COMPUTER_AND_IT", "HEALTHCARE". *
+        # base_compensation_unit: histogram by the CompensationUnit of base salary. For
+        # example, "WEEKLY", "MONTHLY". * base_compensation: histogram by the base
+        # salary. Must specify list of numeric buckets to group results by. *
         # annualized_base_compensation: histogram by the base annualized salary. Must
         # specify list of numeric buckets to group results by. *
         # annualized_total_compensation: histogram by the total annualized salary. Must
@@ -1508,11 +1509,19 @@ module Google
         # @return [Google::Apis::JobsV3p1beta1::CommuteFilter]
         attr_accessor :commute_filter
       
-        # Optional. This filter specifies the exact company display name of the jobs to
-        # search against. If a value isn't specified, jobs within the search results are
-        # associated with any company. If multiple values are specified, jobs within the
-        # search results may be associated with any of the specified companies. At most
-        # 20 company display name filters are allowed.
+        # Optional. This filter specifies the company Company.display_name of the jobs
+        # to search against. The company name must match the value exactly.
+        # Alternatively, the value being searched for can be wrapped in different match
+        # operators. `SUBSTRING_MATCH([value])` The company name must contain a case
+        # insensitive substring match of the value. Using this function may increase
+        # latency. Sample Value: `SUBSTRING_MATCH(google)` `MULTI_WORD_TOKEN_MATCH([
+        # value])` The value will be treated as a multi word token and the company name
+        # must contain a case insensitive match of the value. Using this function may
+        # increase latency. Sample Value: `MULTI_WORD_TOKEN_MATCH(google)` If a value
+        # isn't specified, jobs within the search results are associated with any
+        # company. If multiple values are specified, jobs within the search results may
+        # be associated with any of the specified companies. At most 20 company display
+        # name filters are allowed.
         # Corresponds to the JSON property `companyDisplayNames`
         # @return [Array<String>]
         attr_accessor :company_display_names
@@ -1762,11 +1771,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `postalAddress`
         # @return [Google::Apis::JobsV3p1beta1::PostalAddress]
         attr_accessor :postal_address
@@ -1833,16 +1842,18 @@ module Google
       
         # Optional. Allows the client to return jobs without a set location,
         # specifically, telecommuting jobs (telecommuting is considered by the service
-        # as a special location. Job.posting_region indicates if a job permits
+        # as a special location). Job.posting_region indicates if a job permits
         # telecommuting. If this field is set to TelecommutePreference.
         # TELECOMMUTE_ALLOWED, telecommuting jobs are searched, and address and lat_lng
         # are ignored. If not set or set to TelecommutePreference.TELECOMMUTE_EXCLUDED,
-        # telecommute job are not searched. This filter can be used by itself to search
-        # exclusively for telecommuting jobs, or it can be combined with another
-        # location filter to search for a combination of job locations, such as "
-        # Mountain View" or "telecommuting" jobs. However, when used in combination with
-        # other location filters, telecommuting jobs can be treated as less relevant
-        # than other jobs in the search response.
+        # the telecommute status of the jobs is ignored. Jobs that have PostingRegion.
+        # TELECOMMUTE and have additional Job.addresses may still be matched based on
+        # other location filters using address or latlng. This filter can be used by
+        # itself to search exclusively for telecommuting jobs, or it can be combined
+        # with another location filter to search for a combination of job locations,
+        # such as "Mountain View" or "telecommuting" jobs. However, when used in
+        # combination with other location filters, telecommuting jobs can be treated as
+        # less relevant than other jobs in the search response.
         # Corresponds to the JSON property `telecommutePreference`
         # @return [String]
         attr_accessor :telecommute_preference
@@ -1974,7 +1985,7 @@ module Google
         end
       end
       
-      # Next ID: 15
+      # Next ID: 16
       class NamespacedDebugInput
         include Google::Apis::Core::Hashable
       
@@ -2018,7 +2029,8 @@ module Google
         # If true, disable automatic enrollment selection (at all diversion points).
         # Automatic enrollment selection means experiment selection process based on the
         # experiment's automatic enrollment condition. This does not disable selection
-        # of forced experiments.
+        # of forced experiments. Setting this field to false does not change anything in
+        # the experiment selection process.
         # Corresponds to the JSON property `disableAutomaticEnrollmentSelection`
         # @return [Boolean]
         attr_accessor :disable_automatic_enrollment_selection
@@ -2056,7 +2068,8 @@ module Google
         # If true, disable manual enrollment selection (at all diversion points). Manual
         # enrollment selection means experiment selection process based on the request's
         # manual enrollment states (a.k.a. opt-in experiments). This does not disable
-        # selection of forced experiments.
+        # selection of forced experiments. Setting this field to false does not change
+        # anything in the experiment selection process.
         # Corresponds to the JSON property `disableManualEnrollmentSelection`
         # @return [Boolean]
         attr_accessor :disable_manual_enrollment_selection
@@ -2068,6 +2081,8 @@ module Google
         # of forced experiments. This is useful in cases when it is not known whether
         # experiment selection behavior is responsible for a error or breakage.
         # Disabling organic selection may help to isolate the cause of a given problem.
+        # Setting this field to false does not change anything in the experiment
+        # selection process.
         # Corresponds to the JSON property `disableOrganicSelection`
         # @return [Boolean]
         attr_accessor :disable_organic_selection
@@ -2084,6 +2099,12 @@ module Google
         # Corresponds to the JSON property `forcedRollouts`
         # @return [Hash<String,Boolean>]
         attr_accessor :forced_rollouts
+      
+        # Sets different testing modes. See the documentation in the TestingMode message
+        # for more information.
+        # Corresponds to the JSON property `testingMode`
+        # @return [String]
+        attr_accessor :testing_mode
       
         def initialize(**args)
            update!(**args)
@@ -2105,6 +2126,7 @@ module Google
           @disable_organic_selection = args[:disable_organic_selection] if args.key?(:disable_organic_selection)
           @forced_flags = args[:forced_flags] if args.key?(:forced_flags)
           @forced_rollouts = args[:forced_rollouts] if args.key?(:forced_rollouts)
+          @testing_mode = args[:testing_mode] if args.key?(:testing_mode)
         end
       end
       
@@ -2240,11 +2262,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -2319,8 +2341,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]

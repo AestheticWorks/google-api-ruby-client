@@ -31,11 +31,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `address`
         # @return [Google::Apis::MybusinessverificationsV1::PostalAddress]
         attr_accessor :address
@@ -101,10 +101,14 @@ module Google
       end
       
       # Indicates that the location fails to comply with our [guidelines](https://
-      # support.google.com/business/answer/3038177). To fix this issue, consult the [
-      # Help Center Article](https://support.google.com/business/answer/4569145).
+      # support.google.com/business/answer/3038177).
       class ComplyWithGuidelines
         include Google::Apis::Core::Hashable
+      
+        # The reason why the location is being recommended to comply with guidelines.
+        # Corresponds to the JSON property `recommendationReason`
+        # @return [String]
+        attr_accessor :recommendation_reason
       
         def initialize(**args)
            update!(**args)
@@ -112,6 +116,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @recommendation_reason = args[:recommendation_reason] if args.key?(:recommendation_reason)
         end
       end
       
@@ -274,11 +279,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `address`
         # @return [Google::Apis::MybusinessverificationsV1::PostalAddress]
         attr_accessor :address
@@ -298,7 +303,7 @@ module Google
         attr_accessor :name
       
         # Required. Id of the category that best describes the core business this
-        # location engages in.
+        # location engages in. e.g. gcid:bakery.
         # Corresponds to the JSON property `primaryCategoryId`
         # @return [String]
         attr_accessor :primary_category_id
@@ -336,11 +341,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -415,8 +420,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]
@@ -487,11 +492,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `address`
         # @return [Google::Apis::MybusinessverificationsV1::PostalAddress]
         attr_accessor :address
@@ -509,6 +514,11 @@ module Google
       # A verification represents a verification attempt on a location.
       class Verification
         include Google::Apis::Core::Hashable
+      
+        # Optional. Response announcement set only if the method is VETTED_PARTNER.
+        # Corresponds to the JSON property `announcement`
+        # @return [String]
+        attr_accessor :announcement
       
         # The timestamp when the verification is requested.
         # Corresponds to the JSON property `createTime`
@@ -536,6 +546,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @announcement = args[:announcement] if args.key?(:announcement)
           @create_time = args[:create_time] if args.key?(:create_time)
           @method_prop = args[:method_prop] if args.key?(:method_prop)
           @name = args[:name] if args.key?(:name)
@@ -553,6 +564,11 @@ module Google
         # Corresponds to the JSON property `addressData`
         # @return [Google::Apis::MybusinessverificationsV1::AddressVerificationData]
         attr_accessor :address_data
+      
+        # Set only if the method is VETTED_PARTNER.
+        # Corresponds to the JSON property `announcement`
+        # @return [String]
+        attr_accessor :announcement
       
         # Display data for verifications through email.
         # Corresponds to the JSON property `emailData`
@@ -577,6 +593,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @address_data = args[:address_data] if args.key?(:address_data)
+          @announcement = args[:announcement] if args.key?(:announcement)
           @email_data = args[:email_data] if args.key?(:email_data)
           @phone_number = args[:phone_number] if args.key?(:phone_number)
           @verification_method = args[:verification_method] if args.key?(:verification_method)
@@ -713,8 +730,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Indicates that the location fails to comply with our [guidelines](https://
-        # support.google.com/business/answer/3038177). To fix this issue, consult the [
-        # Help Center Article](https://support.google.com/business/answer/4569145).
+        # support.google.com/business/answer/3038177).
         # Corresponds to the JSON property `complyWithGuidelines`
         # @return [Google::Apis::MybusinessverificationsV1::ComplyWithGuidelines]
         attr_accessor :comply_with_guidelines

@@ -398,8 +398,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -879,6 +878,12 @@ module Google
         # @return [String]
         attr_accessor :function
       
+        # Optional. Specify a Cloud region for rewritten Functions invocations. If not
+        # provided, defaults to us-central1.
+        # Corresponds to the JSON property `functionRegion`
+        # @return [String]
+        attr_accessor :function_region
+      
         # The user-supplied [glob](https://firebase.google.com/docs/hosting/full-config#
         # glob_pattern_matching) to match against the request URL path.
         # Corresponds to the JSON property `glob`
@@ -912,6 +917,7 @@ module Google
         def update!(**args)
           @dynamic_links = args[:dynamic_links] if args.key?(:dynamic_links)
           @function = args[:function] if args.key?(:function)
+          @function_region = args[:function_region] if args.key?(:function_region)
           @glob = args[:glob] if args.key?(:glob)
           @path = args[:path] if args.key?(:path)
           @regex = args[:regex] if args.key?(:regex)
@@ -989,9 +995,9 @@ module Google
       class Site
         include Google::Apis::Core::Hashable
       
-        # Optional. The [ID of a Web App](https://firebase.google.com/docs/projects/api/
-        # reference/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id) associated with
-        # the Hosting site.
+        # Optional. The [ID of a Web App](https://firebase.google.com/docs/reference/
+        # firebase-management/rest/v1beta1/projects.webApps#WebApp.FIELDS.app_id)
+        # associated with the Hosting site.
         # Corresponds to the JSON property `appId`
         # @return [String]
         attr_accessor :app_id
@@ -1008,12 +1014,12 @@ module Google
       
         # Output only. The fully-qualified resource name of the Hosting site, in the
         # format: projects/PROJECT_IDENTIFIER/sites/SITE_ID PROJECT_IDENTIFIER: the
-        # Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/projects/
-        # api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_number) ***(
-        # recommended)*** or its [`ProjectId`](https://firebase.google.com/docs/projects/
-        # api/reference/rest/v1beta1/projects#FirebaseProject.FIELDS.project_id). Learn
-        # more about using project identifiers in Google's [AIP 2510 standard](https://
-        # google.aip.dev/cloud/2510).
+        # Firebase project's [`ProjectNumber`](https://firebase.google.com/docs/
+        # reference/firebase-management/rest/v1beta1/projects#FirebaseProject.FIELDS.
+        # project_number) ***(recommended)*** or its [`ProjectId`](https://firebase.
+        # google.com/docs/reference/firebase-management/rest/v1beta1/projects#
+        # FirebaseProject.FIELDS.project_id). Learn more about using project identifiers
+        # in Google's [AIP 2510 standard](https://google.aip.dev/cloud/2510).
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name

@@ -251,6 +251,8 @@ module Google
       class BatchTranslateDocumentRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :customized_attribution, as: 'customizedAttribution'
+          hash :format_conversions, as: 'formatConversions'
           hash :glossaries, as: 'glossaries', class: Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig, decorator: Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig::Representation
       
           collection :input_configs, as: 'inputConfigs', class: Google::Apis::TranslateV3beta1::BatchDocumentInputConfig, decorator: Google::Apis::TranslateV3beta1::BatchDocumentInputConfig::Representation
@@ -495,12 +497,15 @@ module Google
       class TranslateDocumentRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :customized_attribution, as: 'customizedAttribution'
           property :document_input_config, as: 'documentInputConfig', class: Google::Apis::TranslateV3beta1::DocumentInputConfig, decorator: Google::Apis::TranslateV3beta1::DocumentInputConfig::Representation
       
           property :document_output_config, as: 'documentOutputConfig', class: Google::Apis::TranslateV3beta1::DocumentOutputConfig, decorator: Google::Apis::TranslateV3beta1::DocumentOutputConfig::Representation
       
+          property :enable_shadow_removal_native_pdf, as: 'enableShadowRemovalNativePdf'
           property :glossary_config, as: 'glossaryConfig', class: Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig, decorator: Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig::Representation
       
+          property :is_translate_native_pdf_only, as: 'isTranslateNativePdfOnly'
           hash :labels, as: 'labels'
           property :model, as: 'model'
           property :source_language_code, as: 'sourceLanguageCode'

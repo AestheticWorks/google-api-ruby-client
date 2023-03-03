@@ -40,6 +40,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AccountAutomaticImprovements
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AccountBusinessInformation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -70,6 +76,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AccountImageImprovements
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AccountImageImprovementsSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AccountItemUpdates
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AccountItemUpdatesSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AccountLabel
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -77,6 +107,12 @@ module Google
       end
       
       class AccountReturnCarrier
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AccountShippingImprovements
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -275,6 +311,12 @@ module Google
       end
       
       class ActivateBuyOnGoogleProgramRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Address
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -2236,6 +2278,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TimePeriod
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class TimeZone
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -2296,7 +2344,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Warehouse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class WarehouseBasedDeliveryTime
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class WarehouseCutoffTime
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -2315,6 +2375,8 @@ module Google
           collection :ads_links, as: 'adsLinks', class: Google::Apis::ContentV2_1::AccountAdsLink, decorator: Google::Apis::ContentV2_1::AccountAdsLink::Representation
       
           property :adult_content, as: 'adultContent'
+          property :automatic_improvements, as: 'automaticImprovements', class: Google::Apis::ContentV2_1::AccountAutomaticImprovements, decorator: Google::Apis::ContentV2_1::AccountAutomaticImprovements::Representation
+      
           collection :automatic_label_ids, as: 'automaticLabelIds'
           property :business_information, as: 'businessInformation', class: Google::Apis::ContentV2_1::AccountBusinessInformation, decorator: Google::Apis::ContentV2_1::AccountBusinessInformation::Representation
       
@@ -2353,6 +2415,18 @@ module Google
         end
       end
       
+      class AccountAutomaticImprovements
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :image_improvements, as: 'imageImprovements', class: Google::Apis::ContentV2_1::AccountImageImprovements, decorator: Google::Apis::ContentV2_1::AccountImageImprovements::Representation
+      
+          property :item_updates, as: 'itemUpdates', class: Google::Apis::ContentV2_1::AccountItemUpdates, decorator: Google::Apis::ContentV2_1::AccountItemUpdates::Representation
+      
+          property :shipping_improvements, as: 'shippingImprovements', class: Google::Apis::ContentV2_1::AccountShippingImprovements, decorator: Google::Apis::ContentV2_1::AccountShippingImprovements::Representation
+      
+        end
+      end
+      
       class AccountBusinessInformation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2362,6 +2436,7 @@ module Google
       
           property :korean_business_registration_number, as: 'koreanBusinessRegistrationNumber'
           property :phone_number, as: 'phoneNumber'
+          property :phone_verification_status, as: 'phoneVerificationStatus'
         end
       end
       
@@ -2400,6 +2475,42 @@ module Google
         end
       end
       
+      class AccountImageImprovements
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :account_image_improvements_settings, as: 'accountImageImprovementsSettings', class: Google::Apis::ContentV2_1::AccountImageImprovementsSettings, decorator: Google::Apis::ContentV2_1::AccountImageImprovementsSettings::Representation
+      
+          property :effective_allow_automatic_image_improvements, as: 'effectiveAllowAutomaticImageImprovements'
+        end
+      end
+      
+      class AccountImageImprovementsSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_automatic_image_improvements, as: 'allowAutomaticImageImprovements'
+        end
+      end
+      
+      class AccountItemUpdates
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :account_item_updates_settings, as: 'accountItemUpdatesSettings', class: Google::Apis::ContentV2_1::AccountItemUpdatesSettings, decorator: Google::Apis::ContentV2_1::AccountItemUpdatesSettings::Representation
+      
+          property :effective_allow_availability_updates, as: 'effectiveAllowAvailabilityUpdates'
+          property :effective_allow_price_updates, as: 'effectiveAllowPriceUpdates'
+          property :effective_allow_strict_availability_updates, as: 'effectiveAllowStrictAvailabilityUpdates'
+        end
+      end
+      
+      class AccountItemUpdatesSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_availability_updates, as: 'allowAvailabilityUpdates'
+          property :allow_price_updates, as: 'allowPriceUpdates'
+          property :allow_strict_availability_updates, as: 'allowStrictAvailabilityUpdates'
+        end
+      end
+      
       class AccountLabel
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2418,6 +2529,13 @@ module Google
           property :carrier_account_name, as: 'carrierAccountName'
           property :carrier_account_number, as: 'carrierAccountNumber'
           property :carrier_code, as: 'carrierCode'
+        end
+      end
+      
+      class AccountShippingImprovements
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_shipping_improvements, as: 'allowShippingImprovements'
         end
       end
       
@@ -2756,6 +2874,17 @@ module Google
       class ActivateBuyOnGoogleProgramRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class Address
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :administrative_area, as: 'administrativeArea'
+          property :city, as: 'city'
+          property :country, as: 'country'
+          property :postal_code, as: 'postalCode'
+          property :street_address, as: 'streetAddress'
         end
       end
       
@@ -4172,11 +4301,16 @@ module Google
       class OrderTrackingSignalLineItemDetails
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :brand, as: 'brand'
           property :gtin, as: 'gtin'
           property :line_item_id, as: 'lineItemId'
           property :mpn, as: 'mpn'
+          property :product_description, as: 'productDescription'
           property :product_id, as: 'productId'
+          property :product_title, as: 'productTitle'
           property :quantity, :numeric_string => true, as: 'quantity'
+          property :sku, as: 'sku'
+          property :upc, as: 'upc'
         end
       end
       
@@ -5002,9 +5136,14 @@ module Google
       class PosStore
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :gcid_category, as: 'gcidCategory'
           property :kind, as: 'kind'
+          property :phone_number, as: 'phoneNumber'
+          property :place_id, as: 'placeId'
           property :store_address, as: 'storeAddress'
           property :store_code, as: 'storeCode'
+          property :store_name, as: 'storeName'
+          property :website_url, as: 'websiteUrl'
         end
       end
       
@@ -5450,7 +5589,11 @@ module Google
           collection :product_type_exclusion, as: 'productTypeExclusion'
           collection :promotion_destination_ids, as: 'promotionDestinationIds'
           property :promotion_display_dates, as: 'promotionDisplayDates'
+          property :promotion_display_time_period, as: 'promotionDisplayTimePeriod', class: Google::Apis::ContentV2_1::TimePeriod, decorator: Google::Apis::ContentV2_1::TimePeriod::Representation
+      
           property :promotion_effective_dates, as: 'promotionEffectiveDates'
+          property :promotion_effective_time_period, as: 'promotionEffectiveTimePeriod', class: Google::Apis::ContentV2_1::TimePeriod, decorator: Google::Apis::ContentV2_1::TimePeriod::Representation
+      
           property :promotion_id, as: 'promotionId'
           collection :redemption_channel, as: 'redemptionChannel'
           collection :shipping_service_names, as: 'shippingServiceNames'
@@ -6244,6 +6387,8 @@ module Google
       
           collection :services, as: 'services', class: Google::Apis::ContentV2_1::Service, decorator: Google::Apis::ContentV2_1::Service::Representation
       
+          collection :warehouses, as: 'warehouses', class: Google::Apis::ContentV2_1::Warehouse, decorator: Google::Apis::ContentV2_1::Warehouse::Representation
+      
         end
       end
       
@@ -6462,6 +6607,14 @@ module Google
         end
       end
       
+      class TimePeriod
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
       class TimeZone
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -6555,6 +6708,20 @@ module Google
         end
       end
       
+      class Warehouse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :business_day_config, as: 'businessDayConfig', class: Google::Apis::ContentV2_1::BusinessDayConfig, decorator: Google::Apis::ContentV2_1::BusinessDayConfig::Representation
+      
+          property :cutoff_time, as: 'cutoffTime', class: Google::Apis::ContentV2_1::WarehouseCutoffTime, decorator: Google::Apis::ContentV2_1::WarehouseCutoffTime::Representation
+      
+          property :handling_days, :numeric_string => true, as: 'handlingDays'
+          property :name, as: 'name'
+          property :shipping_address, as: 'shippingAddress', class: Google::Apis::ContentV2_1::Address, decorator: Google::Apis::ContentV2_1::Address::Representation
+      
+        end
+      end
+      
       class WarehouseBasedDeliveryTime
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -6565,6 +6732,15 @@ module Google
           property :origin_country, as: 'originCountry'
           property :origin_postal_code, as: 'originPostalCode'
           property :origin_street_address, as: 'originStreetAddress'
+          property :warehouse_name, as: 'warehouseName'
+        end
+      end
+      
+      class WarehouseCutoffTime
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hour, as: 'hour'
+          property :minute, as: 'minute'
         end
       end
       

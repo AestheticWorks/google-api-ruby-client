@@ -88,6 +88,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CopyBackupEncryptionConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CopyBackupMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CopyBackupRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CreateBackupMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -125,6 +143,12 @@ module Google
       end
       
       class Database
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DatabaseRole
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -191,6 +215,12 @@ module Google
       end
       
       class Field
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FreeInstanceMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -275,6 +305,12 @@ module Google
       end
       
       class ListDatabaseOperationsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListDatabaseRolesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -639,10 +675,13 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :create_time, as: 'createTime'
           property :database, as: 'database'
+          property :database_dialect, as: 'databaseDialect'
           property :encryption_info, as: 'encryptionInfo', class: Google::Apis::SpannerV1::EncryptionInfo, decorator: Google::Apis::SpannerV1::EncryptionInfo::Representation
       
           property :expire_time, as: 'expireTime'
+          property :max_expire_time, as: 'maxExpireTime'
           property :name, as: 'name'
+          collection :referencing_backups, as: 'referencingBackups'
           collection :referencing_databases, as: 'referencingDatabases'
           property :size_bytes, :numeric_string => true, as: 'sizeBytes'
           property :state, as: 'state'
@@ -747,6 +786,36 @@ module Google
         end
       end
       
+      class CopyBackupEncryptionConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :encryption_type, as: 'encryptionType'
+          property :kms_key_name, as: 'kmsKeyName'
+        end
+      end
+      
+      class CopyBackupMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cancel_time, as: 'cancelTime'
+          property :name, as: 'name'
+          property :progress, as: 'progress', class: Google::Apis::SpannerV1::OperationProgress, decorator: Google::Apis::SpannerV1::OperationProgress::Representation
+      
+          property :source_backup, as: 'sourceBackup'
+        end
+      end
+      
+      class CopyBackupRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :backup_id, as: 'backupId'
+          property :encryption_config, as: 'encryptionConfig', class: Google::Apis::SpannerV1::CopyBackupEncryptionConfig, decorator: Google::Apis::SpannerV1::CopyBackupEncryptionConfig::Representation
+      
+          property :expire_time, as: 'expireTime'
+          property :source_backup, as: 'sourceBackup'
+        end
+      end
+      
       class CreateBackupMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -769,6 +838,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :create_statement, as: 'createStatement'
+          property :database_dialect, as: 'databaseDialect'
           property :encryption_config, as: 'encryptionConfig', class: Google::Apis::SpannerV1::EncryptionConfig, decorator: Google::Apis::SpannerV1::EncryptionConfig::Representation
       
           collection :extra_statements, as: 'extraStatements'
@@ -807,6 +877,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :create_time, as: 'createTime'
+          property :database_dialect, as: 'databaseDialect'
           property :default_leader, as: 'defaultLeader'
           property :earliest_version_time, as: 'earliestVersionTime'
           property :encryption_config, as: 'encryptionConfig', class: Google::Apis::SpannerV1::EncryptionConfig, decorator: Google::Apis::SpannerV1::EncryptionConfig::Representation
@@ -818,6 +889,13 @@ module Google
       
           property :state, as: 'state'
           property :version_retention_period, as: 'versionRetentionPeriod'
+        end
+      end
+      
+      class DatabaseRole
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
         end
       end
       
@@ -939,6 +1017,15 @@ module Google
         end
       end
       
+      class FreeInstanceMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :expire_behavior, as: 'expireBehavior'
+          property :expire_time, as: 'expireTime'
+          property :upgrade_time, as: 'upgradeTime'
+        end
+      end
+      
       class GetDatabaseDdlResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -980,13 +1067,18 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :config, as: 'config'
+          property :create_time, as: 'createTime'
           property :display_name, as: 'displayName'
           collection :endpoint_uris, as: 'endpointUris'
+          property :free_instance_metadata, as: 'freeInstanceMetadata', class: Google::Apis::SpannerV1::FreeInstanceMetadata, decorator: Google::Apis::SpannerV1::FreeInstanceMetadata::Representation
+      
+          property :instance_type, as: 'instanceType'
           hash :labels, as: 'labels'
           property :name, as: 'name'
           property :node_count, as: 'nodeCount'
           property :processing_units, as: 'processingUnits'
           property :state, as: 'state'
+          property :update_time, as: 'updateTime'
         end
       end
       
@@ -994,6 +1086,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :display_name, as: 'displayName'
+          property :free_instance_availability, as: 'freeInstanceAvailability'
           collection :leader_options, as: 'leaderOptions'
           property :name, as: 'name'
           collection :replicas, as: 'replicas', class: Google::Apis::SpannerV1::ReplicaInfo, decorator: Google::Apis::SpannerV1::ReplicaInfo::Representation
@@ -1077,6 +1170,15 @@ module Google
           property :next_page_token, as: 'nextPageToken'
           collection :operations, as: 'operations', class: Google::Apis::SpannerV1::Operation, decorator: Google::Apis::SpannerV1::Operation::Representation
       
+        end
+      end
+      
+      class ListDatabaseRolesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :database_roles, as: 'databaseRoles', class: Google::Apis::SpannerV1::DatabaseRole, decorator: Google::Apis::SpannerV1::DatabaseRole::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
         end
       end
       
@@ -1521,6 +1623,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :approximate_last_use_time, as: 'approximateLastUseTime'
           property :create_time, as: 'createTime'
+          property :creator_role, as: 'creatorRole'
           hash :labels, as: 'labels'
           property :name, as: 'name'
         end
@@ -1622,6 +1725,7 @@ module Google
           property :code, as: 'code'
           property :struct_type, as: 'structType', class: Google::Apis::SpannerV1::StructType, decorator: Google::Apis::SpannerV1::StructType::Representation
       
+          property :type_annotation, as: 'typeAnnotation'
         end
       end
       

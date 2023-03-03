@@ -51,6 +51,51 @@ module Google
           @batch_path = 'batch'
         end
         
+        # Generate summary of app installation requests.
+        # @param [String] customer
+        #   Required. Customer id or "my_customer" to use the customer associated to the
+        #   account making the request.
+        # @param [String] order_by
+        #   Field used to order results. Supported fields: * request_count *
+        #   latest_request_time
+        # @param [String] org_unit_id
+        #   The ID of the organizational unit.
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return. Maximum and default are 50, anything
+        #   above will be coerced to 50.
+        # @param [String] page_token
+        #   Token to specify the page of the request to be returned.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeAppRequestsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeAppRequestsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_app_chrome_app_requests(customer, order_by: nil, org_unit_id: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/apps:countChromeAppRequests', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeAppRequestsResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeAppRequestsResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Get a specific app for a customer by its resource name.
         # @param [String] name
         #   Required. The app for which details are being queried. Examples: "customers/
@@ -153,6 +198,167 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Count of Chrome Browsers that have been recently enrolled, have new policy to
+        # be synced, or have no recent activity.
+        # @param [String] customer
+        #   Required. The customer ID or "my_customer" prefixed with "customers/".
+        # @param [String] org_unit_id
+        #   Optional. The ID of the organizational unit. If omitted, all data will be
+        #   returned.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_chrome_browsers_needing_attention(customer, org_unit_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countChromeBrowsersNeedingAttention', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Generate report of the number of devices expiring in each month of the
+        # selected time frame. Devices are grouped by auto update expiration date and
+        # model. Further information can be found [here](https://support.google.com/
+        # chrome/a/answer/10564947).
+        # @param [String] customer
+        #   Required. The customer ID or "my_customer" prefixed with "customers/".
+        # @param [String] max_aue_date
+        #   Optional. Maximum expiration date in format yyyy-mm-dd in UTC timezone. If
+        #   included returns all devices that have already expired and devices with auto
+        #   expiration date equal to or earlier than the maximum date.
+        # @param [String] min_aue_date
+        #   Optional. Maximum expiration date in format yyyy-mm-dd in UTC timezone. If
+        #   included returns all devices that have already expired and devices with auto
+        #   expiration date equal to or later than the minimum date.
+        # @param [String] org_unit_id
+        #   Optional. The organizational unit ID, if omitted, will return data for all
+        #   organizational units.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_chrome_devices_reaching_auto_expiration_date(customer, max_aue_date: nil, min_aue_date: nil, org_unit_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countChromeDevicesReachingAutoExpirationDate', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['maxAueDate'] = max_aue_date unless max_aue_date.nil?
+          command.query['minAueDate'] = min_aue_date unless min_aue_date.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Counts of ChromeOS devices that have not synced policies or have lacked user
+        # activity in the past 28 days, are out of date, or are not complaint. Further
+        # information can be found here https://support.google.com/chrome/a/answer/
+        # 10564947
+        # @param [String] customer
+        #   Required. The customer ID or "my_customer" prefixed with "customers/".
+        # @param [String] org_unit_id
+        #   Optional. The ID of the organizational unit. If omitted, all data will be
+        #   returned.
+        # @param [String] read_mask
+        #   Required. Mask of the fields that should be populated in the returned report.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_chrome_devices_that_need_attention(customer, org_unit_id: nil, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countChromeDevicesThatNeedAttention', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeDevicesThatNeedAttentionResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Counts of devices with a specific hardware specification from the requested
+        # hardware type (for example model name, processor type). Further information
+        # can be found here https://support.google.com/chrome/a/answer/10564947
+        # @param [String] customer
+        #   Required. The customer ID or "my_customer".
+        # @param [String] org_unit_id
+        #   Optional. The ID of the organizational unit. If omitted, all data will be
+        #   returned.
+        # @param [String] read_mask
+        #   Required. Mask of the fields that should be populated in the returned report.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_chrome_hardware_fleet_devices(customer, org_unit_id: nil, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countChromeHardwareFleetDevices', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountChromeHardwareFleetDevicesResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Generate report of installed Chrome versions.
         # @param [String] customer
         #   Required. Customer id or "my_customer" to use the customer associated to the
@@ -206,10 +412,10 @@ module Google
         #   Query string to filter results, AND-separated fields in EBNF syntax. Note: OR
         #   operations are not supported in this filter. Supported filter fields: *
         #   app_name * app_type * install_type * number_of_permissions *
-        #   total_install_count * latest_profile_active_date * permission_name
+        #   total_install_count * latest_profile_active_date * permission_name * app_id
         # @param [String] order_by
         #   Field used to order results. Supported order by fields: * app_name * app_type *
-        #   install_type * number_of_permissions * total_install_count
+        #   install_type * number_of_permissions * total_install_count * app_id
         # @param [String] org_unit_id
         #   The ID of the organizational unit.
         # @param [Fixnum] page_size
@@ -243,6 +449,110 @@ module Google
           command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get a summary of printing done by each printer.
+        # @param [String] customer
+        #   Required. Customer ID prefixed with "customers/" or "customers/my_customer" to
+        #   use the customer associated to the account making the request.
+        # @param [String] filter
+        #   Query string to filter results, AND-separated fields in EBNF syntax. Note: OR
+        #   operations are not supported in this filter. Note: Only >= and <= comparators
+        #   are supported in this filter. Supported filter fields: * completion_time
+        # @param [String] order_by
+        #   Field used to order results. If omitted, results will be ordered in ascending
+        #   order of the 'printer' field. Supported order_by fields: * printer * job_count
+        #   * device_count * user_count
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return. Maximum and default are 100.
+        # @param [String] page_token
+        #   Token to specify the page of the response to be returned.
+        # @param [String] printer_org_unit_id
+        #   The ID of the organizational unit for printers. If specified, only data for
+        #   printers from the specified organizational unit will be returned. If omitted,
+        #   data for printers from all organizational units will be returned.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByPrinterResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByPrinterResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_print_jobs_by_printer(customer, filter: nil, order_by: nil, page_size: nil, page_token: nil, printer_org_unit_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countPrintJobsByPrinter', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByPrinterResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByPrinterResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['printerOrgUnitId'] = printer_org_unit_id unless printer_org_unit_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get a summary of printing done by each user.
+        # @param [String] customer
+        #   Required. Customer ID prefixed with "customers/" or "customers/my_customer" to
+        #   use the customer associated to the account making the request.
+        # @param [String] filter
+        #   Query string to filter results, AND-separated fields in EBNF syntax. Note: OR
+        #   operations are not supported in this filter. Note: Only >= and <= comparators
+        #   are supported in this filter. Supported filter fields: * completion_time
+        # @param [String] order_by
+        #   Field used to order results. If omitted, results will be ordered in ascending
+        #   order of the 'user_email' field. Supported order_by fields: * user_email *
+        #   job_count * printer_count * device_count
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return. Maximum and default are 100.
+        # @param [String] page_token
+        #   Token to specify the page of the response to be returned.
+        # @param [String] printer_org_unit_id
+        #   The ID of the organizational unit for printers. If specified, only print jobs
+        #   initiated with printers from the specified organizational unit will be counted.
+        #   If omitted, all print jobs will be counted.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByUserResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByUserResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def count_customer_report_print_jobs_by_user(customer, filter: nil, order_by: nil, page_size: nil, page_token: nil, printer_org_unit_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+customer}/reports:countPrintJobsByUser', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByUserResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1CountPrintJobsByUserResponse
+          command.params['customer'] = customer unless customer.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['printerOrgUnitId'] = printer_org_unit_id unless printer_org_unit_id.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -299,6 +609,209 @@ module Google
           command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get telemetry device.
+        # @param [String] name
+        #   Required. Name of the `TelemetryDevice` to return.
+        # @param [String] read_mask
+        #   Required. Read mask to specify which fields to return.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDevice] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDevice]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_customer_telemetry_device(name, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDevice::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryDevice
+          command.params['name'] = name unless name.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # List all telemetry devices.
+        # @param [String] parent
+        #   Required. Customer id or "my_customer" to use the customer associated to the
+        #   account making the request.
+        # @param [String] filter
+        #   Optional. Only include resources that match the filter. Supported filter
+        #   fields: - org_unit_id - serial_number - device_id
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return. Default value is 100. Maximum value is
+        #   1000.
+        # @param [String] page_token
+        #   Token to specify next page in the list.
+        # @param [String] read_mask
+        #   Required. Read mask to specify which fields to return.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryDevicesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryDevicesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_customer_telemetry_devices(parent, filter: nil, page_size: nil, page_token: nil, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/telemetry/devices', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryDevicesResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryDevicesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # List telemetry events.
+        # @param [String] parent
+        #   Required. Customer id or "my_customer" to use the customer associated to the
+        #   account making the request.
+        # @param [String] filter
+        #   Optional. Only include resources that match the filter. Supported filter
+        #   fields: - device_id - user_id - device_org_unit_id - user_org_unit_id -
+        #   timestamp - event_type The "timestamp" filter accepts either Epoch
+        #   milliseconds or RFC 3339 formatted time surrounded by simple double quotes.
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of results to return. Default value is 100. Maximum
+        #   value is 1000.
+        # @param [String] page_token
+        #   Optional. Token to specify next page in the list.
+        # @param [String] read_mask
+        #   Required. Read mask to specify which fields to return.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryEventsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryEventsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_customer_telemetry_events(parent, filter: nil, page_size: nil, page_token: nil, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/telemetry/events', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryEventsResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryEventsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Get telemetry user.
+        # @param [String] name
+        #   Required. Name of the `TelemetryUser` to return.
+        # @param [String] read_mask
+        #   Read mask to specify which fields to return.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUser] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUser]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_customer_telemetry_user(name, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUser::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1TelemetryUser
+          command.params['name'] = name unless name.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # List all telemetry users.
+        # @param [String] parent
+        #   Required. Customer id or "my_customer" to use the customer associated to the
+        #   account making the request.
+        # @param [String] filter
+        #   Only include resources that match the filter. Supported filter fields: -
+        #   user_id - user_org_unit_id
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return. Default value is 100. Maximum value is
+        #   1000.
+        # @param [String] page_token
+        #   Token to specify next page in the list.
+        # @param [String] read_mask
+        #   Read mask to specify which fields to return.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryUsersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryUsersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_customer_telemetry_users(parent, filter: nil, page_size: nil, page_token: nil, read_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/telemetry/users', options)
+          command.response_representation = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryUsersResponse::Representation
+          command.response_class = Google::Apis::ChromemanagementV1::GoogleChromeManagementV1ListTelemetryUsersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['readMask'] = read_mask unless read_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

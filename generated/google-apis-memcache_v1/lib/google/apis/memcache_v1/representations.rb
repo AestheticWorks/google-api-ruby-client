@@ -64,6 +64,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudMemcacheV1MaintenancePolicy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudMemcacheV1OperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -95,6 +101,12 @@ module Google
       end
       
       class GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -172,6 +184,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MaintenanceSchedule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class MaintenanceWindow
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -208,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RescheduleMaintenanceRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Schedule
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -239,6 +263,12 @@ module Google
       end
       
       class WeeklyCycle
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class WeeklyMaintenanceWindow
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -308,6 +338,17 @@ module Google
         end
       end
       
+      class GoogleCloudMemcacheV1MaintenancePolicy
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :description, as: 'description'
+          property :update_time, as: 'updateTime'
+          collection :weekly_maintenance_window, as: 'weeklyMaintenanceWindow', class: Google::Apis::MemcacheV1::WeeklyMaintenanceWindow, decorator: Google::Apis::MemcacheV1::WeeklyMaintenanceWindow::Representation
+      
+        end
+      end
+      
       class GoogleCloudMemcacheV1OperationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -332,6 +373,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :consumer_defined_name, as: 'consumerDefinedName'
           property :create_time, as: 'createTime'
+          property :instance_type, as: 'instanceType'
           hash :labels, as: 'labels'
           hash :maintenance_policy_names, as: 'maintenancePolicyNames'
           hash :maintenance_schedules, as: 'maintenanceSchedules', class: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule, decorator: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule::Representation
@@ -339,6 +381,8 @@ module Google
           property :maintenance_settings, as: 'maintenanceSettings', class: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings, decorator: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings::Representation
       
           property :name, as: 'name'
+          hash :notification_parameters, as: 'notificationParameters', class: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter, decorator: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter::Representation
+      
           hash :producer_metadata, as: 'producerMetadata'
           collection :provisioned_resources, as: 'provisionedResources', class: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource, decorator: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource::Representation
       
@@ -380,6 +424,13 @@ module Google
           property :node_id, as: 'nodeId'
           property :per_sli_eligibility, as: 'perSliEligibility', class: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility, decorator: Google::Apis::MemcacheV1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility::Representation
       
+        end
+      end
+      
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :values, as: 'values'
         end
       end
       
@@ -428,6 +479,10 @@ module Google
           collection :instance_messages, as: 'instanceMessages', class: Google::Apis::MemcacheV1::InstanceMessage, decorator: Google::Apis::MemcacheV1::InstanceMessage::Representation
       
           hash :labels, as: 'labels'
+          property :maintenance_policy, as: 'maintenancePolicy', class: Google::Apis::MemcacheV1::GoogleCloudMemcacheV1MaintenancePolicy, decorator: Google::Apis::MemcacheV1::GoogleCloudMemcacheV1MaintenancePolicy::Representation
+      
+          property :maintenance_schedule, as: 'maintenanceSchedule', class: Google::Apis::MemcacheV1::MaintenanceSchedule, decorator: Google::Apis::MemcacheV1::MaintenanceSchedule::Representation
+      
           property :memcache_full_version, as: 'memcacheFullVersion'
           collection :memcache_nodes, as: 'memcacheNodes', class: Google::Apis::MemcacheV1::Node, decorator: Google::Apis::MemcacheV1::Node::Representation
       
@@ -513,6 +568,15 @@ module Google
         end
       end
       
+      class MaintenanceSchedule
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :schedule_deadline_time, as: 'scheduleDeadlineTime'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
       class MaintenanceWindow
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -577,6 +641,14 @@ module Google
         end
       end
       
+      class RescheduleMaintenanceRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :reschedule_type, as: 'rescheduleType'
+          property :schedule_time, as: 'scheduleTime'
+        end
+      end
+      
       class Schedule
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -630,6 +702,16 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :schedule, as: 'schedule', class: Google::Apis::MemcacheV1::Schedule, decorator: Google::Apis::MemcacheV1::Schedule::Representation
+      
+        end
+      end
+      
+      class WeeklyMaintenanceWindow
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :day, as: 'day'
+          property :duration, as: 'duration'
+          property :start_time, as: 'startTime', class: Google::Apis::MemcacheV1::TimeOfDay, decorator: Google::Apis::MemcacheV1::TimeOfDay::Representation
       
         end
       end

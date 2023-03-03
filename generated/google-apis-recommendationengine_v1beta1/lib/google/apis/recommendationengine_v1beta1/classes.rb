@@ -964,7 +964,27 @@ module Google
         end
       end
       
-      # Request message for Predict method.
+      # Request message for Predict method. Full resource name of the format: ``name=
+      # projects/*/locations/global/catalogs/default_catalog/eventStores/
+      # default_event_store/placements/*`` The id of the recommendation engine
+      # placement. This id is used to identify the set of models that will be used to
+      # make the prediction. We currently support three placements with the following
+      # IDs by default: // * `shopping_cart`: Predicts items frequently bought
+      # together with one or more catalog items in the same shopping session. Commonly
+      # displayed after `add-to-cart` event, on product detail pages, or on the
+      # shopping cart page. * `home_page`: Predicts the next product that a user will
+      # most likely engage with or purchase based on the shopping or viewing history
+      # of the specified `userId` or `visitorId`. For example - Recommendations for
+      # you. * `product_detail`: Predicts the next product that a user will most
+      # likely engage with or purchase. The prediction is based on the shopping or
+      # viewing history of the specified `userId` or `visitorId` and its relevance to
+      # a specified `CatalogItem`. Typically used on product detail pages. For example
+      # - More items like this. * `recently_viewed_default`: Returns up to 75 items
+      # recently viewed by the specified `userId` or `visitorId`, most recent ones
+      # first. Returns nothing if neither of them has viewed any items yet. For
+      # example - Recently viewed. The full list of available placements can be seen
+      # at https://console.cloud.google.com/recommendation/catalogs/default_catalog/
+      # placements
       class GoogleCloudRecommendationengineV1beta1PredictRequest
         include Google::Apis::Core::Hashable
       
@@ -1763,7 +1783,9 @@ module Google
         attr_accessor :user_agent
       
         # Optional. Unique identifier for logged-in user with a length limit of 128
-        # bytes. Required only for logged-in users.
+        # bytes. Required only for logged-in users. Don't set for anonymous users. Don't
+        # set the field to the same fixed ID for different users. This mixes the event
+        # history of those users together, which results in degraded model quality.
         # Corresponds to the JSON property `userId`
         # @return [String]
         attr_accessor :user_id
@@ -1772,7 +1794,9 @@ module Google
         # bytes. For example, this could be implemented with an HTTP cookie, which
         # should be able to uniquely identify a visitor on a single device. This unique
         # identifier should not change if the visitor logs in or out of the website.
-        # Maximum length 128 bytes. Cannot be empty.
+        # Maximum length 128 bytes. Cannot be empty. Don't set the field to the same
+        # fixed ID for different users. This mixes the event history of those users
+        # together, which results in degraded model quality.
         # Corresponds to the JSON property `visitorId`
         # @return [String]
         attr_accessor :visitor_id
@@ -1881,8 +1905,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class GoogleProtobufEmpty
         include Google::Apis::Core::Hashable
       

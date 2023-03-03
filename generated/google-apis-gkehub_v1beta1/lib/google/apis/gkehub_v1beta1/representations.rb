@@ -22,6 +22,12 @@ module Google
   module Apis
     module GkehubV1beta1
       
+      class ApplianceCluster
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AuditConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -53,6 +59,12 @@ module Google
       end
       
       class ConnectAgentResource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EdgeCluster
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -220,6 +232,13 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ApplianceCluster
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :resource_link, as: 'resourceLink'
+        end
+      end
+      
       class AuditConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -269,6 +288,13 @@ module Google
           property :manifest, as: 'manifest'
           property :type, as: 'type', class: Google::Apis::GkehubV1beta1::TypeMeta, decorator: Google::Apis::GkehubV1beta1::TypeMeta::Representation
       
+        end
+      end
+      
+      class EdgeCluster
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :resource_link, as: 'resourceLink'
         end
       end
       
@@ -410,6 +436,10 @@ module Google
       class MembershipEndpoint
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :appliance_cluster, as: 'applianceCluster', class: Google::Apis::GkehubV1beta1::ApplianceCluster, decorator: Google::Apis::GkehubV1beta1::ApplianceCluster::Representation
+      
+          property :edge_cluster, as: 'edgeCluster', class: Google::Apis::GkehubV1beta1::EdgeCluster, decorator: Google::Apis::GkehubV1beta1::EdgeCluster::Representation
+      
           property :gke_cluster, as: 'gkeCluster', class: Google::Apis::GkehubV1beta1::GkeCluster, decorator: Google::Apis::GkehubV1beta1::GkeCluster::Representation
       
           property :kubernetes_metadata, as: 'kubernetesMetadata', class: Google::Apis::GkehubV1beta1::KubernetesMetadata, decorator: Google::Apis::GkehubV1beta1::KubernetesMetadata::Representation
@@ -445,6 +475,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :admin_cluster, as: 'adminCluster'
           property :cluster_missing, as: 'clusterMissing'
+          property :cluster_type, as: 'clusterType'
           property :resource_link, as: 'resourceLink'
         end
       end
@@ -498,6 +529,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :connect_version, as: 'connectVersion'
+          property :k8s_version, as: 'k8sVersion'
           property :v1beta1_crd, as: 'v1beta1Crd'
         end
       end

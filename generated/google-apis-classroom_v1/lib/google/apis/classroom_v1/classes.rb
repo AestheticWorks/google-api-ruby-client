@@ -274,6 +274,12 @@ module Google
         # @return [String]
         attr_accessor :enrollment_code
       
+        # The gradebook settings for a course. See the [help center article](https://
+        # support.google.com/edu/classroom/answer/9184995) for details.
+        # Corresponds to the JSON property `gradebookSettings`
+        # @return [Google::Apis::ClassroomV1::GradebookSettings]
+        attr_accessor :gradebook_settings
+      
         # Whether or not guardian notifications are enabled for this course. Read-only.
         # Corresponds to the JSON property `guardiansEnabled`
         # @return [Boolean]
@@ -350,6 +356,7 @@ module Google
           @description = args[:description] if args.key?(:description)
           @description_heading = args[:description_heading] if args.key?(:description_heading)
           @enrollment_code = args[:enrollment_code] if args.key?(:enrollment_code)
+          @gradebook_settings = args[:gradebook_settings] if args.key?(:gradebook_settings)
           @guardians_enabled = args[:guardians_enabled] if args.key?(:guardians_enabled)
           @id = args[:id] if args.key?(:id)
           @name = args[:name] if args.key?(:name)
@@ -529,11 +536,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `dueDate`
         # @return [Google::Apis::ClassroomV1::Date]
         attr_accessor :due_date
@@ -544,6 +551,14 @@ module Google
         # Corresponds to the JSON property `dueTime`
         # @return [Google::Apis::ClassroomV1::TimeOfDay]
         attr_accessor :due_time
+      
+        # Details for a grade category in a course. Coursework may have zero or one
+        # grade category, and the category may be used in computing the overall grade.
+        # See the [help center article](https://support.google.com/edu/classroom/answer/
+        # 9184995) for details.
+        # Corresponds to the JSON property `gradeCategory`
+        # @return [Google::Apis::ClassroomV1::GradeCategory]
+        attr_accessor :grade_category
       
         # Classroom-assigned identifier of this course work, unique per course. Read-
         # only.
@@ -628,6 +643,7 @@ module Google
           @description = args[:description] if args.key?(:description)
           @due_date = args[:due_date] if args.key?(:due_date)
           @due_time = args[:due_time] if args.key?(:due_time)
+          @grade_category = args[:grade_category] if args.key?(:grade_category)
           @id = args[:id] if args.key?(:id)
           @individual_students_options = args[:individual_students_options] if args.key?(:individual_students_options)
           @materials = args[:materials] if args.key?(:materials)
@@ -771,11 +787,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -880,8 +896,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -983,6 +998,50 @@ module Google
         end
       end
       
+      # Details for a grade category in a course. Coursework may have zero or one
+      # grade category, and the category may be used in computing the overall grade.
+      # See the [help center article](https://support.google.com/edu/classroom/answer/
+      # 9184995) for details.
+      class GradeCategory
+        include Google::Apis::Core::Hashable
+      
+        # Default value of denominator. Only applicable when grade calculation type is
+        # TOTAL_POINTS.
+        # Corresponds to the JSON property `defaultGradeDenominator`
+        # @return [Fixnum]
+        attr_accessor :default_grade_denominator
+      
+        # ID of the grade category.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Name of the grade category.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The weight of the category average as part of overall average. A weight of 12.
+        # 34% is represented as 123400 (100% is 1,000,000). The last two digits should
+        # always be zero since we use two decimal precision. Only applicable when grade
+        # calculation type is WEIGHTED_CATEGORIES.
+        # Corresponds to the JSON property `weight`
+        # @return [Fixnum]
+        attr_accessor :weight
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @default_grade_denominator = args[:default_grade_denominator] if args.key?(:default_grade_denominator)
+          @id = args[:id] if args.key?(:id)
+          @name = args[:name] if args.key?(:name)
+          @weight = args[:weight] if args.key?(:weight)
+        end
+      end
+      
       # The history of each grade on this submission.
       class GradeHistory
         include Google::Apis::Core::Hashable
@@ -1023,6 +1082,38 @@ module Google
           @grade_timestamp = args[:grade_timestamp] if args.key?(:grade_timestamp)
           @max_points = args[:max_points] if args.key?(:max_points)
           @points_earned = args[:points_earned] if args.key?(:points_earned)
+        end
+      end
+      
+      # The gradebook settings for a course. See the [help center article](https://
+      # support.google.com/edu/classroom/answer/9184995) for details.
+      class GradebookSettings
+        include Google::Apis::Core::Hashable
+      
+        # Indicates how the overall grade is calculated.
+        # Corresponds to the JSON property `calculationType`
+        # @return [String]
+        attr_accessor :calculation_type
+      
+        # Indicates who can see the overall grade..
+        # Corresponds to the JSON property `displaySetting`
+        # @return [String]
+        attr_accessor :display_setting
+      
+        # Grade categories that are available for coursework in the course.
+        # Corresponds to the JSON property `gradeCategories`
+        # @return [Array<Google::Apis::ClassroomV1::GradeCategory>]
+        attr_accessor :grade_categories
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @calculation_type = args[:calculation_type] if args.key?(:calculation_type)
+          @display_setting = args[:display_setting] if args.key?(:display_setting)
+          @grade_categories = args[:grade_categories] if args.key?(:grade_categories)
         end
       end
       
@@ -2193,7 +2284,9 @@ module Google
       class UserProfile
         include Google::Apis::Core::Hashable
       
-        # Email address of the user. Read-only.
+        # Email address of the user. Must request `https://www.googleapis.com/auth/
+        # classroom.profile.emails` scope for this field to be populated in a response
+        # body. Read-only.
         # Corresponds to the JSON property `emailAddress`
         # @return [String]
         attr_accessor :email_address
@@ -2213,14 +2306,17 @@ module Google
         # @return [Array<Google::Apis::ClassroomV1::GlobalPermission>]
         attr_accessor :permissions
       
-        # URL of user's profile photo. Read-only.
+        # URL of user's profile photo. Must request `https://www.googleapis.com/auth/
+        # classroom.profile.photos` scope for this field to be populated in a response
+        # body. Read-only.
         # Corresponds to the JSON property `photoUrl`
         # @return [String]
         attr_accessor :photo_url
       
-        # Represents whether a G Suite for Education user's domain administrator has
-        # explicitly verified them as being a teacher. If the user is not a member of a
-        # G Suite for Education domain, than this field is always false. Read-only
+        # Represents whether a Google Workspace for Education user's domain
+        # administrator has explicitly verified them as being a teacher. This field is
+        # always false if the user is not a member of a Google Workspace for Education
+        # domain. Read-only
         # Corresponds to the JSON property `verifiedTeacher`
         # @return [Boolean]
         attr_accessor :verified_teacher

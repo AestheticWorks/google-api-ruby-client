@@ -28,6 +28,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Backup
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Binding
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -41,6 +47,18 @@ module Google
       end
       
       class Certificate
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CheckMigrationPermissionRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CheckMigrationPermissionResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -70,7 +88,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DisableMigrationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Domain
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DomainJoinMachineRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DomainJoinMachineResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -82,7 +118,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class EnableMigrationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Expr
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ExtendSchemaRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -130,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -155,6 +209,12 @@ module Google
       end
       
       class LdapsSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListBackupsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -208,6 +268,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class OnPremDomainDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OnPremDomainSidDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Operation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -245,6 +317,12 @@ module Google
       end
       
       class ResetAdminPasswordResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RestoreDomainRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -324,6 +402,20 @@ module Google
         end
       end
       
+      class Backup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :description, as: 'description'
+          hash :labels, as: 'labels'
+          property :name, as: 'name'
+          property :state, as: 'state'
+          property :status_message, as: 'statusMessage'
+          property :type, as: 'type'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
       class Binding
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -349,6 +441,21 @@ module Google
           property :subject, as: 'subject'
           collection :subject_alternative_name, as: 'subjectAlternativeName'
           property :thumbprint, as: 'thumbprint'
+        end
+      end
+      
+      class CheckMigrationPermissionRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CheckMigrationPermissionResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :onprem_domains, as: 'onpremDomains', class: Google::Apis::ManagedidentitiesV1alpha1::OnPremDomainSidDetails, decorator: Google::Apis::ManagedidentitiesV1alpha1::OnPremDomainSidDetails::Representation
+      
+          property :state, as: 'state'
         end
       end
       
@@ -390,6 +497,12 @@ module Google
         end
       end
       
+      class DisableMigrationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class Domain
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -410,9 +523,32 @@ module Google
         end
       end
       
+      class DomainJoinMachineRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :ou_name, as: 'ouName'
+          property :vm_id_token, as: 'vmIdToken'
+        end
+      end
+      
+      class DomainJoinMachineResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :domain_join_blob, as: 'domainJoinBlob'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class EnableMigrationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :migrating_domains, as: 'migratingDomains', class: Google::Apis::ManagedidentitiesV1alpha1::OnPremDomainDetails, decorator: Google::Apis::ManagedidentitiesV1alpha1::OnPremDomainDetails::Representation
+      
         end
       end
       
@@ -423,6 +559,15 @@ module Google
           property :expression, as: 'expression'
           property :location, as: 'location'
           property :title, as: 'title'
+        end
+      end
+      
+      class ExtendSchemaRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :file_contents, :base64 => true, as: 'fileContents'
+          property :gcs_path, as: 'gcsPath'
         end
       end
       
@@ -467,6 +612,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :consumer_defined_name, as: 'consumerDefinedName'
           property :create_time, as: 'createTime'
+          property :instance_type, as: 'instanceType'
           hash :labels, as: 'labels'
           hash :maintenance_policy_names, as: 'maintenancePolicyNames'
           hash :maintenance_schedules, as: 'maintenanceSchedules', class: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule, decorator: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule::Representation
@@ -474,6 +620,8 @@ module Google
           property :maintenance_settings, as: 'maintenanceSettings', class: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings, decorator: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings::Representation
       
           property :name, as: 'name'
+          hash :notification_parameters, as: 'notificationParameters', class: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter, decorator: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter::Representation
+      
           hash :producer_metadata, as: 'producerMetadata'
           collection :provisioned_resources, as: 'provisionedResources', class: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource, decorator: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource::Representation
       
@@ -515,6 +663,13 @@ module Google
           property :node_id, as: 'nodeId'
           property :per_sli_eligibility, as: 'perSliEligibility', class: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility, decorator: Google::Apis::ManagedidentitiesV1alpha1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility::Representation
       
+        end
+      end
+      
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :values, as: 'values'
         end
       end
       
@@ -563,6 +718,16 @@ module Google
           property :name, as: 'name'
           property :state, as: 'state'
           property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class ListBackupsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :backups, as: 'backups', class: Google::Apis::ManagedidentitiesV1alpha1::Backup, decorator: Google::Apis::ManagedidentitiesV1alpha1::Backup::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          collection :unreachable, as: 'unreachable'
         end
       end
       
@@ -649,6 +814,22 @@ module Google
         end
       end
       
+      class OnPremDomainDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :disable_sid_filtering, as: 'disableSidFiltering'
+          property :domain_name, as: 'domainName'
+        end
+      end
+      
+      class OnPremDomainSidDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :sid_filtering_state, as: 'sidFilteringState'
+        end
+      end
+      
       class Operation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -716,6 +897,13 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :password, as: 'password'
+        end
+      end
+      
+      class RestoreDomainRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :backup_id, as: 'backupId'
         end
       end
       

@@ -34,6 +34,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CancelOperationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CancelPatchJobRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -83,6 +89,12 @@ module Google
       end
       
       class GooSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -149,6 +161,12 @@ module Google
       end
       
       class ListInventoriesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListOsPolicyAssignmentReportsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -227,6 +245,36 @@ module Google
       end
       
       class OsPolicyAssignmentOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsPolicyAssignmentReport
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyCompliance
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -430,7 +478,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PausePatchDeploymentRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RecurringSchedule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ResumePatchDeploymentRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -473,6 +533,12 @@ module Google
       end
       
       class VulnerabilityReportVulnerabilityDetailsReference
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VulnerabilityReportVulnerabilityItem
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -531,6 +597,12 @@ module Google
           property :privileges_required, as: 'privilegesRequired'
           property :scope, as: 'scope'
           property :user_interaction, as: 'userInteraction'
+        end
+      end
+      
+      class CancelOperationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -612,6 +684,17 @@ module Google
       class GooSettings
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_method, as: 'apiMethod'
+          property :os_policy_assignment, as: 'osPolicyAssignment'
+          property :rollout_start_time, as: 'rolloutStartTime'
+          property :rollout_state, as: 'rolloutState'
+          property :rollout_update_time, as: 'rolloutUpdateTime'
         end
       end
       
@@ -754,6 +837,15 @@ module Google
         end
       end
       
+      class ListOsPolicyAssignmentReportsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :os_policy_assignment_reports, as: 'osPolicyAssignmentReports', class: Google::Apis::OsconfigV1::OsPolicyAssignmentReport, decorator: Google::Apis::OsconfigV1::OsPolicyAssignmentReport::Representation
+      
+        end
+      end
+      
       class ListOsPolicyAssignmentRevisionsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -887,6 +979,58 @@ module Google
           property :rollout_start_time, as: 'rolloutStartTime'
           property :rollout_state, as: 'rolloutState'
           property :rollout_update_time, as: 'rolloutUpdateTime'
+        end
+      end
+      
+      class OsPolicyAssignmentReport
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :instance, as: 'instance'
+          property :last_run_id, as: 'lastRunId'
+          property :name, as: 'name'
+          property :os_policy_assignment, as: 'osPolicyAssignment'
+          collection :os_policy_compliances, as: 'osPolicyCompliances', class: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyCompliance, decorator: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyCompliance::Representation
+      
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyCompliance
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :compliance_state, as: 'complianceState'
+          property :compliance_state_reason, as: 'complianceStateReason'
+          property :os_policy_id, as: 'osPolicyId'
+          collection :os_policy_resource_compliances, as: 'osPolicyResourceCompliances', class: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance, decorator: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance::Representation
+      
+        end
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :compliance_state, as: 'complianceState'
+          property :compliance_state_reason, as: 'complianceStateReason'
+          collection :config_steps, as: 'configSteps', class: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep, decorator: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep::Representation
+      
+          property :exec_resource_output, as: 'execResourceOutput', class: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput, decorator: Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput::Representation
+      
+          property :os_policy_resource_id, as: 'osPolicyResourceId'
+        end
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enforcement_output, :base64 => true, as: 'enforcementOutput'
+        end
+      end
+      
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error_message, as: 'errorMessage'
+          property :type, as: 'type'
         end
       end
       
@@ -1150,6 +1294,7 @@ module Google
       
           property :goo, as: 'goo', class: Google::Apis::OsconfigV1::GooSettings, decorator: Google::Apis::OsconfigV1::GooSettings::Representation
       
+          property :mig_instances_allowed, as: 'migInstancesAllowed'
           property :post_step, as: 'postStep', class: Google::Apis::OsconfigV1::ExecStep, decorator: Google::Apis::OsconfigV1::ExecStep::Representation
       
           property :pre_step, as: 'preStep', class: Google::Apis::OsconfigV1::ExecStep, decorator: Google::Apis::OsconfigV1::ExecStep::Representation
@@ -1182,6 +1327,7 @@ module Google
       
           property :rollout, as: 'rollout', class: Google::Apis::OsconfigV1::PatchRollout, decorator: Google::Apis::OsconfigV1::PatchRollout::Representation
       
+          property :state, as: 'state'
           property :update_time, as: 'updateTime'
         end
       end
@@ -1271,6 +1417,12 @@ module Google
         end
       end
       
+      class PausePatchDeploymentRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class RecurringSchedule
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1287,6 +1439,12 @@ module Google
       
           property :weekly, as: 'weekly', class: Google::Apis::OsconfigV1::WeeklySchedule, decorator: Google::Apis::OsconfigV1::WeeklySchedule::Representation
       
+        end
+      end
+      
+      class ResumePatchDeploymentRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -1335,6 +1493,8 @@ module Google
           property :details, as: 'details', class: Google::Apis::OsconfigV1::VulnerabilityReportVulnerabilityDetails, decorator: Google::Apis::OsconfigV1::VulnerabilityReportVulnerabilityDetails::Representation
       
           collection :installed_inventory_item_ids, as: 'installedInventoryItemIds'
+          collection :items, as: 'items', class: Google::Apis::OsconfigV1::VulnerabilityReportVulnerabilityItem, decorator: Google::Apis::OsconfigV1::VulnerabilityReportVulnerabilityItem::Representation
+      
           property :update_time, as: 'updateTime'
         end
       end
@@ -1361,10 +1521,21 @@ module Google
         end
       end
       
+      class VulnerabilityReportVulnerabilityItem
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :available_inventory_item_id, as: 'availableInventoryItemId'
+          property :fixed_cpe_uri, as: 'fixedCpeUri'
+          property :installed_inventory_item_id, as: 'installedInventoryItemId'
+          property :upstream_fix, as: 'upstreamFix'
+        end
+      end
+      
       class WeekDayOfMonth
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :day_of_week, as: 'dayOfWeek'
+          property :day_offset, as: 'dayOffset'
           property :week_ordinal, as: 'weekOrdinal'
         end
       end

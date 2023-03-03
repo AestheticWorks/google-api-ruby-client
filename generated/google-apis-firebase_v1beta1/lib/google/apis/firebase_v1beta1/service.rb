@@ -369,6 +369,9 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `ListFirebaseProjects` indicating where
         #   in the set of Projects to resume listing.
+        # @param [Boolean] show_deleted
+        #   Optional. Controls whether Projects in the DELETED state should be returned in
+        #   the response. If not specified, only `ACTIVE` Projects will be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -386,12 +389,13 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_projects(page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_projects(page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/projects', options)
           command.response_representation = Google::Apis::FirebaseV1beta1::ListFirebaseProjectsResponse::Representation
           command.response_class = Google::Apis::FirebaseV1beta1::ListFirebaseProjectsResponse
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -409,9 +413,12 @@ module Google
         #   will be the `ProjectId`.
         # @param [Google::Apis::FirebaseV1beta1::FirebaseProject] firebase_project_object
         # @param [String] update_mask
-        #   Specifies which fields to update. If this list is empty, then no state will be
-        #   updated. Note that the fields `name`, `projectId`, and `projectNumber` are all
-        #   immutable.
+        #   Specifies which fields of the FirebaseProject to update. Note that the
+        #   following fields are immutable: `name`, `project_id`, and `project_number`. To
+        #   update `state`, use any of the following Google Cloud endpoints: [`projects.
+        #   delete`](https://cloud.google.com/resource-manager/reference/rest/v1/projects/
+        #   delete) or [`projects.undelete`](https://cloud.google.com/resource-manager/
+        #   reference/rest/v1/projects/undelete)
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -496,24 +503,25 @@ module Google
         #   PROJECT_IDENTIFIER Refer to the `FirebaseProject` [`name`](../projects#
         #   FirebaseProject.FIELDS.name) field for details about PROJECT_IDENTIFIER values.
         # @param [String] filter
-        #   A query string compatible with Google's [AIP-160](https://google.aip.dev/160)
-        #   standard. Use any of the following fields in a query: * [`app_id`](../projects.
-        #   apps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects.apps#
-        #   FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects.apps#
-        #   FirebaseAppInfo.FIELDS.platform) We also support the following "virtual"
-        #   fields (fields which are not actually part of the returned resource object,
-        #   but can be queried as if they are pre-populated with specific values): * `
-        #   sha1_hash`: This field is considered to be a repeated `string` field,
-        #   populated with the list of all SHA-1 certificate fingerprints registered with
-        #   the app. This list is empty if the app is not an Android app. * `sha256_hash`:
-        #   This field is considered to be a repeated `string` field, populated with the
-        #   list of all SHA-256 certificate fingerprints registered with the app. This
-        #   list is empty if the app is not an Android app. * `app_store_id`: This field
-        #   is considered to be a singular `string` field, populated with the Apple App
-        #   Store ID registered with the app. This field is empty if the app is not an iOS
-        #   app. * `team_id`: This field is considered to be a singular `string` field,
-        #   populated with the Apple team ID registered with the app. This field is empty
-        #   if the app is not an iOS app.
+        #   A query string compatible with Google's [AIP-160 standard](https://google.aip.
+        #   dev/160). Use any of the following fields in a query: * [`app_id`](../projects/
+        #   searchApps#FirebaseAppInfo.FIELDS.app_id) * [`namespace`](../projects/
+        #   searchApps#FirebaseAppInfo.FIELDS.namespace) * [`platform`](../projects/
+        #   searchApps#FirebaseAppInfo.FIELDS.platform) This query also supports the
+        #   following "virtual" fields. These are fields which are not actually part of
+        #   the returned resource object, but they can be queried as if they are pre-
+        #   populated with specific values. * `sha1_hash` or `sha1_hashes`: This field is
+        #   considered to be a _repeated_ `string` field, populated with the list of all
+        #   SHA-1 certificate fingerprints registered with the AndroidApp. This list is
+        #   empty if the App is not an `AndroidApp`. * `sha256_hash` or `sha256_hashes`:
+        #   This field is considered to be a _repeated_ `string` field, populated with the
+        #   list of all SHA-256 certificate fingerprints registered with the AndroidApp.
+        #   This list is empty if the App is not an `AndroidApp`. * `app_store_id`: This
+        #   field is considered to be a _singular_ `string` field, populated with the
+        #   Apple App Store ID registered with the IosApp. This field is empty if the App
+        #   is not an `IosApp`. * `team_id`: This field is considered to be a _singular_ `
+        #   string` field, populated with the Apple team ID registered with the IosApp.
+        #   This field is empty if the App is not an `IosApp`.
         # @param [Fixnum] page_size
         #   The maximum number of Apps to return in the response. The server may return
         #   fewer than this value at its discretion. If no value is specified (or too
@@ -522,6 +530,9 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `SearchFirebaseApps` indicating where
         #   in the set of Apps to resume listing.
+        # @param [Boolean] show_deleted
+        #   Controls whether Apps in the DELETED state should be returned. If not
+        #   specified, only `ACTIVE` Apps will be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -539,7 +550,7 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def search_project_apps(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def search_project_apps(parent, filter: nil, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/{+parent}:searchApps', options)
           command.response_representation = Google::Apis::FirebaseV1beta1::SearchFirebaseAppsResponse::Representation
           command.response_class = Google::Apis::FirebaseV1beta1::SearchFirebaseAppsResponse
@@ -547,6 +558,7 @@ module Google
           command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -676,6 +688,9 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `ListAndroidApps` indicating where in
         #   the set of Apps to resume listing.
+        # @param [Boolean] show_deleted
+        #   Controls whether Apps in the DELETED state should be returned in the response.
+        #   If not specified, only `ACTIVE` Apps will be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -693,13 +708,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_android_apps(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_android_apps(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/{+parent}/androidApps', options)
           command.response_representation = Google::Apis::FirebaseV1beta1::ListAndroidAppsResponse::Representation
           command.response_class = Google::Apis::FirebaseV1beta1::ListAndroidAppsResponse
           command.params['parent'] = parent unless parent.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -718,8 +734,10 @@ module Google
         #   projects.androidApps#AndroidApp.FIELDS.app_id)).
         # @param [Google::Apis::FirebaseV1beta1::AndroidApp] android_app_object
         # @param [String] update_mask
-        #   Specifies which fields to update. Note that the fields `name`, `app_id`, `
-        #   project_id`, and `package_name` are all immutable.
+        #   Specifies which fields of the AndroidApp to update. Note that the following
+        #   fields are immutable: `name`, `app_id`, `project_id`, and `package_name`. To
+        #   update `state`, use any of the following endpoints: RemoveAndroidApp or
+        #   UndeleteAndroidApp.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -745,6 +763,82 @@ module Google
           command.response_class = Google::Apis::FirebaseV1beta1::AndroidApp
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Removes the specified AndroidApp from the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the AndroidApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique identifier,
+        #   the Unique Resource from Sub-Collection access pattern may be used here, in
+        #   the format: projects/-/androidApps/APP_ID Refer to the AndroidApp [name](../
+        #   projects.androidApps#AndroidApp.FIELDS.name) field for details about
+        #   PROJECT_IDENTIFIER and APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::RemoveAndroidAppRequest] remove_android_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def remove_android_app(name, remove_android_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:remove', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::RemoveAndroidAppRequest::Representation
+          command.request_object = remove_android_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Restores the specified AndroidApp to the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the AndroidApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/androidApps/APP_ID Since an APP_ID is a unique identifier,
+        #   the Unique Resource from Sub-Collection access pattern may be used here, in
+        #   the format: projects/-/androidApps/APP_ID Refer to the AndroidApp [name](../
+        #   projects.androidApps#AndroidApp.FIELDS.name) field for details about
+        #   PROJECT_IDENTIFIER and APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::UndeleteAndroidAppRequest] undelete_android_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_android_app(name, undelete_android_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::UndeleteAndroidAppRequest::Representation
+          command.request_object = undelete_android_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1103,6 +1197,9 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `ListIosApps` indicating where in the
         #   set of Apps to resume listing.
+        # @param [Boolean] show_deleted
+        #   Controls whether Apps in the DELETED state should be returned in the response.
+        #   If not specified, only `ACTIVE` Apps will be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1120,13 +1217,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_ios_apps(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_ios_apps(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/{+parent}/iosApps', options)
           command.response_representation = Google::Apis::FirebaseV1beta1::ListIosAppsResponse::Representation
           command.response_class = Google::Apis::FirebaseV1beta1::ListIosAppsResponse
           command.params['parent'] = parent unless parent.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1145,8 +1243,9 @@ module Google
         #   ).
         # @param [Google::Apis::FirebaseV1beta1::IosApp] ios_app_object
         # @param [String] update_mask
-        #   Specifies which fields to update. Note that the fields `name`, `appId`, `
-        #   projectId`, and `bundleId` are all immutable.
+        #   Specifies which fields of the IosApp to update. Note that the following fields
+        #   are immutable: `name`, `app_id`, `project_id`, and `bundle_id`. To update `
+        #   state`, use any of the following endpoints: RemoveIosApp or UndeleteIosApp.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1172,6 +1271,82 @@ module Google
           command.response_class = Google::Apis::FirebaseV1beta1::IosApp
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Removes the specified IosApp from the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the IosApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique identifier, the
+        #   Unique Resource from Sub-Collection access pattern may be used here, in the
+        #   format: projects/-/iosApps/APP_ID Refer to the IosApp [name](../projects.
+        #   iosApps#IosApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and
+        #   APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::RemoveIosAppRequest] remove_ios_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def remove_ios_app(name, remove_ios_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:remove', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::RemoveIosAppRequest::Representation
+          command.request_object = remove_ios_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Restores the specified IosApp to the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the IosApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/iosApps/APP_ID Since an APP_ID is a unique identifier, the
+        #   Unique Resource from Sub-Collection access pattern may be used here, in the
+        #   format: projects/-/iosApps/APP_ID Refer to the IosApp [name](../projects.
+        #   iosApps#IosApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and
+        #   APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::UndeleteIosAppRequest] undelete_ios_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_ios_app(name, undelete_ios_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::UndeleteIosAppRequest::Representation
+          command.request_object = undelete_ios_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1300,6 +1475,9 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `ListWebApps` indicating where in the
         #   set of Apps to resume listing.
+        # @param [Boolean] show_deleted
+        #   Controls whether Apps in the DELETED state should be returned in the response.
+        #   If not specified, only `ACTIVE` Apps will be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1317,13 +1495,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_web_apps(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_web_apps(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/{+parent}/webApps', options)
           command.response_representation = Google::Apis::FirebaseV1beta1::ListWebAppsResponse::Representation
           command.response_class = Google::Apis::FirebaseV1beta1::ListWebAppsResponse
           command.params['parent'] = parent unless parent.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1342,8 +1521,9 @@ module Google
         #   ).
         # @param [Google::Apis::FirebaseV1beta1::WebApp] web_app_object
         # @param [String] update_mask
-        #   Specifies which fields to update. Note that the fields `name`, `appId`, and `
-        #   projectId` are all immutable.
+        #   Specifies which fields of the WebApp to update. Note that the following fields
+        #   are immutable: `name`, `app_id`, and `project_id`. To update `state`, use any
+        #   of the following endpoints: RemoveWebApp or UndeleteWebApp.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1369,6 +1549,82 @@ module Google
           command.response_class = Google::Apis::FirebaseV1beta1::WebApp
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Removes the specified WebApp from the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the WebApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique identifier, the
+        #   Unique Resource from Sub-Collection access pattern may be used here, in the
+        #   format: projects/-/webApps/APP_ID Refer to the WebApp [name](../projects.
+        #   webApps#WebApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and
+        #   APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::RemoveWebAppRequest] remove_web_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def remove_web_app(name, remove_web_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:remove', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::RemoveWebAppRequest::Representation
+          command.request_object = remove_web_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Restores the specified WebApp to the FirebaseProject.
+        # @param [String] name
+        #   Required. The resource name of the WebApp, in the format: projects/
+        #   PROJECT_IDENTIFIER/webApps/APP_ID Since an APP_ID is a unique identifier, the
+        #   Unique Resource from Sub-Collection access pattern may be used here, in the
+        #   format: projects/-/webApps/APP_ID Refer to the WebApp [name](../projects.
+        #   webApps#WebApp.FIELDS.name) field for details about PROJECT_IDENTIFIER and
+        #   APP_ID values.
+        # @param [Google::Apis::FirebaseV1beta1::UndeleteWebAppRequest] undelete_web_app_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebaseV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebaseV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_web_app(name, undelete_web_app_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::FirebaseV1beta1::UndeleteWebAppRequest::Representation
+          command.request_object = undelete_web_app_request_object
+          command.response_representation = Google::Apis::FirebaseV1beta1::Operation::Representation
+          command.response_class = Google::Apis::FirebaseV1beta1::Operation
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

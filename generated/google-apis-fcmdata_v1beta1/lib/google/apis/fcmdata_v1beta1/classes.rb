@@ -45,11 +45,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `date`
         # @return [Google::Apis::FcmdataV1beta1::GoogleTypeDate]
         attr_accessor :date
@@ -205,8 +205,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The percentage of accepted messages that had their priority lowered from high
-        # to normal due to [app standby buckets](https://firebase.google.com/docs/cloud-
-        # messaging/concept-options#setting-the-priority-of-a-message).
+        # to normal. See [documentation for setting message priority](https://firebase.
+        # google.com/docs/cloud-messaging/android/message-priority).
         # Corresponds to the JSON property `priorityLowered`
         # @return [Float]
         attr_accessor :priority_lowered
@@ -289,11 +289,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class GoogleTypeDate
         include Google::Apis::Core::Hashable
       

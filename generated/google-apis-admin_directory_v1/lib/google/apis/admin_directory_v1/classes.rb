@@ -224,6 +224,51 @@ module Google
         end
       end
       
+      # Request to add multiple new print servers in a batch.
+      class BatchCreatePrintServersRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. A list of `PrintServer` resources to be created (max `50` per batch).
+        # Corresponds to the JSON property `requests`
+        # @return [Array<Google::Apis::AdminDirectoryV1::CreatePrintServerRequest>]
+        attr_accessor :requests
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @requests = args[:requests] if args.key?(:requests)
+        end
+      end
+      
+      # 
+      class BatchCreatePrintServersResponse
+        include Google::Apis::Core::Hashable
+      
+        # A list of create failures. `PrintServer` IDs are not populated, as print
+        # servers were not created.
+        # Corresponds to the JSON property `failures`
+        # @return [Array<Google::Apis::AdminDirectoryV1::PrintServerFailureInfo>]
+        attr_accessor :failures
+      
+        # A list of successfully created print servers with their IDs populated.
+        # Corresponds to the JSON property `printServers`
+        # @return [Array<Google::Apis::AdminDirectoryV1::PrintServer>]
+        attr_accessor :print_servers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failures = args[:failures] if args.key?(:failures)
+          @print_servers = args[:print_servers] if args.key?(:print_servers)
+        end
+      end
+      
       # Request for adding new printers in batch.
       class BatchCreatePrintersRequest
         include Google::Apis::Core::Hashable
@@ -266,6 +311,50 @@ module Google
         def update!(**args)
           @failures = args[:failures] if args.key?(:failures)
           @printers = args[:printers] if args.key?(:printers)
+        end
+      end
+      
+      # Request to delete multiple existing print servers in a batch.
+      class BatchDeletePrintServersRequest
+        include Google::Apis::Core::Hashable
+      
+        # A list of print server IDs that should be deleted (max `100` per batch).
+        # Corresponds to the JSON property `printServerIds`
+        # @return [Array<String>]
+        attr_accessor :print_server_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @print_server_ids = args[:print_server_ids] if args.key?(:print_server_ids)
+        end
+      end
+      
+      # 
+      class BatchDeletePrintServersResponse
+        include Google::Apis::Core::Hashable
+      
+        # A list of update failures.
+        # Corresponds to the JSON property `failedPrintServers`
+        # @return [Array<Google::Apis::AdminDirectoryV1::PrintServerFailureInfo>]
+        attr_accessor :failed_print_servers
+      
+        # A list of print server IDs that were successfully deleted.
+        # Corresponds to the JSON property `printServerIds`
+        # @return [Array<String>]
+        attr_accessor :print_server_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failed_print_servers = args[:failed_print_servers] if args.key?(:failed_print_servers)
+          @print_server_ids = args[:print_server_ids] if args.key?(:print_server_ids)
         end
       end
       
@@ -672,7 +761,10 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # Additional parameters controlling delivery channel behavior. Optional.
+        # Additional parameters controlling delivery channel behavior. Optional. For
+        # example, `params.ttl` specifies the time-to-live in seconds for the
+        # notification channel, where the default is 2 hours and the maximum TTL is 2
+        # days.
         # Corresponds to the JSON property `params`
         # @return [Hash<String,String>]
         attr_accessor :params
@@ -730,7 +822,7 @@ module Google
       class ChromeOsDevice
         include Google::Apis::Core::Hashable
       
-        # List of active time ranges (Read-only).
+        # A list of active time ranges (Read-only).
         # Corresponds to the JSON property `activeTimeRanges`
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::ActiveTimeRange>]
         attr_accessor :active_time_ranges
@@ -780,7 +872,12 @@ module Google
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::CpuStatusReport>]
         attr_accessor :cpu_status_reports
       
-        # List of device files to download (Read-only)
+        # (Read-only) Deprovision reason.
+        # Corresponds to the JSON property `deprovisionReason`
+        # @return [String]
+        attr_accessor :deprovision_reason
+      
+        # A list of device files to download (Read-only)
         # Corresponds to the JSON property `deviceFiles`
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::DeviceFile>]
         attr_accessor :device_files
@@ -827,11 +924,21 @@ module Google
         # @return [String]
         attr_accessor :firmware_version
       
+        # Date and time for the first time the device was enrolled.
+        # Corresponds to the JSON property `firstEnrollmentTime`
+        # @return [String]
+        attr_accessor :first_enrollment_time
+      
         # The type of resource. For the Chromeosdevices resource, the value is `admin#
         # directory#chromeosdevice`.
         # Corresponds to the JSON property `kind`
         # @return [String]
         attr_accessor :kind
+      
+        # (Read-only) Date and time for the last deprovision of the device.
+        # Corresponds to the JSON property `lastDeprovisionTimestamp`
+        # @return [String]
+        attr_accessor :last_deprovision_timestamp
       
         # Date and time the device was last enrolled (Read-only)
         # Corresponds to the JSON property `lastEnrollmentTime`
@@ -891,16 +998,33 @@ module Google
         # @return [String]
         attr_accessor :order_number
       
+        # The unique ID of the organizational unit. orgUnitPath is the human readable
+        # version of orgUnitId. While orgUnitPath may change by renaming an
+        # organizational unit within the path, orgUnitId is unchangeable for one
+        # organizational unit. This property can be [updated](/admin-sdk/directory/v1/
+        # guides/manage-chrome-devices#move_chrome_devices_to_ou) using the API. For
+        # more information about how to create an organizational structure for your
+        # device, see the [administration help center](https://support.google.com/a/
+        # answer/182433).
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
         # The full parent path with the organizational unit's name associated with the
         # device. Path names are case insensitive. If the parent organizational unit is
         # the top-level organization, it is represented as a forward slash, `/`. This
         # property can be [updated](/admin-sdk/directory/v1/guides/manage-chrome-devices#
-        # update_chrome_device) using the API. For more information about how to create
-        # an organizational structure for your device, see the [administration help
-        # center](https://support.google.com/a/answer/182433).
+        # move_chrome_devices_to_ou) using the API. For more information about how to
+        # create an organizational structure for your device, see the [administration
+        # help center](https://support.google.com/a/answer/182433).
         # Corresponds to the JSON property `orgUnitPath`
         # @return [String]
         attr_accessor :org_unit_path
+      
+        # Contains information regarding the current OS update status.
+        # Corresponds to the JSON property `osUpdateStatus`
+        # @return [Google::Apis::AdminDirectoryV1::OsUpdateStatus]
+        attr_accessor :os_update_status
       
         # The Chrome device's operating system version.
         # Corresponds to the JSON property `osVersion`
@@ -912,13 +1036,13 @@ module Google
         # @return [String]
         attr_accessor :platform_version
       
-        # List of recent device users, in descending order, by last login time.
+        # A list of recent device users, in descending order, by last login time.
         # Corresponds to the JSON property `recentUsers`
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::RecentUser>]
         attr_accessor :recent_users
       
-        # List of screenshot files to download. Type is always "SCREENSHOT_FILE". (Read-
-        # only)
+        # A list of screenshot files to download. Type is always "SCREENSHOT_FILE". (
+        # Read-only)
         # Corresponds to the JSON property `screenshotFiles`
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::ScreenshotFile>]
         attr_accessor :screenshot_files
@@ -976,6 +1100,7 @@ module Google
           @boot_mode = args[:boot_mode] if args.key?(:boot_mode)
           @cpu_info = args[:cpu_info] if args.key?(:cpu_info)
           @cpu_status_reports = args[:cpu_status_reports] if args.key?(:cpu_status_reports)
+          @deprovision_reason = args[:deprovision_reason] if args.key?(:deprovision_reason)
           @device_files = args[:device_files] if args.key?(:device_files)
           @device_id = args[:device_id] if args.key?(:device_id)
           @disk_volume_reports = args[:disk_volume_reports] if args.key?(:disk_volume_reports)
@@ -984,7 +1109,9 @@ module Google
           @ethernet_mac_address = args[:ethernet_mac_address] if args.key?(:ethernet_mac_address)
           @ethernet_mac_address0 = args[:ethernet_mac_address0] if args.key?(:ethernet_mac_address0)
           @firmware_version = args[:firmware_version] if args.key?(:firmware_version)
+          @first_enrollment_time = args[:first_enrollment_time] if args.key?(:first_enrollment_time)
           @kind = args[:kind] if args.key?(:kind)
+          @last_deprovision_timestamp = args[:last_deprovision_timestamp] if args.key?(:last_deprovision_timestamp)
           @last_enrollment_time = args[:last_enrollment_time] if args.key?(:last_enrollment_time)
           @last_known_network = args[:last_known_network] if args.key?(:last_known_network)
           @last_sync = args[:last_sync] if args.key?(:last_sync)
@@ -994,7 +1121,9 @@ module Google
           @model = args[:model] if args.key?(:model)
           @notes = args[:notes] if args.key?(:notes)
           @order_number = args[:order_number] if args.key?(:order_number)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
           @org_unit_path = args[:org_unit_path] if args.key?(:org_unit_path)
+          @os_update_status = args[:os_update_status] if args.key?(:os_update_status)
           @os_version = args[:os_version] if args.key?(:os_version)
           @platform_version = args[:platform_version] if args.key?(:platform_version)
           @recent_users = args[:recent_users] if args.key?(:recent_users)
@@ -1138,7 +1267,7 @@ module Google
         class CpuStatusReport
           include Google::Apis::Core::Hashable
         
-          # List of CPU temperature samples.
+          # A list of CPU temperature samples.
           # Corresponds to the JSON property `cpuTemperatureInfo`
           # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice::CpuStatusReport::CpuTemperatureInfo>]
           attr_accessor :cpu_temperature_info
@@ -1302,7 +1431,7 @@ module Google
           end
         end
         
-        # List of recent device users, in descending order, by last login time.
+        # A list of recent device users, in descending order, by last login time.
         class RecentUser
           include Google::Apis::Core::Hashable
         
@@ -1442,7 +1571,7 @@ module Google
         end
       end
       
-      # 
+      # Data about an update to the status of a Chrome OS device.
       class ChromeOsDeviceAction
         include Google::Apis::Core::Hashable
       
@@ -1473,7 +1602,7 @@ module Google
       class ChromeOsDevices
         include Google::Apis::Core::Hashable
       
-        # List of Chrome OS Device objects.
+        # A list of Chrome OS Device objects.
         # Corresponds to the JSON property `chromeosdevices`
         # @return [Array<Google::Apis::AdminDirectoryV1::ChromeOsDevice>]
         attr_accessor :chromeosdevices
@@ -1523,6 +1652,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @device_ids = args[:device_ids] if args.key?(:device_ids)
+        end
+      end
+      
+      # Request for adding a new print server.
+      class CreatePrintServerRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        # reference/rest/v1/customers) of the customer's Google Workspace account.
+        # Format: `customers/`id``
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # Configuration for a print server.
+        # Corresponds to the JSON property `printServer`
+        # @return [Google::Apis::AdminDirectoryV1::PrintServer]
+        attr_accessor :print_server
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @parent = args[:parent] if args.key?(:parent)
+          @print_server = args[:print_server] if args.key?(:print_server)
         end
       end
       
@@ -1757,6 +1913,14 @@ module Google
       class DirectoryChromeosdevicesCommandResult
         include Google::Apis::Core::Hashable
       
+        # The payload for the command result. The following commands respond with a
+        # payload: * `DEVICE_START_CRD_SESSION`: Payload is a stringified JSON object in
+        # the form: ` "url": url `. The URL provides a link to the Chrome Remote Desktop
+        # session.
+        # Corresponds to the JSON property `commandResultPayload`
+        # @return [String]
+        attr_accessor :command_result_payload
+      
         # The error message with a short explanation as to why the command failed. Only
         # present if the command failed.
         # Corresponds to the JSON property `errorMessage`
@@ -1779,6 +1943,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @command_result_payload = args[:command_result_payload] if args.key?(:command_result_payload)
           @error_message = args[:error_message] if args.key?(:error_message)
           @execute_time = args[:execute_time] if args.key?(:execute_time)
           @result = args[:result] if args.key?(:result)
@@ -1795,9 +1960,13 @@ module Google
         attr_accessor :command_type
       
         # The payload for the command, provide it only if command supports it. The
-        # following commands support adding payload: - SET_VOLUME: Payload is a
+        # following commands support adding payload: * `SET_VOLUME`: Payload is a
         # stringified JSON object in the form: ` "volume": 50 `. The volume has to be an
-        # integer in the range [0,100].
+        # integer in the range [0,100]. * `DEVICE_START_CRD_SESSION`: Payload is
+        # optionally a stringified JSON object in the form: ` "ackedUserPresence": true `
+        # . `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is set to `
+        # false`. To start a Chrome Remote Desktop session for an active device, set `
+        # ackedUserPresence` to `true`.
         # Corresponds to the JSON property `payload`
         # @return [String]
         attr_accessor :payload
@@ -1887,7 +2056,7 @@ module Google
       class DomainAliases
         include Google::Apis::Core::Hashable
       
-        # List of domain alias objects.
+        # A list of domain alias objects.
         # Corresponds to the JSON property `domainAliases`
         # @return [Array<Google::Apis::AdminDirectoryV1::DomainAlias>]
         attr_accessor :domain_aliases
@@ -1924,7 +2093,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :creation_time
       
-        # List of domain alias objects. (Read-only)
+        # A list of domain alias objects. (Read-only)
         # Corresponds to the JSON property `domainAliases`
         # @return [Array<Google::Apis::AdminDirectoryV1::DomainAlias>]
         attr_accessor :domain_aliases
@@ -1976,7 +2145,7 @@ module Google
       class Domains2
         include Google::Apis::Core::Hashable
       
-        # List of domain objects.
+        # A list of domain objects.
         # Corresponds to the JSON property `domains`
         # @return [Array<Google::Apis::AdminDirectoryV1::Domains>]
         attr_accessor :domains
@@ -2006,8 +2175,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -2166,19 +2334,26 @@ module Google
       
       # Google Groups provide your users the ability to send messages to groups of
       # people using the group's email address. For more information about common
-      # tasks, see the [Developer's Guide](/admin-sdk/directory/v1/guides/manage-
-      # groups).
+      # tasks, see the [Developer's Guide](https://developers.google.com/admin-sdk/
+      # directory/v1/guides/manage-groups). For information about other types of
+      # groups, see the [Cloud Identity Groups API documentation](https://cloud.google.
+      # com/identity/docs/groups). Note: The user calling the API (or being
+      # impersonated by a service account) must have an assigned [role](https://
+      # developers.google.com/admin-sdk/directory/v1/guides/manage-roles) that
+      # includes Admin API Groups permissions, such as Super Admin or Groups Admin.
       class Group
         include Google::Apis::Core::Hashable
       
-        # Value is `true` if this group was created by an administrator rather than a
-        # user.
+        # Read-only. Value is `true` if this group was created by an administrator
+        # rather than a user.
         # Corresponds to the JSON property `adminCreated`
         # @return [Boolean]
         attr_accessor :admin_created
         alias_method :admin_created?, :admin_created
       
-        # List of a group's alias email addresses.
+        # Read-only. The list of a group's alias email addresses. To add, update, or
+        # remove a group's aliases, use the `groups.aliases` methods. If edited in a
+        # group's POST or PUT request, the edit is ignored.
         # Corresponds to the JSON property `aliases`
         # @return [Array<String>]
         attr_accessor :aliases
@@ -2212,8 +2387,8 @@ module Google
         # @return [String]
         attr_accessor :etag
       
-        # The unique ID of a group. A group `id` can be used as a group request URI's `
-        # groupKey`.
+        # Read-only. The unique ID of a group. A group `id` can be used as a group
+        # request URI's `groupKey`.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -2229,11 +2404,11 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # List of the group's non-editable alias email addresses that are outside of the
-        # account's primary domain or subdomains. These are functioning email addresses
-        # used by the group. This is a read-only property returned in the API's response
-        # for a group. If edited in a group's POST or PUT request, the edit is ignored
-        # by the API service.
+        # Read-only. The list of the group's non-editable alias email addresses that are
+        # outside of the account's primary domain or subdomains. These are functioning
+        # email addresses used by the group. This is a read-only property returned in
+        # the API's response for a group. If edited in a group's POST or PUT request,
+        # the edit is ignored.
         # Corresponds to the JSON property `nonEditableAliases`
         # @return [Array<String>]
         attr_accessor :non_editable_aliases
@@ -2257,6 +2432,50 @@ module Google
         end
       end
       
+      # The Directory API manages aliases, which are alternative email addresses.
+      class GroupAlias
+        include Google::Apis::Core::Hashable
+      
+        # The alias email address.
+        # Corresponds to the JSON property `alias`
+        # @return [String]
+        attr_accessor :alias
+      
+        # ETag of the resource.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # The unique ID of the group.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # The type of the API resource. For Alias resources, the value is `admin#
+        # directory#alias`.
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The primary email address of the group.
+        # Corresponds to the JSON property `primaryEmail`
+        # @return [String]
+        attr_accessor :primary_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @alias = args[:alias] if args.key?(:alias)
+          @etag = args[:etag] if args.key?(:etag)
+          @id = args[:id] if args.key?(:id)
+          @kind = args[:kind] if args.key?(:kind)
+          @primary_email = args[:primary_email] if args.key?(:primary_email)
+        end
+      end
+      
       # 
       class Groups
         include Google::Apis::Core::Hashable
@@ -2266,7 +2485,7 @@ module Google
         # @return [String]
         attr_accessor :etag
       
-        # List of group objects.
+        # A list of group objects.
         # Corresponds to the JSON property `groups`
         # @return [Array<Google::Apis::AdminDirectoryV1::Group>]
         attr_accessor :groups
@@ -2291,6 +2510,32 @@ module Google
           @groups = args[:groups] if args.key?(:groups)
           @kind = args[:kind] if args.key?(:kind)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # 
+      class ListPrintServersResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token that can be sent as `page_token` in a request to retrieve the next
+        # page. If this field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # List of print servers.
+        # Corresponds to the JSON property `printServers`
+        # @return [Array<Google::Apis::AdminDirectoryV1::PrintServer>]
+        attr_accessor :print_servers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @print_servers = args[:print_servers] if args.key?(:print_servers)
         end
       end
       
@@ -2332,8 +2577,8 @@ module Google
         attr_accessor :next_page_token
       
         # List of printers. If `org_unit_id` was given in the request, then only
-        # printers visible for this OU will be returned. If `org_unit_id` was given in
-        # the request, then all printers will be returned.
+        # printers visible for this OU will be returned. If `org_unit_id` was not given
+        # in the request, then all printers will be returned.
         # Corresponds to the JSON property `printers`
         # @return [Array<Google::Apis::AdminDirectoryV1::Printer>]
         attr_accessor :printers
@@ -2436,7 +2681,7 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # List of member objects.
+        # A list of member objects.
         # Corresponds to the JSON property `members`
         # @return [Array<Google::Apis::AdminDirectoryV1::Member>]
         attr_accessor :members
@@ -2550,10 +2795,10 @@ module Google
         # @return [String]
         attr_accessor :device_password_status
       
-        # List of owner's email addresses. If your application needs the current list of
-        # user emails, use the [get](/admin-sdk/directory/v1/reference/mobiledevices/get.
-        # html) method. For additional information, see the [retrieve a user](/admin-sdk/
-        # directory/v1/guides/manage-users#get_user) method.
+        # The list of the owner's email addresses. If your application needs the current
+        # list of user emails, use the [get](/admin-sdk/directory/v1/reference/
+        # mobiledevices/get.html) method. For additional information, see the [retrieve
+        # a user](/admin-sdk/directory/v1/guides/manage-users#get_user) method.
         # Corresponds to the JSON property `email`
         # @return [Array<String>]
         attr_accessor :email
@@ -2632,8 +2877,8 @@ module Google
         # @return [String]
         attr_accessor :model
       
-        # List of the owner's user names. If your application needs the current list of
-        # device owner names, use the [get](/admin-sdk/directory/v1/reference/
+        # The list of the owner's user names. If your application needs the current list
+        # of device owner names, use the [get](/admin-sdk/directory/v1/reference/
         # mobiledevices/get.html) method. For more information about retrieving mobile
         # device user information, see the [Developer's Guide](/admin-sdk/directory/v1/
         # guides/manage-users#get_user).
@@ -2654,7 +2899,7 @@ module Google
         # @return [String]
         attr_accessor :os
       
-        # List of accounts added on device (Read-only)
+        # The list of accounts added on device (Read-only)
         # Corresponds to the JSON property `otherAccountsInfo`
         # @return [Array<String>]
         attr_accessor :other_accounts_info
@@ -2848,7 +3093,7 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # List of Mobile Device objects.
+        # A list of Mobile Device objects.
         # Corresponds to the JSON property `mobiledevices`
         # @return [Array<Google::Apis::AdminDirectoryV1::MobileDevice>]
         attr_accessor :mobiledevices
@@ -2874,7 +3119,8 @@ module Google
       # Managing your account's organizational units allows you to configure your
       # users' access to services and custom settings. For more information about
       # common organizational unit tasks, see the [Developer's Guide](/admin-sdk/
-      # directory/v1/guides/manage-org-units.html).
+      # directory/v1/guides/manage-org-units.html). The customer's organizational unit
+      # hierarchy is limited to 35 levels of depth.
       class OrgUnit
         include Google::Apis::Core::Hashable
       
@@ -2978,7 +3224,7 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # List of organizational unit objects.
+        # A list of organizational unit objects.
         # Corresponds to the JSON property `organizationUnits`
         # @return [Array<Google::Apis::AdminDirectoryV1::OrgUnit>]
         attr_accessor :organization_units
@@ -2992,6 +3238,156 @@ module Google
           @etag = args[:etag] if args.key?(:etag)
           @kind = args[:kind] if args.key?(:kind)
           @organization_units = args[:organization_units] if args.key?(:organization_units)
+        end
+      end
+      
+      # Contains information regarding the current OS update status.
+      class OsUpdateStatus
+        include Google::Apis::Core::Hashable
+      
+        # Date and time of the last reboot.
+        # Corresponds to the JSON property `rebootTime`
+        # @return [String]
+        attr_accessor :reboot_time
+      
+        # The update state of an OS update.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # New required platform version from the pending updated kiosk app.
+        # Corresponds to the JSON property `targetKioskAppVersion`
+        # @return [String]
+        attr_accessor :target_kiosk_app_version
+      
+        # New platform version of the OS image being downloaded and applied. It is only
+        # set when update status is UPDATE_STATUS_DOWNLOAD_IN_PROGRESS or
+        # UPDATE_STATUS_NEED_REBOOT. Note this could be a dummy "0.0.0.0" for
+        # UPDATE_STATUS_NEED_REBOOT for some edge cases, e.g. update engine is restarted
+        # without a reboot.
+        # Corresponds to the JSON property `targetOsVersion`
+        # @return [String]
+        attr_accessor :target_os_version
+      
+        # Date and time of the last update check.
+        # Corresponds to the JSON property `updateCheckTime`
+        # @return [String]
+        attr_accessor :update_check_time
+      
+        # Date and time of the last successful OS update.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @reboot_time = args[:reboot_time] if args.key?(:reboot_time)
+          @state = args[:state] if args.key?(:state)
+          @target_kiosk_app_version = args[:target_kiosk_app_version] if args.key?(:target_kiosk_app_version)
+          @target_os_version = args[:target_os_version] if args.key?(:target_os_version)
+          @update_check_time = args[:update_check_time] if args.key?(:update_check_time)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # Configuration for a print server.
+      class PrintServer
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Time when the print server was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Editable. Description of the print server (as shown in the Admin console).
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Editable. Display name of the print server (as shown in the Admin console).
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Immutable. ID of the print server. Leave empty when creating.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Immutable. Resource name of the print server. Leave empty when creating.
+        # Format: `customers/`customer.id`/printServers/`print_server.id``
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # ID of the organization unit (OU) that owns this print server. This value can
+        # only be set when the print server is initially created. If it's not populated,
+        # the print server is placed under the root OU. The `org_unit_id` can be
+        # retrieved using the [Directory API](/admin-sdk/directory/reference/rest/v1/
+        # orgunits).
+        # Corresponds to the JSON property `orgUnitId`
+        # @return [String]
+        attr_accessor :org_unit_id
+      
+        # Editable. Print server URI.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @description = args[:description] if args.key?(:description)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @id = args[:id] if args.key?(:id)
+          @name = args[:name] if args.key?(:name)
+          @org_unit_id = args[:org_unit_id] if args.key?(:org_unit_id)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # Info about failures
+      class PrintServerFailureInfo
+        include Google::Apis::Core::Hashable
+      
+        # Canonical code for why the update failed to apply.
+        # Corresponds to the JSON property `errorCode`
+        # @return [String]
+        attr_accessor :error_code
+      
+        # Failure reason message.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        # Configuration for a print server.
+        # Corresponds to the JSON property `printServer`
+        # @return [Google::Apis::AdminDirectoryV1::PrintServer]
+        attr_accessor :print_server
+      
+        # ID of a failed print server.
+        # Corresponds to the JSON property `printServerId`
+        # @return [String]
+        attr_accessor :print_server_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @error_code = args[:error_code] if args.key?(:error_code)
+          @error_message = args[:error_message] if args.key?(:error_message)
+          @print_server = args[:print_server] if args.key?(:print_server)
+          @print_server_id = args[:print_server_id] if args.key?(:print_server_id)
         end
       end
       
@@ -3289,7 +3685,10 @@ module Google
       class RoleAssignment
         include Google::Apis::Core::Hashable
       
-        # The unique ID of the user this role is assigned to.
+        # The unique ID of the entity this role is assigned to—either the `user_id` of a
+        # user or the `uniqueId` of a service account, as defined in [Identity and
+        # Access Management (IAM)](https://cloud.google.com/iam/docs/reference/rest/v1/
+        # projects.serviceAccounts).
         # Corresponds to the JSON property `assignedTo`
         # @return [String]
         attr_accessor :assigned_to
@@ -3597,7 +3996,7 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # List of UserSchema objects.
+        # A list of UserSchema objects.
         # Corresponds to the JSON property `schemas`
         # @return [Array<Google::Apis::AdminDirectoryV1::Schema>]
         attr_accessor :schemas
@@ -3718,8 +4117,8 @@ module Google
       class User
         include Google::Apis::Core::Hashable
       
-        # A list of the user's addresses. The maximum allowed data size for this field
-        # is 10Kb.
+        # The list of the user's addresses. The maximum allowed data size for this field
+        # is 10KB.
         # Corresponds to the JSON property `addresses`
         # @return [Object]
         attr_accessor :addresses
@@ -3731,7 +4130,7 @@ module Google
         attr_accessor :agreed_to_terms
         alias_method :agreed_to_terms?, :agreed_to_terms
       
-        # Output only. A list of the user's alias email addresses.
+        # Output only. The list of the user's alias email addresses.
         # Corresponds to the JSON property `aliases`
         # @return [Array<String>]
         attr_accessor :aliases
@@ -3776,8 +4175,8 @@ module Google
         # @return [DateTime]
         attr_accessor :deletion_time
       
-        # A list of the user's email addresses. The maximum allowed data size for this
-        # field is 10Kb.
+        # The list of the user's email addresses. The maximum allowed data size for this
+        # field is 10KB.
         # Corresponds to the JSON property `emails`
         # @return [Object]
         attr_accessor :emails
@@ -3787,22 +4186,24 @@ module Google
         # @return [String]
         attr_accessor :etag
       
-        # A list of external IDs for the user, such as an employee or network ID. The
-        # maximum allowed data size for this field is 2Kb.
+        # The list of external IDs for the user, such as an employee or network ID. The
+        # maximum allowed data size for this field is 2KB.
         # Corresponds to the JSON property `externalIds`
         # @return [Object]
         attr_accessor :external_ids
       
-        # The user's gender. The maximum allowed data size for this field is 1Kb.
+        # The user's gender. The maximum allowed data size for this field is 1KB.
         # Corresponds to the JSON property `gender`
         # @return [Object]
         attr_accessor :gender
       
-        # Stores the hash format of the password property. We recommend sending the `
-        # password` property value as a base 16 bit hexadecimal-encoded hash value. Set
-        # the `hashFunction` values as either the [SHA-1](https://wikipedia.org/wiki/SHA-
-        # 1), [MD5](https://wikipedia.org/wiki/MD5), or [crypt](https://en.wikipedia.org/
-        # wiki/Crypt_\(C\)) hash format.
+        # Stores the hash format of the `password` property. The following `hashFunction`
+        # values are allowed: * `MD5` - Accepts simple hex-encoded values. * `SHA-1` -
+        # Accepts simple hex-encoded values. * `crypt` - Compliant with the [C crypt
+        # library](https://en.wikipedia.org/wiki/Crypt_%28C%29). Supports the DES, MD5 (
+        # hash prefix `$1$`), SHA-256 (hash prefix `$5$`), and SHA-512 (hash prefix `$6$`
+        # ) hash algorithms. If rounds are specified as part of the prefix, they must be
+        # 10,000 or fewer.
         # Corresponds to the JSON property `hashFunction`
         # @return [String]
         attr_accessor :hash_function
@@ -3813,9 +4214,9 @@ module Google
         # @return [String]
         attr_accessor :id
       
-        # The user's Instant Messenger (IM) accounts. A user account can have multiple
-        # ims properties. But, only one of these ims properties can be the primary IM
-        # contact. The maximum allowed data size for this field is 2Kb.
+        # The list of the user's Instant Messenger (IM) accounts. A user account can
+        # have multiple ims properties. But, only one of these ims properties can be the
+        # primary IM contact. The maximum allowed data size for this field is 2KB.
         # Corresponds to the JSON property `ims`
         # @return [Object]
         attr_accessor :ims
@@ -3829,8 +4230,8 @@ module Google
         attr_accessor :include_in_global_address_list
         alias_method :include_in_global_address_list?, :include_in_global_address_list
       
-        # If `true`, the user's IP address is [whitelisted](https://support.google.com/a/
-        # answer/60752).
+        # If `true`, the user's IP address is subject to a deprecated IP address [`
+        # allowlist`](https://support.google.com/a/answer/60752) configuration.
         # Corresponds to the JSON property `ipWhitelisted`
         # @return [Boolean]
         attr_accessor :ip_whitelisted
@@ -3877,7 +4278,8 @@ module Google
         attr_accessor :is_mailbox_setup
         alias_method :is_mailbox_setup?, :is_mailbox_setup
       
-        # The user's keywords. The maximum allowed data size for this field is 1Kb.
+        # The list of the user's keywords. The maximum allowed data size for this field
+        # is 1KB.
         # Corresponds to the JSON property `keywords`
         # @return [Object]
         attr_accessor :keywords
@@ -3888,7 +4290,7 @@ module Google
         # @return [String]
         attr_accessor :kind
       
-        # The user's languages. The maximum allowed data size for this field is 1Kb.
+        # The user's languages. The maximum allowed data size for this field is 1KB.
         # Corresponds to the JSON property `languages`
         # @return [Object]
         attr_accessor :languages
@@ -3898,7 +4300,7 @@ module Google
         # @return [DateTime]
         attr_accessor :last_login_time
       
-        # The user's locations. The maximum allowed data size for this field is 10Kb.
+        # The user's locations. The maximum allowed data size for this field is 10KB.
         # Corresponds to the JSON property `locations`
         # @return [Object]
         attr_accessor :locations
@@ -3909,13 +4311,13 @@ module Google
         # characters, and can contain spaces, letters (a-z), numbers (0-9), dashes (-),
         # forward slashes (/), and periods (.). For more information about character
         # usage rules, see the [administration help center](https://support.google.com/a/
-        # answer/9193374). Maximum allowed data size for this field is 1Kb.
+        # answer/9193374). Maximum allowed data size for this field is 1KB.
         # Corresponds to the JSON property `name`
         # @return [Google::Apis::AdminDirectoryV1::UserName]
         attr_accessor :name
       
-        # Output only. List of the user's non-editable alias email addresses. These are
-        # typically outside the account's primary domain or sub-domain.
+        # Output only. The list of the user's non-editable alias email addresses. These
+        # are typically outside the account's primary domain or sub-domain.
         # Corresponds to the JSON property `nonEditableAliases`
         # @return [Array<String>]
         attr_accessor :non_editable_aliases
@@ -3932,8 +4334,8 @@ module Google
         # @return [String]
         attr_accessor :org_unit_path
       
-        # A list of organizations the user belongs to. The maximum allowed data size for
-        # this field is 10Kb.
+        # The list of organizations the user belongs to. The maximum allowed data size
+        # for this field is 10KB.
         # Corresponds to the JSON property `organizations`
         # @return [Object]
         attr_accessor :organizations
@@ -3943,13 +4345,13 @@ module Google
         # @return [String]
         attr_accessor :password
       
-        # A list of the user's phone numbers. The maximum allowed data size for this
-        # field is 1Kb.
+        # The list of the user's phone numbers. The maximum allowed data size for this
+        # field is 1KB.
         # Corresponds to the JSON property `phones`
         # @return [Object]
         attr_accessor :phones
       
-        # A list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html)
+        # The list of [POSIX](https://www.opengroup.org/austin/papers/posix_faq.html)
         # account information for the user.
         # Corresponds to the JSON property `posixAccounts`
         # @return [Object]
@@ -3973,8 +4375,8 @@ module Google
         # @return [String]
         attr_accessor :recovery_phone
       
-        # A list of the user's relationships to other users. The maximum allowed data
-        # size for this field is 2Kb.
+        # The list of the user's relationships to other users. The maximum allowed data
+        # size for this field is 2KB.
         # Corresponds to the JSON property `relations`
         # @return [Object]
         attr_accessor :relations
@@ -4007,7 +4409,7 @@ module Google
         # @return [String]
         attr_accessor :thumbnail_photo_url
       
-        # The user's websites. The maximum allowed data size for this field is 2Kb.
+        # The user's websites. The maximum allowed data size for this field is 2KB.
         # Corresponds to the JSON property `websites`
         # @return [Object]
         attr_accessor :websites
@@ -4188,6 +4590,50 @@ module Google
           @source_is_structured = args[:source_is_structured] if args.key?(:source_is_structured)
           @street_address = args[:street_address] if args.key?(:street_address)
           @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # The Directory API manages aliases, which are alternative email addresses.
+      class UserAlias
+        include Google::Apis::Core::Hashable
+      
+        # The alias email address.
+        # Corresponds to the JSON property `alias`
+        # @return [String]
+        attr_accessor :alias
+      
+        # ETag of the resource.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # The unique ID for the user.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # The type of the API resource. For Alias resources, the value is `admin#
+        # directory#alias`.
+        # Corresponds to the JSON property `kind`
+        # @return [String]
+        attr_accessor :kind
+      
+        # The user's primary email address.
+        # Corresponds to the JSON property `primaryEmail`
+        # @return [String]
+        attr_accessor :primary_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @alias = args[:alias] if args.key?(:alias)
+          @etag = args[:etag] if args.key?(:etag)
+          @id = args[:id] if args.key?(:id)
+          @kind = args[:kind] if args.key?(:kind)
+          @primary_email = args[:primary_email] if args.key?(:primary_email)
         end
       end
       
@@ -4388,18 +4834,28 @@ module Google
       class UserLanguage
         include Google::Apis::Core::Hashable
       
-        # Other language. User can provide own language name if there is no
-        # corresponding Google III language code. If this is set LanguageCode can't be
-        # set
+        # Other language. User can provide their own language name if there is no
+        # corresponding ISO 639 language code. If this is set, `languageCode` can't be
+        # set.
         # Corresponds to the JSON property `customLanguage`
         # @return [String]
         attr_accessor :custom_language
       
-        # Language Code. Should be used for storing Google III LanguageCode string
-        # representation for language. Illegal values cause SchemaException.
+        # ISO 639 string representation of a language. See [Language Codes](/admin-sdk/
+        # directory/v1/languages) for the list of supported codes. Valid language codes
+        # outside the supported set will be accepted by the API but may lead to
+        # unexpected behavior. Illegal values cause `SchemaException`. If this is set, `
+        # customLanguage` can't be set.
         # Corresponds to the JSON property `languageCode`
         # @return [String]
         attr_accessor :language_code
+      
+        # Optional. If present, controls whether the specified `languageCode` is the
+        # user's preferred language. If `customLanguage` is set, this can't be set.
+        # Allowed values are `preferred` and `not_preferred`.
+        # Corresponds to the JSON property `preference`
+        # @return [String]
+        attr_accessor :preference
       
         def initialize(**args)
            update!(**args)
@@ -4409,6 +4865,7 @@ module Google
         def update!(**args)
           @custom_language = args[:custom_language] if args.key?(:custom_language)
           @language_code = args[:language_code] if args.key?(:language_code)
+          @preference = args[:preference] if args.key?(:preference)
         end
       end
       
@@ -4498,6 +4955,11 @@ module Google
       class UserName
         include Google::Apis::Core::Hashable
       
+        # The user's display name. Limit: 256 characters.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
         # The user's last name. Required when creating a user account.
         # Corresponds to the JSON property `familyName`
         # @return [String]
@@ -4519,6 +4981,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
           @family_name = args[:family_name] if args.key?(:family_name)
           @full_name = args[:full_name] if args.key?(:full_name)
           @given_name = args[:given_name] if args.key?(:given_name)
@@ -4947,7 +5410,7 @@ module Google
         # @return [String]
         attr_accessor :trigger_event
       
-        # List of user objects.
+        # A list of user objects.
         # Corresponds to the JSON property `users`
         # @return [Array<Google::Apis::AdminDirectoryV1::User>]
         attr_accessor :users
@@ -5005,7 +5468,7 @@ module Google
         end
       end
       
-      # JSON response template for List verification codes operation in Directory API.
+      # JSON response template for list verification codes operation in Directory API.
       class VerificationCodes
         include Google::Apis::Core::Hashable
       

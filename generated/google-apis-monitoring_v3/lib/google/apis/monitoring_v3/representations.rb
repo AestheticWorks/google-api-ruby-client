@@ -58,6 +58,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BasicService
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BasicSli
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -71,6 +77,12 @@ module Google
       end
       
       class CloudEndpoints
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CloudRun
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -142,6 +154,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Criteria
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Custom
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -208,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ForecastOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GetNotificationChannelVerificationCodeRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -215,6 +239,24 @@ module Google
       end
       
       class GetNotificationChannelVerificationCodeResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNamespace
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeService
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeWorkload
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -245,6 +287,12 @@ module Google
       end
       
       class IstioCanonicalService
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class JsonPathMatcher
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -323,6 +371,12 @@ module Google
       end
       
       class ListServicesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListSnoozesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -460,6 +514,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Point
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -502,6 +562,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ResponseStatusCode
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SendNotificationChannelVerificationCodeRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -521,6 +587,12 @@ module Google
       end
       
       class ServiceLevelObjective
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Snooze
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -698,6 +770,14 @@ module Google
         end
       end
       
+      class BasicService
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :service_labels, as: 'serviceLabels'
+          property :service_type, as: 'serviceType'
+        end
+      end
+      
       class BasicSli
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -727,6 +807,14 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :service, as: 'service'
+        end
+      end
+      
+      class CloudRun
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :location, as: 'location'
+          property :service_name, as: 'serviceName'
         end
       end
       
@@ -806,6 +894,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :content, as: 'content'
+          property :json_path_matcher, as: 'jsonPathMatcher', class: Google::Apis::MonitoringV3::JsonPathMatcher, decorator: Google::Apis::MonitoringV3::JsonPathMatcher::Representation
+      
           property :matcher, as: 'matcher'
         end
       end
@@ -846,6 +936,13 @@ module Google
       
           property :success_point_count, as: 'successPointCount'
           property :total_point_count, as: 'totalPointCount'
+        end
+      end
+      
+      class Criteria
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :policies, as: 'policies'
         end
       end
       
@@ -952,6 +1049,13 @@ module Google
         end
       end
       
+      class ForecastOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :forecast_horizon, as: 'forecastHorizon'
+        end
+      end
+      
       class GetNotificationChannelVerificationCodeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -964,6 +1068,39 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :code, as: 'code'
           property :expire_time, as: 'expireTime'
+        end
+      end
+      
+      class GkeNamespace
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_name, as: 'clusterName'
+          property :location, as: 'location'
+          property :namespace_name, as: 'namespaceName'
+          property :project_id, as: 'projectId'
+        end
+      end
+      
+      class GkeService
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_name, as: 'clusterName'
+          property :location, as: 'location'
+          property :namespace_name, as: 'namespaceName'
+          property :project_id, as: 'projectId'
+          property :service_name, as: 'serviceName'
+        end
+      end
+      
+      class GkeWorkload
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_name, as: 'clusterName'
+          property :location, as: 'location'
+          property :namespace_name, as: 'namespaceName'
+          property :project_id, as: 'projectId'
+          property :top_level_controller_name, as: 'topLevelControllerName'
+          property :top_level_controller_type, as: 'topLevelControllerType'
         end
       end
       
@@ -989,13 +1126,18 @@ module Google
       class HttpCheck
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :accepted_response_status_codes, as: 'acceptedResponseStatusCodes', class: Google::Apis::MonitoringV3::ResponseStatusCode, decorator: Google::Apis::MonitoringV3::ResponseStatusCode::Representation
+      
           property :auth_info, as: 'authInfo', class: Google::Apis::MonitoringV3::BasicAuthentication, decorator: Google::Apis::MonitoringV3::BasicAuthentication::Representation
       
           property :body, :base64 => true, as: 'body'
           property :content_type, as: 'contentType'
+          property :custom_content_type, as: 'customContentType'
           hash :headers, as: 'headers'
           property :mask_headers, as: 'maskHeaders'
           property :path, as: 'path'
+          property :ping_config, as: 'pingConfig', class: Google::Apis::MonitoringV3::PingConfig, decorator: Google::Apis::MonitoringV3::PingConfig::Representation
+      
           property :port, as: 'port'
           property :request_method, as: 'requestMethod'
           property :use_ssl, as: 'useSsl'
@@ -1021,6 +1163,14 @@ module Google
           property :canonical_service, as: 'canonicalService'
           property :canonical_service_namespace, as: 'canonicalServiceNamespace'
           property :mesh_uid, as: 'meshUid'
+        end
+      end
+      
+      class JsonPathMatcher
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :json_matcher, as: 'jsonMatcher'
+          property :json_path, as: 'jsonPath'
         end
       end
       
@@ -1142,6 +1292,15 @@ module Google
         end
       end
       
+      class ListSnoozesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :snoozes, as: 'snoozes', class: Google::Apis::MonitoringV3::Snooze, decorator: Google::Apis::MonitoringV3::Snooze::Representation
+      
+        end
+      end
+      
       class ListTimeSeriesResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1257,7 +1416,10 @@ module Google
       
           property :denominator_filter, as: 'denominatorFilter'
           property :duration, as: 'duration'
+          property :evaluation_missing_data, as: 'evaluationMissingData'
           property :filter, as: 'filter'
+          property :forecast_options, as: 'forecastOptions', class: Google::Apis::MonitoringV3::ForecastOptions, decorator: Google::Apis::MonitoringV3::ForecastOptions::Representation
+      
           property :threshold_value, as: 'thresholdValue'
           property :trigger, as: 'trigger', class: Google::Apis::MonitoringV3::Trigger, decorator: Google::Apis::MonitoringV3::Trigger::Representation
       
@@ -1297,6 +1459,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :duration, as: 'duration'
+          property :evaluation_missing_data, as: 'evaluationMissingData'
           property :query, as: 'query'
           property :trigger, as: 'trigger', class: Google::Apis::MonitoringV3::Trigger, decorator: Google::Apis::MonitoringV3::Trigger::Representation
       
@@ -1338,6 +1501,7 @@ module Google
       
           property :launch_stage, as: 'launchStage'
           property :name, as: 'name'
+          collection :supported_tiers, as: 'supportedTiers'
           property :type, as: 'type'
         end
       end
@@ -1374,6 +1538,13 @@ module Google
           property :performance, as: 'performance', class: Google::Apis::MonitoringV3::RequestBasedSli, decorator: Google::Apis::MonitoringV3::RequestBasedSli::Representation
       
           property :threshold, as: 'threshold'
+        end
+      end
+      
+      class PingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :pings_count, as: 'pingsCount'
         end
       end
       
@@ -1445,6 +1616,14 @@ module Google
         end
       end
       
+      class ResponseStatusCode
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :status_class, as: 'statusClass'
+          property :status_value, as: 'statusValue'
+        end
+      end
+      
       class SendNotificationChannelVerificationCodeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1456,13 +1635,23 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :app_engine, as: 'appEngine', class: Google::Apis::MonitoringV3::AppEngine, decorator: Google::Apis::MonitoringV3::AppEngine::Representation
       
+          property :basic_service, as: 'basicService', class: Google::Apis::MonitoringV3::BasicService, decorator: Google::Apis::MonitoringV3::BasicService::Representation
+      
           property :cloud_endpoints, as: 'cloudEndpoints', class: Google::Apis::MonitoringV3::CloudEndpoints, decorator: Google::Apis::MonitoringV3::CloudEndpoints::Representation
+      
+          property :cloud_run, as: 'cloudRun', class: Google::Apis::MonitoringV3::CloudRun, decorator: Google::Apis::MonitoringV3::CloudRun::Representation
       
           property :cluster_istio, as: 'clusterIstio', class: Google::Apis::MonitoringV3::ClusterIstio, decorator: Google::Apis::MonitoringV3::ClusterIstio::Representation
       
           property :custom, as: 'custom', class: Google::Apis::MonitoringV3::Custom, decorator: Google::Apis::MonitoringV3::Custom::Representation
       
           property :display_name, as: 'displayName'
+          property :gke_namespace, as: 'gkeNamespace', class: Google::Apis::MonitoringV3::GkeNamespace, decorator: Google::Apis::MonitoringV3::GkeNamespace::Representation
+      
+          property :gke_service, as: 'gkeService', class: Google::Apis::MonitoringV3::GkeService, decorator: Google::Apis::MonitoringV3::GkeService::Representation
+      
+          property :gke_workload, as: 'gkeWorkload', class: Google::Apis::MonitoringV3::GkeWorkload, decorator: Google::Apis::MonitoringV3::GkeWorkload::Representation
+      
           property :istio_canonical_service, as: 'istioCanonicalService', class: Google::Apis::MonitoringV3::IstioCanonicalService, decorator: Google::Apis::MonitoringV3::IstioCanonicalService::Representation
       
           property :mesh_istio, as: 'meshIstio', class: Google::Apis::MonitoringV3::MeshIstio, decorator: Google::Apis::MonitoringV3::MeshIstio::Representation
@@ -1500,6 +1689,18 @@ module Google
         end
       end
       
+      class Snooze
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :criteria, as: 'criteria', class: Google::Apis::MonitoringV3::Criteria, decorator: Google::Apis::MonitoringV3::Criteria::Representation
+      
+          property :display_name, as: 'displayName'
+          property :interval, as: 'interval', class: Google::Apis::MonitoringV3::TimeInterval, decorator: Google::Apis::MonitoringV3::TimeInterval::Representation
+      
+          property :name, as: 'name'
+        end
+      end
+      
       class SourceContext
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1526,6 +1727,8 @@ module Google
       class TcpCheck
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :ping_config, as: 'pingConfig', class: Google::Apis::MonitoringV3::PingConfig, decorator: Google::Apis::MonitoringV3::PingConfig::Representation
+      
           property :port, as: 'port'
         end
       end
@@ -1629,6 +1832,7 @@ module Google
       class UptimeCheckConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :checker_type, as: 'checkerType'
           collection :content_matchers, as: 'contentMatchers', class: Google::Apis::MonitoringV3::ContentMatcher, decorator: Google::Apis::MonitoringV3::ContentMatcher::Representation
       
           property :display_name, as: 'displayName'
@@ -1647,6 +1851,7 @@ module Google
           property :tcp_check, as: 'tcpCheck', class: Google::Apis::MonitoringV3::TcpCheck, decorator: Google::Apis::MonitoringV3::TcpCheck::Representation
       
           property :timeout, as: 'timeout'
+          hash :user_labels, as: 'userLabels'
         end
       end
       

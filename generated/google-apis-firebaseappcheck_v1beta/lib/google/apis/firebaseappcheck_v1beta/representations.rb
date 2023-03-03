@@ -22,13 +22,13 @@ module Google
   module Apis
     module FirebaseappcheckV1beta
       
-      class GoogleFirebaseAppcheckV1betaAppAttestChallengeResponse
+      class GoogleFirebaseAppcheckV1betaAppAttestConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class GoogleFirebaseAppcheckV1betaAppAttestConfig
+      class GoogleFirebaseAppcheckV1betaAppCheckToken
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -52,7 +52,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -124,7 +142,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -142,6 +178,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleFirebaseAppcheckV1betaListDebugTokensResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -149,6 +203,12 @@ module Google
       end
       
       class GoogleFirebaseAppcheckV1betaListServicesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaPlayIntegrityConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -167,6 +227,18 @@ module Google
       end
       
       class GoogleFirebaseAppcheckV1betaRecaptchaConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleFirebaseAppcheckV1betaRecaptchaV3Config
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -196,19 +268,20 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class GoogleFirebaseAppcheckV1betaAppAttestChallengeResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :challenge, :base64 => true, as: 'challenge'
-          property :ttl, as: 'ttl'
-        end
-      end
-      
       class GoogleFirebaseAppcheckV1betaAppAttestConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
           property :token_ttl, as: 'tokenTtl'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaAppCheckToken
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :attestation_token, as: 'attestationToken'
+          property :token, as: 'token'
+          property :ttl, as: 'ttl'
         end
       end
       
@@ -236,10 +309,34 @@ module Google
         end
       end
       
+      class GoogleFirebaseAppcheckV1betaBatchGetPlayIntegrityConfigsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :configs, as: 'configs', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaPlayIntegrityConfig, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaPlayIntegrityConfig::Representation
+      
+        end
+      end
+      
       class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaConfigsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :configs, as: 'configs', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaConfig, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaConfig::Representation
+      
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaEnterpriseConfigsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :configs, as: 'configs', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig::Representation
+      
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaBatchGetRecaptchaV3ConfigsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :configs, as: 'configs', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaV3Config, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaRecaptchaV3Config::Representation
       
         end
       end
@@ -310,6 +407,8 @@ module Google
       class GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :app_check_token, as: 'appCheckToken', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaAppCheckToken, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaAppCheckToken::Representation
+      
           property :artifact, :base64 => true, as: 'artifact'
           property :attestation_token, as: 'attestationToken', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaAttestationTokenResponse, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaAttestationTokenResponse::Representation
       
@@ -337,10 +436,31 @@ module Google
         end
       end
       
+      class GoogleFirebaseAppcheckV1betaExchangePlayIntegrityTokenRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :play_integrity_token, as: 'playIntegrityToken'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaExchangeRecaptchaEnterpriseTokenRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :recaptcha_enterprise_token, as: 'recaptchaEnterpriseToken'
+        end
+      end
+      
       class GoogleFirebaseAppcheckV1betaExchangeRecaptchaTokenRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :recaptcha_token, as: 'recaptchaToken'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaExchangeRecaptchaV3TokenRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :recaptcha_v3_token, as: 'recaptchaV3Token'
         end
       end
       
@@ -354,6 +474,28 @@ module Google
       class GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :challenge, :base64 => true, as: 'challenge'
+          property :ttl, as: 'ttl'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :challenge, as: 'challenge'
+          property :ttl, as: 'ttl'
         end
       end
       
@@ -372,6 +514,14 @@ module Google
           property :next_page_token, as: 'nextPageToken'
           collection :services, as: 'services', class: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaService, decorator: Google::Apis::FirebaseappcheckV1beta::GoogleFirebaseAppcheckV1betaService::Representation
       
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaPlayIntegrityConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :token_ttl, as: 'tokenTtl'
         end
       end
       
@@ -396,6 +546,25 @@ module Google
       end
       
       class GoogleFirebaseAppcheckV1betaRecaptchaConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :site_secret, as: 'siteSecret'
+          property :site_secret_set, as: 'siteSecretSet'
+          property :token_ttl, as: 'tokenTtl'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaRecaptchaEnterpriseConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :site_key, as: 'siteKey'
+          property :token_ttl, as: 'tokenTtl'
+        end
+      end
+      
+      class GoogleFirebaseAppcheckV1betaRecaptchaV3Config
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'

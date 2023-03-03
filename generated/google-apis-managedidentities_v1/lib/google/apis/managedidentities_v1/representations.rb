@@ -28,6 +28,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Backup
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Binding
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -88,6 +94,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ExtendSchemaRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudManagedidentitiesV1OpMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -130,6 +142,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -155,6 +173,12 @@ module Google
       end
       
       class LdapsSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListBackupsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -250,6 +274,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RestoreDomainRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Schedule
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -321,6 +351,19 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :trust_prop, as: 'trust', class: Google::Apis::ManagedidentitiesV1::TrustProp, decorator: Google::Apis::ManagedidentitiesV1::TrustProp::Representation
       
+        end
+      end
+      
+      class Backup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          hash :labels, as: 'labels'
+          property :name, as: 'name'
+          property :state, as: 'state'
+          property :status_message, as: 'statusMessage'
+          property :type, as: 'type'
+          property :update_time, as: 'updateTime'
         end
       end
       
@@ -426,6 +469,15 @@ module Google
         end
       end
       
+      class ExtendSchemaRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :file_contents, :base64 => true, as: 'fileContents'
+          property :gcs_path, as: 'gcsPath'
+        end
+      end
+      
       class GoogleCloudManagedidentitiesV1OpMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -467,6 +519,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :consumer_defined_name, as: 'consumerDefinedName'
           property :create_time, as: 'createTime'
+          property :instance_type, as: 'instanceType'
           hash :labels, as: 'labels'
           hash :maintenance_policy_names, as: 'maintenancePolicyNames'
           hash :maintenance_schedules, as: 'maintenanceSchedules', class: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule, decorator: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSchedule::Representation
@@ -474,6 +527,8 @@ module Google
           property :maintenance_settings, as: 'maintenanceSettings', class: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings, decorator: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings::Representation
       
           property :name, as: 'name'
+          hash :notification_parameters, as: 'notificationParameters', class: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter, decorator: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter::Representation
+      
           hash :producer_metadata, as: 'producerMetadata'
           collection :provisioned_resources, as: 'provisionedResources', class: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource, decorator: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1ProvisionedResource::Representation
       
@@ -515,6 +570,13 @@ module Google
           property :node_id, as: 'nodeId'
           property :per_sli_eligibility, as: 'perSliEligibility', class: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility, decorator: Google::Apis::ManagedidentitiesV1::GoogleCloudSaasacceleratorManagementProvidersV1PerSliSloEligibility::Representation
       
+        end
+      end
+      
+      class GoogleCloudSaasacceleratorManagementProvidersV1NotificationParameter
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :values, as: 'values'
         end
       end
       
@@ -563,6 +625,16 @@ module Google
           property :name, as: 'name'
           property :state, as: 'state'
           property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class ListBackupsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :backups, as: 'backups', class: Google::Apis::ManagedidentitiesV1::Backup, decorator: Google::Apis::ManagedidentitiesV1::Backup::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+          collection :unreachable, as: 'unreachable'
         end
       end
       
@@ -716,6 +788,13 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :password, as: 'password'
+        end
+      end
+      
+      class RestoreDomainRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :backup_id, as: 'backupId'
         end
       end
       

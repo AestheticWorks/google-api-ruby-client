@@ -22,13 +22,40 @@ module Google
   module Apis
     module PaymentsresellersubscriptionV1
       
+      # Describes the amount unit including the currency code.
+      class GoogleCloudPaymentsResellerSubscriptionV1Amount
+        include Google::Apis::Core::Hashable
+      
+        # Required. Amount in micros (1_000_000 micros = 1 currency unit)
+        # Corresponds to the JSON property `amountMicros`
+        # @return [Fixnum]
+        attr_accessor :amount_micros
+      
+        # Required. Currency codes in accordance with [ISO-4217 Currency Codes] (https://
+        # en.wikipedia.org/wiki/ISO_4217). For example, USD.
+        # Corresponds to the JSON property `currencyCode`
+        # @return [String]
+        attr_accessor :currency_code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @amount_micros = args[:amount_micros] if args.key?(:amount_micros)
+          @currency_code = args[:currency_code] if args.key?(:currency_code)
+        end
+      end
+      
       # 
       class GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
         include Google::Apis::Core::Hashable
       
-        # Optional. If true, the subscription will be cancelled immediately. Otherwise,
-        # the subscription will be cancelled at the end of the current cycle, and
-        # therefore no prorated refund will be issued for the rest of the cycle.
+        # Optional. If true, Google will cancel the subscription immediately, and may or
+        # may not (based on the contract) issue a prorated refund for the remainder of
+        # the billing cycle. Otherwise, Google defers the cancelation at renewal_time,
+        # and will not issue a refund.
         # Corresponds to the JSON property `cancelImmediately`
         # @return [Boolean]
         attr_accessor :cancel_immediately
@@ -175,6 +202,15 @@ module Google
         # @return [String]
         attr_accessor :free_trial_end_time
       
+        # Output only. The time at which the subscription is expected to be renewed by
+        # Google - a new charge will be incurred and the service entitlement will be
+        # renewed. A non-immediate cancellation will take place at this time too, before
+        # which, the service entitlement for the end user will remain valid. UTC
+        # timezone in ISO 8061 format. For example: "2019-08-31T17:28:54.564Z"
+        # Corresponds to the JSON property `renewalTime`
+        # @return [String]
+        attr_accessor :renewal_time
+      
         def initialize(**args)
            update!(**args)
         end
@@ -183,6 +219,7 @@ module Google
         def update!(**args)
           @cycle_end_time = args[:cycle_end_time] if args.key?(:cycle_end_time)
           @free_trial_end_time = args[:free_trial_end_time] if args.key?(:free_trial_end_time)
+          @renewal_time = args[:renewal_time] if args.key?(:renewal_time)
         end
       end
       
@@ -208,6 +245,114 @@ module Google
         def update!(**args)
           @duration = args[:duration] if args.key?(:duration)
           @partner_user_token = args[:partner_user_token] if args.key?(:partner_user_token)
+        end
+      end
+      
+      # 
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Specifies the filters for the promotion results. The syntax is
+        # defined in https://google.aip.dev/160 with the following caveats: - Only the
+        # following features are supported: - Logical operator `AND` - Comparison
+        # operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (
+        # no wildcards `*`) - Only the following fields are supported: - `
+        # applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `
+        # youtubePayload.postalCode` - Unless explicitly mentioned above, other features
+        # are not supported. Example: `applicableProducts:partners/partner1/products/
+        # product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND
+        # youtubePayload.partnerEligibilityId=eligibility-id`
+        # Corresponds to the JSON property `filter`
+        # @return [String]
+        attr_accessor :filter
+      
+        # Optional. The maximum number of promotions to return. The service may return
+        # fewer than this value. If unspecified, at most 50 products will be returned.
+        # The maximum value is 1000; values above 1000 will be coerced to 1000.
+        # Corresponds to the JSON property `pageSize`
+        # @return [Fixnum]
+        attr_accessor :page_size
+      
+        # Optional. A page token, received from a previous `ListPromotions` call.
+        # Provide this to retrieve the subsequent page. When paginating, all other
+        # parameters provided to `ListPromotions` must match the call that provided the
+        # page token.
+        # Corresponds to the JSON property `pageToken`
+        # @return [String]
+        attr_accessor :page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter = args[:filter] if args.key?(:filter)
+          @page_size = args[:page_size] if args.key?(:page_size)
+          @page_token = args[:page_token] if args.key?(:page_token)
+        end
+      end
+      
+      # Response containing the found promotions for the current user.
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is empty, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The promotions for the current user.
+        # Corresponds to the JSON property `promotions`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Promotion>]
+        attr_accessor :promotions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @promotions = args[:promotions] if args.key?(:promotions)
+        end
+      end
+      
+      # Payload specific to Google One products.
+      class GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+        include Google::Apis::Core::Hashable
+      
+        # Campaign attributed to sales of this subscription.
+        # Corresponds to the JSON property `campaigns`
+        # @return [Array<String>]
+        attr_accessor :campaigns
+      
+        # The type of offering the subscription was sold by the partner. e.g. VAS.
+        # Corresponds to the JSON property `offering`
+        # @return [String]
+        attr_accessor :offering
+      
+        # The type of sales channel through which the subscription was sold.
+        # Corresponds to the JSON property `salesChannel`
+        # @return [String]
+        attr_accessor :sales_channel
+      
+        # The identifier for the partner store where the subscription was sold.
+        # Corresponds to the JSON property `storeId`
+        # @return [String]
+        attr_accessor :store_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @campaigns = args[:campaigns] if args.key?(:campaigns)
+          @offering = args[:offering] if args.key?(:offering)
+          @sales_channel = args[:sales_channel] if args.key?(:sales_channel)
+          @store_id = args[:store_id] if args.key?(:store_id)
         end
       end
       
@@ -293,11 +438,16 @@ module Google
       class GoogleCloudPaymentsResellerSubscriptionV1Product
         include Google::Apis::Core::Hashable
       
-        # Output only. Response only. Resource name of the subscription. It will have
-        # the format of "partners/`partner_id`/products/`product_id`"
+        # Output only. Response only. Resource name of the product. It will have the
+        # format of "partners/`partner_id`/products/`product_id`"
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Output only. Price configs for the product in the available regions.
+        # Corresponds to the JSON property `priceConfigs`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig>]
+        attr_accessor :price_configs
       
         # Output only. 2-letter ISO region code where the product is available in. Ex. "
         # US" Please refers to: https://en.wikipedia.org/wiki/ISO_3166-1
@@ -322,9 +472,61 @@ module Google
         # Update properties of this object
         def update!(**args)
           @name = args[:name] if args.key?(:name)
+          @price_configs = args[:price_configs] if args.key?(:price_configs)
           @region_codes = args[:region_codes] if args.key?(:region_codes)
           @subscription_billing_cycle_duration = args[:subscription_billing_cycle_duration] if args.key?(:subscription_billing_cycle_duration)
           @titles = args[:titles] if args.key?(:titles)
+        end
+      end
+      
+      # Specifies product specific payload.
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
+        include Google::Apis::Core::Hashable
+      
+        # Payload specific to Google One products.
+        # Corresponds to the JSON property `googleOnePayload`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload]
+        attr_accessor :google_one_payload
+      
+        # Payload specific to Youtube products.
+        # Corresponds to the JSON property `youtubePayload`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload]
+        attr_accessor :youtube_payload
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @google_one_payload = args[:google_one_payload] if args.key?(:google_one_payload)
+          @youtube_payload = args[:youtube_payload] if args.key?(:youtube_payload)
+        end
+      end
+      
+      # Configs the prices in an available region.
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
+        include Google::Apis::Core::Hashable
+      
+        # Describes the amount unit including the currency code.
+        # Corresponds to the JSON property `amount`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount]
+        attr_accessor :amount
+      
+        # Output only. 2-letter ISO region code where the product is available in. Ex. "
+        # US".
+        # Corresponds to the JSON property `regionCode`
+        # @return [String]
+        attr_accessor :region_code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @amount = args[:amount] if args.key?(:amount)
+          @region_code = args[:region_code] if args.key?(:region_code)
         end
       end
       
@@ -349,11 +551,21 @@ module Google
         # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration]
         attr_accessor :free_trial_duration
       
+        # The details of a introductory pricing promotion.
+        # Corresponds to the JSON property `introductoryPricingDetails`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails]
+        attr_accessor :introductory_pricing_details
+      
         # Output only. Response only. Resource name of the subscription promotion. It
         # will have the format of "partners/`partner_id`/promotion/`promotion_id`"
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Output only. Output Only. Specifies the type of the promotion.
+        # Corresponds to the JSON property `promotionType`
+        # @return [String]
+        attr_accessor :promotion_type
       
         # Output only. 2-letter ISO region code where the promotion is available in. Ex.
         # "US" Please refers to: https://en.wikipedia.org/wiki/ISO_3166-1
@@ -381,10 +593,97 @@ module Google
           @applicable_products = args[:applicable_products] if args.key?(:applicable_products)
           @end_time = args[:end_time] if args.key?(:end_time)
           @free_trial_duration = args[:free_trial_duration] if args.key?(:free_trial_duration)
+          @introductory_pricing_details = args[:introductory_pricing_details] if args.key?(:introductory_pricing_details)
           @name = args[:name] if args.key?(:name)
+          @promotion_type = args[:promotion_type] if args.key?(:promotion_type)
           @region_codes = args[:region_codes] if args.key?(:region_codes)
           @start_time = args[:start_time] if args.key?(:start_time)
           @titles = args[:titles] if args.key?(:titles)
+        end
+      end
+      
+      # The details of a introductory pricing promotion.
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+        include Google::Apis::Core::Hashable
+      
+        # Specifies the introductory pricing periods.
+        # Corresponds to the JSON property `introductoryPricingSpecs`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec>]
+        attr_accessor :introductory_pricing_specs
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @introductory_pricing_specs = args[:introductory_pricing_specs] if args.key?(:introductory_pricing_specs)
+        end
+      end
+      
+      # The duration of an introductory pricing promotion.
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
+        include Google::Apis::Core::Hashable
+      
+        # Describes the amount unit including the currency code.
+        # Corresponds to the JSON property `discountAmount`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount]
+        attr_accessor :discount_amount
+      
+        # Output only. The discount percentage in micros. For example, 50,000 represents
+        # 5%.
+        # Corresponds to the JSON property `discountRatioMicros`
+        # @return [Fixnum]
+        attr_accessor :discount_ratio_micros
+      
+        # Output only. Output Only. The duration of an introductory offer in billing
+        # cycles.
+        # Corresponds to the JSON property `recurrenceCount`
+        # @return [Fixnum]
+        attr_accessor :recurrence_count
+      
+        # Output only. 2-letter ISO region code where the product is available in. Ex. "
+        # US".
+        # Corresponds to the JSON property `regionCode`
+        # @return [String]
+        attr_accessor :region_code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @discount_amount = args[:discount_amount] if args.key?(:discount_amount)
+          @discount_ratio_micros = args[:discount_ratio_micros] if args.key?(:discount_ratio_micros)
+          @recurrence_count = args[:recurrence_count] if args.key?(:recurrence_count)
+          @region_code = args[:region_code] if args.key?(:region_code)
+        end
+      end
+      
+      # A description of what time period or moment in time the product or service is
+      # being delivered over.
+      class GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The end time of the service period. Time is exclusive.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Required. The start time of the service period. Time is inclusive.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @start_time = args[:start_time] if args.key?(:start_time)
         end
       end
       
@@ -422,8 +721,14 @@ module Google
         # @return [String]
         attr_accessor :free_trial_end_time
       
-        # Output only. Response only. Resource name of the subscription. It will have
-        # the format of "partners/`partner_id`/subscriptions/`subscription_id`"
+        # Required. The line items of the subscription.
+        # Corresponds to the JSON property `lineItems`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem>]
+        attr_accessor :line_items
+      
+        # Optional. Resource name of the subscription. It will have the format of "
+        # partners/`partner_id`/subscriptions/`subscription_id`". This is available for
+        # authorizeAddon, but otherwise is response only.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -441,15 +746,25 @@ module Google
         # @return [String]
         attr_accessor :processing_state
       
-        # Required. Resource name that identifies one or more subscription products. The
-        # format will be 'partners/`partner_id`/products/`product_id`'.
+        # Required. Deprecated: consider using `line_items` as the input. Required.
+        # Resource name that identifies the purchased products. The format will be '
+        # partners/`partner_id`/products/`product_id`'.
         # Corresponds to the JSON property `products`
         # @return [Array<String>]
         attr_accessor :products
       
-        # Optional. Resource name that identifies one or more promotions that can be
-        # applied on the product. A typical promotion for a subscription is Free trial.
-        # The format will be 'partners/`partner_id`/promotions/`promotion_id`'.
+        # Optional. Subscription-level promotions. Only free trial is supported on this
+        # level. It determines the first renewal time of the subscription to be the end
+        # of the free trial period. Specify the promotion resource name only when used
+        # as input.
+        # Corresponds to the JSON property `promotionSpecs`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec>]
+        attr_accessor :promotion_specs
+      
+        # Optional. Deprecated: consider using the top-level `promotion_specs` as the
+        # input. Optional. Resource name that identifies one or more promotions that can
+        # be applied on the product. A typical promotion for a subscription is Free
+        # trial. The format will be 'partners/`partner_id`/promotions/`promotion_id`'.
         # Corresponds to the JSON property `promotions`
         # @return [Array<String>]
         attr_accessor :promotions
@@ -461,6 +776,15 @@ module Google
         # Corresponds to the JSON property `redirectUri`
         # @return [String]
         attr_accessor :redirect_uri
+      
+        # Output only. The time at which the subscription is expected to be renewed by
+        # Google - a new charge will be incurred and the service entitlement will be
+        # renewed. A non-immediate cancellation will take place at this time too, before
+        # which, the service entitlement for the end user will remain valid. UTC
+        # timezone in ISO 8061 format. For example: "2019-08-31T17:28:54.564Z"
+        # Corresponds to the JSON property `renewalTime`
+        # @return [String]
+        attr_accessor :renewal_time
       
         # Describes a location of an end user.
         # Corresponds to the JSON property `serviceLocation`
@@ -497,12 +821,15 @@ module Google
           @cycle_end_time = args[:cycle_end_time] if args.key?(:cycle_end_time)
           @end_user_entitled = args[:end_user_entitled] if args.key?(:end_user_entitled)
           @free_trial_end_time = args[:free_trial_end_time] if args.key?(:free_trial_end_time)
+          @line_items = args[:line_items] if args.key?(:line_items)
           @name = args[:name] if args.key?(:name)
           @partner_user_token = args[:partner_user_token] if args.key?(:partner_user_token)
           @processing_state = args[:processing_state] if args.key?(:processing_state)
           @products = args[:products] if args.key?(:products)
+          @promotion_specs = args[:promotion_specs] if args.key?(:promotion_specs)
           @promotions = args[:promotions] if args.key?(:promotions)
           @redirect_uri = args[:redirect_uri] if args.key?(:redirect_uri)
+          @renewal_time = args[:renewal_time] if args.key?(:renewal_time)
           @service_location = args[:service_location] if args.key?(:service_location)
           @state = args[:state] if args.key?(:state)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -526,6 +853,138 @@ module Google
         # Update properties of this object
         def update!(**args)
           @reason = args[:reason] if args.key?(:reason)
+        end
+      end
+      
+      # Individual line item definition of a subscription.
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+        include Google::Apis::Core::Hashable
+      
+        # Describes the amount unit including the currency code.
+        # Corresponds to the JSON property `amount`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount]
+        attr_accessor :amount
+      
+        # Output only. Description of this line item.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. It is set only if the line item has its own free trial applied.
+        # End time of the line item free trial period, in ISO 8061 format. For example, "
+        # 2019-08-31T17:28:54.564Z". It will be set the same as createTime if no free
+        # trial promotion is specified.
+        # Corresponds to the JSON property `lineItemFreeTrialEndTime`
+        # @return [String]
+        attr_accessor :line_item_free_trial_end_time
+      
+        # Optional. The promotions applied on the line item. It can be: - a free trial
+        # promotion, which overrides the subscription-level free trial promotion. - an
+        # introductory pricing promotion. When used as input in Create or Provision API,
+        # specify its resource name only.
+        # Corresponds to the JSON property `lineItemPromotionSpecs`
+        # @return [Array<Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec>]
+        attr_accessor :line_item_promotion_specs
+      
+        # Details for a ONE_TIME recurrence line item.
+        # Corresponds to the JSON property `oneTimeRecurrenceDetails`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails]
+        attr_accessor :one_time_recurrence_details
+      
+        # Required. Product resource name that identifies one the line item The format
+        # is 'partners/`partner_id`/products/`product_id`'.
+        # Corresponds to the JSON property `product`
+        # @return [String]
+        attr_accessor :product
+      
+        # Specifies product specific payload.
+        # Corresponds to the JSON property `productPayload`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPayload]
+        attr_accessor :product_payload
+      
+        # Output only. The recurrence type of the line item.
+        # Corresponds to the JSON property `recurrenceType`
+        # @return [String]
+        attr_accessor :recurrence_type
+      
+        # Output only. The state of the line item.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @amount = args[:amount] if args.key?(:amount)
+          @description = args[:description] if args.key?(:description)
+          @line_item_free_trial_end_time = args[:line_item_free_trial_end_time] if args.key?(:line_item_free_trial_end_time)
+          @line_item_promotion_specs = args[:line_item_promotion_specs] if args.key?(:line_item_promotion_specs)
+          @one_time_recurrence_details = args[:one_time_recurrence_details] if args.key?(:one_time_recurrence_details)
+          @product = args[:product] if args.key?(:product)
+          @product_payload = args[:product_payload] if args.key?(:product_payload)
+          @recurrence_type = args[:recurrence_type] if args.key?(:recurrence_type)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Details for a ONE_TIME recurrence line item.
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
+        include Google::Apis::Core::Hashable
+      
+        # A description of what time period or moment in time the product or service is
+        # being delivered over.
+        # Corresponds to the JSON property `servicePeriod`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod]
+        attr_accessor :service_period
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @service_period = args[:service_period] if args.key?(:service_period)
+        end
+      end
+      
+      # Describes the spec for one promotion.
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
+        include Google::Apis::Core::Hashable
+      
+        # Describes the length of a period of a time.
+        # Corresponds to the JSON property `freeTrialDuration`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration]
+        attr_accessor :free_trial_duration
+      
+        # The details of a introductory pricing promotion.
+        # Corresponds to the JSON property `introductoryPricingDetails`
+        # @return [Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails]
+        attr_accessor :introductory_pricing_details
+      
+        # Required. Promotion resource name that identifies a promotion. The format is '
+        # partners/`partner_id`/promotions/`promotion_id`'.
+        # Corresponds to the JSON property `promotion`
+        # @return [String]
+        attr_accessor :promotion
+      
+        # Output only. The type of the promotion for the spec.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @free_trial_duration = args[:free_trial_duration] if args.key?(:free_trial_duration)
+          @introductory_pricing_details = args[:introductory_pricing_details] if args.key?(:introductory_pricing_details)
+          @promotion = args[:promotion] if args.key?(:promotion)
+          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -586,6 +1045,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @subscription = args[:subscription] if args.key?(:subscription)
+        end
+      end
+      
+      # Payload specific to Youtube products.
+      class GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
+        include Google::Apis::Core::Hashable
+      
+        # The list of eligibility_ids which are applicable for the line item.
+        # Corresponds to the JSON property `partnerEligibilityIds`
+        # @return [Array<String>]
+        attr_accessor :partner_eligibility_ids
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @partner_eligibility_ids = args[:partner_eligibility_ids] if args.key?(:partner_eligibility_ids)
         end
       end
       

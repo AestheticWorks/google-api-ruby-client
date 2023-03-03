@@ -50,6 +50,73 @@ module Google
           @batch_path = 'batch'
         end
         
+        # Retrieves the Settings for the Project.
+        # @param [String] name
+        #   Required. The name of the projectSettings resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ArtifactregistryV1beta2::ProjectSettings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ArtifactregistryV1beta2::ProjectSettings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_project_settings(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1beta2/{+name}', options)
+          command.response_representation = Google::Apis::ArtifactregistryV1beta2::ProjectSettings::Representation
+          command.response_class = Google::Apis::ArtifactregistryV1beta2::ProjectSettings
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the Settings for the Project.
+        # @param [String] name
+        #   The name of the project's settings. Always of the form: projects/`project-id`/
+        #   projectSettings In update request: never set In response: always set
+        # @param [Google::Apis::ArtifactregistryV1beta2::ProjectSettings] project_settings_object
+        # @param [String] update_mask
+        #   Field mask to support partial updates.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ArtifactregistryV1beta2::ProjectSettings] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ArtifactregistryV1beta2::ProjectSettings]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def update_project_project_settings(name, project_settings_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1beta2/{+name}', options)
+          command.request_representation = Google::Apis::ArtifactregistryV1beta2::ProjectSettings::Representation
+          command.request_object = project_settings_object
+          command.response_representation = Google::Apis::ArtifactregistryV1beta2::ProjectSettings::Representation
+          command.response_class = Google::Apis::ArtifactregistryV1beta2::ProjectSettings
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets information about a location.
         # @param [String] name
         #   Resource name for the location.
@@ -85,8 +152,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -157,7 +224,7 @@ module Google
         # Creates a repository. The returned Operation will finish once the repository
         # has been created. Its response will be the created Repository.
         # @param [String] parent
-        #   The name of the parent resource where the repository will be created.
+        #   Required. The name of the parent resource where the repository will be created.
         # @param [Google::Apis::ArtifactregistryV1beta2::Repository] repository_object
         # @param [String] repository_id
         #   The repository id to use for this repository.
@@ -195,7 +262,7 @@ module Google
         # finish once the repository has been deleted. It will not have any Operation
         # metadata and will return a google.protobuf.Empty response.
         # @param [String] name
-        #   The name of the repository to delete.
+        #   Required. The name of the repository to delete.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -225,7 +292,7 @@ module Google
         
         # Gets a repository.
         # @param [String] name
-        #   The name of the repository to retrieve.
+        #   Required. The name of the repository to retrieve.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -255,16 +322,20 @@ module Google
         
         # Gets the IAM policy for a given resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -295,7 +366,7 @@ module Google
         
         # Lists repositories.
         # @param [String] parent
-        #   The name of the parent resource whose repositories will be listed.
+        #   Required. The name of the parent resource whose repositories will be listed.
         # @param [Fixnum] page_size
         #   The maximum number of repositories to return. Maximum page size is 1,000.
         # @param [String] page_token
@@ -370,8 +441,9 @@ module Google
         
         # Updates the IAM policy for a given resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ArtifactregistryV1beta2::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -404,8 +476,9 @@ module Google
         
         # Tests if the caller has a list of permissions on a resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ArtifactregistryV1beta2::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -500,7 +573,7 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def upload_aptartifact_apt_artifact(parent, upload_apt_artifact_request_object = nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
+        def upload_apt_artifact(parent, upload_apt_artifact_request_object = nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
           if upload_source.nil?
             command = make_simple_command(:post, 'v1beta2/{+parent}/aptArtifacts:create', options)
           else
@@ -520,7 +593,7 @@ module Google
         
         # Gets a file.
         # @param [String] name
-        #   The name of the file to retrieve.
+        #   Required. The name of the file to retrieve.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -550,7 +623,8 @@ module Google
         
         # Lists files.
         # @param [String] parent
-        #   The name of the parent resource whose files will be listed.
+        #   Required. The name of the repository whose files will be listed. For example: "
+        #   projects/p1/locations/us-central1/repositories/repo1
         # @param [String] filter
         #   An expression for filtering the results of the request. Filter rules are case
         #   insensitive. The fields eligible for filtering are: * `name` * `owner` An
@@ -595,7 +669,7 @@ module Google
         # Deletes a package and all of its versions and tags. The returned operation
         # will complete once the package has been deleted.
         # @param [String] name
-        #   The name of the package to delete.
+        #   Required. The name of the package to delete.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -625,7 +699,7 @@ module Google
         
         # Gets a package.
         # @param [String] name
-        #   The name of the package to retrieve.
+        #   Required. The name of the package to retrieve.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -655,7 +729,7 @@ module Google
         
         # Lists packages.
         # @param [String] parent
-        #   The name of the parent resource whose packages will be listed.
+        #   Required. The name of the parent resource whose packages will be listed.
         # @param [Fixnum] page_size
         #   The maximum number of packages to return. Maximum page size is 1,000.
         # @param [String] page_token
@@ -941,7 +1015,7 @@ module Google
         # @param [String] parent
         #   The name of the parent resource whose versions will be listed.
         # @param [String] order_by
-        #   Optional. Sorting field and order
+        #   Optional. The field to order the results by.
         # @param [Fixnum] page_size
         #   The maximum number of versions to return. Maximum page size is 1,000.
         # @param [String] page_token
@@ -1043,7 +1117,7 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def upload_yumartifact_yum_artifact(parent, upload_yum_artifact_request_object = nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
+        def upload_yum_artifact(parent, upload_yum_artifact_request_object = nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
           if upload_source.nil?
             command = make_simple_command(:post, 'v1beta2/{+parent}/yumArtifacts:create', options)
           else

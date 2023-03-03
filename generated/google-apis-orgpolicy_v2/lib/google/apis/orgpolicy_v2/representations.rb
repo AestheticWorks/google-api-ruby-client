@@ -22,6 +22,12 @@ module Google
   module Apis
     module OrgpolicyV2
       
+      class GoogleCloudOrgpolicyV2AlternatePolicySpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudOrgpolicyV2Constraint
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -40,7 +46,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudOrgpolicyV2CustomConstraint
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudOrgpolicyV2ListConstraintsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudOrgpolicyV2ListCustomConstraintsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -88,6 +106,15 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudOrgpolicyV2AlternatePolicySpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :launch, as: 'launch'
+          property :spec, as: 'spec', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec::Representation
+      
+        end
+      end
+      
       class GoogleCloudOrgpolicyV2Constraint
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -116,10 +143,33 @@ module Google
         end
       end
       
+      class GoogleCloudOrgpolicyV2CustomConstraint
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :action_type, as: 'actionType'
+          property :condition, as: 'condition'
+          property :description, as: 'description'
+          property :display_name, as: 'displayName'
+          collection :method_types, as: 'methodTypes'
+          property :name, as: 'name'
+          collection :resource_types, as: 'resourceTypes'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
       class GoogleCloudOrgpolicyV2ListConstraintsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :constraints, as: 'constraints', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2Constraint, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2Constraint::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class GoogleCloudOrgpolicyV2ListCustomConstraintsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :custom_constraints, as: 'customConstraints', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2CustomConstraint, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2CustomConstraint::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -137,6 +187,10 @@ module Google
       class GoogleCloudOrgpolicyV2Policy
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :alternate, as: 'alternate', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2AlternatePolicySpec, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2AlternatePolicySpec::Representation
+      
+          property :dry_run_spec, as: 'dryRunSpec', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec::Representation
+      
           property :name, as: 'name'
           property :spec, as: 'spec', class: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec, decorator: Google::Apis::OrgpolicyV2::GoogleCloudOrgpolicyV2PolicySpec::Representation
       

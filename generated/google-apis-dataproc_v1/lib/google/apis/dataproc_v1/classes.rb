@@ -35,14 +35,14 @@ module Google
       
         # Full URL, partial URI, or short name of the accelerator type resource to
         # expose to this instance. See Compute Engine AcceleratorTypes (https://cloud.
-        # google.com/compute/docs/reference/beta/acceleratorTypes).Examples: https://www.
-        # googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/
-        # acceleratorTypes/nvidia-tesla-k80 projects/[project_id]/zones/us-east1-a/
-        # acceleratorTypes/nvidia-tesla-k80 nvidia-tesla-k80Auto Zone Exception: If you
-        # are using the Dataproc Auto Zone Placement (https://cloud.google.com/dataproc/
-        # docs/concepts/configuring-clusters/auto-zone#using_auto_zone_placement)
-        # feature, you must use the short name of the accelerator type resource, for
-        # example, nvidia-tesla-k80.
+        # google.com/compute/docs/reference/v1/acceleratorTypes).Examples: https://www.
+        # googleapis.com/compute/v1/projects/[project_id]/zones/[zone]/acceleratorTypes/
+        # nvidia-tesla-k80 projects/[project_id]/zones/[zone]/acceleratorTypes/nvidia-
+        # tesla-k80 nvidia-tesla-k80Auto Zone Exception: If you are using the Dataproc
+        # Auto Zone Placement (https://cloud.google.com/dataproc/docs/concepts/
+        # configuring-clusters/auto-zone#using_auto_zone_placement) feature, you must
+        # use the short name of the accelerator type resource, for example, nvidia-tesla-
+        # k80.
         # Corresponds to the JSON property `acceleratorTypeUri`
         # @return [String]
         attr_accessor :accelerator_type_uri
@@ -98,6 +98,16 @@ module Google
         # @return [String]
         attr_accessor :id
       
+        # Optional. The labels to associate with this autoscaling policy. Label keys
+        # must contain 1 to 63 characters, and must conform to RFC 1035 (https://www.
+        # ietf.org/rfc/rfc1035.txt). Label values may be empty, but, if present, must
+        # contain 1 to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/
+        # rfc/rfc1035.txt). No more than 32 labels can be associated with an autoscaling
+        # policy.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
         # Output only. The "resource name" of the autoscaling policy, as described in
         # https://cloud.google.com/apis/design/resource_names. For projects.regions.
         # autoscalingPolicies, the resource name of the policy has the following format:
@@ -129,9 +139,64 @@ module Google
         def update!(**args)
           @basic_algorithm = args[:basic_algorithm] if args.key?(:basic_algorithm)
           @id = args[:id] if args.key?(:id)
+          @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
           @secondary_worker_config = args[:secondary_worker_config] if args.key?(:secondary_worker_config)
           @worker_config = args[:worker_config] if args.key?(:worker_config)
+        end
+      end
+      
+      # Node group identification and configuration information.
+      class AuxiliaryNodeGroup
+        include Google::Apis::Core::Hashable
+      
+        # Dataproc Node Group. The Dataproc NodeGroup resource is not related to the
+        # Dataproc NodeGroupAffinity resource.
+        # Corresponds to the JSON property `nodeGroup`
+        # @return [Google::Apis::DataprocV1::NodeGroup]
+        attr_accessor :node_group
+      
+        # Optional. A node group ID. Generated if not specified.The ID must contain only
+        # letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot
+        # begin or end with underscore or hyphen. Must consist of from 3 to 33
+        # characters.
+        # Corresponds to the JSON property `nodeGroupId`
+        # @return [String]
+        attr_accessor :node_group_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @node_group = args[:node_group] if args.key?(:node_group)
+          @node_group_id = args[:node_group_id] if args.key?(:node_group_id)
+        end
+      end
+      
+      # Auxiliary services configuration for a Cluster.
+      class AuxiliaryServicesConfig
+        include Google::Apis::Core::Hashable
+      
+        # Specifies a Metastore configuration.
+        # Corresponds to the JSON property `metastoreConfig`
+        # @return [Google::Apis::DataprocV1::MetastoreConfig]
+        attr_accessor :metastore_config
+      
+        # Spark History Server configuration for the workload.
+        # Corresponds to the JSON property `sparkHistoryServerConfig`
+        # @return [Google::Apis::DataprocV1::SparkHistoryServerConfig]
+        attr_accessor :spark_history_server_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metastore_config = args[:metastore_config] if args.key?(:metastore_config)
+          @spark_history_server_config = args[:spark_history_server_config] if args.key?(:spark_history_server_config)
         end
       end
       
@@ -146,6 +211,11 @@ module Google
         # @return [String]
         attr_accessor :cooldown_period
       
+        # Basic autoscaling configurations for Spark Standalone.
+        # Corresponds to the JSON property `sparkStandaloneConfig`
+        # @return [Google::Apis::DataprocV1::SparkStandaloneAutoscalingConfig]
+        attr_accessor :spark_standalone_config
+      
         # Basic autoscaling configurations for YARN.
         # Corresponds to the JSON property `yarnConfig`
         # @return [Google::Apis::DataprocV1::BasicYarnAutoscalingConfig]
@@ -158,6 +228,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cooldown_period = args[:cooldown_period] if args.key?(:cooldown_period)
+          @spark_standalone_config = args[:spark_standalone_config] if args.key?(:spark_standalone_config)
           @yarn_config = args[:yarn_config] if args.key?(:yarn_config)
         end
       end
@@ -228,6 +299,131 @@ module Google
         end
       end
       
+      # A representation of a batch workload in the service.
+      class Batch
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time when the batch was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The email address of the user who created the batch.
+        # Corresponds to the JSON property `creator`
+        # @return [String]
+        attr_accessor :creator
+      
+        # Environment configuration for a workload.
+        # Corresponds to the JSON property `environmentConfig`
+        # @return [Google::Apis::DataprocV1::EnvironmentConfig]
+        attr_accessor :environment_config
+      
+        # Optional. The labels to associate with this batch. Label keys must contain 1
+        # to 63 characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/
+        # rfc1035.txt). Label values may be empty, but, if present, must contain 1 to 63
+        # characters, and must conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt)
+        # . No more than 32 labels can be associated with a batch.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # Output only. The resource name of the batch.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. The resource name of the operation associated with this batch.
+        # Corresponds to the JSON property `operation`
+        # @return [String]
+        attr_accessor :operation
+      
+        # A configuration for running an Apache PySpark (https://spark.apache.org/docs/
+        # latest/api/python/getting_started/quickstart.html) batch workload.
+        # Corresponds to the JSON property `pysparkBatch`
+        # @return [Google::Apis::DataprocV1::PySparkBatch]
+        attr_accessor :pyspark_batch
+      
+        # Runtime configuration for a workload.
+        # Corresponds to the JSON property `runtimeConfig`
+        # @return [Google::Apis::DataprocV1::RuntimeConfig]
+        attr_accessor :runtime_config
+      
+        # Runtime information about workload execution.
+        # Corresponds to the JSON property `runtimeInfo`
+        # @return [Google::Apis::DataprocV1::RuntimeInfo]
+        attr_accessor :runtime_info
+      
+        # A configuration for running an Apache Spark (https://spark.apache.org/) batch
+        # workload.
+        # Corresponds to the JSON property `sparkBatch`
+        # @return [Google::Apis::DataprocV1::SparkBatch]
+        attr_accessor :spark_batch
+      
+        # A configuration for running an Apache SparkR (https://spark.apache.org/docs/
+        # latest/sparkr.html) batch workload.
+        # Corresponds to the JSON property `sparkRBatch`
+        # @return [Google::Apis::DataprocV1::SparkRBatch]
+        attr_accessor :spark_r_batch
+      
+        # A configuration for running Apache Spark SQL (https://spark.apache.org/sql/)
+        # queries as a batch workload.
+        # Corresponds to the JSON property `sparkSqlBatch`
+        # @return [Google::Apis::DataprocV1::SparkSqlBatch]
+        attr_accessor :spark_sql_batch
+      
+        # Output only. The state of the batch.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # Output only. Historical state information for the batch.
+        # Corresponds to the JSON property `stateHistory`
+        # @return [Array<Google::Apis::DataprocV1::StateHistory>]
+        attr_accessor :state_history
+      
+        # Output only. Batch state details, such as a failure description if the state
+        # is FAILED.
+        # Corresponds to the JSON property `stateMessage`
+        # @return [String]
+        attr_accessor :state_message
+      
+        # Output only. The time when the batch entered a current state.
+        # Corresponds to the JSON property `stateTime`
+        # @return [String]
+        attr_accessor :state_time
+      
+        # Output only. A batch UUID (Unique Universal Identifier). The service generates
+        # this value when it creates the batch.
+        # Corresponds to the JSON property `uuid`
+        # @return [String]
+        attr_accessor :uuid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @creator = args[:creator] if args.key?(:creator)
+          @environment_config = args[:environment_config] if args.key?(:environment_config)
+          @labels = args[:labels] if args.key?(:labels)
+          @name = args[:name] if args.key?(:name)
+          @operation = args[:operation] if args.key?(:operation)
+          @pyspark_batch = args[:pyspark_batch] if args.key?(:pyspark_batch)
+          @runtime_config = args[:runtime_config] if args.key?(:runtime_config)
+          @runtime_info = args[:runtime_info] if args.key?(:runtime_info)
+          @spark_batch = args[:spark_batch] if args.key?(:spark_batch)
+          @spark_r_batch = args[:spark_r_batch] if args.key?(:spark_r_batch)
+          @spark_sql_batch = args[:spark_sql_batch] if args.key?(:spark_sql_batch)
+          @state = args[:state] if args.key?(:state)
+          @state_history = args[:state_history] if args.key?(:state_history)
+          @state_message = args[:state_message] if args.key?(:state_message)
+          @state_time = args[:state_time] if args.key?(:state_time)
+          @uuid = args[:uuid] if args.key?(:uuid)
+        end
+      end
+      
       # Metadata describing the Batch operation.
       class BatchOperationMetadata
         include Google::Apis::Core::Hashable
@@ -289,7 +485,7 @@ module Google
         end
       end
       
-      # Associates members with a role.
+      # Associates members, or principals, with a role.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -312,37 +508,42 @@ module Google
         # @return [Google::Apis::DataprocV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource.
+        # Specifies the principals requesting access for a Google Cloud resource.
         # members can have the following values: allUsers: A special identifier that
         # represents anyone who is on the internet; with or without a Google account.
         # allAuthenticatedUsers: A special identifier that represents anyone who is
-        # authenticated with a Google account or a service account. user:`emailid`: An
-        # email address that represents a specific Google account. For example, alice@
-        # example.com . serviceAccount:`emailid`: An email address that represents a
-        # service account. For example, my-other-app@appspot.gserviceaccount.com. group:`
+        # authenticated with a Google account or a service account. Does not include
+        # identities that come from external identity providers (IdPs) through identity
+        # federation. user:`emailid`: An email address that represents a specific Google
+        # account. For example, alice@example.com . serviceAccount:`emailid`: An email
+        # address that represents a Google service account. For example, my-other-app@
+        # appspot.gserviceaccount.com. serviceAccount:`projectid`.svc.id.goog[`namespace`
+        # /`kubernetes-sa`]: An identifier for a Kubernetes service account (https://
+        # cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
+        # For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa]. group:`
         # emailid`: An email address that represents a Google group. For example, admins@
-        # example.com. deleted:user:`emailid`?uid=`uniqueid`: An email address (plus
-        # unique identifier) representing a user that has been recently deleted. For
-        # example, alice@example.com?uid=123456789012345678901. If the user is recovered,
-        # this value reverts to user:`emailid` and the recovered user retains the role
-        # in the binding. deleted:serviceAccount:`emailid`?uid=`uniqueid`: An email
-        # address (plus unique identifier) representing a service account that has been
-        # recently deleted. For example, my-other-app@appspot.gserviceaccount.com?uid=
-        # 123456789012345678901. If the service account is undeleted, this value reverts
-        # to serviceAccount:`emailid` and the undeleted service account retains the role
-        # in the binding. deleted:group:`emailid`?uid=`uniqueid`: An email address (plus
-        # unique identifier) representing a Google group that has been recently deleted.
-        # For example, admins@example.com?uid=123456789012345678901. If the group is
+        # example.com. domain:`domain`: The G Suite domain (primary) that represents all
+        # the users of that domain. For example, google.com or example.com. deleted:user:
+        # `emailid`?uid=`uniqueid`: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, alice@example.
+        # com?uid=123456789012345678901. If the user is recovered, this value reverts to
+        # user:`emailid` and the recovered user retains the role in the binding. deleted:
+        # serviceAccount:`emailid`?uid=`uniqueid`: An email address (plus unique
+        # identifier) representing a service account that has been recently deleted. For
+        # example, my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901.
+        # If the service account is undeleted, this value reverts to serviceAccount:`
+        # emailid` and the undeleted service account retains the role in the binding.
+        # deleted:group:`emailid`?uid=`uniqueid`: An email address (plus unique
+        # identifier) representing a Google group that has been recently deleted. For
+        # example, admins@example.com?uid=123456789012345678901. If the group is
         # recovered, this value reverts to group:`emailid` and the recovered group
-        # retains the role in the binding. domain:`domain`: The G Suite domain (primary)
-        # that represents all the users of that domain. For example, google.com or
-        # example.com.
+        # retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to members. For example, roles/viewer, roles/editor, or
-        # roles/owner.
+        # Role that is assigned to the list of members, or principals. For example,
+        # roles/viewer, roles/editor, or roles/owner.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -377,8 +578,10 @@ module Google
       class Cluster
         include Google::Apis::Core::Hashable
       
-        # Required. The cluster name. Cluster names within a project must be unique.
-        # Names of deleted clusters can be reused.
+        # Required. The cluster name, which must be unique within a project. The name
+        # must start with a lowercase letter, and can contain up to 51 lowercase letters,
+        # numbers, and hyphens. It cannot end with a hyphen. The name of a deleted
+        # cluster can be reused.
         # Corresponds to the JSON property `clusterName`
         # @return [String]
         attr_accessor :cluster_name
@@ -425,6 +628,13 @@ module Google
         # @return [Array<Google::Apis::DataprocV1::ClusterStatus>]
         attr_accessor :status_history
       
+        # The Dataproc cluster config for a cluster that does not directly control the
+        # underlying compute resources, such as a Dataproc-on-GKE cluster (https://cloud.
+        # google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
+        # Corresponds to the JSON property `virtualClusterConfig`
+        # @return [Google::Apis::DataprocV1::VirtualClusterConfig]
+        attr_accessor :virtual_cluster_config
+      
         def initialize(**args)
            update!(**args)
         end
@@ -439,6 +649,7 @@ module Google
           @project_id = args[:project_id] if args.key?(:project_id)
           @status = args[:status] if args.key?(:status)
           @status_history = args[:status_history] if args.key?(:status_history)
+          @virtual_cluster_config = args[:virtual_cluster_config] if args.key?(:virtual_cluster_config)
         end
       end
       
@@ -450,6 +661,11 @@ module Google
         # Corresponds to the JSON property `autoscalingConfig`
         # @return [Google::Apis::DataprocV1::AutoscalingConfig]
         attr_accessor :autoscaling_config
+      
+        # Optional. The node group settings.
+        # Corresponds to the JSON property `auxiliaryNodeGroups`
+        # @return [Array<Google::Apis::DataprocV1::AuxiliaryNodeGroup>]
+        attr_accessor :auxiliary_node_groups
       
         # Optional. A Cloud Storage bucket used to stage job dependencies, config files,
         # and job driver console output. If you do not specify a staging bucket, Cloud
@@ -463,6 +679,11 @@ module Google
         # Corresponds to the JSON property `configBucket`
         # @return [String]
         attr_accessor :config_bucket
+      
+        # Dataproc metric config.
+        # Corresponds to the JSON property `dataprocMetricConfig`
+        # @return [Google::Apis::DataprocV1::DataprocMetricConfig]
+        attr_accessor :dataproc_metric_config
       
         # Encryption settings for the cluster.
         # Corresponds to the JSON property `encryptionConfig`
@@ -555,7 +776,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @autoscaling_config = args[:autoscaling_config] if args.key?(:autoscaling_config)
+          @auxiliary_node_groups = args[:auxiliary_node_groups] if args.key?(:auxiliary_node_groups)
           @config_bucket = args[:config_bucket] if args.key?(:config_bucket)
+          @dataproc_metric_config = args[:dataproc_metric_config] if args.key?(:dataproc_metric_config)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
           @endpoint_config = args[:endpoint_config] if args.key?(:endpoint_config)
           @gce_cluster_config = args[:gce_cluster_config] if args.key?(:gce_cluster_config)
@@ -583,7 +806,7 @@ module Google
         # @return [Hash<String,Fixnum>]
         attr_accessor :hdfs_metrics
       
-        # The YARN metrics.
+        # YARN metrics.
         # Corresponds to the JSON property `yarnMetrics`
         # @return [Hash<String,Fixnum>]
         attr_accessor :yarn_metrics
@@ -635,6 +858,11 @@ module Google
       class ClusterOperationMetadata
         include Google::Apis::Core::Hashable
       
+        # Output only. Child operation ids
+        # Corresponds to the JSON property `childOperationIds`
+        # @return [Array<String>]
+        attr_accessor :child_operation_ids
+      
         # Output only. Name of the cluster for the operation.
         # Corresponds to the JSON property `clusterName`
         # @return [String]
@@ -681,6 +909,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @child_operation_ids = args[:child_operation_ids] if args.key?(:child_operation_ids)
           @cluster_name = args[:cluster_name] if args.key?(:cluster_name)
           @cluster_uuid = args[:cluster_uuid] if args.key?(:cluster_uuid)
           @description = args[:description] if args.key?(:description)
@@ -817,9 +1046,14 @@ module Google
         end
       end
       
-      # A request to collect cluster diagnostic information.
-      class DiagnoseClusterRequest
+      # Dataproc metric config.
+      class DataprocMetricConfig
         include Google::Apis::Core::Hashable
+      
+        # Required. Metrics sources to enable.
+        # Corresponds to the JSON property `metrics`
+        # @return [Array<Google::Apis::DataprocV1::Metric>]
+        attr_accessor :metrics
       
         def initialize(**args)
            update!(**args)
@@ -827,6 +1061,43 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @metrics = args[:metrics] if args.key?(:metrics)
+        end
+      end
+      
+      # A request to collect cluster diagnostic information.
+      class DiagnoseClusterRequest
+        include Google::Apis::Core::Hashable
+      
+        # Represents a time interval, encoded as a Timestamp start (inclusive) and a
+        # Timestamp end (exclusive).The start must be less than or equal to the end.
+        # When the start equals the end, the interval is empty (matches no time). When
+        # both start and end are unspecified, the interval matches any time.
+        # Corresponds to the JSON property `diagnosisInterval`
+        # @return [Google::Apis::DataprocV1::Interval]
+        attr_accessor :diagnosis_interval
+      
+        # Optional. DEPRECATED Specifies the job on which diagnosis is to be performed.
+        # Format: projects/`project`/regions/`region`/jobs/`job`
+        # Corresponds to the JSON property `job`
+        # @return [String]
+        attr_accessor :job
+      
+        # Optional. DEPRECATED Specifies the yarn application on which diagnosis is to
+        # be performed.
+        # Corresponds to the JSON property `yarnApplicationId`
+        # @return [String]
+        attr_accessor :yarn_application_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @diagnosis_interval = args[:diagnosis_interval] if args.key?(:diagnosis_interval)
+          @job = args[:job] if args.key?(:job)
+          @yarn_application_id = args[:yarn_application_id] if args.key?(:yarn_application_id)
         end
       end
       
@@ -867,11 +1138,20 @@ module Google
         # @return [String]
         attr_accessor :boot_disk_type
       
-        # Optional. Number of attached SSDs, from 0 to 4 (default is 0). If SSDs are not
+        # Optional. Interface type of local SSDs (default is "scsi"). Valid values: "
+        # scsi" (Small Computer System Interface), "nvme" (Non-Volatile Memory Express).
+        # See local SSD performance (https://cloud.google.com/compute/docs/disks/local-
+        # ssd#performance).
+        # Corresponds to the JSON property `localSsdInterface`
+        # @return [String]
+        attr_accessor :local_ssd_interface
+      
+        # Optional. Number of attached SSDs, from 0 to 8 (default is 0). If SSDs are not
         # attached, the boot disk is used to store runtime logs and HDFS (https://hadoop.
         # apache.org/docs/r1.2.1/hdfs_user_guide.html) data. If one or more SSDs are
         # attached, this runtime bulk data is spread across them, and the boot disk
-        # contains only basic config and installed binaries.
+        # contains only basic config and installed binaries.Note: Local SSD options may
+        # vary by machine type and number of vCPUs selected.
         # Corresponds to the JSON property `numLocalSsds`
         # @return [Fixnum]
         attr_accessor :num_local_ssds
@@ -884,15 +1164,40 @@ module Google
         def update!(**args)
           @boot_disk_size_gb = args[:boot_disk_size_gb] if args.key?(:boot_disk_size_gb)
           @boot_disk_type = args[:boot_disk_type] if args.key?(:boot_disk_type)
+          @local_ssd_interface = args[:local_ssd_interface] if args.key?(:local_ssd_interface)
           @num_local_ssds = args[:num_local_ssds] if args.key?(:num_local_ssds)
+        end
+      end
+      
+      # Driver scheduling configuration.
+      class DriverSchedulingConfig
+        include Google::Apis::Core::Hashable
+      
+        # Required. The amount of memory in MB the driver is requesting.
+        # Corresponds to the JSON property `memoryMb`
+        # @return [Fixnum]
+        attr_accessor :memory_mb
+      
+        # Required. The number of vCPUs the driver is requesting.
+        # Corresponds to the JSON property `vcores`
+        # @return [Fixnum]
+        attr_accessor :vcores
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @memory_mb = args[:memory_mb] if args.key?(:memory_mb)
+          @vcores = args[:vcores] if args.key?(:vcores)
         end
       end
       
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -915,6 +1220,12 @@ module Google
         # @return [String]
         attr_accessor :gce_pd_kms_key_name
       
+        # Optional. The Cloud KMS key name to use for encrypting customer core content
+        # and cluster PD disk for all instances in the cluster.
+        # Corresponds to the JSON property `kmsKey`
+        # @return [String]
+        attr_accessor :kms_key
+      
         def initialize(**args)
            update!(**args)
         end
@@ -922,6 +1233,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @gce_pd_kms_key_name = args[:gce_pd_kms_key_name] if args.key?(:gce_pd_kms_key_name)
+          @kms_key = args[:kms_key] if args.key?(:kms_key)
         end
       end
       
@@ -950,6 +1262,111 @@ module Google
         def update!(**args)
           @enable_http_port_access = args[:enable_http_port_access] if args.key?(:enable_http_port_access)
           @http_ports = args[:http_ports] if args.key?(:http_ports)
+        end
+      end
+      
+      # Environment configuration for a workload.
+      class EnvironmentConfig
+        include Google::Apis::Core::Hashable
+      
+        # Execution configuration for a workload.
+        # Corresponds to the JSON property `executionConfig`
+        # @return [Google::Apis::DataprocV1::ExecutionConfig]
+        attr_accessor :execution_config
+      
+        # Auxiliary services configuration for a workload.
+        # Corresponds to the JSON property `peripheralsConfig`
+        # @return [Google::Apis::DataprocV1::PeripheralsConfig]
+        attr_accessor :peripherals_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @execution_config = args[:execution_config] if args.key?(:execution_config)
+          @peripherals_config = args[:peripherals_config] if args.key?(:peripherals_config)
+        end
+      end
+      
+      # Execution configuration for a workload.
+      class ExecutionConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The duration to keep the session alive while it's idling. Passing
+        # this threshold will cause the session to be terminated. Minimum value is 10
+        # minutes; maximum value is 14 days (see JSON representation of Duration (https:/
+        # /developers.google.com/protocol-buffers/docs/proto3#json)). Defaults to 4
+        # hours if not set. If both ttl and idle_ttl are specified, the conditions are
+        # treated as and OR: the workload will be terminated when it has been idle for
+        # idle_ttl or when the ttl has passed, whichever comes first.
+        # Corresponds to the JSON property `idleTtl`
+        # @return [String]
+        attr_accessor :idle_ttl
+      
+        # Optional. The Cloud KMS key to use for encryption.
+        # Corresponds to the JSON property `kmsKey`
+        # @return [String]
+        attr_accessor :kms_key
+      
+        # Optional. Tags used for network traffic control.
+        # Corresponds to the JSON property `networkTags`
+        # @return [Array<String>]
+        attr_accessor :network_tags
+      
+        # Optional. Network URI to connect workload to.
+        # Corresponds to the JSON property `networkUri`
+        # @return [String]
+        attr_accessor :network_uri
+      
+        # Optional. Service account that used to execute workload.
+        # Corresponds to the JSON property `serviceAccount`
+        # @return [String]
+        attr_accessor :service_account
+      
+        # Optional. A Cloud Storage bucket used to stage workload dependencies, config
+        # files, and store workload output and other ephemeral data, such as Spark
+        # history files. If you do not specify a staging bucket, Cloud Dataproc will
+        # determine a Cloud Storage location according to the region where your workload
+        # is running, and then create and manage project-level, per-location staging and
+        # temporary buckets. This field requires a Cloud Storage bucket name, not a gs://
+        # ... URI to a Cloud Storage bucket.
+        # Corresponds to the JSON property `stagingBucket`
+        # @return [String]
+        attr_accessor :staging_bucket
+      
+        # Optional. Subnetwork URI to connect workload to.
+        # Corresponds to the JSON property `subnetworkUri`
+        # @return [String]
+        attr_accessor :subnetwork_uri
+      
+        # Optional. The duration after which the workload will be terminated. When the
+        # workload passes this ttl, it will be unconditionally killed without waiting
+        # for ongoing work to finish. Minimum value is 10 minutes; maximum value is 14
+        # days (see JSON representation of Duration (https://developers.google.com/
+        # protocol-buffers/docs/proto3#json)). If both ttl and idle_ttl are specified,
+        # the conditions are treated as and OR: the workload will be terminated when it
+        # has been idle for idle_ttl or when the ttl has passed, whichever comes first.
+        # If ttl is not specified for a session, it defaults to 24h.
+        # Corresponds to the JSON property `ttl`
+        # @return [String]
+        attr_accessor :ttl
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @idle_ttl = args[:idle_ttl] if args.key?(:idle_ttl)
+          @kms_key = args[:kms_key] if args.key?(:kms_key)
+          @network_tags = args[:network_tags] if args.key?(:network_tags)
+          @network_uri = args[:network_uri] if args.key?(:network_uri)
+          @service_account = args[:service_account] if args.key?(:service_account)
+          @staging_bucket = args[:staging_bucket] if args.key?(:staging_bucket)
+          @subnetwork_uri = args[:subnetwork_uri] if args.key?(:subnetwork_uri)
+          @ttl = args[:ttl] if args.key?(:ttl)
         end
       end
       
@@ -1042,13 +1459,14 @@ module Google
         # it exists. Cannot be a "Custom Subnet Network" (see Using Subnetworks (https://
         # cloud.google.com/compute/docs/subnetworks) for more information).A full URL,
         # partial URI, or short name are valid. Examples: https://www.googleapis.com/
-        # compute/v1/projects/[project_id]/regions/global/default projects/[project_id]/
-        # regions/global/default default
+        # compute/v1/projects/[project_id]/global/networks/default projects/[project_id]/
+        # global/networks/default default
         # Corresponds to the JSON property `networkUri`
         # @return [String]
         attr_accessor :network_uri
       
-        # Node Group Affinity for clusters using sole-tenant node groups.
+        # Node Group Affinity for clusters using sole-tenant node groups. The Dataproc
+        # NodeGroupAffinity resource is not related to the Dataproc NodeGroup resource.
         # Corresponds to the JSON property `nodeGroupAffinity`
         # @return [Google::Apis::DataprocV1::NodeGroupAffinity]
         attr_accessor :node_group_affinity
@@ -1096,8 +1514,8 @@ module Google
         # Optional. The Compute Engine subnetwork to be used for machine communications.
         # Cannot be specified with network_uri.A full URL, partial URI, or short name
         # are valid. Examples: https://www.googleapis.com/compute/v1/projects/[
-        # project_id]/regions/us-east1/subnetworks/sub0 projects/[project_id]/regions/us-
-        # east1/subnetworks/sub0 sub0
+        # project_id]/regions/[region]/subnetworks/sub0 projects/[project_id]/regions/[
+        # region]/subnetworks/sub0 sub0
         # Corresponds to the JSON property `subnetworkUri`
         # @return [String]
         attr_accessor :subnetwork_uri
@@ -1108,13 +1526,11 @@ module Google
         # @return [Array<String>]
         attr_accessor :tags
       
-        # Optional. The zone where the Compute Engine cluster will be located. On a
-        # create request, it is required in the "global" region. If omitted in a non-
-        # global Dataproc region, the service will pick a zone in the corresponding
-        # Compute Engine region. On a get request, zone will always be present.A full
-        # URL, partial URI, or short name are valid. Examples: https://www.googleapis.
-        # com/compute/v1/projects/[project_id]/zones/[zone] projects/[project_id]/zones/[
-        # zone] us-central1-f
+        # Optional. The Compute Engine zone where the Dataproc cluster will be located.
+        # If omitted, the service will pick a zone in the cluster's Compute Engine
+        # region. On a get request, zone will always be present.A full URL, partial URI,
+        # or short name are valid. Examples: https://www.googleapis.com/compute/v1/
+        # projects/[project_id]/zones/[zone] projects/[project_id]/zones/[zone] [zone]
         # Corresponds to the JSON property `zoneUri`
         # @return [String]
         attr_accessor :zone_uri
@@ -1164,12 +1580,16 @@ module Google
       class GetPolicyOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. The policy format version to be returned.Valid values are 0, 1, and
-        # 3. Requests specifying an invalid value will be rejected.Requests for policies
-        # with any conditional bindings must specify version 3. Policies without any
-        # conditional bindings may specify any valid value or leave the field unset.To
-        # learn which resources support conditions in their IAM policies, see the IAM
-        # documentation (https://cloud.google.com/iam/help/conditions/resource-policies).
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected.Requests for policies with any conditional role bindings must specify
+        # version 3. Policies with no conditional role bindings may specify any valid
+        # value or leave the field unset.The policy in the response might use the policy
+        # version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1.To learn which resources support
+        # conditions in their IAM policies, see the IAM documentation (https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
         # Corresponds to the JSON property `requestedPolicyVersion`
         # @return [Fixnum]
         attr_accessor :requested_policy_version
@@ -1188,10 +1608,27 @@ module Google
       class GkeClusterConfig
         include Google::Apis::Core::Hashable
       
-        # A full, namespace-isolated deployment target for an existing GKE cluster.
+        # Optional. A target GKE cluster to deploy to. It must be in the same project
+        # and region as the Dataproc cluster (the GKE cluster can be zonal or regional).
+        # Format: 'projects/`project`/locations/`location`/clusters/`cluster_id`'
+        # Corresponds to the JSON property `gkeClusterTarget`
+        # @return [String]
+        attr_accessor :gke_cluster_target
+      
+        # Deprecated. Used only for the deprecated beta. A full, namespace-isolated
+        # deployment target for an existing GKE cluster.
         # Corresponds to the JSON property `namespacedGkeDeploymentTarget`
         # @return [Google::Apis::DataprocV1::NamespacedGkeDeploymentTarget]
         attr_accessor :namespaced_gke_deployment_target
+      
+        # Optional. GKE node pools where workloads will be scheduled. At least one node
+        # pool must be assigned the DEFAULT GkeNodePoolTarget.Role. If a
+        # GkeNodePoolTarget is not specified, Dataproc constructs a DEFAULT
+        # GkeNodePoolTarget. Each role can be given to only one GkeNodePoolTarget. All
+        # node pools must have the same location settings.
+        # Corresponds to the JSON property `nodePoolTarget`
+        # @return [Array<Google::Apis::DataprocV1::GkeNodePoolTarget>]
+        attr_accessor :node_pool_target
       
         def initialize(**args)
            update!(**args)
@@ -1199,7 +1636,223 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @gke_cluster_target = args[:gke_cluster_target] if args.key?(:gke_cluster_target)
           @namespaced_gke_deployment_target = args[:namespaced_gke_deployment_target] if args.key?(:namespaced_gke_deployment_target)
+          @node_pool_target = args[:node_pool_target] if args.key?(:node_pool_target)
+        end
+      end
+      
+      # Parameters that describe cluster nodes.
+      class GkeNodeConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. A list of hardware accelerators (https://cloud.google.com/compute/
+        # docs/gpus) to attach to each node.
+        # Corresponds to the JSON property `accelerators`
+        # @return [Array<Google::Apis::DataprocV1::GkeNodePoolAcceleratorConfig>]
+        attr_accessor :accelerators
+      
+        # Optional. The Customer Managed Encryption Key (CMEK) (https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/using-cmek) used to encrypt the boot disk
+        # attached to each node in the node pool. Specify the key using the following
+        # format: projects/KEY_PROJECT_ID/locations/LOCATION /keyRings/RING_NAME/
+        # cryptoKeys/KEY_NAME.
+        # Corresponds to the JSON property `bootDiskKmsKey`
+        # @return [String]
+        attr_accessor :boot_disk_kms_key
+      
+        # Optional. The number of local SSD disks to attach to the node, which is
+        # limited by the maximum number of disks allowable per zone (see Adding Local
+        # SSDs (https://cloud.google.com/compute/docs/disks/local-ssd)).
+        # Corresponds to the JSON property `localSsdCount`
+        # @return [Fixnum]
+        attr_accessor :local_ssd_count
+      
+        # Optional. The name of a Compute Engine machine type (https://cloud.google.com/
+        # compute/docs/machine-types).
+        # Corresponds to the JSON property `machineType`
+        # @return [String]
+        attr_accessor :machine_type
+      
+        # Optional. Minimum CPU platform (https://cloud.google.com/compute/docs/
+        # instances/specify-min-cpu-platform) to be used by this instance. The instance
+        # may be scheduled on the specified or a newer CPU platform. Specify the
+        # friendly names of CPU platforms, such as "Intel Haswell"` or Intel Sandy
+        # Bridge".
+        # Corresponds to the JSON property `minCpuPlatform`
+        # @return [String]
+        attr_accessor :min_cpu_platform
+      
+        # Optional. Whether the nodes are created as legacy preemptible VM instances (
+        # https://cloud.google.com/compute/docs/instances/preemptible). Also see Spot
+        # VMs, preemptible VM instances without a maximum lifetime. Legacy and Spot
+        # preemptible nodes cannot be used in a node pool with the CONTROLLER role or in
+        # the DEFAULT node pool if the CONTROLLER role is not assigned (the DEFAULT node
+        # pool will assume the CONTROLLER role).
+        # Corresponds to the JSON property `preemptible`
+        # @return [Boolean]
+        attr_accessor :preemptible
+        alias_method :preemptible?, :preemptible
+      
+        # Optional. Whether the nodes are created as Spot VM instances (https://cloud.
+        # google.com/compute/docs/instances/spot). Spot VMs are the latest update to
+        # legacy preemptible VMs. Spot VMs do not have a maximum lifetime. Legacy and
+        # Spot preemptible nodes cannot be used in a node pool with the CONTROLLER role
+        # or in the DEFAULT node pool if the CONTROLLER role is not assigned (the
+        # DEFAULT node pool will assume the CONTROLLER role).
+        # Corresponds to the JSON property `spot`
+        # @return [Boolean]
+        attr_accessor :spot
+        alias_method :spot?, :spot
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @accelerators = args[:accelerators] if args.key?(:accelerators)
+          @boot_disk_kms_key = args[:boot_disk_kms_key] if args.key?(:boot_disk_kms_key)
+          @local_ssd_count = args[:local_ssd_count] if args.key?(:local_ssd_count)
+          @machine_type = args[:machine_type] if args.key?(:machine_type)
+          @min_cpu_platform = args[:min_cpu_platform] if args.key?(:min_cpu_platform)
+          @preemptible = args[:preemptible] if args.key?(:preemptible)
+          @spot = args[:spot] if args.key?(:spot)
+        end
+      end
+      
+      # A GkeNodeConfigAcceleratorConfig represents a Hardware Accelerator request for
+      # a node pool.
+      class GkeNodePoolAcceleratorConfig
+        include Google::Apis::Core::Hashable
+      
+        # The number of accelerator cards exposed to an instance.
+        # Corresponds to the JSON property `acceleratorCount`
+        # @return [Fixnum]
+        attr_accessor :accelerator_count
+      
+        # The accelerator type resource namename (see GPUs on Compute Engine).
+        # Corresponds to the JSON property `acceleratorType`
+        # @return [String]
+        attr_accessor :accelerator_type
+      
+        # Size of partitions to create on the GPU. Valid values are described in the
+        # NVIDIA mig user guide (https://docs.nvidia.com/datacenter/tesla/mig-user-guide/
+        # #partitioning).
+        # Corresponds to the JSON property `gpuPartitionSize`
+        # @return [String]
+        attr_accessor :gpu_partition_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @accelerator_count = args[:accelerator_count] if args.key?(:accelerator_count)
+          @accelerator_type = args[:accelerator_type] if args.key?(:accelerator_type)
+          @gpu_partition_size = args[:gpu_partition_size] if args.key?(:gpu_partition_size)
+        end
+      end
+      
+      # GkeNodePoolAutoscaling contains information the cluster autoscaler needs to
+      # adjust the size of the node pool to the current cluster usage.
+      class GkeNodePoolAutoscalingConfig
+        include Google::Apis::Core::Hashable
+      
+        # The maximum number of nodes in the node pool. Must be >= min_node_count, and
+        # must be > 0. Note: Quota must be sufficient to scale up the cluster.
+        # Corresponds to the JSON property `maxNodeCount`
+        # @return [Fixnum]
+        attr_accessor :max_node_count
+      
+        # The minimum number of nodes in the node pool. Must be >= 0 and <=
+        # max_node_count.
+        # Corresponds to the JSON property `minNodeCount`
+        # @return [Fixnum]
+        attr_accessor :min_node_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @max_node_count = args[:max_node_count] if args.key?(:max_node_count)
+          @min_node_count = args[:min_node_count] if args.key?(:min_node_count)
+        end
+      end
+      
+      # The configuration of a GKE node pool used by a Dataproc-on-GKE cluster (https:/
+      # /cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-
+      # on-gke-cluster).
+      class GkeNodePoolConfig
+        include Google::Apis::Core::Hashable
+      
+        # GkeNodePoolAutoscaling contains information the cluster autoscaler needs to
+        # adjust the size of the node pool to the current cluster usage.
+        # Corresponds to the JSON property `autoscaling`
+        # @return [Google::Apis::DataprocV1::GkeNodePoolAutoscalingConfig]
+        attr_accessor :autoscaling
+      
+        # Parameters that describe cluster nodes.
+        # Corresponds to the JSON property `config`
+        # @return [Google::Apis::DataprocV1::GkeNodeConfig]
+        attr_accessor :config
+      
+        # Optional. The list of Compute Engine zones (https://cloud.google.com/compute/
+        # docs/zones#available) where node pool nodes associated with a Dataproc on GKE
+        # virtual cluster will be located.Note: All node pools associated with a virtual
+        # cluster must be located in the same region as the virtual cluster, and they
+        # must be located in the same zone within that region.If a location is not
+        # specified during node pool creation, Dataproc on GKE will choose the zone.
+        # Corresponds to the JSON property `locations`
+        # @return [Array<String>]
+        attr_accessor :locations
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @autoscaling = args[:autoscaling] if args.key?(:autoscaling)
+          @config = args[:config] if args.key?(:config)
+          @locations = args[:locations] if args.key?(:locations)
+        end
+      end
+      
+      # GKE node pools that Dataproc workloads run on.
+      class GkeNodePoolTarget
+        include Google::Apis::Core::Hashable
+      
+        # Required. The target GKE node pool. Format: 'projects/`project`/locations/`
+        # location`/clusters/`cluster`/nodePools/`node_pool`'
+        # Corresponds to the JSON property `nodePool`
+        # @return [String]
+        attr_accessor :node_pool
+      
+        # The configuration of a GKE node pool used by a Dataproc-on-GKE cluster (https:/
+        # /cloud.google.com/dataproc/docs/concepts/jobs/dataproc-gke#create-a-dataproc-
+        # on-gke-cluster).
+        # Corresponds to the JSON property `nodePoolConfig`
+        # @return [Google::Apis::DataprocV1::GkeNodePoolConfig]
+        attr_accessor :node_pool_config
+      
+        # Required. The roles associated with the GKE node pool.
+        # Corresponds to the JSON property `roles`
+        # @return [Array<String>]
+        attr_accessor :roles
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @node_pool = args[:node_pool] if args.key?(:node_pool)
+          @node_pool_config = args[:node_pool_config] if args.key?(:node_pool_config)
+          @roles = args[:roles] if args.key?(:roles)
         end
       end
       
@@ -1455,10 +2108,10 @@ module Google
       
         # Optional. The Compute Engine image resource used for cluster instances.The URI
         # can represent an image or image family.Image examples: https://www.googleapis.
-        # com/compute/beta/projects/[project_id]/global/images/[image-id] projects/[
+        # com/compute/v1/projects/[project_id]/global/images/[image-id] projects/[
         # project_id]/global/images/[image-id] image-idImage family examples. Dataproc
         # will use the most recent image from the family: https://www.googleapis.com/
-        # compute/beta/projects/[project_id]/global/images/family/[custom-image-family-
+        # compute/v1/projects/[project_id]/global/images/family/[custom-image-family-
         # name] projects/[project_id]/global/images/family/[custom-image-family-name]If
         # the URI is unspecified, it will be inferred from SoftwareConfig.image_version
         # or the system default.
@@ -1485,12 +2138,12 @@ module Google
       
         # Optional. The Compute Engine machine type used for cluster instances.A full
         # URL, partial URI, or short name are valid. Examples: https://www.googleapis.
-        # com/compute/v1/projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-
-        # 2 projects/[project_id]/zones/us-east1-a/machineTypes/n1-standard-2 n1-
-        # standard-2Auto Zone Exception: If you are using the Dataproc Auto Zone
-        # Placement (https://cloud.google.com/dataproc/docs/concepts/configuring-
-        # clusters/auto-zone#using_auto_zone_placement) feature, you must use the short
-        # name of the machine type resource, for example, n1-standard-2.
+        # com/compute/v1/projects/[project_id]/zones/[zone]/machineTypes/n1-standard-2
+        # projects/[project_id]/zones/[zone]/machineTypes/n1-standard-2 n1-standard-
+        # 2Auto Zone Exception: If you are using the Dataproc Auto Zone Placement (https:
+        # //cloud.google.com/dataproc/docs/concepts/configuring-clusters/auto-zone#
+        # using_auto_zone_placement) feature, you must use the short name of the machine
+        # type resource, for example, n1-standard-2.
         # Corresponds to the JSON property `machineTypeUri`
         # @return [String]
         attr_accessor :machine_type_uri
@@ -1618,6 +2271,36 @@ module Google
         end
       end
       
+      # Represents a time interval, encoded as a Timestamp start (inclusive) and a
+      # Timestamp end (exclusive).The start must be less than or equal to the end.
+      # When the start equals the end, the interval is empty (matches no time). When
+      # both start and end are unspecified, the interval matches any time.
+      class Interval
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Exclusive end of the interval.If specified, a Timestamp matching
+        # this interval will have to be before the end.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Optional. Inclusive start of the interval.If specified, a Timestamp matching
+        # this interval will have to be the same or after the start.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
       # A Dataproc job resource.
       class Job
         include Google::Apis::Core::Hashable
@@ -1642,6 +2325,11 @@ module Google
         # Corresponds to the JSON property `driverOutputResourceUri`
         # @return [String]
         attr_accessor :driver_output_resource_uri
+      
+        # Driver scheduling configuration.
+        # Corresponds to the JSON property `driverSchedulingConfig`
+        # @return [Google::Apis::DataprocV1::DriverSchedulingConfig]
+        attr_accessor :driver_scheduling_config
       
         # A Dataproc job for running Apache Hadoop MapReduce (https://hadoop.apache.org/
         # docs/current/hadoop-mapreduce-client/hadoop-mapreduce-client-core/
@@ -1708,7 +2396,7 @@ module Google
         # @return [Google::Apis::DataprocV1::JobScheduling]
         attr_accessor :scheduling
       
-        # A Dataproc job for running Apache Spark (http://spark.apache.org/)
+        # A Dataproc job for running Apache Spark (https://spark.apache.org/)
         # applications on YARN.
         # Corresponds to the JSON property `sparkJob`
         # @return [Google::Apis::DataprocV1::SparkJob]
@@ -1720,7 +2408,7 @@ module Google
         # @return [Google::Apis::DataprocV1::SparkRJob]
         attr_accessor :spark_r_job
       
-        # A Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/)
+        # A Dataproc job for running Apache Spark SQL (https://spark.apache.org/sql/)
         # queries.
         # Corresponds to the JSON property `sparkSqlJob`
         # @return [Google::Apis::DataprocV1::SparkSqlJob]
@@ -1735,6 +2423,14 @@ module Google
         # Corresponds to the JSON property `statusHistory`
         # @return [Array<Google::Apis::DataprocV1::JobStatus>]
         attr_accessor :status_history
+      
+        # A Dataproc job for running Trino (https://trino.io/) queries. IMPORTANT: The
+        # Dataproc Trino Optional Component (https://cloud.google.com/dataproc/docs/
+        # concepts/components/trino) must be enabled when the cluster is created to
+        # submit a Trino job to the cluster.
+        # Corresponds to the JSON property `trinoJob`
+        # @return [Google::Apis::DataprocV1::TrinoJob]
+        attr_accessor :trino_job
       
         # Output only. The collection of YARN applications spun up by this job.Beta
         # Feature: This report is available for testing purposes only. It may be changed
@@ -1752,6 +2448,7 @@ module Google
           @done = args[:done] if args.key?(:done)
           @driver_control_files_uri = args[:driver_control_files_uri] if args.key?(:driver_control_files_uri)
           @driver_output_resource_uri = args[:driver_output_resource_uri] if args.key?(:driver_output_resource_uri)
+          @driver_scheduling_config = args[:driver_scheduling_config] if args.key?(:driver_scheduling_config)
           @hadoop_job = args[:hadoop_job] if args.key?(:hadoop_job)
           @hive_job = args[:hive_job] if args.key?(:hive_job)
           @job_uuid = args[:job_uuid] if args.key?(:job_uuid)
@@ -1767,6 +2464,7 @@ module Google
           @spark_sql_job = args[:spark_sql_job] if args.key?(:spark_sql_job)
           @status = args[:status] if args.key?(:status)
           @status_history = args[:status_history] if args.key?(:status_history)
+          @trino_job = args[:trino_job] if args.key?(:trino_job)
           @yarn_applications = args[:yarn_applications] if args.key?(:yarn_applications)
         end
       end
@@ -1875,15 +2573,21 @@ module Google
       
         # Optional. Maximum number of times per hour a driver may be restarted as a
         # result of driver exiting with non-zero code before job is reported failed.A
-        # job may be reported as thrashing if driver exits with non-zero code 4 times
-        # within 10 minute window.Maximum value is 10.
+        # job may be reported as thrashing if the driver exits with a non-zero code four
+        # times within a 10-minute window.Maximum value is 10.Note: This restartable job
+        # option is not supported in Dataproc workflow templates (https://cloud.google.
+        # com/dataproc/docs/concepts/workflows/using-workflows#adding_jobs_to_a_template)
+        # .
         # Corresponds to the JSON property `maxFailuresPerHour`
         # @return [Fixnum]
         attr_accessor :max_failures_per_hour
       
-        # Optional. Maximum number of times in total a driver may be restarted as a
-        # result of driver exiting with non-zero code before job is reported failed.
-        # Maximum value is 240.
+        # Optional. Maximum total number of times a driver may be restarted as a result
+        # of the driver exiting with a non-zero code. After the maximum number is
+        # reached, the job will be reported as failed.Maximum value is 240.Note:
+        # Currently, this restartable job option is not supported in Dataproc workflow
+        # templates (https://cloud.google.com/dataproc/docs/concepts/workflows/using-
+        # workflows#adding_jobs_to_a_template).
         # Corresponds to the JSON property `maxFailuresTotal`
         # @return [Fixnum]
         attr_accessor :max_failures_total
@@ -2060,6 +2764,71 @@ module Google
         end
       end
       
+      # The configuration for running the Dataproc cluster on Kubernetes.
+      class KubernetesClusterConfig
+        include Google::Apis::Core::Hashable
+      
+        # The cluster's GKE config.
+        # Corresponds to the JSON property `gkeClusterConfig`
+        # @return [Google::Apis::DataprocV1::GkeClusterConfig]
+        attr_accessor :gke_cluster_config
+      
+        # Optional. A namespace within the Kubernetes cluster to deploy into. If this
+        # namespace does not exist, it is created. If it exists, Dataproc verifies that
+        # another Dataproc VirtualCluster is not installed into it. If not specified,
+        # the name of the Dataproc Cluster is used.
+        # Corresponds to the JSON property `kubernetesNamespace`
+        # @return [String]
+        attr_accessor :kubernetes_namespace
+      
+        # The software configuration for this Dataproc cluster running on Kubernetes.
+        # Corresponds to the JSON property `kubernetesSoftwareConfig`
+        # @return [Google::Apis::DataprocV1::KubernetesSoftwareConfig]
+        attr_accessor :kubernetes_software_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gke_cluster_config = args[:gke_cluster_config] if args.key?(:gke_cluster_config)
+          @kubernetes_namespace = args[:kubernetes_namespace] if args.key?(:kubernetes_namespace)
+          @kubernetes_software_config = args[:kubernetes_software_config] if args.key?(:kubernetes_software_config)
+        end
+      end
+      
+      # The software configuration for this Dataproc cluster running on Kubernetes.
+      class KubernetesSoftwareConfig
+        include Google::Apis::Core::Hashable
+      
+        # The components that should be installed in this Dataproc cluster. The key must
+        # be a string from the KubernetesComponent enumeration. The value is the version
+        # of the software to be installed. At least one entry must be specified.
+        # Corresponds to the JSON property `componentVersion`
+        # @return [Hash<String,String>]
+        attr_accessor :component_version
+      
+        # The properties to set on daemon config files.Property keys are specified in
+        # prefix:property format, for example spark:spark.kubernetes.container.image.
+        # The following are supported prefixes and their mappings: spark: spark-defaults.
+        # confFor more information, see Cluster properties (https://cloud.google.com/
+        # dataproc/docs/concepts/cluster-properties).
+        # Corresponds to the JSON property `properties`
+        # @return [Hash<String,String>]
+        attr_accessor :properties
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @component_version = args[:component_version] if args.key?(:component_version)
+          @properties = args[:properties] if args.key?(:properties)
+        end
+      end
+      
       # Specifies the cluster auto-delete schedule configuration.
       class LifecycleConfig
         include Google::Apis::Core::Hashable
@@ -2130,6 +2899,32 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @policies = args[:policies] if args.key?(:policies)
+        end
+      end
+      
+      # A list of batch workloads.
+      class ListBatchesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The batches from the specified collection.
+        # Corresponds to the JSON property `batches`
+        # @return [Array<Google::Apis::DataprocV1::Batch>]
+        attr_accessor :batches
+      
+        # A token, which can be sent as page_token to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @batches = args[:batches] if args.key?(:batches)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
       
@@ -2344,7 +3139,48 @@ module Google
         end
       end
       
-      # A full, namespace-isolated deployment target for an existing GKE cluster.
+      # A Dataproc OSS metric.
+      class Metric
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Specify one or more available OSS metrics (https://cloud.google.com/
+        # dataproc/docs/guides/monitoring#available_oss_metrics) to collect for the
+        # metric course (for the SPARK metric source, any Spark metric (https://spark.
+        # apache.org/docs/latest/monitoring.html#metrics) can be specified).Provide
+        # metrics in the following format: METRIC_SOURCE: INSTANCE:GROUP:METRIC Use
+        # camelcase as appropriate.Examples: yarn:ResourceManager:QueueMetrics:
+        # AppsCompleted spark:driver:DAGScheduler:job.allJobs sparkHistoryServer:JVM:
+        # Memory:NonHeapMemoryUsage.committed hiveserver2:JVM:Memory:NonHeapMemoryUsage.
+        # used Notes: Only the specified overridden metrics will be collected for the
+        # metric source. For example, if one or more spark:executive metrics are listed
+        # as metric overrides, other SPARK metrics will not be collected. The collection
+        # of the default metrics for other OSS metric sources is unaffected. For example,
+        # if both SPARK andd YARN metric sources are enabled, and overrides are
+        # provided for Spark metrics only, all default YARN metrics will be collected.
+        # Corresponds to the JSON property `metricOverrides`
+        # @return [Array<String>]
+        attr_accessor :metric_overrides
+      
+        # Required. Default metrics are collected unless metricOverrides are specified
+        # for the metric source (see Available OSS metrics (https://cloud.google.com/
+        # dataproc/docs/guides/monitoring#available_oss_metrics) for more information).
+        # Corresponds to the JSON property `metricSource`
+        # @return [String]
+        attr_accessor :metric_source
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metric_overrides = args[:metric_overrides] if args.key?(:metric_overrides)
+          @metric_source = args[:metric_source] if args.key?(:metric_source)
+        end
+      end
+      
+      # Deprecated. Used only for the deprecated beta. A full, namespace-isolated
+      # deployment target for an existing GKE cluster.
       class NamespacedGkeDeploymentTarget
         include Google::Apis::Core::Hashable
       
@@ -2370,16 +3206,60 @@ module Google
         end
       end
       
-      # Node Group Affinity for clusters using sole-tenant node groups.
+      # Dataproc Node Group. The Dataproc NodeGroup resource is not related to the
+      # Dataproc NodeGroupAffinity resource.
+      class NodeGroup
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Node group labels. Label keys must consist of from 1 to 63
+        # characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt).
+        # Label values can be empty. If specified, they must consist of from 1 to 63
+        # characters and conform to RFC 1035 (https://www.ietf.org/rfc/rfc1035.txt). The
+        # node group must have no more than 32 labelsn.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # The Node group resource name (https://aip.dev/122).
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The config settings for Compute Engine resources in an instance group, such as
+        # a master or worker group.
+        # Corresponds to the JSON property `nodeGroupConfig`
+        # @return [Google::Apis::DataprocV1::InstanceGroupConfig]
+        attr_accessor :node_group_config
+      
+        # Required. Node group roles.
+        # Corresponds to the JSON property `roles`
+        # @return [Array<String>]
+        attr_accessor :roles
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @labels = args[:labels] if args.key?(:labels)
+          @name = args[:name] if args.key?(:name)
+          @node_group_config = args[:node_group_config] if args.key?(:node_group_config)
+          @roles = args[:roles] if args.key?(:roles)
+        end
+      end
+      
+      # Node Group Affinity for clusters using sole-tenant node groups. The Dataproc
+      # NodeGroupAffinity resource is not related to the Dataproc NodeGroup resource.
       class NodeGroupAffinity
         include Google::Apis::Core::Hashable
       
         # Required. The URI of a sole-tenant node group resource (https://cloud.google.
         # com/compute/docs/reference/rest/v1/nodeGroups) that the cluster will be
         # created on.A full URL, partial URI, or node group name are valid. Examples:
-        # https://www.googleapis.com/compute/v1/projects/[project_id]/zones/us-central1-
-        # a/nodeGroups/node-group-1 projects/[project_id]/zones/us-central1-a/nodeGroups/
-        # node-group-1 node-group-1
+        # https://www.googleapis.com/compute/v1/projects/[project_id]/zones/[zone]/
+        # nodeGroups/node-group-1 projects/[project_id]/zones/[zone]/nodeGroups/node-
+        # group-1 node-group-1
         # Corresponds to the JSON property `nodeGroupUri`
         # @return [String]
         attr_accessor :node_group_uri
@@ -2391,6 +3271,67 @@ module Google
         # Update properties of this object
         def update!(**args)
           @node_group_uri = args[:node_group_uri] if args.key?(:node_group_uri)
+        end
+      end
+      
+      # Metadata describing the node group operation.
+      class NodeGroupOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Cluster UUID associated with the node group operation.
+        # Corresponds to the JSON property `clusterUuid`
+        # @return [String]
+        attr_accessor :cluster_uuid
+      
+        # Output only. Short description of operation.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. Labels associated with the operation.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # Output only. Node group ID for the operation.
+        # Corresponds to the JSON property `nodeGroupId`
+        # @return [String]
+        attr_accessor :node_group_id
+      
+        # The operation type.
+        # Corresponds to the JSON property `operationType`
+        # @return [String]
+        attr_accessor :operation_type
+      
+        # The status of the operation.
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DataprocV1::ClusterOperationStatus]
+        attr_accessor :status
+      
+        # Output only. The previous operation status.
+        # Corresponds to the JSON property `statusHistory`
+        # @return [Array<Google::Apis::DataprocV1::ClusterOperationStatus>]
+        attr_accessor :status_history
+      
+        # Output only. Errors encountered during operation execution.
+        # Corresponds to the JSON property `warnings`
+        # @return [Array<String>]
+        attr_accessor :warnings
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_uuid = args[:cluster_uuid] if args.key?(:cluster_uuid)
+          @description = args[:description] if args.key?(:description)
+          @labels = args[:labels] if args.key?(:labels)
+          @node_group_id = args[:node_group_id] if args.key?(:node_group_id)
+          @operation_type = args[:operation_type] if args.key?(:operation_type)
+          @status = args[:status] if args.key?(:status)
+          @status_history = args[:status_history] if args.key?(:status_history)
+          @warnings = args[:warnings] if args.key?(:warnings)
         end
       end
       
@@ -2422,6 +3363,41 @@ module Google
         def update!(**args)
           @executable_file = args[:executable_file] if args.key?(:executable_file)
           @execution_timeout = args[:execution_timeout] if args.key?(:execution_timeout)
+        end
+      end
+      
+      # indicating a list of workers of same type
+      class NodePool
+        include Google::Apis::Core::Hashable
+      
+        # Required. A unique id of the node pool. Primary and Secondary workers can be
+        # specified using special reserved ids PRIMARY_WORKER_POOL and
+        # SECONDARY_WORKER_POOL respectively. Aux node pools can be referenced using
+        # corresponding pool id.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Name of instances to be repaired. These instances must belong to specified
+        # node pool.
+        # Corresponds to the JSON property `instanceNames`
+        # @return [Array<String>]
+        attr_accessor :instance_names
+      
+        # Required. Repair action to take on specified resources of the node pool.
+        # Corresponds to the JSON property `repairAction`
+        # @return [String]
+        attr_accessor :repair_action
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+          @instance_names = args[:instance_names] if args.key?(:instance_names)
+          @repair_action = args[:repair_action] if args.key?(:repair_action)
         end
       end
       
@@ -2545,7 +3521,7 @@ module Google
         # @return [Google::Apis::DataprocV1::JobScheduling]
         attr_accessor :scheduling
       
-        # A Dataproc job for running Apache Spark (http://spark.apache.org/)
+        # A Dataproc job for running Apache Spark (https://spark.apache.org/)
         # applications on YARN.
         # Corresponds to the JSON property `sparkJob`
         # @return [Google::Apis::DataprocV1::SparkJob]
@@ -2557,7 +3533,7 @@ module Google
         # @return [Google::Apis::DataprocV1::SparkRJob]
         attr_accessor :spark_r_job
       
-        # A Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/)
+        # A Dataproc job for running Apache Spark SQL (https://spark.apache.org/sql/)
         # queries.
         # Corresponds to the JSON property `sparkSqlJob`
         # @return [Google::Apis::DataprocV1::SparkSqlJob]
@@ -2572,6 +3548,14 @@ module Google
         # Corresponds to the JSON property `stepId`
         # @return [String]
         attr_accessor :step_id
+      
+        # A Dataproc job for running Trino (https://trino.io/) queries. IMPORTANT: The
+        # Dataproc Trino Optional Component (https://cloud.google.com/dataproc/docs/
+        # concepts/components/trino) must be enabled when the cluster is created to
+        # submit a Trino job to the cluster.
+        # Corresponds to the JSON property `trinoJob`
+        # @return [Google::Apis::DataprocV1::TrinoJob]
+        attr_accessor :trino_job
       
         def initialize(**args)
            update!(**args)
@@ -2591,6 +3575,7 @@ module Google
           @spark_r_job = args[:spark_r_job] if args.key?(:spark_r_job)
           @spark_sql_job = args[:spark_sql_job] if args.key?(:spark_sql_job)
           @step_id = args[:step_id] if args.key?(:step_id)
+          @trino_job = args[:trino_job] if args.key?(:trino_job)
         end
       end
       
@@ -2616,6 +3601,32 @@ module Google
         def update!(**args)
           @regex = args[:regex] if args.key?(:regex)
           @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # Auxiliary services configuration for a workload.
+      class PeripheralsConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Resource name of an existing Dataproc Metastore service.Example:
+        # projects/[project_id]/locations/[region]/services/[service_id]
+        # Corresponds to the JSON property `metastoreService`
+        # @return [String]
+        attr_accessor :metastore_service
+      
+        # Spark History Server configuration for the workload.
+        # Corresponds to the JSON property `sparkHistoryServerConfig`
+        # @return [Google::Apis::DataprocV1::SparkHistoryServerConfig]
+        attr_accessor :spark_history_server_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metastore_service = args[:metastore_service] if args.key?(:metastore_service)
+          @spark_history_server_config = args[:spark_history_server_config] if args.key?(:spark_history_server_config)
         end
       end
       
@@ -2685,16 +3696,16 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources.A Policy is a collection of bindings. A
-      # binding binds one or more members to a single role. Members can be user
-      # accounts, service accounts, Google groups, and domains (such as G Suite). A
-      # role is a named list of permissions; each role can be an IAM predefined role
-      # or a user-created custom role.For some types of Google Cloud resources, a
-      # binding can also specify a condition, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to true. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the IAM documentation (https://cloud.google.com/iam/help/conditions/
-      # resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
+      # binding binds one or more members, or principals, to a single role. Principals
+      # can be user accounts, service accounts, Google groups, and domains (such as G
+      # Suite). A role is a named list of permissions; each role can be an IAM
+      # predefined role or a user-created custom role.For some types of Google Cloud
+      # resources, a binding can also specify a condition, which is a logical
+      # expression that allows access to a resource only if the expression evaluates
+      # to true. A condition can add constraints based on attributes of the request,
+      # the resource, or both. To learn which resources support conditions in their
+      # IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/
+      # conditions/resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
       # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
       # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
       # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
@@ -2713,9 +3724,14 @@ module Google
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of members to a role. Optionally, may specify a condition
-        # that determines how and when the bindings are applied. Each of the bindings
-        # must contain at least one member.
+        # Associates a list of members, or principals, with a role. Optionally, may
+        # specify a condition that determines how and when the bindings are applied.
+        # Each of the bindings must contain at least one principal.The bindings in a
+        # Policy can refer to up to 1,500 principals; up to 250 of these principals can
+        # be Google groups. Each occurrence of a principal counts towards these limits.
+        # For example, if the bindings grant 50 different roles to user:alice@example.
+        # com, and not to any other principal, then you can add another 1,450 principals
+        # to the bindings in the Policy.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::DataprocV1::Binding>]
         attr_accessor :bindings
@@ -2826,6 +3842,63 @@ module Google
           @properties = args[:properties] if args.key?(:properties)
           @query_file_uri = args[:query_file_uri] if args.key?(:query_file_uri)
           @query_list = args[:query_list] if args.key?(:query_list)
+        end
+      end
+      
+      # A configuration for running an Apache PySpark (https://spark.apache.org/docs/
+      # latest/api/python/getting_started/quickstart.html) batch workload.
+      class PySparkBatch
+        include Google::Apis::Core::Hashable
+      
+        # Optional. HCFS URIs of archives to be extracted into the working directory of
+        # each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        # Corresponds to the JSON property `archiveUris`
+        # @return [Array<String>]
+        attr_accessor :archive_uris
+      
+        # Optional. The arguments to pass to the driver. Do not include arguments that
+        # can be set as batch properties, such as --conf, since a collision can occur
+        # that causes an incorrect batch submission.
+        # Corresponds to the JSON property `args`
+        # @return [Array<String>]
+        attr_accessor :args
+      
+        # Optional. HCFS URIs of files to be placed in the working directory of each
+        # executor.
+        # Corresponds to the JSON property `fileUris`
+        # @return [Array<String>]
+        attr_accessor :file_uris
+      
+        # Optional. HCFS URIs of jar files to add to the classpath of the Spark driver
+        # and tasks.
+        # Corresponds to the JSON property `jarFileUris`
+        # @return [Array<String>]
+        attr_accessor :jar_file_uris
+      
+        # Required. The HCFS URI of the main Python file to use as the Spark driver.
+        # Must be a .py file.
+        # Corresponds to the JSON property `mainPythonFileUri`
+        # @return [String]
+        attr_accessor :main_python_file_uri
+      
+        # Optional. HCFS file URIs of Python files to pass to the PySpark framework.
+        # Supported file types: .py, .egg, and .zip.
+        # Corresponds to the JSON property `pythonFileUris`
+        # @return [Array<String>]
+        attr_accessor :python_file_uris
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @archive_uris = args[:archive_uris] if args.key?(:archive_uris)
+          @args = args[:args] if args.key?(:args)
+          @file_uris = args[:file_uris] if args.key?(:file_uris)
+          @jar_file_uris = args[:jar_file_uris] if args.key?(:jar_file_uris)
+          @main_python_file_uri = args[:main_python_file_uri] if args.key?(:main_python_file_uri)
+          @python_file_uris = args[:python_file_uris] if args.key?(:python_file_uris)
         end
       end
       
@@ -2955,6 +4028,29 @@ module Google
         # @return [String]
         attr_accessor :cluster_uuid
       
+        # Optional. Timeout for graceful YARN decommissioning. Graceful decommissioning
+        # facilitates the removal of cluster nodes without interrupting jobs in progress.
+        # The timeout specifies the amount of time to wait for jobs finish before
+        # forcefully removing nodes. The default timeout is 0 for forceful
+        # decommissioning, and the maximum timeout period is 1 day. (see JSON Mapping—
+        # Duration (https://developers.google.com/protocol-buffers/docs/proto3#json)).
+        # graceful_decommission_timeout is supported in Dataproc image versions 1.2+.
+        # Corresponds to the JSON property `gracefulDecommissionTimeout`
+        # @return [String]
+        attr_accessor :graceful_decommission_timeout
+      
+        # Optional. Node pools and corresponding repair action to be taken. All node
+        # pools should be unique in this request. i.e. Multiple entries for the same
+        # node pool id are not allowed.
+        # Corresponds to the JSON property `nodePools`
+        # @return [Array<Google::Apis::DataprocV1::NodePool>]
+        attr_accessor :node_pools
+      
+        # Optional. operation id of the parent operation sending the repair request
+        # Corresponds to the JSON property `parentOperationId`
+        # @return [String]
+        attr_accessor :parent_operation_id
+      
         # Optional. A unique ID used to identify the request. If the server receives two
         # RepairClusterRequests with the same ID, the second request is ignored, and the
         # first google.longrunning.Operation created and stored in the backend is
@@ -2973,6 +4069,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cluster_uuid = args[:cluster_uuid] if args.key?(:cluster_uuid)
+          @graceful_decommission_timeout = args[:graceful_decommission_timeout] if args.key?(:graceful_decommission_timeout)
+          @node_pools = args[:node_pools] if args.key?(:node_pools)
+          @parent_operation_id = args[:parent_operation_id] if args.key?(:parent_operation_id)
           @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
@@ -3005,6 +4104,134 @@ module Google
           @consume_reservation_type = args[:consume_reservation_type] if args.key?(:consume_reservation_type)
           @key = args[:key] if args.key?(:key)
           @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # A request to resize a node group.
+      class ResizeNodeGroupRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning (
+        # https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/scaling-
+        # clusters#graceful_decommissioning) allows the removal of nodes from the
+        # Compute Engine node group without interrupting jobs in progress. This timeout
+        # specifies how long to wait for jobs in progress to finish before forcefully
+        # removing nodes (and potentially interrupting jobs). Default timeout is 0 (for
+        # forceful decommission), and the maximum allowed timeout is 1 day. (see JSON
+        # representation of Duration (https://developers.google.com/protocol-buffers/
+        # docs/proto3#json)).Only supported on Dataproc image versions 1.2 and higher.
+        # Corresponds to the JSON property `gracefulDecommissionTimeout`
+        # @return [String]
+        attr_accessor :graceful_decommission_timeout
+      
+        # Optional. A unique ID used to identify the request. If the server receives two
+        # ResizeNodeGroupRequest (https://cloud.google.com/dataproc/docs/reference/rpc/
+        # google.cloud.dataproc.v1#google.cloud.dataproc.v1.ResizeNodeGroupRequests)
+        # with the same ID, the second request is ignored and the first google.
+        # longrunning.Operation created and stored in the backend is returned.
+        # Recommendation: Set this value to a UUID (https://en.wikipedia.org/wiki/
+        # Universally_unique_identifier).The ID must contain only letters (a-z, A-Z),
+        # numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40
+        # characters.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
+      
+        # Required. The number of running instances for the node group to maintain. The
+        # group adds or removes instances to maintain the number of instances specified
+        # by this parameter.
+        # Corresponds to the JSON property `size`
+        # @return [Fixnum]
+        attr_accessor :size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @graceful_decommission_timeout = args[:graceful_decommission_timeout] if args.key?(:graceful_decommission_timeout)
+          @request_id = args[:request_id] if args.key?(:request_id)
+          @size = args[:size] if args.key?(:size)
+        end
+      end
+      
+      # Runtime configuration for a workload.
+      class RuntimeConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional custom container image for the job runtime environment. If
+        # not specified, a default container image will be used.
+        # Corresponds to the JSON property `containerImage`
+        # @return [String]
+        attr_accessor :container_image
+      
+        # Optional. A mapping of property names to values, which are used to configure
+        # workload execution.
+        # Corresponds to the JSON property `properties`
+        # @return [Hash<String,String>]
+        attr_accessor :properties
+      
+        # Optional. Version of the batch runtime.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @container_image = args[:container_image] if args.key?(:container_image)
+          @properties = args[:properties] if args.key?(:properties)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Runtime information about workload execution.
+      class RuntimeInfo
+        include Google::Apis::Core::Hashable
+      
+        # Usage metrics represent approximate total resources consumed by a workload.
+        # Corresponds to the JSON property `approximateUsage`
+        # @return [Google::Apis::DataprocV1::UsageMetrics]
+        attr_accessor :approximate_usage
+      
+        # The usage snaphot represents the resources consumed by a workload at a
+        # specified time.
+        # Corresponds to the JSON property `currentUsage`
+        # @return [Google::Apis::DataprocV1::UsageSnapshot]
+        attr_accessor :current_usage
+      
+        # Output only. A URI pointing to the location of the diagnostics tarball.
+        # Corresponds to the JSON property `diagnosticOutputUri`
+        # @return [String]
+        attr_accessor :diagnostic_output_uri
+      
+        # Output only. Map of remote access endpoints (such as web interfaces and APIs)
+        # to their URIs.
+        # Corresponds to the JSON property `endpoints`
+        # @return [Hash<String,String>]
+        attr_accessor :endpoints
+      
+        # Output only. A URI pointing to the location of the stdout and stderr of the
+        # workload.
+        # Corresponds to the JSON property `outputUri`
+        # @return [String]
+        attr_accessor :output_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @approximate_usage = args[:approximate_usage] if args.key?(:approximate_usage)
+          @current_usage = args[:current_usage] if args.key?(:current_usage)
+          @diagnostic_output_uri = args[:diagnostic_output_uri] if args.key?(:diagnostic_output_uri)
+          @endpoints = args[:endpoints] if args.key?(:endpoints)
+          @output_uri = args[:output_uri] if args.key?(:output_uri)
         end
       end
       
@@ -3101,16 +4328,16 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources.A Policy is a collection of bindings. A
-        # binding binds one or more members to a single role. Members can be user
-        # accounts, service accounts, Google groups, and domains (such as G Suite). A
-        # role is a named list of permissions; each role can be an IAM predefined role
-        # or a user-created custom role.For some types of Google Cloud resources, a
-        # binding can also specify a condition, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to true. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the IAM documentation (https://cloud.google.com/iam/help/conditions/
-        # resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
+        # binding binds one or more members, or principals, to a single role. Principals
+        # can be user accounts, service accounts, Google groups, and domains (such as G
+        # Suite). A role is a named list of permissions; each role can be an IAM
+        # predefined role or a user-created custom role.For some types of Google Cloud
+        # resources, a binding can also specify a condition, which is a logical
+        # expression that allows access to a resource only if the expression evaluates
+        # to true. A condition can add constraints based on attributes of the request,
+        # the resource, or both. To learn which resources support conditions in their
+        # IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/
+        # conditions/resource-policies).JSON example: ` "bindings": [ ` "role": "roles/
         # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
         # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
         # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
@@ -3218,7 +4445,84 @@ module Google
         end
       end
       
-      # A Dataproc job for running Apache Spark (http://spark.apache.org/)
+      # A configuration for running an Apache Spark (https://spark.apache.org/) batch
+      # workload.
+      class SparkBatch
+        include Google::Apis::Core::Hashable
+      
+        # Optional. HCFS URIs of archives to be extracted into the working directory of
+        # each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        # Corresponds to the JSON property `archiveUris`
+        # @return [Array<String>]
+        attr_accessor :archive_uris
+      
+        # Optional. The arguments to pass to the driver. Do not include arguments that
+        # can be set as batch properties, such as --conf, since a collision can occur
+        # that causes an incorrect batch submission.
+        # Corresponds to the JSON property `args`
+        # @return [Array<String>]
+        attr_accessor :args
+      
+        # Optional. HCFS URIs of files to be placed in the working directory of each
+        # executor.
+        # Corresponds to the JSON property `fileUris`
+        # @return [Array<String>]
+        attr_accessor :file_uris
+      
+        # Optional. HCFS URIs of jar files to add to the classpath of the Spark driver
+        # and tasks.
+        # Corresponds to the JSON property `jarFileUris`
+        # @return [Array<String>]
+        attr_accessor :jar_file_uris
+      
+        # Optional. The name of the driver main class. The jar file that contains the
+        # class must be in the classpath or specified in jar_file_uris.
+        # Corresponds to the JSON property `mainClass`
+        # @return [String]
+        attr_accessor :main_class
+      
+        # Optional. The HCFS URI of the jar file that contains the main class.
+        # Corresponds to the JSON property `mainJarFileUri`
+        # @return [String]
+        attr_accessor :main_jar_file_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @archive_uris = args[:archive_uris] if args.key?(:archive_uris)
+          @args = args[:args] if args.key?(:args)
+          @file_uris = args[:file_uris] if args.key?(:file_uris)
+          @jar_file_uris = args[:jar_file_uris] if args.key?(:jar_file_uris)
+          @main_class = args[:main_class] if args.key?(:main_class)
+          @main_jar_file_uri = args[:main_jar_file_uri] if args.key?(:main_jar_file_uri)
+        end
+      end
+      
+      # Spark History Server configuration for the workload.
+      class SparkHistoryServerConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Resource name of an existing Dataproc Cluster to act as a Spark
+        # History Server for the workload.Example: projects/[project_id]/regions/[region]
+        # /clusters/[cluster_name]
+        # Corresponds to the JSON property `dataprocCluster`
+        # @return [String]
+        attr_accessor :dataproc_cluster
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataproc_cluster = args[:dataproc_cluster] if args.key?(:dataproc_cluster)
+        end
+      end
+      
+      # A Dataproc job for running Apache Spark (https://spark.apache.org/)
       # applications on YARN.
       class SparkJob
         include Google::Apis::Core::Hashable
@@ -3289,6 +4593,49 @@ module Google
         end
       end
       
+      # A configuration for running an Apache SparkR (https://spark.apache.org/docs/
+      # latest/sparkr.html) batch workload.
+      class SparkRBatch
+        include Google::Apis::Core::Hashable
+      
+        # Optional. HCFS URIs of archives to be extracted into the working directory of
+        # each executor. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.
+        # Corresponds to the JSON property `archiveUris`
+        # @return [Array<String>]
+        attr_accessor :archive_uris
+      
+        # Optional. The arguments to pass to the Spark driver. Do not include arguments
+        # that can be set as batch properties, such as --conf, since a collision can
+        # occur that causes an incorrect batch submission.
+        # Corresponds to the JSON property `args`
+        # @return [Array<String>]
+        attr_accessor :args
+      
+        # Optional. HCFS URIs of files to be placed in the working directory of each
+        # executor.
+        # Corresponds to the JSON property `fileUris`
+        # @return [Array<String>]
+        attr_accessor :file_uris
+      
+        # Required. The HCFS URI of the main R file to use as the driver. Must be a .R
+        # or .r file.
+        # Corresponds to the JSON property `mainRFileUri`
+        # @return [String]
+        attr_accessor :main_r_file_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @archive_uris = args[:archive_uris] if args.key?(:archive_uris)
+          @args = args[:args] if args.key?(:args)
+          @file_uris = args[:file_uris] if args.key?(:file_uris)
+          @main_r_file_uri = args[:main_r_file_uri] if args.key?(:main_r_file_uri)
+        end
+      end
+      
       # A Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/
       # sparkr.html) applications on YARN.
       class SparkRJob
@@ -3347,7 +4694,41 @@ module Google
         end
       end
       
-      # A Dataproc job for running Apache Spark SQL (http://spark.apache.org/sql/)
+      # A configuration for running Apache Spark SQL (https://spark.apache.org/sql/)
+      # queries as a batch workload.
+      class SparkSqlBatch
+        include Google::Apis::Core::Hashable
+      
+        # Optional. HCFS URIs of jar files to be added to the Spark CLASSPATH.
+        # Corresponds to the JSON property `jarFileUris`
+        # @return [Array<String>]
+        attr_accessor :jar_file_uris
+      
+        # Required. The HCFS URI of the script that contains Spark SQL queries to
+        # execute.
+        # Corresponds to the JSON property `queryFileUri`
+        # @return [String]
+        attr_accessor :query_file_uri
+      
+        # Optional. Mapping of query variable names to values (equivalent to the Spark
+        # SQL command: SET name="value";).
+        # Corresponds to the JSON property `queryVariables`
+        # @return [Hash<String,String>]
+        attr_accessor :query_variables
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @jar_file_uris = args[:jar_file_uris] if args.key?(:jar_file_uris)
+          @query_file_uri = args[:query_file_uri] if args.key?(:query_file_uri)
+          @query_variables = args[:query_variables] if args.key?(:query_variables)
+        end
+      end
+      
+      # A Dataproc job for running Apache Spark SQL (https://spark.apache.org/sql/)
       # queries.
       class SparkSqlJob
         include Google::Apis::Core::Hashable
@@ -3400,6 +4781,68 @@ module Google
         end
       end
       
+      # Basic autoscaling configurations for Spark Standalone.
+      class SparkStandaloneAutoscalingConfig
+        include Google::Apis::Core::Hashable
+      
+        # Required. Timeout for Spark graceful decommissioning of spark workers.
+        # Specifies the duration to wait for spark worker to complete spark
+        # decomissioning tasks before forcefully removing workers. Only applicable to
+        # downscaling operations.Bounds: 0s, 1d.
+        # Corresponds to the JSON property `gracefulDecommissionTimeout`
+        # @return [String]
+        attr_accessor :graceful_decommission_timeout
+      
+        # Required. Fraction of required executors to remove from Spark Serverless
+        # clusters. A scale-down factor of 1.0 will result in scaling down so that there
+        # are no more executors for the Spark Job.(more aggressive scaling). A scale-
+        # down factor closer to 0 will result in a smaller magnitude of scaling donw (
+        # less aggressive scaling).Bounds: 0.0, 1.0.
+        # Corresponds to the JSON property `scaleDownFactor`
+        # @return [Float]
+        attr_accessor :scale_down_factor
+      
+        # Optional. Minimum scale-down threshold as a fraction of total cluster size
+        # before scaling occurs. For example, in a 20-worker cluster, a threshold of 0.1
+        # means the autoscaler must recommend at least a 2 worker scale-down for the
+        # cluster to scale. A threshold of 0 means the autoscaler will scale down on any
+        # recommended change.Bounds: 0.0, 1.0. Default: 0.0.
+        # Corresponds to the JSON property `scaleDownMinWorkerFraction`
+        # @return [Float]
+        attr_accessor :scale_down_min_worker_fraction
+      
+        # Required. Fraction of required workers to add to Spark Standalone clusters. A
+        # scale-up factor of 1.0 will result in scaling up so that there are no more
+        # required workers for the Spark Job (more aggressive scaling). A scale-up
+        # factor closer to 0 will result in a smaller magnitude of scaling up (less
+        # aggressive scaling).Bounds: 0.0, 1.0.
+        # Corresponds to the JSON property `scaleUpFactor`
+        # @return [Float]
+        attr_accessor :scale_up_factor
+      
+        # Optional. Minimum scale-up threshold as a fraction of total cluster size
+        # before scaling occurs. For example, in a 20-worker cluster, a threshold of 0.1
+        # means the autoscaler must recommend at least a 2-worker scale-up for the
+        # cluster to scale. A threshold of 0 means the autoscaler will scale up on any
+        # recommended change.Bounds: 0.0, 1.0. Default: 0.0.
+        # Corresponds to the JSON property `scaleUpMinWorkerFraction`
+        # @return [Float]
+        attr_accessor :scale_up_min_worker_fraction
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @graceful_decommission_timeout = args[:graceful_decommission_timeout] if args.key?(:graceful_decommission_timeout)
+          @scale_down_factor = args[:scale_down_factor] if args.key?(:scale_down_factor)
+          @scale_down_min_worker_fraction = args[:scale_down_min_worker_fraction] if args.key?(:scale_down_min_worker_fraction)
+          @scale_up_factor = args[:scale_up_factor] if args.key?(:scale_up_factor)
+          @scale_up_min_worker_fraction = args[:scale_up_min_worker_fraction] if args.key?(:scale_up_min_worker_fraction)
+        end
+      end
+      
       # A request to start a cluster.
       class StartClusterRequest
         include Google::Apis::Core::Hashable
@@ -3431,6 +4874,37 @@ module Google
         def update!(**args)
           @cluster_uuid = args[:cluster_uuid] if args.key?(:cluster_uuid)
           @request_id = args[:request_id] if args.key?(:request_id)
+        end
+      end
+      
+      # Historical state information.
+      class StateHistory
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The state of the batch at this point in history.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # Output only. Details about the state at this point in history.
+        # Corresponds to the JSON property `stateMessage`
+        # @return [String]
+        attr_accessor :state_message
+      
+        # Output only. The time when the batch entered the historical state.
+        # Corresponds to the JSON property `stateStartTime`
+        # @return [String]
+        attr_accessor :state_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @state = args[:state] if args.key?(:state)
+          @state_message = args[:state_message] if args.key?(:state_message)
+          @state_start_time = args[:state_start_time] if args.key?(:state_start_time)
         end
       end
       
@@ -3608,8 +5082,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the resource. Permissions with wildcards (
-        # such as '*' or 'storage.*') are not allowed. For more information see IAM
-        # Overview (https://cloud.google.com/iam/docs/overview#permissions).
+        # such as * or storage.*) are not allowed. For more information see IAM Overview
+        # (https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
         attr_accessor :permissions
@@ -3643,6 +5117,132 @@ module Google
         end
       end
       
+      # A Dataproc job for running Trino (https://trino.io/) queries. IMPORTANT: The
+      # Dataproc Trino Optional Component (https://cloud.google.com/dataproc/docs/
+      # concepts/components/trino) must be enabled when the cluster is created to
+      # submit a Trino job to the cluster.
+      class TrinoJob
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Trino client tags to attach to this query
+        # Corresponds to the JSON property `clientTags`
+        # @return [Array<String>]
+        attr_accessor :client_tags
+      
+        # Optional. Whether to continue executing queries if a query fails. The default
+        # value is false. Setting to true can be useful when executing independent
+        # parallel queries.
+        # Corresponds to the JSON property `continueOnFailure`
+        # @return [Boolean]
+        attr_accessor :continue_on_failure
+        alias_method :continue_on_failure?, :continue_on_failure
+      
+        # The runtime logging config of the job.
+        # Corresponds to the JSON property `loggingConfig`
+        # @return [Google::Apis::DataprocV1::LoggingConfig]
+        attr_accessor :logging_config
+      
+        # Optional. The format in which query output will be displayed. See the Trino
+        # documentation for supported output formats
+        # Corresponds to the JSON property `outputFormat`
+        # @return [String]
+        attr_accessor :output_format
+      
+        # Optional. A mapping of property names to values. Used to set Trino session
+        # properties (https://trino.io/docs/current/sql/set-session.html) Equivalent to
+        # using the --session flag in the Trino CLI
+        # Corresponds to the JSON property `properties`
+        # @return [Hash<String,String>]
+        attr_accessor :properties
+      
+        # The HCFS URI of the script that contains SQL queries.
+        # Corresponds to the JSON property `queryFileUri`
+        # @return [String]
+        attr_accessor :query_file_uri
+      
+        # A list of queries to run on a cluster.
+        # Corresponds to the JSON property `queryList`
+        # @return [Google::Apis::DataprocV1::QueryList]
+        attr_accessor :query_list
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @client_tags = args[:client_tags] if args.key?(:client_tags)
+          @continue_on_failure = args[:continue_on_failure] if args.key?(:continue_on_failure)
+          @logging_config = args[:logging_config] if args.key?(:logging_config)
+          @output_format = args[:output_format] if args.key?(:output_format)
+          @properties = args[:properties] if args.key?(:properties)
+          @query_file_uri = args[:query_file_uri] if args.key?(:query_file_uri)
+          @query_list = args[:query_list] if args.key?(:query_list)
+        end
+      end
+      
+      # Usage metrics represent approximate total resources consumed by a workload.
+      class UsageMetrics
+        include Google::Apis::Core::Hashable
+      
+        # Optional. DCU (Dataproc Compute Units) usage in (milliDCU x seconds) (see
+        # Dataproc Serverless pricing (https://cloud.google.com/dataproc-serverless/
+        # pricing)).
+        # Corresponds to the JSON property `milliDcuSeconds`
+        # @return [Fixnum]
+        attr_accessor :milli_dcu_seconds
+      
+        # Optional. Shuffle storage usage in (GB x seconds) (see Dataproc Serverless
+        # pricing (https://cloud.google.com/dataproc-serverless/pricing)).
+        # Corresponds to the JSON property `shuffleStorageGbSeconds`
+        # @return [Fixnum]
+        attr_accessor :shuffle_storage_gb_seconds
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @milli_dcu_seconds = args[:milli_dcu_seconds] if args.key?(:milli_dcu_seconds)
+          @shuffle_storage_gb_seconds = args[:shuffle_storage_gb_seconds] if args.key?(:shuffle_storage_gb_seconds)
+        end
+      end
+      
+      # The usage snaphot represents the resources consumed by a workload at a
+      # specified time.
+      class UsageSnapshot
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Milli (one-thousandth) Dataproc Compute Units (DCUs) (see Dataproc
+        # Serverless pricing (https://cloud.google.com/dataproc-serverless/pricing)).
+        # Corresponds to the JSON property `milliDcu`
+        # @return [Fixnum]
+        attr_accessor :milli_dcu
+      
+        # Optional. Shuffle Storage in gigabytes (GB). (see Dataproc Serverless pricing (
+        # https://cloud.google.com/dataproc-serverless/pricing))
+        # Corresponds to the JSON property `shuffleStorageGb`
+        # @return [Fixnum]
+        attr_accessor :shuffle_storage_gb
+      
+        # Optional. The timestamp of the usage snapshot.
+        # Corresponds to the JSON property `snapshotTime`
+        # @return [String]
+        attr_accessor :snapshot_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @milli_dcu = args[:milli_dcu] if args.key?(:milli_dcu)
+          @shuffle_storage_gb = args[:shuffle_storage_gb] if args.key?(:shuffle_storage_gb)
+          @snapshot_time = args[:snapshot_time] if args.key?(:snapshot_time)
+        end
+      end
+      
       # Validation based on a list of allowed values.
       class ValueValidation
         include Google::Apis::Core::Hashable
@@ -3659,6 +5259,47 @@ module Google
         # Update properties of this object
         def update!(**args)
           @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # The Dataproc cluster config for a cluster that does not directly control the
+      # underlying compute resources, such as a Dataproc-on-GKE cluster (https://cloud.
+      # google.com/dataproc/docs/guides/dpgke/dataproc-gke-overview).
+      class VirtualClusterConfig
+        include Google::Apis::Core::Hashable
+      
+        # Auxiliary services configuration for a Cluster.
+        # Corresponds to the JSON property `auxiliaryServicesConfig`
+        # @return [Google::Apis::DataprocV1::AuxiliaryServicesConfig]
+        attr_accessor :auxiliary_services_config
+      
+        # The configuration for running the Dataproc cluster on Kubernetes.
+        # Corresponds to the JSON property `kubernetesClusterConfig`
+        # @return [Google::Apis::DataprocV1::KubernetesClusterConfig]
+        attr_accessor :kubernetes_cluster_config
+      
+        # Optional. A Cloud Storage bucket used to stage job dependencies, config files,
+        # and job driver console output. If you do not specify a staging bucket, Cloud
+        # Dataproc will determine a Cloud Storage location (US, ASIA, or EU) for your
+        # cluster's staging bucket according to the Compute Engine zone where your
+        # cluster is deployed, and then create and manage this project-level, per-
+        # location bucket (see Dataproc staging and temp buckets (https://cloud.google.
+        # com/dataproc/docs/concepts/configuring-clusters/staging-bucket)). This field
+        # requires a Cloud Storage bucket name, not a gs://... URI to a Cloud Storage
+        # bucket.
+        # Corresponds to the JSON property `stagingBucket`
+        # @return [String]
+        attr_accessor :staging_bucket
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @auxiliary_services_config = args[:auxiliary_services_config] if args.key?(:auxiliary_services_config)
+          @kubernetes_cluster_config = args[:kubernetes_cluster_config] if args.key?(:kubernetes_cluster_config)
+          @staging_bucket = args[:staging_bucket] if args.key?(:staging_bucket)
         end
       end
       

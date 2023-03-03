@@ -39,7 +39,7 @@ module Google
       class Error
         include Google::Apis::Core::Hashable
       
-        # Human readable stack trace string.
+        # Human-readable stack trace string.
         # Corresponds to the JSON property `context`
         # @return [String]
         attr_accessor :context
@@ -116,6 +116,11 @@ module Google
         # @return [String]
         attr_accessor :state
       
+        # Represents the current status of this execution.
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::WorkflowexecutionsV1beta::Status]
+        attr_accessor :status
+      
         # Output only. Revision of the workflow this execution is using.
         # Corresponds to the JSON property `workflowRevisionId`
         # @return [String]
@@ -135,6 +140,7 @@ module Google
           @result = args[:result] if args.key?(:result)
           @start_time = args[:start_time] if args.key?(:start_time)
           @state = args[:state] if args.key?(:state)
+          @status = args[:status] if args.key?(:status)
           @workflow_revision_id = args[:workflow_revision_id] if args.key?(:workflow_revision_id)
         end
       end
@@ -176,8 +182,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :column
       
-        # The length in bytes of text in this character group, e.g. digits of a number,
-        # string length, or AST (abstract syntax tree) node.
+        # The number of bytes of source code making up this stack trace element.
         # Corresponds to the JSON property `length`
         # @return [Fixnum]
         attr_accessor :length
@@ -203,7 +208,7 @@ module Google
       class StackTrace
         include Google::Apis::Core::Hashable
       
-        # An array of Stack elements.
+        # An array of stack elements.
         # Corresponds to the JSON property `elements`
         # @return [Array<Google::Apis::WorkflowexecutionsV1beta::StackTraceElement>]
         attr_accessor :elements
@@ -245,6 +250,55 @@ module Google
         # Update properties of this object
         def update!(**args)
           @position = args[:position] if args.key?(:position)
+          @routine = args[:routine] if args.key?(:routine)
+          @step = args[:step] if args.key?(:step)
+        end
+      end
+      
+      # Represents the current status of this execution.
+      class Status
+        include Google::Apis::Core::Hashable
+      
+        # A list of currently executing or last executed step names for the workflow
+        # execution currently running. If the workflow has succeeded or failed, this is
+        # the last attempted or executed step. Presently, if the current step is inside
+        # a subworkflow, the list only includes that step. In the future, the list will
+        # contain items for each step in the call stack, starting with the outermost
+        # step in the `main` subworkflow, and ending with the most deeply nested step.
+        # Corresponds to the JSON property `currentSteps`
+        # @return [Array<Google::Apis::WorkflowexecutionsV1beta::Step>]
+        attr_accessor :current_steps
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @current_steps = args[:current_steps] if args.key?(:current_steps)
+        end
+      end
+      
+      # Represents a step of the workflow this execution is running.
+      class Step
+        include Google::Apis::Core::Hashable
+      
+        # Name of a routine within the workflow.
+        # Corresponds to the JSON property `routine`
+        # @return [String]
+        attr_accessor :routine
+      
+        # Name of a step within the routine.
+        # Corresponds to the JSON property `step`
+        # @return [String]
+        attr_accessor :step
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
           @routine = args[:routine] if args.key?(:routine)
           @step = args[:step] if args.key?(:step)
         end

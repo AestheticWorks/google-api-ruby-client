@@ -28,6 +28,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Autoscale
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BiReservation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -112,6 +118,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TableReference
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Assignment
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -122,10 +134,20 @@ module Google
         end
       end
       
+      class Autoscale
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :current_slots, :numeric_string => true, as: 'currentSlots'
+          property :max_slots, :numeric_string => true, as: 'maxSlots'
+        end
+      end
+      
       class BiReservation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
+          collection :preferred_tables, as: 'preferredTables', class: Google::Apis::BigqueryreservationV1::TableReference, decorator: Google::Apis::BigqueryreservationV1::TableReference::Representation
+      
           property :size, :numeric_string => true, as: 'size'
           property :update_time, as: 'updateTime'
         end
@@ -136,8 +158,10 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :commitment_end_time, as: 'commitmentEndTime'
           property :commitment_start_time, as: 'commitmentStartTime'
+          property :edition, as: 'edition'
           property :failure_status, as: 'failureStatus', class: Google::Apis::BigqueryreservationV1::Status, decorator: Google::Apis::BigqueryreservationV1::Status::Representation
       
+          property :multi_region_auxiliary, as: 'multiRegionAuxiliary'
           property :name, as: 'name'
           property :plan, as: 'plan'
           property :renewal_plan, as: 'renewalPlan'
@@ -196,8 +220,13 @@ module Google
       class Reservation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :autoscale, as: 'autoscale', class: Google::Apis::BigqueryreservationV1::Autoscale, decorator: Google::Apis::BigqueryreservationV1::Autoscale::Representation
+      
+          property :concurrency, :numeric_string => true, as: 'concurrency'
           property :creation_time, as: 'creationTime'
+          property :edition, as: 'edition'
           property :ignore_idle_slots, as: 'ignoreIdleSlots'
+          property :multi_region_auxiliary, as: 'multiRegionAuxiliary'
           property :name, as: 'name'
           property :slot_capacity, :numeric_string => true, as: 'slotCapacity'
           property :update_time, as: 'updateTime'
@@ -245,6 +274,15 @@ module Google
           property :code, as: 'code'
           collection :details, as: 'details'
           property :message, as: 'message'
+        end
+      end
+      
+      class TableReference
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dataset_id, as: 'datasetId'
+          property :project_id, as: 'projectId'
+          property :table_id, as: 'tableId'
         end
       end
     end

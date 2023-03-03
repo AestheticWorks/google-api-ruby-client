@@ -22,9 +22,41 @@ module Google
   module Apis
     module AndroidmanagementV1
       
-      # Security policies set to the most secure values by default. To maintain the
-      # security posture of a device, we don't recommend overriding any of the default
-      # values.
+      # A shell command was issued over ADB via “adb shell command”.
+      class AdbShellCommandEvent
+        include Google::Apis::Core::Hashable
+      
+        # Shell command that was issued over ADB via "adb shell command". Redacted to
+        # empty string on organization-owned managed profile devices.
+        # Corresponds to the JSON property `shellCmd`
+        # @return [String]
+        attr_accessor :shell_cmd
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @shell_cmd = args[:shell_cmd] if args.key?(:shell_cmd)
+        end
+      end
+      
+      # An ADB interactive shell was opened via “adb shell”. Intentionally empty.
+      class AdbShellInteractiveEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Security policies set to secure values by default. To maintain the security
+      # posture of a device, we don't recommend overriding any of the default values.
       class AdvancedSecurityOverrides
         include Google::Apis::Core::Hashable
       
@@ -131,6 +163,87 @@ module Google
         end
       end
       
+      # Information about a process. It contains process name, start time, app Uid,
+      # app Pid, seinfo tag, hash of the base APK.
+      class AppProcessInfo
+        include Google::Apis::Core::Hashable
+      
+        # SHA-256 hash of the base APK, in hexadecimal format.
+        # Corresponds to the JSON property `apkSha256Hash`
+        # @return [String]
+        attr_accessor :apk_sha256_hash
+      
+        # Package names of all packages that are associated with the particular user ID.
+        # In most cases, this will be a single package name, the package that has been
+        # assigned that user ID. If multiple application share a UID then all packages
+        # sharing UID will be included.
+        # Corresponds to the JSON property `packageNames`
+        # @return [Array<String>]
+        attr_accessor :package_names
+      
+        # Process ID.
+        # Corresponds to the JSON property `pid`
+        # @return [Fixnum]
+        attr_accessor :pid
+      
+        # Process name.
+        # Corresponds to the JSON property `processName`
+        # @return [String]
+        attr_accessor :process_name
+      
+        # SELinux policy info.
+        # Corresponds to the JSON property `seinfo`
+        # @return [String]
+        attr_accessor :seinfo
+      
+        # Process start time.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        # UID of the package.
+        # Corresponds to the JSON property `uid`
+        # @return [Fixnum]
+        attr_accessor :uid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @apk_sha256_hash = args[:apk_sha256_hash] if args.key?(:apk_sha256_hash)
+          @package_names = args[:package_names] if args.key?(:package_names)
+          @pid = args[:pid] if args.key?(:pid)
+          @process_name = args[:process_name] if args.key?(:process_name)
+          @seinfo = args[:seinfo] if args.key?(:seinfo)
+          @start_time = args[:start_time] if args.key?(:start_time)
+          @uid = args[:uid] if args.key?(:uid)
+        end
+      end
+      
+      # An app process was started. This is available device-wide on fully managed
+      # devices and within the work profile on organization-owned devices with a work
+      # profile.
+      class AppProcessStartEvent
+        include Google::Apis::Core::Hashable
+      
+        # Information about a process. It contains process name, start time, app Uid,
+        # app Pid, seinfo tag, hash of the base APK.
+        # Corresponds to the JSON property `processInfo`
+        # @return [Google::Apis::AndroidmanagementV1::AppProcessInfo]
+        attr_accessor :process_info
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @process_info = args[:process_info] if args.key?(:process_info)
+        end
+      end
+      
       # Id to name association of a app track.
       class AppTrackInfo
         include Google::Apis::Core::Hashable
@@ -158,21 +271,125 @@ module Google
         end
       end
       
+      # This represents a single version of the app.
+      class AppVersion
+        include Google::Apis::Core::Hashable
+      
+        # If the value is True, it indicates that this version is a production track.
+        # Corresponds to the JSON property `production`
+        # @return [Boolean]
+        attr_accessor :production
+        alias_method :production?, :production
+      
+        # Track identifiers that the app version is published in. This does not include
+        # the production track (see production instead).
+        # Corresponds to the JSON property `trackIds`
+        # @return [Array<String>]
+        attr_accessor :track_ids
+      
+        # Unique increasing identifier for the app version.
+        # Corresponds to the JSON property `versionCode`
+        # @return [Fixnum]
+        attr_accessor :version_code
+      
+        # The string used in the Play store by the app developer to identify the version.
+        # The string is not necessarily unique or localized (for example, the string
+        # could be "1.4").
+        # Corresponds to the JSON property `versionString`
+        # @return [String]
+        attr_accessor :version_string
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @production = args[:production] if args.key?(:production)
+          @track_ids = args[:track_ids] if args.key?(:track_ids)
+          @version_code = args[:version_code] if args.key?(:version_code)
+          @version_string = args[:version_string] if args.key?(:version_string)
+        end
+      end
+      
       # Information about an app.
       class Application
         include Google::Apis::Core::Hashable
+      
+        # Whether this app is free, free with in-app purchases, or paid. If the pricing
+        # is unspecified, this means the app is not generally available anymore (even
+        # though it might still be available to people who own it).
+        # Corresponds to the JSON property `appPricing`
+        # @return [String]
+        attr_accessor :app_pricing
       
         # Application tracks visible to the enterprise.
         # Corresponds to the JSON property `appTracks`
         # @return [Array<Google::Apis::AndroidmanagementV1::AppTrackInfo>]
         attr_accessor :app_tracks
       
+        # Versions currently available for this app.
+        # Corresponds to the JSON property `appVersions`
+        # @return [Array<Google::Apis::AndroidmanagementV1::AppVersion>]
+        attr_accessor :app_versions
+      
+        # The name of the author of the apps (for example, the app developer).
+        # Corresponds to the JSON property `author`
+        # @return [String]
+        attr_accessor :author
+      
+        # The countries which this app is available in as per ISO 3166-1 alpha-2.
+        # Corresponds to the JSON property `availableCountries`
+        # @return [Array<String>]
+        attr_accessor :available_countries
+      
+        # The app category (e.g. RACING, SOCIAL, etc.)
+        # Corresponds to the JSON property `category`
+        # @return [String]
+        attr_accessor :category
+      
+        # The content rating for this app.
+        # Corresponds to the JSON property `contentRating`
+        # @return [String]
+        attr_accessor :content_rating
+      
+        # The localized promotional description, if available.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # How and to whom the package is made available.
+        # Corresponds to the JSON property `distributionChannel`
+        # @return [String]
+        attr_accessor :distribution_channel
+      
+        # Noteworthy features (if any) of this app.
+        # Corresponds to the JSON property `features`
+        # @return [Array<String>]
+        attr_accessor :features
+      
+        # Full app description, if available.
+        # Corresponds to the JSON property `fullDescription`
+        # @return [String]
+        attr_accessor :full_description
+      
+        # A link to an image that can be used as an icon for the app. This image is
+        # suitable for use up to a pixel size of 512 x 512.
+        # Corresponds to the JSON property `iconUrl`
+        # @return [String]
+        attr_accessor :icon_url
+      
         # The set of managed properties available to be pre-configured for the app.
         # Corresponds to the JSON property `managedProperties`
         # @return [Array<Google::Apis::AndroidmanagementV1::ManagedProperty>]
         attr_accessor :managed_properties
       
-        # The name of the app in the form enterprises/`enterpriseId`/applications/`
+        # The minimum Android SDK necessary to run the app.
+        # Corresponds to the JSON property `minAndroidSdkVersion`
+        # @return [Fixnum]
+        attr_accessor :min_android_sdk_version
+      
+        # The name of the app in the form enterprises/`enterprise`/applications/`
         # package_name`.
         # Corresponds to the JSON property `name`
         # @return [String]
@@ -183,10 +400,36 @@ module Google
         # @return [Array<Google::Apis::AndroidmanagementV1::ApplicationPermission>]
         attr_accessor :permissions
       
+        # A link to the (consumer) Google Play details page for the app.
+        # Corresponds to the JSON property `playStoreUrl`
+        # @return [String]
+        attr_accessor :play_store_url
+      
+        # A localised description of the recent changes made to the app.
+        # Corresponds to the JSON property `recentChanges`
+        # @return [String]
+        attr_accessor :recent_changes
+      
+        # A list of screenshot links representing the app.
+        # Corresponds to the JSON property `screenshotUrls`
+        # @return [Array<String>]
+        attr_accessor :screenshot_urls
+      
+        # A link to a smaller image that can be used as an icon for the app. This image
+        # is suitable for use up to a pixel size of 128 x 128.
+        # Corresponds to the JSON property `smallIconUrl`
+        # @return [String]
+        attr_accessor :small_icon_url
+      
         # The title of the app. Localized.
         # Corresponds to the JSON property `title`
         # @return [String]
         attr_accessor :title
+      
+        # Output only. The approximate time (within 7 days) the app was last published.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
       
         def initialize(**args)
            update!(**args)
@@ -194,11 +437,28 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @app_pricing = args[:app_pricing] if args.key?(:app_pricing)
           @app_tracks = args[:app_tracks] if args.key?(:app_tracks)
+          @app_versions = args[:app_versions] if args.key?(:app_versions)
+          @author = args[:author] if args.key?(:author)
+          @available_countries = args[:available_countries] if args.key?(:available_countries)
+          @category = args[:category] if args.key?(:category)
+          @content_rating = args[:content_rating] if args.key?(:content_rating)
+          @description = args[:description] if args.key?(:description)
+          @distribution_channel = args[:distribution_channel] if args.key?(:distribution_channel)
+          @features = args[:features] if args.key?(:features)
+          @full_description = args[:full_description] if args.key?(:full_description)
+          @icon_url = args[:icon_url] if args.key?(:icon_url)
           @managed_properties = args[:managed_properties] if args.key?(:managed_properties)
+          @min_android_sdk_version = args[:min_android_sdk_version] if args.key?(:min_android_sdk_version)
           @name = args[:name] if args.key?(:name)
           @permissions = args[:permissions] if args.key?(:permissions)
+          @play_store_url = args[:play_store_url] if args.key?(:play_store_url)
+          @recent_changes = args[:recent_changes] if args.key?(:recent_changes)
+          @screenshot_urls = args[:screenshot_urls] if args.key?(:screenshot_urls)
+          @small_icon_url = args[:small_icon_url] if args.key?(:small_icon_url)
           @title = args[:title] if args.key?(:title)
+          @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
       
@@ -272,6 +532,21 @@ module Google
         # @return [Array<String>]
         attr_accessor :accessible_track_ids
       
+        # Specifies whether the app is allowed networking when the VPN is not connected
+        # and alwaysOnVpnPackage.lockdownEnabled is enabled. If set to
+        # VPN_LOCKDOWN_ENFORCED, the app is not allowed networking, and if set to
+        # VPN_LOCKDOWN_EXEMPTION, the app is allowed networking. Only supported on
+        # devices running Android 10 and above. If this is not supported by the device,
+        # the device will contain a NonComplianceDetail with non_compliance_reason set
+        # to API_LEVEL and a fieldPath. If this is not applicable to the app, the device
+        # will contain a NonComplianceDetail with non_compliance_reason set to
+        # UNSUPPORTED and a fieldPath. The fieldPath is set to applications[i].
+        # alwaysOnVpnLockdownExemption, where i is the index of the package in the
+        # applications policy.
+        # Corresponds to the JSON property `alwaysOnVpnLockdownExemption`
+        # @return [String]
+        attr_accessor :always_on_vpn_lockdown_exemption
+      
         # Controls the auto-update mode for the app.
         # Corresponds to the JSON property `autoUpdateMode`
         # @return [String]
@@ -302,7 +577,14 @@ module Google
         alias_method :disabled?, :disabled
       
         # Configuration to enable an app as an extension app, with the capability of
-        # interacting with Android Device Policy offline.
+        # interacting with Android Device Policy offline. For Android versions 13 and
+        # above, extension apps are exempt from battery restrictions so will not be
+        # placed into the restricted App Standby Bucket (https://developer.android.com/
+        # topic/performance/appstandby#restricted-bucket). Extensions apps are also
+        # protected against users clearing their data or force-closing the application,
+        # although admins can continue to use the clear app data command (https://
+        # developer.android.com/management/reference/rest/v1/enterprises.devices/
+        # issueCommand#CommandType) on extension apps if needed for Android 13 and above.
         # Corresponds to the JSON property `extensionConfig`
         # @return [Google::Apis::AndroidmanagementV1::ExtensionConfig]
         attr_accessor :extension_config
@@ -313,7 +595,7 @@ module Google
         attr_accessor :install_type
       
         # Whether the app is allowed to lock itself in full-screen mode. DEPRECATED. Use
-        # InstallType KIOSK or kioskCustomLauncherEnabled to to configure a dedicated
+        # InstallType KIOSK or kioskCustomLauncherEnabled to configure a dedicated
         # device.
         # Corresponds to the JSON property `lockTaskAllowed`
         # @return [Boolean]
@@ -358,6 +640,12 @@ module Google
         # @return [Array<Google::Apis::AndroidmanagementV1::PermissionGrant>]
         attr_accessor :permission_grants
       
+        # Specifies whether the app installed in the work profile is allowed to add
+        # widgets to the home screen.
+        # Corresponds to the JSON property `workProfileWidgets`
+        # @return [String]
+        attr_accessor :work_profile_widgets
+      
         def initialize(**args)
            update!(**args)
         end
@@ -365,6 +653,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @accessible_track_ids = args[:accessible_track_ids] if args.key?(:accessible_track_ids)
+          @always_on_vpn_lockdown_exemption = args[:always_on_vpn_lockdown_exemption] if args.key?(:always_on_vpn_lockdown_exemption)
           @auto_update_mode = args[:auto_update_mode] if args.key?(:auto_update_mode)
           @connected_work_and_personal_app = args[:connected_work_and_personal_app] if args.key?(:connected_work_and_personal_app)
           @default_permission_policy = args[:default_permission_policy] if args.key?(:default_permission_policy)
@@ -378,6 +667,7 @@ module Google
           @minimum_version_code = args[:minimum_version_code] if args.key?(:minimum_version_code)
           @package_name = args[:package_name] if args.key?(:package_name)
           @permission_grants = args[:permission_grants] if args.key?(:permission_grants)
+          @work_profile_widgets = args[:work_profile_widgets] if args.key?(:work_profile_widgets)
         end
       end
       
@@ -395,7 +685,7 @@ module Google
         # @return [String]
         attr_accessor :display_name
       
-        # List of app events. The most recent 20 events are stored in the list.
+        # The list of app events which have occurred in the last 30 hours.
         # Corresponds to the JSON property `events`
         # @return [Array<Google::Apis::AndroidmanagementV1::ApplicationEvent>]
         attr_accessor :events
@@ -486,6 +776,46 @@ module Google
         end
       end
       
+      # Batched event logs of events from the device.
+      class BatchUsageLogEvents
+        include Google::Apis::Core::Hashable
+      
+        # The name of the device in the form ‘enterprises/`enterpriseId`/devices/`
+        # deviceId`’
+        # Corresponds to the JSON property `device`
+        # @return [String]
+        attr_accessor :device
+      
+        # The device timestamp when the batch of events were collected from the device.
+        # Corresponds to the JSON property `retrievalTime`
+        # @return [String]
+        attr_accessor :retrieval_time
+      
+        # The list of UsageLogEvent that were reported by the device, sorted
+        # chronologically by the event time.
+        # Corresponds to the JSON property `usageLogEvents`
+        # @return [Array<Google::Apis::AndroidmanagementV1::UsageLogEvent>]
+        attr_accessor :usage_log_events
+      
+        # The resource name of the user that owns this device in the form ‘enterprises/`
+        # enterpriseId`/users/`userId`’.
+        # Corresponds to the JSON property `user`
+        # @return [String]
+        attr_accessor :user
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device = args[:device] if args.key?(:device)
+          @retrieval_time = args[:retrieval_time] if args.key?(:retrieval_time)
+          @usage_log_events = args[:usage_log_events] if args.key?(:usage_log_events)
+          @user = args[:user] if args.key?(:user)
+        end
+      end
+      
       # An action to block access to apps and data on a fully managed device or in a
       # work profile. This action also triggers a device or work profile to displays a
       # user-facing notification with information (where possible) on how to correct
@@ -514,6 +844,98 @@ module Google
         def update!(**args)
           @block_after_days = args[:block_after_days] if args.key?(:block_after_days)
           @block_scope = args[:block_scope] if args.key?(:block_scope)
+        end
+      end
+      
+      # A new root certificate was installed into the system's trusted credential
+      # storage. This is available device-wide on fully managed devices and within the
+      # work profile on organization-owned devices with a work profile.
+      class CertAuthorityInstalledEvent
+        include Google::Apis::Core::Hashable
+      
+        # Subject of the certificate.
+        # Corresponds to the JSON property `certificate`
+        # @return [String]
+        attr_accessor :certificate
+      
+        # Whether the installation event succeeded.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        # The user in which the certificate install event happened. Only available for
+        # devices running Android 11 and above.
+        # Corresponds to the JSON property `userId`
+        # @return [Fixnum]
+        attr_accessor :user_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @certificate = args[:certificate] if args.key?(:certificate)
+          @success = args[:success] if args.key?(:success)
+          @user_id = args[:user_id] if args.key?(:user_id)
+        end
+      end
+      
+      # A root certificate was removed from the system's trusted credential storage.
+      # This is available device-wide on fully managed devices and within the work
+      # profile on organization-owned devices with a work profile.
+      class CertAuthorityRemovedEvent
+        include Google::Apis::Core::Hashable
+      
+        # Subject of the certificate.
+        # Corresponds to the JSON property `certificate`
+        # @return [String]
+        attr_accessor :certificate
+      
+        # Whether the removal succeeded.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        # The user in which the certificate removal event occurred. Only available for
+        # devices running Android 11 and above.
+        # Corresponds to the JSON property `userId`
+        # @return [Fixnum]
+        attr_accessor :user_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @certificate = args[:certificate] if args.key?(:certificate)
+          @success = args[:success] if args.key?(:success)
+          @user_id = args[:user_id] if args.key?(:user_id)
+        end
+      end
+      
+      # An X.509v3 certificate failed to validate, currently this validation is
+      # performed on the Wi-FI access point and failure may be due to a mismatch upon
+      # server certificate validation. However it may in the future include other
+      # validation events of an X.509v3 certificate.
+      class CertValidationFailureEvent
+        include Google::Apis::Core::Hashable
+      
+        # The reason why certification validation failed.
+        # Corresponds to the JSON property `failureReason`
+        # @return [String]
+        attr_accessor :failure_reason
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failure_reason = args[:failure_reason] if args.key?(:failure_reason)
         end
       end
       
@@ -573,9 +995,63 @@ module Google
         end
       end
       
+      # Parameters associated with the CLEAR_APP_DATA command to clear the data of
+      # specified apps from the device.
+      class ClearAppsDataParams
+        include Google::Apis::Core::Hashable
+      
+        # The package names of the apps whose data will be cleared when the command is
+        # executed.
+        # Corresponds to the JSON property `packageNames`
+        # @return [Array<String>]
+        attr_accessor :package_names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @package_names = args[:package_names] if args.key?(:package_names)
+        end
+      end
+      
+      # Status of the CLEAR_APP_DATA command to clear the data of specified apps from
+      # the device.
+      class ClearAppsDataStatus
+        include Google::Apis::Core::Hashable
+      
+        # The per-app results, a mapping from package names to the respective clearing
+        # result.
+        # Corresponds to the JSON property `results`
+        # @return [Hash<String,Google::Apis::AndroidmanagementV1::PerAppResult>]
+        attr_accessor :results
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @results = args[:results] if args.key?(:results)
+        end
+      end
+      
       # A command.
       class Command
         include Google::Apis::Core::Hashable
+      
+        # Parameters associated with the CLEAR_APP_DATA command to clear the data of
+        # specified apps from the device.
+        # Corresponds to the JSON property `clearAppsDataParams`
+        # @return [Google::Apis::AndroidmanagementV1::ClearAppsDataParams]
+        attr_accessor :clear_apps_data_params
+      
+        # Status of the CLEAR_APP_DATA command to clear the data of specified apps from
+        # the device.
+        # Corresponds to the JSON property `clearAppsDataStatus`
+        # @return [Google::Apis::AndroidmanagementV1::ClearAppsDataStatus]
+        attr_accessor :clear_apps_data_status
       
         # The timestamp at which the command was created. The timestamp is automatically
         # generated by the server.
@@ -624,6 +1100,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @clear_apps_data_params = args[:clear_apps_data_params] if args.key?(:clear_apps_data_params)
+          @clear_apps_data_status = args[:clear_apps_data_status] if args.key?(:clear_apps_data_status)
           @create_time = args[:create_time] if args.key?(:create_time)
           @duration = args[:duration] if args.key?(:duration)
           @error_code = args[:error_code] if args.key?(:error_code)
@@ -707,6 +1185,37 @@ module Google
           @disable_apps = args[:disable_apps] if args.key?(:disable_apps)
           @non_compliance_detail_condition = args[:non_compliance_detail_condition] if args.key?(:non_compliance_detail_condition)
           @package_names_to_disable = args[:package_names_to_disable] if args.key?(:package_names_to_disable)
+        end
+      end
+      
+      # A TCP connect event was initiated through the standard network stack.
+      class ConnectEvent
+        include Google::Apis::Core::Hashable
+      
+        # The destination IP address of the connect call.
+        # Corresponds to the JSON property `destinationIpAddress`
+        # @return [String]
+        attr_accessor :destination_ip_address
+      
+        # The destination port of the connect call.
+        # Corresponds to the JSON property `destinationPort`
+        # @return [Fixnum]
+        attr_accessor :destination_port
+      
+        # The package name of the UID that performed the connect call.
+        # Corresponds to the JSON property `packageName`
+        # @return [String]
+        attr_accessor :package_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @destination_ip_address = args[:destination_ip_address] if args.key?(:destination_ip_address)
+          @destination_port = args[:destination_port] if args.key?(:destination_port)
+          @package_name = args[:package_name] if args.key?(:package_name)
         end
       end
       
@@ -825,6 +1334,13 @@ module Google
         # @return [String]
         attr_accessor :show_work_contacts_in_personal_profile
       
+        # Specifies the default behaviour for work profile widgets. If the policy does
+        # not specify work_profile_widgets for a specific application, it will behave
+        # according to the value specified here.
+        # Corresponds to the JSON property `workProfileWidgetsDefault`
+        # @return [String]
+        attr_accessor :work_profile_widgets_default
+      
         def initialize(**args)
            update!(**args)
         end
@@ -834,17 +1350,40 @@ module Google
           @cross_profile_copy_paste = args[:cross_profile_copy_paste] if args.key?(:cross_profile_copy_paste)
           @cross_profile_data_sharing = args[:cross_profile_data_sharing] if args.key?(:cross_profile_data_sharing)
           @show_work_contacts_in_personal_profile = args[:show_work_contacts_in_personal_profile] if args.key?(:show_work_contacts_in_personal_profile)
+          @work_profile_widgets_default = args[:work_profile_widgets_default] if args.key?(:work_profile_widgets_default)
+        end
+      end
+      
+      # Validates whether Android’s built-in cryptographic library (BoringSSL) is
+      # valid. Should always succeed on device boot, if it fails, the device should be
+      # considered untrusted.
+      class CryptoSelfTestCompletedEvent
+        include Google::Apis::Core::Hashable
+      
+        # Whether the test succeeded.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @success = args[:success] if args.key?(:success)
         end
       end
       
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: A full date, with non-zero year, month, and day values A month and
-      # day value, with a zero year, such as an anniversary A year on its own, with
-      # zero month and day values A year and month value, with a zero day, such as a
-      # credit card expiration dateRelated types are google.type.TimeOfDay and google.
-      # protobuf.Timestamp.
+      # following: A full date, with non-zero year, month, and day values. A month and
+      # day, with a zero year (for example, an anniversary). A year on its own, with a
+      # zero month and a zero day. A year and month, with a zero day (for example, a
+      # credit card expiration date).Related types: google.type.TimeOfDay google.type.
+      # DateTime google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -1256,11 +1795,49 @@ module Google
         end
       end
       
+      # A DNS lookup event was initiated through the standard network stack.
+      class DnsEvent
+        include Google::Apis::Core::Hashable
+      
+        # The hostname that was looked up.
+        # Corresponds to the JSON property `hostname`
+        # @return [String]
+        attr_accessor :hostname
+      
+        # The (possibly truncated) list of the IP addresses returned for DNS lookup (max
+        # 10 IPv4 or IPv6 addresses).
+        # Corresponds to the JSON property `ipAddresses`
+        # @return [Array<String>]
+        attr_accessor :ip_addresses
+      
+        # The package name of the UID that performed the DNS lookup.
+        # Corresponds to the JSON property `packageName`
+        # @return [String]
+        attr_accessor :package_name
+      
+        # The number of IP addresses returned from the DNS lookup event. May be higher
+        # than the amount of ip_addresses if there were too many addresses to log.
+        # Corresponds to the JSON property `totalIpAddressesReturned`
+        # @return [Fixnum]
+        attr_accessor :total_ip_addresses_returned
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @hostname = args[:hostname] if args.key?(:hostname)
+          @ip_addresses = args[:ip_addresses] if args.key?(:ip_addresses)
+          @package_name = args[:package_name] if args.key?(:package_name)
+          @total_ip_addresses_returned = args[:total_ip_addresses_returned] if args.key?(:total_ip_addresses_returned)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1297,8 +1874,14 @@ module Google
         # @return [String]
         attr_accessor :allow_personal_usage
       
-        # The length of time the enrollment token is valid, ranging from 1 minute to 90
-        # days. If not specified, the default duration is 1 hour.
+        # The length of time the enrollment token is valid, ranging from 1 minute to
+        # Durations.MAX_VALUE (https://developers.google.com/protocol-buffers/docs/
+        # reference/java/com/google/protobuf/util/Durations.html#MAX_VALUE),
+        # approximately 10,000 years. If not specified, the default duration is 1 hour.
+        # Please note that if requested duration causes the resulting
+        # expiration_timestamp to exceed Timestamps.MAX_VALUE (https://developers.google.
+        # com/protocol-buffers/docs/reference/java/com/google/protobuf/util/Timestamps.
+        # html#MAX_VALUE), then expiration_timestamp is coerced to Timestamps.MAX_VALUE.
         # Corresponds to the JSON property `duration`
         # @return [String]
         attr_accessor :duration
@@ -1392,7 +1975,8 @@ module Google
         # @return [Array<String>]
         attr_accessor :enabled_notification_types
       
-        # The name of the enterprise displayed to users.
+        # The name of the enterprise displayed to users. This field has a maximum length
+        # of 100 characters.
         # Corresponds to the JSON property `enterpriseDisplayName`
         # @return [String]
         attr_accessor :enterprise_display_name
@@ -1417,9 +2001,9 @@ module Google
         # @return [Fixnum]
         attr_accessor :primary_color
       
-        # The topic that Cloud Pub/Sub notifications are published to, in the form
-        # projects/`project`/topics/`topic`. This field is only required if Pub/Sub
-        # notifications are enabled.
+        # The topic which Pub/Sub notifications are published to, in the form projects/`
+        # project`/topics/`topic`. This field is only required if Pub/Sub notifications
+        # are enabled.
         # Corresponds to the JSON property `pubsubTopic`
         # @return [String]
         attr_accessor :pubsub_topic
@@ -1455,7 +2039,14 @@ module Google
       end
       
       # Configuration to enable an app as an extension app, with the capability of
-      # interacting with Android Device Policy offline.
+      # interacting with Android Device Policy offline. For Android versions 13 and
+      # above, extension apps are exempt from battery restrictions so will not be
+      # placed into the restricted App Standby Bucket (https://developer.android.com/
+      # topic/performance/appstandby#restricted-bucket). Extensions apps are also
+      # protected against users clearing their data or force-closing the application,
+      # although admins can continue to use the clear app data command (https://
+      # developer.android.com/management/reference/rest/v1/enterprises.devices/
+      # issueCommand#CommandType) on extension apps if needed for Android 13 and above.
       class ExtensionConfig
         include Google::Apis::Core::Hashable
       
@@ -1465,7 +2056,7 @@ module Google
         # @return [String]
         attr_accessor :notification_receiver
       
-        # Hex-encoded SHA256 hash of the signing certificate of the extension app. Only
+        # Hex-encoded SHA-256 hash of the signing certificate of the extension app. Only
         # hexadecimal string representations of 64 characters are valid.If not specified,
         # the signature for the corresponding package name is obtained from the Play
         # Store instead.If this list is empty, the signature of the extension app on the
@@ -1519,6 +2110,44 @@ module Google
         end
       end
       
+      # A file was downloaded from the device.
+      class FilePulledEvent
+        include Google::Apis::Core::Hashable
+      
+        # The path of the file being pulled.
+        # Corresponds to the JSON property `filePath`
+        # @return [String]
+        attr_accessor :file_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_path = args[:file_path] if args.key?(:file_path)
+        end
+      end
+      
+      # A file was uploaded onto the device.
+      class FilePushedEvent
+        include Google::Apis::Core::Hashable
+      
+        # The path of the file being pushed.
+        # Corresponds to the JSON property `filePath`
+        # @return [String]
+        attr_accessor :file_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_path = args[:file_path] if args.key?(:file_path)
+        end
+      end
+      
       # A system freeze period. When a device’s clock is within the freeze period, all
       # incoming system updates (including security patches) are blocked and won’t be
       # installed. When a device is outside the freeze period, normal update behavior
@@ -1527,18 +2156,20 @@ module Google
       # period will start or end on Feb. 28th instead. * When a device’s system clock
       # reads Feb. 29th, it’s treated as Feb. 28th. * When calculating the number of
       # days in a freeze period or the time between two freeze periods, Feb. 29th is
-      # ignored and not counted as a day.
+      # ignored and not counted as a day.Note: For Freeze Periods to take effect,
+      # SystemUpdateType cannot be specified as SYSTEM_UPDATE_TYPE_UNSPECIFIED,
+      # because freeze periods require a defined policy to be specified.
       class FreezePeriod
         include Google::Apis::Core::Hashable
       
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: A full date, with non-zero year, month, and day values A month and
-        # day value, with a zero year, such as an anniversary A year on its own, with
-        # zero month and day values A year and month value, with a zero day, such as a
-        # credit card expiration dateRelated types are google.type.TimeOfDay and google.
-        # protobuf.Timestamp.
+        # following: A full date, with non-zero year, month, and day values. A month and
+        # day, with a zero year (for example, an anniversary). A year on its own, with a
+        # zero month and a zero day. A year and month, with a zero day (for example, a
+        # credit card expiration date).Related types: google.type.TimeOfDay google.type.
+        # DateTime google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::AndroidmanagementV1::Date]
         attr_accessor :end_date
@@ -1546,11 +2177,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: A full date, with non-zero year, month, and day values A month and
-        # day value, with a zero year, such as an anniversary A year on its own, with
-        # zero month and day values A year and month value, with a zero day, such as a
-        # credit card expiration dateRelated types are google.type.TimeOfDay and google.
-        # protobuf.Timestamp.
+        # following: A full date, with non-zero year, month, and day values. A month and
+        # day, with a zero year (for example, an anniversary). A year on its own, with a
+        # zero month and a zero day. A year and month, with a zero day (for example, a
+        # credit card expiration date).Related types: google.type.TimeOfDay google.type.
+        # DateTime google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::AndroidmanagementV1::Date]
         attr_accessor :start_date
@@ -1604,6 +2235,15 @@ module Google
         # @return [String]
         attr_accessor :device_baseband_version
       
+        # Output only. ID that uniquely identifies a personally-owned device in a
+        # particular organization. On the same physical device when enrolled with the
+        # same organization, this ID persists across setups and even factory resets.
+        # This ID is available on personally-owned devices with a work profile on
+        # devices running Android 12 and above.
+        # Corresponds to the JSON property `enterpriseSpecificId`
+        # @return [String]
+        attr_accessor :enterprise_specific_id
+      
         # GPU shutdown temperature thresholds in Celsius for each GPU on the device.
         # Corresponds to the JSON property `gpuShutdownTemperatures`
         # @return [Array<Float>]
@@ -1656,6 +2296,7 @@ module Google
           @cpu_shutdown_temperatures = args[:cpu_shutdown_temperatures] if args.key?(:cpu_shutdown_temperatures)
           @cpu_throttling_temperatures = args[:cpu_throttling_temperatures] if args.key?(:cpu_throttling_temperatures)
           @device_baseband_version = args[:device_baseband_version] if args.key?(:device_baseband_version)
+          @enterprise_specific_id = args[:enterprise_specific_id] if args.key?(:enterprise_specific_id)
           @gpu_shutdown_temperatures = args[:gpu_shutdown_temperatures] if args.key?(:gpu_shutdown_temperatures)
           @gpu_throttling_temperatures = args[:gpu_throttling_temperatures] if args.key?(:gpu_throttling_temperatures)
           @hardware = args[:hardware] if args.key?(:hardware)
@@ -1739,6 +2380,140 @@ module Google
         end
       end
       
+      # A cryptographic key including user installed, admin installed and system
+      # maintained private key is removed from the device either by the user or
+      # management. This is available device-wide on fully managed devices and within
+      # the work profile on organization-owned devices with a work profile.
+      class KeyDestructionEvent
+        include Google::Apis::Core::Hashable
+      
+        # UID of the application which owns the key.
+        # Corresponds to the JSON property `applicationUid`
+        # @return [Fixnum]
+        attr_accessor :application_uid
+      
+        # Alias of the key.
+        # Corresponds to the JSON property `keyAlias`
+        # @return [String]
+        attr_accessor :key_alias
+      
+        # Whether the operation was successful.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @application_uid = args[:application_uid] if args.key?(:application_uid)
+          @key_alias = args[:key_alias] if args.key?(:key_alias)
+          @success = args[:success] if args.key?(:success)
+        end
+      end
+      
+      # A cryptographic key including user installed, admin installed and system
+      # maintained private key is installed on the device either by the user or
+      # management.This is available device-wide on fully managed devices and within
+      # the work profile on organization-owned devices with a work profile.
+      class KeyGeneratedEvent
+        include Google::Apis::Core::Hashable
+      
+        # UID of the application which generated the key.
+        # Corresponds to the JSON property `applicationUid`
+        # @return [Fixnum]
+        attr_accessor :application_uid
+      
+        # Alias of the key.
+        # Corresponds to the JSON property `keyAlias`
+        # @return [String]
+        attr_accessor :key_alias
+      
+        # Whether the operation was successful.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @application_uid = args[:application_uid] if args.key?(:application_uid)
+          @key_alias = args[:key_alias] if args.key?(:key_alias)
+          @success = args[:success] if args.key?(:success)
+        end
+      end
+      
+      # A cryptographic key including user installed, admin installed and system
+      # maintained private key is imported on the device either by the user or
+      # management. This is available device-wide on fully managed devices and within
+      # the work profile on organization-owned devices with a work profile.
+      class KeyImportEvent
+        include Google::Apis::Core::Hashable
+      
+        # UID of the application which imported the key
+        # Corresponds to the JSON property `applicationUid`
+        # @return [Fixnum]
+        attr_accessor :application_uid
+      
+        # Alias of the key.
+        # Corresponds to the JSON property `keyAlias`
+        # @return [String]
+        attr_accessor :key_alias
+      
+        # Whether the operation was successful.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @application_uid = args[:application_uid] if args.key?(:application_uid)
+          @key_alias = args[:key_alias] if args.key?(:key_alias)
+          @success = args[:success] if args.key?(:success)
+        end
+      end
+      
+      # A cryptographic key including user installed, admin installed and system
+      # maintained private key is determined to be corrupted due to storage corruption,
+      # hardware failure or some OS issue. This is available device-wide on fully
+      # managed devices and within the work profile on organization-owned devices with
+      # a work profile.
+      class KeyIntegrityViolationEvent
+        include Google::Apis::Core::Hashable
+      
+        # UID of the application which owns the key
+        # Corresponds to the JSON property `applicationUid`
+        # @return [Fixnum]
+        attr_accessor :application_uid
+      
+        # Alias of the key.
+        # Corresponds to the JSON property `keyAlias`
+        # @return [String]
+        attr_accessor :key_alias
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @application_uid = args[:application_uid] if args.key?(:application_uid)
+          @key_alias = args[:key_alias] if args.key?(:key_alias)
+        end
+      end
+      
       # Keyed app state reported by the app.
       class KeyedAppState
         include Google::Apis::Core::Hashable
@@ -1791,6 +2566,60 @@ module Google
           @last_update_time = args[:last_update_time] if args.key?(:last_update_time)
           @message = args[:message] if args.key?(:message)
           @severity = args[:severity] if args.key?(:severity)
+        end
+      end
+      
+      # An attempt was made to unlock the device.
+      class KeyguardDismissAuthAttemptEvent
+        include Google::Apis::Core::Hashable
+      
+        # Whether a strong form of authentication (password, PIN, or pattern) was used
+        # to unlock device.
+        # Corresponds to the JSON property `strongAuthMethodUsed`
+        # @return [Boolean]
+        attr_accessor :strong_auth_method_used
+        alias_method :strong_auth_method_used?, :strong_auth_method_used
+      
+        # Whether the unlock attempt was successful.
+        # Corresponds to the JSON property `success`
+        # @return [Boolean]
+        attr_accessor :success
+        alias_method :success?, :success
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @strong_auth_method_used = args[:strong_auth_method_used] if args.key?(:strong_auth_method_used)
+          @success = args[:success] if args.key?(:success)
+        end
+      end
+      
+      # The keyguard was dismissed. Intentionally empty.
+      class KeyguardDismissedEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # The device was locked either by user or timeout. Intentionally empty.
+      class KeyguardSecuredEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -1883,6 +2712,31 @@ module Google
         # Update properties of this object
         def update!(**args)
           @devices = args[:devices] if args.key?(:devices)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response to a request to list enrollment tokens for a given enterprise.
+      class ListEnrollmentTokensResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of enrollment tokens.
+        # Corresponds to the JSON property `enrollmentTokens`
+        # @return [Array<Google::Apis::AndroidmanagementV1::EnrollmentToken>]
+        attr_accessor :enrollment_tokens
+      
+        # If there are more results, a token to retrieve next page of results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enrollment_tokens = args[:enrollment_tokens] if args.key?(:enrollment_tokens)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -1984,6 +2838,46 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @web_apps = args[:web_apps] if args.key?(:web_apps)
+        end
+      end
+      
+      # The usageLog buffer on the device has reached 90% of its capacity, therefore
+      # older events may be dropped. Intentionally empty.
+      class LogBufferSizeCriticalEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # usageLog policy has been enabled. Intentionally empty.
+      class LoggingStartedEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # usageLog policy has been disabled. Intentionally empty.
+      class LoggingStoppedEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -2096,6 +2990,58 @@ module Google
         def update!(**args)
           @name = args[:name] if args.key?(:name)
           @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Removable media was mounted.
+      class MediaMountEvent
+        include Google::Apis::Core::Hashable
+      
+        # Mount point.
+        # Corresponds to the JSON property `mountPoint`
+        # @return [String]
+        attr_accessor :mount_point
+      
+        # Volume label. Redacted to empty string on organization-owned managed profile
+        # devices.
+        # Corresponds to the JSON property `volumeLabel`
+        # @return [String]
+        attr_accessor :volume_label
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @mount_point = args[:mount_point] if args.key?(:mount_point)
+          @volume_label = args[:volume_label] if args.key?(:volume_label)
+        end
+      end
+      
+      # Removable media was unmounted.
+      class MediaUnmountEvent
+        include Google::Apis::Core::Hashable
+      
+        # Mount point.
+        # Corresponds to the JSON property `mountPoint`
+        # @return [String]
+        attr_accessor :mount_point
+      
+        # Volume label. Redacted to empty string on organization-owned managed profile
+        # devices.
+        # Corresponds to the JSON property `volumeLabel`
+        # @return [String]
+        attr_accessor :volume_label
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @mount_point = args[:mount_point] if args.key?(:mount_point)
+          @volume_label = args[:volume_label] if args.key?(:volume_label)
         end
       end
       
@@ -2244,6 +3190,16 @@ module Google
         # @return [String]
         attr_accessor :setting_name
       
+        # Additional context for SpecificNonComplianceReason.
+        # Corresponds to the JSON property `specificNonComplianceContext`
+        # @return [Google::Apis::AndroidmanagementV1::SpecificNonComplianceContext]
+        attr_accessor :specific_non_compliance_context
+      
+        # The policy-specific reason the device is not in compliance with the setting.
+        # Corresponds to the JSON property `specificNonComplianceReason`
+        # @return [String]
+        attr_accessor :specific_non_compliance_reason
+      
         def initialize(**args)
            update!(**args)
         end
@@ -2256,6 +3212,8 @@ module Google
           @non_compliance_reason = args[:non_compliance_reason] if args.key?(:non_compliance_reason)
           @package_name = args[:package_name] if args.key?(:package_name)
           @setting_name = args[:setting_name] if args.key?(:setting_name)
+          @specific_non_compliance_context = args[:specific_non_compliance_context] if args.key?(:specific_non_compliance_context)
+          @specific_non_compliance_reason = args[:specific_non_compliance_reason] if args.key?(:specific_non_compliance_reason)
         end
       end
       
@@ -2322,6 +3280,25 @@ module Google
         end
       end
       
+      # Additional context for non-compliance related to Wi-Fi configuration.
+      class OncWifiContext
+        include Google::Apis::Core::Hashable
+      
+        # The GUID of non-compliant Wi-Fi configuration.
+        # Corresponds to the JSON property `wifiGuid`
+        # @return [String]
+        attr_accessor :wifi_guid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @wifi_guid = args[:wifi_guid] if args.key?(:wifi_guid)
+        end
+      end
+      
       # This resource represents a long-running operation that is the result of a
       # network API call.
       class Operation
@@ -2384,6 +3361,44 @@ module Google
         end
       end
       
+      # Device was shutdown. Intentionally empty.
+      class OsShutdownEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Device was started.
+      class OsStartupEvent
+        include Google::Apis::Core::Hashable
+      
+        # Verified Boot state.
+        # Corresponds to the JSON property `verifiedBootState`
+        # @return [String]
+        attr_accessor :verified_boot_state
+      
+        # dm-verity mode.
+        # Corresponds to the JSON property `verityMode`
+        # @return [String]
+        attr_accessor :verity_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @verified_boot_state = args[:verified_boot_state] if args.key?(:verified_boot_state)
+          @verity_mode = args[:verity_mode] if args.key?(:verity_mode)
+        end
+      end
+      
       # A list of package names.
       class PackageNameList
         include Google::Apis::Core::Hashable
@@ -2400,6 +3415,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @package_names = args[:package_names] if args.key?(:package_names)
+        end
+      end
+      
+      # Additional context for non-compliance related to password policies.
+      class PasswordPoliciesContext
+        include Google::Apis::Core::Hashable
+      
+        # The scope of non-compliant password.
+        # Corresponds to the JSON property `passwordPolicyScope`
+        # @return [String]
+        attr_accessor :password_policy_scope
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @password_policy_scope = args[:password_policy_scope] if args.key?(:password_policy_scope)
         end
       end
       
@@ -2487,6 +3521,16 @@ module Google
         # @return [String]
         attr_accessor :require_password_unlock
       
+        # Controls whether a unified lock is allowed for the device and the work profile,
+        # on devices running Android 9 and above with a work profile. This can be set
+        # only if password_scope is set to SCOPE_PROFILE, the policy will be rejected
+        # otherwise. If user has not set a separate work lock and this field is set to
+        # REQUIRE_SEPARATE_WORK_LOCK, a NonComplianceDetail is reported with
+        # nonComplianceReason set to USER_ACTION.
+        # Corresponds to the JSON property `unifiedLockSettings`
+        # @return [String]
+        attr_accessor :unified_lock_settings
+      
         def initialize(**args)
            update!(**args)
         end
@@ -2506,6 +3550,26 @@ module Google
           @password_quality = args[:password_quality] if args.key?(:password_quality)
           @password_scope = args[:password_scope] if args.key?(:password_scope)
           @require_password_unlock = args[:require_password_unlock] if args.key?(:require_password_unlock)
+          @unified_lock_settings = args[:unified_lock_settings] if args.key?(:unified_lock_settings)
+        end
+      end
+      
+      # The result of an attempt to clear the data of a single app.
+      class PerAppResult
+        include Google::Apis::Core::Hashable
+      
+        # The result of an attempt to clear the data of a single app.
+        # Corresponds to the JSON property `clearingResult`
+        # @return [String]
+        attr_accessor :clearing_result
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @clearing_result = args[:clearing_result] if args.key?(:clearing_result)
         end
       end
       
@@ -2613,7 +3677,7 @@ module Google
         # @return [Array<String>]
         attr_accessor :account_types_with_management_disabled
       
-        # Whether camera is disabled.
+        # If true, the camera is disabled on the personal profile.
         # Corresponds to the JSON property `cameraDisabled`
         # @return [Boolean]
         attr_accessor :camera_disabled
@@ -2636,7 +3700,7 @@ module Google
         # @return [String]
         attr_accessor :personal_play_store_mode
       
-        # Whether screen capture is disabled.
+        # If true, screen capture is disabled for all users.
         # Corresponds to the JSON property `screenCaptureDisabled`
         # @return [Boolean]
         attr_accessor :screen_capture_disabled
@@ -2679,9 +3743,8 @@ module Google
         attr_accessor :adjust_volume_disabled
         alias_method :adjust_volume_disabled?, :adjust_volume_disabled
       
-        # Security policies set to the most secure values by default. To maintain the
-        # security posture of a device, we don't recommend overriding any of the default
-        # values.
+        # Security policies set to secure values by default. To maintain the security
+        # posture of a device, we don't recommend overriding any of the default values.
         # Corresponds to the JSON property `advancedSecurityOverrides`
         # @return [Google::Apis::AndroidmanagementV1::AdvancedSecurityOverrides]
         attr_accessor :advanced_security_overrides
@@ -2753,7 +3816,18 @@ module Google
         attr_accessor :bluetooth_disabled
         alias_method :bluetooth_disabled?, :bluetooth_disabled
       
-        # Whether all cameras on the device are disabled.
+        # Controls the use of the camera and whether the user has access to the camera
+        # access toggle.
+        # Corresponds to the JSON property `cameraAccess`
+        # @return [String]
+        attr_accessor :camera_access
+      
+        # If camera_access is set to any value other than CAMERA_ACCESS_UNSPECIFIED,
+        # this has no effect. Otherwise this field controls whether cameras are disabled:
+        # If true, all cameras are disabled, otherwise they are available. For fully
+        # managed devices this field applies for all apps on the device. For work
+        # profiles, this field applies only to apps in the work profile, and the camera
+        # access of apps outside the work profile is unaffected.
         # Corresponds to the JSON property `cameraDisabled`
         # @return [Boolean]
         attr_accessor :camera_disabled
@@ -2863,7 +3937,8 @@ module Google
         attr_accessor :install_unknown_sources_allowed
         alias_method :install_unknown_sources_allowed?, :install_unknown_sources_allowed
       
-        # Whether the keyguard is disabled.
+        # If true, this disables the Lock Screen (https://source.android.com/docs/core/
+        # display/multi_display/lock-screen) for primary and/or secondary displays.
         # Corresponds to the JSON property `keyguardDisabled`
         # @return [Boolean]
         attr_accessor :keyguard_disabled
@@ -2906,6 +3981,12 @@ module Google
         # Corresponds to the JSON property `maximumTimeToLock`
         # @return [Fixnum]
         attr_accessor :maximum_time_to_lock
+      
+        # Controls the use of the microphone and whether the user has access to the
+        # microphone access toggle. This applies only on fully managed devices.
+        # Corresponds to the JSON property `microphoneAccess`
+        # @return [String]
+        attr_accessor :microphone_access
       
         # The minimum allowed Android API level.
         # Corresponds to the JSON property `minimumApiLevel`
@@ -3029,6 +4110,16 @@ module Google
         # @return [Array<Google::Apis::AndroidmanagementV1::PolicyEnforcementRule>]
         attr_accessor :policy_enforcement_rules
       
+        # Controls whether preferential network service is enabled on the work profile.
+        # For example, an organization may have an agreement with a carrier that all of
+        # the work data from its employees' devices will be sent via a network service
+        # dedicated for enterprise use. An example of a supported preferential network
+        # service is the enterprise slice on 5G networks. This has no effect on fully
+        # managed devices.
+        # Corresponds to the JSON property `preferentialNetworkService`
+        # @return [String]
+        attr_accessor :preferential_network_service
+      
         # Allows showing UI on a device for a user to choose a private key alias if
         # there are no matching rules in ChoosePrivateKeyRules. For devices below
         # Android P, setting this may leave enterprise keys vulnerable.
@@ -3073,12 +4164,13 @@ module Google
         attr_accessor :set_wallpaper_disabled
         alias_method :set_wallpaper_disabled?, :set_wallpaper_disabled
       
-        # Actions to take during the setup process.
+        # Action to take during the setup process. At most one action may be specified.
         # Corresponds to the JSON property `setupActions`
         # @return [Array<Google::Apis::AndroidmanagementV1::SetupAction>]
         attr_accessor :setup_actions
       
-        # Whether location sharing is disabled.
+        # Whether location sharing is disabled. share_location_disabled is supported for
+        # both fully managed devices and personally owned work profiles.
         # Corresponds to the JSON property `shareLocationDisabled`
         # @return [Boolean]
         attr_accessor :share_location_disabled
@@ -3136,19 +4228,32 @@ module Google
         attr_accessor :tethering_config_disabled
         alias_method :tethering_config_disabled?, :tethering_config_disabled
       
-        # Whether user uninstallation of applications is disabled.
+        # Whether user uninstallation of applications is disabled. This prevents apps
+        # from being uninstalled, even those removed using applications
         # Corresponds to the JSON property `uninstallAppsDisabled`
         # @return [Boolean]
         attr_accessor :uninstall_apps_disabled
         alias_method :uninstall_apps_disabled?, :uninstall_apps_disabled
       
-        # Whether the microphone is muted and adjusting microphone volume is disabled.
+        # If microphone_access is set to any value other than
+        # MICROPHONE_ACCESS_UNSPECIFIED, this has no effect. Otherwise this field
+        # controls whether microphones are disabled: If true, all microphones are
+        # disabled, otherwise they are available. This is available only on fully
+        # managed devices.
         # Corresponds to the JSON property `unmuteMicrophoneDisabled`
         # @return [Boolean]
         attr_accessor :unmute_microphone_disabled
         alias_method :unmute_microphone_disabled?, :unmute_microphone_disabled
       
-        # Whether transferring files over USB is disabled.
+        # Controls types of device activity logs collected from the device and reported
+        # via Pub/Sub notification (https://developers.google.com/android/management/
+        # notifications).
+        # Corresponds to the JSON property `usageLog`
+        # @return [Google::Apis::AndroidmanagementV1::UsageLog]
+        attr_accessor :usage_log
+      
+        # Whether transferring files over USB is disabled. This is supported only on
+        # company-owned devices.
         # Corresponds to the JSON property `usbFileTransferDisabled`
         # @return [Boolean]
         attr_accessor :usb_file_transfer_disabled
@@ -3172,7 +4277,7 @@ module Google
         attr_accessor :vpn_config_disabled
         alias_method :vpn_config_disabled?, :vpn_config_disabled
       
-        # Whether configuring Wi-Fi access points is disabled.Note: If a network
+        # Whether configuring Wi-Fi access points is disabled. Note: If a network
         # connection can't be made at boot time and configuring Wi-Fi is disabled then
         # network escape hatch will be shown in order to refresh the device policy (see
         # networkEscapeHatchEnabled).
@@ -3207,6 +4312,7 @@ module Google
           @bluetooth_config_disabled = args[:bluetooth_config_disabled] if args.key?(:bluetooth_config_disabled)
           @bluetooth_contact_sharing_disabled = args[:bluetooth_contact_sharing_disabled] if args.key?(:bluetooth_contact_sharing_disabled)
           @bluetooth_disabled = args[:bluetooth_disabled] if args.key?(:bluetooth_disabled)
+          @camera_access = args[:camera_access] if args.key?(:camera_access)
           @camera_disabled = args[:camera_disabled] if args.key?(:camera_disabled)
           @cell_broadcasts_config_disabled = args[:cell_broadcasts_config_disabled] if args.key?(:cell_broadcasts_config_disabled)
           @choose_private_key_rules = args[:choose_private_key_rules] if args.key?(:choose_private_key_rules)
@@ -3232,6 +4338,7 @@ module Google
           @location_mode = args[:location_mode] if args.key?(:location_mode)
           @long_support_message = args[:long_support_message] if args.key?(:long_support_message)
           @maximum_time_to_lock = args[:maximum_time_to_lock] if args.key?(:maximum_time_to_lock)
+          @microphone_access = args[:microphone_access] if args.key?(:microphone_access)
           @minimum_api_level = args[:minimum_api_level] if args.key?(:minimum_api_level)
           @mobile_networks_config_disabled = args[:mobile_networks_config_disabled] if args.key?(:mobile_networks_config_disabled)
           @modify_accounts_disabled = args[:modify_accounts_disabled] if args.key?(:modify_accounts_disabled)
@@ -3252,6 +4359,7 @@ module Google
           @personal_usage_policies = args[:personal_usage_policies] if args.key?(:personal_usage_policies)
           @play_store_mode = args[:play_store_mode] if args.key?(:play_store_mode)
           @policy_enforcement_rules = args[:policy_enforcement_rules] if args.key?(:policy_enforcement_rules)
+          @preferential_network_service = args[:preferential_network_service] if args.key?(:preferential_network_service)
           @private_key_selection_enabled = args[:private_key_selection_enabled] if args.key?(:private_key_selection_enabled)
           @recommended_global_proxy = args[:recommended_global_proxy] if args.key?(:recommended_global_proxy)
           @remove_user_disabled = args[:remove_user_disabled] if args.key?(:remove_user_disabled)
@@ -3271,6 +4379,7 @@ module Google
           @tethering_config_disabled = args[:tethering_config_disabled] if args.key?(:tethering_config_disabled)
           @uninstall_apps_disabled = args[:uninstall_apps_disabled] if args.key?(:uninstall_apps_disabled)
           @unmute_microphone_disabled = args[:unmute_microphone_disabled] if args.key?(:unmute_microphone_disabled)
+          @usage_log = args[:usage_log] if args.key?(:usage_log)
           @usb_file_transfer_disabled = args[:usb_file_transfer_disabled] if args.key?(:usb_file_transfer_disabled)
           @usb_mass_storage_enabled = args[:usb_mass_storage_enabled] if args.key?(:usb_mass_storage_enabled)
           @version = args[:version] if args.key?(:version)
@@ -3298,7 +4407,7 @@ module Google
         # @return [String]
         attr_accessor :setting_name
       
-        # An action to reset a fully managed device or delete a work profile. Note:
+        # An action to reset a company owned device or delete a work profile. Note:
         # blockAction must also be specified.
         # Corresponds to the JSON property `wipeAction`
         # @return [Google::Apis::AndroidmanagementV1::WipeAction]
@@ -3410,6 +4519,37 @@ module Google
           @host = args[:host] if args.key?(:host)
           @pac_uri = args[:pac_uri] if args.key?(:pac_uri)
           @port = args[:port] if args.key?(:port)
+        end
+      end
+      
+      # The device or profile has been remotely locked via the LOCK command.
+      class RemoteLockEvent
+        include Google::Apis::Core::Hashable
+      
+        # Package name of the admin app requesting the change.
+        # Corresponds to the JSON property `adminPackageName`
+        # @return [String]
+        attr_accessor :admin_package_name
+      
+        # User ID of the admin app from the which the change was requested.
+        # Corresponds to the JSON property `adminUserId`
+        # @return [Fixnum]
+        attr_accessor :admin_user_id
+      
+        # User ID in which the change was requested in.
+        # Corresponds to the JSON property `targetUserId`
+        # @return [Fixnum]
+        attr_accessor :target_user_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @admin_package_name = args[:admin_package_name] if args.key?(:admin_package_name)
+          @admin_user_id = args[:admin_user_id] if args.key?(:admin_user_id)
+          @target_user_id = args[:target_user_id] if args.key?(:target_user_id)
         end
       end
       
@@ -3630,6 +4770,31 @@ module Google
           @primary_language_code = args[:primary_language_code] if args.key?(:primary_language_code)
           @security_patch_level = args[:security_patch_level] if args.key?(:security_patch_level)
           @system_update_info = args[:system_update_info] if args.key?(:system_update_info)
+        end
+      end
+      
+      # Additional context for SpecificNonComplianceReason.
+      class SpecificNonComplianceContext
+        include Google::Apis::Core::Hashable
+      
+        # Additional context for non-compliance related to Wi-Fi configuration.
+        # Corresponds to the JSON property `oncWifiContext`
+        # @return [Google::Apis::AndroidmanagementV1::OncWifiContext]
+        attr_accessor :onc_wifi_context
+      
+        # Additional context for non-compliance related to password policies.
+        # Corresponds to the JSON property `passwordPoliciesContext`
+        # @return [Google::Apis::AndroidmanagementV1::PasswordPoliciesContext]
+        attr_accessor :password_policies_context
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @onc_wifi_context = args[:onc_wifi_context] if args.key?(:onc_wifi_context)
+          @password_policies_context = args[:password_policies_context] if args.key?(:password_policies_context)
         end
       end
       
@@ -3891,6 +5056,256 @@ module Google
         end
       end
       
+      # Controls types of device activity logs collected from the device and reported
+      # via Pub/Sub notification (https://developers.google.com/android/management/
+      # notifications).
+      class UsageLog
+        include Google::Apis::Core::Hashable
+      
+        # Specifies which log types are enabled. Note that users will receive on-device
+        # messaging when usage logging is enabled.
+        # Corresponds to the JSON property `enabledLogTypes`
+        # @return [Array<String>]
+        attr_accessor :enabled_log_types
+      
+        # Specifies which of the enabled log types can be uploaded over mobile data. By
+        # default logs are queued for upload when the device connects to WiFi.
+        # Corresponds to the JSON property `uploadOnCellularAllowed`
+        # @return [Array<String>]
+        attr_accessor :upload_on_cellular_allowed
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enabled_log_types = args[:enabled_log_types] if args.key?(:enabled_log_types)
+          @upload_on_cellular_allowed = args[:upload_on_cellular_allowed] if args.key?(:upload_on_cellular_allowed)
+        end
+      end
+      
+      # An event logged on the device.
+      class UsageLogEvent
+        include Google::Apis::Core::Hashable
+      
+        # A shell command was issued over ADB via “adb shell command”.
+        # Corresponds to the JSON property `adbShellCommandEvent`
+        # @return [Google::Apis::AndroidmanagementV1::AdbShellCommandEvent]
+        attr_accessor :adb_shell_command_event
+      
+        # An ADB interactive shell was opened via “adb shell”. Intentionally empty.
+        # Corresponds to the JSON property `adbShellInteractiveEvent`
+        # @return [Google::Apis::AndroidmanagementV1::AdbShellInteractiveEvent]
+        attr_accessor :adb_shell_interactive_event
+      
+        # An app process was started. This is available device-wide on fully managed
+        # devices and within the work profile on organization-owned devices with a work
+        # profile.
+        # Corresponds to the JSON property `appProcessStartEvent`
+        # @return [Google::Apis::AndroidmanagementV1::AppProcessStartEvent]
+        attr_accessor :app_process_start_event
+      
+        # A new root certificate was installed into the system's trusted credential
+        # storage. This is available device-wide on fully managed devices and within the
+        # work profile on organization-owned devices with a work profile.
+        # Corresponds to the JSON property `certAuthorityInstalledEvent`
+        # @return [Google::Apis::AndroidmanagementV1::CertAuthorityInstalledEvent]
+        attr_accessor :cert_authority_installed_event
+      
+        # A root certificate was removed from the system's trusted credential storage.
+        # This is available device-wide on fully managed devices and within the work
+        # profile on organization-owned devices with a work profile.
+        # Corresponds to the JSON property `certAuthorityRemovedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::CertAuthorityRemovedEvent]
+        attr_accessor :cert_authority_removed_event
+      
+        # An X.509v3 certificate failed to validate, currently this validation is
+        # performed on the Wi-FI access point and failure may be due to a mismatch upon
+        # server certificate validation. However it may in the future include other
+        # validation events of an X.509v3 certificate.
+        # Corresponds to the JSON property `certValidationFailureEvent`
+        # @return [Google::Apis::AndroidmanagementV1::CertValidationFailureEvent]
+        attr_accessor :cert_validation_failure_event
+      
+        # A TCP connect event was initiated through the standard network stack.
+        # Corresponds to the JSON property `connectEvent`
+        # @return [Google::Apis::AndroidmanagementV1::ConnectEvent]
+        attr_accessor :connect_event
+      
+        # Validates whether Android’s built-in cryptographic library (BoringSSL) is
+        # valid. Should always succeed on device boot, if it fails, the device should be
+        # considered untrusted.
+        # Corresponds to the JSON property `cryptoSelfTestCompletedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::CryptoSelfTestCompletedEvent]
+        attr_accessor :crypto_self_test_completed_event
+      
+        # A DNS lookup event was initiated through the standard network stack.
+        # Corresponds to the JSON property `dnsEvent`
+        # @return [Google::Apis::AndroidmanagementV1::DnsEvent]
+        attr_accessor :dns_event
+      
+        # Unique id of the event.
+        # Corresponds to the JSON property `eventId`
+        # @return [Fixnum]
+        attr_accessor :event_id
+      
+        # Device timestamp when the event was logged.
+        # Corresponds to the JSON property `eventTime`
+        # @return [String]
+        attr_accessor :event_time
+      
+        # The particular usage log event type that was reported on the device. Use this
+        # to determine which event field to access.
+        # Corresponds to the JSON property `eventType`
+        # @return [String]
+        attr_accessor :event_type
+      
+        # A file was downloaded from the device.
+        # Corresponds to the JSON property `filePulledEvent`
+        # @return [Google::Apis::AndroidmanagementV1::FilePulledEvent]
+        attr_accessor :file_pulled_event
+      
+        # A file was uploaded onto the device.
+        # Corresponds to the JSON property `filePushedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::FilePushedEvent]
+        attr_accessor :file_pushed_event
+      
+        # A cryptographic key including user installed, admin installed and system
+        # maintained private key is removed from the device either by the user or
+        # management. This is available device-wide on fully managed devices and within
+        # the work profile on organization-owned devices with a work profile.
+        # Corresponds to the JSON property `keyDestructionEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyDestructionEvent]
+        attr_accessor :key_destruction_event
+      
+        # A cryptographic key including user installed, admin installed and system
+        # maintained private key is installed on the device either by the user or
+        # management.This is available device-wide on fully managed devices and within
+        # the work profile on organization-owned devices with a work profile.
+        # Corresponds to the JSON property `keyGeneratedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyGeneratedEvent]
+        attr_accessor :key_generated_event
+      
+        # A cryptographic key including user installed, admin installed and system
+        # maintained private key is imported on the device either by the user or
+        # management. This is available device-wide on fully managed devices and within
+        # the work profile on organization-owned devices with a work profile.
+        # Corresponds to the JSON property `keyImportEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyImportEvent]
+        attr_accessor :key_import_event
+      
+        # A cryptographic key including user installed, admin installed and system
+        # maintained private key is determined to be corrupted due to storage corruption,
+        # hardware failure or some OS issue. This is available device-wide on fully
+        # managed devices and within the work profile on organization-owned devices with
+        # a work profile.
+        # Corresponds to the JSON property `keyIntegrityViolationEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyIntegrityViolationEvent]
+        attr_accessor :key_integrity_violation_event
+      
+        # An attempt was made to unlock the device.
+        # Corresponds to the JSON property `keyguardDismissAuthAttemptEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyguardDismissAuthAttemptEvent]
+        attr_accessor :keyguard_dismiss_auth_attempt_event
+      
+        # The keyguard was dismissed. Intentionally empty.
+        # Corresponds to the JSON property `keyguardDismissedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyguardDismissedEvent]
+        attr_accessor :keyguard_dismissed_event
+      
+        # The device was locked either by user or timeout. Intentionally empty.
+        # Corresponds to the JSON property `keyguardSecuredEvent`
+        # @return [Google::Apis::AndroidmanagementV1::KeyguardSecuredEvent]
+        attr_accessor :keyguard_secured_event
+      
+        # The usageLog buffer on the device has reached 90% of its capacity, therefore
+        # older events may be dropped. Intentionally empty.
+        # Corresponds to the JSON property `logBufferSizeCriticalEvent`
+        # @return [Google::Apis::AndroidmanagementV1::LogBufferSizeCriticalEvent]
+        attr_accessor :log_buffer_size_critical_event
+      
+        # usageLog policy has been enabled. Intentionally empty.
+        # Corresponds to the JSON property `loggingStartedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::LoggingStartedEvent]
+        attr_accessor :logging_started_event
+      
+        # usageLog policy has been disabled. Intentionally empty.
+        # Corresponds to the JSON property `loggingStoppedEvent`
+        # @return [Google::Apis::AndroidmanagementV1::LoggingStoppedEvent]
+        attr_accessor :logging_stopped_event
+      
+        # Removable media was mounted.
+        # Corresponds to the JSON property `mediaMountEvent`
+        # @return [Google::Apis::AndroidmanagementV1::MediaMountEvent]
+        attr_accessor :media_mount_event
+      
+        # Removable media was unmounted.
+        # Corresponds to the JSON property `mediaUnmountEvent`
+        # @return [Google::Apis::AndroidmanagementV1::MediaUnmountEvent]
+        attr_accessor :media_unmount_event
+      
+        # Device was shutdown. Intentionally empty.
+        # Corresponds to the JSON property `osShutdownEvent`
+        # @return [Google::Apis::AndroidmanagementV1::OsShutdownEvent]
+        attr_accessor :os_shutdown_event
+      
+        # Device was started.
+        # Corresponds to the JSON property `osStartupEvent`
+        # @return [Google::Apis::AndroidmanagementV1::OsStartupEvent]
+        attr_accessor :os_startup_event
+      
+        # The device or profile has been remotely locked via the LOCK command.
+        # Corresponds to the JSON property `remoteLockEvent`
+        # @return [Google::Apis::AndroidmanagementV1::RemoteLockEvent]
+        attr_accessor :remote_lock_event
+      
+        # The work profile or company-owned device failed to wipe when requested. This
+        # could be user initiated or admin initiated e.g. delete was received.
+        # Intentionally empty.
+        # Corresponds to the JSON property `wipeFailureEvent`
+        # @return [Google::Apis::AndroidmanagementV1::WipeFailureEvent]
+        attr_accessor :wipe_failure_event
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @adb_shell_command_event = args[:adb_shell_command_event] if args.key?(:adb_shell_command_event)
+          @adb_shell_interactive_event = args[:adb_shell_interactive_event] if args.key?(:adb_shell_interactive_event)
+          @app_process_start_event = args[:app_process_start_event] if args.key?(:app_process_start_event)
+          @cert_authority_installed_event = args[:cert_authority_installed_event] if args.key?(:cert_authority_installed_event)
+          @cert_authority_removed_event = args[:cert_authority_removed_event] if args.key?(:cert_authority_removed_event)
+          @cert_validation_failure_event = args[:cert_validation_failure_event] if args.key?(:cert_validation_failure_event)
+          @connect_event = args[:connect_event] if args.key?(:connect_event)
+          @crypto_self_test_completed_event = args[:crypto_self_test_completed_event] if args.key?(:crypto_self_test_completed_event)
+          @dns_event = args[:dns_event] if args.key?(:dns_event)
+          @event_id = args[:event_id] if args.key?(:event_id)
+          @event_time = args[:event_time] if args.key?(:event_time)
+          @event_type = args[:event_type] if args.key?(:event_type)
+          @file_pulled_event = args[:file_pulled_event] if args.key?(:file_pulled_event)
+          @file_pushed_event = args[:file_pushed_event] if args.key?(:file_pushed_event)
+          @key_destruction_event = args[:key_destruction_event] if args.key?(:key_destruction_event)
+          @key_generated_event = args[:key_generated_event] if args.key?(:key_generated_event)
+          @key_import_event = args[:key_import_event] if args.key?(:key_import_event)
+          @key_integrity_violation_event = args[:key_integrity_violation_event] if args.key?(:key_integrity_violation_event)
+          @keyguard_dismiss_auth_attempt_event = args[:keyguard_dismiss_auth_attempt_event] if args.key?(:keyguard_dismiss_auth_attempt_event)
+          @keyguard_dismissed_event = args[:keyguard_dismissed_event] if args.key?(:keyguard_dismissed_event)
+          @keyguard_secured_event = args[:keyguard_secured_event] if args.key?(:keyguard_secured_event)
+          @log_buffer_size_critical_event = args[:log_buffer_size_critical_event] if args.key?(:log_buffer_size_critical_event)
+          @logging_started_event = args[:logging_started_event] if args.key?(:logging_started_event)
+          @logging_stopped_event = args[:logging_stopped_event] if args.key?(:logging_stopped_event)
+          @media_mount_event = args[:media_mount_event] if args.key?(:media_mount_event)
+          @media_unmount_event = args[:media_unmount_event] if args.key?(:media_unmount_event)
+          @os_shutdown_event = args[:os_shutdown_event] if args.key?(:os_shutdown_event)
+          @os_startup_event = args[:os_startup_event] if args.key?(:os_startup_event)
+          @remote_lock_event = args[:remote_lock_event] if args.key?(:remote_lock_event)
+          @wipe_failure_event = args[:wipe_failure_event] if args.key?(:wipe_failure_event)
+        end
+      end
+      
       # A user belonging to an enterprise.
       class User
         include Google::Apis::Core::Hashable
@@ -4073,7 +5488,7 @@ module Google
         end
       end
       
-      # An action to reset a fully managed device or delete a work profile. Note:
+      # An action to reset a company owned device or delete a work profile. Note:
       # blockAction must also be specified.
       class WipeAction
         include Google::Apis::Core::Hashable
@@ -4099,6 +5514,21 @@ module Google
         def update!(**args)
           @preserve_frp = args[:preserve_frp] if args.key?(:preserve_frp)
           @wipe_after_days = args[:wipe_after_days] if args.key?(:wipe_after_days)
+        end
+      end
+      
+      # The work profile or company-owned device failed to wipe when requested. This
+      # could be user initiated or admin initiated e.g. delete was received.
+      # Intentionally empty.
+      class WipeFailureEvent
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
     end

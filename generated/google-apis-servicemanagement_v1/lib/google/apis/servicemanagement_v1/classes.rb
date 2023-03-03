@@ -131,8 +131,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -238,14 +238,15 @@ module Google
         # @return [String]
         attr_accessor :jwks_uri
       
-        # Defines the locations to extract the JWT. JWT locations can be either from
-        # HTTP headers or URL query parameters. The rule is that the first match wins.
-        # The checking order is: checking all headers first, then URL query parameters.
-        # If not specified, default to use following 3 locations: 1) Authorization:
-        # Bearer 2) x-goog-iap-jwt-assertion 3) access_token query parameter Default
-        # locations can be specified as followings: jwt_locations: - header:
-        # Authorization value_prefix: "Bearer " - header: x-goog-iap-jwt-assertion -
-        # query: access_token
+        # Defines the locations to extract the JWT. For now it is only used by the Cloud
+        # Endpoints to store the OpenAPI extension [x-google-jwt-locations] (https://
+        # cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-
+        # locations) JWT locations can be one of HTTP headers, URL query parameters or
+        # cookies. The rule is that the first match wins. If not specified, default to
+        # use following 3 locations: 1) Authorization: Bearer 2) x-goog-iap-jwt-
+        # assertion 3) access_token query parameter Default locations can be specified
+        # as followings: jwt_locations: - header: Authorization value_prefix: "Bearer " -
+        # header: x-goog-iap-jwt-assertion - query: access_token
         # Corresponds to the JSON property `jwtLocations`
         # @return [Array<Google::Apis::ServicemanagementV1::JwtLocation>]
         attr_accessor :jwt_locations
@@ -445,11 +446,21 @@ module Google
         # @return [String]
         attr_accessor :jwt_audience
       
+        # Deprecated, do not use.
+        # Corresponds to the JSON property `minDeadline`
+        # @return [Float]
+        attr_accessor :min_deadline
+      
         # The number of seconds to wait for the completion of a long running operation.
         # The default is no deadline.
         # Corresponds to the JSON property `operationDeadline`
         # @return [Float]
         attr_accessor :operation_deadline
+      
+        # The map between request protocol and the backend address.
+        # Corresponds to the JSON property `overridesByRequestProtocol`
+        # @return [Hash<String,Google::Apis::ServicemanagementV1::BackendRule>]
+        attr_accessor :overrides_by_request_protocol
       
         # 
         # Corresponds to the JSON property `pathTranslation`
@@ -485,7 +496,9 @@ module Google
           @deadline = args[:deadline] if args.key?(:deadline)
           @disable_auth = args[:disable_auth] if args.key?(:disable_auth)
           @jwt_audience = args[:jwt_audience] if args.key?(:jwt_audience)
+          @min_deadline = args[:min_deadline] if args.key?(:min_deadline)
           @operation_deadline = args[:operation_deadline] if args.key?(:operation_deadline)
+          @overrides_by_request_protocol = args[:overrides_by_request_protocol] if args.key?(:overrides_by_request_protocol)
           @path_translation = args[:path_translation] if args.key?(:path_translation)
           @protocol = args[:protocol] if args.key?(:protocol)
           @selector = args[:selector] if args.key?(:selector)
@@ -556,7 +569,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -579,38 +592,43 @@ module Google
         # @return [Google::Apis::ServicemanagementV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -648,6 +666,113 @@ module Google
         # Update properties of this object
         def update!(**args)
           @config_changes = args[:config_changes] if args.key?(:config_changes)
+        end
+      end
+      
+      # Details about how and where to publish client libraries.
+      class ClientLibrarySettings
+        include Google::Apis::Core::Hashable
+      
+        # Settings for C++ client libraries.
+        # Corresponds to the JSON property `cppSettings`
+        # @return [Google::Apis::ServicemanagementV1::CppSettings]
+        attr_accessor :cpp_settings
+      
+        # Settings for Dotnet client libraries.
+        # Corresponds to the JSON property `dotnetSettings`
+        # @return [Google::Apis::ServicemanagementV1::DotnetSettings]
+        attr_accessor :dotnet_settings
+      
+        # Settings for Go client libraries.
+        # Corresponds to the JSON property `goSettings`
+        # @return [Google::Apis::ServicemanagementV1::GoSettings]
+        attr_accessor :go_settings
+      
+        # Settings for Java client libraries.
+        # Corresponds to the JSON property `javaSettings`
+        # @return [Google::Apis::ServicemanagementV1::JavaSettings]
+        attr_accessor :java_settings
+      
+        # Launch stage of this version of the API.
+        # Corresponds to the JSON property `launchStage`
+        # @return [String]
+        attr_accessor :launch_stage
+      
+        # Settings for Node client libraries.
+        # Corresponds to the JSON property `nodeSettings`
+        # @return [Google::Apis::ServicemanagementV1::NodeSettings]
+        attr_accessor :node_settings
+      
+        # Settings for Php client libraries.
+        # Corresponds to the JSON property `phpSettings`
+        # @return [Google::Apis::ServicemanagementV1::PhpSettings]
+        attr_accessor :php_settings
+      
+        # Settings for Python client libraries.
+        # Corresponds to the JSON property `pythonSettings`
+        # @return [Google::Apis::ServicemanagementV1::PythonSettings]
+        attr_accessor :python_settings
+      
+        # When using transport=rest, the client request will encode enums as numbers
+        # rather than strings.
+        # Corresponds to the JSON property `restNumericEnums`
+        # @return [Boolean]
+        attr_accessor :rest_numeric_enums
+        alias_method :rest_numeric_enums?, :rest_numeric_enums
+      
+        # Settings for Ruby client libraries.
+        # Corresponds to the JSON property `rubySettings`
+        # @return [Google::Apis::ServicemanagementV1::RubySettings]
+        attr_accessor :ruby_settings
+      
+        # Version of the API to apply these settings to.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cpp_settings = args[:cpp_settings] if args.key?(:cpp_settings)
+          @dotnet_settings = args[:dotnet_settings] if args.key?(:dotnet_settings)
+          @go_settings = args[:go_settings] if args.key?(:go_settings)
+          @java_settings = args[:java_settings] if args.key?(:java_settings)
+          @launch_stage = args[:launch_stage] if args.key?(:launch_stage)
+          @node_settings = args[:node_settings] if args.key?(:node_settings)
+          @php_settings = args[:php_settings] if args.key?(:php_settings)
+          @python_settings = args[:python_settings] if args.key?(:python_settings)
+          @rest_numeric_enums = args[:rest_numeric_enums] if args.key?(:rest_numeric_enums)
+          @ruby_settings = args[:ruby_settings] if args.key?(:ruby_settings)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Required information for every language.
+      class CommonLanguageSettings
+        include Google::Apis::Core::Hashable
+      
+        # The destination where API teams want this client library to be published.
+        # Corresponds to the JSON property `destinations`
+        # @return [Array<String>]
+        attr_accessor :destinations
+      
+        # Link to automatically generated reference documentation. Example: https://
+        # cloud.google.com/nodejs/docs/reference/asset/latest
+        # Corresponds to the JSON property `referenceDocsUri`
+        # @return [String]
+        attr_accessor :reference_docs_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @destinations = args[:destinations] if args.key?(:destinations)
+          @reference_docs_uri = args[:reference_docs_uri] if args.key?(:reference_docs_uri)
         end
       end
       
@@ -866,14 +991,14 @@ module Google
         end
       end
       
-      # Selects and configures the service controller used by the service. The service
-      # controller handles features like abuse, quota, billing, logging, monitoring,
-      # etc.
+      # Selects and configures the service controller used by the service. Example:
+      # control: environment: servicecontrol.googleapis.com
       class Control
         include Google::Apis::Core::Hashable
       
-        # The service control environment to use. If empty, no control plane feature (
-        # like quota and billing) will be enabled.
+        # The service controller environment to use. If empty, no control plane feature (
+        # like quota and billing) will be enabled. The recommended value for most
+        # services is servicecontrol.googleapis.com
         # Corresponds to the JSON property `environment`
         # @return [String]
         attr_accessor :environment
@@ -885,6 +1010,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @environment = args[:environment] if args.key?(:environment)
+        end
+      end
+      
+      # Settings for C++ client libraries.
+      class CppSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
         end
       end
       
@@ -1138,6 +1282,25 @@ module Google
         end
       end
       
+      # Settings for Dotnet client libraries.
+      class DotnetSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # Operation payload for EnableService method.
       class EnableServiceResponse
         include Google::Apis::Core::Hashable
@@ -1165,6 +1328,13 @@ module Google
       # allowed # to proceed. allow_cors: true
       class Endpoint
         include Google::Apis::Core::Hashable
+      
+        # Unimplemented. Dot not use. DEPRECATED: This field is no longer supported.
+        # Instead of using aliases, please specify multiple google.api.Endpoint for each
+        # of the intended aliases. Additional names that this endpoint will be hosted on.
+        # Corresponds to the JSON property `aliases`
+        # @return [Array<String>]
+        attr_accessor :aliases
       
         # Allowing [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),
         # aka cross-domain traffic, would allow the backends served from this endpoint
@@ -1195,6 +1365,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @aliases = args[:aliases] if args.key?(:aliases)
           @allow_cors = args[:allow_cors] if args.key?(:allow_cors)
           @name = args[:name] if args.key?(:name)
           @target = args[:target] if args.key?(:target)
@@ -1525,13 +1696,16 @@ module Google
       class GetPolicyOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. The policy format version to be returned. Valid values are 0, 1, and
-        # 3. Requests specifying an invalid value will be rejected. Requests for
-        # policies with any conditional bindings must specify version 3. Policies
-        # without any conditional bindings may specify any valid value or leave the
-        # field unset. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies).
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected. Requests for policies with any conditional role bindings must
+        # specify version 3. Policies with no conditional role bindings may specify any
+        # valid value or leave the field unset. The policy in the response might use the
+        # policy version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
         # Corresponds to the JSON property `requestedPolicyVersion`
         # @return [Fixnum]
         attr_accessor :requested_policy_version
@@ -1543,6 +1717,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @requested_policy_version = args[:requested_policy_version] if args.key?(:requested_policy_version)
+        end
+      end
+      
+      # Settings for Go client libraries.
+      class GoSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
         end
       end
       
@@ -1788,9 +1981,56 @@ module Google
         end
       end
       
+      # Settings for Java client libraries.
+      class JavaSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        # The package name to use in Java. Clobbers the java_package option set in the
+        # protobuf. This should be used **only** by APIs who have already set the
+        # language_settings.java.package_name" field in gapic.yaml. API teams should use
+        # the protobuf java_package option where possible. Example of a YAML
+        # configuration:: publishing: java_settings: library_package: com.google.cloud.
+        # pubsub.v1
+        # Corresponds to the JSON property `libraryPackage`
+        # @return [String]
+        attr_accessor :library_package
+      
+        # Configure the Java class name to use instead of the service's for its
+        # corresponding generated GAPIC client. Keys are fully-qualified service names
+        # as they appear in the protobuf (including the full the language_settings.java.
+        # interface_names" field in gapic.yaml. API teams should otherwise use the
+        # service name as it appears in the protobuf. Example of a YAML configuration::
+        # publishing: java_settings: service_class_names: - google.pubsub.v1.Publisher:
+        # TopicAdmin - google.pubsub.v1.Subscriber: SubscriptionAdmin
+        # Corresponds to the JSON property `serviceClassNames`
+        # @return [Hash<String,String>]
+        attr_accessor :service_class_names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+          @library_package = args[:library_package] if args.key?(:library_package)
+          @service_class_names = args[:service_class_names] if args.key?(:service_class_names)
+        end
+      end
+      
       # Specifies a location to extract JWT from an API request.
       class JwtLocation
         include Google::Apis::Core::Hashable
+      
+        # Specifies cookie name to extract JWT token.
+        # Corresponds to the JSON property `cookie`
+        # @return [String]
+        attr_accessor :cookie
       
         # Specifies HTTP header name to extract JWT token.
         # Corresponds to the JSON property `header`
@@ -1818,6 +2058,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cookie = args[:cookie] if args.key?(:cookie)
           @header = args[:header] if args.key?(:header)
           @query = args[:query] if args.key?(:query)
           @value_prefix = args[:value_prefix] if args.key?(:value_prefix)
@@ -2069,6 +2310,49 @@ module Google
         end
       end
       
+      # Describes settings to use when generating API methods that use the long-
+      # running operation pattern. All default values below are from those used in the
+      # client library generators (e.g. [Java](https://github.com/googleapis/gapic-
+      # generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/
+      # google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+      class LongRunning
+        include Google::Apis::Core::Hashable
+      
+        # Initial delay after which the first poll request will be made. Default value:
+        # 5 seconds.
+        # Corresponds to the JSON property `initialPollDelay`
+        # @return [String]
+        attr_accessor :initial_poll_delay
+      
+        # Maximum time between two subsequent poll requests. Default value: 45 seconds.
+        # Corresponds to the JSON property `maxPollDelay`
+        # @return [String]
+        attr_accessor :max_poll_delay
+      
+        # Multiplier to gradually increase delay between subsequent polls until it
+        # reaches max_poll_delay. Default value: 1.5.
+        # Corresponds to the JSON property `pollDelayMultiplier`
+        # @return [Float]
+        attr_accessor :poll_delay_multiplier
+      
+        # Total polling timeout. Default value: 5 minutes.
+        # Corresponds to the JSON property `totalPollTimeout`
+        # @return [String]
+        attr_accessor :total_poll_timeout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @initial_poll_delay = args[:initial_poll_delay] if args.key?(:initial_poll_delay)
+          @max_poll_delay = args[:max_poll_delay] if args.key?(:max_poll_delay)
+          @poll_delay_multiplier = args[:poll_delay_multiplier] if args.key?(:poll_delay_multiplier)
+          @total_poll_timeout = args[:total_poll_timeout] if args.key?(:total_poll_timeout)
+        end
+      end
+      
       # The full representation of a Service that is managed by Google Service
       # Management.
       class ManagedService
@@ -2079,8 +2363,8 @@ module Google
         # @return [String]
         attr_accessor :producer_project_id
       
-        # The name of the service. See the [overview](/service-management/overview) for
-        # naming requirements.
+        # The name of the service. See the [overview](https://cloud.google.com/service-
+        # infrastructure/docs/overview) for naming requirements.
         # Corresponds to the JSON property `serviceName`
         # @return [String]
         attr_accessor :service_name
@@ -2150,6 +2434,36 @@ module Google
           @response_streaming = args[:response_streaming] if args.key?(:response_streaming)
           @response_type_url = args[:response_type_url] if args.key?(:response_type_url)
           @syntax = args[:syntax] if args.key?(:syntax)
+        end
+      end
+      
+      # Describes the generator configuration for a method.
+      class MethodSettings
+        include Google::Apis::Core::Hashable
+      
+        # Describes settings to use when generating API methods that use the long-
+        # running operation pattern. All default values below are from those used in the
+        # client library generators (e.g. [Java](https://github.com/googleapis/gapic-
+        # generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/
+        # google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+        # Corresponds to the JSON property `longRunning`
+        # @return [Google::Apis::ServicemanagementV1::LongRunning]
+        attr_accessor :long_running
+      
+        # The fully qualified name of the method, for which the options below apply.
+        # This is used to find the method to apply the options.
+        # Corresponds to the JSON property `selector`
+        # @return [String]
+        attr_accessor :selector
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @long_running = args[:long_running] if args.key?(:long_running)
+          @selector = args[:selector] if args.key?(:selector)
         end
       end
       
@@ -2568,6 +2882,25 @@ module Google
         end
       end
       
+      # Settings for Node client libraries.
+      class NodeSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # OAuth scopes are a way to define data and permissions on data. For example,
       # there are scopes defined for "Read-only access to Google Calendar" and "Access
       # to Cloud Platform". Users can consent to a scope for an application, giving it
@@ -2809,33 +3142,52 @@ module Google
         end
       end
       
+      # Settings for Php client libraries.
+      class PhpSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -2844,9 +3196,14 @@ module Google
         # @return [Array<Google::Apis::ServicemanagementV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::ServicemanagementV1::Binding>]
         attr_accessor :bindings
@@ -2899,6 +3256,103 @@ module Google
         end
       end
       
+      # This message configures the settings for publishing [Google Cloud Client
+      # libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+      # generated from the service config.
+      class Publishing
+        include Google::Apis::Core::Hashable
+      
+        # Used as a tracking tag when collecting data about the APIs developer relations
+        # artifacts like docs, packages delivered to package managers, etc. Example: "
+        # speech".
+        # Corresponds to the JSON property `apiShortName`
+        # @return [String]
+        attr_accessor :api_short_name
+      
+        # GitHub teams to be added to CODEOWNERS in the directory in GitHub containing
+        # source code for the client libraries for this API.
+        # Corresponds to the JSON property `codeownerGithubTeams`
+        # @return [Array<String>]
+        attr_accessor :codeowner_github_teams
+      
+        # A prefix used in sample code when demarking regions to be included in
+        # documentation.
+        # Corresponds to the JSON property `docTagPrefix`
+        # @return [String]
+        attr_accessor :doc_tag_prefix
+      
+        # Link to product home page. Example: https://cloud.google.com/asset-inventory/
+        # docs/overview
+        # Corresponds to the JSON property `documentationUri`
+        # @return [String]
+        attr_accessor :documentation_uri
+      
+        # GitHub label to apply to issues and pull requests opened for this API.
+        # Corresponds to the JSON property `githubLabel`
+        # @return [String]
+        attr_accessor :github_label
+      
+        # Client library settings. If the same version string appears multiple times in
+        # this list, then the last one wins. Settings from earlier settings with the
+        # same version string are discarded.
+        # Corresponds to the JSON property `librarySettings`
+        # @return [Array<Google::Apis::ServicemanagementV1::ClientLibrarySettings>]
+        attr_accessor :library_settings
+      
+        # A list of API method settings, e.g. the behavior for methods that use the long-
+        # running operation pattern.
+        # Corresponds to the JSON property `methodSettings`
+        # @return [Array<Google::Apis::ServicemanagementV1::MethodSettings>]
+        attr_accessor :method_settings
+      
+        # Link to a place that API users can report issues. Example: https://
+        # issuetracker.google.com/issues/new?component=190865&template=1161103
+        # Corresponds to the JSON property `newIssueUri`
+        # @return [String]
+        attr_accessor :new_issue_uri
+      
+        # For whom the client library is being published.
+        # Corresponds to the JSON property `organization`
+        # @return [String]
+        attr_accessor :organization
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_short_name = args[:api_short_name] if args.key?(:api_short_name)
+          @codeowner_github_teams = args[:codeowner_github_teams] if args.key?(:codeowner_github_teams)
+          @doc_tag_prefix = args[:doc_tag_prefix] if args.key?(:doc_tag_prefix)
+          @documentation_uri = args[:documentation_uri] if args.key?(:documentation_uri)
+          @github_label = args[:github_label] if args.key?(:github_label)
+          @library_settings = args[:library_settings] if args.key?(:library_settings)
+          @method_settings = args[:method_settings] if args.key?(:method_settings)
+          @new_issue_uri = args[:new_issue_uri] if args.key?(:new_issue_uri)
+          @organization = args[:organization] if args.key?(:organization)
+        end
+      end
+      
+      # Settings for Python client libraries.
+      class PythonSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # Quota configuration helps to achieve fairness and budgeting in service usage.
       # The metric based quota configuration works this way: - The service
       # configuration defines a set of metrics. - For API calls, the quota.
@@ -2906,11 +3360,11 @@ module Google
       # limits defines limits on the metrics, which will be used for quota checks at
       # runtime. An example quota configuration in yaml format: quota: limits: - name:
       # apiWriteQpsPerProject metric: library.googleapis.com/write_calls unit: "1/min/`
-      # project`" # rate limit for consumer projects values: STANDARD: 10000 # The
-      # metric rules bind all methods to the read_calls metric, # except for the
-      # UpdateBook and DeleteBook methods. These two methods # are mapped to the
-      # write_calls metric, with the UpdateBook method # consuming at twice rate as
-      # the DeleteBook method. metric_rules: - selector: "*" metric_costs: library.
+      # project`" # rate limit for consumer projects values: STANDARD: 10000 (The
+      # metric rules bind all methods to the read_calls metric, except for the
+      # UpdateBook and DeleteBook methods. These two methods are mapped to the
+      # write_calls metric, with the UpdateBook method consuming at twice rate as the
+      # DeleteBook method.) metric_rules: - selector: "*" metric_costs: library.
       # googleapis.com/read_calls: 1 - selector: google.example.library.v1.
       # LibraryService.UpdateBook metric_costs: library.googleapis.com/write_calls: 2 -
       # selector: google.example.library.v1.LibraryService.DeleteBook metric_costs:
@@ -2921,12 +3375,12 @@ module Google
       class Quota
         include Google::Apis::Core::Hashable
       
-        # List of `QuotaLimit` definitions for the service.
+        # List of QuotaLimit definitions for the service.
         # Corresponds to the JSON property `limits`
         # @return [Array<Google::Apis::ServicemanagementV1::QuotaLimit>]
         attr_accessor :limits
       
-        # List of `MetricRule` definitions, each one mapping a selected method to one or
+        # List of MetricRule definitions, each one mapping a selected method to one or
         # more metrics.
         # Corresponds to the JSON property `metricRules`
         # @return [Array<Google::Apis::ServicemanagementV1::MetricRule>]
@@ -3096,8 +3550,7 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
-        # This field is deprecated and will be deleted. Please remove usage of this
-        # field.
+        # The user who created the Rollout. Readonly.
         # Corresponds to the JSON property `createdBy`
         # @return [String]
         attr_accessor :created_by
@@ -3156,6 +3609,25 @@ module Google
           @service_name = args[:service_name] if args.key?(:service_name)
           @status = args[:status] if args.key?(:status)
           @traffic_percent_strategy = args[:traffic_percent_strategy] if args.key?(:traffic_percent_strategy)
+        end
+      end
+      
+      # Settings for Ruby client libraries.
+      class RubySettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicemanagementV1::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
         end
       end
       
@@ -3242,9 +3714,8 @@ module Google
         # @return [Google::Apis::ServicemanagementV1::Context]
         attr_accessor :context
       
-        # Selects and configures the service controller used by the service. The service
-        # controller handles features like abuse, quota, billing, logging, monitoring,
-        # etc.
+        # Selects and configures the service controller used by the service. Example:
+        # control: environment: servicecontrol.googleapis.com
         # Corresponds to the JSON property `control`
         # @return [Google::Apis::ServicemanagementV1::Control]
         attr_accessor :control
@@ -3386,6 +3857,13 @@ module Google
         # @return [String]
         attr_accessor :producer_project_id
       
+        # This message configures the settings for publishing [Google Cloud Client
+        # libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+        # generated from the service config.
+        # Corresponds to the JSON property `publishing`
+        # @return [Google::Apis::ServicemanagementV1::Publishing]
+        attr_accessor :publishing
+      
         # Quota configuration helps to achieve fairness and budgeting in service usage.
         # The metric based quota configuration works this way: - The service
         # configuration defines a set of metrics. - For API calls, the quota.
@@ -3393,11 +3871,11 @@ module Google
         # limits defines limits on the metrics, which will be used for quota checks at
         # runtime. An example quota configuration in yaml format: quota: limits: - name:
         # apiWriteQpsPerProject metric: library.googleapis.com/write_calls unit: "1/min/`
-        # project`" # rate limit for consumer projects values: STANDARD: 10000 # The
-        # metric rules bind all methods to the read_calls metric, # except for the
-        # UpdateBook and DeleteBook methods. These two methods # are mapped to the
-        # write_calls metric, with the UpdateBook method # consuming at twice rate as
-        # the DeleteBook method. metric_rules: - selector: "*" metric_costs: library.
+        # project`" # rate limit for consumer projects values: STANDARD: 10000 (The
+        # metric rules bind all methods to the read_calls metric, except for the
+        # UpdateBook and DeleteBook methods. These two methods are mapped to the
+        # write_calls metric, with the UpdateBook method consuming at twice rate as the
+        # DeleteBook method.) metric_rules: - selector: "*" metric_costs: library.
         # googleapis.com/read_calls: 1 - selector: google.example.library.v1.
         # LibraryService.UpdateBook metric_costs: library.googleapis.com/write_calls: 2 -
         # selector: google.example.library.v1.LibraryService.DeleteBook metric_costs:
@@ -3476,6 +3954,7 @@ module Google
           @monitoring = args[:monitoring] if args.key?(:monitoring)
           @name = args[:name] if args.key?(:name)
           @producer_project_id = args[:producer_project_id] if args.key?(:producer_project_id)
+          @publishing = args[:publishing] if args.key?(:publishing)
           @quota = args[:quota] if args.key?(:quota)
           @source_info = args[:source_info] if args.key?(:source_info)
           @system_parameters = args[:system_parameters] if args.key?(:system_parameters)
@@ -3492,31 +3971,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::ServicemanagementV1::Policy]
         attr_accessor :policy
@@ -3802,7 +4281,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]

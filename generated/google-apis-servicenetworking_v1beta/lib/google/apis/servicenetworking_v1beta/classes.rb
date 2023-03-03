@@ -314,14 +314,15 @@ module Google
         # @return [String]
         attr_accessor :jwks_uri
       
-        # Defines the locations to extract the JWT. JWT locations can be either from
-        # HTTP headers or URL query parameters. The rule is that the first match wins.
-        # The checking order is: checking all headers first, then URL query parameters.
-        # If not specified, default to use following 3 locations: 1) Authorization:
-        # Bearer 2) x-goog-iap-jwt-assertion 3) access_token query parameter Default
-        # locations can be specified as followings: jwt_locations: - header:
-        # Authorization value_prefix: "Bearer " - header: x-goog-iap-jwt-assertion -
-        # query: access_token
+        # Defines the locations to extract the JWT. For now it is only used by the Cloud
+        # Endpoints to store the OpenAPI extension [x-google-jwt-locations] (https://
+        # cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-
+        # locations) JWT locations can be one of HTTP headers, URL query parameters or
+        # cookies. The rule is that the first match wins. If not specified, default to
+        # use following 3 locations: 1) Authorization: Bearer 2) x-goog-iap-jwt-
+        # assertion 3) access_token query parameter Default locations can be specified
+        # as followings: jwt_locations: - header: Authorization value_prefix: "Bearer " -
+        # header: x-goog-iap-jwt-assertion - query: access_token
         # Corresponds to the JSON property `jwtLocations`
         # @return [Array<Google::Apis::ServicenetworkingV1beta::JwtLocation>]
         attr_accessor :jwt_locations
@@ -521,11 +522,21 @@ module Google
         # @return [String]
         attr_accessor :jwt_audience
       
+        # Deprecated, do not use.
+        # Corresponds to the JSON property `minDeadline`
+        # @return [Float]
+        attr_accessor :min_deadline
+      
         # The number of seconds to wait for the completion of a long running operation.
         # The default is no deadline.
         # Corresponds to the JSON property `operationDeadline`
         # @return [Float]
         attr_accessor :operation_deadline
+      
+        # The map between request protocol and the backend address.
+        # Corresponds to the JSON property `overridesByRequestProtocol`
+        # @return [Hash<String,Google::Apis::ServicenetworkingV1beta::BackendRule>]
+        attr_accessor :overrides_by_request_protocol
       
         # 
         # Corresponds to the JSON property `pathTranslation`
@@ -561,7 +572,9 @@ module Google
           @deadline = args[:deadline] if args.key?(:deadline)
           @disable_auth = args[:disable_auth] if args.key?(:disable_auth)
           @jwt_audience = args[:jwt_audience] if args.key?(:jwt_audience)
+          @min_deadline = args[:min_deadline] if args.key?(:min_deadline)
           @operation_deadline = args[:operation_deadline] if args.key?(:operation_deadline)
+          @overrides_by_request_protocol = args[:overrides_by_request_protocol] if args.key?(:overrides_by_request_protocol)
           @path_translation = args[:path_translation] if args.key?(:path_translation)
           @protocol = args[:protocol] if args.key?(:protocol)
           @selector = args[:selector] if args.key?(:selector)
@@ -632,6 +645,144 @@ module Google
         end
       end
       
+      # Details about how and where to publish client libraries.
+      class ClientLibrarySettings
+        include Google::Apis::Core::Hashable
+      
+        # Settings for C++ client libraries.
+        # Corresponds to the JSON property `cppSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::CppSettings]
+        attr_accessor :cpp_settings
+      
+        # Settings for Dotnet client libraries.
+        # Corresponds to the JSON property `dotnetSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::DotnetSettings]
+        attr_accessor :dotnet_settings
+      
+        # Settings for Go client libraries.
+        # Corresponds to the JSON property `goSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::GoSettings]
+        attr_accessor :go_settings
+      
+        # Settings for Java client libraries.
+        # Corresponds to the JSON property `javaSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::JavaSettings]
+        attr_accessor :java_settings
+      
+        # Launch stage of this version of the API.
+        # Corresponds to the JSON property `launchStage`
+        # @return [String]
+        attr_accessor :launch_stage
+      
+        # Settings for Node client libraries.
+        # Corresponds to the JSON property `nodeSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::NodeSettings]
+        attr_accessor :node_settings
+      
+        # Settings for Php client libraries.
+        # Corresponds to the JSON property `phpSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::PhpSettings]
+        attr_accessor :php_settings
+      
+        # Settings for Python client libraries.
+        # Corresponds to the JSON property `pythonSettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::PythonSettings]
+        attr_accessor :python_settings
+      
+        # When using transport=rest, the client request will encode enums as numbers
+        # rather than strings.
+        # Corresponds to the JSON property `restNumericEnums`
+        # @return [Boolean]
+        attr_accessor :rest_numeric_enums
+        alias_method :rest_numeric_enums?, :rest_numeric_enums
+      
+        # Settings for Ruby client libraries.
+        # Corresponds to the JSON property `rubySettings`
+        # @return [Google::Apis::ServicenetworkingV1beta::RubySettings]
+        attr_accessor :ruby_settings
+      
+        # Version of the API to apply these settings to.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cpp_settings = args[:cpp_settings] if args.key?(:cpp_settings)
+          @dotnet_settings = args[:dotnet_settings] if args.key?(:dotnet_settings)
+          @go_settings = args[:go_settings] if args.key?(:go_settings)
+          @java_settings = args[:java_settings] if args.key?(:java_settings)
+          @launch_stage = args[:launch_stage] if args.key?(:launch_stage)
+          @node_settings = args[:node_settings] if args.key?(:node_settings)
+          @php_settings = args[:php_settings] if args.key?(:php_settings)
+          @python_settings = args[:python_settings] if args.key?(:python_settings)
+          @rest_numeric_enums = args[:rest_numeric_enums] if args.key?(:rest_numeric_enums)
+          @ruby_settings = args[:ruby_settings] if args.key?(:ruby_settings)
+          @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Cloud SQL configuration.
+      class CloudSqlConfig
+        include Google::Apis::Core::Hashable
+      
+        # Peering service used for peering with the Cloud SQL project.
+        # Corresponds to the JSON property `service`
+        # @return [String]
+        attr_accessor :service
+      
+        # The name of the umbrella network in the Cloud SQL umbrella project.
+        # Corresponds to the JSON property `umbrellaNetwork`
+        # @return [String]
+        attr_accessor :umbrella_network
+      
+        # The project number of the Cloud SQL umbrella project.
+        # Corresponds to the JSON property `umbrellaProject`
+        # @return [Fixnum]
+        attr_accessor :umbrella_project
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @service = args[:service] if args.key?(:service)
+          @umbrella_network = args[:umbrella_network] if args.key?(:umbrella_network)
+          @umbrella_project = args[:umbrella_project] if args.key?(:umbrella_project)
+        end
+      end
+      
+      # Required information for every language.
+      class CommonLanguageSettings
+        include Google::Apis::Core::Hashable
+      
+        # The destination where API teams want this client library to be published.
+        # Corresponds to the JSON property `destinations`
+        # @return [Array<String>]
+        attr_accessor :destinations
+      
+        # Link to automatically generated reference documentation. Example: https://
+        # cloud.google.com/nodejs/docs/reference/asset/latest
+        # Corresponds to the JSON property `referenceDocsUri`
+        # @return [String]
+        attr_accessor :reference_docs_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @destinations = args[:destinations] if args.key?(:destinations)
+          @reference_docs_uri = args[:reference_docs_uri] if args.key?(:reference_docs_uri)
+        end
+      end
+      
       # Represents a private connection resource. A private connection is implemented
       # as a VPC Network Peering connection between a service producer's VPC network
       # and a service consumer's VPC network.
@@ -686,6 +837,11 @@ module Google
       # Configuration information for a private service access connection.
       class ConsumerConfig
         include Google::Apis::Core::Hashable
+      
+        # Represents one or multiple Cloud SQL configurations.
+        # Corresponds to the JSON property `cloudsqlConfigs`
+        # @return [Array<Google::Apis::ServicenetworkingV1beta::CloudSqlConfig>]
+        attr_accessor :cloudsql_configs
       
         # Export custom routes flag value for peering from consumer to producer.
         # Corresponds to the JSON property `consumerExportCustomRoutes`
@@ -752,6 +908,11 @@ module Google
         # @return [Array<Google::Apis::ServicenetworkingV1beta::GoogleCloudServicenetworkingV1ConsumerConfigReservedRange>]
         attr_accessor :reserved_ranges
       
+        # Output only. The IP ranges already in use by consumer or producer
+        # Corresponds to the JSON property `usedIpRanges`
+        # @return [Array<String>]
+        attr_accessor :used_ip_ranges
+      
         # Output only. Indicates whether the VPC Service Controls reference architecture
         # is configured for the producer VPC host network.
         # Corresponds to the JSON property `vpcScReferenceArchitectureEnabled`
@@ -765,6 +926,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cloudsql_configs = args[:cloudsql_configs] if args.key?(:cloudsql_configs)
           @consumer_export_custom_routes = args[:consumer_export_custom_routes] if args.key?(:consumer_export_custom_routes)
           @consumer_export_subnet_routes_with_public_ip = args[:consumer_export_subnet_routes_with_public_ip] if args.key?(:consumer_export_subnet_routes_with_public_ip)
           @consumer_import_custom_routes = args[:consumer_import_custom_routes] if args.key?(:consumer_import_custom_routes)
@@ -775,6 +937,7 @@ module Google
           @producer_import_subnet_routes_with_public_ip = args[:producer_import_subnet_routes_with_public_ip] if args.key?(:producer_import_subnet_routes_with_public_ip)
           @producer_network = args[:producer_network] if args.key?(:producer_network)
           @reserved_ranges = args[:reserved_ranges] if args.key?(:reserved_ranges)
+          @used_ip_ranges = args[:used_ip_ranges] if args.key?(:used_ip_ranges)
           @vpc_sc_reference_architecture_enabled = args[:vpc_sc_reference_architecture_enabled] if args.key?(:vpc_sc_reference_architecture_enabled)
         end
       end
@@ -872,14 +1035,14 @@ module Google
         end
       end
       
-      # Selects and configures the service controller used by the service. The service
-      # controller handles features like abuse, quota, billing, logging, monitoring,
-      # etc.
+      # Selects and configures the service controller used by the service. Example:
+      # control: environment: servicecontrol.googleapis.com
       class Control
         include Google::Apis::Core::Hashable
       
-        # The service control environment to use. If empty, no control plane feature (
-        # like quota and billing) will be enabled.
+        # The service controller environment to use. If empty, no control plane feature (
+        # like quota and billing) will be enabled. The recommended value for most
+        # services is servicecontrol.googleapis.com
         # Corresponds to the JSON property `environment`
         # @return [String]
         attr_accessor :environment
@@ -891,6 +1054,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @environment = args[:environment] if args.key?(:environment)
+        end
+      end
+      
+      # Settings for C++ client libraries.
+      class CppSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
         end
       end
       
@@ -1193,6 +1375,25 @@ module Google
         end
       end
       
+      # Settings for Dotnet client libraries.
+      class DotnetSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # `Endpoint` describes a network address of a service that serves a set of APIs.
       # It is commonly known as a service endpoint. A service may expose any number of
       # service endpoints, and all service endpoints share the same service definition,
@@ -1207,6 +1408,13 @@ module Google
       # allowed # to proceed. allow_cors: true
       class Endpoint
         include Google::Apis::Core::Hashable
+      
+        # Unimplemented. Dot not use. DEPRECATED: This field is no longer supported.
+        # Instead of using aliases, please specify multiple google.api.Endpoint for each
+        # of the intended aliases. Additional names that this endpoint will be hosted on.
+        # Corresponds to the JSON property `aliases`
+        # @return [Array<String>]
+        attr_accessor :aliases
       
         # Allowing [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing),
         # aka cross-domain traffic, would allow the backends served from this endpoint
@@ -1237,6 +1445,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @aliases = args[:aliases] if args.key?(:aliases)
           @allow_cors = args[:allow_cors] if args.key?(:allow_cors)
           @name = args[:name] if args.key?(:name)
           @target = args[:target] if args.key?(:target)
@@ -1391,6 +1600,25 @@ module Google
           @options = args[:options] if args.key?(:options)
           @packed = args[:packed] if args.key?(:packed)
           @type_url = args[:type_url] if args.key?(:type_url)
+        end
+      end
+      
+      # Settings for Go client libraries.
+      class GoSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
         end
       end
       
@@ -1758,9 +1986,56 @@ module Google
         end
       end
       
+      # Settings for Java client libraries.
+      class JavaSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        # The package name to use in Java. Clobbers the java_package option set in the
+        # protobuf. This should be used **only** by APIs who have already set the
+        # language_settings.java.package_name" field in gapic.yaml. API teams should use
+        # the protobuf java_package option where possible. Example of a YAML
+        # configuration:: publishing: java_settings: library_package: com.google.cloud.
+        # pubsub.v1
+        # Corresponds to the JSON property `libraryPackage`
+        # @return [String]
+        attr_accessor :library_package
+      
+        # Configure the Java class name to use instead of the service's for its
+        # corresponding generated GAPIC client. Keys are fully-qualified service names
+        # as they appear in the protobuf (including the full the language_settings.java.
+        # interface_names" field in gapic.yaml. API teams should otherwise use the
+        # service name as it appears in the protobuf. Example of a YAML configuration::
+        # publishing: java_settings: service_class_names: - google.pubsub.v1.Publisher:
+        # TopicAdmin - google.pubsub.v1.Subscriber: SubscriptionAdmin
+        # Corresponds to the JSON property `serviceClassNames`
+        # @return [Hash<String,String>]
+        attr_accessor :service_class_names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+          @library_package = args[:library_package] if args.key?(:library_package)
+          @service_class_names = args[:service_class_names] if args.key?(:service_class_names)
+        end
+      end
+      
       # Specifies a location to extract JWT from an API request.
       class JwtLocation
         include Google::Apis::Core::Hashable
+      
+        # Specifies cookie name to extract JWT token.
+        # Corresponds to the JSON property `cookie`
+        # @return [String]
+        attr_accessor :cookie
       
         # Specifies HTTP header name to extract JWT token.
         # Corresponds to the JSON property `header`
@@ -1788,6 +2063,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cookie = args[:cookie] if args.key?(:cookie)
           @header = args[:header] if args.key?(:header)
           @query = args[:query] if args.key?(:query)
           @value_prefix = args[:value_prefix] if args.key?(:value_prefix)
@@ -1959,6 +2235,49 @@ module Google
         end
       end
       
+      # Describes settings to use when generating API methods that use the long-
+      # running operation pattern. All default values below are from those used in the
+      # client library generators (e.g. [Java](https://github.com/googleapis/gapic-
+      # generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/
+      # google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+      class LongRunning
+        include Google::Apis::Core::Hashable
+      
+        # Initial delay after which the first poll request will be made. Default value:
+        # 5 seconds.
+        # Corresponds to the JSON property `initialPollDelay`
+        # @return [String]
+        attr_accessor :initial_poll_delay
+      
+        # Maximum time between two subsequent poll requests. Default value: 45 seconds.
+        # Corresponds to the JSON property `maxPollDelay`
+        # @return [String]
+        attr_accessor :max_poll_delay
+      
+        # Multiplier to gradually increase delay between subsequent polls until it
+        # reaches max_poll_delay. Default value: 1.5.
+        # Corresponds to the JSON property `pollDelayMultiplier`
+        # @return [Float]
+        attr_accessor :poll_delay_multiplier
+      
+        # Total polling timeout. Default value: 5 minutes.
+        # Corresponds to the JSON property `totalPollTimeout`
+        # @return [String]
+        attr_accessor :total_poll_timeout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @initial_poll_delay = args[:initial_poll_delay] if args.key?(:initial_poll_delay)
+          @max_poll_delay = args[:max_poll_delay] if args.key?(:max_poll_delay)
+          @poll_delay_multiplier = args[:poll_delay_multiplier] if args.key?(:poll_delay_multiplier)
+          @total_poll_timeout = args[:total_poll_timeout] if args.key?(:total_poll_timeout)
+        end
+      end
+      
       # Method represents a method of an API interface.
       class MethodProp
         include Google::Apis::Core::Hashable
@@ -2013,6 +2332,36 @@ module Google
           @response_streaming = args[:response_streaming] if args.key?(:response_streaming)
           @response_type_url = args[:response_type_url] if args.key?(:response_type_url)
           @syntax = args[:syntax] if args.key?(:syntax)
+        end
+      end
+      
+      # Describes the generator configuration for a method.
+      class MethodSettings
+        include Google::Apis::Core::Hashable
+      
+        # Describes settings to use when generating API methods that use the long-
+        # running operation pattern. All default values below are from those used in the
+        # client library generators (e.g. [Java](https://github.com/googleapis/gapic-
+        # generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/
+        # google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+        # Corresponds to the JSON property `longRunning`
+        # @return [Google::Apis::ServicenetworkingV1beta::LongRunning]
+        attr_accessor :long_running
+      
+        # The fully qualified name of the method, for which the options below apply.
+        # This is used to find the method to apply the options.
+        # Corresponds to the JSON property `selector`
+        # @return [String]
+        attr_accessor :selector
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @long_running = args[:long_running] if args.key?(:long_running)
+          @selector = args[:selector] if args.key?(:selector)
         end
       end
       
@@ -2431,6 +2780,25 @@ module Google
         end
       end
       
+      # Settings for Node client libraries.
+      class NodeSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # OAuth scopes are a way to define data and permissions on data. For example,
       # there are scopes defined for "Read-only access to Google Calendar" and "Access
       # to Cloud Platform". Users can consent to a scope for an application, giving it
@@ -2657,6 +3025,25 @@ module Google
         end
       end
       
+      # Settings for Php client libraries.
+      class PhpSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # Grouping of IAM role and IAM member.
       class PolicyBinding
         include Google::Apis::Core::Hashable
@@ -2687,6 +3074,103 @@ module Google
         end
       end
       
+      # This message configures the settings for publishing [Google Cloud Client
+      # libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+      # generated from the service config.
+      class Publishing
+        include Google::Apis::Core::Hashable
+      
+        # Used as a tracking tag when collecting data about the APIs developer relations
+        # artifacts like docs, packages delivered to package managers, etc. Example: "
+        # speech".
+        # Corresponds to the JSON property `apiShortName`
+        # @return [String]
+        attr_accessor :api_short_name
+      
+        # GitHub teams to be added to CODEOWNERS in the directory in GitHub containing
+        # source code for the client libraries for this API.
+        # Corresponds to the JSON property `codeownerGithubTeams`
+        # @return [Array<String>]
+        attr_accessor :codeowner_github_teams
+      
+        # A prefix used in sample code when demarking regions to be included in
+        # documentation.
+        # Corresponds to the JSON property `docTagPrefix`
+        # @return [String]
+        attr_accessor :doc_tag_prefix
+      
+        # Link to product home page. Example: https://cloud.google.com/asset-inventory/
+        # docs/overview
+        # Corresponds to the JSON property `documentationUri`
+        # @return [String]
+        attr_accessor :documentation_uri
+      
+        # GitHub label to apply to issues and pull requests opened for this API.
+        # Corresponds to the JSON property `githubLabel`
+        # @return [String]
+        attr_accessor :github_label
+      
+        # Client library settings. If the same version string appears multiple times in
+        # this list, then the last one wins. Settings from earlier settings with the
+        # same version string are discarded.
+        # Corresponds to the JSON property `librarySettings`
+        # @return [Array<Google::Apis::ServicenetworkingV1beta::ClientLibrarySettings>]
+        attr_accessor :library_settings
+      
+        # A list of API method settings, e.g. the behavior for methods that use the long-
+        # running operation pattern.
+        # Corresponds to the JSON property `methodSettings`
+        # @return [Array<Google::Apis::ServicenetworkingV1beta::MethodSettings>]
+        attr_accessor :method_settings
+      
+        # Link to a place that API users can report issues. Example: https://
+        # issuetracker.google.com/issues/new?component=190865&template=1161103
+        # Corresponds to the JSON property `newIssueUri`
+        # @return [String]
+        attr_accessor :new_issue_uri
+      
+        # For whom the client library is being published.
+        # Corresponds to the JSON property `organization`
+        # @return [String]
+        attr_accessor :organization
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_short_name = args[:api_short_name] if args.key?(:api_short_name)
+          @codeowner_github_teams = args[:codeowner_github_teams] if args.key?(:codeowner_github_teams)
+          @doc_tag_prefix = args[:doc_tag_prefix] if args.key?(:doc_tag_prefix)
+          @documentation_uri = args[:documentation_uri] if args.key?(:documentation_uri)
+          @github_label = args[:github_label] if args.key?(:github_label)
+          @library_settings = args[:library_settings] if args.key?(:library_settings)
+          @method_settings = args[:method_settings] if args.key?(:method_settings)
+          @new_issue_uri = args[:new_issue_uri] if args.key?(:new_issue_uri)
+          @organization = args[:organization] if args.key?(:organization)
+        end
+      end
+      
+      # Settings for Python client libraries.
+      class PythonSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # Quota configuration helps to achieve fairness and budgeting in service usage.
       # The metric based quota configuration works this way: - The service
       # configuration defines a set of metrics. - For API calls, the quota.
@@ -2694,11 +3178,11 @@ module Google
       # limits defines limits on the metrics, which will be used for quota checks at
       # runtime. An example quota configuration in yaml format: quota: limits: - name:
       # apiWriteQpsPerProject metric: library.googleapis.com/write_calls unit: "1/min/`
-      # project`" # rate limit for consumer projects values: STANDARD: 10000 # The
-      # metric rules bind all methods to the read_calls metric, # except for the
-      # UpdateBook and DeleteBook methods. These two methods # are mapped to the
-      # write_calls metric, with the UpdateBook method # consuming at twice rate as
-      # the DeleteBook method. metric_rules: - selector: "*" metric_costs: library.
+      # project`" # rate limit for consumer projects values: STANDARD: 10000 (The
+      # metric rules bind all methods to the read_calls metric, except for the
+      # UpdateBook and DeleteBook methods. These two methods are mapped to the
+      # write_calls metric, with the UpdateBook method consuming at twice rate as the
+      # DeleteBook method.) metric_rules: - selector: "*" metric_costs: library.
       # googleapis.com/read_calls: 1 - selector: google.example.library.v1.
       # LibraryService.UpdateBook metric_costs: library.googleapis.com/write_calls: 2 -
       # selector: google.example.library.v1.LibraryService.DeleteBook metric_costs:
@@ -2709,12 +3193,12 @@ module Google
       class Quota
         include Google::Apis::Core::Hashable
       
-        # List of `QuotaLimit` definitions for the service.
+        # List of QuotaLimit definitions for the service.
         # Corresponds to the JSON property `limits`
         # @return [Array<Google::Apis::ServicenetworkingV1beta::QuotaLimit>]
         attr_accessor :limits
       
-        # List of `MetricRule` definitions, each one mapping a selected method to one or
+        # List of MetricRule definitions, each one mapping a selected method to one or
         # more metrics.
         # Corresponds to the JSON property `metricRules`
         # @return [Array<Google::Apis::ServicenetworkingV1beta::MetricRule>]
@@ -2961,6 +3445,25 @@ module Google
         end
       end
       
+      # Settings for Ruby client libraries.
+      class RubySettings
+        include Google::Apis::Core::Hashable
+      
+        # Required information for every language.
+        # Corresponds to the JSON property `common`
+        # @return [Google::Apis::ServicenetworkingV1beta::CommonLanguageSettings]
+        attr_accessor :common
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common = args[:common] if args.key?(:common)
+        end
+      end
+      
       # Request to search for an unused range within allocated ranges.
       class SearchRangeRequest
         include Google::Apis::Core::Hashable
@@ -3100,9 +3603,8 @@ module Google
         # @return [Google::Apis::ServicenetworkingV1beta::Context]
         attr_accessor :context
       
-        # Selects and configures the service controller used by the service. The service
-        # controller handles features like abuse, quota, billing, logging, monitoring,
-        # etc.
+        # Selects and configures the service controller used by the service. Example:
+        # control: environment: servicecontrol.googleapis.com
         # Corresponds to the JSON property `control`
         # @return [Google::Apis::ServicenetworkingV1beta::Control]
         attr_accessor :control
@@ -3244,6 +3746,13 @@ module Google
         # @return [String]
         attr_accessor :producer_project_id
       
+        # This message configures the settings for publishing [Google Cloud Client
+        # libraries](https://cloud.google.com/apis/docs/cloud-client-libraries)
+        # generated from the service config.
+        # Corresponds to the JSON property `publishing`
+        # @return [Google::Apis::ServicenetworkingV1beta::Publishing]
+        attr_accessor :publishing
+      
         # Quota configuration helps to achieve fairness and budgeting in service usage.
         # The metric based quota configuration works this way: - The service
         # configuration defines a set of metrics. - For API calls, the quota.
@@ -3251,11 +3760,11 @@ module Google
         # limits defines limits on the metrics, which will be used for quota checks at
         # runtime. An example quota configuration in yaml format: quota: limits: - name:
         # apiWriteQpsPerProject metric: library.googleapis.com/write_calls unit: "1/min/`
-        # project`" # rate limit for consumer projects values: STANDARD: 10000 # The
-        # metric rules bind all methods to the read_calls metric, # except for the
-        # UpdateBook and DeleteBook methods. These two methods # are mapped to the
-        # write_calls metric, with the UpdateBook method # consuming at twice rate as
-        # the DeleteBook method. metric_rules: - selector: "*" metric_costs: library.
+        # project`" # rate limit for consumer projects values: STANDARD: 10000 (The
+        # metric rules bind all methods to the read_calls metric, except for the
+        # UpdateBook and DeleteBook methods. These two methods are mapped to the
+        # write_calls metric, with the UpdateBook method consuming at twice rate as the
+        # DeleteBook method.) metric_rules: - selector: "*" metric_costs: library.
         # googleapis.com/read_calls: 1 - selector: google.example.library.v1.
         # LibraryService.UpdateBook metric_costs: library.googleapis.com/write_calls: 2 -
         # selector: google.example.library.v1.LibraryService.DeleteBook metric_costs:
@@ -3334,6 +3843,7 @@ module Google
           @monitoring = args[:monitoring] if args.key?(:monitoring)
           @name = args[:name] if args.key?(:name)
           @producer_project_id = args[:producer_project_id] if args.key?(:producer_project_id)
+          @publishing = args[:publishing] if args.key?(:publishing)
           @quota = args[:quota] if args.key?(:quota)
           @source_info = args[:source_info] if args.key?(:source_info)
           @system_parameters = args[:system_parameters] if args.key?(:system_parameters)

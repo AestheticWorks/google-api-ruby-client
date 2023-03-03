@@ -22,7 +22,9 @@ module Google
     module AndroidpublisherV3
       # Google Play Android Developer API
       #
-      # Lets Android application developers access their Google Play accounts.
+      # Lets Android application developers access their Google Play accounts. At a
+      #  high level, the expected workflow is to "insert" an Edit, make changes as
+      #  necessary, and then "commit" it.
       #
       # @example
       #    require 'google/apis/androidpublisher_v3'
@@ -47,6 +49,117 @@ module Google
                 client_name: 'google-apis-androidpublisher_v3',
                 client_version: Google::Apis::AndroidpublisherV3::GEM_VERSION)
           @batch_path = 'batch'
+        end
+        
+        # Creates a new device tier config for an app.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [Google::Apis::AndroidpublisherV3::DeviceTierConfig] device_tier_config_object
+        # @param [Boolean] allow_unknown_devices
+        #   Whether the service should accept device IDs that are unknown to Play's device
+        #   catalog.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::DeviceTierConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::DeviceTierConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_application_device_tier_config(package_name, device_tier_config_object = nil, allow_unknown_devices: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/deviceTierConfigs', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::DeviceTierConfig::Representation
+          command.request_object = device_tier_config_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::DeviceTierConfig::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::DeviceTierConfig
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.query['allowUnknownDevices'] = allow_unknown_devices unless allow_unknown_devices.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns a particular device tier config.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [Fixnum] device_tier_config_id
+        #   Required. Id of an existing device tier config.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::DeviceTierConfig] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::DeviceTierConfig]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_application_device_tier_config(package_name, device_tier_config_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/deviceTierConfigs/{deviceTierConfigId}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::DeviceTierConfig::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::DeviceTierConfig
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['deviceTierConfigId'] = device_tier_config_id unless device_tier_config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns created device tier configs, ordered by descending creation time.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [Fixnum] page_size
+        #   The maximum number of device tier configs to return. The service may return
+        #   fewer than this value. If unspecified, at most 10 device tier configs will be
+        #   returned. The maximum value for this field is 100; values above 100 will be
+        #   coerced to 100. Device tier configs will be ordered by descending creation
+        #   time.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListDeviceTierConfigs` call. Provide
+        #   this to retrieve the subsequent page.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::ListDeviceTierConfigsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::ListDeviceTierConfigsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_application_device_tier_configs(package_name, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/deviceTierConfigs', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::ListDeviceTierConfigsResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::ListDeviceTierConfigsResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
         end
         
         # Commits an app edit.
@@ -378,6 +491,9 @@ module Google
         #   Must be set to true if the app bundle installation may trigger a warning on
         #   user devices (for example, if installation size may be over a threshold,
         #   typically 100 MB).
+        # @param [String] device_tier_config_id
+        #   Device tier config (DTC) to be used for generating deliverables (APKs).
+        #   Contains id of the DTC or "LATEST" for last uploaded DTC.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -399,7 +515,7 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def upload_edit_bundle(package_name, edit_id, ack_bundle_installation_warning: nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
+        def upload_edit_bundle(package_name, edit_id, ack_bundle_installation_warning: nil, device_tier_config_id: nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
           if upload_source.nil?
             command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/edits/{editId}/bundles', options)
           else
@@ -412,6 +528,43 @@ module Google
           command.params['packageName'] = package_name unless package_name.nil?
           command.params['editId'] = edit_id unless edit_id.nil?
           command.query['ackBundleInstallationWarning'] = ack_bundle_installation_warning unless ack_bundle_installation_warning.nil?
+          command.query['deviceTierConfigId'] = device_tier_config_id unless device_tier_config_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets country availability.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [String] edit_id
+        #   Identifier of the edit.
+        # @param [String] track
+        #   The track to read from.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::TrackCountryAvailability] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::TrackCountryAvailability]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_edit_countryavailability(package_name, edit_id, track, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/edits/{editId}/countryAvailability/{track}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::TrackCountryAvailability::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::TrackCountryAvailability
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['editId'] = edit_id unless edit_id.nil?
+          command.params['track'] = track unless track.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1141,7 +1294,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets testers.
+        # Gets testers. Note: Testers resource does not support email lists.
         # @param [String] package_name
         #   Package name of the app.
         # @param [String] edit_id
@@ -1177,7 +1330,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Patches testers.
+        # Patches testers. Note: Testers resource does not support email lists.
         # @param [String] package_name
         #   Package name of the app.
         # @param [String] edit_id
@@ -1216,7 +1369,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates testers.
+        # Updates testers. Note: Testers resource does not support email lists.
         # @param [String] package_name
         #   Package name of the app.
         # @param [String] edit_id
@@ -1397,6 +1550,183 @@ module Google
           command.params['packageName'] = package_name unless package_name.nil?
           command.params['editId'] = edit_id unless edit_id.nil?
           command.params['track'] = track unless track.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Downloads a single signed APK generated from an app bundle.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [Fixnum] version_code
+        #   Version code of the app bundle.
+        # @param [String] download_id
+        #   Download ID, which uniquely identifies the APK to download. Can be obtained
+        #   from the response of `generatedapks.list` method.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [IO, String] download_dest
+        #   IO stream or filename to receive content download
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def download_generatedapk(package_name, version_code, download_id, fields: nil, quota_user: nil, download_dest: nil, options: nil, &block)
+          if download_dest.nil?
+            command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}/downloads/{downloadId}:download', options)
+          else
+            command = make_download_command(:get, 'androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}/downloads/{downloadId}:download', options)
+            command.download_dest = download_dest
+          end
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['versionCode'] = version_code unless version_code.nil?
+          command.params['downloadId'] = download_id unless download_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns download metadata for all APKs that were generated from a given app
+        # bundle.
+        # @param [String] package_name
+        #   Package name of the app.
+        # @param [Fixnum] version_code
+        #   Version code of the app bundle.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::GeneratedApksListResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::GeneratedApksListResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_generatedapks(package_name, version_code, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/generatedApks/{versionCode}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::GeneratedApksListResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::GeneratedApksListResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['versionCode'] = version_code unless version_code.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Grant access for a user to the given package.
+        # @param [String] parent
+        #   Required. The user which needs permission. Format: developers/`developer`/
+        #   users/`user`
+        # @param [Google::Apis::AndroidpublisherV3::Grant] grant_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Grant] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Grant]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_grant(parent, grant_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/{+parent}/grants', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::Grant::Representation
+          command.request_object = grant_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Grant::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Grant
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Removes all access for the user to the given package or developer account.
+        # @param [String] name
+        #   Required. The name of the grant to delete. Format: developers/`developer`/
+        #   users/`email`/grants/`package_name`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_grant(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'androidpublisher/v3/{+name}', options)
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates access for the user to the given package.
+        # @param [String] name
+        #   Required. Resource name for this grant, following the pattern "developers/`
+        #   developer`/users/`email`/grants/`package_name`". If this grant is for a draft
+        #   app, the app ID will be used in this resource name instead of the package name.
+        # @param [Google::Apis::AndroidpublisherV3::Grant] grant_object
+        # @param [String] update_mask
+        #   Optional. The list of fields to be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Grant] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Grant]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_grant(name, grant_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'androidpublisher/v3/{+name}', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::Grant::Representation
+          command.request_object = grant_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Grant::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Grant
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1716,6 +2046,759 @@ module Google
           command.response_representation = Google::Apis::AndroidpublisherV3::InternalAppSharingArtifact::Representation
           command.response_class = Google::Apis::AndroidpublisherV3::InternalAppSharingArtifact
           command.params['packageName'] = package_name unless package_name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Calculates the region prices, using today's exchange rate and country-specific
+        # pricing patterns, based on the price in the request for a set of regions.
+        # @param [String] package_name
+        #   Required. The app package name.
+        # @param [Google::Apis::AndroidpublisherV3::ConvertRegionPricesRequest] convert_region_prices_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::ConvertRegionPricesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::ConvertRegionPricesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def convert_monetization_region_prices(package_name, convert_region_prices_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/pricing:convertRegionPrices', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::ConvertRegionPricesRequest::Representation
+          command.request_object = convert_region_prices_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::ConvertRegionPricesResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::ConvertRegionPricesResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Archives a subscription. Can only be done if at least one base plan was active
+        # in the past, and no base plan is available for new or existing subscribers
+        # currently. This action is irreversible, and the subscription ID will remain
+        # reserved.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the app of the subscription to
+        #   delete.
+        # @param [String] product_id
+        #   Required. The unique product ID of the subscription to delete.
+        # @param [Google::Apis::AndroidpublisherV3::ArchiveSubscriptionRequest] archive_subscription_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def archive_subscription(package_name, product_id, archive_subscription_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}:archive', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::ArchiveSubscriptionRequest::Representation
+          command.request_object = archive_subscription_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new subscription. Newly added base plans will remain in draft state
+        # until activated.
+        # @param [String] package_name
+        #   Required. The parent app (package name) for which the subscription should be
+        #   created. Must be equal to the package_name field on the Subscription resource.
+        # @param [Google::Apis::AndroidpublisherV3::Subscription] subscription_object
+        # @param [String] product_id
+        #   Required. The ID to use for the subscription. For the requirements on this
+        #   format, see the documentation of the product_id field on the Subscription
+        #   resource.
+        # @param [String] regions_version_version
+        #   Required. A string representing version of the available regions being used
+        #   for the specified resource. The current version is 2022/02.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_monetization_subscription(package_name, subscription_object = nil, product_id: nil, regions_version_version: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.request_object = subscription_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.query['productId'] = product_id unless product_id.nil?
+          command.query['regionsVersion.version'] = regions_version_version unless regions_version_version.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a subscription. A subscription can only be deleted if it has never had
+        # a base plan published.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the app of the subscription to
+        #   delete.
+        # @param [String] product_id
+        #   Required. The unique product ID of the subscription to delete.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_monetization_subscription(package_name, product_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}', options)
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Reads a single subscription.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the subscription to get.
+        # @param [String] product_id
+        #   Required. The unique product ID of the subscription to get.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_monetization_subscription(package_name, product_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists all subscriptions under a given app.
+        # @param [String] package_name
+        #   Required. The parent app (package name) for which the subscriptions should be
+        #   read.
+        # @param [Fixnum] page_size
+        #   The maximum number of subscriptions to return. The service may return fewer
+        #   than this value. If unspecified, at most 50 subscriptions will be returned.
+        #   The maximum value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListSubscriptions` call. Provide this
+        #   to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListSubscriptions` must match the call that provided the page
+        #   token.
+        # @param [Boolean] show_archived
+        #   Whether archived subscriptions should be included in the response. Defaults to
+        #   false.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::ListSubscriptionsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::ListSubscriptionsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_monetization_subscriptions(package_name, page_size: nil, page_token: nil, show_archived: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/subscriptions', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::ListSubscriptionsResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::ListSubscriptionsResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showArchived'] = show_archived unless show_archived.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing subscription.
+        # @param [String] package_name
+        #   Immutable. Package name of the parent app.
+        # @param [String] product_id
+        #   Immutable. Unique product ID of the product. Unique within the parent app.
+        #   Product IDs must be composed of lower-case letters (a-z), numbers (0-9),
+        #   underscores (_) and dots (.). It must start with a lower-case letter or number,
+        #   and be between 1 and 40 (inclusive) characters in length.
+        # @param [Google::Apis::AndroidpublisherV3::Subscription] subscription_object
+        # @param [String] regions_version_version
+        #   Required. A string representing version of the available regions being used
+        #   for the specified resource. The current version is 2022/02.
+        # @param [String] update_mask
+        #   Required. The list of fields to be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_monetization_subscription(package_name, product_id, subscription_object = nil, regions_version_version: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.request_object = subscription_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.query['regionsVersion.version'] = regions_version_version unless regions_version_version.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Activates a base plan. Once activated, base plans will be available to new
+        # subscribers.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the base plan to activate.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the base plan to activate.
+        # @param [String] base_plan_id
+        #   Required. The unique base plan ID of the base plan to activate.
+        # @param [Google::Apis::AndroidpublisherV3::ActivateBasePlanRequest] activate_base_plan_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def activate_base_plan(package_name, product_id, base_plan_id, activate_base_plan_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}:activate', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::ActivateBasePlanRequest::Representation
+          command.request_object = activate_base_plan_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deactivates a base plan. Once deactivated, the base plan will become
+        # unavailable to new subscribers, but existing subscribers will maintain their
+        # subscription
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the base plan to deactivate.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the base plan to deactivate.
+        # @param [String] base_plan_id
+        #   Required. The unique base plan ID of the base plan to deactivate.
+        # @param [Google::Apis::AndroidpublisherV3::DeactivateBasePlanRequest] deactivate_base_plan_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::Subscription] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::Subscription]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def deactivate_base_plan(package_name, product_id, base_plan_id, deactivate_base_plan_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}:deactivate', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::DeactivateBasePlanRequest::Representation
+          command.request_object = deactivate_base_plan_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::Subscription::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::Subscription
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a base plan. Can only be done for draft base plans. This action is
+        # irreversible.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the base plan to delete.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the base plan to delete.
+        # @param [String] base_plan_id
+        #   Required. The unique offer ID of the base plan to delete.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_monetization_subscription_base_plan(package_name, product_id, base_plan_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}', options)
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Migrates subscribers who are receiving an historical subscription price to the
+        # currently-offered price for the specified region. Requests will cause price
+        # change notifications to be sent to users who are currently receiving an
+        # historical price older than the supplied timestamp. Subscribers who do not
+        # agree to the new price will have their subscription ended at the next renewal.
+        # @param [String] package_name
+        #   Required. Package name of the parent app. Must be equal to the package_name
+        #   field on the Subscription resource.
+        # @param [String] product_id
+        #   Required. The ID of the subscription to update. Must be equal to the
+        #   product_id field on the Subscription resource.
+        # @param [String] base_plan_id
+        #   Required. The unique base plan ID of the base plan to update prices on.
+        # @param [Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesRequest] migrate_base_plan_prices_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def migrate_monetization_subscription_base_plan_prices(package_name, product_id, base_plan_id, migrate_base_plan_prices_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}:migratePrices', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesRequest::Representation
+          command.request_object = migrate_base_plan_prices_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::MigrateBasePlanPricesResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Activates a subscription offer. Once activated, subscription offers will be
+        # available to new subscribers.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the offer to activate.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the offer to activate.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) of the offer to activate.
+        # @param [String] offer_id
+        #   Required. The unique offer ID of the offer to activate.
+        # @param [Google::Apis::AndroidpublisherV3::ActivateSubscriptionOfferRequest] activate_subscription_offer_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionOffer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionOffer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def activate_subscription_offer(package_name, product_id, base_plan_id, offer_id, activate_subscription_offer_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers/{offerId}:activate', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::ActivateSubscriptionOfferRequest::Representation
+          command.request_object = activate_subscription_offer_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionOffer
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.params['offerId'] = offer_id unless offer_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new subscription offer. Only auto-renewing base plans can have
+        # subscription offers. The offer state will be DRAFT until it is activated.
+        # @param [String] package_name
+        #   Required. The parent app (package name) for which the offer should be created.
+        #   Must be equal to the package_name field on the Subscription resource.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) for which the offer should be created.
+        #   Must be equal to the product_id field on the SubscriptionOffer resource.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) for which the offer should be created.
+        #   Must be equal to the base_plan_id field on the SubscriptionOffer resource.
+        # @param [Google::Apis::AndroidpublisherV3::SubscriptionOffer] subscription_offer_object
+        # @param [String] offer_id
+        #   Required. The ID to use for the offer. For the requirements on this format,
+        #   see the documentation of the offer_id field on the SubscriptionOffer resource.
+        # @param [String] regions_version_version
+        #   Required. A string representing version of the available regions being used
+        #   for the specified resource. The current version is 2022/02.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionOffer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionOffer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_monetization_subscription_base_plan_offer(package_name, product_id, base_plan_id, subscription_offer_object = nil, offer_id: nil, regions_version_version: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.request_object = subscription_offer_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionOffer
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['offerId'] = offer_id unless offer_id.nil?
+          command.query['regionsVersion.version'] = regions_version_version unless regions_version_version.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deactivates a subscription offer. Once deactivated, existing subscribers will
+        # maintain their subscription, but the offer will become unavailable to new
+        # subscribers.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the offer to deactivate.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the offer to deactivate.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) of the offer to deactivate.
+        # @param [String] offer_id
+        #   Required. The unique offer ID of the offer to deactivate.
+        # @param [Google::Apis::AndroidpublisherV3::DeactivateSubscriptionOfferRequest] deactivate_subscription_offer_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionOffer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionOffer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def deactivate_subscription_offer(package_name, product_id, base_plan_id, offer_id, deactivate_subscription_offer_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers/{offerId}:deactivate', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::DeactivateSubscriptionOfferRequest::Representation
+          command.request_object = deactivate_subscription_offer_request_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionOffer
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.params['offerId'] = offer_id unless offer_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a subscription offer. Can only be done for draft offers. This action
+        # is irreversible.
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the offer to delete.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the offer to delete.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) of the offer to delete.
+        # @param [String] offer_id
+        #   Required. The unique offer ID of the offer to delete.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_monetization_subscription_base_plan_offer(package_name, product_id, base_plan_id, offer_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers/{offerId}', options)
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.params['offerId'] = offer_id unless offer_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Reads a single offer
+        # @param [String] package_name
+        #   Required. The parent app (package name) of the offer to get.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) of the offer to get.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) of the offer to get.
+        # @param [String] offer_id
+        #   Required. The unique offer ID of the offer to get.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionOffer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionOffer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_monetization_subscription_base_plan_offer(package_name, product_id, base_plan_id, offer_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers/{offerId}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionOffer
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.params['offerId'] = offer_id unless offer_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists all offers under a given subscription.
+        # @param [String] package_name
+        #   Required. The parent app (package name) for which the subscriptions should be
+        #   read.
+        # @param [String] product_id
+        #   Required. The parent subscription (ID) for which the offers should be read.
+        # @param [String] base_plan_id
+        #   Required. The parent base plan (ID) for which the offers should be read. May
+        #   be specified as '-' to read all offers under a subscription.
+        # @param [Fixnum] page_size
+        #   The maximum number of subscriptions to return. The service may return fewer
+        #   than this value. If unspecified, at most 50 subscriptions will be returned.
+        #   The maximum value is 1000; values above 1000 will be coerced to 1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListSubscriptionsOffers` call. Provide
+        #   this to retrieve the subsequent page. When paginating, all other parameters
+        #   provided to `ListSubscriptionOffers` must match the call that provided the
+        #   page token.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::ListSubscriptionOffersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::ListSubscriptionOffersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_monetization_subscription_base_plan_offers(package_name, product_id, base_plan_id, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::ListSubscriptionOffersResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::ListSubscriptionOffersResponse
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing subscription offer.
+        # @param [String] package_name
+        #   Required. Immutable. The package name of the app the parent subscription
+        #   belongs to.
+        # @param [String] product_id
+        #   Required. Immutable. The ID of the parent subscription this offer belongs to.
+        # @param [String] base_plan_id
+        #   Required. Immutable. The ID of the base plan to which this offer is an
+        #   extension.
+        # @param [String] offer_id
+        #   Required. Immutable. Unique ID of this subscription offer. Must be unique
+        #   within the base plan.
+        # @param [Google::Apis::AndroidpublisherV3::SubscriptionOffer] subscription_offer_object
+        # @param [String] regions_version_version
+        #   Required. A string representing version of the available regions being used
+        #   for the specified resource. The current version is 2022/02.
+        # @param [String] update_mask
+        #   Required. The list of fields to be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionOffer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionOffer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_monetization_subscription_base_plan_offer(package_name, product_id, base_plan_id, offer_id, subscription_offer_object = nil, regions_version_version: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers/{offerId}', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.request_object = subscription_offer_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionOffer::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionOffer
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['productId'] = product_id unless product_id.nil?
+          command.params['basePlanId'] = base_plan_id unless base_plan_id.nil?
+          command.params['offerId'] = offer_id unless offer_id.nil?
+          command.query['regionsVersion.version'] = regions_version_version unless regions_version_version.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -2060,6 +3143,41 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Get metadata about a subscription
+        # @param [String] package_name
+        #   The package of the application for which this subscription was purchased (for
+        #   example, 'com.some.thing').
+        # @param [String] token
+        #   Required. The token provided to the user's device when the subscription was
+        #   purchased.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::SubscriptionPurchaseV2] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::SubscriptionPurchaseV2]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_purchase_subscriptionsv2(package_name, token, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::SubscriptionPurchaseV2::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::SubscriptionPurchaseV2
+          command.params['packageName'] = package_name unless package_name.nil?
+          command.params['token'] = token unless token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Lists the purchases that were canceled, refunded or charged-back.
         # @param [String] package_name
         #   The package name of the application for which voided purchases need to be
@@ -2387,6 +3505,145 @@ module Google
           command.response_class = Google::Apis::AndroidpublisherV3::SystemApksListResponse
           command.params['packageName'] = package_name unless package_name.nil?
           command.params['versionCode'] = version_code unless version_code.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Grant access for a user to the given developer account.
+        # @param [String] parent
+        #   Required. The developer account to add the user to. Format: developers/`
+        #   developer`
+        # @param [Google::Apis::AndroidpublisherV3::User] user_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::User] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::User]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_user(parent, user_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'androidpublisher/v3/{+parent}/users', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::User::Representation
+          command.request_object = user_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::User::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::User
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Removes all access for the user to the given developer account.
+        # @param [String] name
+        #   Required. The name of the user to delete. Format: developers/`developer`/users/
+        #   `email`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_user(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'androidpublisher/v3/{+name}', options)
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists all users with access to a developer account.
+        # @param [String] parent
+        #   Required. The developer account to fetch users from. Format: developers/`
+        #   developer`
+        # @param [Fixnum] page_size
+        #   The maximum number of results to return. This must be set to -1 to disable
+        #   pagination.
+        # @param [String] page_token
+        #   A token received from a previous call to this method, in order to retrieve
+        #   further results.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::ListUsersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::ListUsersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_users(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'androidpublisher/v3/{+parent}/users', options)
+          command.response_representation = Google::Apis::AndroidpublisherV3::ListUsersResponse::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::ListUsersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates access for the user to the developer account.
+        # @param [String] name
+        #   Required. Resource name for this user, following the pattern "developers/`
+        #   developer`/users/`email`".
+        # @param [Google::Apis::AndroidpublisherV3::User] user_object
+        # @param [String] update_mask
+        #   Optional. The list of fields to be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AndroidpublisherV3::User] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AndroidpublisherV3::User]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_user(name, user_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'androidpublisher/v3/{+name}', options)
+          command.request_representation = Google::Apis::AndroidpublisherV3::User::Representation
+          command.request_object = user_object
+          command.response_representation = Google::Apis::AndroidpublisherV3::User::Representation
+          command.response_class = Google::Apis::AndroidpublisherV3::User
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

@@ -22,6 +22,24 @@ module Google
   module Apis
     module GkehubV1
       
+      class AppDevExperienceFeatureSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AppDevExperienceFeatureState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ApplianceCluster
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AuditConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -64,6 +82,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CommonFleetDefaultMemberConfigSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ConfigManagementConfigSync
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -83,12 +107,6 @@ module Google
       end
       
       class ConfigManagementConfigSyncVersion
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class ConfigManagementContainerResourceRequirements
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -160,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ConfigManagementOciConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ConfigManagementOperatorState
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -172,6 +196,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ConfigManagementPolicyControllerMigration
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ConfigManagementPolicyControllerMonitoring
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ConfigManagementPolicyControllerState
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -179,12 +215,6 @@ module Google
       end
       
       class ConfigManagementPolicyControllerVersion
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class ConfigManagementQuantity
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -203,6 +233,12 @@ module Google
       end
       
       class ConnectAgentResource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EdgeCluster
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -238,6 +274,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FleetObservabilityFeatureSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FleetObservabilityFeatureState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FleetObservabilityMembershipSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FleetObservabilityMembershipState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GenerateConnectManifestResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -256,7 +316,49 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class IdentityServiceAuthMethod
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentityServiceAzureAdConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentityServiceGoogleConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentityServiceMembershipSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentityServiceMembershipState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IdentityServiceOidcConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class KubernetesMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KubernetesResource
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -274,6 +376,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListMembershipBindingsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListMembershipsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -286,6 +394,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListScopesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Location
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -293,6 +407,18 @@ module Google
       end
       
       class Membership
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MembershipBinding
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MembershipBindingLifecycleState
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -358,7 +484,79 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ResourceManifest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ResourceOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Scope
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ScopeFeatureSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ScopeFeatureState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ScopeLifecycleState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceMeshControlPlaneManagement
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceMeshDataPlaneManagement
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceMeshMembershipSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceMeshMembershipState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ServiceMeshStatusDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SetIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Status
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -380,6 +578,27 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AppDevExperienceFeatureSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class AppDevExperienceFeatureState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :networking_install_succeeded, as: 'networkingInstallSucceeded', class: Google::Apis::GkehubV1::Status, decorator: Google::Apis::GkehubV1::Status::Representation
+      
+        end
+      end
+      
+      class ApplianceCluster
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :resource_link, as: 'resourceLink'
+        end
       end
       
       class AuditConfig
@@ -428,6 +647,10 @@ module Google
       class CommonFeatureSpec
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :appdevexperience, as: 'appdevexperience', class: Google::Apis::GkehubV1::AppDevExperienceFeatureSpec, decorator: Google::Apis::GkehubV1::AppDevExperienceFeatureSpec::Representation
+      
+          property :fleetobservability, as: 'fleetobservability', class: Google::Apis::GkehubV1::FleetObservabilityFeatureSpec, decorator: Google::Apis::GkehubV1::FleetObservabilityFeatureSpec::Representation
+      
           property :multiclusteringress, as: 'multiclusteringress', class: Google::Apis::GkehubV1::MultiClusterIngressFeatureSpec, decorator: Google::Apis::GkehubV1::MultiClusterIngressFeatureSpec::Representation
       
         end
@@ -436,18 +659,31 @@ module Google
       class CommonFeatureState
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :appdevexperience, as: 'appdevexperience', class: Google::Apis::GkehubV1::AppDevExperienceFeatureState, decorator: Google::Apis::GkehubV1::AppDevExperienceFeatureState::Representation
+      
+          property :fleetobservability, as: 'fleetobservability', class: Google::Apis::GkehubV1::FleetObservabilityFeatureState, decorator: Google::Apis::GkehubV1::FleetObservabilityFeatureState::Representation
+      
           property :state, as: 'state', class: Google::Apis::GkehubV1::FeatureState, decorator: Google::Apis::GkehubV1::FeatureState::Representation
       
+        end
+      end
+      
+      class CommonFleetDefaultMemberConfigSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
       class ConfigManagementConfigSync
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_vertical_scale, as: 'allowVerticalScale'
+          property :enabled, as: 'enabled'
           property :git, as: 'git', class: Google::Apis::GkehubV1::ConfigManagementGitConfig, decorator: Google::Apis::GkehubV1::ConfigManagementGitConfig::Representation
       
-          hash :resource_requirements, as: 'resourceRequirements', class: Google::Apis::GkehubV1::ConfigManagementContainerResourceRequirements, decorator: Google::Apis::GkehubV1::ConfigManagementContainerResourceRequirements::Representation
+          property :oci, as: 'oci', class: Google::Apis::GkehubV1::ConfigManagementOciConfig, decorator: Google::Apis::GkehubV1::ConfigManagementOciConfig::Representation
       
+          property :prevent_drift, as: 'preventDrift'
           property :source_format, as: 'sourceFormat'
         end
       end
@@ -490,17 +726,6 @@ module Google
         end
       end
       
-      class ConfigManagementContainerResourceRequirements
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :container_name, as: 'containerName'
-          property :cpu_limit, as: 'cpuLimit', class: Google::Apis::GkehubV1::ConfigManagementQuantity, decorator: Google::Apis::GkehubV1::ConfigManagementQuantity::Representation
-      
-          property :memory_limit, as: 'memoryLimit', class: Google::Apis::GkehubV1::ConfigManagementQuantity, decorator: Google::Apis::GkehubV1::ConfigManagementQuantity::Representation
-      
-        end
-      end
-      
       class ConfigManagementErrorResource
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -517,6 +742,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :gatekeeper_audit, as: 'gatekeeperAudit'
           property :gatekeeper_controller_manager_state, as: 'gatekeeperControllerManagerState'
+          property :gatekeeper_mutation, as: 'gatekeeperMutation'
         end
       end
       
@@ -525,11 +751,9 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :gcp_service_account_email, as: 'gcpServiceAccountEmail'
           property :https_proxy, as: 'httpsProxy'
-          property :no_ssl_verify, as: 'noSslVerify'
           property :policy_dir, as: 'policyDir'
           property :secret_type, as: 'secretType'
           property :sync_branch, as: 'syncBranch'
-          property :sync_depth, :numeric_string => true, as: 'syncDepth'
           property :sync_repo, as: 'syncRepo'
           property :sync_rev, as: 'syncRev'
           property :sync_wait_secs, :numeric_string => true, as: 'syncWaitSecs'
@@ -617,6 +841,17 @@ module Google
         end
       end
       
+      class ConfigManagementOciConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gcp_service_account_email, as: 'gcpServiceAccountEmail'
+          property :policy_dir, as: 'policyDir'
+          property :secret_type, as: 'secretType'
+          property :sync_repo, as: 'syncRepo'
+          property :sync_wait_secs, :numeric_string => true, as: 'syncWaitSecs'
+        end
+      end
+      
       class ConfigManagementOperatorState
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -634,8 +869,25 @@ module Google
           property :enabled, as: 'enabled'
           collection :exemptable_namespaces, as: 'exemptableNamespaces'
           property :log_denies_enabled, as: 'logDeniesEnabled'
+          property :monitoring, as: 'monitoring', class: Google::Apis::GkehubV1::ConfigManagementPolicyControllerMonitoring, decorator: Google::Apis::GkehubV1::ConfigManagementPolicyControllerMonitoring::Representation
+      
+          property :mutation_enabled, as: 'mutationEnabled'
           property :referential_rules_enabled, as: 'referentialRulesEnabled'
           property :template_library_installed, as: 'templateLibraryInstalled'
+        end
+      end
+      
+      class ConfigManagementPolicyControllerMigration
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :stage, as: 'stage'
+        end
+      end
+      
+      class ConfigManagementPolicyControllerMonitoring
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :backends, as: 'backends'
         end
       end
       
@@ -643,6 +895,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :deployment_state, as: 'deploymentState', class: Google::Apis::GkehubV1::ConfigManagementGatekeeperDeploymentState, decorator: Google::Apis::GkehubV1::ConfigManagementGatekeeperDeploymentState::Representation
+      
+          property :migration, as: 'migration', class: Google::Apis::GkehubV1::ConfigManagementPolicyControllerMigration, decorator: Google::Apis::GkehubV1::ConfigManagementPolicyControllerMigration::Representation
       
           property :version, as: 'version', class: Google::Apis::GkehubV1::ConfigManagementPolicyControllerVersion, decorator: Google::Apis::GkehubV1::ConfigManagementPolicyControllerVersion::Representation
       
@@ -653,13 +907,6 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :version, as: 'version'
-        end
-      end
-      
-      class ConfigManagementQuantity
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :string, as: 'string'
         end
       end
       
@@ -696,6 +943,13 @@ module Google
         end
       end
       
+      class EdgeCluster
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :resource_link, as: 'resourceLink'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -717,6 +971,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :create_time, as: 'createTime'
           property :delete_time, as: 'deleteTime'
+          property :fleet_default_member_config, as: 'fleetDefaultMemberConfig', class: Google::Apis::GkehubV1::CommonFleetDefaultMemberConfigSpec, decorator: Google::Apis::GkehubV1::CommonFleetDefaultMemberConfigSpec::Representation
+      
           hash :labels, as: 'labels'
           hash :membership_specs, as: 'membershipSpecs', class: Google::Apis::GkehubV1::MembershipFeatureSpec, decorator: Google::Apis::GkehubV1::MembershipFeatureSpec::Representation
       
@@ -724,6 +980,10 @@ module Google
       
           property :name, as: 'name'
           property :resource_state, as: 'resourceState', class: Google::Apis::GkehubV1::FeatureResourceState, decorator: Google::Apis::GkehubV1::FeatureResourceState::Representation
+      
+          hash :scope_specs, as: 'scopeSpecs', class: Google::Apis::GkehubV1::ScopeFeatureSpec, decorator: Google::Apis::GkehubV1::ScopeFeatureSpec::Representation
+      
+          hash :scope_states, as: 'scopeStates', class: Google::Apis::GkehubV1::ScopeFeatureState, decorator: Google::Apis::GkehubV1::ScopeFeatureState::Representation
       
           property :spec, as: 'spec', class: Google::Apis::GkehubV1::CommonFeatureSpec, decorator: Google::Apis::GkehubV1::CommonFeatureSpec::Representation
       
@@ -746,6 +1006,30 @@ module Google
           property :code, as: 'code'
           property :description, as: 'description'
           property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class FleetObservabilityFeatureSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class FleetObservabilityFeatureState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class FleetObservabilityMembershipSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class FleetObservabilityMembershipState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -774,6 +1058,77 @@ module Google
         end
       end
       
+      class IdentityServiceAuthMethod
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :azuread_config, as: 'azureadConfig', class: Google::Apis::GkehubV1::IdentityServiceAzureAdConfig, decorator: Google::Apis::GkehubV1::IdentityServiceAzureAdConfig::Representation
+      
+          property :google_config, as: 'googleConfig', class: Google::Apis::GkehubV1::IdentityServiceGoogleConfig, decorator: Google::Apis::GkehubV1::IdentityServiceGoogleConfig::Representation
+      
+          property :name, as: 'name'
+          property :oidc_config, as: 'oidcConfig', class: Google::Apis::GkehubV1::IdentityServiceOidcConfig, decorator: Google::Apis::GkehubV1::IdentityServiceOidcConfig::Representation
+      
+          property :proxy, as: 'proxy'
+        end
+      end
+      
+      class IdentityServiceAzureAdConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :client_id, as: 'clientId'
+          property :client_secret, as: 'clientSecret'
+          property :encrypted_client_secret, :base64 => true, as: 'encryptedClientSecret'
+          property :kubectl_redirect_uri, as: 'kubectlRedirectUri'
+          property :tenant, as: 'tenant'
+        end
+      end
+      
+      class IdentityServiceGoogleConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :disable, as: 'disable'
+        end
+      end
+      
+      class IdentityServiceMembershipSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :auth_methods, as: 'authMethods', class: Google::Apis::GkehubV1::IdentityServiceAuthMethod, decorator: Google::Apis::GkehubV1::IdentityServiceAuthMethod::Representation
+      
+        end
+      end
+      
+      class IdentityServiceMembershipState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :failure_reason, as: 'failureReason'
+          property :installed_version, as: 'installedVersion'
+          property :member_config, as: 'memberConfig', class: Google::Apis::GkehubV1::IdentityServiceMembershipSpec, decorator: Google::Apis::GkehubV1::IdentityServiceMembershipSpec::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class IdentityServiceOidcConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :certificate_authority_data, as: 'certificateAuthorityData'
+          property :client_id, as: 'clientId'
+          property :client_secret, as: 'clientSecret'
+          property :deploy_cloud_console_proxy, as: 'deployCloudConsoleProxy'
+          property :enable_access_token, as: 'enableAccessToken'
+          property :encrypted_client_secret, :base64 => true, as: 'encryptedClientSecret'
+          property :extra_params, as: 'extraParams'
+          property :group_prefix, as: 'groupPrefix'
+          property :groups_claim, as: 'groupsClaim'
+          property :issuer_uri, as: 'issuerUri'
+          property :kubectl_redirect_uri, as: 'kubectlRedirectUri'
+          property :scopes, as: 'scopes'
+          property :user_claim, as: 'userClaim'
+          property :user_prefix, as: 'userPrefix'
+        end
+      end
+      
       class KubernetesMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -783,6 +1138,19 @@ module Google
           property :node_provider_id, as: 'nodeProviderId'
           property :update_time, as: 'updateTime'
           property :vcpu_count, as: 'vcpuCount'
+        end
+      end
+      
+      class KubernetesResource
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :connect_resources, as: 'connectResources', class: Google::Apis::GkehubV1::ResourceManifest, decorator: Google::Apis::GkehubV1::ResourceManifest::Representation
+      
+          property :membership_cr_manifest, as: 'membershipCrManifest'
+          collection :membership_resources, as: 'membershipResources', class: Google::Apis::GkehubV1::ResourceManifest, decorator: Google::Apis::GkehubV1::ResourceManifest::Representation
+      
+          property :resource_options, as: 'resourceOptions', class: Google::Apis::GkehubV1::ResourceOptions, decorator: Google::Apis::GkehubV1::ResourceOptions::Representation
+      
         end
       end
       
@@ -804,6 +1172,15 @@ module Google
         end
       end
       
+      class ListMembershipBindingsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :membership_bindings, as: 'membershipBindings', class: Google::Apis::GkehubV1::MembershipBinding, decorator: Google::Apis::GkehubV1::MembershipBinding::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
       class ListMembershipsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -819,6 +1196,15 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :next_page_token, as: 'nextPageToken'
           collection :operations, as: 'operations', class: Google::Apis::GkehubV1::Operation, decorator: Google::Apis::GkehubV1::Operation::Representation
+      
+        end
+      end
+      
+      class ListScopesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :scopes, as: 'scopes', class: Google::Apis::GkehubV1::Scope, decorator: Google::Apis::GkehubV1::Scope::Representation
       
         end
       end
@@ -855,12 +1241,41 @@ module Google
         end
       end
       
+      class MembershipBinding
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :delete_time, as: 'deleteTime'
+          property :fleet, as: 'fleet'
+          property :name, as: 'name'
+          property :scope, as: 'scope'
+          property :state, as: 'state', class: Google::Apis::GkehubV1::MembershipBindingLifecycleState, decorator: Google::Apis::GkehubV1::MembershipBindingLifecycleState::Representation
+      
+          property :uid, as: 'uid'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class MembershipBindingLifecycleState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+        end
+      end
+      
       class MembershipEndpoint
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :appliance_cluster, as: 'applianceCluster', class: Google::Apis::GkehubV1::ApplianceCluster, decorator: Google::Apis::GkehubV1::ApplianceCluster::Representation
+      
+          property :edge_cluster, as: 'edgeCluster', class: Google::Apis::GkehubV1::EdgeCluster, decorator: Google::Apis::GkehubV1::EdgeCluster::Representation
+      
           property :gke_cluster, as: 'gkeCluster', class: Google::Apis::GkehubV1::GkeCluster, decorator: Google::Apis::GkehubV1::GkeCluster::Representation
       
+          property :google_managed, as: 'googleManaged'
           property :kubernetes_metadata, as: 'kubernetesMetadata', class: Google::Apis::GkehubV1::KubernetesMetadata, decorator: Google::Apis::GkehubV1::KubernetesMetadata::Representation
+      
+          property :kubernetes_resource, as: 'kubernetesResource', class: Google::Apis::GkehubV1::KubernetesResource, decorator: Google::Apis::GkehubV1::KubernetesResource::Representation
       
           property :multi_cloud_cluster, as: 'multiCloudCluster', class: Google::Apis::GkehubV1::MultiCloudCluster, decorator: Google::Apis::GkehubV1::MultiCloudCluster::Representation
       
@@ -874,13 +1289,28 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :configmanagement, as: 'configmanagement', class: Google::Apis::GkehubV1::ConfigManagementMembershipSpec, decorator: Google::Apis::GkehubV1::ConfigManagementMembershipSpec::Representation
       
+          property :fleet_inherited, as: 'fleetInherited'
+          property :fleetobservability, as: 'fleetobservability', class: Google::Apis::GkehubV1::FleetObservabilityMembershipSpec, decorator: Google::Apis::GkehubV1::FleetObservabilityMembershipSpec::Representation
+      
+          property :identityservice, as: 'identityservice', class: Google::Apis::GkehubV1::IdentityServiceMembershipSpec, decorator: Google::Apis::GkehubV1::IdentityServiceMembershipSpec::Representation
+      
+          property :mesh, as: 'mesh', class: Google::Apis::GkehubV1::ServiceMeshMembershipSpec, decorator: Google::Apis::GkehubV1::ServiceMeshMembershipSpec::Representation
+      
         end
       end
       
       class MembershipFeatureState
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :appdevexperience, as: 'appdevexperience', class: Google::Apis::GkehubV1::AppDevExperienceFeatureState, decorator: Google::Apis::GkehubV1::AppDevExperienceFeatureState::Representation
+      
           property :configmanagement, as: 'configmanagement', class: Google::Apis::GkehubV1::ConfigManagementMembershipState, decorator: Google::Apis::GkehubV1::ConfigManagementMembershipState::Representation
+      
+          property :fleetobservability, as: 'fleetobservability', class: Google::Apis::GkehubV1::FleetObservabilityMembershipState, decorator: Google::Apis::GkehubV1::FleetObservabilityMembershipState::Representation
+      
+          property :identityservice, as: 'identityservice', class: Google::Apis::GkehubV1::IdentityServiceMembershipState, decorator: Google::Apis::GkehubV1::IdentityServiceMembershipState::Representation
+      
+          property :servicemesh, as: 'servicemesh', class: Google::Apis::GkehubV1::ServiceMeshMembershipState, decorator: Google::Apis::GkehubV1::ServiceMeshMembershipState::Representation
       
           property :state, as: 'state', class: Google::Apis::GkehubV1::FeatureState, decorator: Google::Apis::GkehubV1::FeatureState::Representation
       
@@ -914,6 +1344,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :admin_cluster, as: 'adminCluster'
           property :cluster_missing, as: 'clusterMissing'
+          property :cluster_type, as: 'clusterType'
           property :resource_link, as: 'resourceLink'
         end
       end
@@ -955,12 +1386,115 @@ module Google
         end
       end
       
+      class ResourceManifest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_scoped, as: 'clusterScoped'
+          property :manifest, as: 'manifest'
+        end
+      end
+      
+      class ResourceOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :connect_version, as: 'connectVersion'
+          property :k8s_version, as: 'k8sVersion'
+          property :v1beta1_crd, as: 'v1beta1Crd'
+        end
+      end
+      
+      class Scope
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :delete_time, as: 'deleteTime'
+          property :name, as: 'name'
+          property :state, as: 'state', class: Google::Apis::GkehubV1::ScopeLifecycleState, decorator: Google::Apis::GkehubV1::ScopeLifecycleState::Representation
+      
+          property :uid, as: 'uid'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class ScopeFeatureSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class ScopeFeatureState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :state, as: 'state', class: Google::Apis::GkehubV1::FeatureState, decorator: Google::Apis::GkehubV1::FeatureState::Representation
+      
+        end
+      end
+      
+      class ScopeLifecycleState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+        end
+      end
+      
+      class ServiceMeshControlPlaneManagement
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :details, as: 'details', class: Google::Apis::GkehubV1::ServiceMeshStatusDetails, decorator: Google::Apis::GkehubV1::ServiceMeshStatusDetails::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class ServiceMeshDataPlaneManagement
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :details, as: 'details', class: Google::Apis::GkehubV1::ServiceMeshStatusDetails, decorator: Google::Apis::GkehubV1::ServiceMeshStatusDetails::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class ServiceMeshMembershipSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :control_plane, as: 'controlPlane'
+          property :management, as: 'management'
+        end
+      end
+      
+      class ServiceMeshMembershipState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :control_plane_management, as: 'controlPlaneManagement', class: Google::Apis::GkehubV1::ServiceMeshControlPlaneManagement, decorator: Google::Apis::GkehubV1::ServiceMeshControlPlaneManagement::Representation
+      
+          property :data_plane_management, as: 'dataPlaneManagement', class: Google::Apis::GkehubV1::ServiceMeshDataPlaneManagement, decorator: Google::Apis::GkehubV1::ServiceMeshDataPlaneManagement::Representation
+      
+        end
+      end
+      
+      class ServiceMeshStatusDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          property :details, as: 'details'
+        end
+      end
+      
       class SetIamPolicyRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :policy, as: 'policy', class: Google::Apis::GkehubV1::Policy, decorator: Google::Apis::GkehubV1::Policy::Representation
       
           property :update_mask, as: 'updateMask'
+        end
+      end
+      
+      class Status
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          property :description, as: 'description'
         end
       end
       

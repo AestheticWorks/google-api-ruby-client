@@ -40,6 +40,11 @@ module Google
         # @return [String]
         attr_accessor :database
       
+        # Output only. The database dialect information for the backup.
+        # Corresponds to the JSON property `databaseDialect`
+        # @return [String]
+        attr_accessor :database_dialect
+      
         # Encryption information for a Cloud Spanner database or backup.
         # Corresponds to the JSON property `encryptionInfo`
         # @return [Google::Apis::SpannerV1::EncryptionInfo]
@@ -54,6 +59,15 @@ module Google
         # @return [String]
         attr_accessor :expire_time
       
+        # Output only. The max allowed expiration time of the backup, with microseconds
+        # granularity. A backup's expiration time can be configured in multiple APIs:
+        # CreateBackup, UpdateBackup, CopyBackup. When updating or copying an existing
+        # backup, the expiration time specified must be less than `Backup.
+        # max_expire_time`.
+        # Corresponds to the JSON property `maxExpireTime`
+        # @return [String]
+        attr_accessor :max_expire_time
+      
         # Output only for the CreateBackup operation. Required for the UpdateBackup
         # operation. A globally unique identifier for the backup which cannot be changed.
         # Values are of the form `projects//instances//backups/a-z*[a-z0-9]` The final
@@ -64,6 +78,16 @@ module Google
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Output only. The names of the destination backups being created by copying
+        # this source backup. The backup names are of the form `projects//instances//
+        # backups/`. Referencing backups may exist in different instances. The existence
+        # of any referencing backup prevents the backup from being deleted. When the
+        # copy operation is done (either successfully completed or cancelled or the
+        # destination backup is deleted), the reference to the backup is removed.
+        # Corresponds to the JSON property `referencingBackups`
+        # @return [Array<String>]
+        attr_accessor :referencing_backups
       
         # Output only. The names of the restored databases that reference the backup.
         # The database names are of the form `projects//instances//databases/`.
@@ -100,9 +124,12 @@ module Google
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
           @database = args[:database] if args.key?(:database)
+          @database_dialect = args[:database_dialect] if args.key?(:database_dialect)
           @encryption_info = args[:encryption_info] if args.key?(:encryption_info)
           @expire_time = args[:expire_time] if args.key?(:expire_time)
+          @max_expire_time = args[:max_expire_time] if args.key?(:max_expire_time)
           @name = args[:name] if args.key?(:name)
+          @referencing_backups = args[:referencing_backups] if args.key?(:referencing_backups)
           @referencing_databases = args[:referencing_databases] if args.key?(:referencing_databases)
           @size_bytes = args[:size_bytes] if args.key?(:size_bytes)
           @state = args[:state] if args.key?(:state)
@@ -206,25 +233,30 @@ module Google
         # count towards the one transaction limit). After the active transaction is
         # completed, the session can immediately be re-used for the next transaction. It
         # is not necessary to create a new session for each transaction. Transaction
-        # Modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
+        # modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
         # This type of transaction is the only way to write data into Cloud Spanner.
         # These transactions rely on pessimistic locking and, if necessary, two-phase
         # commit. Locking read-write transactions may abort, requiring the application
-        # to retry. 2. Snapshot read-only. This transaction type provides guaranteed
-        # consistency across several reads, but does not allow writes. Snapshot read-
-        # only transactions can be configured to read at timestamps in the past.
-        # Snapshot read-only transactions do not need to be committed. 3. Partitioned
-        # DML. This type of transaction is used to execute a single Partitioned DML
-        # statement. Partitioned DML partitions the key space and runs the DML statement
-        # over each partition in parallel using separate, internal transactions that
-        # commit independently. Partitioned DML transactions do not need to be committed.
-        # For transactions that only read, snapshot read-only transactions provide
-        # simpler semantics and are almost always faster. In particular, read-only
-        # transactions do not take locks, so they do not conflict with read-write
-        # transactions. As a consequence of not taking locks, they also do not abort, so
-        # retry loops are not needed. Transactions may only read/write data in a single
-        # database. They may, however, read/write data in different tables within that
-        # database. Locking Read-Write Transactions: Locking transactions may be used to
+        # to retry. 2. Snapshot read-only. Snapshot read-only transactions provide
+        # guaranteed consistency across several reads, but do not allow writes. Snapshot
+        # read-only transactions can be configured to read at timestamps in the past, or
+        # configured to perform a strong read (where Spanner will select a timestamp
+        # such that the read is guaranteed to see the effects of all transactions that
+        # have committed before the start of the read). Snapshot read-only transactions
+        # do not need to be committed. Queries on change streams must be performed with
+        # the snapshot read-only transaction mode, specifying a strong read. Please see
+        # TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML. This
+        # type of transaction is used to execute a single Partitioned DML statement.
+        # Partitioned DML partitions the key space and runs the DML statement over each
+        # partition in parallel using separate, internal transactions that commit
+        # independently. Partitioned DML transactions do not need to be committed. For
+        # transactions that only read, snapshot read-only transactions provide simpler
+        # semantics and are almost always faster. In particular, read-only transactions
+        # do not take locks, so they do not conflict with read-write transactions. As a
+        # consequence of not taking locks, they also do not abort, so retry loops are
+        # not needed. Transactions may only read-write data in a single database. They
+        # may, however, read-write data in different tables within that database.
+        # Locking read-write transactions: Locking transactions may be used to
         # atomically read-modify-write data anywhere in a database. This type of
         # transaction is externally consistent. Clients should attempt to minimize the
         # amount of time a transaction is active. Faster transactions commit with higher
@@ -243,7 +275,7 @@ module Google
         # Cloud Spanner makes no guarantees about how long the transaction's locks were
         # held for. It is an error to use Cloud Spanner locks for any sort of mutual
         # exclusion other than between Cloud Spanner transactions themselves. Retrying
-        # Aborted Transactions: When a transaction aborts, the application can choose to
+        # aborted transactions: When a transaction aborts, the application can choose to
         # retry the whole transaction again. To maximize the chances of successfully
         # committing the retry, the client should execute the retry in the same session
         # as the original attempt. The original session's lock priority increases with
@@ -252,14 +284,14 @@ module Google
         # transactions attempting to modify the same row(s)), a transaction can abort
         # many times in a short period before successfully committing. Thus, it is not a
         # good idea to cap the number of retries a transaction can attempt; instead, it
-        # is better to limit the total amount of time spent retrying. Idle Transactions:
+        # is better to limit the total amount of time spent retrying. Idle transactions:
         # A transaction is considered idle if it has no outstanding reads or SQL queries
         # and has not started a read or SQL query within the last 10 seconds. Idle
         # transactions can be aborted by Cloud Spanner so that they don't hold on to
         # locks indefinitely. If an idle transaction is aborted, the commit will fail
         # with error `ABORTED`. If this behavior is undesirable, periodically executing
         # a simple SQL query in the transaction (for example, `SELECT 1`) prevents the
-        # transaction from becoming idle. Snapshot Read-Only Transactions: Snapshot read-
+        # transaction from becoming idle. Snapshot read-only transactions: Snapshot read-
         # only transactions provides a simpler method than locking read-write
         # transactions for doing several consistent reads. However, this type of
         # transaction does not support writes. Snapshot transactions do not take locks.
@@ -275,7 +307,7 @@ module Google
         # how to choose a read timestamp. The types of timestamp bound are: - Strong (
         # the default). - Bounded staleness. - Exact staleness. If the Cloud Spanner
         # database to be read is geographically distributed, stale read-only
-        # transactions can execute more quickly than strong or read-write transaction,
+        # transactions can execute more quickly than strong or read-write transactions,
         # because they are able to execute far from the leader replica. Each type of
         # timestamp bound is discussed in detail below. Strong: Strong reads are
         # guaranteed to see the effects of all transactions that have committed before
@@ -285,69 +317,91 @@ module Google
         # two consecutive strong read-only transactions might return inconsistent
         # results if there are concurrent writes. If consistency across reads is
         # required, the reads should be executed within a transaction or at an exact
-        # read timestamp. See TransactionOptions.ReadOnly.strong. Exact Staleness: These
-        # timestamp bounds execute reads at a user-specified timestamp. Reads at a
-        # timestamp are guaranteed to see a consistent prefix of the global transaction
-        # history: they observe modifications done by all transactions with a commit
-        # timestamp less than or equal to the read timestamp, and observe none of the
-        # modifications done by transactions with a larger commit timestamp. They will
-        # block until all conflicting transactions that may be assigned commit
-        # timestamps <= the read timestamp have finished. The timestamp can either be
-        # expressed as an absolute Cloud Spanner commit timestamp or a staleness
-        # relative to the current time. These modes do not require a "negotiation phase"
-        # to pick a timestamp. As a result, they execute slightly faster than the
-        # equivalent boundedly stale concurrency modes. On the other hand, boundedly
-        # stale reads usually return fresher results. See TransactionOptions.ReadOnly.
-        # read_timestamp and TransactionOptions.ReadOnly.exact_staleness. Bounded
-        # Staleness: Bounded staleness modes allow Cloud Spanner to pick the read
-        # timestamp, subject to a user-provided staleness bound. Cloud Spanner chooses
-        # the newest timestamp within the staleness bound that allows execution of the
-        # reads at the closest available replica without blocking. All rows yielded are
-        # consistent with each other -- if any part of the read observes a transaction,
-        # all parts of the read see the transaction. Boundedly stale reads are not
-        # repeatable: two stale reads, even if they use the same staleness bound, can
-        # execute at different timestamps and thus return inconsistent results.
-        # Boundedly stale reads execute in two phases: the first phase negotiates a
-        # timestamp among all replicas needed to serve the read. In the second phase,
-        # reads are executed at the negotiated timestamp. As a result of the two phase
-        # execution, bounded staleness reads are usually a little slower than comparable
-        # exact staleness reads. However, they are typically able to return fresher
-        # results, and are more likely to execute at the closest replica. Because the
-        # timestamp negotiation requires up-front knowledge of which rows will be read,
-        # it can only be used with single-use read-only transactions. See
-        # TransactionOptions.ReadOnly.max_staleness and TransactionOptions.ReadOnly.
-        # min_read_timestamp. Old Read Timestamps and Garbage Collection: Cloud Spanner
-        # continuously garbage collects deleted and overwritten data in the background
-        # to reclaim storage space. This process is known as "version GC". By default,
-        # version GC reclaims versions after they are one hour old. Because of this,
-        # Cloud Spanner cannot perform reads at read timestamps more than one hour in
-        # the past. This restriction also applies to in-progress reads and/or SQL
-        # queries whose timestamp become too old while executing. Reads and SQL queries
-        # with too-old read timestamps fail with the error `FAILED_PRECONDITION`.
-        # Partitioned DML Transactions: Partitioned DML transactions are used to execute
-        # DML statements with a different execution strategy that provides different,
-        # and often better, scalability properties for large, table-wide operations than
-        # DML in a ReadWrite transaction. Smaller scoped statements, such as an OLTP
-        # workload, should prefer using ReadWrite transactions. Partitioned DML
-        # partitions the keyspace and runs the DML statement on each partition in
-        # separate, internal transactions. These transactions commit automatically when
-        # complete, and run independently from one another. To reduce lock contention,
-        # this execution strategy only acquires read locks on rows that match the WHERE
-        # clause of the statement. Additionally, the smaller per-partition transactions
-        # hold locks for less time. That said, Partitioned DML is not a drop-in
-        # replacement for standard DML used in ReadWrite transactions. - The DML
-        # statement must be fully-partitionable. Specifically, the statement must be
-        # expressible as the union of many statements which each access only a single
-        # row of the table. - The statement is not applied atomically to all rows of the
-        # table. Rather, the statement is applied atomically to partitions of the table,
-        # in independent transactions. Secondary index rows are updated atomically with
-        # the base table rows. - Partitioned DML does not guarantee exactly-once
-        # execution semantics against a partition. The statement will be applied at
-        # least once to each partition. It is strongly recommended that the DML
-        # statement should be idempotent to avoid unexpected results. For instance, it
-        # is potentially dangerous to run a statement such as `UPDATE table SET column =
-        # column + 1` as it could be run multiple times against some rows. - The
-        # partitions are committed automatically - there is no support for Commit or
+        # read timestamp. Queries on change streams (see below for more details) must
+        # also specify the strong read timestamp bound. See TransactionOptions.ReadOnly.
+        # strong. Exact staleness: These timestamp bounds execute reads at a user-
+        # specified timestamp. Reads at a timestamp are guaranteed to see a consistent
+        # prefix of the global transaction history: they observe modifications done by
+        # all transactions with a commit timestamp less than or equal to the read
+        # timestamp, and observe none of the modifications done by transactions with a
+        # larger commit timestamp. They will block until all conflicting transactions
+        # that may be assigned commit timestamps <= the read timestamp have finished.
+        # The timestamp can either be expressed as an absolute Cloud Spanner commit
+        # timestamp or a staleness relative to the current time. These modes do not
+        # require a "negotiation phase" to pick a timestamp. As a result, they execute
+        # slightly faster than the equivalent boundedly stale concurrency modes. On the
+        # other hand, boundedly stale reads usually return fresher results. See
+        # TransactionOptions.ReadOnly.read_timestamp and TransactionOptions.ReadOnly.
+        # exact_staleness. Bounded staleness: Bounded staleness modes allow Cloud
+        # Spanner to pick the read timestamp, subject to a user-provided staleness bound.
+        # Cloud Spanner chooses the newest timestamp within the staleness bound that
+        # allows execution of the reads at the closest available replica without
+        # blocking. All rows yielded are consistent with each other -- if any part of
+        # the read observes a transaction, all parts of the read see the transaction.
+        # Boundedly stale reads are not repeatable: two stale reads, even if they use
+        # the same staleness bound, can execute at different timestamps and thus return
+        # inconsistent results. Boundedly stale reads execute in two phases: the first
+        # phase negotiates a timestamp among all replicas needed to serve the read. In
+        # the second phase, reads are executed at the negotiated timestamp. As a result
+        # of the two phase execution, bounded staleness reads are usually a little
+        # slower than comparable exact staleness reads. However, they are typically able
+        # to return fresher results, and are more likely to execute at the closest
+        # replica. Because the timestamp negotiation requires up-front knowledge of
+        # which rows will be read, it can only be used with single-use read-only
+        # transactions. See TransactionOptions.ReadOnly.max_staleness and
+        # TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
+        # garbage collection: Cloud Spanner continuously garbage collects deleted and
+        # overwritten data in the background to reclaim storage space. This process is
+        # known as "version GC". By default, version GC reclaims versions after they are
+        # one hour old. Because of this, Cloud Spanner cannot perform reads at read
+        # timestamps more than one hour in the past. This restriction also applies to in-
+        # progress reads and/or SQL queries whose timestamp become too old while
+        # executing. Reads and SQL queries with too-old read timestamps fail with the
+        # error `FAILED_PRECONDITION`. You can configure and extend the `
+        # VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
+        # which allows Cloud Spanner to perform reads up to one week in the past.
+        # Querying change Streams: A Change Stream is a schema object that can be
+        # configured to watch data changes on the entire database, a set of tables, or a
+        # set of columns in a database. When a change stream is created, Spanner
+        # automatically defines a corresponding SQL Table-Valued Function (TVF) that can
+        # be used to query the change records in the associated change stream using the
+        # ExecuteStreamingSql API. The name of the TVF for a change stream is generated
+        # from the name of the change stream: READ_. All queries on change stream TVFs
+        # must be executed using the ExecuteStreamingSql API with a single-use read-only
+        # transaction with a strong read-only timestamp_bound. The change stream TVF
+        # allows users to specify the start_timestamp and end_timestamp for the time
+        # range of interest. All change records within the retention period is
+        # accessible using the strong read-only timestamp_bound. All other
+        # TransactionOptions are invalid for change stream queries. In addition, if
+        # TransactionOptions.read_only.return_read_timestamp is set to true, a special
+        # value of 2^63 - 2 will be returned in the Transaction message that describes
+        # the transaction, instead of a valid read timestamp. This special value should
+        # be discarded and not used for any subsequent queries. Please see https://cloud.
+        # google.com/spanner/docs/change-streams for more details on how to query the
+        # change stream TVFs. Partitioned DML transactions: Partitioned DML transactions
+        # are used to execute DML statements with a different execution strategy that
+        # provides different, and often better, scalability properties for large, table-
+        # wide operations than DML in a ReadWrite transaction. Smaller scoped statements,
+        # such as an OLTP workload, should prefer using ReadWrite transactions.
+        # Partitioned DML partitions the keyspace and runs the DML statement on each
+        # partition in separate, internal transactions. These transactions commit
+        # automatically when complete, and run independently from one another. To reduce
+        # lock contention, this execution strategy only acquires read locks on rows that
+        # match the WHERE clause of the statement. Additionally, the smaller per-
+        # partition transactions hold locks for less time. That said, Partitioned DML is
+        # not a drop-in replacement for standard DML used in ReadWrite transactions. -
+        # The DML statement must be fully-partitionable. Specifically, the statement
+        # must be expressible as the union of many statements which each access only a
+        # single row of the table. - The statement is not applied atomically to all rows
+        # of the table. Rather, the statement is applied atomically to partitions of the
+        # table, in independent transactions. Secondary index rows are updated
+        # atomically with the base table rows. - Partitioned DML does not guarantee
+        # exactly-once execution semantics against a partition. The statement will be
+        # applied at least once to each partition. It is strongly recommended that the
+        # DML statement should be idempotent to avoid unexpected results. For instance,
+        # it is potentially dangerous to run a statement such as `UPDATE table SET
+        # column = column + 1` as it could be run multiple times against some rows. -
+        # The partitions are committed automatically - there is no support for Commit or
         # Rollback. If the call returns an error, or if the client issuing the
         # ExecuteSql call dies, it is possible that some rows had the statement executed
         # on them successfully. It is also possible that statement was never executed
@@ -381,7 +435,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -404,38 +458,41 @@ module Google
         # @return [Google::Apis::SpannerV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
         # anyone who is authenticated with a Google account or a service account. * `
         # user:`emailid``: An email address that represents a specific Google account.
         # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # address that represents a Google service account. For example, `my-other-app@
+        # appspot.gserviceaccount.com`. * `serviceAccount:`projectid`.svc.id.goog[`
+        # namespace`/`kubernetes-sa`]`: An identifier for a [Kubernetes service account](
+        # https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-
+        # accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`
+        # . * `group:`emailid``: An email address that represents a Google group. For
+        # example, `admins@example.com`. * `deleted:user:`emailid`?uid=`uniqueid``: An
+        # email address (plus unique identifier) representing a user that has been
+        # recently deleted. For example, `alice@example.com?uid=123456789012345678901`.
+        # If the user is recovered, this value reverts to `user:`emailid`` and the
+        # recovered user retains the role in the binding. * `deleted:serviceAccount:`
+        # emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a service account that has been recently deleted. For example, `
+        # my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
+        # service account is undeleted, this value reverts to `serviceAccount:`emailid``
+        # and the undeleted service account retains the role in the binding. * `deleted:
+        # group:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a Google group that has been recently deleted. For example, `
+        # admins@example.com?uid=123456789012345678901`. If the group is recovered, this
+        # value reverts to `group:`emailid`` and the recovered group retains the role in
+        # the binding. * `domain:`domain``: The G Suite domain (primary) that represents
+        # all the users of that domain. For example, `google.com` or `example.com`.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -518,25 +575,30 @@ module Google
         # count towards the one transaction limit). After the active transaction is
         # completed, the session can immediately be re-used for the next transaction. It
         # is not necessary to create a new session for each transaction. Transaction
-        # Modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
+        # modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
         # This type of transaction is the only way to write data into Cloud Spanner.
         # These transactions rely on pessimistic locking and, if necessary, two-phase
         # commit. Locking read-write transactions may abort, requiring the application
-        # to retry. 2. Snapshot read-only. This transaction type provides guaranteed
-        # consistency across several reads, but does not allow writes. Snapshot read-
-        # only transactions can be configured to read at timestamps in the past.
-        # Snapshot read-only transactions do not need to be committed. 3. Partitioned
-        # DML. This type of transaction is used to execute a single Partitioned DML
-        # statement. Partitioned DML partitions the key space and runs the DML statement
-        # over each partition in parallel using separate, internal transactions that
-        # commit independently. Partitioned DML transactions do not need to be committed.
-        # For transactions that only read, snapshot read-only transactions provide
-        # simpler semantics and are almost always faster. In particular, read-only
-        # transactions do not take locks, so they do not conflict with read-write
-        # transactions. As a consequence of not taking locks, they also do not abort, so
-        # retry loops are not needed. Transactions may only read/write data in a single
-        # database. They may, however, read/write data in different tables within that
-        # database. Locking Read-Write Transactions: Locking transactions may be used to
+        # to retry. 2. Snapshot read-only. Snapshot read-only transactions provide
+        # guaranteed consistency across several reads, but do not allow writes. Snapshot
+        # read-only transactions can be configured to read at timestamps in the past, or
+        # configured to perform a strong read (where Spanner will select a timestamp
+        # such that the read is guaranteed to see the effects of all transactions that
+        # have committed before the start of the read). Snapshot read-only transactions
+        # do not need to be committed. Queries on change streams must be performed with
+        # the snapshot read-only transaction mode, specifying a strong read. Please see
+        # TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML. This
+        # type of transaction is used to execute a single Partitioned DML statement.
+        # Partitioned DML partitions the key space and runs the DML statement over each
+        # partition in parallel using separate, internal transactions that commit
+        # independently. Partitioned DML transactions do not need to be committed. For
+        # transactions that only read, snapshot read-only transactions provide simpler
+        # semantics and are almost always faster. In particular, read-only transactions
+        # do not take locks, so they do not conflict with read-write transactions. As a
+        # consequence of not taking locks, they also do not abort, so retry loops are
+        # not needed. Transactions may only read-write data in a single database. They
+        # may, however, read-write data in different tables within that database.
+        # Locking read-write transactions: Locking transactions may be used to
         # atomically read-modify-write data anywhere in a database. This type of
         # transaction is externally consistent. Clients should attempt to minimize the
         # amount of time a transaction is active. Faster transactions commit with higher
@@ -555,7 +617,7 @@ module Google
         # Cloud Spanner makes no guarantees about how long the transaction's locks were
         # held for. It is an error to use Cloud Spanner locks for any sort of mutual
         # exclusion other than between Cloud Spanner transactions themselves. Retrying
-        # Aborted Transactions: When a transaction aborts, the application can choose to
+        # aborted transactions: When a transaction aborts, the application can choose to
         # retry the whole transaction again. To maximize the chances of successfully
         # committing the retry, the client should execute the retry in the same session
         # as the original attempt. The original session's lock priority increases with
@@ -564,14 +626,14 @@ module Google
         # transactions attempting to modify the same row(s)), a transaction can abort
         # many times in a short period before successfully committing. Thus, it is not a
         # good idea to cap the number of retries a transaction can attempt; instead, it
-        # is better to limit the total amount of time spent retrying. Idle Transactions:
+        # is better to limit the total amount of time spent retrying. Idle transactions:
         # A transaction is considered idle if it has no outstanding reads or SQL queries
         # and has not started a read or SQL query within the last 10 seconds. Idle
         # transactions can be aborted by Cloud Spanner so that they don't hold on to
         # locks indefinitely. If an idle transaction is aborted, the commit will fail
         # with error `ABORTED`. If this behavior is undesirable, periodically executing
         # a simple SQL query in the transaction (for example, `SELECT 1`) prevents the
-        # transaction from becoming idle. Snapshot Read-Only Transactions: Snapshot read-
+        # transaction from becoming idle. Snapshot read-only transactions: Snapshot read-
         # only transactions provides a simpler method than locking read-write
         # transactions for doing several consistent reads. However, this type of
         # transaction does not support writes. Snapshot transactions do not take locks.
@@ -587,7 +649,7 @@ module Google
         # how to choose a read timestamp. The types of timestamp bound are: - Strong (
         # the default). - Bounded staleness. - Exact staleness. If the Cloud Spanner
         # database to be read is geographically distributed, stale read-only
-        # transactions can execute more quickly than strong or read-write transaction,
+        # transactions can execute more quickly than strong or read-write transactions,
         # because they are able to execute far from the leader replica. Each type of
         # timestamp bound is discussed in detail below. Strong: Strong reads are
         # guaranteed to see the effects of all transactions that have committed before
@@ -597,69 +659,91 @@ module Google
         # two consecutive strong read-only transactions might return inconsistent
         # results if there are concurrent writes. If consistency across reads is
         # required, the reads should be executed within a transaction or at an exact
-        # read timestamp. See TransactionOptions.ReadOnly.strong. Exact Staleness: These
-        # timestamp bounds execute reads at a user-specified timestamp. Reads at a
-        # timestamp are guaranteed to see a consistent prefix of the global transaction
-        # history: they observe modifications done by all transactions with a commit
-        # timestamp less than or equal to the read timestamp, and observe none of the
-        # modifications done by transactions with a larger commit timestamp. They will
-        # block until all conflicting transactions that may be assigned commit
-        # timestamps <= the read timestamp have finished. The timestamp can either be
-        # expressed as an absolute Cloud Spanner commit timestamp or a staleness
-        # relative to the current time. These modes do not require a "negotiation phase"
-        # to pick a timestamp. As a result, they execute slightly faster than the
-        # equivalent boundedly stale concurrency modes. On the other hand, boundedly
-        # stale reads usually return fresher results. See TransactionOptions.ReadOnly.
-        # read_timestamp and TransactionOptions.ReadOnly.exact_staleness. Bounded
-        # Staleness: Bounded staleness modes allow Cloud Spanner to pick the read
-        # timestamp, subject to a user-provided staleness bound. Cloud Spanner chooses
-        # the newest timestamp within the staleness bound that allows execution of the
-        # reads at the closest available replica without blocking. All rows yielded are
-        # consistent with each other -- if any part of the read observes a transaction,
-        # all parts of the read see the transaction. Boundedly stale reads are not
-        # repeatable: two stale reads, even if they use the same staleness bound, can
-        # execute at different timestamps and thus return inconsistent results.
-        # Boundedly stale reads execute in two phases: the first phase negotiates a
-        # timestamp among all replicas needed to serve the read. In the second phase,
-        # reads are executed at the negotiated timestamp. As a result of the two phase
-        # execution, bounded staleness reads are usually a little slower than comparable
-        # exact staleness reads. However, they are typically able to return fresher
-        # results, and are more likely to execute at the closest replica. Because the
-        # timestamp negotiation requires up-front knowledge of which rows will be read,
-        # it can only be used with single-use read-only transactions. See
-        # TransactionOptions.ReadOnly.max_staleness and TransactionOptions.ReadOnly.
-        # min_read_timestamp. Old Read Timestamps and Garbage Collection: Cloud Spanner
-        # continuously garbage collects deleted and overwritten data in the background
-        # to reclaim storage space. This process is known as "version GC". By default,
-        # version GC reclaims versions after they are one hour old. Because of this,
-        # Cloud Spanner cannot perform reads at read timestamps more than one hour in
-        # the past. This restriction also applies to in-progress reads and/or SQL
-        # queries whose timestamp become too old while executing. Reads and SQL queries
-        # with too-old read timestamps fail with the error `FAILED_PRECONDITION`.
-        # Partitioned DML Transactions: Partitioned DML transactions are used to execute
-        # DML statements with a different execution strategy that provides different,
-        # and often better, scalability properties for large, table-wide operations than
-        # DML in a ReadWrite transaction. Smaller scoped statements, such as an OLTP
-        # workload, should prefer using ReadWrite transactions. Partitioned DML
-        # partitions the keyspace and runs the DML statement on each partition in
-        # separate, internal transactions. These transactions commit automatically when
-        # complete, and run independently from one another. To reduce lock contention,
-        # this execution strategy only acquires read locks on rows that match the WHERE
-        # clause of the statement. Additionally, the smaller per-partition transactions
-        # hold locks for less time. That said, Partitioned DML is not a drop-in
-        # replacement for standard DML used in ReadWrite transactions. - The DML
-        # statement must be fully-partitionable. Specifically, the statement must be
-        # expressible as the union of many statements which each access only a single
-        # row of the table. - The statement is not applied atomically to all rows of the
-        # table. Rather, the statement is applied atomically to partitions of the table,
-        # in independent transactions. Secondary index rows are updated atomically with
-        # the base table rows. - Partitioned DML does not guarantee exactly-once
-        # execution semantics against a partition. The statement will be applied at
-        # least once to each partition. It is strongly recommended that the DML
-        # statement should be idempotent to avoid unexpected results. For instance, it
-        # is potentially dangerous to run a statement such as `UPDATE table SET column =
-        # column + 1` as it could be run multiple times against some rows. - The
-        # partitions are committed automatically - there is no support for Commit or
+        # read timestamp. Queries on change streams (see below for more details) must
+        # also specify the strong read timestamp bound. See TransactionOptions.ReadOnly.
+        # strong. Exact staleness: These timestamp bounds execute reads at a user-
+        # specified timestamp. Reads at a timestamp are guaranteed to see a consistent
+        # prefix of the global transaction history: they observe modifications done by
+        # all transactions with a commit timestamp less than or equal to the read
+        # timestamp, and observe none of the modifications done by transactions with a
+        # larger commit timestamp. They will block until all conflicting transactions
+        # that may be assigned commit timestamps <= the read timestamp have finished.
+        # The timestamp can either be expressed as an absolute Cloud Spanner commit
+        # timestamp or a staleness relative to the current time. These modes do not
+        # require a "negotiation phase" to pick a timestamp. As a result, they execute
+        # slightly faster than the equivalent boundedly stale concurrency modes. On the
+        # other hand, boundedly stale reads usually return fresher results. See
+        # TransactionOptions.ReadOnly.read_timestamp and TransactionOptions.ReadOnly.
+        # exact_staleness. Bounded staleness: Bounded staleness modes allow Cloud
+        # Spanner to pick the read timestamp, subject to a user-provided staleness bound.
+        # Cloud Spanner chooses the newest timestamp within the staleness bound that
+        # allows execution of the reads at the closest available replica without
+        # blocking. All rows yielded are consistent with each other -- if any part of
+        # the read observes a transaction, all parts of the read see the transaction.
+        # Boundedly stale reads are not repeatable: two stale reads, even if they use
+        # the same staleness bound, can execute at different timestamps and thus return
+        # inconsistent results. Boundedly stale reads execute in two phases: the first
+        # phase negotiates a timestamp among all replicas needed to serve the read. In
+        # the second phase, reads are executed at the negotiated timestamp. As a result
+        # of the two phase execution, bounded staleness reads are usually a little
+        # slower than comparable exact staleness reads. However, they are typically able
+        # to return fresher results, and are more likely to execute at the closest
+        # replica. Because the timestamp negotiation requires up-front knowledge of
+        # which rows will be read, it can only be used with single-use read-only
+        # transactions. See TransactionOptions.ReadOnly.max_staleness and
+        # TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
+        # garbage collection: Cloud Spanner continuously garbage collects deleted and
+        # overwritten data in the background to reclaim storage space. This process is
+        # known as "version GC". By default, version GC reclaims versions after they are
+        # one hour old. Because of this, Cloud Spanner cannot perform reads at read
+        # timestamps more than one hour in the past. This restriction also applies to in-
+        # progress reads and/or SQL queries whose timestamp become too old while
+        # executing. Reads and SQL queries with too-old read timestamps fail with the
+        # error `FAILED_PRECONDITION`. You can configure and extend the `
+        # VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
+        # which allows Cloud Spanner to perform reads up to one week in the past.
+        # Querying change Streams: A Change Stream is a schema object that can be
+        # configured to watch data changes on the entire database, a set of tables, or a
+        # set of columns in a database. When a change stream is created, Spanner
+        # automatically defines a corresponding SQL Table-Valued Function (TVF) that can
+        # be used to query the change records in the associated change stream using the
+        # ExecuteStreamingSql API. The name of the TVF for a change stream is generated
+        # from the name of the change stream: READ_. All queries on change stream TVFs
+        # must be executed using the ExecuteStreamingSql API with a single-use read-only
+        # transaction with a strong read-only timestamp_bound. The change stream TVF
+        # allows users to specify the start_timestamp and end_timestamp for the time
+        # range of interest. All change records within the retention period is
+        # accessible using the strong read-only timestamp_bound. All other
+        # TransactionOptions are invalid for change stream queries. In addition, if
+        # TransactionOptions.read_only.return_read_timestamp is set to true, a special
+        # value of 2^63 - 2 will be returned in the Transaction message that describes
+        # the transaction, instead of a valid read timestamp. This special value should
+        # be discarded and not used for any subsequent queries. Please see https://cloud.
+        # google.com/spanner/docs/change-streams for more details on how to query the
+        # change stream TVFs. Partitioned DML transactions: Partitioned DML transactions
+        # are used to execute DML statements with a different execution strategy that
+        # provides different, and often better, scalability properties for large, table-
+        # wide operations than DML in a ReadWrite transaction. Smaller scoped statements,
+        # such as an OLTP workload, should prefer using ReadWrite transactions.
+        # Partitioned DML partitions the keyspace and runs the DML statement on each
+        # partition in separate, internal transactions. These transactions commit
+        # automatically when complete, and run independently from one another. To reduce
+        # lock contention, this execution strategy only acquires read locks on rows that
+        # match the WHERE clause of the statement. Additionally, the smaller per-
+        # partition transactions hold locks for less time. That said, Partitioned DML is
+        # not a drop-in replacement for standard DML used in ReadWrite transactions. -
+        # The DML statement must be fully-partitionable. Specifically, the statement
+        # must be expressible as the union of many statements which each access only a
+        # single row of the table. - The statement is not applied atomically to all rows
+        # of the table. Rather, the statement is applied atomically to partitions of the
+        # table, in independent transactions. Secondary index rows are updated
+        # atomically with the base table rows. - Partitioned DML does not guarantee
+        # exactly-once execution semantics against a partition. The statement will be
+        # applied at least once to each partition. It is strongly recommended that the
+        # DML statement should be idempotent to avoid unexpected results. For instance,
+        # it is potentially dangerous to run a statement such as `UPDATE table SET
+        # column = column + 1` as it could be run multiple times against some rows. -
+        # The partitions are committed automatically - there is no support for Commit or
         # Rollback. If the call returns an error, or if the client issuing the
         # ExecuteSql call dies, it is possible that some rows had the statement executed
         # on them successfully. It is also possible that statement was never executed
@@ -787,6 +871,125 @@ module Google
         end
       end
       
+      # Encryption configuration for the copied backup.
+      class CopyBackupEncryptionConfig
+        include Google::Apis::Core::Hashable
+      
+        # Required. The encryption type of the backup.
+        # Corresponds to the JSON property `encryptionType`
+        # @return [String]
+        attr_accessor :encryption_type
+      
+        # Optional. The Cloud KMS key that will be used to protect the backup. This
+        # field should be set only when encryption_type is `CUSTOMER_MANAGED_ENCRYPTION`.
+        # Values are of the form `projects//locations//keyRings//cryptoKeys/`.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @encryption_type = args[:encryption_type] if args.key?(:encryption_type)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
+        end
+      end
+      
+      # Metadata type for the operation returned by CopyBackup.
+      class CopyBackupMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The time at which cancellation of CopyBackup operation was received.
+        # Operations.CancelOperation starts asynchronous cancellation on a long-running
+        # operation. The server makes a best effort to cancel the operation, but success
+        # is not guaranteed. Clients can use Operations.GetOperation or other methods to
+        # check whether the cancellation succeeded or whether the operation completed
+        # despite cancellation. On successful cancellation, the operation is not deleted;
+        # instead, it becomes an operation with an Operation.error value with a google.
+        # rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+        # Corresponds to the JSON property `cancelTime`
+        # @return [String]
+        attr_accessor :cancel_time
+      
+        # The name of the backup being created through the copy operation. Values are of
+        # the form `projects//instances//backups/`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Encapsulates progress related information for a Cloud Spanner long running
+        # operation.
+        # Corresponds to the JSON property `progress`
+        # @return [Google::Apis::SpannerV1::OperationProgress]
+        attr_accessor :progress
+      
+        # The name of the source backup that is being copied. Values are of the form `
+        # projects//instances//backups/`.
+        # Corresponds to the JSON property `sourceBackup`
+        # @return [String]
+        attr_accessor :source_backup
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cancel_time = args[:cancel_time] if args.key?(:cancel_time)
+          @name = args[:name] if args.key?(:name)
+          @progress = args[:progress] if args.key?(:progress)
+          @source_backup = args[:source_backup] if args.key?(:source_backup)
+        end
+      end
+      
+      # The request for CopyBackup.
+      class CopyBackupRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The id of the backup copy. The `backup_id` appended to `parent`
+        # forms the full backup_uri of the form `projects//instances//backups/`.
+        # Corresponds to the JSON property `backupId`
+        # @return [String]
+        attr_accessor :backup_id
+      
+        # Encryption configuration for the copied backup.
+        # Corresponds to the JSON property `encryptionConfig`
+        # @return [Google::Apis::SpannerV1::CopyBackupEncryptionConfig]
+        attr_accessor :encryption_config
+      
+        # Required. The expiration time of the backup in microsecond granularity. The
+        # expiration time must be at least 6 hours and at most 366 days from the `
+        # create_time` of the source backup. Once the `expire_time` has passed, the
+        # backup is eligible to be automatically deleted by Cloud Spanner to free the
+        # resources used by the backup.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
+      
+        # Required. The source backup to be copied. The source backup needs to be in
+        # READY state for it to be copied. Once CopyBackup is in progress, the source
+        # backup cannot be deleted or cleaned up on expiration until CopyBackup is
+        # finished. Values are of the form: `projects//instances//backups/`.
+        # Corresponds to the JSON property `sourceBackup`
+        # @return [String]
+        attr_accessor :source_backup
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @backup_id = args[:backup_id] if args.key?(:backup_id)
+          @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
+          @source_backup = args[:source_backup] if args.key?(:source_backup)
+        end
+      end
+      
       # Metadata type for the operation returned by CreateBackup.
       class CreateBackupMetadata
         include Google::Apis::Core::Hashable
@@ -864,6 +1067,11 @@ module Google
         # @return [String]
         attr_accessor :create_statement
       
+        # Optional. The dialect of the Cloud Spanner Database.
+        # Corresponds to the JSON property `databaseDialect`
+        # @return [String]
+        attr_accessor :database_dialect
+      
         # Encryption configuration for a Cloud Spanner database.
         # Corresponds to the JSON property `encryptionConfig`
         # @return [Google::Apis::SpannerV1::EncryptionConfig]
@@ -884,6 +1092,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_statement = args[:create_statement] if args.key?(:create_statement)
+          @database_dialect = args[:database_dialect] if args.key?(:database_dialect)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
           @extra_statements = args[:extra_statements] if args.key?(:extra_statements)
         end
@@ -982,6 +1191,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Output only. The dialect of the Cloud Spanner Database.
+        # Corresponds to the JSON property `databaseDialect`
+        # @return [String]
+        attr_accessor :database_dialect
+      
         # Output only. The read-write region which contains the database's leader
         # replicas. This is the same as the value of default_leader database option set
         # using DatabaseAdmin.CreateDatabase or DatabaseAdmin.UpdateDatabaseDdl. If not
@@ -1005,11 +1219,12 @@ module Google
         attr_accessor :encryption_config
       
         # Output only. For databases that are using customer managed encryption, this
-        # field contains the encryption information for the database, such as encryption
-        # state and the Cloud KMS key versions that are in use. For databases that are
-        # using Google default or other types of encryption, this field is empty. This
-        # field is propagated lazily from the backend. There might be a delay from when
-        # a key version is being used and when it appears in this field.
+        # field contains the encryption information for the database, such as all Cloud
+        # KMS key versions that are in use. The `encryption_status' field inside of each
+        # `EncryptionInfo` is not populated. For databases that are using Google default
+        # or other types of encryption, this field is empty. This field is propagated
+        # lazily from the backend. There might be a delay from when a key version is
+        # being used and when it appears in this field.
         # Corresponds to the JSON property `encryptionInfo`
         # @return [Array<Google::Apis::SpannerV1::EncryptionInfo>]
         attr_accessor :encryption_info
@@ -1046,6 +1261,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @database_dialect = args[:database_dialect] if args.key?(:database_dialect)
           @default_leader = args[:default_leader] if args.key?(:default_leader)
           @earliest_version_time = args[:earliest_version_time] if args.key?(:earliest_version_time)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
@@ -1054,6 +1270,27 @@ module Google
           @restore_info = args[:restore_info] if args.key?(:restore_info)
           @state = args[:state] if args.key?(:state)
           @version_retention_period = args[:version_retention_period] if args.key?(:version_retention_period)
+        end
+      end
+      
+      # A Cloud Spanner database role.
+      class DatabaseRole
+        include Google::Apis::Core::Hashable
+      
+        # Required. The name of the database role. Values are of the form `projects//
+        # instances//databases//databaseRoles/` where `` is as specified in the `CREATE
+        # ROLE` DDL statement.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
         end
       end
       
@@ -1168,8 +1405,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1519,6 +1755,44 @@ module Google
         end
       end
       
+      # Free instance specific metadata that is kept even after an instance has been
+      # upgraded for tracking purposes.
+      class FreeInstanceMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Specifies the expiration behavior of a free instance. The default of
+        # ExpireBehavior is `REMOVE_AFTER_GRACE_PERIOD`. This can be modified during or
+        # after creation, and before expiration.
+        # Corresponds to the JSON property `expireBehavior`
+        # @return [String]
+        attr_accessor :expire_behavior
+      
+        # Output only. Timestamp after which the instance will either be upgraded or
+        # scheduled for deletion after a grace period. ExpireBehavior is used to choose
+        # between upgrading or scheduling the free instance for deletion. This timestamp
+        # is set during the creation of a free instance.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
+      
+        # Output only. If present, the timestamp at which the free instance was upgraded
+        # to a provisioned instance.
+        # Corresponds to the JSON property `upgradeTime`
+        # @return [String]
+        attr_accessor :upgrade_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @expire_behavior = args[:expire_behavior] if args.key?(:expire_behavior)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
+          @upgrade_time = args[:upgrade_time] if args.key?(:upgrade_time)
+        end
+      end
+      
       # The response for GetDatabaseDdl.
       class GetDatabaseDdlResponse
         include Google::Apis::Core::Hashable
@@ -1562,13 +1836,16 @@ module Google
       class GetPolicyOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. The policy format version to be returned. Valid values are 0, 1, and
-        # 3. Requests specifying an invalid value will be rejected. Requests for
-        # policies with any conditional bindings must specify version 3. Policies
-        # without any conditional bindings may specify any valid value or leave the
-        # field unset. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies).
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected. Requests for policies with any conditional role bindings must
+        # specify version 3. Policies with no conditional role bindings may specify any
+        # valid value or leave the field unset. The policy in the response might use the
+        # policy version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
         # Corresponds to the JSON property `requestedPolicyVersion`
         # @return [Fixnum]
         attr_accessor :requested_policy_version
@@ -1636,6 +1913,11 @@ module Google
         # @return [String]
         attr_accessor :config
       
+        # Output only. The time at which the instance was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
         # Required. The descriptive name for this instance as it appears in UIs. Must be
         # unique per project and between 4 and 30 characters in length.
         # Corresponds to the JSON property `displayName`
@@ -1646,6 +1928,17 @@ module Google
         # Corresponds to the JSON property `endpointUris`
         # @return [Array<String>]
         attr_accessor :endpoint_uris
+      
+        # Free instance specific metadata that is kept even after an instance has been
+        # upgraded for tracking purposes.
+        # Corresponds to the JSON property `freeInstanceMetadata`
+        # @return [Google::Apis::SpannerV1::FreeInstanceMetadata]
+        attr_accessor :free_instance_metadata
+      
+        # The `InstanceType` of the current instance.
+        # Corresponds to the JSON property `instanceType`
+        # @return [String]
+        attr_accessor :instance_type
       
         # Cloud Labels are a flexible and lightweight mechanism for organizing cloud
         # resources into groups that reflect a customer's organizational needs and
@@ -1700,6 +1993,11 @@ module Google
         # @return [String]
         attr_accessor :state
       
+        # Output only. The time at which the instance was most recently updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1707,13 +2005,17 @@ module Google
         # Update properties of this object
         def update!(**args)
           @config = args[:config] if args.key?(:config)
+          @create_time = args[:create_time] if args.key?(:create_time)
           @display_name = args[:display_name] if args.key?(:display_name)
           @endpoint_uris = args[:endpoint_uris] if args.key?(:endpoint_uris)
+          @free_instance_metadata = args[:free_instance_metadata] if args.key?(:free_instance_metadata)
+          @instance_type = args[:instance_type] if args.key?(:instance_type)
           @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
           @node_count = args[:node_count] if args.key?(:node_count)
           @processing_units = args[:processing_units] if args.key?(:processing_units)
           @state = args[:state] if args.key?(:state)
+          @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
       
@@ -1727,7 +2029,13 @@ module Google
         # @return [String]
         attr_accessor :display_name
       
-        # Allowed values of the “default_leader” schema option for databases in
+        # Output only. Describes whether free instances are available to be created in
+        # this instance config.
+        # Corresponds to the JSON property `freeInstanceAvailability`
+        # @return [String]
+        attr_accessor :free_instance_availability
+      
+        # Allowed values of the "default_leader" schema option for databases in
         # instances that use this instance configuration.
         # Corresponds to the JSON property `leaderOptions`
         # @return [Array<String>]
@@ -1752,6 +2060,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @free_instance_availability = args[:free_instance_availability] if args.key?(:free_instance_availability)
           @leader_options = args[:leader_options] if args.key?(:leader_options)
           @name = args[:name] if args.key?(:name)
           @replicas = args[:replicas] if args.key?(:replicas)
@@ -1981,11 +2290,12 @@ module Google
         attr_accessor :next_page_token
       
         # The list of matching backup long-running operations. Each operation's name
-        # will be prefixed by the backup's name and the operation's metadata will be of
-        # type CreateBackupMetadata. Operations returned include those that are pending
-        # or have completed/failed/canceled within the last 7 days. Operations returned
-        # are ordered by `operation.metadata.value.progress.start_time` in descending
-        # order starting from the most recently started operation.
+        # will be prefixed by the backup's name. The operation's metadata field type `
+        # metadata.type_url` describes the type of the metadata. Operations returned
+        # include those that are pending or have completed/failed/canceled within the
+        # last 7 days. Operations returned are ordered by `operation.metadata.value.
+        # progress.start_time` in descending order starting from the most recently
+        # started operation.
         # Corresponds to the JSON property `operations`
         # @return [Array<Google::Apis::SpannerV1::Operation>]
         attr_accessor :operations
@@ -2053,6 +2363,32 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @operations = args[:operations] if args.key?(:operations)
+        end
+      end
+      
+      # The response for ListDatabaseRoles.
+      class ListDatabaseRolesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Database roles that matched the request.
+        # Corresponds to the JSON property `databaseRoles`
+        # @return [Array<Google::Apis::SpannerV1::DatabaseRole>]
+        attr_accessor :database_roles
+      
+        # `next_page_token` can be sent in a subsequent ListDatabaseRoles call to fetch
+        # more of the matching roles.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @database_roles = args[:database_roles] if args.key?(:database_roles)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
       
@@ -2618,11 +2954,14 @@ module Google
         # suppose a streaming SQL query is yielding a result set whose rows contain a
         # single string field. The following `PartialResultSet`s might be yielded: ` "
         # metadata": ` ... ` "values": ["Hello", "W"] "chunked_value": true "
-        # resume_token": "Af65..." ` ` "values": ["orl"] "chunked_value": true "
-        # resume_token": "Bqp2..." ` ` "values": ["d"] "resume_token": "Zx1B..." ` This
-        # sequence of `PartialResultSet`s encodes two rows, one containing the field
-        # value `"Hello"`, and a second containing the field value `"World" = "W" + "orl"
-        # + "d"`.
+        # resume_token": "Af65..." ` ` "values": ["orl"] "chunked_value": true ` ` "
+        # values": ["d"] "resume_token": "Zx1B..." ` This sequence of `PartialResultSet`
+        # s encodes two rows, one containing the field value `"Hello"`, and a second
+        # containing the field value `"World" = "W" + "orl" + "d"`. Not all `
+        # PartialResultSet`s contain a `resume_token`. Execution can only be resumed
+        # from a previously yielded `resume_token`. For the above sequence of `
+        # PartialResultSet`s, resuming the query with `"resume_token": "Af65..."` will
+        # yield results from the `PartialResultSet` with value `["orl"]`.
         # Corresponds to the JSON property `values`
         # @return [Array<Object>]
         attr_accessor :values
@@ -2917,37 +3256,42 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::SpannerV1::Binding>]
         attr_accessor :bindings
@@ -3349,7 +3693,7 @@ module Google
         # A tag used for statistics collection about this transaction. Both request_tag
         # and transaction_tag can be specified for a read or query that belongs to a
         # transaction. The value of transaction_tag should be the same for all requests
-        # belonging to the same transaction. If this request doesn’t belong to any
+        # belonging to the same transaction. If this request doesn't belong to any
         # transaction, transaction_tag will be ignored. Legal characters for `
         # transaction_tag` values are all printable characters (ASCII 32 - 126) and the
         # length of a transaction_tag is limited to 50 characters. Values that exceed
@@ -3737,6 +4081,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # The database role which created this session.
+        # Corresponds to the JSON property `creatorRole`
+        # @return [String]
+        attr_accessor :creator_role
+      
         # The labels for the session. * Label keys must be between 1 and 63 characters
         # long and must conform to the following regular expression: `[a-z]([-a-z0-9]*[a-
         # z0-9])?`. * Label values must be between 0 and 63 characters long and must
@@ -3760,6 +4109,7 @@ module Google
         def update!(**args)
           @approximate_last_use_time = args[:approximate_last_use_time] if args.key?(:approximate_last_use_time)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @creator_role = args[:creator_role] if args.key?(:creator_role)
           @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
         end
@@ -3771,31 +4121,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::SpannerV1::Policy]
         attr_accessor :policy
@@ -4017,25 +4367,30 @@ module Google
       # count towards the one transaction limit). After the active transaction is
       # completed, the session can immediately be re-used for the next transaction. It
       # is not necessary to create a new session for each transaction. Transaction
-      # Modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
+      # modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
       # This type of transaction is the only way to write data into Cloud Spanner.
       # These transactions rely on pessimistic locking and, if necessary, two-phase
       # commit. Locking read-write transactions may abort, requiring the application
-      # to retry. 2. Snapshot read-only. This transaction type provides guaranteed
-      # consistency across several reads, but does not allow writes. Snapshot read-
-      # only transactions can be configured to read at timestamps in the past.
-      # Snapshot read-only transactions do not need to be committed. 3. Partitioned
-      # DML. This type of transaction is used to execute a single Partitioned DML
-      # statement. Partitioned DML partitions the key space and runs the DML statement
-      # over each partition in parallel using separate, internal transactions that
-      # commit independently. Partitioned DML transactions do not need to be committed.
-      # For transactions that only read, snapshot read-only transactions provide
-      # simpler semantics and are almost always faster. In particular, read-only
-      # transactions do not take locks, so they do not conflict with read-write
-      # transactions. As a consequence of not taking locks, they also do not abort, so
-      # retry loops are not needed. Transactions may only read/write data in a single
-      # database. They may, however, read/write data in different tables within that
-      # database. Locking Read-Write Transactions: Locking transactions may be used to
+      # to retry. 2. Snapshot read-only. Snapshot read-only transactions provide
+      # guaranteed consistency across several reads, but do not allow writes. Snapshot
+      # read-only transactions can be configured to read at timestamps in the past, or
+      # configured to perform a strong read (where Spanner will select a timestamp
+      # such that the read is guaranteed to see the effects of all transactions that
+      # have committed before the start of the read). Snapshot read-only transactions
+      # do not need to be committed. Queries on change streams must be performed with
+      # the snapshot read-only transaction mode, specifying a strong read. Please see
+      # TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML. This
+      # type of transaction is used to execute a single Partitioned DML statement.
+      # Partitioned DML partitions the key space and runs the DML statement over each
+      # partition in parallel using separate, internal transactions that commit
+      # independently. Partitioned DML transactions do not need to be committed. For
+      # transactions that only read, snapshot read-only transactions provide simpler
+      # semantics and are almost always faster. In particular, read-only transactions
+      # do not take locks, so they do not conflict with read-write transactions. As a
+      # consequence of not taking locks, they also do not abort, so retry loops are
+      # not needed. Transactions may only read-write data in a single database. They
+      # may, however, read-write data in different tables within that database.
+      # Locking read-write transactions: Locking transactions may be used to
       # atomically read-modify-write data anywhere in a database. This type of
       # transaction is externally consistent. Clients should attempt to minimize the
       # amount of time a transaction is active. Faster transactions commit with higher
@@ -4054,7 +4409,7 @@ module Google
       # Cloud Spanner makes no guarantees about how long the transaction's locks were
       # held for. It is an error to use Cloud Spanner locks for any sort of mutual
       # exclusion other than between Cloud Spanner transactions themselves. Retrying
-      # Aborted Transactions: When a transaction aborts, the application can choose to
+      # aborted transactions: When a transaction aborts, the application can choose to
       # retry the whole transaction again. To maximize the chances of successfully
       # committing the retry, the client should execute the retry in the same session
       # as the original attempt. The original session's lock priority increases with
@@ -4063,14 +4418,14 @@ module Google
       # transactions attempting to modify the same row(s)), a transaction can abort
       # many times in a short period before successfully committing. Thus, it is not a
       # good idea to cap the number of retries a transaction can attempt; instead, it
-      # is better to limit the total amount of time spent retrying. Idle Transactions:
+      # is better to limit the total amount of time spent retrying. Idle transactions:
       # A transaction is considered idle if it has no outstanding reads or SQL queries
       # and has not started a read or SQL query within the last 10 seconds. Idle
       # transactions can be aborted by Cloud Spanner so that they don't hold on to
       # locks indefinitely. If an idle transaction is aborted, the commit will fail
       # with error `ABORTED`. If this behavior is undesirable, periodically executing
       # a simple SQL query in the transaction (for example, `SELECT 1`) prevents the
-      # transaction from becoming idle. Snapshot Read-Only Transactions: Snapshot read-
+      # transaction from becoming idle. Snapshot read-only transactions: Snapshot read-
       # only transactions provides a simpler method than locking read-write
       # transactions for doing several consistent reads. However, this type of
       # transaction does not support writes. Snapshot transactions do not take locks.
@@ -4086,7 +4441,7 @@ module Google
       # how to choose a read timestamp. The types of timestamp bound are: - Strong (
       # the default). - Bounded staleness. - Exact staleness. If the Cloud Spanner
       # database to be read is geographically distributed, stale read-only
-      # transactions can execute more quickly than strong or read-write transaction,
+      # transactions can execute more quickly than strong or read-write transactions,
       # because they are able to execute far from the leader replica. Each type of
       # timestamp bound is discussed in detail below. Strong: Strong reads are
       # guaranteed to see the effects of all transactions that have committed before
@@ -4096,69 +4451,91 @@ module Google
       # two consecutive strong read-only transactions might return inconsistent
       # results if there are concurrent writes. If consistency across reads is
       # required, the reads should be executed within a transaction or at an exact
-      # read timestamp. See TransactionOptions.ReadOnly.strong. Exact Staleness: These
-      # timestamp bounds execute reads at a user-specified timestamp. Reads at a
-      # timestamp are guaranteed to see a consistent prefix of the global transaction
-      # history: they observe modifications done by all transactions with a commit
-      # timestamp less than or equal to the read timestamp, and observe none of the
-      # modifications done by transactions with a larger commit timestamp. They will
-      # block until all conflicting transactions that may be assigned commit
-      # timestamps <= the read timestamp have finished. The timestamp can either be
-      # expressed as an absolute Cloud Spanner commit timestamp or a staleness
-      # relative to the current time. These modes do not require a "negotiation phase"
-      # to pick a timestamp. As a result, they execute slightly faster than the
-      # equivalent boundedly stale concurrency modes. On the other hand, boundedly
-      # stale reads usually return fresher results. See TransactionOptions.ReadOnly.
-      # read_timestamp and TransactionOptions.ReadOnly.exact_staleness. Bounded
-      # Staleness: Bounded staleness modes allow Cloud Spanner to pick the read
-      # timestamp, subject to a user-provided staleness bound. Cloud Spanner chooses
-      # the newest timestamp within the staleness bound that allows execution of the
-      # reads at the closest available replica without blocking. All rows yielded are
-      # consistent with each other -- if any part of the read observes a transaction,
-      # all parts of the read see the transaction. Boundedly stale reads are not
-      # repeatable: two stale reads, even if they use the same staleness bound, can
-      # execute at different timestamps and thus return inconsistent results.
-      # Boundedly stale reads execute in two phases: the first phase negotiates a
-      # timestamp among all replicas needed to serve the read. In the second phase,
-      # reads are executed at the negotiated timestamp. As a result of the two phase
-      # execution, bounded staleness reads are usually a little slower than comparable
-      # exact staleness reads. However, they are typically able to return fresher
-      # results, and are more likely to execute at the closest replica. Because the
-      # timestamp negotiation requires up-front knowledge of which rows will be read,
-      # it can only be used with single-use read-only transactions. See
-      # TransactionOptions.ReadOnly.max_staleness and TransactionOptions.ReadOnly.
-      # min_read_timestamp. Old Read Timestamps and Garbage Collection: Cloud Spanner
-      # continuously garbage collects deleted and overwritten data in the background
-      # to reclaim storage space. This process is known as "version GC". By default,
-      # version GC reclaims versions after they are one hour old. Because of this,
-      # Cloud Spanner cannot perform reads at read timestamps more than one hour in
-      # the past. This restriction also applies to in-progress reads and/or SQL
-      # queries whose timestamp become too old while executing. Reads and SQL queries
-      # with too-old read timestamps fail with the error `FAILED_PRECONDITION`.
-      # Partitioned DML Transactions: Partitioned DML transactions are used to execute
-      # DML statements with a different execution strategy that provides different,
-      # and often better, scalability properties for large, table-wide operations than
-      # DML in a ReadWrite transaction. Smaller scoped statements, such as an OLTP
-      # workload, should prefer using ReadWrite transactions. Partitioned DML
-      # partitions the keyspace and runs the DML statement on each partition in
-      # separate, internal transactions. These transactions commit automatically when
-      # complete, and run independently from one another. To reduce lock contention,
-      # this execution strategy only acquires read locks on rows that match the WHERE
-      # clause of the statement. Additionally, the smaller per-partition transactions
-      # hold locks for less time. That said, Partitioned DML is not a drop-in
-      # replacement for standard DML used in ReadWrite transactions. - The DML
-      # statement must be fully-partitionable. Specifically, the statement must be
-      # expressible as the union of many statements which each access only a single
-      # row of the table. - The statement is not applied atomically to all rows of the
-      # table. Rather, the statement is applied atomically to partitions of the table,
-      # in independent transactions. Secondary index rows are updated atomically with
-      # the base table rows. - Partitioned DML does not guarantee exactly-once
-      # execution semantics against a partition. The statement will be applied at
-      # least once to each partition. It is strongly recommended that the DML
-      # statement should be idempotent to avoid unexpected results. For instance, it
-      # is potentially dangerous to run a statement such as `UPDATE table SET column =
-      # column + 1` as it could be run multiple times against some rows. - The
-      # partitions are committed automatically - there is no support for Commit or
+      # read timestamp. Queries on change streams (see below for more details) must
+      # also specify the strong read timestamp bound. See TransactionOptions.ReadOnly.
+      # strong. Exact staleness: These timestamp bounds execute reads at a user-
+      # specified timestamp. Reads at a timestamp are guaranteed to see a consistent
+      # prefix of the global transaction history: they observe modifications done by
+      # all transactions with a commit timestamp less than or equal to the read
+      # timestamp, and observe none of the modifications done by transactions with a
+      # larger commit timestamp. They will block until all conflicting transactions
+      # that may be assigned commit timestamps <= the read timestamp have finished.
+      # The timestamp can either be expressed as an absolute Cloud Spanner commit
+      # timestamp or a staleness relative to the current time. These modes do not
+      # require a "negotiation phase" to pick a timestamp. As a result, they execute
+      # slightly faster than the equivalent boundedly stale concurrency modes. On the
+      # other hand, boundedly stale reads usually return fresher results. See
+      # TransactionOptions.ReadOnly.read_timestamp and TransactionOptions.ReadOnly.
+      # exact_staleness. Bounded staleness: Bounded staleness modes allow Cloud
+      # Spanner to pick the read timestamp, subject to a user-provided staleness bound.
+      # Cloud Spanner chooses the newest timestamp within the staleness bound that
+      # allows execution of the reads at the closest available replica without
+      # blocking. All rows yielded are consistent with each other -- if any part of
+      # the read observes a transaction, all parts of the read see the transaction.
+      # Boundedly stale reads are not repeatable: two stale reads, even if they use
+      # the same staleness bound, can execute at different timestamps and thus return
+      # inconsistent results. Boundedly stale reads execute in two phases: the first
+      # phase negotiates a timestamp among all replicas needed to serve the read. In
+      # the second phase, reads are executed at the negotiated timestamp. As a result
+      # of the two phase execution, bounded staleness reads are usually a little
+      # slower than comparable exact staleness reads. However, they are typically able
+      # to return fresher results, and are more likely to execute at the closest
+      # replica. Because the timestamp negotiation requires up-front knowledge of
+      # which rows will be read, it can only be used with single-use read-only
+      # transactions. See TransactionOptions.ReadOnly.max_staleness and
+      # TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
+      # garbage collection: Cloud Spanner continuously garbage collects deleted and
+      # overwritten data in the background to reclaim storage space. This process is
+      # known as "version GC". By default, version GC reclaims versions after they are
+      # one hour old. Because of this, Cloud Spanner cannot perform reads at read
+      # timestamps more than one hour in the past. This restriction also applies to in-
+      # progress reads and/or SQL queries whose timestamp become too old while
+      # executing. Reads and SQL queries with too-old read timestamps fail with the
+      # error `FAILED_PRECONDITION`. You can configure and extend the `
+      # VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
+      # which allows Cloud Spanner to perform reads up to one week in the past.
+      # Querying change Streams: A Change Stream is a schema object that can be
+      # configured to watch data changes on the entire database, a set of tables, or a
+      # set of columns in a database. When a change stream is created, Spanner
+      # automatically defines a corresponding SQL Table-Valued Function (TVF) that can
+      # be used to query the change records in the associated change stream using the
+      # ExecuteStreamingSql API. The name of the TVF for a change stream is generated
+      # from the name of the change stream: READ_. All queries on change stream TVFs
+      # must be executed using the ExecuteStreamingSql API with a single-use read-only
+      # transaction with a strong read-only timestamp_bound. The change stream TVF
+      # allows users to specify the start_timestamp and end_timestamp for the time
+      # range of interest. All change records within the retention period is
+      # accessible using the strong read-only timestamp_bound. All other
+      # TransactionOptions are invalid for change stream queries. In addition, if
+      # TransactionOptions.read_only.return_read_timestamp is set to true, a special
+      # value of 2^63 - 2 will be returned in the Transaction message that describes
+      # the transaction, instead of a valid read timestamp. This special value should
+      # be discarded and not used for any subsequent queries. Please see https://cloud.
+      # google.com/spanner/docs/change-streams for more details on how to query the
+      # change stream TVFs. Partitioned DML transactions: Partitioned DML transactions
+      # are used to execute DML statements with a different execution strategy that
+      # provides different, and often better, scalability properties for large, table-
+      # wide operations than DML in a ReadWrite transaction. Smaller scoped statements,
+      # such as an OLTP workload, should prefer using ReadWrite transactions.
+      # Partitioned DML partitions the keyspace and runs the DML statement on each
+      # partition in separate, internal transactions. These transactions commit
+      # automatically when complete, and run independently from one another. To reduce
+      # lock contention, this execution strategy only acquires read locks on rows that
+      # match the WHERE clause of the statement. Additionally, the smaller per-
+      # partition transactions hold locks for less time. That said, Partitioned DML is
+      # not a drop-in replacement for standard DML used in ReadWrite transactions. -
+      # The DML statement must be fully-partitionable. Specifically, the statement
+      # must be expressible as the union of many statements which each access only a
+      # single row of the table. - The statement is not applied atomically to all rows
+      # of the table. Rather, the statement is applied atomically to partitions of the
+      # table, in independent transactions. Secondary index rows are updated
+      # atomically with the base table rows. - Partitioned DML does not guarantee
+      # exactly-once execution semantics against a partition. The statement will be
+      # applied at least once to each partition. It is strongly recommended that the
+      # DML statement should be idempotent to avoid unexpected results. For instance,
+      # it is potentially dangerous to run a statement such as `UPDATE table SET
+      # column = column + 1` as it could be run multiple times against some rows. -
+      # The partitions are committed automatically - there is no support for Commit or
       # Rollback. If the call returns an error, or if the client issuing the
       # ExecuteSql call dies, it is possible that some rows had the statement executed
       # on them successfully. It is also possible that statement was never executed
@@ -4213,25 +4590,30 @@ module Google
         # count towards the one transaction limit). After the active transaction is
         # completed, the session can immediately be re-used for the next transaction. It
         # is not necessary to create a new session for each transaction. Transaction
-        # Modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
+        # modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
         # This type of transaction is the only way to write data into Cloud Spanner.
         # These transactions rely on pessimistic locking and, if necessary, two-phase
         # commit. Locking read-write transactions may abort, requiring the application
-        # to retry. 2. Snapshot read-only. This transaction type provides guaranteed
-        # consistency across several reads, but does not allow writes. Snapshot read-
-        # only transactions can be configured to read at timestamps in the past.
-        # Snapshot read-only transactions do not need to be committed. 3. Partitioned
-        # DML. This type of transaction is used to execute a single Partitioned DML
-        # statement. Partitioned DML partitions the key space and runs the DML statement
-        # over each partition in parallel using separate, internal transactions that
-        # commit independently. Partitioned DML transactions do not need to be committed.
-        # For transactions that only read, snapshot read-only transactions provide
-        # simpler semantics and are almost always faster. In particular, read-only
-        # transactions do not take locks, so they do not conflict with read-write
-        # transactions. As a consequence of not taking locks, they also do not abort, so
-        # retry loops are not needed. Transactions may only read/write data in a single
-        # database. They may, however, read/write data in different tables within that
-        # database. Locking Read-Write Transactions: Locking transactions may be used to
+        # to retry. 2. Snapshot read-only. Snapshot read-only transactions provide
+        # guaranteed consistency across several reads, but do not allow writes. Snapshot
+        # read-only transactions can be configured to read at timestamps in the past, or
+        # configured to perform a strong read (where Spanner will select a timestamp
+        # such that the read is guaranteed to see the effects of all transactions that
+        # have committed before the start of the read). Snapshot read-only transactions
+        # do not need to be committed. Queries on change streams must be performed with
+        # the snapshot read-only transaction mode, specifying a strong read. Please see
+        # TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML. This
+        # type of transaction is used to execute a single Partitioned DML statement.
+        # Partitioned DML partitions the key space and runs the DML statement over each
+        # partition in parallel using separate, internal transactions that commit
+        # independently. Partitioned DML transactions do not need to be committed. For
+        # transactions that only read, snapshot read-only transactions provide simpler
+        # semantics and are almost always faster. In particular, read-only transactions
+        # do not take locks, so they do not conflict with read-write transactions. As a
+        # consequence of not taking locks, they also do not abort, so retry loops are
+        # not needed. Transactions may only read-write data in a single database. They
+        # may, however, read-write data in different tables within that database.
+        # Locking read-write transactions: Locking transactions may be used to
         # atomically read-modify-write data anywhere in a database. This type of
         # transaction is externally consistent. Clients should attempt to minimize the
         # amount of time a transaction is active. Faster transactions commit with higher
@@ -4250,7 +4632,7 @@ module Google
         # Cloud Spanner makes no guarantees about how long the transaction's locks were
         # held for. It is an error to use Cloud Spanner locks for any sort of mutual
         # exclusion other than between Cloud Spanner transactions themselves. Retrying
-        # Aborted Transactions: When a transaction aborts, the application can choose to
+        # aborted transactions: When a transaction aborts, the application can choose to
         # retry the whole transaction again. To maximize the chances of successfully
         # committing the retry, the client should execute the retry in the same session
         # as the original attempt. The original session's lock priority increases with
@@ -4259,14 +4641,14 @@ module Google
         # transactions attempting to modify the same row(s)), a transaction can abort
         # many times in a short period before successfully committing. Thus, it is not a
         # good idea to cap the number of retries a transaction can attempt; instead, it
-        # is better to limit the total amount of time spent retrying. Idle Transactions:
+        # is better to limit the total amount of time spent retrying. Idle transactions:
         # A transaction is considered idle if it has no outstanding reads or SQL queries
         # and has not started a read or SQL query within the last 10 seconds. Idle
         # transactions can be aborted by Cloud Spanner so that they don't hold on to
         # locks indefinitely. If an idle transaction is aborted, the commit will fail
         # with error `ABORTED`. If this behavior is undesirable, periodically executing
         # a simple SQL query in the transaction (for example, `SELECT 1`) prevents the
-        # transaction from becoming idle. Snapshot Read-Only Transactions: Snapshot read-
+        # transaction from becoming idle. Snapshot read-only transactions: Snapshot read-
         # only transactions provides a simpler method than locking read-write
         # transactions for doing several consistent reads. However, this type of
         # transaction does not support writes. Snapshot transactions do not take locks.
@@ -4282,7 +4664,7 @@ module Google
         # how to choose a read timestamp. The types of timestamp bound are: - Strong (
         # the default). - Bounded staleness. - Exact staleness. If the Cloud Spanner
         # database to be read is geographically distributed, stale read-only
-        # transactions can execute more quickly than strong or read-write transaction,
+        # transactions can execute more quickly than strong or read-write transactions,
         # because they are able to execute far from the leader replica. Each type of
         # timestamp bound is discussed in detail below. Strong: Strong reads are
         # guaranteed to see the effects of all transactions that have committed before
@@ -4292,69 +4674,91 @@ module Google
         # two consecutive strong read-only transactions might return inconsistent
         # results if there are concurrent writes. If consistency across reads is
         # required, the reads should be executed within a transaction or at an exact
-        # read timestamp. See TransactionOptions.ReadOnly.strong. Exact Staleness: These
-        # timestamp bounds execute reads at a user-specified timestamp. Reads at a
-        # timestamp are guaranteed to see a consistent prefix of the global transaction
-        # history: they observe modifications done by all transactions with a commit
-        # timestamp less than or equal to the read timestamp, and observe none of the
-        # modifications done by transactions with a larger commit timestamp. They will
-        # block until all conflicting transactions that may be assigned commit
-        # timestamps <= the read timestamp have finished. The timestamp can either be
-        # expressed as an absolute Cloud Spanner commit timestamp or a staleness
-        # relative to the current time. These modes do not require a "negotiation phase"
-        # to pick a timestamp. As a result, they execute slightly faster than the
-        # equivalent boundedly stale concurrency modes. On the other hand, boundedly
-        # stale reads usually return fresher results. See TransactionOptions.ReadOnly.
-        # read_timestamp and TransactionOptions.ReadOnly.exact_staleness. Bounded
-        # Staleness: Bounded staleness modes allow Cloud Spanner to pick the read
-        # timestamp, subject to a user-provided staleness bound. Cloud Spanner chooses
-        # the newest timestamp within the staleness bound that allows execution of the
-        # reads at the closest available replica without blocking. All rows yielded are
-        # consistent with each other -- if any part of the read observes a transaction,
-        # all parts of the read see the transaction. Boundedly stale reads are not
-        # repeatable: two stale reads, even if they use the same staleness bound, can
-        # execute at different timestamps and thus return inconsistent results.
-        # Boundedly stale reads execute in two phases: the first phase negotiates a
-        # timestamp among all replicas needed to serve the read. In the second phase,
-        # reads are executed at the negotiated timestamp. As a result of the two phase
-        # execution, bounded staleness reads are usually a little slower than comparable
-        # exact staleness reads. However, they are typically able to return fresher
-        # results, and are more likely to execute at the closest replica. Because the
-        # timestamp negotiation requires up-front knowledge of which rows will be read,
-        # it can only be used with single-use read-only transactions. See
-        # TransactionOptions.ReadOnly.max_staleness and TransactionOptions.ReadOnly.
-        # min_read_timestamp. Old Read Timestamps and Garbage Collection: Cloud Spanner
-        # continuously garbage collects deleted and overwritten data in the background
-        # to reclaim storage space. This process is known as "version GC". By default,
-        # version GC reclaims versions after they are one hour old. Because of this,
-        # Cloud Spanner cannot perform reads at read timestamps more than one hour in
-        # the past. This restriction also applies to in-progress reads and/or SQL
-        # queries whose timestamp become too old while executing. Reads and SQL queries
-        # with too-old read timestamps fail with the error `FAILED_PRECONDITION`.
-        # Partitioned DML Transactions: Partitioned DML transactions are used to execute
-        # DML statements with a different execution strategy that provides different,
-        # and often better, scalability properties for large, table-wide operations than
-        # DML in a ReadWrite transaction. Smaller scoped statements, such as an OLTP
-        # workload, should prefer using ReadWrite transactions. Partitioned DML
-        # partitions the keyspace and runs the DML statement on each partition in
-        # separate, internal transactions. These transactions commit automatically when
-        # complete, and run independently from one another. To reduce lock contention,
-        # this execution strategy only acquires read locks on rows that match the WHERE
-        # clause of the statement. Additionally, the smaller per-partition transactions
-        # hold locks for less time. That said, Partitioned DML is not a drop-in
-        # replacement for standard DML used in ReadWrite transactions. - The DML
-        # statement must be fully-partitionable. Specifically, the statement must be
-        # expressible as the union of many statements which each access only a single
-        # row of the table. - The statement is not applied atomically to all rows of the
-        # table. Rather, the statement is applied atomically to partitions of the table,
-        # in independent transactions. Secondary index rows are updated atomically with
-        # the base table rows. - Partitioned DML does not guarantee exactly-once
-        # execution semantics against a partition. The statement will be applied at
-        # least once to each partition. It is strongly recommended that the DML
-        # statement should be idempotent to avoid unexpected results. For instance, it
-        # is potentially dangerous to run a statement such as `UPDATE table SET column =
-        # column + 1` as it could be run multiple times against some rows. - The
-        # partitions are committed automatically - there is no support for Commit or
+        # read timestamp. Queries on change streams (see below for more details) must
+        # also specify the strong read timestamp bound. See TransactionOptions.ReadOnly.
+        # strong. Exact staleness: These timestamp bounds execute reads at a user-
+        # specified timestamp. Reads at a timestamp are guaranteed to see a consistent
+        # prefix of the global transaction history: they observe modifications done by
+        # all transactions with a commit timestamp less than or equal to the read
+        # timestamp, and observe none of the modifications done by transactions with a
+        # larger commit timestamp. They will block until all conflicting transactions
+        # that may be assigned commit timestamps <= the read timestamp have finished.
+        # The timestamp can either be expressed as an absolute Cloud Spanner commit
+        # timestamp or a staleness relative to the current time. These modes do not
+        # require a "negotiation phase" to pick a timestamp. As a result, they execute
+        # slightly faster than the equivalent boundedly stale concurrency modes. On the
+        # other hand, boundedly stale reads usually return fresher results. See
+        # TransactionOptions.ReadOnly.read_timestamp and TransactionOptions.ReadOnly.
+        # exact_staleness. Bounded staleness: Bounded staleness modes allow Cloud
+        # Spanner to pick the read timestamp, subject to a user-provided staleness bound.
+        # Cloud Spanner chooses the newest timestamp within the staleness bound that
+        # allows execution of the reads at the closest available replica without
+        # blocking. All rows yielded are consistent with each other -- if any part of
+        # the read observes a transaction, all parts of the read see the transaction.
+        # Boundedly stale reads are not repeatable: two stale reads, even if they use
+        # the same staleness bound, can execute at different timestamps and thus return
+        # inconsistent results. Boundedly stale reads execute in two phases: the first
+        # phase negotiates a timestamp among all replicas needed to serve the read. In
+        # the second phase, reads are executed at the negotiated timestamp. As a result
+        # of the two phase execution, bounded staleness reads are usually a little
+        # slower than comparable exact staleness reads. However, they are typically able
+        # to return fresher results, and are more likely to execute at the closest
+        # replica. Because the timestamp negotiation requires up-front knowledge of
+        # which rows will be read, it can only be used with single-use read-only
+        # transactions. See TransactionOptions.ReadOnly.max_staleness and
+        # TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
+        # garbage collection: Cloud Spanner continuously garbage collects deleted and
+        # overwritten data in the background to reclaim storage space. This process is
+        # known as "version GC". By default, version GC reclaims versions after they are
+        # one hour old. Because of this, Cloud Spanner cannot perform reads at read
+        # timestamps more than one hour in the past. This restriction also applies to in-
+        # progress reads and/or SQL queries whose timestamp become too old while
+        # executing. Reads and SQL queries with too-old read timestamps fail with the
+        # error `FAILED_PRECONDITION`. You can configure and extend the `
+        # VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
+        # which allows Cloud Spanner to perform reads up to one week in the past.
+        # Querying change Streams: A Change Stream is a schema object that can be
+        # configured to watch data changes on the entire database, a set of tables, or a
+        # set of columns in a database. When a change stream is created, Spanner
+        # automatically defines a corresponding SQL Table-Valued Function (TVF) that can
+        # be used to query the change records in the associated change stream using the
+        # ExecuteStreamingSql API. The name of the TVF for a change stream is generated
+        # from the name of the change stream: READ_. All queries on change stream TVFs
+        # must be executed using the ExecuteStreamingSql API with a single-use read-only
+        # transaction with a strong read-only timestamp_bound. The change stream TVF
+        # allows users to specify the start_timestamp and end_timestamp for the time
+        # range of interest. All change records within the retention period is
+        # accessible using the strong read-only timestamp_bound. All other
+        # TransactionOptions are invalid for change stream queries. In addition, if
+        # TransactionOptions.read_only.return_read_timestamp is set to true, a special
+        # value of 2^63 - 2 will be returned in the Transaction message that describes
+        # the transaction, instead of a valid read timestamp. This special value should
+        # be discarded and not used for any subsequent queries. Please see https://cloud.
+        # google.com/spanner/docs/change-streams for more details on how to query the
+        # change stream TVFs. Partitioned DML transactions: Partitioned DML transactions
+        # are used to execute DML statements with a different execution strategy that
+        # provides different, and often better, scalability properties for large, table-
+        # wide operations than DML in a ReadWrite transaction. Smaller scoped statements,
+        # such as an OLTP workload, should prefer using ReadWrite transactions.
+        # Partitioned DML partitions the keyspace and runs the DML statement on each
+        # partition in separate, internal transactions. These transactions commit
+        # automatically when complete, and run independently from one another. To reduce
+        # lock contention, this execution strategy only acquires read locks on rows that
+        # match the WHERE clause of the statement. Additionally, the smaller per-
+        # partition transactions hold locks for less time. That said, Partitioned DML is
+        # not a drop-in replacement for standard DML used in ReadWrite transactions. -
+        # The DML statement must be fully-partitionable. Specifically, the statement
+        # must be expressible as the union of many statements which each access only a
+        # single row of the table. - The statement is not applied atomically to all rows
+        # of the table. Rather, the statement is applied atomically to partitions of the
+        # table, in independent transactions. Secondary index rows are updated
+        # atomically with the base table rows. - Partitioned DML does not guarantee
+        # exactly-once execution semantics against a partition. The statement will be
+        # applied at least once to each partition. It is strongly recommended that the
+        # DML statement should be idempotent to avoid unexpected results. For instance,
+        # it is potentially dangerous to run a statement such as `UPDATE table SET
+        # column = column + 1` as it could be run multiple times against some rows. -
+        # The partitions are committed automatically - there is no support for Commit or
         # Rollback. If the call returns an error, or if the client issuing the
         # ExecuteSql call dies, it is possible that some rows had the statement executed
         # on them successfully. It is also possible that statement was never executed
@@ -4383,25 +4787,30 @@ module Google
         # count towards the one transaction limit). After the active transaction is
         # completed, the session can immediately be re-used for the next transaction. It
         # is not necessary to create a new session for each transaction. Transaction
-        # Modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
+        # modes: Cloud Spanner supports three transaction modes: 1. Locking read-write.
         # This type of transaction is the only way to write data into Cloud Spanner.
         # These transactions rely on pessimistic locking and, if necessary, two-phase
         # commit. Locking read-write transactions may abort, requiring the application
-        # to retry. 2. Snapshot read-only. This transaction type provides guaranteed
-        # consistency across several reads, but does not allow writes. Snapshot read-
-        # only transactions can be configured to read at timestamps in the past.
-        # Snapshot read-only transactions do not need to be committed. 3. Partitioned
-        # DML. This type of transaction is used to execute a single Partitioned DML
-        # statement. Partitioned DML partitions the key space and runs the DML statement
-        # over each partition in parallel using separate, internal transactions that
-        # commit independently. Partitioned DML transactions do not need to be committed.
-        # For transactions that only read, snapshot read-only transactions provide
-        # simpler semantics and are almost always faster. In particular, read-only
-        # transactions do not take locks, so they do not conflict with read-write
-        # transactions. As a consequence of not taking locks, they also do not abort, so
-        # retry loops are not needed. Transactions may only read/write data in a single
-        # database. They may, however, read/write data in different tables within that
-        # database. Locking Read-Write Transactions: Locking transactions may be used to
+        # to retry. 2. Snapshot read-only. Snapshot read-only transactions provide
+        # guaranteed consistency across several reads, but do not allow writes. Snapshot
+        # read-only transactions can be configured to read at timestamps in the past, or
+        # configured to perform a strong read (where Spanner will select a timestamp
+        # such that the read is guaranteed to see the effects of all transactions that
+        # have committed before the start of the read). Snapshot read-only transactions
+        # do not need to be committed. Queries on change streams must be performed with
+        # the snapshot read-only transaction mode, specifying a strong read. Please see
+        # TransactionOptions.ReadOnly.strong for more details. 3. Partitioned DML. This
+        # type of transaction is used to execute a single Partitioned DML statement.
+        # Partitioned DML partitions the key space and runs the DML statement over each
+        # partition in parallel using separate, internal transactions that commit
+        # independently. Partitioned DML transactions do not need to be committed. For
+        # transactions that only read, snapshot read-only transactions provide simpler
+        # semantics and are almost always faster. In particular, read-only transactions
+        # do not take locks, so they do not conflict with read-write transactions. As a
+        # consequence of not taking locks, they also do not abort, so retry loops are
+        # not needed. Transactions may only read-write data in a single database. They
+        # may, however, read-write data in different tables within that database.
+        # Locking read-write transactions: Locking transactions may be used to
         # atomically read-modify-write data anywhere in a database. This type of
         # transaction is externally consistent. Clients should attempt to minimize the
         # amount of time a transaction is active. Faster transactions commit with higher
@@ -4420,7 +4829,7 @@ module Google
         # Cloud Spanner makes no guarantees about how long the transaction's locks were
         # held for. It is an error to use Cloud Spanner locks for any sort of mutual
         # exclusion other than between Cloud Spanner transactions themselves. Retrying
-        # Aborted Transactions: When a transaction aborts, the application can choose to
+        # aborted transactions: When a transaction aborts, the application can choose to
         # retry the whole transaction again. To maximize the chances of successfully
         # committing the retry, the client should execute the retry in the same session
         # as the original attempt. The original session's lock priority increases with
@@ -4429,14 +4838,14 @@ module Google
         # transactions attempting to modify the same row(s)), a transaction can abort
         # many times in a short period before successfully committing. Thus, it is not a
         # good idea to cap the number of retries a transaction can attempt; instead, it
-        # is better to limit the total amount of time spent retrying. Idle Transactions:
+        # is better to limit the total amount of time spent retrying. Idle transactions:
         # A transaction is considered idle if it has no outstanding reads or SQL queries
         # and has not started a read or SQL query within the last 10 seconds. Idle
         # transactions can be aborted by Cloud Spanner so that they don't hold on to
         # locks indefinitely. If an idle transaction is aborted, the commit will fail
         # with error `ABORTED`. If this behavior is undesirable, periodically executing
         # a simple SQL query in the transaction (for example, `SELECT 1`) prevents the
-        # transaction from becoming idle. Snapshot Read-Only Transactions: Snapshot read-
+        # transaction from becoming idle. Snapshot read-only transactions: Snapshot read-
         # only transactions provides a simpler method than locking read-write
         # transactions for doing several consistent reads. However, this type of
         # transaction does not support writes. Snapshot transactions do not take locks.
@@ -4452,7 +4861,7 @@ module Google
         # how to choose a read timestamp. The types of timestamp bound are: - Strong (
         # the default). - Bounded staleness. - Exact staleness. If the Cloud Spanner
         # database to be read is geographically distributed, stale read-only
-        # transactions can execute more quickly than strong or read-write transaction,
+        # transactions can execute more quickly than strong or read-write transactions,
         # because they are able to execute far from the leader replica. Each type of
         # timestamp bound is discussed in detail below. Strong: Strong reads are
         # guaranteed to see the effects of all transactions that have committed before
@@ -4462,69 +4871,91 @@ module Google
         # two consecutive strong read-only transactions might return inconsistent
         # results if there are concurrent writes. If consistency across reads is
         # required, the reads should be executed within a transaction or at an exact
-        # read timestamp. See TransactionOptions.ReadOnly.strong. Exact Staleness: These
-        # timestamp bounds execute reads at a user-specified timestamp. Reads at a
-        # timestamp are guaranteed to see a consistent prefix of the global transaction
-        # history: they observe modifications done by all transactions with a commit
-        # timestamp less than or equal to the read timestamp, and observe none of the
-        # modifications done by transactions with a larger commit timestamp. They will
-        # block until all conflicting transactions that may be assigned commit
-        # timestamps <= the read timestamp have finished. The timestamp can either be
-        # expressed as an absolute Cloud Spanner commit timestamp or a staleness
-        # relative to the current time. These modes do not require a "negotiation phase"
-        # to pick a timestamp. As a result, they execute slightly faster than the
-        # equivalent boundedly stale concurrency modes. On the other hand, boundedly
-        # stale reads usually return fresher results. See TransactionOptions.ReadOnly.
-        # read_timestamp and TransactionOptions.ReadOnly.exact_staleness. Bounded
-        # Staleness: Bounded staleness modes allow Cloud Spanner to pick the read
-        # timestamp, subject to a user-provided staleness bound. Cloud Spanner chooses
-        # the newest timestamp within the staleness bound that allows execution of the
-        # reads at the closest available replica without blocking. All rows yielded are
-        # consistent with each other -- if any part of the read observes a transaction,
-        # all parts of the read see the transaction. Boundedly stale reads are not
-        # repeatable: two stale reads, even if they use the same staleness bound, can
-        # execute at different timestamps and thus return inconsistent results.
-        # Boundedly stale reads execute in two phases: the first phase negotiates a
-        # timestamp among all replicas needed to serve the read. In the second phase,
-        # reads are executed at the negotiated timestamp. As a result of the two phase
-        # execution, bounded staleness reads are usually a little slower than comparable
-        # exact staleness reads. However, they are typically able to return fresher
-        # results, and are more likely to execute at the closest replica. Because the
-        # timestamp negotiation requires up-front knowledge of which rows will be read,
-        # it can only be used with single-use read-only transactions. See
-        # TransactionOptions.ReadOnly.max_staleness and TransactionOptions.ReadOnly.
-        # min_read_timestamp. Old Read Timestamps and Garbage Collection: Cloud Spanner
-        # continuously garbage collects deleted and overwritten data in the background
-        # to reclaim storage space. This process is known as "version GC". By default,
-        # version GC reclaims versions after they are one hour old. Because of this,
-        # Cloud Spanner cannot perform reads at read timestamps more than one hour in
-        # the past. This restriction also applies to in-progress reads and/or SQL
-        # queries whose timestamp become too old while executing. Reads and SQL queries
-        # with too-old read timestamps fail with the error `FAILED_PRECONDITION`.
-        # Partitioned DML Transactions: Partitioned DML transactions are used to execute
-        # DML statements with a different execution strategy that provides different,
-        # and often better, scalability properties for large, table-wide operations than
-        # DML in a ReadWrite transaction. Smaller scoped statements, such as an OLTP
-        # workload, should prefer using ReadWrite transactions. Partitioned DML
-        # partitions the keyspace and runs the DML statement on each partition in
-        # separate, internal transactions. These transactions commit automatically when
-        # complete, and run independently from one another. To reduce lock contention,
-        # this execution strategy only acquires read locks on rows that match the WHERE
-        # clause of the statement. Additionally, the smaller per-partition transactions
-        # hold locks for less time. That said, Partitioned DML is not a drop-in
-        # replacement for standard DML used in ReadWrite transactions. - The DML
-        # statement must be fully-partitionable. Specifically, the statement must be
-        # expressible as the union of many statements which each access only a single
-        # row of the table. - The statement is not applied atomically to all rows of the
-        # table. Rather, the statement is applied atomically to partitions of the table,
-        # in independent transactions. Secondary index rows are updated atomically with
-        # the base table rows. - Partitioned DML does not guarantee exactly-once
-        # execution semantics against a partition. The statement will be applied at
-        # least once to each partition. It is strongly recommended that the DML
-        # statement should be idempotent to avoid unexpected results. For instance, it
-        # is potentially dangerous to run a statement such as `UPDATE table SET column =
-        # column + 1` as it could be run multiple times against some rows. - The
-        # partitions are committed automatically - there is no support for Commit or
+        # read timestamp. Queries on change streams (see below for more details) must
+        # also specify the strong read timestamp bound. See TransactionOptions.ReadOnly.
+        # strong. Exact staleness: These timestamp bounds execute reads at a user-
+        # specified timestamp. Reads at a timestamp are guaranteed to see a consistent
+        # prefix of the global transaction history: they observe modifications done by
+        # all transactions with a commit timestamp less than or equal to the read
+        # timestamp, and observe none of the modifications done by transactions with a
+        # larger commit timestamp. They will block until all conflicting transactions
+        # that may be assigned commit timestamps <= the read timestamp have finished.
+        # The timestamp can either be expressed as an absolute Cloud Spanner commit
+        # timestamp or a staleness relative to the current time. These modes do not
+        # require a "negotiation phase" to pick a timestamp. As a result, they execute
+        # slightly faster than the equivalent boundedly stale concurrency modes. On the
+        # other hand, boundedly stale reads usually return fresher results. See
+        # TransactionOptions.ReadOnly.read_timestamp and TransactionOptions.ReadOnly.
+        # exact_staleness. Bounded staleness: Bounded staleness modes allow Cloud
+        # Spanner to pick the read timestamp, subject to a user-provided staleness bound.
+        # Cloud Spanner chooses the newest timestamp within the staleness bound that
+        # allows execution of the reads at the closest available replica without
+        # blocking. All rows yielded are consistent with each other -- if any part of
+        # the read observes a transaction, all parts of the read see the transaction.
+        # Boundedly stale reads are not repeatable: two stale reads, even if they use
+        # the same staleness bound, can execute at different timestamps and thus return
+        # inconsistent results. Boundedly stale reads execute in two phases: the first
+        # phase negotiates a timestamp among all replicas needed to serve the read. In
+        # the second phase, reads are executed at the negotiated timestamp. As a result
+        # of the two phase execution, bounded staleness reads are usually a little
+        # slower than comparable exact staleness reads. However, they are typically able
+        # to return fresher results, and are more likely to execute at the closest
+        # replica. Because the timestamp negotiation requires up-front knowledge of
+        # which rows will be read, it can only be used with single-use read-only
+        # transactions. See TransactionOptions.ReadOnly.max_staleness and
+        # TransactionOptions.ReadOnly.min_read_timestamp. Old read timestamps and
+        # garbage collection: Cloud Spanner continuously garbage collects deleted and
+        # overwritten data in the background to reclaim storage space. This process is
+        # known as "version GC". By default, version GC reclaims versions after they are
+        # one hour old. Because of this, Cloud Spanner cannot perform reads at read
+        # timestamps more than one hour in the past. This restriction also applies to in-
+        # progress reads and/or SQL queries whose timestamp become too old while
+        # executing. Reads and SQL queries with too-old read timestamps fail with the
+        # error `FAILED_PRECONDITION`. You can configure and extend the `
+        # VERSION_RETENTION_PERIOD` of a database up to a period as long as one week,
+        # which allows Cloud Spanner to perform reads up to one week in the past.
+        # Querying change Streams: A Change Stream is a schema object that can be
+        # configured to watch data changes on the entire database, a set of tables, or a
+        # set of columns in a database. When a change stream is created, Spanner
+        # automatically defines a corresponding SQL Table-Valued Function (TVF) that can
+        # be used to query the change records in the associated change stream using the
+        # ExecuteStreamingSql API. The name of the TVF for a change stream is generated
+        # from the name of the change stream: READ_. All queries on change stream TVFs
+        # must be executed using the ExecuteStreamingSql API with a single-use read-only
+        # transaction with a strong read-only timestamp_bound. The change stream TVF
+        # allows users to specify the start_timestamp and end_timestamp for the time
+        # range of interest. All change records within the retention period is
+        # accessible using the strong read-only timestamp_bound. All other
+        # TransactionOptions are invalid for change stream queries. In addition, if
+        # TransactionOptions.read_only.return_read_timestamp is set to true, a special
+        # value of 2^63 - 2 will be returned in the Transaction message that describes
+        # the transaction, instead of a valid read timestamp. This special value should
+        # be discarded and not used for any subsequent queries. Please see https://cloud.
+        # google.com/spanner/docs/change-streams for more details on how to query the
+        # change stream TVFs. Partitioned DML transactions: Partitioned DML transactions
+        # are used to execute DML statements with a different execution strategy that
+        # provides different, and often better, scalability properties for large, table-
+        # wide operations than DML in a ReadWrite transaction. Smaller scoped statements,
+        # such as an OLTP workload, should prefer using ReadWrite transactions.
+        # Partitioned DML partitions the keyspace and runs the DML statement on each
+        # partition in separate, internal transactions. These transactions commit
+        # automatically when complete, and run independently from one another. To reduce
+        # lock contention, this execution strategy only acquires read locks on rows that
+        # match the WHERE clause of the statement. Additionally, the smaller per-
+        # partition transactions hold locks for less time. That said, Partitioned DML is
+        # not a drop-in replacement for standard DML used in ReadWrite transactions. -
+        # The DML statement must be fully-partitionable. Specifically, the statement
+        # must be expressible as the union of many statements which each access only a
+        # single row of the table. - The statement is not applied atomically to all rows
+        # of the table. Rather, the statement is applied atomically to partitions of the
+        # table, in independent transactions. Secondary index rows are updated
+        # atomically with the base table rows. - Partitioned DML does not guarantee
+        # exactly-once execution semantics against a partition. The statement will be
+        # applied at least once to each partition. It is strongly recommended that the
+        # DML statement should be idempotent to avoid unexpected results. For instance,
+        # it is potentially dangerous to run a statement such as `UPDATE table SET
+        # column = column + 1` as it could be run multiple times against some rows. -
+        # The partitions are committed automatically - there is no support for Commit or
         # Rollback. If the call returns an error, or if the client issuing the
         # ExecuteSql call dies, it is possible that some rows had the statement executed
         # on them successfully. It is also possible that statement was never executed
@@ -4575,6 +5006,16 @@ module Google
         # @return [Google::Apis::SpannerV1::StructType]
         attr_accessor :struct_type
       
+        # The TypeAnnotationCode that disambiguates SQL type that Spanner will use to
+        # represent values of this type during query processing. This is necessary for
+        # some type codes because a single TypeCode can be mapped to different SQL types
+        # depending on the SQL dialect. type_annotation typically is not needed to
+        # process the content of a value (it doesn't affect serialization) and clients
+        # can ignore it on the read path.
+        # Corresponds to the JSON property `typeAnnotation`
+        # @return [String]
+        attr_accessor :type_annotation
+      
         def initialize(**args)
            update!(**args)
         end
@@ -4584,6 +5025,7 @@ module Google
           @array_element_type = args[:array_element_type] if args.key?(:array_element_type)
           @code = args[:code] if args.key?(:code)
           @struct_type = args[:struct_type] if args.key?(:struct_type)
+          @type_annotation = args[:type_annotation] if args.key?(:type_annotation)
         end
       end
       

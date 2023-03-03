@@ -59,7 +59,7 @@ module Google
         # @return [Google::Apis::SasportalV1alpha1::SasPortalFrequencyRange]
         attr_accessor :frequency_range
       
-        # The channel score, normalized to be in [0,100].
+        # The channel score, normalized to be in the range [0,100].
         # Corresponds to the JSON property `score`
         # @return [Float]
         attr_accessor :score
@@ -138,22 +138,12 @@ module Google
       class SasPortalDeployment
         include Google::Apis::Core::Hashable
       
-        # The allowed billing modes under this deployment.
-        # Corresponds to the JSON property `allowedBillingModes`
-        # @return [Array<String>]
-        attr_accessor :allowed_billing_modes
-      
-        # Default billing mode for the deployment and devices under it.
-        # Corresponds to the JSON property `defaultBillingMode`
-        # @return [String]
-        attr_accessor :default_billing_mode
-      
         # The deployment's display name.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
       
-        # Output only. The FRNs copied from its direct parent.
+        # Output only. The FCC Registration Numbers (FRNs) copied from its direct parent.
         # Corresponds to the JSON property `frns`
         # @return [Array<String>]
         attr_accessor :frns
@@ -175,8 +165,6 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @allowed_billing_modes = args[:allowed_billing_modes] if args.key?(:allowed_billing_modes)
-          @default_billing_mode = args[:default_billing_mode] if args.key?(:default_billing_mode)
           @display_name = args[:display_name] if args.key?(:display_name)
           @frns = args[:frns] if args.key?(:frns)
           @name = args[:name] if args.key?(:name)
@@ -213,7 +201,7 @@ module Google
         # @return [String]
         attr_accessor :fcc_id
       
-        # Only ranges within the allowlists are available for new grants.
+        # Only ranges that are within the allowlists are available for new grants.
         # Corresponds to the JSON property `grantRangeAllowlists`
         # @return [Array<Google::Apis::SasportalV1alpha1::SasPortalFrequencyRange>]
         attr_accessor :grant_range_allowlists
@@ -391,6 +379,11 @@ module Google
         # @return [String]
         attr_accessor :grant_id
       
+        # The transmit expiration time of the last heartbeat.
+        # Corresponds to the JSON property `lastHeartbeatTransmitExpireTime`
+        # @return [String]
+        attr_accessor :last_heartbeat_transmit_expire_time
+      
         # Maximum Equivalent Isotropically Radiated Power (EIRP) permitted by the grant.
         # The maximum EIRP is in units of dBm/MHz. The value of `maxEirp` represents the
         # average (RMS) EIRP that would be measured by the procedure defined in FCC part
@@ -424,6 +417,7 @@ module Google
           @expire_time = args[:expire_time] if args.key?(:expire_time)
           @frequency_range = args[:frequency_range] if args.key?(:frequency_range)
           @grant_id = args[:grant_id] if args.key?(:grant_id)
+          @last_heartbeat_transmit_expire_time = args[:last_heartbeat_transmit_expire_time] if args.key?(:last_heartbeat_transmit_expire_time)
           @max_eirp = args[:max_eirp] if args.key?(:max_eirp)
           @move_list = args[:move_list] if args.key?(:move_list)
           @state = args[:state] if args.key?(:state)
@@ -435,23 +429,39 @@ module Google
       class SasPortalDeviceMetadata
         include Google::Apis::Core::Hashable
       
-        # If populated, the Antenna Model Pattern to use. Format is: RecordCreatorId:
-        # PatternId
+        # If populated, the Antenna Model Pattern to use. Format is: `RecordCreatorId:
+        # PatternId`
         # Corresponds to the JSON property `antennaModel`
         # @return [String]
         attr_accessor :antenna_model
       
-        # CCG. A group of CBSDs in the same ICG requesting a common primary channel
-        # assignment. See CBRSA-TS-2001 V3.0.0 for more details.
+        # Common Channel Group (CCG). A group of CBSDs in the same ICG requesting a
+        # common primary channel assignment. For more details, see [CBRSA-TS-2001 V3.0.0]
+        # (https://ongoalliance.org/wp-content/uploads/2020/02/CBRSA-TS-2001-V3.0.
+        # 0_Approved-for-publication.pdf).
         # Corresponds to the JSON property `commonChannelGroup`
         # @return [String]
         attr_accessor :common_channel_group
       
-        # ICG. A group of CBSDs that manage their own interference with the group. See
-        # CBRSA-TS-2001 V3.0.0 for more details.
+        # Interference Coordination Group (ICG). A group of CBSDs that manage their own
+        # interference with the group. For more details, see [CBRSA-TS-2001 V3.0.0](
+        # https://ongoalliance.org/wp-content/uploads/2020/02/CBRSA-TS-2001-V3.0.
+        # 0_Approved-for-publication.pdf).
         # Corresponds to the JSON property `interferenceCoordinationGroup`
         # @return [String]
         attr_accessor :interference_coordination_group
+      
+        # Output only. Set to `true` if a CPI has validated that they have coordinated
+        # with the National Quiet Zone office.
+        # Corresponds to the JSON property `nrqzValidated`
+        # @return [Boolean]
+        attr_accessor :nrqz_validated
+        alias_method :nrqz_validated?, :nrqz_validated
+      
+        # Information about National Radio Quiet Zone validation.
+        # Corresponds to the JSON property `nrqzValidation`
+        # @return [Google::Apis::SasportalV1alpha1::SasPortalNrqzValidation]
+        attr_accessor :nrqz_validation
       
         def initialize(**args)
            update!(**args)
@@ -462,6 +472,8 @@ module Google
           @antenna_model = args[:antenna_model] if args.key?(:antenna_model)
           @common_channel_group = args[:common_channel_group] if args.key?(:common_channel_group)
           @interference_coordination_group = args[:interference_coordination_group] if args.key?(:interference_coordination_group)
+          @nrqz_validated = args[:nrqz_validated] if args.key?(:nrqz_validated)
+          @nrqz_validation = args[:nrqz_validation] if args.key?(:nrqz_validation)
         end
       end
       
@@ -536,8 +548,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class SasPortalEmpty
         include Google::Apis::Core::Hashable
       
@@ -661,6 +672,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :antenna_gain
       
+        # As above, but as a DoubleValue.
+        # Corresponds to the JSON property `antennaGainNewField`
+        # @return [Float]
+        attr_accessor :antenna_gain_new_field
+      
         # If an external antenna is used, the antenna model is optionally provided in
         # this field. The string has a maximum length of 128 octets.
         # Corresponds to the JSON property `antennaModel`
@@ -680,6 +696,11 @@ module Google
         # Corresponds to the JSON property `eirpCapability`
         # @return [Fixnum]
         attr_accessor :eirp_capability
+      
+        # As above, but as a DoubleValue.
+        # Corresponds to the JSON property `eirpCapabilityNewField`
+        # @return [Float]
+        attr_accessor :eirp_capability_new_field
       
         # Device antenna height in meters. When the `heightType` parameter value is "AGL"
         # , the antenna height should be given relative to ground level. When the `
@@ -738,9 +759,11 @@ module Google
           @antenna_beamwidth = args[:antenna_beamwidth] if args.key?(:antenna_beamwidth)
           @antenna_downtilt = args[:antenna_downtilt] if args.key?(:antenna_downtilt)
           @antenna_gain = args[:antenna_gain] if args.key?(:antenna_gain)
+          @antenna_gain_new_field = args[:antenna_gain_new_field] if args.key?(:antenna_gain_new_field)
           @antenna_model = args[:antenna_model] if args.key?(:antenna_model)
           @cpe_cbsd_indication = args[:cpe_cbsd_indication] if args.key?(:cpe_cbsd_indication)
           @eirp_capability = args[:eirp_capability] if args.key?(:eirp_capability)
+          @eirp_capability_new_field = args[:eirp_capability_new_field] if args.key?(:eirp_capability_new_field)
           @height = args[:height] if args.key?(:height)
           @height_type = args[:height_type] if args.key?(:height_type)
           @horizontal_accuracy = args[:horizontal_accuracy] if args.key?(:horizontal_accuracy)
@@ -950,6 +973,49 @@ module Google
         end
       end
       
+      # Information about National Radio Quiet Zone validation.
+      class SasPortalNrqzValidation
+        include Google::Apis::Core::Hashable
+      
+        # Validation case ID.
+        # Corresponds to the JSON property `caseId`
+        # @return [String]
+        attr_accessor :case_id
+      
+        # CPI who signed the validation.
+        # Corresponds to the JSON property `cpiId`
+        # @return [String]
+        attr_accessor :cpi_id
+      
+        # Device latitude that's associated with the validation.
+        # Corresponds to the JSON property `latitude`
+        # @return [Float]
+        attr_accessor :latitude
+      
+        # Device longitude that's associated with the validation.
+        # Corresponds to the JSON property `longitude`
+        # @return [Float]
+        attr_accessor :longitude
+      
+        # State of the NRQZ validation info.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_id = args[:case_id] if args.key?(:case_id)
+          @cpi_id = args[:cpi_id] if args.key?(:cpi_id)
+          @latitude = args[:latitude] if args.key?(:latitude)
+          @longitude = args[:longitude] if args.key?(:longitude)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
       # This resource represents a long-running operation that is the result of a
       # network API call.
       class SasPortalOperation
@@ -1045,12 +1111,48 @@ module Google
         end
       end
       
+      # Request for [ProvisionDeployment]. [spectrum.sas.portal.v1alpha1.Provisioning.
+      # ProvisionDeployment]. No input is needed, because GCP Project, Organization
+      # Info, and caller’s GAIA ID should be retrieved from the RPC handler, and used
+      # as inputs to create a new SAS organization (if not exists) and a new SAS
+      # deployment.
+      class SasPortalProvisionDeploymentRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Response for [ProvisionDeployment]. [spectrum.sas.portal.v1alpha1.Provisioning.
+      # ProvisionDeployment].
+      class SasPortalProvisionDeploymentResponse
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional error message if the provisioning request is not successful.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @error_message = args[:error_message] if args.key?(:error_message)
+        end
+      end
+      
       # Request message for `SetPolicy` method.
       class SasPortalSetPolicyRequest
         include Google::Apis::Core::Hashable
       
-        # Optional. Set the field as true when we would like to disable the onboarding
-        # notification.
+        # Optional. Set the field as `true` to disable the onboarding notification.
         # Corresponds to the JSON property `disableNotification`
         # @return [Boolean]
         attr_accessor :disable_notification

@@ -130,6 +130,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GuestPolicy
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -244,7 +250,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PausePatchDeploymentRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RecurringSchedule
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ResumePatchDeploymentRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -544,6 +562,17 @@ module Google
         end
       end
       
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_method, as: 'apiMethod'
+          property :os_policy_assignment, as: 'osPolicyAssignment'
+          property :rollout_start_time, as: 'rolloutStartTime'
+          property :rollout_state, as: 'rolloutState'
+          property :rollout_update_time, as: 'rolloutUpdateTime'
+        end
+      end
+      
       class GuestPolicy
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -665,6 +694,7 @@ module Google
       
           property :goo, as: 'goo', class: Google::Apis::OsconfigV1beta::GooSettings, decorator: Google::Apis::OsconfigV1beta::GooSettings::Representation
       
+          property :mig_instances_allowed, as: 'migInstancesAllowed'
           property :post_step, as: 'postStep', class: Google::Apis::OsconfigV1beta::ExecStep, decorator: Google::Apis::OsconfigV1beta::ExecStep::Representation
       
           property :pre_step, as: 'preStep', class: Google::Apis::OsconfigV1beta::ExecStep, decorator: Google::Apis::OsconfigV1beta::ExecStep::Representation
@@ -697,6 +727,7 @@ module Google
       
           property :rollout, as: 'rollout', class: Google::Apis::OsconfigV1beta::PatchRollout, decorator: Google::Apis::OsconfigV1beta::PatchRollout::Representation
       
+          property :state, as: 'state'
           property :update_time, as: 'updateTime'
         end
       end
@@ -786,6 +817,12 @@ module Google
         end
       end
       
+      class PausePatchDeploymentRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class RecurringSchedule
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -802,6 +839,12 @@ module Google
       
           property :weekly, as: 'weekly', class: Google::Apis::OsconfigV1beta::WeeklySchedule, decorator: Google::Apis::OsconfigV1beta::WeeklySchedule::Representation
       
+        end
+      end
+      
+      class ResumePatchDeploymentRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -952,6 +995,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :day_of_week, as: 'dayOfWeek'
+          property :day_offset, as: 'dayOffset'
           property :week_ordinal, as: 'weekOrdinal'
         end
       end

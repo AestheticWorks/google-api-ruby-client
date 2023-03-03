@@ -76,18 +76,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class GoogleAppengineV2OperationMetadata
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class GoogleAppengineV2mainOperationMetadata
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class ListAuthorizedCertificatesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -155,6 +143,30 @@ module Google
       end
       
       class OperationMetadataV1Beta
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectsMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Reasons
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -256,36 +268,6 @@ module Google
           property :flexible_environment_available, as: 'flexibleEnvironmentAvailable'
           property :search_api_available, as: 'searchApiAvailable'
           property :standard_environment_available, as: 'standardEnvironmentAvailable'
-        end
-      end
-      
-      class GoogleAppengineV2OperationMetadata
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :api_version, as: 'apiVersion'
-          property :create_time, as: 'createTime'
-          property :end_time, as: 'endTime'
-          property :ephemeral_message, as: 'ephemeralMessage'
-          property :requested_cancellation, as: 'requestedCancellation'
-          property :status_message, as: 'statusMessage'
-          property :target, as: 'target'
-          property :verb, as: 'verb'
-          collection :warning, as: 'warning'
-        end
-      end
-      
-      class GoogleAppengineV2mainOperationMetadata
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :api_version, as: 'apiVersion'
-          property :create_time, as: 'createTime'
-          property :end_time, as: 'endTime'
-          property :ephemeral_message, as: 'ephemeralMessage'
-          property :requested_cancellation, as: 'requestedCancellation'
-          property :status_message, as: 'statusMessage'
-          property :target, as: 'target'
-          property :verb, as: 'verb'
-          collection :warning, as: 'warning'
         end
       end
       
@@ -416,6 +398,53 @@ module Google
           property :target, as: 'target'
           property :user, as: 'user'
           collection :warning, as: 'warning'
+        end
+      end
+      
+      class ProjectEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :event_id, as: 'eventId'
+          property :phase, as: 'phase'
+          property :project_metadata, as: 'projectMetadata', class: Google::Apis::AppengineV1alpha::ProjectsMetadata, decorator: Google::Apis::AppengineV1alpha::ProjectsMetadata::Representation
+      
+          property :state, as: 'state', class: Google::Apis::AppengineV1alpha::ProjectState, decorator: Google::Apis::AppengineV1alpha::ProjectState::Representation
+      
+        end
+      end
+      
+      class ProjectState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :current_reasons, as: 'currentReasons', class: Google::Apis::AppengineV1alpha::Reasons, decorator: Google::Apis::AppengineV1alpha::Reasons::Representation
+      
+          property :previous_reasons, as: 'previousReasons', class: Google::Apis::AppengineV1alpha::Reasons, decorator: Google::Apis::AppengineV1alpha::Reasons::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class ProjectsMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :consumer_project_id, as: 'consumerProjectId'
+          property :consumer_project_number, :numeric_string => true, as: 'consumerProjectNumber'
+          property :consumer_project_state, as: 'consumerProjectState'
+          property :p4_service_account, as: 'p4ServiceAccount'
+          property :producer_project_id, as: 'producerProjectId'
+          property :producer_project_number, :numeric_string => true, as: 'producerProjectNumber'
+          property :tenant_project_id, as: 'tenantProjectId'
+          property :tenant_project_number, :numeric_string => true, as: 'tenantProjectNumber'
+        end
+      end
+      
+      class Reasons
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :abuse, as: 'abuse'
+          property :billing, as: 'billing'
+          property :data_governance, as: 'dataGovernance'
+          property :service_management, as: 'serviceManagement'
         end
       end
       

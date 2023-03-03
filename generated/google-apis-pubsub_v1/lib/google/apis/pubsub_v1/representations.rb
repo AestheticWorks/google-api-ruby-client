@@ -28,7 +28,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BigQueryConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Binding
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CommitSchemaRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -65,6 +77,12 @@ module Google
       end
       
       class Expr
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListSchemaRevisionsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -184,6 +202,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RollbackSchemaRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Schema
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -293,6 +317,17 @@ module Google
         end
       end
       
+      class BigQueryConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :drop_unknown_fields, as: 'dropUnknownFields'
+          property :state, as: 'state'
+          property :table, as: 'table'
+          property :use_topic_schema, as: 'useTopicSchema'
+          property :write_metadata, as: 'writeMetadata'
+        end
+      end
+      
       class Binding
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -300,6 +335,14 @@ module Google
       
           collection :members, as: 'members'
           property :role, as: 'role'
+        end
+      end
+      
+      class CommitSchemaRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :schema, as: 'schema', class: Google::Apis::PubsubV1::Schema, decorator: Google::Apis::PubsubV1::Schema::Representation
+      
         end
       end
       
@@ -345,6 +388,15 @@ module Google
           property :expression, as: 'expression'
           property :location, as: 'location'
           property :title, as: 'title'
+        end
+      end
+      
+      class ListSchemaRevisionsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :schemas, as: 'schemas', class: Google::Apis::PubsubV1::Schema, decorator: Google::Apis::PubsubV1::Schema::Representation
+      
         end
       end
       
@@ -511,11 +563,20 @@ module Google
         end
       end
       
+      class RollbackSchemaRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :revision_id, as: 'revisionId'
+        end
+      end
+      
       class Schema
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :definition, as: 'definition'
           property :name, as: 'name'
+          property :revision_create_time, as: 'revisionCreateTime'
+          property :revision_id, as: 'revisionId'
           property :type, as: 'type'
         end
       end
@@ -524,6 +585,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :encoding, as: 'encoding'
+          property :first_revision_id, as: 'firstRevisionId'
+          property :last_revision_id, as: 'lastRevisionId'
           property :schema, as: 'schema'
         end
       end
@@ -564,9 +627,12 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :ack_deadline_seconds, as: 'ackDeadlineSeconds'
+          property :bigquery_config, as: 'bigqueryConfig', class: Google::Apis::PubsubV1::BigQueryConfig, decorator: Google::Apis::PubsubV1::BigQueryConfig::Representation
+      
           property :dead_letter_policy, as: 'deadLetterPolicy', class: Google::Apis::PubsubV1::DeadLetterPolicy, decorator: Google::Apis::PubsubV1::DeadLetterPolicy::Representation
       
           property :detached, as: 'detached'
+          property :enable_exactly_once_delivery, as: 'enableExactlyOnceDelivery'
           property :enable_message_ordering, as: 'enableMessageOrdering'
           property :expiration_policy, as: 'expirationPolicy', class: Google::Apis::PubsubV1::ExpirationPolicy, decorator: Google::Apis::PubsubV1::ExpirationPolicy::Representation
       
@@ -579,6 +645,7 @@ module Google
           property :retain_acked_messages, as: 'retainAckedMessages'
           property :retry_policy, as: 'retryPolicy', class: Google::Apis::PubsubV1::RetryPolicy, decorator: Google::Apis::PubsubV1::RetryPolicy::Representation
       
+          property :state, as: 'state'
           property :topic, as: 'topic'
           property :topic_message_retention_duration, as: 'topicMessageRetentionDuration'
         end

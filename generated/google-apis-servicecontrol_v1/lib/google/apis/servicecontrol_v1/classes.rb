@@ -217,6 +217,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :num_response_items
       
+        # Information related to policy violations for this request.
+        # Corresponds to the JSON property `policyViolationInfo`
+        # @return [Google::Apis::ServicecontrolV1::PolicyViolationInfo]
+        attr_accessor :policy_violation_info
+      
         # The operation request. This may not include all request parameters, such as
         # those that are too large, privacy-sensitive, or duplicated elsewhere in the
         # log record. It should never include user-generated data, such as file contents.
@@ -296,6 +301,7 @@ module Google
           @metadata = args[:metadata] if args.key?(:metadata)
           @method_name = args[:method_name] if args.key?(:method_name)
           @num_response_items = args[:num_response_items] if args.key?(:num_response_items)
+          @policy_violation_info = args[:policy_violation_info] if args.key?(:policy_violation_info)
           @request = args[:request] if args.key?(:request)
           @request_metadata = args[:request_metadata] if args.key?(:request_metadata)
           @resource_location = args[:resource_location] if args.key?(:resource_location)
@@ -690,9 +696,9 @@ module Google
       
       # Distribution represents a frequency distribution of double-valued sample
       # points. It contains the size of the population of sample points plus
-      # additional optional information: - the arithmetic mean of the samples - the
-      # minimum and maximum of the samples - the sum-squared-deviation of the samples,
-      # used to compute variance - a histogram of the values of the sample points
+      # additional optional information: * the arithmetic mean of the samples * the
+      # minimum and maximum of the samples * the sum-squared-deviation of the samples,
+      # used to compute variance * a histogram of the values of the sample points
       class Distribution
         include Google::Apis::Core::Hashable
       
@@ -1251,9 +1257,9 @@ module Google
       
         # Distribution represents a frequency distribution of double-valued sample
         # points. It contains the size of the population of sample points plus
-        # additional optional information: - the arithmetic mean of the samples - the
-        # minimum and maximum of the samples - the sum-squared-deviation of the samples,
-        # used to compute variance - a histogram of the values of the sample points
+        # additional optional information: * the arithmetic mean of the samples * the
+        # minimum and maximum of the samples * the sum-squared-deviation of the samples,
+        # used to compute variance * a histogram of the values of the sample points
         # Corresponds to the JSON property `distributionValue`
         # @return [Google::Apis::ServicecontrolV1::Distribution]
         attr_accessor :distribution_value
@@ -1401,11 +1407,6 @@ module Google
         # @return [String]
         attr_accessor :end_time
       
-        # Unimplemented.
-        # Corresponds to the JSON property `extensions`
-        # @return [Array<Hash<String,Object>>]
-        attr_accessor :extensions
-      
         # DO NOT USE. This is an experimental field.
         # Corresponds to the JSON property `importance`
         # @return [String]
@@ -1493,7 +1494,6 @@ module Google
         def update!(**args)
           @consumer_id = args[:consumer_id] if args.key?(:consumer_id)
           @end_time = args[:end_time] if args.key?(:end_time)
-          @extensions = args[:extensions] if args.key?(:extensions)
           @importance = args[:importance] if args.key?(:importance)
           @labels = args[:labels] if args.key?(:labels)
           @log_entries = args[:log_entries] if args.key?(:log_entries)
@@ -1505,6 +1505,50 @@ module Google
           @start_time = args[:start_time] if args.key?(:start_time)
           @trace_spans = args[:trace_spans] if args.key?(:trace_spans)
           @user_labels = args[:user_labels] if args.key?(:user_labels)
+        end
+      end
+      
+      # Represents OrgPolicy Violation information.
+      class OrgPolicyViolationInfo
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Resource payload that is currently in scope and is subjected to
+        # orgpolicy conditions. This payload may be the subset of the actual Resource
+        # that may come in the request. This payload should not contain any core content.
+        # Corresponds to the JSON property `payload`
+        # @return [Hash<String,Object>]
+        attr_accessor :payload
+      
+        # Optional. Tags referenced on the resource at the time of evaluation. These
+        # also include the federated tags, if they are supplied in the CheckOrgPolicy or
+        # CheckCustomConstraints Requests. Optional field as of now. These tags are the
+        # Cloud tags that are available on the resource during the policy evaluation and
+        # will be available as part of the OrgPolicy check response for logging purposes.
+        # Corresponds to the JSON property `resourceTags`
+        # @return [Hash<String,String>]
+        attr_accessor :resource_tags
+      
+        # Optional. Resource type that the orgpolicy is checked against. Example:
+        # compute.googleapis.com/Instance, store.googleapis.com/bucket
+        # Corresponds to the JSON property `resourceType`
+        # @return [String]
+        attr_accessor :resource_type
+      
+        # Optional. Policy violations
+        # Corresponds to the JSON property `violationInfo`
+        # @return [Array<Google::Apis::ServicecontrolV1::ViolationInfo>]
+        attr_accessor :violation_info
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @payload = args[:payload] if args.key?(:payload)
+          @resource_tags = args[:resource_tags] if args.key?(:resource_tags)
+          @resource_type = args[:resource_type] if args.key?(:resource_type)
+          @violation_info = args[:violation_info] if args.key?(:violation_info)
         end
       end
       
@@ -1531,8 +1575,8 @@ module Google
         attr_accessor :port
       
         # The identity of this peer. Similar to `Request.auth.principal`, but relative
-        # to the peer instead of the request. For example, the idenity associated with a
-        # load balancer that forwared the request.
+        # to the peer instead of the request. For example, the identity associated with
+        # a load balancer that forwarded the request.
         # Corresponds to the JSON property `principal`
         # @return [String]
         attr_accessor :principal
@@ -1555,6 +1599,25 @@ module Google
           @port = args[:port] if args.key?(:port)
           @principal = args[:principal] if args.key?(:principal)
           @region_code = args[:region_code] if args.key?(:region_code)
+        end
+      end
+      
+      # Information related to policy violations for this request.
+      class PolicyViolationInfo
+        include Google::Apis::Core::Hashable
+      
+        # Represents OrgPolicy Violation information.
+        # Corresponds to the JSON property `orgPolicyViolationInfo`
+        # @return [Google::Apis::ServicecontrolV1::OrgPolicyViolationInfo]
+        attr_accessor :org_policy_violation_info
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @org_policy_violation_info = args[:org_policy_violation_info] if args.key?(:org_policy_violation_info)
         end
       end
       
@@ -1675,13 +1738,13 @@ module Google
         # @return [String]
         attr_accessor :method_name
       
-        # Identity of the operation. This is expected to be unique within the scope of
-        # the service that generated the operation, and guarantees idempotency in case
-        # of retries. In order to ensure best performance and latency in the Quota
-        # backends, operation_ids are optimally associated with time, so that related
-        # operations can be accessed fast in storage. For this reason, the recommended
-        # token for services that intend to operate at a high QPS is Unix time in nanos +
-        # UUID
+        # Identity of the operation. For Allocation Quota, this is expected to be unique
+        # within the scope of the service that generated the operation, and guarantees
+        # idempotency in case of retries. In order to ensure best performance and
+        # latency in the Quota backends, operation_ids are optimally associated with
+        # time, so that related operations can be accessed fast in storage. For this
+        # reason, the recommended token for services that intend to operate at a high
+        # QPS is Unix time in nanos + UUID
         # Corresponds to the JSON property `operationId`
         # @return [String]
         attr_accessor :operation_id
@@ -1942,13 +2005,16 @@ module Google
       class RequestMetadata
         include Google::Apis::Core::Hashable
       
-        # The IP address of the caller. For caller from internet, this will be public
-        # IPv4 or IPv6 address. For caller from a Compute Engine VM with external IP
-        # address, this will be the VM's external IP address. For caller from a Compute
-        # Engine VM without external IP address, if the VM is in the same organization (
-        # or project) as the accessed resource, `caller_ip` will be the VM's internal
-        # IPv4 address, otherwise the `caller_ip` will be redacted to "gce-internal-ip".
-        # See https://cloud.google.com/compute/docs/vpc/ for more information.
+        # The IP address of the caller. For a caller from the internet, this will be the
+        # public IPv4 or IPv6 address. For calls made from inside Google's internal
+        # production network from one GCP service to another, `caller_ip` will be
+        # redacted to "private". For a caller from a Compute Engine VM with a external
+        # IP address, `caller_ip` will be the VM's external IP address. For a caller
+        # from a Compute Engine VM without a external IP address, if the VM is in the
+        # same organization (or project) as the accessed resource, `caller_ip` will be
+        # the VM's internal IPv4 address, otherwise `caller_ip` will be redacted to "gce-
+        # internal-ip". See https://cloud.google.com/compute/docs/vpc/ for more
+        # information.
         # Corresponds to the JSON property `callerIp`
         # @return [String]
         attr_accessor :caller_ip
@@ -1968,7 +2034,7 @@ module Google
         # Line Tool apitools-client/1.0 gcloud/0.9.62`: The request was made by the
         # Google Cloud SDK CLI (gcloud). + `AppEngine-Google; (+http://code.google.com/
         # appengine; appid: s~my-project`: The request was made from the `my-project`
-        # App Engine app. NOLINT
+        # App Engine app.
         # Corresponds to the JSON property `callerSuppliedUserAgent`
         # @return [String]
         attr_accessor :caller_supplied_user_agent
@@ -2124,6 +2190,11 @@ module Google
       class ResourceInfo
         include Google::Apis::Core::Hashable
       
+        # The resource permission required for this request.
+        # Corresponds to the JSON property `permission`
+        # @return [String]
+        attr_accessor :permission
+      
         # The identifier of the parent of this resource instance. Must be in one of the
         # following formats: - `projects/` - `folders/` - `organizations/`
         # Corresponds to the JSON property `resourceContainer`
@@ -2148,6 +2219,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @permission = args[:permission] if args.key?(:permission)
           @resource_container = args[:resource_container] if args.key?(:resource_container)
           @resource_location = args[:resource_location] if args.key?(:resource_location)
           @resource_name = args[:resource_name] if args.key?(:resource_name)
@@ -2433,6 +2505,350 @@ module Google
         def update!(**args)
           @truncated_byte_count = args[:truncated_byte_count] if args.key?(:truncated_byte_count)
           @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # A common proto for logging HTTP requests. Only contains semantics defined by
+      # the HTTP specification. Product-specific logging information MUST be defined
+      # in a separate message.
+      class V1HttpRequest
+        include Google::Apis::Core::Hashable
+      
+        # The number of HTTP response bytes inserted into cache. Set only when a cache
+        # fill was attempted.
+        # Corresponds to the JSON property `cacheFillBytes`
+        # @return [Fixnum]
+        attr_accessor :cache_fill_bytes
+      
+        # Whether or not an entity was served from cache (with or without validation).
+        # Corresponds to the JSON property `cacheHit`
+        # @return [Boolean]
+        attr_accessor :cache_hit
+        alias_method :cache_hit?, :cache_hit
+      
+        # Whether or not a cache lookup was attempted.
+        # Corresponds to the JSON property `cacheLookup`
+        # @return [Boolean]
+        attr_accessor :cache_lookup
+        alias_method :cache_lookup?, :cache_lookup
+      
+        # Whether or not the response was validated with the origin server before being
+        # served from cache. This field is only meaningful if `cache_hit` is True.
+        # Corresponds to the JSON property `cacheValidatedWithOriginServer`
+        # @return [Boolean]
+        attr_accessor :cache_validated_with_origin_server
+        alias_method :cache_validated_with_origin_server?, :cache_validated_with_origin_server
+      
+        # The request processing latency on the server, from the time the request was
+        # received until the response was sent.
+        # Corresponds to the JSON property `latency`
+        # @return [String]
+        attr_accessor :latency
+      
+        # Protocol used for the request. Examples: "HTTP/1.1", "HTTP/2", "websocket"
+        # Corresponds to the JSON property `protocol`
+        # @return [String]
+        attr_accessor :protocol
+      
+        # The referer URL of the request, as defined in [HTTP/1.1 Header Field
+        # Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+        # Corresponds to the JSON property `referer`
+        # @return [String]
+        attr_accessor :referer
+      
+        # The IP address (IPv4 or IPv6) of the client that issued the HTTP request.
+        # Examples: `"192.168.1.1"`, `"FE80::0202:B3FF:FE1E:8329"`.
+        # Corresponds to the JSON property `remoteIp`
+        # @return [String]
+        attr_accessor :remote_ip
+      
+        # The request method. Examples: `"GET"`, `"HEAD"`, `"PUT"`, `"POST"`.
+        # Corresponds to the JSON property `requestMethod`
+        # @return [String]
+        attr_accessor :request_method
+      
+        # The size of the HTTP request message in bytes, including the request headers
+        # and the request body.
+        # Corresponds to the JSON property `requestSize`
+        # @return [Fixnum]
+        attr_accessor :request_size
+      
+        # The scheme (http, https), the host name, the path, and the query portion of
+        # the URL that was requested. Example: `"http://example.com/some/info?color=red"`
+        # .
+        # Corresponds to the JSON property `requestUrl`
+        # @return [String]
+        attr_accessor :request_url
+      
+        # The size of the HTTP response message sent back to the client, in bytes,
+        # including the response headers and the response body.
+        # Corresponds to the JSON property `responseSize`
+        # @return [Fixnum]
+        attr_accessor :response_size
+      
+        # The IP address (IPv4 or IPv6) of the origin server that the request was sent
+        # to.
+        # Corresponds to the JSON property `serverIp`
+        # @return [String]
+        attr_accessor :server_ip
+      
+        # The response code indicating the status of the response. Examples: 200, 404.
+        # Corresponds to the JSON property `status`
+        # @return [Fixnum]
+        attr_accessor :status
+      
+        # The user agent sent by the client. Example: `"Mozilla/4.0 (compatible; MSIE 6.
+        # 0; Windows 98; Q312461; .NET CLR 1.0.3705)"`.
+        # Corresponds to the JSON property `userAgent`
+        # @return [String]
+        attr_accessor :user_agent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cache_fill_bytes = args[:cache_fill_bytes] if args.key?(:cache_fill_bytes)
+          @cache_hit = args[:cache_hit] if args.key?(:cache_hit)
+          @cache_lookup = args[:cache_lookup] if args.key?(:cache_lookup)
+          @cache_validated_with_origin_server = args[:cache_validated_with_origin_server] if args.key?(:cache_validated_with_origin_server)
+          @latency = args[:latency] if args.key?(:latency)
+          @protocol = args[:protocol] if args.key?(:protocol)
+          @referer = args[:referer] if args.key?(:referer)
+          @remote_ip = args[:remote_ip] if args.key?(:remote_ip)
+          @request_method = args[:request_method] if args.key?(:request_method)
+          @request_size = args[:request_size] if args.key?(:request_size)
+          @request_url = args[:request_url] if args.key?(:request_url)
+          @response_size = args[:response_size] if args.key?(:response_size)
+          @server_ip = args[:server_ip] if args.key?(:server_ip)
+          @status = args[:status] if args.key?(:status)
+          @user_agent = args[:user_agent] if args.key?(:user_agent)
+        end
+      end
+      
+      # An individual log entry.
+      class V1LogEntry
+        include Google::Apis::Core::Hashable
+      
+        # A common proto for logging HTTP requests. Only contains semantics defined by
+        # the HTTP specification. Product-specific logging information MUST be defined
+        # in a separate message.
+        # Corresponds to the JSON property `httpRequest`
+        # @return [Google::Apis::ServicecontrolV1::V1HttpRequest]
+        attr_accessor :http_request
+      
+        # A unique ID for the log entry used for deduplication. If omitted, the
+        # implementation will generate one based on operation_id.
+        # Corresponds to the JSON property `insertId`
+        # @return [String]
+        attr_accessor :insert_id
+      
+        # A set of user-defined (key, value) data that provides additional information
+        # about the log entry.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        # A set of user-defined (key, value) data that provides additional information
+        # about the moniotored resource that the log entry belongs to.
+        # Corresponds to the JSON property `monitoredResourceLabels`
+        # @return [Hash<String,String>]
+        attr_accessor :monitored_resource_labels
+      
+        # Required. The log to which this log entry belongs. Examples: `"syslog"`, `"
+        # book_log"`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Additional information about a potentially long-running operation with which a
+        # log entry is associated.
+        # Corresponds to the JSON property `operation`
+        # @return [Google::Apis::ServicecontrolV1::V1LogEntryOperation]
+        attr_accessor :operation
+      
+        # The log entry payload, represented as a protocol buffer that is expressed as a
+        # JSON object. The only accepted type currently is AuditLog.
+        # Corresponds to the JSON property `protoPayload`
+        # @return [Hash<String,Object>]
+        attr_accessor :proto_payload
+      
+        # The severity of the log entry. The default value is `LogSeverity.DEFAULT`.
+        # Corresponds to the JSON property `severity`
+        # @return [String]
+        attr_accessor :severity
+      
+        # Additional information about the source code location that produced the log
+        # entry.
+        # Corresponds to the JSON property `sourceLocation`
+        # @return [Google::Apis::ServicecontrolV1::V1LogEntrySourceLocation]
+        attr_accessor :source_location
+      
+        # The log entry payload, represented as a structure that is expressed as a JSON
+        # object.
+        # Corresponds to the JSON property `structPayload`
+        # @return [Hash<String,Object>]
+        attr_accessor :struct_payload
+      
+        # The log entry payload, represented as a Unicode string (UTF-8).
+        # Corresponds to the JSON property `textPayload`
+        # @return [String]
+        attr_accessor :text_payload
+      
+        # The time the event described by the log entry occurred. If omitted, defaults
+        # to operation start time.
+        # Corresponds to the JSON property `timestamp`
+        # @return [String]
+        attr_accessor :timestamp
+      
+        # Optional. Resource name of the trace associated with the log entry, if any. If
+        # this field contains a relative resource name, you can assume the name is
+        # relative to `//tracing.googleapis.com`. Example: `projects/my-projectid/traces/
+        # 06796866738c859f2f19b7cfb3214824`
+        # Corresponds to the JSON property `trace`
+        # @return [String]
+        attr_accessor :trace
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @http_request = args[:http_request] if args.key?(:http_request)
+          @insert_id = args[:insert_id] if args.key?(:insert_id)
+          @labels = args[:labels] if args.key?(:labels)
+          @monitored_resource_labels = args[:monitored_resource_labels] if args.key?(:monitored_resource_labels)
+          @name = args[:name] if args.key?(:name)
+          @operation = args[:operation] if args.key?(:operation)
+          @proto_payload = args[:proto_payload] if args.key?(:proto_payload)
+          @severity = args[:severity] if args.key?(:severity)
+          @source_location = args[:source_location] if args.key?(:source_location)
+          @struct_payload = args[:struct_payload] if args.key?(:struct_payload)
+          @text_payload = args[:text_payload] if args.key?(:text_payload)
+          @timestamp = args[:timestamp] if args.key?(:timestamp)
+          @trace = args[:trace] if args.key?(:trace)
+        end
+      end
+      
+      # Additional information about a potentially long-running operation with which a
+      # log entry is associated.
+      class V1LogEntryOperation
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Set this to True if this is the first log entry in the operation.
+        # Corresponds to the JSON property `first`
+        # @return [Boolean]
+        attr_accessor :first
+        alias_method :first?, :first
+      
+        # Optional. An arbitrary operation identifier. Log entries with the same
+        # identifier are assumed to be part of the same operation.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Optional. Set this to True if this is the last log entry in the operation.
+        # Corresponds to the JSON property `last`
+        # @return [Boolean]
+        attr_accessor :last
+        alias_method :last?, :last
+      
+        # Optional. An arbitrary producer identifier. The combination of `id` and `
+        # producer` must be globally unique. Examples for `producer`: `"MyDivision.
+        # MyBigCompany.com"`, `"github.com/MyProject/MyApplication"`.
+        # Corresponds to the JSON property `producer`
+        # @return [String]
+        attr_accessor :producer
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @first = args[:first] if args.key?(:first)
+          @id = args[:id] if args.key?(:id)
+          @last = args[:last] if args.key?(:last)
+          @producer = args[:producer] if args.key?(:producer)
+        end
+      end
+      
+      # Additional information about the source code location that produced the log
+      # entry.
+      class V1LogEntrySourceLocation
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Source file name. Depending on the runtime environment, this might
+        # be a simple name or a fully-qualified name.
+        # Corresponds to the JSON property `file`
+        # @return [String]
+        attr_accessor :file
+      
+        # Optional. Human-readable name of the function or method being invoked, with
+        # optional context such as the class or package name. This information may be
+        # used in contexts such as the logs viewer, where a file and line number are
+        # less meaningful. The format can vary by language. For example: `qual.if.ied.
+        # Class.method` (Java), `dir/package.func` (Go), `function` (Python).
+        # Corresponds to the JSON property `function`
+        # @return [String]
+        attr_accessor :function
+      
+        # Optional. Line within the source file. 1-based; 0 indicates no line number
+        # available.
+        # Corresponds to the JSON property `line`
+        # @return [Fixnum]
+        attr_accessor :line
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file = args[:file] if args.key?(:file)
+          @function = args[:function] if args.key?(:function)
+          @line = args[:line] if args.key?(:line)
+        end
+      end
+      
+      # Provides information about the Policy violation info for this request.
+      class ViolationInfo
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Value that is being checked for the policy. This could be in
+        # encrypted form (if pii sensitive). This field will only be emitted in
+        # LIST_POLICY types
+        # Corresponds to the JSON property `checkedValue`
+        # @return [String]
+        attr_accessor :checked_value
+      
+        # Optional. Constraint name
+        # Corresponds to the JSON property `constraint`
+        # @return [String]
+        attr_accessor :constraint
+      
+        # Optional. Error message that policy is indicating.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        # Optional. Indicates the type of the policy.
+        # Corresponds to the JSON property `policyType`
+        # @return [String]
+        attr_accessor :policy_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @checked_value = args[:checked_value] if args.key?(:checked_value)
+          @constraint = args[:constraint] if args.key?(:constraint)
+          @error_message = args[:error_message] if args.key?(:error_message)
+          @policy_type = args[:policy_type] if args.key?(:policy_type)
         end
       end
     end

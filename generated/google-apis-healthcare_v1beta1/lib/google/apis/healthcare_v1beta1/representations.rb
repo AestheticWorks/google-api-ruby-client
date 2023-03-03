@@ -22,6 +22,12 @@ module Google
   module Apis
     module HealthcareV1beta1
       
+      class Action
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ActivateConsentRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -130,6 +136,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CharacterMaskField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CheckDataAccessRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -137,6 +149,24 @@ module Google
       end
       
       class CheckDataAccessResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CleanDescriptorsOption
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CleanTextField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CleanTextTag
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -184,6 +214,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ContextualDeidConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CreateMessageRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -196,6 +232,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CryptoHashField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Dataset
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -203,6 +245,18 @@ module Google
       end
       
       class DateShiftConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DateShiftField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DeidentifiedStoreDestination
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -232,7 +286,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DeidentifyOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DeidentifySummary
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DeleteTag
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -257,6 +323,12 @@ module Google
       end
       
       class DicomStore
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DicomTagConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -370,7 +442,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FhirFieldConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class FhirFilter
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FhirNotificationConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class FhirOutput
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -455,6 +545,18 @@ module Google
       end
       
       class GoogleCloudHealthcareV1beta1DeidentifyDeidentifyFhirStoreSummary
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudHealthcareV1beta1DeidentifyOptions
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -634,6 +736,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class KeepExtensionsConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeepField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KeepTag
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KmsWrappedCryptoKey
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LinkedEntity
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -760,6 +886,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Options
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ParsedData
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -802,7 +934,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RecurseTag
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class RedactConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RegenUidTag
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -814,7 +958,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RemoveField
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveTag
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ReplaceWithInfoTypeConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ResetTag
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -958,6 +1120,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TimePartitioning
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Type
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -986,6 +1154,29 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Action
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :clean_image_tag, as: 'cleanImageTag', class: Google::Apis::HealthcareV1beta1::ImageConfig, decorator: Google::Apis::HealthcareV1beta1::ImageConfig::Representation
+      
+          property :clean_text_tag, as: 'cleanTextTag', class: Google::Apis::HealthcareV1beta1::CleanTextTag, decorator: Google::Apis::HealthcareV1beta1::CleanTextTag::Representation
+      
+          property :delete_tag, as: 'deleteTag', class: Google::Apis::HealthcareV1beta1::DeleteTag, decorator: Google::Apis::HealthcareV1beta1::DeleteTag::Representation
+      
+          property :keep_tag, as: 'keepTag', class: Google::Apis::HealthcareV1beta1::KeepTag, decorator: Google::Apis::HealthcareV1beta1::KeepTag::Representation
+      
+          collection :queries, as: 'queries'
+          property :recurse_tag, as: 'recurseTag', class: Google::Apis::HealthcareV1beta1::RecurseTag, decorator: Google::Apis::HealthcareV1beta1::RecurseTag::Representation
+      
+          property :regen_uid_tag, as: 'regenUidTag', class: Google::Apis::HealthcareV1beta1::RegenUidTag, decorator: Google::Apis::HealthcareV1beta1::RegenUidTag::Representation
+      
+          property :remove_tag, as: 'removeTag', class: Google::Apis::HealthcareV1beta1::RemoveTag, decorator: Google::Apis::HealthcareV1beta1::RemoveTag::Representation
+      
+          property :reset_tag, as: 'resetTag', class: Google::Apis::HealthcareV1beta1::ResetTag, decorator: Google::Apis::HealthcareV1beta1::ResetTag::Representation
+      
+        end
       end
       
       class ActivateConsentRequest
@@ -1146,6 +1337,12 @@ module Google
         end
       end
       
+      class CharacterMaskField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class CheckDataAccessRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1163,6 +1360,24 @@ module Google
           hash :consent_details, as: 'consentDetails', class: Google::Apis::HealthcareV1beta1::ConsentEvaluation, decorator: Google::Apis::HealthcareV1beta1::ConsentEvaluation::Representation
       
           property :consented, as: 'consented'
+        end
+      end
+      
+      class CleanDescriptorsOption
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CleanTextField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CleanTextTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -1240,6 +1455,12 @@ module Google
         end
       end
       
+      class ContextualDeidConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class CreateMessageRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1252,6 +1473,14 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :crypto_key, :base64 => true, as: 'cryptoKey'
+          property :kms_wrapped, as: 'kmsWrapped', class: Google::Apis::HealthcareV1beta1::KmsWrappedCryptoKey, decorator: Google::Apis::HealthcareV1beta1::KmsWrappedCryptoKey::Representation
+      
+        end
+      end
+      
+      class CryptoHashField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -1267,6 +1496,23 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :crypto_key, :base64 => true, as: 'cryptoKey'
+          property :kms_wrapped, as: 'kmsWrapped', class: Google::Apis::HealthcareV1beta1::KmsWrappedCryptoKey, decorator: Google::Apis::HealthcareV1beta1::KmsWrappedCryptoKey::Representation
+      
+        end
+      end
+      
+      class DateShiftField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class DeidentifiedStoreDestination
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :config, as: 'config', class: Google::Apis::HealthcareV1beta1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1beta1::DeidentifyConfig::Representation
+      
+          property :store, as: 'store'
         end
       end
       
@@ -1277,9 +1523,15 @@ module Google
       
           property :dicom, as: 'dicom', class: Google::Apis::HealthcareV1beta1::DicomConfig, decorator: Google::Apis::HealthcareV1beta1::DicomConfig::Representation
       
+          property :dicom_tag_config, as: 'dicomTagConfig', class: Google::Apis::HealthcareV1beta1::DicomTagConfig, decorator: Google::Apis::HealthcareV1beta1::DicomTagConfig::Representation
+      
           property :fhir, as: 'fhir', class: Google::Apis::HealthcareV1beta1::FhirConfig, decorator: Google::Apis::HealthcareV1beta1::FhirConfig::Representation
       
+          property :fhir_field_config, as: 'fhirFieldConfig', class: Google::Apis::HealthcareV1beta1::FhirFieldConfig, decorator: Google::Apis::HealthcareV1beta1::FhirFieldConfig::Representation
+      
           property :image, as: 'image', class: Google::Apis::HealthcareV1beta1::ImageConfig, decorator: Google::Apis::HealthcareV1beta1::ImageConfig::Representation
+      
+          property :operation_metadata, as: 'operationMetadata', class: Google::Apis::HealthcareV1beta1::DeidentifyOperationMetadata, decorator: Google::Apis::HealthcareV1beta1::DeidentifyOperationMetadata::Representation
       
           property :text, as: 'text', class: Google::Apis::HealthcareV1beta1::TextConfig, decorator: Google::Apis::HealthcareV1beta1::TextConfig::Representation
       
@@ -1292,6 +1544,7 @@ module Google
           property :config, as: 'config', class: Google::Apis::HealthcareV1beta1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1beta1::DeidentifyConfig::Representation
       
           property :destination_dataset, as: 'destinationDataset'
+          property :gcs_config_uri, as: 'gcsConfigUri'
         end
       end
       
@@ -1303,6 +1556,7 @@ module Google
           property :destination_store, as: 'destinationStore'
           property :filter_config, as: 'filterConfig', class: Google::Apis::HealthcareV1beta1::DicomFilterConfig, decorator: Google::Apis::HealthcareV1beta1::DicomFilterConfig::Representation
       
+          property :gcs_config_uri, as: 'gcsConfigUri'
         end
       end
       
@@ -1312,12 +1566,28 @@ module Google
           property :config, as: 'config', class: Google::Apis::HealthcareV1beta1::DeidentifyConfig, decorator: Google::Apis::HealthcareV1beta1::DeidentifyConfig::Representation
       
           property :destination_store, as: 'destinationStore'
+          property :gcs_config_uri, as: 'gcsConfigUri'
           property :resource_filter, as: 'resourceFilter', class: Google::Apis::HealthcareV1beta1::FhirFilter, decorator: Google::Apis::HealthcareV1beta1::FhirFilter::Representation
+      
+          property :skip_modified_resources, as: 'skipModifiedResources'
+        end
+      end
+      
+      class DeidentifyOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :fhir_output, as: 'fhirOutput', class: Google::Apis::HealthcareV1beta1::FhirOutput, decorator: Google::Apis::HealthcareV1beta1::FhirOutput::Representation
       
         end
       end
       
       class DeidentifySummary
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class DeleteTag
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end
@@ -1359,6 +1629,17 @@ module Google
       
           collection :stream_configs, as: 'streamConfigs', class: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DicomStreamConfig, decorator: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DicomStreamConfig::Representation
       
+        end
+      end
+      
+      class DicomTagConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :actions, as: 'actions', class: Google::Apis::HealthcareV1beta1::Action, decorator: Google::Apis::HealthcareV1beta1::Action::Representation
+      
+          property :options, as: 'options', class: Google::Apis::HealthcareV1beta1::Options, decorator: Google::Apis::HealthcareV1beta1::Options::Representation
+      
+          property :profile_type, as: 'profileType'
         end
       end
       
@@ -1530,8 +1811,20 @@ module Google
       class FhirConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :default_keep_extensions, as: 'defaultKeepExtensions'
           collection :field_metadata_list, as: 'fieldMetadataList', class: Google::Apis::HealthcareV1beta1::FieldMetadata, decorator: Google::Apis::HealthcareV1beta1::FieldMetadata::Representation
       
+        end
+      end
+      
+      class FhirFieldConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :field_metadata_list, as: 'fieldMetadataList', class: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata, decorator: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata::Representation
+      
+          property :options, as: 'options', class: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DeidentifyOptions, decorator: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1DeidentifyOptions::Representation
+      
+          property :profile_type, as: 'profileType'
         end
       end
       
@@ -1543,9 +1836,25 @@ module Google
         end
       end
       
+      class FhirNotificationConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :pubsub_topic, as: 'pubsubTopic'
+          property :send_full_resource, as: 'sendFullResource'
+        end
+      end
+      
+      class FhirOutput
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :fhir_store, as: 'fhirStore'
+        end
+      end
+      
       class FhirStore
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :complex_data_type_reference_parsing, as: 'complexDataTypeReferenceParsing'
           property :default_search_handling_strict, as: 'defaultSearchHandlingStrict'
           property :disable_referential_integrity, as: 'disableReferentialIntegrity'
           property :disable_resource_versioning, as: 'disableResourceVersioning'
@@ -1553,6 +1862,8 @@ module Google
           hash :labels, as: 'labels'
           property :name, as: 'name'
           property :notification_config, as: 'notificationConfig', class: Google::Apis::HealthcareV1beta1::NotificationConfig, decorator: Google::Apis::HealthcareV1beta1::NotificationConfig::Representation
+      
+          collection :notification_configs, as: 'notificationConfigs', class: Google::Apis::HealthcareV1beta1::FhirNotificationConfig, decorator: Google::Apis::HealthcareV1beta1::FhirNotificationConfig::Representation
       
           property :search_config, as: 'searchConfig', class: Google::Apis::HealthcareV1beta1::SearchConfig, decorator: Google::Apis::HealthcareV1beta1::SearchConfig::Representation
       
@@ -1666,6 +1977,41 @@ module Google
       class GoogleCloudHealthcareV1beta1DeidentifyDeidentifyFhirStoreSummary
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class GoogleCloudHealthcareV1beta1DeidentifyFieldMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :character_mask_field, as: 'characterMaskField', class: Google::Apis::HealthcareV1beta1::CharacterMaskField, decorator: Google::Apis::HealthcareV1beta1::CharacterMaskField::Representation
+      
+          property :clean_text_field, as: 'cleanTextField', class: Google::Apis::HealthcareV1beta1::CleanTextField, decorator: Google::Apis::HealthcareV1beta1::CleanTextField::Representation
+      
+          property :crypto_hash_field, as: 'cryptoHashField', class: Google::Apis::HealthcareV1beta1::CryptoHashField, decorator: Google::Apis::HealthcareV1beta1::CryptoHashField::Representation
+      
+          property :date_shift_field, as: 'dateShiftField', class: Google::Apis::HealthcareV1beta1::DateShiftField, decorator: Google::Apis::HealthcareV1beta1::DateShiftField::Representation
+      
+          property :keep_field, as: 'keepField', class: Google::Apis::HealthcareV1beta1::KeepField, decorator: Google::Apis::HealthcareV1beta1::KeepField::Representation
+      
+          collection :paths, as: 'paths'
+          property :remove_field, as: 'removeField', class: Google::Apis::HealthcareV1beta1::RemoveField, decorator: Google::Apis::HealthcareV1beta1::RemoveField::Representation
+      
+        end
+      end
+      
+      class GoogleCloudHealthcareV1beta1DeidentifyOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :character_mask_config, as: 'characterMaskConfig', class: Google::Apis::HealthcareV1beta1::CharacterMaskConfig, decorator: Google::Apis::HealthcareV1beta1::CharacterMaskConfig::Representation
+      
+          property :contextual_deid, as: 'contextualDeid', class: Google::Apis::HealthcareV1beta1::ContextualDeidConfig, decorator: Google::Apis::HealthcareV1beta1::ContextualDeidConfig::Representation
+      
+          property :crypto_hash_config, as: 'cryptoHashConfig', class: Google::Apis::HealthcareV1beta1::CryptoHashConfig, decorator: Google::Apis::HealthcareV1beta1::CryptoHashConfig::Representation
+      
+          property :date_shift_config, as: 'dateShiftConfig', class: Google::Apis::HealthcareV1beta1::DateShiftConfig, decorator: Google::Apis::HealthcareV1beta1::DateShiftConfig::Representation
+      
+          property :keep_extensions, as: 'keepExtensions', class: Google::Apis::HealthcareV1beta1::KeepExtensionsConfig, decorator: Google::Apis::HealthcareV1beta1::KeepExtensionsConfig::Representation
+      
         end
       end
       
@@ -1820,6 +2166,8 @@ module Google
       class ImageConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :additional_info_types, as: 'additionalInfoTypes'
+          collection :exclude_info_types, as: 'excludeInfoTypes'
           property :text_redaction_mode, as: 'textRedactionMode'
         end
       end
@@ -1917,6 +2265,32 @@ module Google
           property :hl7_ack, :base64 => true, as: 'hl7Ack'
           property :message, as: 'message', class: Google::Apis::HealthcareV1beta1::Message, decorator: Google::Apis::HealthcareV1beta1::Message::Representation
       
+        end
+      end
+      
+      class KeepExtensionsConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class KeepField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class KeepTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class KmsWrappedCryptoKey
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :crypto_key, as: 'cryptoKey'
+          property :wrapped_key, :base64 => true, as: 'wrappedKey'
         end
       end
       
@@ -2125,6 +2499,17 @@ module Google
         end
       end
       
+      class Options
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :clean_descriptors, as: 'cleanDescriptors', class: Google::Apis::HealthcareV1beta1::CleanDescriptorsOption, decorator: Google::Apis::HealthcareV1beta1::CleanDescriptorsOption::Representation
+      
+          property :clean_image, as: 'cleanImage', class: Google::Apis::HealthcareV1beta1::ImageConfig, decorator: Google::Apis::HealthcareV1beta1::ImageConfig::Representation
+      
+          property :primary_ids, as: 'primaryIds'
+        end
+      end
+      
       class ParsedData
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2190,7 +2575,19 @@ module Google
         end
       end
       
+      class RecurseTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class RedactConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class RegenUidTag
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end
@@ -2203,7 +2600,25 @@ module Google
         end
       end
       
+      class RemoveField
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class RemoveTag
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class ReplaceWithInfoTypeConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class ResetTag
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end
@@ -2243,6 +2658,8 @@ module Google
       class SchemaConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :last_updated_partition_config, as: 'lastUpdatedPartitionConfig', class: Google::Apis::HealthcareV1beta1::TimePartitioning, decorator: Google::Apis::HealthcareV1beta1::TimePartitioning::Representation
+      
           property :recursive_structure_depth, :numeric_string => true, as: 'recursiveStructureDepth'
           property :schema_type, as: 'schemaType'
         end
@@ -2364,6 +2781,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :bigquery_destination, as: 'bigqueryDestination', class: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1FhirBigQueryDestination, decorator: Google::Apis::HealthcareV1beta1::GoogleCloudHealthcareV1beta1FhirBigQueryDestination::Representation
       
+          property :deidentified_store_destination, as: 'deidentifiedStoreDestination', class: Google::Apis::HealthcareV1beta1::DeidentifiedStoreDestination, decorator: Google::Apis::HealthcareV1beta1::DeidentifiedStoreDestination::Representation
+      
           collection :resource_types, as: 'resourceTypes'
         end
       end
@@ -2392,6 +2811,10 @@ module Google
       class TextConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :additional_transformations, as: 'additionalTransformations', class: Google::Apis::HealthcareV1beta1::InfoTypeTransformation, decorator: Google::Apis::HealthcareV1beta1::InfoTypeTransformation::Representation
+      
+          collection :exclude_info_types, as: 'excludeInfoTypes'
+          property :profile_type, as: 'profileType'
           collection :transformations, as: 'transformations', class: Google::Apis::HealthcareV1beta1::InfoTypeTransformation, decorator: Google::Apis::HealthcareV1beta1::InfoTypeTransformation::Representation
       
         end
@@ -2402,6 +2825,14 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :begin_offset, as: 'beginOffset'
           property :content, as: 'content'
+        end
+      end
+      
+      class TimePartitioning
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :expiration_ms, :numeric_string => true, as: 'expirationMs'
+          property :type, as: 'type'
         end
       end
       
@@ -2431,7 +2862,10 @@ module Google
       class ValidationConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :disable_fhirpath_validation, as: 'disableFhirpathValidation'
           property :disable_profile_validation, as: 'disableProfileValidation'
+          property :disable_reference_type_validation, as: 'disableReferenceTypeValidation'
+          property :disable_required_field_validation, as: 'disableRequiredFieldValidation'
           collection :enabled_implementation_guides, as: 'enabledImplementationGuides'
         end
       end

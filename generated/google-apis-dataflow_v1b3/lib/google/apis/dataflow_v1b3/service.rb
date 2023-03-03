@@ -126,6 +126,8 @@ module Google
         # @param [String] location
         #   The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/
         #   regional-endpoints) that contains this job.
+        # @param [String] name
+        #   Optional. The job name. Optional.
         # @param [Fixnum] page_size
         #   If there are many jobs, limit response to at most this many. The actual number
         #   of jobs returned will be the lesser of max_responses and an unspecified server-
@@ -153,13 +155,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def aggregated_project_job(project_id, filter: nil, location: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def aggregated_project_job(project_id, filter: nil, location: nil, name: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1b3/projects/{projectId}/jobs:aggregated', options)
           command.response_representation = Google::Apis::DataflowV1b3::ListJobsResponse::Representation
           command.response_class = Google::Apis::DataflowV1b3::ListJobsResponse
           command.params['projectId'] = project_id unless project_id.nil?
           command.query['filter'] = filter unless filter.nil?
           command.query['location'] = location unless location.nil?
+          command.query['name'] = name unless name.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['view'] = view unless view.nil?
@@ -171,7 +174,8 @@ module Google
         # Creates a Cloud Dataflow job. To create a job, we recommend using `projects.
         # locations.jobs.create` with a [regional endpoint] (https://cloud.google.com/
         # dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.create` is
-        # not recommended, as your job will always start in `us-central1`.
+        # not recommended, as your job will always start in `us-central1`. Do not enter
+        # confidential information when you supply string values using the API.
         # @param [String] project_id
         #   The ID of the Cloud Platform project that the job belongs to.
         # @param [Google::Apis::DataflowV1b3::Job] job_object
@@ -316,6 +320,8 @@ module Google
         # @param [String] location
         #   The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/
         #   regional-endpoints) that contains this job.
+        # @param [String] name
+        #   Optional. The job name. Optional.
         # @param [Fixnum] page_size
         #   If there are many jobs, limit response to at most this many. The actual number
         #   of jobs returned will be the lesser of max_responses and an unspecified server-
@@ -343,13 +349,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_jobs(project_id, filter: nil, location: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_jobs(project_id, filter: nil, location: nil, name: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1b3/projects/{projectId}/jobs', options)
           command.response_representation = Google::Apis::DataflowV1b3::ListJobsResponse::Representation
           command.response_class = Google::Apis::DataflowV1b3::ListJobsResponse
           command.params['projectId'] = project_id unless project_id.nil?
           command.query['filter'] = filter unless filter.nil?
           command.query['location'] = location unless location.nil?
+          command.query['name'] = name unless name.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['view'] = view unless view.nil?
@@ -721,7 +728,8 @@ module Google
         # Creates a Cloud Dataflow job. To create a job, we recommend using `projects.
         # locations.jobs.create` with a [regional endpoint] (https://cloud.google.com/
         # dataflow/docs/concepts/regional-endpoints). Using `projects.jobs.create` is
-        # not recommended, as your job will always start in `us-central1`.
+        # not recommended, as your job will always start in `us-central1`. Do not enter
+        # confidential information when you supply string values using the API.
         # @param [String] project_id
         #   The ID of the Cloud Platform project that the job belongs to.
         # @param [String] location
@@ -913,6 +921,8 @@ module Google
         #   regional-endpoints) that contains this job.
         # @param [String] filter
         #   The kind of filter to use.
+        # @param [String] name
+        #   Optional. The job name. Optional.
         # @param [Fixnum] page_size
         #   If there are many jobs, limit response to at most this many. The actual number
         #   of jobs returned will be the lesser of max_responses and an unspecified server-
@@ -940,13 +950,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_jobs(project_id, location, filter: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_jobs(project_id, location, filter: nil, name: nil, page_size: nil, page_token: nil, view: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1b3/projects/{projectId}/locations/{location}/jobs', options)
           command.response_representation = Google::Apis::DataflowV1b3::ListJobsResponse::Representation
           command.response_class = Google::Apis::DataflowV1b3::ListJobsResponse
           command.params['projectId'] = project_id unless project_id.nil?
           command.params['location'] = location unless location.nil?
           command.query['filter'] = filter unless filter.nil?
+          command.query['name'] = name unless name.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['view'] = view unless view.nil?
@@ -1459,46 +1470,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Validates a GoogleSQL query for Cloud Dataflow syntax. Will always confirm the
-        # given query parses correctly, and if able to look up schema information from
-        # DataCatalog, will validate that the query analyzes properly as well.
-        # @param [String] project_id
-        #   Required. The ID of the Cloud Platform project that the job belongs to.
-        # @param [String] location
-        #   The [regional endpoint] (https://cloud.google.com/dataflow/docs/concepts/
-        #   regional-endpoints) to which to direct the request.
-        # @param [String] query
-        #   The sql query to validate.
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::DataflowV1b3::ValidateResponse] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::DataflowV1b3::ValidateResponse]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def validate_project_location_sql(project_id, location, query: nil, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v1b3/projects/{projectId}/locations/{location}/sql:validate', options)
-          command.response_representation = Google::Apis::DataflowV1b3::ValidateResponse::Representation
-          command.response_class = Google::Apis::DataflowV1b3::ValidateResponse
-          command.params['projectId'] = project_id unless project_id.nil?
-          command.params['location'] = location unless location.nil?
-          command.query['query'] = query unless query.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
-        # Creates a Cloud Dataflow job from a template.
+        # Creates a Cloud Dataflow job from a template. Do not enter confidential
+        # information when you supply string values using the API.
         # @param [String] project_id
         #   Required. The ID of the Cloud Platform project that the job belongs to.
         # @param [String] location
@@ -1700,7 +1673,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a Cloud Dataflow job from a template.
+        # Creates a Cloud Dataflow job from a template. Do not enter confidential
+        # information when you supply string values using the API.
         # @param [String] project_id
         #   Required. The ID of the Cloud Platform project that the job belongs to.
         # @param [Google::Apis::DataflowV1b3::CreateJobFromTemplateRequest] create_job_from_template_request_object

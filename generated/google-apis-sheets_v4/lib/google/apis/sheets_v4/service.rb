@@ -124,15 +124,20 @@ module Google
         end
         
         # Returns the spreadsheet at the given ID. The caller must specify the
-        # spreadsheet ID. By default, data within grids will not be returned. You can
-        # include grid data one of two ways: * Specify a field mask listing your desired
-        # fields using the `fields` URL parameter in HTTP * Set the includeGridData URL
-        # parameter to true. If a field mask is set, the `includeGridData` parameter is
-        # ignored For large spreadsheets, it is recommended to retrieve only the
-        # specific fields of the spreadsheet that you want. To retrieve only subsets of
-        # the spreadsheet, use the ranges URL parameter. Multiple ranges can be
-        # specified. Limiting the range will return only the portions of the spreadsheet
-        # that intersect the requested ranges. Ranges are specified using A1 notation.
+        # spreadsheet ID. By default, data within grids is not returned. You can include
+        # grid data in one of 2 ways: * Specify a [field mask](https://developers.google.
+        # com/sheets/api/guides/field-masks) listing your desired fields using the `
+        # fields` URL parameter in HTTP * Set the includeGridData URL parameter to true.
+        # If a field mask is set, the `includeGridData` parameter is ignored For large
+        # spreadsheets, as a best practice, retrieve only the specific spreadsheet
+        # fields that you want. To retrieve only subsets of spreadsheet data, use the
+        # ranges URL parameter. Ranges are specified using [A1 notation](/sheets/api/
+        # guides/concepts#cell). You can define a single cell (for example, `A1`) or
+        # multiple cells (for example, `A1:D5`). You can also get cells from other
+        # sheets within the same spreadsheet (for example, `Sheet2!A1:C4`) or retrieve
+        # multiple ranges at once (for example, `?ranges=A1:D5&ranges=Sheet2!A1:C4`).
+        # Limiting the range returns only the portions of the spreadsheet that intersect
+        # the requested ranges.
         # @param [String] spreadsheet_id
         #   The spreadsheet to request.
         # @param [Boolean] include_grid_data
@@ -173,14 +178,14 @@ module Google
         # spreadsheet ID. This method differs from GetSpreadsheet in that it allows
         # selecting which subsets of spreadsheet data to return by specifying a
         # dataFilters parameter. Multiple DataFilters can be specified. Specifying one
-        # or more data filters will return the portions of the spreadsheet that
-        # intersect ranges matched by any of the filters. By default, data within grids
-        # will not be returned. You can include grid data one of two ways: * Specify a
-        # field mask listing your desired fields using the `fields` URL parameter in
-        # HTTP * Set the includeGridData parameter to true. If a field mask is set, the `
-        # includeGridData` parameter is ignored For large spreadsheets, it is
-        # recommended to retrieve only the specific fields of the spreadsheet that you
-        # want.
+        # or more data filters returns the portions of the spreadsheet that intersect
+        # ranges matched by any of the filters. By default, data within grids is not
+        # returned. You can include grid data one of 2 ways: * Specify a [field mask](
+        # https://developers.google.com/sheets/api/guides/field-masks) listing your
+        # desired fields using the `fields` URL parameter in HTTP * Set the
+        # includeGridData parameter to true. If a field mask is set, the `
+        # includeGridData` parameter is ignored For large spreadsheets, as a best
+        # practice, retrieve only the specific spreadsheet fields that you want.
         # @param [String] spreadsheet_id
         #   The spreadsheet to request.
         # @param [Google::Apis::SheetsV4::GetSpreadsheetByDataFilterRequest] get_spreadsheet_by_data_filter_request_object
@@ -333,8 +338,8 @@ module Google
         # @param [String] spreadsheet_id
         #   The ID of the spreadsheet to update.
         # @param [String] range
-        #   The A1 notation of a range to search for a logical table of data. Values are
-        #   appended after the last row of the table.
+        #   The [A1 notation](/sheets/api/guides/concepts#cell) of a range to search for a
+        #   logical table of data. Values are appended after the last row of the table.
         # @param [Google::Apis::SheetsV4::ValueRange] value_range_object
         # @param [Boolean] include_values_in_response
         #   Determines if the update response should include the values of the cells that
@@ -387,8 +392,8 @@ module Google
         
         # Clears one or more ranges of values from a spreadsheet. The caller must
         # specify the spreadsheet ID and one or more ranges. Only values are cleared --
-        # all other properties of the cell (such as formatting, data validation, etc..)
-        # are kept.
+        # all other properties of the cell (such as formatting and data validation) are
+        # kept.
         # @param [String] spreadsheet_id
         #   The ID of the spreadsheet to update.
         # @param [Google::Apis::SheetsV4::BatchClearValuesRequest] batch_clear_values_request_object
@@ -468,11 +473,12 @@ module Google
         #   option is SERIAL_NUMBER.
         # @param [String] major_dimension
         #   The major dimension that results should use. For example, if the spreadsheet
-        #   data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=
-        #   ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=
-        #   COLUMNS` returns `[[1,3],[2,4]]`.
+        #   data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `ranges=["A1:B2"],
+        #   majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `ranges=["A1:
+        #   B2"],majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.
         # @param [Array<String>, String] ranges
-        #   The A1 notation or R1C1 notation of the range to retrieve values from.
+        #   The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the
+        #   range to retrieve values from.
         # @param [String] value_render_option
         #   How values should be represented in the output. The default render option is
         #   ValueRenderOption.FORMATTED_VALUE.
@@ -616,7 +622,8 @@ module Google
         # @param [String] spreadsheet_id
         #   The ID of the spreadsheet to update.
         # @param [String] range
-        #   The A1 notation or R1C1 notation of the values to clear.
+        #   The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the
+        #   values to clear.
         # @param [Google::Apis::SheetsV4::ClearValuesRequest] clear_values_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -653,16 +660,17 @@ module Google
         # @param [String] spreadsheet_id
         #   The ID of the spreadsheet to retrieve data from.
         # @param [String] range
-        #   The A1 notation or R1C1 notation of the range to retrieve values from.
+        #   The [A1 notation or R1C1 notation](/sheets/api/guides/concepts#cell) of the
+        #   range to retrieve values from.
         # @param [String] date_time_render_option
         #   How dates, times, and durations should be represented in the output. This is
         #   ignored if value_render_option is FORMATTED_VALUE. The default dateTime render
         #   option is SERIAL_NUMBER.
         # @param [String] major_dimension
         #   The major dimension that results should use. For example, if the spreadsheet
-        #   data is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=A1:B2,majorDimension=
-        #   ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=A1:B2,majorDimension=
-        #   COLUMNS` returns `[[1,3],[2,4]]`.
+        #   data in Sheet1 is: `A1=1,B1=2,A2=3,B2=4`, then requesting `range=Sheet1!A1:B2?
+        #   majorDimension=ROWS` returns `[[1,2],[3,4]]`, whereas requesting `range=Sheet1!
+        #   A1:B2?majorDimension=COLUMNS` returns `[[1,3],[2,4]]`.
         # @param [String] value_render_option
         #   How values should be represented in the output. The default render option is
         #   FORMATTED_VALUE.
@@ -702,7 +710,7 @@ module Google
         # @param [String] spreadsheet_id
         #   The ID of the spreadsheet to update.
         # @param [String] range
-        #   The A1 notation of the values to update.
+        #   The [A1 notation](/sheets/api/guides/concepts#cell) of the values to update.
         # @param [Google::Apis::SheetsV4::ValueRange] value_range_object
         # @param [Boolean] include_values_in_response
         #   Determines if the update response should include the values of the cells that

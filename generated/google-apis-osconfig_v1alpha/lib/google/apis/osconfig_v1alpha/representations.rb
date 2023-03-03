@@ -52,6 +52,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class InstanceOsPoliciesCompliance
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -424,6 +430,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class VulnerabilityReportVulnerabilityItem
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CvsSv3
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -467,6 +479,17 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :fixed, as: 'fixed'
           property :percent, as: 'percent'
+        end
+      end
+      
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_method, as: 'apiMethod'
+          property :os_policy_assignment, as: 'osPolicyAssignment'
+          property :rollout_start_time, as: 'rolloutStartTime'
+          property :rollout_state, as: 'rolloutState'
+          property :rollout_update_time, as: 'rolloutUpdateTime'
         end
       end
       
@@ -1117,6 +1140,8 @@ module Google
           property :details, as: 'details', class: Google::Apis::OsconfigV1alpha::VulnerabilityReportVulnerabilityDetails, decorator: Google::Apis::OsconfigV1alpha::VulnerabilityReportVulnerabilityDetails::Representation
       
           collection :installed_inventory_item_ids, as: 'installedInventoryItemIds'
+          collection :items, as: 'items', class: Google::Apis::OsconfigV1alpha::VulnerabilityReportVulnerabilityItem, decorator: Google::Apis::OsconfigV1alpha::VulnerabilityReportVulnerabilityItem::Representation
+      
           property :update_time, as: 'updateTime'
         end
       end
@@ -1140,6 +1165,16 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :source, as: 'source'
           property :url, as: 'url'
+        end
+      end
+      
+      class VulnerabilityReportVulnerabilityItem
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :available_inventory_item_id, as: 'availableInventoryItemId'
+          property :fixed_cpe_uri, as: 'fixedCpeUri'
+          property :installed_inventory_item_id, as: 'installedInventoryItemId'
+          property :upstream_fix, as: 'upstreamFix'
         end
       end
     end

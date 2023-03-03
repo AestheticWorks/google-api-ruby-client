@@ -32,7 +32,7 @@ module Google
         attr_accessor :abuse_reason
       
         # The name of the product being abused. This is restricted to only the following
-        # values: "Gmail" "Payments" "Voice" "Workspace" "Other"
+        # values: "Gmail" "Google Workspace" "Payments" "Voice" "YouTube" "Other"
         # Corresponds to the JSON property `productName`
         # @return [String]
         attr_accessor :product_name
@@ -224,7 +224,8 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
-        # Output only. The unique identifier of the Google account of the customer.
+        # Output only. The unique identifier of the Google Workspace account of the
+        # customer.
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -334,7 +335,8 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
-        # Output only. The unique identifier of the Google account of the customer.
+        # Output only. The unique identifier of the Google Workspace account of the
+        # customer.
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -383,7 +385,8 @@ module Google
         # @return [String]
         attr_accessor :assignee
       
-        # Output only. The unique identifier of the Google account of the customer.
+        # Output only. The unique identifier of the Google Workspace account of the
+        # customer.
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -391,7 +394,7 @@ module Google
         # Optional. `etag` is used for optimistic concurrency control as a way to help
         # prevent simultaneous updates of an alert metadata from overwriting each other.
         # It is strongly suggested that systems make use of the `etag` in the read-
-        # modify-write cycle to perform metatdata updates in order to avoid race
+        # modify-write cycle to perform metadata updates in order to avoid race
         # conditions: An `etag` is returned in the response which contains alert
         # metadata, and systems are expected to put that etag in the request to update
         # alert metadata to ensure that their change will be applied to the same version
@@ -433,6 +436,38 @@ module Google
           @severity = args[:severity] if args.key?(:severity)
           @status = args[:status] if args.key?(:status)
           @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # The explanation message associated with ApnsCertificationExpiring and
+      # ApnsCertificationExpired alerts.
+      class ApnsCertificateExpirationInfo
+        include Google::Apis::Core::Hashable
+      
+        # The Apple ID used for the certificate may be blank if admins didn't enter it.
+        # Corresponds to the JSON property `appleId`
+        # @return [String]
+        attr_accessor :apple_id
+      
+        # The expiration date of the APNS Certificate.
+        # Corresponds to the JSON property `expirationTime`
+        # @return [String]
+        attr_accessor :expiration_time
+      
+        # The UID for the certificate.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @apple_id = args[:apple_id] if args.key?(:apple_id)
+          @expiration_time = args[:expiration_time] if args.key?(:expiration_time)
+          @uid = args[:uid] if args.key?(:uid)
         end
       end
       
@@ -492,6 +527,16 @@ module Google
         # @return [String]
         attr_accessor :dashboard_uri
       
+        # Incident tracking ID.
+        # Corresponds to the JSON property `incidentTrackingId`
+        # @return [String]
+        attr_accessor :incident_tracking_id
+      
+        # New alert tracking numbers.
+        # Corresponds to the JSON property `mergeInfo`
+        # @return [Google::Apis::AlertcenterV1beta1::MergeInfo]
+        attr_accessor :merge_info
+      
         # Timestamp by which the next update is expected to arrive.
         # Corresponds to the JSON property `nextUpdateTime`
         # @return [String]
@@ -520,6 +565,8 @@ module Google
         # Update properties of this object
         def update!(**args)
           @dashboard_uri = args[:dashboard_uri] if args.key?(:dashboard_uri)
+          @incident_tracking_id = args[:incident_tracking_id] if args.key?(:incident_tracking_id)
+          @merge_info = args[:merge_info] if args.key?(:merge_info)
           @next_update_time = args[:next_update_time] if args.key?(:next_update_time)
           @products = args[:products] if args.key?(:products)
           @resolution_time = args[:resolution_time] if args.key?(:resolution_time)
@@ -589,13 +636,16 @@ module Google
       class BatchDeleteAlertsRequest
         include Google::Apis::Core::Hashable
       
-        # Required. list of alert IDs.
+        # Required. The list of alert IDs to delete.
         # Corresponds to the JSON property `alertId`
         # @return [Array<String>]
         attr_accessor :alert_id
       
-        # Optional. The unique identifier of the Google Workspace organization account
-        # of the customer the alerts are associated with.
+        # Optional. The unique identifier of the Google Workspace account of the
+        # customer the alerts are associated with. The `customer_id` must have the
+        # initial "C" stripped (for example, `046psxkn`). Inferred from the caller
+        # identity if not provided. [Find your customer ID](https://support.google.com/
+        # cloudidentity/answer/10070793).
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -615,7 +665,7 @@ module Google
       class BatchDeleteAlertsResponse
         include Google::Apis::Core::Hashable
       
-        # The status details for each failed alert_id.
+        # The status details for each failed `alert_id`.
         # Corresponds to the JSON property `failedAlertStatus`
         # @return [Hash<String,Google::Apis::AlertcenterV1beta1::Status>]
         attr_accessor :failed_alert_status
@@ -640,13 +690,16 @@ module Google
       class BatchUndeleteAlertsRequest
         include Google::Apis::Core::Hashable
       
-        # Required. list of alert IDs.
+        # Required. The list of alert IDs to undelete.
         # Corresponds to the JSON property `alertId`
         # @return [Array<String>]
         attr_accessor :alert_id
       
-        # Optional. The unique identifier of the Google Workspace organization account
-        # of the customer the alerts are associated with.
+        # Optional. The unique identifier of the Google Workspace account of the
+        # customer the alerts are associated with. The `customer_id` must have the
+        # initial "C" stripped (for example, `046psxkn`). Inferred from the caller
+        # identity if not provided. [Find your customer ID](https://support.google.com/
+        # cloudidentity/answer/10070793).
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -666,7 +719,7 @@ module Google
       class BatchUndeleteAlertsResponse
         include Google::Apis::Core::Hashable
       
-        # The status details for each failed alert_id.
+        # The status details for each failed `alert_id`.
         # Corresponds to the JSON property `failedAlertStatus`
         # @return [Hash<String,Google::Apis::AlertcenterV1beta1::Status>]
         attr_accessor :failed_alert_status
@@ -912,8 +965,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1007,6 +1059,11 @@ module Google
         # @return [String]
         attr_accessor :description
       
+        # Customer domain for email template personalization.
+        # Corresponds to the JSON property `domain`
+        # @return [String]
+        attr_accessor :domain
+      
         # A header to display above the incident message. Typically used to attach a
         # localized notice on the timeline for followup comms translations.
         # Corresponds to the JSON property `header`
@@ -1027,6 +1084,7 @@ module Google
           @affected_user_emails = args[:affected_user_emails] if args.key?(:affected_user_emails)
           @attachment_data = args[:attachment_data] if args.key?(:attachment_data)
           @description = args[:description] if args.key?(:description)
+          @domain = args[:domain] if args.key?(:domain)
           @header = args[:header] if args.key?(:header)
           @title = args[:title] if args.key?(:title)
         end
@@ -1185,6 +1243,32 @@ module Google
         end
       end
       
+      # Alert Created by the MSA team for communications necessary for continued use
+      # of Google Workspace Products.
+      class MandatoryServiceAnnouncement
+        include Google::Apis::Core::Hashable
+      
+        # Detailed, freeform text describing the announcement
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # One line summary of the announcement
+        # Corresponds to the JSON property `title`
+        # @return [String]
+        attr_accessor :title
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @description = args[:description] if args.key?(:description)
+          @title = args[:title] if args.key?(:title)
+        end
+      end
+      
       # Proto that contains match information from the condition part of the rule.
       class MatchInfo
         include Google::Apis::Core::Hashable
@@ -1207,6 +1291,32 @@ module Google
         def update!(**args)
           @predefined_detector = args[:predefined_detector] if args.key?(:predefined_detector)
           @user_defined_detector = args[:user_defined_detector] if args.key?(:user_defined_detector)
+        end
+      end
+      
+      # New alert tracking numbers.
+      class MergeInfo
+        include Google::Apis::Core::Hashable
+      
+        # Optional. New alert ID. Reference the [google.apps.alertcenter.Alert] with
+        # this ID for the current state.
+        # Corresponds to the JSON property `newAlertId`
+        # @return [String]
+        attr_accessor :new_alert_id
+      
+        # The new tracking ID from the parent incident.
+        # Corresponds to the JSON property `newIncidentTrackingId`
+        # @return [String]
+        attr_accessor :new_incident_tracking_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @new_alert_id = args[:new_alert_id] if args.key?(:new_alert_id)
+          @new_incident_tracking_id = args[:new_incident_tracking_id] if args.key?(:new_incident_tracking_id)
         end
       end
       
@@ -1289,6 +1399,38 @@ module Google
         # Update properties of this object
         def update!(**args)
           @detector_name = args[:detector_name] if args.key?(:detector_name)
+        end
+      end
+      
+      # Event occurred when primary admin changed in customer's account. The event are
+      # being received from insight forwarder
+      class PrimaryAdminChangedEvent
+        include Google::Apis::Core::Hashable
+      
+        # domain in which actioned occurred
+        # Corresponds to the JSON property `domain`
+        # @return [String]
+        attr_accessor :domain
+      
+        # Email of person who was the primary admin before the action
+        # Corresponds to the JSON property `previousAdminEmail`
+        # @return [String]
+        attr_accessor :previous_admin_email
+      
+        # Email of person who is the primary admin after the action
+        # Corresponds to the JSON property `updatedAdminEmail`
+        # @return [String]
+        attr_accessor :updated_admin_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @domain = args[:domain] if args.key?(:domain)
+          @previous_admin_email = args[:previous_admin_email] if args.key?(:previous_admin_email)
+          @updated_admin_email = args[:updated_admin_email] if args.key?(:updated_admin_email)
         end
       end
       
@@ -1488,6 +1630,132 @@ module Google
         end
       end
       
+      # Event occurred when SSO Profile created in customer's account. The event are
+      # being received from insight forwarder
+      class SsoProfileCreatedEvent
+        include Google::Apis::Core::Hashable
+      
+        # sso profile name which got created
+        # Corresponds to the JSON property `inboundSsoProfileName`
+        # @return [String]
+        attr_accessor :inbound_sso_profile_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_sso_profile_name = args[:inbound_sso_profile_name] if args.key?(:inbound_sso_profile_name)
+        end
+      end
+      
+      # Event occurred when SSO Profile deleted in customer's account. The event are
+      # being received from insight forwarder
+      class SsoProfileDeletedEvent
+        include Google::Apis::Core::Hashable
+      
+        # sso profile name which got deleted
+        # Corresponds to the JSON property `inboundSsoProfileName`
+        # @return [String]
+        attr_accessor :inbound_sso_profile_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_sso_profile_name = args[:inbound_sso_profile_name] if args.key?(:inbound_sso_profile_name)
+        end
+      end
+      
+      # Event occurred when SSO Profile updated in customer's account. The event are
+      # being received from insight forwarder
+      class SsoProfileUpdatedEvent
+        include Google::Apis::Core::Hashable
+      
+        # changes made to sso profile
+        # Corresponds to the JSON property `inboundSsoProfileChanges`
+        # @return [String]
+        attr_accessor :inbound_sso_profile_changes
+      
+        # sso profile name which got updated
+        # Corresponds to the JSON property `inboundSsoProfileName`
+        # @return [String]
+        attr_accessor :inbound_sso_profile_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @inbound_sso_profile_changes = args[:inbound_sso_profile_changes] if args.key?(:inbound_sso_profile_changes)
+          @inbound_sso_profile_name = args[:inbound_sso_profile_name] if args.key?(:inbound_sso_profile_name)
+        end
+      end
+      
+      # Alert that is triggered when Sensitive Admin Action occur in customer account.
+      class SensitiveAdminAction
+        include Google::Apis::Core::Hashable
+      
+        # Email of person who performed the action
+        # Corresponds to the JSON property `actorEmail`
+        # @return [String]
+        attr_accessor :actor_email
+      
+        # The time at which event occurred
+        # Corresponds to the JSON property `eventTime`
+        # @return [String]
+        attr_accessor :event_time
+      
+        # Event occurred when primary admin changed in customer's account. The event are
+        # being received from insight forwarder
+        # Corresponds to the JSON property `primaryAdminChangedEvent`
+        # @return [Google::Apis::AlertcenterV1beta1::PrimaryAdminChangedEvent]
+        attr_accessor :primary_admin_changed_event
+      
+        # Event occurred when SSO Profile created in customer's account. The event are
+        # being received from insight forwarder
+        # Corresponds to the JSON property `ssoProfileCreatedEvent`
+        # @return [Google::Apis::AlertcenterV1beta1::SsoProfileCreatedEvent]
+        attr_accessor :sso_profile_created_event
+      
+        # Event occurred when SSO Profile deleted in customer's account. The event are
+        # being received from insight forwarder
+        # Corresponds to the JSON property `ssoProfileDeletedEvent`
+        # @return [Google::Apis::AlertcenterV1beta1::SsoProfileDeletedEvent]
+        attr_accessor :sso_profile_deleted_event
+      
+        # Event occurred when SSO Profile updated in customer's account. The event are
+        # being received from insight forwarder
+        # Corresponds to the JSON property `ssoProfileUpdatedEvent`
+        # @return [Google::Apis::AlertcenterV1beta1::SsoProfileUpdatedEvent]
+        attr_accessor :sso_profile_updated_event
+      
+        # Event occurred when password was reset for super admin in customer's account.
+        # The event are being received from insight forwarder
+        # Corresponds to the JSON property `superAdminPasswordResetEvent`
+        # @return [Google::Apis::AlertcenterV1beta1::SuperAdminPasswordResetEvent]
+        attr_accessor :super_admin_password_reset_event
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @actor_email = args[:actor_email] if args.key?(:actor_email)
+          @event_time = args[:event_time] if args.key?(:event_time)
+          @primary_admin_changed_event = args[:primary_admin_changed_event] if args.key?(:primary_admin_changed_event)
+          @sso_profile_created_event = args[:sso_profile_created_event] if args.key?(:sso_profile_created_event)
+          @sso_profile_deleted_event = args[:sso_profile_deleted_event] if args.key?(:sso_profile_deleted_event)
+          @sso_profile_updated_event = args[:sso_profile_updated_event] if args.key?(:sso_profile_updated_event)
+          @super_admin_password_reset_event = args[:super_admin_password_reset_event] if args.key?(:super_admin_password_reset_event)
+        end
+      end
+      
       # Customer-level settings.
       class Settings
         include Google::Apis::Core::Hashable
@@ -1562,6 +1830,26 @@ module Google
           @code = args[:code] if args.key?(:code)
           @details = args[:details] if args.key?(:details)
           @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # Event occurred when password was reset for super admin in customer's account.
+      # The event are being received from insight forwarder
+      class SuperAdminPasswordResetEvent
+        include Google::Apis::Core::Hashable
+      
+        # email of person whose password was reset
+        # Corresponds to the JSON property `userEmail`
+        # @return [String]
+        attr_accessor :user_email
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @user_email = args[:user_email] if args.key?(:user_email)
         end
       end
       
@@ -1657,13 +1945,79 @@ module Google
         end
       end
       
+      # Details for an invalid transfer or forward.
+      class TransferError
+        include Google::Apis::Core::Hashable
+      
+        # User's email address. This may be unavailable if the entity was deleted.
+        # Corresponds to the JSON property `email`
+        # @return [String]
+        attr_accessor :email
+      
+        # Type of entity being transferred to. For ring group members, this should
+        # always be USER.
+        # Corresponds to the JSON property `entityType`
+        # @return [String]
+        attr_accessor :entity_type
+      
+        # Ring group or auto attendant ID. Not set for users.
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Reason for the error.
+        # Corresponds to the JSON property `invalidReason`
+        # @return [String]
+        attr_accessor :invalid_reason
+      
+        # User's full name, or the ring group / auto attendant name. This may be
+        # unavailable if the entity was deleted.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @email = args[:email] if args.key?(:email)
+          @entity_type = args[:entity_type] if args.key?(:entity_type)
+          @id = args[:id] if args.key?(:id)
+          @invalid_reason = args[:invalid_reason] if args.key?(:invalid_reason)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # Error related to transferring or forwarding a phone call.
+      class TransferMisconfiguration
+        include Google::Apis::Core::Hashable
+      
+        # Details for each invalid transfer or forward.
+        # Corresponds to the JSON property `errors`
+        # @return [Array<Google::Apis::AlertcenterV1beta1::TransferError>]
+        attr_accessor :errors
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @errors = args[:errors] if args.key?(:errors)
+        end
+      end
+      
       # A request to undelete a specific alert that was marked for deletion.
       class UndeleteAlertRequest
         include Google::Apis::Core::Hashable
       
-        # Optional. The unique identifier of the Google Workspace organization account
-        # of the customer the alert is associated with. Inferred from the caller
-        # identity if not provided.
+        # Optional. The unique identifier of the Google Workspace account of the
+        # customer the alert is associated with. The `customer_id` must have the initial
+        # "C" stripped (for example, `046psxkn`). Inferred from the caller identity if
+        # not provided. [Find your customer ID](https://support.google.com/cloudidentity/
+        # answer/10070793).
         # Corresponds to the JSON property `customerId`
         # @return [String]
         attr_accessor :customer_id
@@ -1747,6 +2101,101 @@ module Google
         def update!(**args)
           @display_name = args[:display_name] if args.key?(:display_name)
           @resource_name = args[:resource_name] if args.key?(:resource_name)
+        end
+      end
+      
+      # An alert triggered when Google Voice configuration becomes invalid, generally
+      # due to an external entity being modified or deleted.
+      class VoiceMisconfiguration
+        include Google::Apis::Core::Hashable
+      
+        # Name of the entity whose configuration is now invalid.
+        # Corresponds to the JSON property `entityName`
+        # @return [String]
+        attr_accessor :entity_name
+      
+        # Type of the entity whose configuration is now invalid.
+        # Corresponds to the JSON property `entityType`
+        # @return [String]
+        attr_accessor :entity_type
+      
+        # Link that the admin can follow to fix the issue.
+        # Corresponds to the JSON property `fixUri`
+        # @return [String]
+        attr_accessor :fix_uri
+      
+        # Error related to transferring or forwarding a phone call.
+        # Corresponds to the JSON property `membersMisconfiguration`
+        # @return [Google::Apis::AlertcenterV1beta1::TransferMisconfiguration]
+        attr_accessor :members_misconfiguration
+      
+        # Error related to transferring or forwarding a phone call.
+        # Corresponds to the JSON property `transferMisconfiguration`
+        # @return [Google::Apis::AlertcenterV1beta1::TransferMisconfiguration]
+        attr_accessor :transfer_misconfiguration
+      
+        # Issue(s) with sending to voicemail.
+        # Corresponds to the JSON property `voicemailMisconfiguration`
+        # @return [Google::Apis::AlertcenterV1beta1::VoicemailMisconfiguration]
+        attr_accessor :voicemail_misconfiguration
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @entity_name = args[:entity_name] if args.key?(:entity_name)
+          @entity_type = args[:entity_type] if args.key?(:entity_type)
+          @fix_uri = args[:fix_uri] if args.key?(:fix_uri)
+          @members_misconfiguration = args[:members_misconfiguration] if args.key?(:members_misconfiguration)
+          @transfer_misconfiguration = args[:transfer_misconfiguration] if args.key?(:transfer_misconfiguration)
+          @voicemail_misconfiguration = args[:voicemail_misconfiguration] if args.key?(:voicemail_misconfiguration)
+        end
+      end
+      
+      # Issue(s) with sending to voicemail.
+      class VoicemailMisconfiguration
+        include Google::Apis::Core::Hashable
+      
+        # Issue(s) with voicemail recipients.
+        # Corresponds to the JSON property `errors`
+        # @return [Array<Google::Apis::AlertcenterV1beta1::VoicemailRecipientError>]
+        attr_accessor :errors
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @errors = args[:errors] if args.key?(:errors)
+        end
+      end
+      
+      # Issue(s) with a voicemail recipient.
+      class VoicemailRecipientError
+        include Google::Apis::Core::Hashable
+      
+        # Email address of the invalid recipient. This may be unavailable if the
+        # recipient was deleted.
+        # Corresponds to the JSON property `email`
+        # @return [String]
+        attr_accessor :email
+      
+        # Reason for the error.
+        # Corresponds to the JSON property `invalidReason`
+        # @return [String]
+        attr_accessor :invalid_reason
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @email = args[:email] if args.key?(:email)
+          @invalid_reason = args[:invalid_reason] if args.key?(:invalid_reason)
         end
       end
     end

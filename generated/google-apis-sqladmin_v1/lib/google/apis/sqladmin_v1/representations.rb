@@ -151,6 +151,12 @@ module Google
       class ExportContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
         
+        class BakExportOptions
+          class Representation < Google::Apis::Core::JsonRepresentation; end
+        
+          include Google::Apis::Core::JsonObjectSupport
+        end
+        
         class CsvExportOptions
           class Representation < Google::Apis::Core::JsonRepresentation; end
         
@@ -364,6 +370,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PasswordStatus
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PasswordValidationPolicy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ReplicaConfiguration
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -526,6 +544,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UserPasswordValidationPolicy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class UsersListResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -603,6 +627,7 @@ module Google
           property :self_link, as: 'selfLink'
           property :start_time, as: 'startTime'
           property :status, as: 'status'
+          property :time_zone, as: 'timeZone'
           property :type, as: 'type'
           property :window_start_time, as: 'windowStartTime'
         end
@@ -630,8 +655,10 @@ module Google
       class CloneContext
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :allocated_ip_range, as: 'allocatedIpRange'
           property :bin_log_coordinates, as: 'binLogCoordinates', class: Google::Apis::SqladminV1::BinLogCoordinates, decorator: Google::Apis::SqladminV1::BinLogCoordinates::Representation
       
+          collection :database_names, as: 'databaseNames'
           property :destination_instance_name, as: 'destinationInstanceName'
           property :kind, as: 'kind'
           property :pitr_timestamp_ms, :numeric_string => true, as: 'pitrTimestampMs'
@@ -680,10 +707,12 @@ module Google
       class DatabaseInstance
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :available_maintenance_versions, as: 'availableMaintenanceVersions'
           property :backend_type, as: 'backendType'
           property :connection_name, as: 'connectionName'
           property :create_time, as: 'createTime'
           property :current_disk_size, :numeric_string => true, as: 'currentDiskSize'
+          property :database_installed_version, as: 'databaseInstalledVersion'
           property :database_version, as: 'databaseVersion'
           property :disk_encryption_configuration, as: 'diskEncryptionConfiguration', class: Google::Apis::SqladminV1::DiskEncryptionConfiguration, decorator: Google::Apis::SqladminV1::DiskEncryptionConfiguration::Representation
       
@@ -698,6 +727,7 @@ module Google
       
           property :ipv6_address, as: 'ipv6Address'
           property :kind, as: 'kind'
+          property :maintenance_version, as: 'maintenanceVersion'
           property :master_instance_name, as: 'masterInstanceName'
           property :max_disk_size, :numeric_string => true, as: 'maxDiskSize'
           property :name, as: 'name'
@@ -804,6 +834,8 @@ module Google
       class ExportContext
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :bak_export_options, as: 'bakExportOptions', class: Google::Apis::SqladminV1::ExportContext::BakExportOptions, decorator: Google::Apis::SqladminV1::ExportContext::BakExportOptions::Representation
+      
           property :csv_export_options, as: 'csvExportOptions', class: Google::Apis::SqladminV1::ExportContext::CsvExportOptions, decorator: Google::Apis::SqladminV1::ExportContext::CsvExportOptions::Representation
       
           collection :databases, as: 'databases'
@@ -813,6 +845,14 @@ module Google
           property :sql_export_options, as: 'sqlExportOptions', class: Google::Apis::SqladminV1::ExportContext::SqlExportOptions, decorator: Google::Apis::SqladminV1::ExportContext::SqlExportOptions::Representation
       
           property :uri, as: 'uri'
+        end
+        
+        class BakExportOptions
+          # @private
+          class Representation < Google::Apis::Core::JsonRepresentation
+            property :stripe_count, as: 'stripeCount'
+            property :striped, as: 'striped'
+          end
         end
         
         class CsvExportOptions
@@ -883,6 +923,7 @@ module Google
           property :access_token, as: 'access_token'
           property :public_key, as: 'public_key'
           property :read_time, as: 'readTime'
+          property :valid_duration, as: 'validDuration'
         end
       end
       
@@ -913,6 +954,7 @@ module Google
           class Representation < Google::Apis::Core::JsonRepresentation
             property :encryption_options, as: 'encryptionOptions', class: Google::Apis::SqladminV1::ImportContext::BakImportOptions::EncryptionOptions, decorator: Google::Apis::SqladminV1::ImportContext::BakImportOptions::EncryptionOptions::Representation
         
+            property :striped, as: 'striped'
           end
           
           class EncryptionOptions
@@ -1050,6 +1092,7 @@ module Google
           property :allocated_ip_range, as: 'allocatedIpRange'
           collection :authorized_networks, as: 'authorizedNetworks', class: Google::Apis::SqladminV1::AclEntry, decorator: Google::Apis::SqladminV1::AclEntry::Representation
       
+          property :enable_private_path_for_google_cloud_services, as: 'enablePrivatePathForGoogleCloudServices'
           property :ipv4_enabled, as: 'ipv4Enabled'
           property :private_network, as: 'privateNetwork'
           property :require_ssl, as: 'requireSsl'
@@ -1180,6 +1223,26 @@ module Google
         end
       end
       
+      class PasswordStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :locked, as: 'locked'
+          property :password_expiration_time, as: 'passwordExpirationTime'
+        end
+      end
+      
+      class PasswordValidationPolicy
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :complexity, as: 'complexity'
+          property :disallow_username_substring, as: 'disallowUsernameSubstring'
+          property :enable_password_policy, as: 'enablePasswordPolicy'
+          property :min_length, as: 'minLength'
+          property :password_change_interval, as: 'passwordChangeInterval'
+          property :reuse_interval, as: 'reuseInterval'
+        end
+      end
+      
       class ReplicaConfiguration
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1227,12 +1290,14 @@ module Google
           property :backup_configuration, as: 'backupConfiguration', class: Google::Apis::SqladminV1::BackupConfiguration, decorator: Google::Apis::SqladminV1::BackupConfiguration::Representation
       
           property :collation, as: 'collation'
+          property :connector_enforcement, as: 'connectorEnforcement'
           property :crash_safe_replication_enabled, as: 'crashSafeReplicationEnabled'
           property :data_disk_size_gb, :numeric_string => true, as: 'dataDiskSizeGb'
           property :data_disk_type, as: 'dataDiskType'
           collection :database_flags, as: 'databaseFlags', class: Google::Apis::SqladminV1::DatabaseFlags, decorator: Google::Apis::SqladminV1::DatabaseFlags::Representation
       
           property :database_replication_enabled, as: 'databaseReplicationEnabled'
+          property :deletion_protection_enabled, as: 'deletionProtectionEnabled'
           collection :deny_maintenance_periods, as: 'denyMaintenancePeriods', class: Google::Apis::SqladminV1::DenyMaintenancePeriod, decorator: Google::Apis::SqladminV1::DenyMaintenancePeriod::Representation
       
           property :insights_config, as: 'insightsConfig', class: Google::Apis::SqladminV1::InsightsConfig, decorator: Google::Apis::SqladminV1::InsightsConfig::Representation
@@ -1244,6 +1309,8 @@ module Google
       
           property :maintenance_window, as: 'maintenanceWindow', class: Google::Apis::SqladminV1::MaintenanceWindow, decorator: Google::Apis::SqladminV1::MaintenanceWindow::Representation
       
+          property :password_validation_policy, as: 'passwordValidationPolicy', class: Google::Apis::SqladminV1::PasswordValidationPolicy, decorator: Google::Apis::SqladminV1::PasswordValidationPolicy::Representation
+      
           property :pricing_plan, as: 'pricingPlan'
           property :replication_type, as: 'replicationType'
           property :settings_version, :numeric_string => true, as: 'settingsVersion'
@@ -1252,6 +1319,7 @@ module Google
           property :storage_auto_resize, as: 'storageAutoResize'
           property :storage_auto_resize_limit, :numeric_string => true, as: 'storageAutoResizeLimit'
           property :tier, as: 'tier'
+          property :time_zone, as: 'timeZone'
           hash :user_labels, as: 'userLabels'
         end
       end
@@ -1336,6 +1404,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :bucket, as: 'bucket'
           property :kind, as: 'kind'
+          property :retention_interval, as: 'retentionInterval'
+          property :upload_interval, as: 'uploadInterval'
         end
       end
       
@@ -1455,16 +1525,31 @@ module Google
       class User
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :dual_password_type, as: 'dualPasswordType'
           property :etag, as: 'etag'
           property :host, as: 'host'
           property :instance, as: 'instance'
           property :kind, as: 'kind'
           property :name, as: 'name'
           property :password, as: 'password'
+          property :password_policy, as: 'passwordPolicy', class: Google::Apis::SqladminV1::UserPasswordValidationPolicy, decorator: Google::Apis::SqladminV1::UserPasswordValidationPolicy::Representation
+      
           property :project, as: 'project'
           property :sqlserver_user_details, as: 'sqlserverUserDetails', class: Google::Apis::SqladminV1::SqlServerUserDetails, decorator: Google::Apis::SqladminV1::SqlServerUserDetails::Representation
       
           property :type, as: 'type'
+        end
+      end
+      
+      class UserPasswordValidationPolicy
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allowed_failed_attempts, as: 'allowedFailedAttempts'
+          property :enable_failed_attempts_check, as: 'enableFailedAttemptsCheck'
+          property :enable_password_verification, as: 'enablePasswordVerification'
+          property :password_expiration_duration, as: 'passwordExpirationDuration'
+          property :status, as: 'status', class: Google::Apis::SqladminV1::PasswordStatus, decorator: Google::Apis::SqladminV1::PasswordStatus::Representation
+      
         end
       end
       

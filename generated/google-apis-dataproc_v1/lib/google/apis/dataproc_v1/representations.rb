@@ -40,6 +40,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AuxiliaryNodeGroup
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AuxiliaryServicesConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BasicAutoscalingAlgorithm
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -47,6 +59,12 @@ module Google
       end
       
       class BasicYarnAutoscalingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Batch
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -124,6 +142,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DataprocMetricConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DiagnoseClusterRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -142,6 +166,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DriverSchedulingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Empty
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -155,6 +185,18 @@ module Google
       end
       
       class EndpointConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EnvironmentConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ExecutionConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -185,6 +227,36 @@ module Google
       end
       
       class GkeClusterConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNodeConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNodePoolAcceleratorConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNodePoolAutoscalingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNodePoolConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GkeNodePoolTarget
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -238,6 +310,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Interval
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Job
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -280,6 +358,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class KubernetesClusterConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class KubernetesSoftwareConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LifecycleConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -287,6 +377,12 @@ module Google
       end
       
       class ListAutoscalingPoliciesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListBatchesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -340,7 +436,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Metric
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class NamespacedGkeDeploymentTarget
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NodeGroup
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -352,7 +460,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class NodeGroupOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class NodeInitializationAction
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NodePool
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -376,6 +496,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PeripheralsConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PigJob
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -389,6 +515,12 @@ module Google
       end
       
       class PrestoJob
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PySparkBatch
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -424,6 +556,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ResizeNodeGroupRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RuntimeConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RuntimeInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SecurityConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -454,7 +604,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SparkBatch
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SparkHistoryServerConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SparkJob
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SparkRBatch
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -466,13 +634,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SparkSqlBatch
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SparkSqlJob
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SparkStandaloneAutoscalingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class StartClusterRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StateHistory
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -514,7 +700,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TrinoJob
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UsageMetrics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UsageSnapshot
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ValueValidation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class VirtualClusterConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -577,6 +787,7 @@ module Google
           property :basic_algorithm, as: 'basicAlgorithm', class: Google::Apis::DataprocV1::BasicAutoscalingAlgorithm, decorator: Google::Apis::DataprocV1::BasicAutoscalingAlgorithm::Representation
       
           property :id, as: 'id'
+          hash :labels, as: 'labels'
           property :name, as: 'name'
           property :secondary_worker_config, as: 'secondaryWorkerConfig', class: Google::Apis::DataprocV1::InstanceGroupAutoscalingPolicyConfig, decorator: Google::Apis::DataprocV1::InstanceGroupAutoscalingPolicyConfig::Representation
       
@@ -585,10 +796,31 @@ module Google
         end
       end
       
+      class AuxiliaryNodeGroup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :node_group, as: 'nodeGroup', class: Google::Apis::DataprocV1::NodeGroup, decorator: Google::Apis::DataprocV1::NodeGroup::Representation
+      
+          property :node_group_id, as: 'nodeGroupId'
+        end
+      end
+      
+      class AuxiliaryServicesConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :metastore_config, as: 'metastoreConfig', class: Google::Apis::DataprocV1::MetastoreConfig, decorator: Google::Apis::DataprocV1::MetastoreConfig::Representation
+      
+          property :spark_history_server_config, as: 'sparkHistoryServerConfig', class: Google::Apis::DataprocV1::SparkHistoryServerConfig, decorator: Google::Apis::DataprocV1::SparkHistoryServerConfig::Representation
+      
+        end
+      end
+      
       class BasicAutoscalingAlgorithm
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cooldown_period, as: 'cooldownPeriod'
+          property :spark_standalone_config, as: 'sparkStandaloneConfig', class: Google::Apis::DataprocV1::SparkStandaloneAutoscalingConfig, decorator: Google::Apis::DataprocV1::SparkStandaloneAutoscalingConfig::Representation
+      
           property :yarn_config, as: 'yarnConfig', class: Google::Apis::DataprocV1::BasicYarnAutoscalingConfig, decorator: Google::Apis::DataprocV1::BasicYarnAutoscalingConfig::Representation
       
         end
@@ -602,6 +834,37 @@ module Google
           property :scale_down_min_worker_fraction, as: 'scaleDownMinWorkerFraction'
           property :scale_up_factor, as: 'scaleUpFactor'
           property :scale_up_min_worker_fraction, as: 'scaleUpMinWorkerFraction'
+        end
+      end
+      
+      class Batch
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :creator, as: 'creator'
+          property :environment_config, as: 'environmentConfig', class: Google::Apis::DataprocV1::EnvironmentConfig, decorator: Google::Apis::DataprocV1::EnvironmentConfig::Representation
+      
+          hash :labels, as: 'labels'
+          property :name, as: 'name'
+          property :operation, as: 'operation'
+          property :pyspark_batch, as: 'pysparkBatch', class: Google::Apis::DataprocV1::PySparkBatch, decorator: Google::Apis::DataprocV1::PySparkBatch::Representation
+      
+          property :runtime_config, as: 'runtimeConfig', class: Google::Apis::DataprocV1::RuntimeConfig, decorator: Google::Apis::DataprocV1::RuntimeConfig::Representation
+      
+          property :runtime_info, as: 'runtimeInfo', class: Google::Apis::DataprocV1::RuntimeInfo, decorator: Google::Apis::DataprocV1::RuntimeInfo::Representation
+      
+          property :spark_batch, as: 'sparkBatch', class: Google::Apis::DataprocV1::SparkBatch, decorator: Google::Apis::DataprocV1::SparkBatch::Representation
+      
+          property :spark_r_batch, as: 'sparkRBatch', class: Google::Apis::DataprocV1::SparkRBatch, decorator: Google::Apis::DataprocV1::SparkRBatch::Representation
+      
+          property :spark_sql_batch, as: 'sparkSqlBatch', class: Google::Apis::DataprocV1::SparkSqlBatch, decorator: Google::Apis::DataprocV1::SparkSqlBatch::Representation
+      
+          property :state, as: 'state'
+          collection :state_history, as: 'stateHistory', class: Google::Apis::DataprocV1::StateHistory, decorator: Google::Apis::DataprocV1::StateHistory::Representation
+      
+          property :state_message, as: 'stateMessage'
+          property :state_time, as: 'stateTime'
+          property :uuid, as: 'uuid'
         end
       end
       
@@ -650,6 +913,8 @@ module Google
       
           collection :status_history, as: 'statusHistory', class: Google::Apis::DataprocV1::ClusterStatus, decorator: Google::Apis::DataprocV1::ClusterStatus::Representation
       
+          property :virtual_cluster_config, as: 'virtualClusterConfig', class: Google::Apis::DataprocV1::VirtualClusterConfig, decorator: Google::Apis::DataprocV1::VirtualClusterConfig::Representation
+      
         end
       end
       
@@ -658,7 +923,11 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :autoscaling_config, as: 'autoscalingConfig', class: Google::Apis::DataprocV1::AutoscalingConfig, decorator: Google::Apis::DataprocV1::AutoscalingConfig::Representation
       
+          collection :auxiliary_node_groups, as: 'auxiliaryNodeGroups', class: Google::Apis::DataprocV1::AuxiliaryNodeGroup, decorator: Google::Apis::DataprocV1::AuxiliaryNodeGroup::Representation
+      
           property :config_bucket, as: 'configBucket'
+          property :dataproc_metric_config, as: 'dataprocMetricConfig', class: Google::Apis::DataprocV1::DataprocMetricConfig, decorator: Google::Apis::DataprocV1::DataprocMetricConfig::Representation
+      
           property :encryption_config, as: 'encryptionConfig', class: Google::Apis::DataprocV1::EncryptionConfig, decorator: Google::Apis::DataprocV1::EncryptionConfig::Representation
       
           property :endpoint_config, as: 'endpointConfig', class: Google::Apis::DataprocV1::EndpointConfig, decorator: Google::Apis::DataprocV1::EndpointConfig::Representation
@@ -707,6 +976,7 @@ module Google
       class ClusterOperationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :child_operation_ids, as: 'childOperationIds'
           property :cluster_name, as: 'clusterName'
           property :cluster_uuid, as: 'clusterUuid'
           property :description, as: 'description'
@@ -755,9 +1025,21 @@ module Google
         end
       end
       
+      class DataprocMetricConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :metrics, as: 'metrics', class: Google::Apis::DataprocV1::Metric, decorator: Google::Apis::DataprocV1::Metric::Representation
+      
+        end
+      end
+      
       class DiagnoseClusterRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :diagnosis_interval, as: 'diagnosisInterval', class: Google::Apis::DataprocV1::Interval, decorator: Google::Apis::DataprocV1::Interval::Representation
+      
+          property :job, as: 'job'
+          property :yarn_application_id, as: 'yarnApplicationId'
         end
       end
       
@@ -773,7 +1055,16 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :boot_disk_size_gb, as: 'bootDiskSizeGb'
           property :boot_disk_type, as: 'bootDiskType'
+          property :local_ssd_interface, as: 'localSsdInterface'
           property :num_local_ssds, as: 'numLocalSsds'
+        end
+      end
+      
+      class DriverSchedulingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :memory_mb, as: 'memoryMb'
+          property :vcores, as: 'vcores'
         end
       end
       
@@ -787,6 +1078,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :gce_pd_kms_key_name, as: 'gcePdKmsKeyName'
+          property :kms_key, as: 'kmsKey'
         end
       end
       
@@ -795,6 +1087,30 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :enable_http_port_access, as: 'enableHttpPortAccess'
           hash :http_ports, as: 'httpPorts'
+        end
+      end
+      
+      class EnvironmentConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :execution_config, as: 'executionConfig', class: Google::Apis::DataprocV1::ExecutionConfig, decorator: Google::Apis::DataprocV1::ExecutionConfig::Representation
+      
+          property :peripherals_config, as: 'peripheralsConfig', class: Google::Apis::DataprocV1::PeripheralsConfig, decorator: Google::Apis::DataprocV1::PeripheralsConfig::Representation
+      
+        end
+      end
+      
+      class ExecutionConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :idle_ttl, as: 'idleTtl'
+          property :kms_key, as: 'kmsKey'
+          collection :network_tags, as: 'networkTags'
+          property :network_uri, as: 'networkUri'
+          property :service_account, as: 'serviceAccount'
+          property :staging_bucket, as: 'stagingBucket'
+          property :subnetwork_uri, as: 'subnetworkUri'
+          property :ttl, as: 'ttl'
         end
       end
       
@@ -849,8 +1165,63 @@ module Google
       class GkeClusterConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :gke_cluster_target, as: 'gkeClusterTarget'
           property :namespaced_gke_deployment_target, as: 'namespacedGkeDeploymentTarget', class: Google::Apis::DataprocV1::NamespacedGkeDeploymentTarget, decorator: Google::Apis::DataprocV1::NamespacedGkeDeploymentTarget::Representation
       
+          collection :node_pool_target, as: 'nodePoolTarget', class: Google::Apis::DataprocV1::GkeNodePoolTarget, decorator: Google::Apis::DataprocV1::GkeNodePoolTarget::Representation
+      
+        end
+      end
+      
+      class GkeNodeConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :accelerators, as: 'accelerators', class: Google::Apis::DataprocV1::GkeNodePoolAcceleratorConfig, decorator: Google::Apis::DataprocV1::GkeNodePoolAcceleratorConfig::Representation
+      
+          property :boot_disk_kms_key, as: 'bootDiskKmsKey'
+          property :local_ssd_count, as: 'localSsdCount'
+          property :machine_type, as: 'machineType'
+          property :min_cpu_platform, as: 'minCpuPlatform'
+          property :preemptible, as: 'preemptible'
+          property :spot, as: 'spot'
+        end
+      end
+      
+      class GkeNodePoolAcceleratorConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :accelerator_count, :numeric_string => true, as: 'acceleratorCount'
+          property :accelerator_type, as: 'acceleratorType'
+          property :gpu_partition_size, as: 'gpuPartitionSize'
+        end
+      end
+      
+      class GkeNodePoolAutoscalingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :max_node_count, as: 'maxNodeCount'
+          property :min_node_count, as: 'minNodeCount'
+        end
+      end
+      
+      class GkeNodePoolConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :autoscaling, as: 'autoscaling', class: Google::Apis::DataprocV1::GkeNodePoolAutoscalingConfig, decorator: Google::Apis::DataprocV1::GkeNodePoolAutoscalingConfig::Representation
+      
+          property :config, as: 'config', class: Google::Apis::DataprocV1::GkeNodeConfig, decorator: Google::Apis::DataprocV1::GkeNodeConfig::Representation
+      
+          collection :locations, as: 'locations'
+        end
+      end
+      
+      class GkeNodePoolTarget
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :node_pool, as: 'nodePool'
+          property :node_pool_config, as: 'nodePoolConfig', class: Google::Apis::DataprocV1::GkeNodePoolConfig, decorator: Google::Apis::DataprocV1::GkeNodePoolConfig::Representation
+      
+          collection :roles, as: 'roles'
         end
       end
       
@@ -946,12 +1317,22 @@ module Google
         end
       end
       
+      class Interval
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
       class Job
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :done, as: 'done'
           property :driver_control_files_uri, as: 'driverControlFilesUri'
           property :driver_output_resource_uri, as: 'driverOutputResourceUri'
+          property :driver_scheduling_config, as: 'driverSchedulingConfig', class: Google::Apis::DataprocV1::DriverSchedulingConfig, decorator: Google::Apis::DataprocV1::DriverSchedulingConfig::Representation
+      
           property :hadoop_job, as: 'hadoopJob', class: Google::Apis::DataprocV1::HadoopJob, decorator: Google::Apis::DataprocV1::HadoopJob::Representation
       
           property :hive_job, as: 'hiveJob', class: Google::Apis::DataprocV1::HiveJob, decorator: Google::Apis::DataprocV1::HiveJob::Representation
@@ -979,6 +1360,8 @@ module Google
           property :status, as: 'status', class: Google::Apis::DataprocV1::JobStatus, decorator: Google::Apis::DataprocV1::JobStatus::Representation
       
           collection :status_history, as: 'statusHistory', class: Google::Apis::DataprocV1::JobStatus, decorator: Google::Apis::DataprocV1::JobStatus::Representation
+      
+          property :trino_job, as: 'trinoJob', class: Google::Apis::DataprocV1::TrinoJob, decorator: Google::Apis::DataprocV1::TrinoJob::Representation
       
           collection :yarn_applications, as: 'yarnApplications', class: Google::Apis::DataprocV1::YarnApplication, decorator: Google::Apis::DataprocV1::YarnApplication::Representation
       
@@ -1052,6 +1435,25 @@ module Google
         end
       end
       
+      class KubernetesClusterConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gke_cluster_config, as: 'gkeClusterConfig', class: Google::Apis::DataprocV1::GkeClusterConfig, decorator: Google::Apis::DataprocV1::GkeClusterConfig::Representation
+      
+          property :kubernetes_namespace, as: 'kubernetesNamespace'
+          property :kubernetes_software_config, as: 'kubernetesSoftwareConfig', class: Google::Apis::DataprocV1::KubernetesSoftwareConfig, decorator: Google::Apis::DataprocV1::KubernetesSoftwareConfig::Representation
+      
+        end
+      end
+      
+      class KubernetesSoftwareConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :component_version, as: 'componentVersion'
+          hash :properties, as: 'properties'
+        end
+      end
+      
       class LifecycleConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1068,6 +1470,15 @@ module Google
           property :next_page_token, as: 'nextPageToken'
           collection :policies, as: 'policies', class: Google::Apis::DataprocV1::AutoscalingPolicy, decorator: Google::Apis::DataprocV1::AutoscalingPolicy::Representation
       
+        end
+      end
+      
+      class ListBatchesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :batches, as: 'batches', class: Google::Apis::DataprocV1::Batch, decorator: Google::Apis::DataprocV1::Batch::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
         end
       end
       
@@ -1139,11 +1550,30 @@ module Google
         end
       end
       
+      class Metric
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :metric_overrides, as: 'metricOverrides'
+          property :metric_source, as: 'metricSource'
+        end
+      end
+      
       class NamespacedGkeDeploymentTarget
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cluster_namespace, as: 'clusterNamespace'
           property :target_gke_cluster, as: 'targetGkeCluster'
+        end
+      end
+      
+      class NodeGroup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :labels, as: 'labels'
+          property :name, as: 'name'
+          property :node_group_config, as: 'nodeGroupConfig', class: Google::Apis::DataprocV1::InstanceGroupConfig, decorator: Google::Apis::DataprocV1::InstanceGroupConfig::Representation
+      
+          collection :roles, as: 'roles'
         end
       end
       
@@ -1154,11 +1584,36 @@ module Google
         end
       end
       
+      class NodeGroupOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cluster_uuid, as: 'clusterUuid'
+          property :description, as: 'description'
+          hash :labels, as: 'labels'
+          property :node_group_id, as: 'nodeGroupId'
+          property :operation_type, as: 'operationType'
+          property :status, as: 'status', class: Google::Apis::DataprocV1::ClusterOperationStatus, decorator: Google::Apis::DataprocV1::ClusterOperationStatus::Representation
+      
+          collection :status_history, as: 'statusHistory', class: Google::Apis::DataprocV1::ClusterOperationStatus, decorator: Google::Apis::DataprocV1::ClusterOperationStatus::Representation
+      
+          collection :warnings, as: 'warnings'
+        end
+      end
+      
       class NodeInitializationAction
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :executable_file, as: 'executableFile'
           property :execution_timeout, as: 'executionTimeout'
+        end
+      end
+      
+      class NodePool
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :id, as: 'id'
+          collection :instance_names, as: 'instanceNames'
+          property :repair_action, as: 'repairAction'
         end
       end
       
@@ -1198,6 +1653,8 @@ module Google
           property :spark_sql_job, as: 'sparkSqlJob', class: Google::Apis::DataprocV1::SparkSqlJob, decorator: Google::Apis::DataprocV1::SparkSqlJob::Representation
       
           property :step_id, as: 'stepId'
+          property :trino_job, as: 'trinoJob', class: Google::Apis::DataprocV1::TrinoJob, decorator: Google::Apis::DataprocV1::TrinoJob::Representation
+      
         end
       end
       
@@ -1207,6 +1664,15 @@ module Google
           property :regex, as: 'regex', class: Google::Apis::DataprocV1::RegexValidation, decorator: Google::Apis::DataprocV1::RegexValidation::Representation
       
           property :values, as: 'values', class: Google::Apis::DataprocV1::ValueValidation, decorator: Google::Apis::DataprocV1::ValueValidation::Representation
+      
+        end
+      end
+      
+      class PeripheralsConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :metastore_service, as: 'metastoreService'
+          property :spark_history_server_config, as: 'sparkHistoryServerConfig', class: Google::Apis::DataprocV1::SparkHistoryServerConfig, decorator: Google::Apis::DataprocV1::SparkHistoryServerConfig::Representation
       
         end
       end
@@ -1251,6 +1717,18 @@ module Google
         end
       end
       
+      class PySparkBatch
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :archive_uris, as: 'archiveUris'
+          collection :args, as: 'args'
+          collection :file_uris, as: 'fileUris'
+          collection :jar_file_uris, as: 'jarFileUris'
+          property :main_python_file_uri, as: 'mainPythonFileUri'
+          collection :python_file_uris, as: 'pythonFileUris'
+        end
+      end
+      
       class PySparkJob
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1284,6 +1762,10 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cluster_uuid, as: 'clusterUuid'
+          property :graceful_decommission_timeout, as: 'gracefulDecommissionTimeout'
+          collection :node_pools, as: 'nodePools', class: Google::Apis::DataprocV1::NodePool, decorator: Google::Apis::DataprocV1::NodePool::Representation
+      
+          property :parent_operation_id, as: 'parentOperationId'
           property :request_id, as: 'requestId'
         end
       end
@@ -1294,6 +1776,37 @@ module Google
           property :consume_reservation_type, as: 'consumeReservationType'
           property :key, as: 'key'
           collection :values, as: 'values'
+        end
+      end
+      
+      class ResizeNodeGroupRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :graceful_decommission_timeout, as: 'gracefulDecommissionTimeout'
+          property :request_id, as: 'requestId'
+          property :size, as: 'size'
+        end
+      end
+      
+      class RuntimeConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :container_image, as: 'containerImage'
+          hash :properties, as: 'properties'
+          property :version, as: 'version'
+        end
+      end
+      
+      class RuntimeInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :approximate_usage, as: 'approximateUsage', class: Google::Apis::DataprocV1::UsageMetrics, decorator: Google::Apis::DataprocV1::UsageMetrics::Representation
+      
+          property :current_usage, as: 'currentUsage', class: Google::Apis::DataprocV1::UsageSnapshot, decorator: Google::Apis::DataprocV1::UsageSnapshot::Representation
+      
+          property :diagnostic_output_uri, as: 'diagnosticOutputUri'
+          hash :endpoints, as: 'endpoints'
+          property :output_uri, as: 'outputUri'
         end
       end
       
@@ -1347,6 +1860,25 @@ module Google
         end
       end
       
+      class SparkBatch
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :archive_uris, as: 'archiveUris'
+          collection :args, as: 'args'
+          collection :file_uris, as: 'fileUris'
+          collection :jar_file_uris, as: 'jarFileUris'
+          property :main_class, as: 'mainClass'
+          property :main_jar_file_uri, as: 'mainJarFileUri'
+        end
+      end
+      
+      class SparkHistoryServerConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dataproc_cluster, as: 'dataprocCluster'
+        end
+      end
+      
       class SparkJob
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1362,6 +1894,16 @@ module Google
         end
       end
       
+      class SparkRBatch
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :archive_uris, as: 'archiveUris'
+          collection :args, as: 'args'
+          collection :file_uris, as: 'fileUris'
+          property :main_r_file_uri, as: 'mainRFileUri'
+        end
+      end
+      
       class SparkRJob
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1372,6 +1914,15 @@ module Google
       
           property :main_r_file_uri, as: 'mainRFileUri'
           hash :properties, as: 'properties'
+        end
+      end
+      
+      class SparkSqlBatch
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :jar_file_uris, as: 'jarFileUris'
+          property :query_file_uri, as: 'queryFileUri'
+          hash :query_variables, as: 'queryVariables'
         end
       end
       
@@ -1389,11 +1940,31 @@ module Google
         end
       end
       
+      class SparkStandaloneAutoscalingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :graceful_decommission_timeout, as: 'gracefulDecommissionTimeout'
+          property :scale_down_factor, as: 'scaleDownFactor'
+          property :scale_down_min_worker_fraction, as: 'scaleDownMinWorkerFraction'
+          property :scale_up_factor, as: 'scaleUpFactor'
+          property :scale_up_min_worker_fraction, as: 'scaleUpMinWorkerFraction'
+        end
+      end
+      
       class StartClusterRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cluster_uuid, as: 'clusterUuid'
           property :request_id, as: 'requestId'
+        end
+      end
+      
+      class StateHistory
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :state, as: 'state'
+          property :state_message, as: 'stateMessage'
+          property :state_start_time, as: 'stateStartTime'
         end
       end
       
@@ -1448,10 +2019,53 @@ module Google
         end
       end
       
+      class TrinoJob
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :client_tags, as: 'clientTags'
+          property :continue_on_failure, as: 'continueOnFailure'
+          property :logging_config, as: 'loggingConfig', class: Google::Apis::DataprocV1::LoggingConfig, decorator: Google::Apis::DataprocV1::LoggingConfig::Representation
+      
+          property :output_format, as: 'outputFormat'
+          hash :properties, as: 'properties'
+          property :query_file_uri, as: 'queryFileUri'
+          property :query_list, as: 'queryList', class: Google::Apis::DataprocV1::QueryList, decorator: Google::Apis::DataprocV1::QueryList::Representation
+      
+        end
+      end
+      
+      class UsageMetrics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :milli_dcu_seconds, :numeric_string => true, as: 'milliDcuSeconds'
+          property :shuffle_storage_gb_seconds, :numeric_string => true, as: 'shuffleStorageGbSeconds'
+        end
+      end
+      
+      class UsageSnapshot
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :milli_dcu, :numeric_string => true, as: 'milliDcu'
+          property :shuffle_storage_gb, :numeric_string => true, as: 'shuffleStorageGb'
+          property :snapshot_time, as: 'snapshotTime'
+        end
+      end
+      
       class ValueValidation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :values, as: 'values'
+        end
+      end
+      
+      class VirtualClusterConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :auxiliary_services_config, as: 'auxiliaryServicesConfig', class: Google::Apis::DataprocV1::AuxiliaryServicesConfig, decorator: Google::Apis::DataprocV1::AuxiliaryServicesConfig::Representation
+      
+          property :kubernetes_cluster_config, as: 'kubernetesClusterConfig', class: Google::Apis::DataprocV1::KubernetesClusterConfig, decorator: Google::Apis::DataprocV1::KubernetesClusterConfig::Representation
+      
+          property :staging_bucket, as: 'stagingBucket'
         end
       end
       

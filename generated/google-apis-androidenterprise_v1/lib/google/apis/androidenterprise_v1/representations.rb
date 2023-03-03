@@ -148,6 +148,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CreateEnrollmentTokenResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Device
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -190,6 +196,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class EnterpriseAuthenticationAppLinkConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListEnterprisesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -209,6 +221,12 @@ module Google
       end
       
       class ListEntitlementsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleAuthenticationSettings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -716,15 +734,29 @@ module Google
         end
       end
       
+      class CreateEnrollmentTokenResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enrollment_token, as: 'enrollmentToken'
+        end
+      end
+      
       class Device
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :android_id, as: 'androidId'
+          property :device, as: 'device'
+          property :latest_build_fingerprint, as: 'latestBuildFingerprint'
+          property :maker, as: 'maker'
           property :management_type, as: 'managementType'
+          property :model, as: 'model'
           property :policy, as: 'policy', class: Google::Apis::AndroidenterpriseV1::Policy, decorator: Google::Apis::AndroidenterpriseV1::Policy::Representation
       
+          property :product, as: 'product'
           property :report, as: 'report', class: Google::Apis::AndroidenterpriseV1::DeviceReport, decorator: Google::Apis::AndroidenterpriseV1::DeviceReport::Representation
       
+          property :retail_brand, as: 'retailBrand'
+          property :sdk_version, as: 'sdkVersion'
         end
       end
       
@@ -767,6 +799,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :administrator, as: 'administrator', class: Google::Apis::AndroidenterpriseV1::Administrator, decorator: Google::Apis::AndroidenterpriseV1::Administrator::Representation
       
+          property :google_authentication_settings, as: 'googleAuthenticationSettings', class: Google::Apis::AndroidenterpriseV1::GoogleAuthenticationSettings, decorator: Google::Apis::AndroidenterpriseV1::GoogleAuthenticationSettings::Representation
+      
           property :id, as: 'id'
           property :name, as: 'name'
           property :primary_domain, as: 'primaryDomain'
@@ -777,6 +811,13 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :account_email, as: 'accountEmail'
+        end
+      end
+      
+      class EnterpriseAuthenticationAppLinkConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :uri, as: 'uri'
         end
       end
       
@@ -809,6 +850,14 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :entitlement, as: 'entitlement', class: Google::Apis::AndroidenterpriseV1::Entitlement, decorator: Google::Apis::AndroidenterpriseV1::Entitlement::Representation
       
+        end
+      end
+      
+      class GoogleAuthenticationSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dedicated_devices_allowed, as: 'dedicatedDevicesAllowed'
+          property :google_authentication_required, as: 'googleAuthenticationRequired'
         end
       end
       
@@ -1050,6 +1099,8 @@ module Google
       class Product
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :app_restrictions_schema, as: 'appRestrictionsSchema', class: Google::Apis::AndroidenterpriseV1::AppRestrictionsSchema, decorator: Google::Apis::AndroidenterpriseV1::AppRestrictionsSchema::Representation
+      
           collection :app_tracks, as: 'appTracks', class: Google::Apis::AndroidenterpriseV1::TrackInfo, decorator: Google::Apis::AndroidenterpriseV1::TrackInfo::Representation
       
           collection :app_version, as: 'appVersion', class: Google::Apis::AndroidenterpriseV1::AppVersion, decorator: Google::Apis::AndroidenterpriseV1::AppVersion::Representation
@@ -1120,6 +1171,8 @@ module Google
           property :auto_install_policy, as: 'autoInstallPolicy', class: Google::Apis::AndroidenterpriseV1::AutoInstallPolicy, decorator: Google::Apis::AndroidenterpriseV1::AutoInstallPolicy::Representation
       
           property :auto_update_mode, as: 'autoUpdateMode'
+          collection :enterprise_authentication_app_link_configs, as: 'enterpriseAuthenticationAppLinkConfigs', class: Google::Apis::AndroidenterpriseV1::EnterpriseAuthenticationAppLinkConfig, decorator: Google::Apis::AndroidenterpriseV1::EnterpriseAuthenticationAppLinkConfig::Representation
+      
           property :managed_configuration, as: 'managedConfiguration', class: Google::Apis::AndroidenterpriseV1::ManagedConfiguration, decorator: Google::Apis::AndroidenterpriseV1::ManagedConfiguration::Representation
       
           property :product_id, as: 'productId'

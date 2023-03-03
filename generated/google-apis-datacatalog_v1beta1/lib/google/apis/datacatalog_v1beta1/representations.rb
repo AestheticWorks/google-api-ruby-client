@@ -52,6 +52,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudDatacatalogV1ImportEntriesMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudDatacatalogV1ImportEntriesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudDatacatalogV1ReconcileTagsMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudDatacatalogV1ReconcileTagsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudDatacatalogV1beta1BigQueryDateShardedSpec
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -274,6 +298,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudDatacatalogV1beta1TaxonomyService
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudDatacatalogV1beta1UsageSignal
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -299,6 +329,12 @@ module Google
       end
       
       class SetIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Status
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -354,6 +390,41 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :requested_policy_version, as: 'requestedPolicyVersion'
+        end
+      end
+      
+      class GoogleCloudDatacatalogV1ImportEntriesMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :errors, as: 'errors', class: Google::Apis::DatacatalogV1beta1::Status, decorator: Google::Apis::DatacatalogV1beta1::Status::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class GoogleCloudDatacatalogV1ImportEntriesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :deleted_entries_count, :numeric_string => true, as: 'deletedEntriesCount'
+          property :upserted_entries_count, :numeric_string => true, as: 'upsertedEntriesCount'
+        end
+      end
+      
+      class GoogleCloudDatacatalogV1ReconcileTagsMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :errors, as: 'errors', class: Google::Apis::DatacatalogV1beta1::Status, decorator: Google::Apis::DatacatalogV1beta1::Status::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class GoogleCloudDatacatalogV1ReconcileTagsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :created_tags_count, :numeric_string => true, as: 'createdTagsCount'
+          property :deleted_tags_count, :numeric_string => true, as: 'deletedTagsCount'
+          property :updated_tags_count, :numeric_string => true, as: 'updatedTagsCount'
         end
       end
       
@@ -724,8 +795,18 @@ module Google
           property :display_name, as: 'displayName'
           property :name, as: 'name'
           property :policy_tag_count, as: 'policyTagCount'
+          property :service, as: 'service', class: Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1TaxonomyService, decorator: Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1TaxonomyService::Representation
+      
           property :taxonomy_timestamps, as: 'taxonomyTimestamps', class: Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1SystemTimestamps, decorator: Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1SystemTimestamps::Representation
       
+        end
+      end
+      
+      class GoogleCloudDatacatalogV1beta1TaxonomyService
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :identity, as: 'identity'
+          property :name, as: 'name'
         end
       end
       
@@ -770,6 +851,15 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :policy, as: 'policy', class: Google::Apis::DatacatalogV1beta1::Policy, decorator: Google::Apis::DatacatalogV1beta1::Policy::Representation
       
+        end
+      end
+      
+      class Status
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          collection :details, as: 'details'
+          property :message, as: 'message'
         end
       end
       

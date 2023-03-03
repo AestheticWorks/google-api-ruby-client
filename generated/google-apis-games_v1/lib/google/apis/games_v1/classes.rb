@@ -1646,6 +1646,11 @@ module Google
         # @return [String]
         attr_accessor :friend_status
       
+        # Per-application unique player identifier.
+        # Corresponds to the JSON property `gamePlayerId`
+        # @return [String]
+        attr_accessor :game_player_id
+      
         # Uniquely identifies the type of this resource. Value is always the fixed
         # string `games#player`
         # Corresponds to the JSON property `kind`
@@ -1692,6 +1697,7 @@ module Google
           @display_name = args[:display_name] if args.key?(:display_name)
           @experience_info = args[:experience_info] if args.key?(:experience_info)
           @friend_status = args[:friend_status] if args.key?(:friend_status)
+          @game_player_id = args[:game_player_id] if args.key?(:game_player_id)
           @kind = args[:kind] if args.key?(:kind)
           @name = args[:name] if args.key?(:name)
           @original_player_id = args[:original_player_id] if args.key?(:original_player_id)
@@ -2336,6 +2342,35 @@ module Google
           @api_version = args[:api_version] if args.key?(:api_version)
           @kind = args[:kind] if args.key?(:kind)
           @revision_status = args[:revision_status] if args.key?(:revision_status)
+        end
+      end
+      
+      # Scoped player identifiers.
+      class ScopedPlayerIds
+        include Google::Apis::Core::Hashable
+      
+        # Identifier of the player across all games of the given developer. Every player
+        # has the same developer_player_key in all games of one developer. Developer
+        # player key changes for the game if the game is transferred to another
+        # developer. Note that game_player_id will stay unchanged.
+        # Corresponds to the JSON property `developerPlayerKey`
+        # @return [String]
+        attr_accessor :developer_player_key
+      
+        # Game-scoped player identifier. This is the same id that is returned in
+        # GetPlayer game_player_id field.
+        # Corresponds to the JSON property `gamePlayerId`
+        # @return [String]
+        attr_accessor :game_player_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @developer_player_key = args[:developer_player_key] if args.key?(:developer_player_key)
+          @game_player_id = args[:game_player_id] if args.key?(:game_player_id)
         end
       end
       

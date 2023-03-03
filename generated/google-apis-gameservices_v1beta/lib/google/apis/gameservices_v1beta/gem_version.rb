@@ -16,13 +16,13 @@ module Google
   module Apis
     module GameservicesV1beta
       # Version of the google-apis-gameservices_v1beta gem
-      GEM_VERSION = "0.10.0"
+      GEM_VERSION = "0.30.0"
 
       # Version of the code generator used to generate this client
-      GENERATOR_VERSION = "0.4.0"
+      GENERATOR_VERSION = "0.12.0"
 
       # Revision of the discovery document this client was generated from
-      REVISION = "20210915"
+      REVISION = "20230125"
     end
   end
 end

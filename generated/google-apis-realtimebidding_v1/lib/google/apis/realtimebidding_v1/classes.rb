@@ -53,7 +53,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The detected IAB Global Vendor List (GVL) IDs for this creative. See the IAB
-        # Global Vendor List at https://vendorlist.consensu.org/v2/vendor-list.json for
+        # Global Vendor List at https://vendor-list.consensu.org/v2/vendor-list.json for
         # details about the vendors.
         # Corresponds to the JSON property `detectedGvlIds`
         # @return [Array<Fixnum>]
@@ -257,15 +257,97 @@ module Google
         end
       end
       
+      # A request to approve a batch of publisher connections.
+      class BatchApprovePublisherConnectionsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The names of the publishers with which connections will be approved.
+        # In the pattern `bidders/`bidder`/publisherConnections/`publisher`` where ``
+        # bidder`` is the account ID of the bidder, and ``publisher`` is the ads.txt/app-
+        # ads.txt publisher ID.
+        # Corresponds to the JSON property `names`
+        # @return [Array<String>]
+        attr_accessor :names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @names = args[:names] if args.key?(:names)
+        end
+      end
+      
+      # A response for the request to approve a batch of publisher connections.
+      class BatchApprovePublisherConnectionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The publisher connections that have been approved.
+        # Corresponds to the JSON property `publisherConnections`
+        # @return [Array<Google::Apis::RealtimebiddingV1::PublisherConnection>]
+        attr_accessor :publisher_connections
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @publisher_connections = args[:publisher_connections] if args.key?(:publisher_connections)
+        end
+      end
+      
+      # A request to reject a batch of publisher connections.
+      class BatchRejectPublisherConnectionsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The names of the publishers with whom connection will be rejected.
+        # In the pattern `bidders/`bidder`/publisherConnections/`publisher`` where ``
+        # bidder`` is the account ID of the bidder, and ``publisher`` is the ads.txt/app-
+        # ads.txt publisher ID.
+        # Corresponds to the JSON property `names`
+        # @return [Array<String>]
+        attr_accessor :names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @names = args[:names] if args.key?(:names)
+        end
+      end
+      
+      # A response for the request to reject a batch of publisher connections.
+      class BatchRejectPublisherConnectionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The publisher connections that have been rejected.
+        # Corresponds to the JSON property `publisherConnections`
+        # @return [Array<Google::Apis::RealtimebiddingV1::PublisherConnection>]
+        attr_accessor :publisher_connections
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @publisher_connections = args[:publisher_connections] if args.key?(:publisher_connections)
+        end
+      end
+      
       # Bidder settings.
       class Bidder
         include Google::Apis::Core::Hashable
       
-        # Output only. A flag to bypass pretargeting for private auctions and preferred
-        # deals. When true, bid requests from these nonguaranteed deals will always be
-        # sent. When false, bid requests will be subject to regular pretargeting
-        # configurations. Programmatic Guaranteed deals will always be sent to the
-        # bidder, regardless of the value for this flag. Auction packages are not
+        # Output only. An option to bypass pretargeting for private auctions and
+        # preferred deals. When true, bid requests from these nonguaranteed deals will
+        # always be sent. When false, bid requests will be subject to regular
+        # pretargeting configurations. Programmatic Guaranteed deals will always be sent
+        # to the bidder, regardless of the value for this flag. Auction packages are not
         # impacted by this value and are subject to the regular pretargeting
         # configurations.
         # Corresponds to the JSON property `bypassNonguaranteedDealsPretargeting`
@@ -322,8 +404,8 @@ module Google
       class Buyer
         include Google::Apis::Core::Hashable
       
-        # Output only. The number of creatives that this buyer submitted via the API or
-        # bid with in the last 30 days. This is counted against the maximum number of
+        # Output only. The number of creatives that this buyer submitted through the API
+        # or bid with in the last 30 days. This is counted against the maximum number of
         # active creatives.
         # Corresponds to the JSON property `activeCreativeCount`
         # @return [Fixnum]
@@ -422,7 +504,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :agency_id
       
-        # Output only. The last update timestamp of the creative via API.
+        # Output only. The last update timestamp of the creative through the API.
         # Corresponds to the JSON property `apiUpdateTime`
         # @return [String]
         attr_accessor :api_update_time
@@ -505,12 +587,21 @@ module Google
         # @return [Google::Apis::RealtimebiddingV1::NativeContent]
         attr_accessor :native
       
+        # Experimental field that can be used during the [FLEDGE Origin Trial](/
+        # authorized-buyers/rtb/fledge-origin-trial). The URL to fetch an interest group
+        # ad used in [TURTLEDOVE on-device auction](https://github.com/WICG/turtledove/
+        # blob/main/FLEDGE.md#1-browsers-record-interest-groups"). This should be unique
+        # among all creatives for a given `accountId`.
+        # Corresponds to the JSON property `renderUrl`
+        # @return [String]
+        attr_accessor :render_url
+      
         # All restricted categories for the ads that may be shown from this creative.
         # Corresponds to the JSON property `restrictedCategories`
         # @return [Array<String>]
         attr_accessor :restricted_categories
       
-        # Output only. The version of this creative. Version for a new creative is 1 and
+        # Output only. The version of the creative. Version for a new creative is 1 and
         # it increments during subsequent creative updates.
         # Corresponds to the JSON property `version`
         # @return [Fixnum]
@@ -544,6 +635,7 @@ module Google
           @impression_tracking_urls = args[:impression_tracking_urls] if args.key?(:impression_tracking_urls)
           @name = args[:name] if args.key?(:name)
           @native = args[:native] if args.key?(:native)
+          @render_url = args[:render_url] if args.key?(:render_url)
           @restricted_categories = args[:restricted_categories] if args.key?(:restricted_categories)
           @version = args[:version] if args.key?(:version)
           @video = args[:video] if args.key?(:video)
@@ -715,11 +807,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -799,7 +891,7 @@ module Google
         # @return [String]
         attr_accessor :expanded_url
       
-        # HTTP error code (e.g. 404 or 5xx)
+        # HTTP error code (for example, 404 or 5xx)
         # Corresponds to the JSON property `httpError`
         # @return [Fixnum]
         attr_accessor :http_error
@@ -870,7 +962,7 @@ module Google
       class DomainCallEvidence
         include Google::Apis::Core::Hashable
       
-        # Breakdown of the most frequent domains called via HTTP by the creative.
+        # Breakdown of the most frequent domains called through HTTP by the creative.
         # Corresponds to the JSON property `topHttpCallDomains`
         # @return [Array<Google::Apis::RealtimebiddingV1::DomainCalls>]
         attr_accessor :top_http_call_domains
@@ -946,8 +1038,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1277,6 +1368,33 @@ module Google
         end
       end
       
+      # A response to a request for listing publisher connections.
+      class ListPublisherConnectionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token to retrieve the next page of results. Pass this value in the
+        # ListPublisherConnectionsRequest.pageToken field in the subsequent call to the `
+        # ListPublisherConnections` method to retrieve the next page of results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The list of publisher connections.
+        # Corresponds to the JSON property `publisherConnections`
+        # @return [Array<Google::Apis::RealtimebiddingV1::PublisherConnection>]
+        attr_accessor :publisher_connections
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @publisher_connections = args[:publisher_connections] if args.key?(:publisher_connections)
+        end
+      end
+      
       # The list user list response.
       class ListUserListsResponse
         include Google::Apis::Core::Hashable
@@ -1470,16 +1588,16 @@ module Google
       class PolicyCompliance
         include Google::Apis::Core::Hashable
       
-        # Serving status for the given transaction type (e.g., open auction, deals) or
-        # region (e.g., China, Russia). Can be used to filter the response of the
-        # creatives.list method.
+        # Serving status for the given transaction type (for example, open auction,
+        # deals) or region (for example, China, Russia). Can be used to filter the
+        # response of the creatives.list method.
         # Corresponds to the JSON property `status`
         # @return [String]
         attr_accessor :status
       
-        # Topics related to the policy compliance for this transaction type (e.g., open
-        # auction, deals) or region (e.g., China, Russia). Topics may be present only if
-        # status is DISAPPROVED.
+        # Topics related to the policy compliance for this transaction type (for example,
+        # open auction, deals) or region (for example, China, Russia). Topics may be
+        # present only if status is DISAPPROVED.
         # Corresponds to the JSON property `topics`
         # @return [Array<Google::Apis::RealtimebiddingV1::PolicyTopicEntry>]
         attr_accessor :topics
@@ -1785,6 +1903,56 @@ module Google
         end
       end
       
+      # An Open Bidding exchange's connection to a publisher. This is initiated by the
+      # publisher for the bidder to review. If approved by the bidder, this means that
+      # the bidder agrees to receive bid requests from the publisher.
+      class PublisherConnection
+        include Google::Apis::Core::Hashable
+      
+        # Whether the publisher has been approved by the bidder.
+        # Corresponds to the JSON property `biddingState`
+        # @return [String]
+        attr_accessor :bidding_state
+      
+        # Output only. The time at which the publisher initiated a connection with the
+        # bidder (irrespective of if or when the bidder approves it). This is
+        # subsequently updated if the publisher revokes and re-initiates the connection.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. Publisher display name.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. Name of the publisher connection. This follows the pattern `
+        # bidders/`bidder`/publisherConnections/`publisher``, where ``bidder``
+        # represents the account ID of the bidder, and ``publisher`` is the ads.txt/app-
+        # ads.txt publisher ID.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Whether the publisher is an Ad Manager or AdMob publisher.
+        # Corresponds to the JSON property `publisherPlatform`
+        # @return [String]
+        attr_accessor :publisher_platform
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bidding_state = args[:bidding_state] if args.key?(:bidding_state)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @name = args[:name] if args.key?(:name)
+          @publisher_platform = args[:publisher_platform] if args.key?(:publisher_platform)
+        end
+      end
+      
       # A request to stop targeting the provided apps in a specific pretargeting
       # configuration. The pretargeting configuration itself specifies how these apps
       # are targeted. in PretargetingConfig.appTargeting.mobileAppTargeting.
@@ -1929,11 +2097,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::RealtimebiddingV1::Date]
         attr_accessor :end_date
@@ -1946,11 +2114,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::RealtimebiddingV1::Date]
         attr_accessor :start_date
@@ -2149,7 +2317,7 @@ module Google
         # subscriptions/`subscription_id``. Subscription is created with pull delivery.
         # All service accounts belonging to the bidder will have read access to this
         # subscription. Subscriptions that are inactive for more than 90 days will be
-        # disabled. Please use watchCreatives to re-enable the subscription.
+        # disabled. Use watchCreatives to re-enable the subscription.
         # Corresponds to the JSON property `subscription`
         # @return [String]
         attr_accessor :subscription

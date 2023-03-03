@@ -498,6 +498,7 @@ module Google
           property :etag, as: 'etag'
           property :name, as: 'name'
           property :parent, as: 'parent'
+          collection :scopes, as: 'scopes'
           property :title, as: 'title'
         end
       end
@@ -575,6 +576,7 @@ module Google
       class GoogleIdentityAccesscontextmanagerV1EgressTo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :external_resources, as: 'externalResources'
           collection :operations, as: 'operations', class: Google::Apis::CloudassetV1p7beta1::GoogleIdentityAccesscontextmanagerV1ApiOperation, decorator: Google::Apis::CloudassetV1p7beta1::GoogleIdentityAccesscontextmanagerV1ApiOperation::Representation
       
           collection :resources, as: 'resources'

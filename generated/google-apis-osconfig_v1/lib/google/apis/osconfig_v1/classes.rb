@@ -149,6 +149,19 @@ module Google
         end
       end
       
+      # The request message for Operations.CancelOperation.
+      class CancelOperationRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Message for canceling a patch job.
       class CancelPatchJobRequest
         include Google::Apis::Core::Hashable
@@ -165,11 +178,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -206,8 +219,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -419,6 +431,52 @@ module Google
         end
       end
       
+      # OS policy assignment operation metadata provided by OS policy assignment API
+      # methods that return long running operations.
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The OS policy assignment API method.
+        # Corresponds to the JSON property `apiMethod`
+        # @return [String]
+        attr_accessor :api_method
+      
+        # Reference to the `OSPolicyAssignment` API resource. Format: `projects/`
+        # project_number`/locations/`location`/osPolicyAssignments/`
+        # os_policy_assignment_id@revision_id``
+        # Corresponds to the JSON property `osPolicyAssignment`
+        # @return [String]
+        attr_accessor :os_policy_assignment
+      
+        # Rollout start time
+        # Corresponds to the JSON property `rolloutStartTime`
+        # @return [String]
+        attr_accessor :rollout_start_time
+      
+        # State of the rollout
+        # Corresponds to the JSON property `rolloutState`
+        # @return [String]
+        attr_accessor :rollout_state
+      
+        # Rollout update time
+        # Corresponds to the JSON property `rolloutUpdateTime`
+        # @return [String]
+        attr_accessor :rollout_update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_method = args[:api_method] if args.key?(:api_method)
+          @os_policy_assignment = args[:os_policy_assignment] if args.key?(:os_policy_assignment)
+          @rollout_start_time = args[:rollout_start_time] if args.key?(:rollout_start_time)
+          @rollout_state = args[:rollout_state] if args.key?(:rollout_state)
+          @rollout_update_time = args[:rollout_update_time] if args.key?(:rollout_update_time)
+        end
+      end
+      
       # This API resource represents the available inventory data for a Compute Engine
       # virtual machine (VM) instance at a given point in time. You can use this API
       # resource to determine the inventory data of your VM. For more information, see
@@ -609,10 +667,9 @@ module Google
         # @return [Google::Apis::OsconfigV1::InventoryWindowsQuickFixEngineeringPackage]
         attr_accessor :qfe_package
       
-        # Contains information about a Windows application as retrieved from the Windows
-        # Registry. For more information about these fields, see [Windows Installer
-        # Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/
-        # windows/win32/msi/uninstall-registry-key)`: class="external" `
+        # Contains information about a Windows application that is retrieved from the
+        # Windows Registry. For more information about these fields, see: https://docs.
+        # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
         # Corresponds to the JSON property `windowsApplication`
         # @return [Google::Apis::OsconfigV1::InventoryWindowsApplication]
         attr_accessor :windows_application
@@ -692,10 +749,9 @@ module Google
         end
       end
       
-      # Contains information about a Windows application as retrieved from the Windows
-      # Registry. For more information about these fields, see [Windows Installer
-      # Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/
-      # windows/win32/msi/uninstall-registry-key)`: class="external" `
+      # Contains information about a Windows application that is retrieved from the
+      # Windows Registry. For more information about these fields, see: https://docs.
+      # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
       class InventoryWindowsApplication
         include Google::Apis::Core::Hashable
       
@@ -717,11 +773,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `installDate`
         # @return [Google::Apis::OsconfigV1::Date]
         attr_accessor :install_date
@@ -940,6 +996,33 @@ module Google
         def update!(**args)
           @inventories = args[:inventories] if args.key?(:inventories)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # A response message for listing OS Policy assignment reports including the page
+      # of results and page token.
+      class ListOsPolicyAssignmentReportsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The pagination token to retrieve the next page of OS policy assignment report
+        # objects.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # List of OS policy assignment reports.
+        # Corresponds to the JSON property `osPolicyAssignmentReports`
+        # @return [Array<Google::Apis::OsconfigV1::OsPolicyAssignmentReport>]
+        attr_accessor :os_policy_assignment_reports
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @os_policy_assignment_reports = args[:os_policy_assignment_reports] if args.key?(:os_policy_assignment_reports)
         end
       end
       
@@ -1184,8 +1267,9 @@ module Google
       # policy is used to define the desired state configuration for a Compute Engine
       # VM instance through a set of configuration resources that provide capabilities
       # such as installing or removing software packages, or executing a script. For
-      # more information, see [OS policy and OS policy assignment](https://cloud.
-      # google.com/compute/docs/os-configuration-management/working-with-os-policies).
+      # more information about the OS policy resource definitions and examples, see [
+      # OS policy and OS policy assignment](https://cloud.google.com/compute/docs/os-
+      # configuration-management/working-with-os-policies).
       class OsPolicyAssignment
         include Google::Apis::Core::Hashable
       
@@ -1434,6 +1518,214 @@ module Google
         end
       end
       
+      # A report of the OS policy assignment status for a given instance.
+      class OsPolicyAssignmentReport
+        include Google::Apis::Core::Hashable
+      
+        # The Compute Engine VM instance name.
+        # Corresponds to the JSON property `instance`
+        # @return [String]
+        attr_accessor :instance
+      
+        # Unique identifier of the last attempted run to apply the OS policies
+        # associated with this assignment on the VM. This ID is logged by the OS Config
+        # agent while applying the OS policies associated with this assignment on the VM.
+        # NOTE: If the service is unable to successfully connect to the agent for this
+        # run, then this id will not be available in the agent logs.
+        # Corresponds to the JSON property `lastRunId`
+        # @return [String]
+        attr_accessor :last_run_id
+      
+        # The `OSPolicyAssignmentReport` API resource name. Format: `projects/`
+        # project_number`/locations/`location`/instances/`instance_id`/
+        # osPolicyAssignments/`os_policy_assignment_id`/report`
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Reference to the `OSPolicyAssignment` API resource that the `OSPolicy` belongs
+        # to. Format: `projects/`project_number`/locations/`location`/
+        # osPolicyAssignments/`os_policy_assignment_id@revision_id``
+        # Corresponds to the JSON property `osPolicyAssignment`
+        # @return [String]
+        attr_accessor :os_policy_assignment
+      
+        # Compliance data for each `OSPolicy` that is applied to the VM.
+        # Corresponds to the JSON property `osPolicyCompliances`
+        # @return [Array<Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyCompliance>]
+        attr_accessor :os_policy_compliances
+      
+        # Timestamp for when the report was last generated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @instance = args[:instance] if args.key?(:instance)
+          @last_run_id = args[:last_run_id] if args.key?(:last_run_id)
+          @name = args[:name] if args.key?(:name)
+          @os_policy_assignment = args[:os_policy_assignment] if args.key?(:os_policy_assignment)
+          @os_policy_compliances = args[:os_policy_compliances] if args.key?(:os_policy_compliances)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # Compliance data for an OS policy
+      class OsPolicyAssignmentReportOsPolicyCompliance
+        include Google::Apis::Core::Hashable
+      
+        # The compliance state of the OS policy.
+        # Corresponds to the JSON property `complianceState`
+        # @return [String]
+        attr_accessor :compliance_state
+      
+        # The reason for the OS policy to be in an unknown compliance state. This field
+        # is always populated when `compliance_state` is `UNKNOWN`. If populated, the
+        # field can contain one of the following values: * `vm-not-running`: The VM was
+        # not running. * `os-policies-not-supported-by-agent`: The version of the OS
+        # Config agent running on the VM does not support running OS policies. * `no-
+        # agent-detected`: The OS Config agent is not detected for the VM. * `resource-
+        # execution-errors`: The OS Config agent encountered errors while executing one
+        # or more resources in the policy. See `os_policy_resource_compliances` for
+        # details. * `task-timeout`: The task sent to the agent to apply the policy
+        # timed out. * `unexpected-agent-state`: The OS Config agent did not report the
+        # final status of the task that attempted to apply the policy. Instead, the
+        # agent unexpectedly started working on a different task. This mostly happens
+        # when the agent or VM unexpectedly restarts while applying OS policies. * `
+        # internal-service-errors`: Internal service errors were encountered while
+        # attempting to apply the policy.
+        # Corresponds to the JSON property `complianceStateReason`
+        # @return [String]
+        attr_accessor :compliance_state_reason
+      
+        # The OS policy id
+        # Corresponds to the JSON property `osPolicyId`
+        # @return [String]
+        attr_accessor :os_policy_id
+      
+        # Compliance data for each resource within the policy that is applied to the VM.
+        # Corresponds to the JSON property `osPolicyResourceCompliances`
+        # @return [Array<Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance>]
+        attr_accessor :os_policy_resource_compliances
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @compliance_state = args[:compliance_state] if args.key?(:compliance_state)
+          @compliance_state_reason = args[:compliance_state_reason] if args.key?(:compliance_state_reason)
+          @os_policy_id = args[:os_policy_id] if args.key?(:os_policy_id)
+          @os_policy_resource_compliances = args[:os_policy_resource_compliances] if args.key?(:os_policy_resource_compliances)
+        end
+      end
+      
+      # Compliance data for an OS policy resource.
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceCompliance
+        include Google::Apis::Core::Hashable
+      
+        # The compliance state of the resource.
+        # Corresponds to the JSON property `complianceState`
+        # @return [String]
+        attr_accessor :compliance_state
+      
+        # A reason for the resource to be in the given compliance state. This field is
+        # always populated when `compliance_state` is `UNKNOWN`. The following values
+        # are supported when `compliance_state == UNKNOWN` * `execution-errors`: Errors
+        # were encountered by the agent while executing the resource and the compliance
+        # state couldn't be determined. * `execution-skipped-by-agent`: Resource
+        # execution was skipped by the agent because errors were encountered while
+        # executing prior resources in the OS policy. * `os-policy-execution-attempt-
+        # failed`: The execution of the OS policy containing this resource failed and
+        # the compliance state couldn't be determined.
+        # Corresponds to the JSON property `complianceStateReason`
+        # @return [String]
+        attr_accessor :compliance_state_reason
+      
+        # Ordered list of configuration completed by the agent for the OS policy
+        # resource.
+        # Corresponds to the JSON property `configSteps`
+        # @return [Array<Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep>]
+        attr_accessor :config_steps
+      
+        # ExecResource specific output.
+        # Corresponds to the JSON property `execResourceOutput`
+        # @return [Google::Apis::OsconfigV1::OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput]
+        attr_accessor :exec_resource_output
+      
+        # The ID of the OS policy resource.
+        # Corresponds to the JSON property `osPolicyResourceId`
+        # @return [String]
+        attr_accessor :os_policy_resource_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @compliance_state = args[:compliance_state] if args.key?(:compliance_state)
+          @compliance_state_reason = args[:compliance_state_reason] if args.key?(:compliance_state_reason)
+          @config_steps = args[:config_steps] if args.key?(:config_steps)
+          @exec_resource_output = args[:exec_resource_output] if args.key?(:exec_resource_output)
+          @os_policy_resource_id = args[:os_policy_resource_id] if args.key?(:os_policy_resource_id)
+        end
+      end
+      
+      # ExecResource specific output.
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceExecResourceOutput
+        include Google::Apis::Core::Hashable
+      
+        # Output from enforcement phase output file (if run). Output size is limited to
+        # 100K bytes.
+        # Corresponds to the JSON property `enforcementOutput`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :enforcement_output
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @enforcement_output = args[:enforcement_output] if args.key?(:enforcement_output)
+        end
+      end
+      
+      # Step performed by the OS Config agent for configuring an `OSPolicy` resource
+      # to its desired state.
+      class OsPolicyAssignmentReportOsPolicyComplianceOsPolicyResourceComplianceOsPolicyResourceConfigStep
+        include Google::Apis::Core::Hashable
+      
+        # An error message recorded during the execution of this step. Only populated if
+        # errors were encountered during this step execution.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        # Configuration step type.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @error_message = args[:error_message] if args.key?(:error_message)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # Message to configure the rollout at the zonal level for the OS policy
       # assignment.
       class OsPolicyAssignmentRollout
@@ -1630,7 +1922,7 @@ module Google
         # @return [String]
         attr_accessor :output_file_path
       
-        # An inline script. The size of the script is limited to 1024 characters.
+        # An inline script. The size of the script is limited to 32KiB.
         # Corresponds to the JSON property `script`
         # @return [String]
         attr_accessor :script
@@ -1750,8 +2042,7 @@ module Google
       class OsPolicyResourceFileResource
         include Google::Apis::Core::Hashable
       
-        # A a file with this content. The size of the content is limited to 1024
-        # characters.
+        # A a file with this content. The size of the content is limited to 32KiB.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -2354,6 +2645,12 @@ module Google
         # @return [Google::Apis::OsconfigV1::GooSettings]
         attr_accessor :goo
       
+        # Allows the patch job to run on Managed instance groups (MIGs).
+        # Corresponds to the JSON property `migInstancesAllowed`
+        # @return [Boolean]
+        attr_accessor :mig_instances_allowed
+        alias_method :mig_instances_allowed?, :mig_instances_allowed
+      
         # A step that runs an executable for a PatchJob.
         # Corresponds to the JSON property `postStep`
         # @return [Google::Apis::OsconfigV1::ExecStep]
@@ -2395,6 +2692,7 @@ module Google
         def update!(**args)
           @apt = args[:apt] if args.key?(:apt)
           @goo = args[:goo] if args.key?(:goo)
+          @mig_instances_allowed = args[:mig_instances_allowed] if args.key?(:mig_instances_allowed)
           @post_step = args[:post_step] if args.key?(:post_step)
           @pre_step = args[:pre_step] if args.key?(:pre_step)
           @reboot_config = args[:reboot_config] if args.key?(:reboot_config)
@@ -2473,6 +2771,11 @@ module Google
         # @return [Google::Apis::OsconfigV1::PatchRollout]
         attr_accessor :rollout
       
+        # Output only. Current state of the patch deployment.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
         # Output only. Time the patch deployment was last updated. Timestamp is in [
         # RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
         # Corresponds to the JSON property `updateTime`
@@ -2495,6 +2798,7 @@ module Google
           @patch_config = args[:patch_config] if args.key?(:patch_config)
           @recurring_schedule = args[:recurring_schedule] if args.key?(:recurring_schedule)
           @rollout = args[:rollout] if args.key?(:rollout)
+          @state = args[:state] if args.key?(:state)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -2879,6 +3183,19 @@ module Google
         end
       end
       
+      # A request message for pausing a patch deployment.
+      class PausePatchDeploymentRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Sets the time for recurring patch deployments.
       class RecurringSchedule
         include Google::Apis::Core::Hashable
@@ -2949,6 +3266,19 @@ module Google
           @time_of_day = args[:time_of_day] if args.key?(:time_of_day)
           @time_zone = args[:time_zone] if args.key?(:time_zone)
           @weekly = args[:weekly] if args.key?(:weekly)
+        end
+      end
+      
+      # A request message for resuming a patch deployment.
+      class ResumePatchDeploymentRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -3128,6 +3458,11 @@ module Google
         # @return [Array<String>]
         attr_accessor :installed_inventory_item_ids
       
+        # List of items affected by the vulnerability.
+        # Corresponds to the JSON property `items`
+        # @return [Array<Google::Apis::OsconfigV1::VulnerabilityReportVulnerabilityItem>]
+        attr_accessor :items
+      
         # The timestamp for when the vulnerability was last modified.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
@@ -3143,6 +3478,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @details = args[:details] if args.key?(:details)
           @installed_inventory_item_ids = args[:installed_inventory_item_ids] if args.key?(:installed_inventory_item_ids)
+          @items = args[:items] if args.key?(:items)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -3225,6 +3561,53 @@ module Google
         end
       end
       
+      # OS inventory item that is affected by a vulnerability or fixed as a result of
+      # a vulnerability.
+      class VulnerabilityReportVulnerabilityItem
+        include Google::Apis::Core::Hashable
+      
+        # Corresponds to the `AVAILABLE_PACKAGE` inventory item on the VM. If the
+        # vulnerability report was not updated after the VM inventory update, these
+        # values might not display in VM inventory. If there is no available fix, the
+        # field is empty. The `inventory_item` value specifies the latest `
+        # SoftwarePackage` available to the VM that fixes the vulnerability.
+        # Corresponds to the JSON property `availableInventoryItemId`
+        # @return [String]
+        attr_accessor :available_inventory_item_id
+      
+        # The recommended [CPE URI](https://cpe.mitre.org/specification/) update that
+        # contains a fix for this vulnerability.
+        # Corresponds to the JSON property `fixedCpeUri`
+        # @return [String]
+        attr_accessor :fixed_cpe_uri
+      
+        # Corresponds to the `INSTALLED_PACKAGE` inventory item on the VM. This field
+        # displays the inventory items affected by this vulnerability. If the
+        # vulnerability report was not updated after the VM inventory update, these
+        # values might not display in VM inventory. For some operating systems, this
+        # field might be empty.
+        # Corresponds to the JSON property `installedInventoryItemId`
+        # @return [String]
+        attr_accessor :installed_inventory_item_id
+      
+        # The upstream OS patch, packages or KB that fixes the vulnerability.
+        # Corresponds to the JSON property `upstreamFix`
+        # @return [String]
+        attr_accessor :upstream_fix
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @available_inventory_item_id = args[:available_inventory_item_id] if args.key?(:available_inventory_item_id)
+          @fixed_cpe_uri = args[:fixed_cpe_uri] if args.key?(:fixed_cpe_uri)
+          @installed_inventory_item_id = args[:installed_inventory_item_id] if args.key?(:installed_inventory_item_id)
+          @upstream_fix = args[:upstream_fix] if args.key?(:upstream_fix)
+        end
+      end
+      
       # Represents one week day in a month. An example is "the 4th Sunday".
       class WeekDayOfMonth
         include Google::Apis::Core::Hashable
@@ -3233,6 +3616,17 @@ module Google
         # Corresponds to the JSON property `dayOfWeek`
         # @return [String]
         attr_accessor :day_of_week
+      
+        # Optional. Represents the number of days before or after the given week day of
+        # month that the patch deployment is scheduled for. For example if `week_ordinal`
+        # and `day_of_week` values point to the second day of the month and this `
+        # day_offset` value is set to `3`, the patch deployment takes place three days
+        # after the second Tuesday of the month. If this value is negative, for example -
+        # 5, the patches are deployed five days before before the second Tuesday of the
+        # month. Allowed values are in range [-30, 30].
+        # Corresponds to the JSON property `dayOffset`
+        # @return [Fixnum]
+        attr_accessor :day_offset
       
         # Required. Week number in a month. 1-4 indicates the 1st to 4th week of the
         # month. -1 indicates the last week of the month.
@@ -3247,6 +3641,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @day_of_week = args[:day_of_week] if args.key?(:day_of_week)
+          @day_offset = args[:day_offset] if args.key?(:day_offset)
           @week_ordinal = args[:week_ordinal] if args.key?(:week_ordinal)
         end
       end

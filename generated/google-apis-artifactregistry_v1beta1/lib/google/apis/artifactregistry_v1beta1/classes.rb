@@ -22,59 +22,7 @@ module Google
   module Apis
     module ArtifactregistryV1beta1
       
-      # A detailed representation of an Apt artifact. Information in the record is
-      # derived from the archive's control file. See https://www.debian.org/doc/debian-
-      # policy/ch-controlfields.html
-      class AptArtifact
-        include Google::Apis::Core::Hashable
-      
-        # Output only. Operating system architecture of the artifact.
-        # Corresponds to the JSON property `architecture`
-        # @return [String]
-        attr_accessor :architecture
-      
-        # Output only. Repository component of the artifact.
-        # Corresponds to the JSON property `component`
-        # @return [String]
-        attr_accessor :component
-      
-        # Output only. Contents of the artifact's control metadata file.
-        # Corresponds to the JSON property `controlFile`
-        # NOTE: Values are automatically base64 encoded/decoded in the client library.
-        # @return [String]
-        attr_accessor :control_file
-      
-        # Output only. The Artifact Registry resource name of the artifact.
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Output only. The Apt package name of the artifact.
-        # Corresponds to the JSON property `packageName`
-        # @return [String]
-        attr_accessor :package_name
-      
-        # Output only. An artifact is a binary or source package.
-        # Corresponds to the JSON property `packageType`
-        # @return [String]
-        attr_accessor :package_type
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @architecture = args[:architecture] if args.key?(:architecture)
-          @component = args[:component] if args.key?(:component)
-          @control_file = args[:control_file] if args.key?(:control_file)
-          @name = args[:name] if args.key?(:name)
-          @package_name = args[:package_name] if args.key?(:package_name)
-          @package_type = args[:package_type] if args.key?(:package_type)
-        end
-      end
-      
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -97,38 +45,43 @@ module Google
         # @return [Google::Apis::ArtifactregistryV1beta1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -148,8 +101,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -220,7 +172,7 @@ module Google
       class File
         include Google::Apis::Core::Hashable
       
-        # The time when the File was created.
+        # Output only. The time when the File was created.
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
@@ -247,7 +199,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :size_bytes
       
-        # The time when the File was last updated.
+        # Output only. The time when the File was last updated.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
         attr_accessor :update_time
@@ -290,168 +242,6 @@ module Google
         def update!(**args)
           @type = args[:type] if args.key?(:type)
           @value = args[:value] if args.key?(:value)
-        end
-      end
-      
-      # Error information explaining why a package was not imported.
-      class ImportAptArtifactsErrorInfo
-        include Google::Apis::Core::Hashable
-      
-        # The `Status` type defines a logical error model that is suitable for different
-        # programming environments, including REST APIs and RPC APIs. It is used by [
-        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
-        # data: error code, error message, and error details. You can find out more
-        # about this error model and how to work with it in the [API Design Guide](https:
-        # //cloud.google.com/apis/design/errors).
-        # Corresponds to the JSON property `error`
-        # @return [Google::Apis::ArtifactregistryV1beta1::Status]
-        attr_accessor :error
-      
-        # Google Cloud Storage location where the artifacts currently reside.
-        # Corresponds to the JSON property `gcsSource`
-        # @return [Google::Apis::ArtifactregistryV1beta1::ImportAptArtifactsGcsSource]
-        attr_accessor :gcs_source
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @error = args[:error] if args.key?(:error)
-          @gcs_source = args[:gcs_source] if args.key?(:gcs_source)
-        end
-      end
-      
-      # Google Cloud Storage location where the artifacts currently reside.
-      class ImportAptArtifactsGcsSource
-        include Google::Apis::Core::Hashable
-      
-        # Cloud Storage paths URI (e.g., gs://my_bucket//my_object).
-        # Corresponds to the JSON property `uris`
-        # @return [Array<String>]
-        attr_accessor :uris
-      
-        # Supports URI wildcards for matching multiple objects from a single URI.
-        # Corresponds to the JSON property `useWildcards`
-        # @return [Boolean]
-        attr_accessor :use_wildcards
-        alias_method :use_wildcards?, :use_wildcards
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @uris = args[:uris] if args.key?(:uris)
-          @use_wildcards = args[:use_wildcards] if args.key?(:use_wildcards)
-        end
-      end
-      
-      # The response message from importing artifacts.
-      class ImportAptArtifactsResponse
-        include Google::Apis::Core::Hashable
-      
-        # The Apt artifacts updated.
-        # Corresponds to the JSON property `aptArtifacts`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::AptArtifact>]
-        attr_accessor :apt_artifacts
-      
-        # Detailed error info for packages that were not imported.
-        # Corresponds to the JSON property `errors`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::ImportAptArtifactsErrorInfo>]
-        attr_accessor :errors
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @apt_artifacts = args[:apt_artifacts] if args.key?(:apt_artifacts)
-          @errors = args[:errors] if args.key?(:errors)
-        end
-      end
-      
-      # Error information explaining why a package was not imported.
-      class ImportYumArtifactsErrorInfo
-        include Google::Apis::Core::Hashable
-      
-        # The `Status` type defines a logical error model that is suitable for different
-        # programming environments, including REST APIs and RPC APIs. It is used by [
-        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
-        # data: error code, error message, and error details. You can find out more
-        # about this error model and how to work with it in the [API Design Guide](https:
-        # //cloud.google.com/apis/design/errors).
-        # Corresponds to the JSON property `error`
-        # @return [Google::Apis::ArtifactregistryV1beta1::Status]
-        attr_accessor :error
-      
-        # Google Cloud Storage location where the artifacts currently reside.
-        # Corresponds to the JSON property `gcsSource`
-        # @return [Google::Apis::ArtifactregistryV1beta1::ImportYumArtifactsGcsSource]
-        attr_accessor :gcs_source
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @error = args[:error] if args.key?(:error)
-          @gcs_source = args[:gcs_source] if args.key?(:gcs_source)
-        end
-      end
-      
-      # Google Cloud Storage location where the artifacts currently reside.
-      class ImportYumArtifactsGcsSource
-        include Google::Apis::Core::Hashable
-      
-        # Cloud Storage paths URI (e.g., gs://my_bucket//my_object).
-        # Corresponds to the JSON property `uris`
-        # @return [Array<String>]
-        attr_accessor :uris
-      
-        # Supports URI wildcards for matching multiple objects from a single URI.
-        # Corresponds to the JSON property `useWildcards`
-        # @return [Boolean]
-        attr_accessor :use_wildcards
-        alias_method :use_wildcards?, :use_wildcards
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @uris = args[:uris] if args.key?(:uris)
-          @use_wildcards = args[:use_wildcards] if args.key?(:use_wildcards)
-        end
-      end
-      
-      # The response message from importing artifacts.
-      class ImportYumArtifactsResponse
-        include Google::Apis::Core::Hashable
-      
-        # Detailed error info for packages that were not imported.
-        # Corresponds to the JSON property `errors`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::ImportYumArtifactsErrorInfo>]
-        attr_accessor :errors
-      
-        # The yum artifacts updated.
-        # Corresponds to the JSON property `yumArtifacts`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::YumArtifact>]
-        attr_accessor :yum_artifacts
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @errors = args[:errors] if args.key?(:errors)
-          @yum_artifacts = args[:yum_artifacts] if args.key?(:yum_artifacts)
         end
       end
       
@@ -761,37 +551,42 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::ArtifactregistryV1beta1::Binding>]
         attr_accessor :bindings
@@ -862,7 +657,7 @@ module Google
         # @return [String]
         attr_accessor :format
       
-        # The Cloud KMS resource name of the customer managed encryption key that’s used
+        # The Cloud KMS resource name of the customer managed encryption key that's used
         # to encrypt the contents of the Repository. Has the form: `projects/my-project/
         # locations/my-region/keyRings/my-kr/cryptoKeys/my-key`. This value may not be
         # changed after the Repository has been created.
@@ -884,6 +679,19 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Output only. If set, the repository satisfies physical zone separation.
+        # Corresponds to the JSON property `satisfiesPzs`
+        # @return [Boolean]
+        attr_accessor :satisfies_pzs
+        alias_method :satisfies_pzs?, :satisfies_pzs
+      
+        # Output only. The size, in bytes, of all artifact storage in this repository.
+        # Repositories that are generally available or in public preview use this to
+        # calculate storage costs.
+        # Corresponds to the JSON property `sizeBytes`
+        # @return [Fixnum]
+        attr_accessor :size_bytes
+      
         # The time when the repository was last updated.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
@@ -901,6 +709,8 @@ module Google
           @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
           @labels = args[:labels] if args.key?(:labels)
           @name = args[:name] if args.key?(:name)
+          @satisfies_pzs = args[:satisfies_pzs] if args.key?(:satisfies_pzs)
+          @size_bytes = args[:size_bytes] if args.key?(:size_bytes)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -911,31 +721,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::ArtifactregistryV1beta1::Policy]
         attr_accessor :policy
@@ -1003,7 +813,8 @@ module Google
         attr_accessor :name
       
         # The name of the version the tag refers to, for example: "projects/p1/locations/
-        # us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811"
+        # us-central1/repositories/repo1/packages/pkg1/versions/sha256:5243811" If the
+        # package or version ID parts contain slashes, the slashes are escaped.
         # Corresponds to the JSON property `version`
         # @return [String]
         attr_accessor :version
@@ -1024,7 +835,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -1056,86 +867,6 @@ module Google
         # Update properties of this object
         def update!(**args)
           @permissions = args[:permissions] if args.key?(:permissions)
-        end
-      end
-      
-      # The response to upload an artifact.
-      class UploadAptArtifactMediaResponse
-        include Google::Apis::Core::Hashable
-      
-        # This resource represents a long-running operation that is the result of a
-        # network API call.
-        # Corresponds to the JSON property `operation`
-        # @return [Google::Apis::ArtifactregistryV1beta1::Operation]
-        attr_accessor :operation
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @operation = args[:operation] if args.key?(:operation)
-        end
-      end
-      
-      # The response of the completed artifact upload operation. This response is
-      # contained in the Operation and available to users.
-      class UploadAptArtifactResponse
-        include Google::Apis::Core::Hashable
-      
-        # The Apt artifacts updated.
-        # Corresponds to the JSON property `aptArtifacts`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::AptArtifact>]
-        attr_accessor :apt_artifacts
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @apt_artifacts = args[:apt_artifacts] if args.key?(:apt_artifacts)
-        end
-      end
-      
-      # The response to upload an artifact.
-      class UploadYumArtifactMediaResponse
-        include Google::Apis::Core::Hashable
-      
-        # This resource represents a long-running operation that is the result of a
-        # network API call.
-        # Corresponds to the JSON property `operation`
-        # @return [Google::Apis::ArtifactregistryV1beta1::Operation]
-        attr_accessor :operation
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @operation = args[:operation] if args.key?(:operation)
-        end
-      end
-      
-      # The response of the completed artifact upload operation. This response is
-      # contained in the Operation and available to users.
-      class UploadYumArtifactResponse
-        include Google::Apis::Core::Hashable
-      
-        # The Apt artifacts updated.
-        # Corresponds to the JSON property `yumArtifacts`
-        # @return [Array<Google::Apis::ArtifactregistryV1beta1::YumArtifact>]
-        attr_accessor :yum_artifacts
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @yum_artifacts = args[:yum_artifacts] if args.key?(:yum_artifacts)
         end
       end
       
@@ -1184,43 +915,6 @@ module Google
           @name = args[:name] if args.key?(:name)
           @related_tags = args[:related_tags] if args.key?(:related_tags)
           @update_time = args[:update_time] if args.key?(:update_time)
-        end
-      end
-      
-      # A detailed representation of a Yum artifact.
-      class YumArtifact
-        include Google::Apis::Core::Hashable
-      
-        # Output only. Operating system architecture of the artifact.
-        # Corresponds to the JSON property `architecture`
-        # @return [String]
-        attr_accessor :architecture
-      
-        # Output only. The Artifact Registry resource name of the artifact.
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Output only. The yum package name of the artifact.
-        # Corresponds to the JSON property `packageName`
-        # @return [String]
-        attr_accessor :package_name
-      
-        # Output only. An artifact is a binary or source package.
-        # Corresponds to the JSON property `packageType`
-        # @return [String]
-        attr_accessor :package_type
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @architecture = args[:architecture] if args.key?(:architecture)
-          @name = args[:name] if args.key?(:name)
-          @package_name = args[:package_name] if args.key?(:package_name)
-          @package_type = args[:package_type] if args.key?(:package_type)
         end
       end
     end

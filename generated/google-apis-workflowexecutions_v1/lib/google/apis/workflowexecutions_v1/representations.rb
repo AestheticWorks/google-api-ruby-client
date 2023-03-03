@@ -52,6 +52,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PubsubMessage
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class StackTrace
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -59,6 +65,24 @@ module Google
       end
       
       class StackTraceElement
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Status
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Step
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class TriggerPubsubExecutionRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -85,13 +109,17 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :argument, as: 'argument'
           property :call_log_level, as: 'callLogLevel'
+          property :duration, as: 'duration'
           property :end_time, as: 'endTime'
           property :error, as: 'error', class: Google::Apis::WorkflowexecutionsV1::Error, decorator: Google::Apis::WorkflowexecutionsV1::Error::Representation
       
+          hash :labels, as: 'labels'
           property :name, as: 'name'
           property :result, as: 'result'
           property :start_time, as: 'startTime'
           property :state, as: 'state'
+          property :status, as: 'status', class: Google::Apis::WorkflowexecutionsV1::Status, decorator: Google::Apis::WorkflowexecutionsV1::Status::Representation
+      
           property :workflow_revision_id, as: 'workflowRevisionId'
         end
       end
@@ -114,6 +142,17 @@ module Google
         end
       end
       
+      class PubsubMessage
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :attributes, as: 'attributes'
+          property :data, :base64 => true, as: 'data'
+          property :message_id, as: 'messageId'
+          property :ordering_key, as: 'orderingKey'
+          property :publish_time, as: 'publishTime'
+        end
+      end
+      
       class StackTrace
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -129,6 +168,32 @@ module Google
       
           property :routine, as: 'routine'
           property :step, as: 'step'
+        end
+      end
+      
+      class Status
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :current_steps, as: 'currentSteps', class: Google::Apis::WorkflowexecutionsV1::Step, decorator: Google::Apis::WorkflowexecutionsV1::Step::Representation
+      
+        end
+      end
+      
+      class Step
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :routine, as: 'routine'
+          property :step, as: 'step'
+        end
+      end
+      
+      class TriggerPubsubExecutionRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gcp_cloud_events_mode, as: 'GCPCloudEventsMode'
+          property :message, as: 'message', class: Google::Apis::WorkflowexecutionsV1::PubsubMessage, decorator: Google::Apis::WorkflowexecutionsV1::PubsubMessage::Representation
+      
+          property :subscription, as: 'subscription'
         end
       end
     end

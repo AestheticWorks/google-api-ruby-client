@@ -35,8 +35,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -93,7 +93,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -116,38 +116,43 @@ module Google
         # @return [Google::Apis::CloudfunctionsV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -217,7 +222,7 @@ module Google
       end
       
       # Describes a Cloud Function that contains user computation executed in response
-      # to an event. It encapsulate function and triggers configurations. Next tag: 35
+      # to an event. It encapsulate function and triggers configurations.
       class CloudFunction
         include Google::Apis::Core::Hashable
       
@@ -260,6 +265,27 @@ module Google
         # @return [String]
         attr_accessor :description
       
+        # Docker Registry to use for this deployment. If `docker_repository` field is
+        # specified, this field will be automatically set as `ARTIFACT_REGISTRY`. If
+        # unspecified, it currently defaults to `CONTAINER_REGISTRY`. This field may be
+        # overridden by the backend for eligible deployments.
+        # Corresponds to the JSON property `dockerRegistry`
+        # @return [String]
+        attr_accessor :docker_registry
+      
+        # User managed repository created in Artifact Registry optionally with a
+        # customer managed encryption key. If specified, deployments will use Artifact
+        # Registry. If unspecified and the deployment is eligible to use Artifact
+        # Registry, GCF will create and use a repository named 'gcf-artifacts' for every
+        # deployed region. This is the repository to which the function docker image
+        # will be pushed after it is built by Cloud Build. It must match the pattern `
+        # projects/`project`/locations/`location`/repositories/`repository``. Cross-
+        # project repositories are not supported. Cross-location repositories are not
+        # supported. Repository format must be 'DOCKER'.
+        # Corresponds to the JSON property `dockerRepository`
+        # @return [String]
+        attr_accessor :docker_repository
+      
         # The name of the function (as defined in source code) that will be executed.
         # Defaults to the resource name suffix, if not specified. For backward
         # compatibility, if function with given name is not found, then the system will
@@ -288,6 +314,28 @@ module Google
         # Corresponds to the JSON property `ingressSettings`
         # @return [String]
         attr_accessor :ingress_settings
+      
+        # Resource name of a KMS crypto key (managed by the user) used to encrypt/
+        # decrypt function resources. It must match the pattern `projects/`project`/
+        # locations/`location`/keyRings/`key_ring`/cryptoKeys/`crypto_key``. If
+        # specified, you must also provide an artifact registry repository using the `
+        # docker_repository` field that was created with the same KMS crypto key. The
+        # following service accounts need to be granted the role 'Cloud KMS CryptoKey
+        # Encrypter/Decrypter (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the Key/
+        # KeyRing/Project/Organization (least access preferred). 1. Google Cloud
+        # Functions service account (service-`project_number`@gcf-admin-robot.iam.
+        # gserviceaccount.com) - Required to protect the function's image. 2. Google
+        # Storage service account (service-`project_number`@gs-project-accounts.iam.
+        # gserviceaccount.com) - Required to protect the function's source code. If this
+        # service account does not exist, deploying a function without a KMS key or
+        # retrieving the service agent name provisions it. For more information, see
+        # https://cloud.google.com/storage/docs/projects#service-agents and https://
+        # cloud.google.com/storage/docs/getting-service-agent#gsutil. Google Cloud
+        # Functions delegates access to service agents to protect function resources in
+        # internal projects that are not accessible by the end user.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
       
         # Labels associated with this Cloud Function.
         # Corresponds to the JSON property `labels`
@@ -432,11 +480,14 @@ module Google
           @build_name = args[:build_name] if args.key?(:build_name)
           @build_worker_pool = args[:build_worker_pool] if args.key?(:build_worker_pool)
           @description = args[:description] if args.key?(:description)
+          @docker_registry = args[:docker_registry] if args.key?(:docker_registry)
+          @docker_repository = args[:docker_repository] if args.key?(:docker_repository)
           @entry_point = args[:entry_point] if args.key?(:entry_point)
           @environment_variables = args[:environment_variables] if args.key?(:environment_variables)
           @event_trigger = args[:event_trigger] if args.key?(:event_trigger)
           @https_trigger = args[:https_trigger] if args.key?(:https_trigger)
           @ingress_settings = args[:ingress_settings] if args.key?(:ingress_settings)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
           @labels = args[:labels] if args.key?(:labels)
           @max_instances = args[:max_instances] if args.key?(:max_instances)
           @min_instances = args[:min_instances] if args.key?(:min_instances)
@@ -637,12 +688,29 @@ module Google
       class GenerateUploadUrlRequest
         include Google::Apis::Core::Hashable
       
+        # Resource name of a KMS crypto key (managed by the user) used to encrypt/
+        # decrypt function source code objects in staging Cloud Storage buckets. When
+        # you generate an upload url and upload your source code, it gets copied to a
+        # staging Cloud Storage bucket in an internal regional project. The source code
+        # is then copied to a versioned directory in the sources bucket in the consumer
+        # project during the function deployment. It must match the pattern `projects/`
+        # project`/locations/`location`/keyRings/`key_ring`/cryptoKeys/`crypto_key``.
+        # The Google Cloud Functions service account (service-`project_number`@gcf-admin-
+        # robot.iam.gserviceaccount.com) must be granted the role 'Cloud KMS CryptoKey
+        # Encrypter/Decrypter (roles/cloudkms.cryptoKeyEncrypterDecrypter)' on the Key/
+        # KeyRing/Project/Organization (least access preferred). GCF will delegate
+        # access to the Google Storage service account in the internal project.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
         end
       end
       
@@ -664,6 +732,456 @@ module Google
         # Update properties of this object
         def update!(**args)
           @upload_url = args[:upload_url] if args.key?(:upload_url)
+        end
+      end
+      
+      # Represents the metadata of the long-running operation.
+      class GoogleCloudFunctionsV2OperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # API version used to start the operation.
+        # Corresponds to the JSON property `apiVersion`
+        # @return [String]
+        attr_accessor :api_version
+      
+        # Identifies whether the user has requested cancellation of the operation.
+        # Operations that have successfully been cancelled have Operation.error value
+        # with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+        # Corresponds to the JSON property `cancelRequested`
+        # @return [Boolean]
+        attr_accessor :cancel_requested
+        alias_method :cancel_requested?, :cancel_requested
+      
+        # The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The original request that started the operation.
+        # Corresponds to the JSON property `requestResource`
+        # @return [Hash<String,Object>]
+        attr_accessor :request_resource
+      
+        # Mechanism for reporting in-progress stages
+        # Corresponds to the JSON property `stages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2Stage>]
+        attr_accessor :stages
+      
+        # Human-readable status of the operation, if any.
+        # Corresponds to the JSON property `statusDetail`
+        # @return [String]
+        attr_accessor :status_detail
+      
+        # Server-defined resource path for the target of the operation.
+        # Corresponds to the JSON property `target`
+        # @return [String]
+        attr_accessor :target
+      
+        # Name of the verb executed by the operation.
+        # Corresponds to the JSON property `verb`
+        # @return [String]
+        attr_accessor :verb
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_version = args[:api_version] if args.key?(:api_version)
+          @cancel_requested = args[:cancel_requested] if args.key?(:cancel_requested)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @request_resource = args[:request_resource] if args.key?(:request_resource)
+          @stages = args[:stages] if args.key?(:stages)
+          @status_detail = args[:status_detail] if args.key?(:status_detail)
+          @target = args[:target] if args.key?(:target)
+          @verb = args[:verb] if args.key?(:verb)
+        end
+      end
+      
+      # Each Stage of the deployment process
+      class GoogleCloudFunctionsV2Stage
+        include Google::Apis::Core::Hashable
+      
+        # Message describing the Stage
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Name of the Stage. This will be unique for each Stage.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Resource of the Stage
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
+        # Link to the current Stage resource
+        # Corresponds to the JSON property `resourceUri`
+        # @return [String]
+        attr_accessor :resource_uri
+      
+        # Current state of the Stage
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # State messages from the current Stage.
+        # Corresponds to the JSON property `stateMessages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2StateMessage>]
+        attr_accessor :state_messages
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @name = args[:name] if args.key?(:name)
+          @resource = args[:resource] if args.key?(:resource)
+          @resource_uri = args[:resource_uri] if args.key?(:resource_uri)
+          @state = args[:state] if args.key?(:state)
+          @state_messages = args[:state_messages] if args.key?(:state_messages)
+        end
+      end
+      
+      # Informational messages about the state of the Cloud Function or Operation.
+      class GoogleCloudFunctionsV2StateMessage
+        include Google::Apis::Core::Hashable
+      
+        # The message.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Severity of the state message.
+        # Corresponds to the JSON property `severity`
+        # @return [String]
+        attr_accessor :severity
+      
+        # One-word CamelCase type of the state message.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @severity = args[:severity] if args.key?(:severity)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # Represents the metadata of the long-running operation.
+      class GoogleCloudFunctionsV2alphaOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # API version used to start the operation.
+        # Corresponds to the JSON property `apiVersion`
+        # @return [String]
+        attr_accessor :api_version
+      
+        # Identifies whether the user has requested cancellation of the operation.
+        # Operations that have successfully been cancelled have Operation.error value
+        # with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+        # Corresponds to the JSON property `cancelRequested`
+        # @return [Boolean]
+        attr_accessor :cancel_requested
+        alias_method :cancel_requested?, :cancel_requested
+      
+        # The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The original request that started the operation.
+        # Corresponds to the JSON property `requestResource`
+        # @return [Hash<String,Object>]
+        attr_accessor :request_resource
+      
+        # Mechanism for reporting in-progress stages
+        # Corresponds to the JSON property `stages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStage>]
+        attr_accessor :stages
+      
+        # Human-readable status of the operation, if any.
+        # Corresponds to the JSON property `statusDetail`
+        # @return [String]
+        attr_accessor :status_detail
+      
+        # Server-defined resource path for the target of the operation.
+        # Corresponds to the JSON property `target`
+        # @return [String]
+        attr_accessor :target
+      
+        # Name of the verb executed by the operation.
+        # Corresponds to the JSON property `verb`
+        # @return [String]
+        attr_accessor :verb
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_version = args[:api_version] if args.key?(:api_version)
+          @cancel_requested = args[:cancel_requested] if args.key?(:cancel_requested)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @request_resource = args[:request_resource] if args.key?(:request_resource)
+          @stages = args[:stages] if args.key?(:stages)
+          @status_detail = args[:status_detail] if args.key?(:status_detail)
+          @target = args[:target] if args.key?(:target)
+          @verb = args[:verb] if args.key?(:verb)
+        end
+      end
+      
+      # Each Stage of the deployment process
+      class GoogleCloudFunctionsV2alphaStage
+        include Google::Apis::Core::Hashable
+      
+        # Message describing the Stage
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Name of the Stage. This will be unique for each Stage.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Resource of the Stage
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
+        # Link to the current Stage resource
+        # Corresponds to the JSON property `resourceUri`
+        # @return [String]
+        attr_accessor :resource_uri
+      
+        # Current state of the Stage
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # State messages from the current Stage.
+        # Corresponds to the JSON property `stateMessages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2alphaStateMessage>]
+        attr_accessor :state_messages
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @name = args[:name] if args.key?(:name)
+          @resource = args[:resource] if args.key?(:resource)
+          @resource_uri = args[:resource_uri] if args.key?(:resource_uri)
+          @state = args[:state] if args.key?(:state)
+          @state_messages = args[:state_messages] if args.key?(:state_messages)
+        end
+      end
+      
+      # Informational messages about the state of the Cloud Function or Operation.
+      class GoogleCloudFunctionsV2alphaStateMessage
+        include Google::Apis::Core::Hashable
+      
+        # The message.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Severity of the state message.
+        # Corresponds to the JSON property `severity`
+        # @return [String]
+        attr_accessor :severity
+      
+        # One-word CamelCase type of the state message.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @severity = args[:severity] if args.key?(:severity)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # Represents the metadata of the long-running operation.
+      class GoogleCloudFunctionsV2betaOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # API version used to start the operation.
+        # Corresponds to the JSON property `apiVersion`
+        # @return [String]
+        attr_accessor :api_version
+      
+        # Identifies whether the user has requested cancellation of the operation.
+        # Operations that have successfully been cancelled have Operation.error value
+        # with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+        # Corresponds to the JSON property `cancelRequested`
+        # @return [Boolean]
+        attr_accessor :cancel_requested
+        alias_method :cancel_requested?, :cancel_requested
+      
+        # The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The original request that started the operation.
+        # Corresponds to the JSON property `requestResource`
+        # @return [Hash<String,Object>]
+        attr_accessor :request_resource
+      
+        # Mechanism for reporting in-progress stages
+        # Corresponds to the JSON property `stages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStage>]
+        attr_accessor :stages
+      
+        # Human-readable status of the operation, if any.
+        # Corresponds to the JSON property `statusDetail`
+        # @return [String]
+        attr_accessor :status_detail
+      
+        # Server-defined resource path for the target of the operation.
+        # Corresponds to the JSON property `target`
+        # @return [String]
+        attr_accessor :target
+      
+        # Name of the verb executed by the operation.
+        # Corresponds to the JSON property `verb`
+        # @return [String]
+        attr_accessor :verb
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_version = args[:api_version] if args.key?(:api_version)
+          @cancel_requested = args[:cancel_requested] if args.key?(:cancel_requested)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @request_resource = args[:request_resource] if args.key?(:request_resource)
+          @stages = args[:stages] if args.key?(:stages)
+          @status_detail = args[:status_detail] if args.key?(:status_detail)
+          @target = args[:target] if args.key?(:target)
+          @verb = args[:verb] if args.key?(:verb)
+        end
+      end
+      
+      # Each Stage of the deployment process
+      class GoogleCloudFunctionsV2betaStage
+        include Google::Apis::Core::Hashable
+      
+        # Message describing the Stage
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Name of the Stage. This will be unique for each Stage.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Resource of the Stage
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
+        # Link to the current Stage resource
+        # Corresponds to the JSON property `resourceUri`
+        # @return [String]
+        attr_accessor :resource_uri
+      
+        # Current state of the Stage
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # State messages from the current Stage.
+        # Corresponds to the JSON property `stateMessages`
+        # @return [Array<Google::Apis::CloudfunctionsV1::GoogleCloudFunctionsV2betaStateMessage>]
+        attr_accessor :state_messages
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @name = args[:name] if args.key?(:name)
+          @resource = args[:resource] if args.key?(:resource)
+          @resource_uri = args[:resource_uri] if args.key?(:resource_uri)
+          @state = args[:state] if args.key?(:state)
+          @state_messages = args[:state_messages] if args.key?(:state_messages)
+        end
+      end
+      
+      # Informational messages about the state of the Cloud Function or Operation.
+      class GoogleCloudFunctionsV2betaStateMessage
+        include Google::Apis::Core::Hashable
+      
+        # The message.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        # Severity of the state message.
+        # Corresponds to the JSON property `severity`
+        # @return [String]
+        attr_accessor :severity
+      
+        # One-word CamelCase type of the state message.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @message = args[:message] if args.key?(:message)
+          @severity = args[:severity] if args.key?(:severity)
+          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -953,31 +1471,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -986,9 +1504,14 @@ module Google
         # @return [Array<Google::Apis::CloudfunctionsV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::CloudfunctionsV1::Binding>]
         attr_accessor :bindings
@@ -1059,8 +1582,7 @@ module Google
       
       # Configuration for a secret environment variable. It has the information
       # necessary to fetch the secret value from secret manager and expose it as an
-      # environment variable. Secret value is not a part of the configuration. Secret
-      # values are only fetched when a new clone starts.
+      # environment variable.
       class SecretEnvVar
         include Google::Apis::Core::Hashable
       
@@ -1084,7 +1606,7 @@ module Google
       
         # Version of the secret (version number or the string 'latest'). It is
         # recommended to use a numeric version for secret environment variables as any
-        # updates to the secret value is not reflected until new clones start.
+        # updates to the secret value is not reflected until new instances start.
         # Corresponds to the JSON property `version`
         # @return [String]
         attr_accessor :version
@@ -1188,31 +1710,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::CloudfunctionsV1::Policy]
         attr_accessor :policy
@@ -1315,7 +1837,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]

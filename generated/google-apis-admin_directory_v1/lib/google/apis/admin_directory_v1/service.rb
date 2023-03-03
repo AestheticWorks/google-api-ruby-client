@@ -271,12 +271,16 @@ module Google
         #   administrator, you can also use the `my_customer` alias to represent your
         #   account's `customerId`. The `customerId` is also returned as part of the [
         #   Users resource](/admin-sdk/directory/v1/reference/users).
+        # @param [Boolean] include_child_orgunits
+        #   Return devices from all child orgunits, as well as the specified org unit. If
+        #   this is set to true, 'orgUnitPath' must be provided.
         # @param [Fixnum] max_results
         #   Maximum number of results to return.
         # @param [String] order_by
         #   Device property to use for sorting results.
         # @param [String] org_unit_path
-        #   The full path of the organizational unit or its unique ID.
+        #   The full path of the organizational unit (minus the leading `/`) or its unique
+        #   ID.
         # @param [String] page_token
         #   The `pageToken` query parameter is used to request the next page of query
         #   results. The follow-on request's `pageToken` query parameter is the `
@@ -284,8 +288,8 @@ module Google
         # @param [String] projection
         #   Restrict information returned to a set of selected fields.
         # @param [String] query
-        #   Search string in the format given at http://support.google.com/chromeos/a/bin/
-        #   answer.py?answer=1698333
+        #   Search string in the format given at https://developers.google.com/admin-sdk/
+        #   directory/v1/list-query-operators
         # @param [String] sort_order
         #   Whether to return results in ascending or descending order. Must be used with
         #   the `orderBy` parameter.
@@ -306,11 +310,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_chrome_os_devices(customer_id, max_results: nil, order_by: nil, org_unit_path: nil, page_token: nil, projection: nil, query: nil, sort_order: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_chrome_os_devices(customer_id, include_child_orgunits: nil, max_results: nil, order_by: nil, org_unit_path: nil, page_token: nil, projection: nil, query: nil, sort_order: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'admin/directory/v1/customer/{customerId}/devices/chromeos', options)
           command.response_representation = Google::Apis::AdminDirectoryV1::ChromeOsDevices::Representation
           command.response_class = Google::Apis::AdminDirectoryV1::ChromeOsDevices
           command.params['customerId'] = customer_id unless customer_id.nil?
+          command.query['includeChildOrgunits'] = include_child_orgunits unless include_child_orgunits.nil?
           command.query['maxResults'] = max_results unless max_results.nil?
           command.query['orderBy'] = order_by unless order_by.nil?
           command.query['orgUnitPath'] = org_unit_path unless org_unit_path.nil?
@@ -326,7 +331,7 @@ module Google
         # Moves or inserts multiple Chrome OS devices to an organizational unit. You can
         # move up to 50 devices at once.
         # @param [String] customer_id
-        #   Immutable ID of the Google Workspace account
+        #   Immutable. ID of the Google Workspace account
         # @param [String] org_unit_path
         #   Full path of the target organizational unit or its ID
         # @param [Google::Apis::AdminDirectoryV1::ChromeOsMoveDevicesToOu] chrome_os_move_devices_to_ou_object
@@ -451,9 +456,9 @@ module Google
         
         # Issues a command for the device to execute.
         # @param [String] customer_id
-        #   Immutable. Immutable ID of the Google Workspace account.
+        #   Immutable. ID of the Google Workspace account.
         # @param [String] device_id
-        #   Immutable. Immutable ID of Chrome OS Device.
+        #   Immutable. ID of Chrome OS Device.
         # @param [Google::Apis::AdminDirectoryV1::DirectoryChromeosdevicesIssueCommandRequest] directory_chromeosdevices_issue_command_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -487,11 +492,11 @@ module Google
         
         # Gets command data a specific command issued to the device.
         # @param [String] customer_id
-        #   Immutable. Immutable ID of the Google Workspace account.
+        #   Immutable. ID of the Google Workspace account.
         # @param [String] device_id
-        #   Immutable. Immutable ID of Chrome OS Device.
+        #   Immutable. ID of Chrome OS Device.
         # @param [Fixnum] command_id
-        #   Immutable. Immutable ID of Chrome OS Device Command.
+        #   Immutable. ID of Chrome OS Device Command.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -612,6 +617,271 @@ module Google
           command.response_representation = Google::Apis::AdminDirectoryV1::Customer::Representation
           command.response_class = Google::Apis::AdminDirectoryV1::Customer
           command.params['customerKey'] = customer_key unless customer_key.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates multiple print servers.
+        # @param [String] parent
+        #   Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        #   reference/rest/v1/customers) of the customer's Google Workspace account.
+        #   Format: `customers/`id``
+        # @param [Google::Apis::AdminDirectoryV1::BatchCreatePrintServersRequest] batch_create_print_servers_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::BatchCreatePrintServersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::BatchCreatePrintServersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def batch_create_print_servers(parent, batch_create_print_servers_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'admin/directory/v1/{+parent}/chrome/printServers:batchCreatePrintServers', options)
+          command.request_representation = Google::Apis::AdminDirectoryV1::BatchCreatePrintServersRequest::Representation
+          command.request_object = batch_create_print_servers_request_object
+          command.response_representation = Google::Apis::AdminDirectoryV1::BatchCreatePrintServersResponse::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::BatchCreatePrintServersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes multiple print servers.
+        # @param [String] parent
+        #   Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        #   reference/rest/v1/customers) of the customer's Google Workspace account.
+        #   Format: `customers/`customer.id``
+        # @param [Google::Apis::AdminDirectoryV1::BatchDeletePrintServersRequest] batch_delete_print_servers_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::BatchDeletePrintServersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::BatchDeletePrintServersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def batch_delete_print_servers(parent, batch_delete_print_servers_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'admin/directory/v1/{+parent}/chrome/printServers:batchDeletePrintServers', options)
+          command.request_representation = Google::Apis::AdminDirectoryV1::BatchDeletePrintServersRequest::Representation
+          command.request_object = batch_delete_print_servers_request_object
+          command.response_representation = Google::Apis::AdminDirectoryV1::BatchDeletePrintServersResponse::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::BatchDeletePrintServersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a print server.
+        # @param [String] parent
+        #   Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        #   reference/rest/v1/customers) of the customer's Google Workspace account.
+        #   Format: `customers/`id``
+        # @param [Google::Apis::AdminDirectoryV1::PrintServer] print_server_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::PrintServer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::PrintServer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_customer_chrome_print_server(parent, print_server_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'admin/directory/v1/{+parent}/chrome/printServers', options)
+          command.request_representation = Google::Apis::AdminDirectoryV1::PrintServer::Representation
+          command.request_object = print_server_object
+          command.response_representation = Google::Apis::AdminDirectoryV1::PrintServer::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::PrintServer
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a print server.
+        # @param [String] name
+        #   Required. The name of the print server to be deleted. Format: `customers/`
+        #   customer.id`/chrome/printServers/`print_server.id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_customer_chrome_print_server(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'admin/directory/v1/{+name}', options)
+          command.response_representation = Google::Apis::AdminDirectoryV1::Empty::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns a print server's configuration.
+        # @param [String] name
+        #   Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        #   reference/rest/v1/customers) of the customer's Google Workspace account.
+        #   Format: `customers/`id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::PrintServer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::PrintServer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_customer_chrome_print_server(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'admin/directory/v1/{+name}', options)
+          command.response_representation = Google::Apis::AdminDirectoryV1::PrintServer::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::PrintServer
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists print server configurations.
+        # @param [String] parent
+        #   Required. The [unique ID](https://developers.google.com/admin-sdk/directory/
+        #   reference/rest/v1/customers) of the customer's Google Workspace account.
+        #   Format: `customers/`id``
+        # @param [String] filter
+        #   Search query in [Common Expression Language syntax](https://github.com/google/
+        #   cel-spec). Supported filters are `display_name`, `description`, and `uri`.
+        #   Example: `printServer.displayName=='marketing-queue'`.
+        # @param [String] order_by
+        #   Sort order for results. Supported values are `display_name`, `description`, or
+        #   `create_time`. Default order is ascending, but descending order can be
+        #   returned by appending "desc" to the `order_by` field. For instance, `orderBy=='
+        #   description desc'` returns the print servers sorted by description in
+        #   descending order.
+        # @param [String] org_unit_id
+        #   If `org_unit_id` is present in the request, only print servers owned or
+        #   inherited by the organizational unit (OU) are returned. If the `PrintServer`
+        #   resource's `org_unit_id` matches the one in the request, the OU owns the
+        #   server. If `org_unit_id` is not specified in the request, all print servers
+        #   are returned or filtered against.
+        # @param [Fixnum] page_size
+        #   The maximum number of objects to return (default `100`, max `100`). The
+        #   service might return fewer than this value.
+        # @param [String] page_token
+        #   A generated token to paginate results (the `next_page_token` from a previous
+        #   call).
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::ListPrintServersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::ListPrintServersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_customer_chrome_print_servers(parent, filter: nil, order_by: nil, org_unit_id: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'admin/directory/v1/{+parent}/chrome/printServers', options)
+          command.response_representation = Google::Apis::AdminDirectoryV1::ListPrintServersResponse::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::ListPrintServersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a print server's configuration.
+        # @param [String] name
+        #   Immutable. Resource name of the print server. Leave empty when creating.
+        #   Format: `customers/`customer.id`/printServers/`print_server.id``
+        # @param [Google::Apis::AdminDirectoryV1::PrintServer] print_server_object
+        # @param [String] update_mask
+        #   The list of fields to update. Some fields are read-only and cannot be updated.
+        #   Values for unspecified fields are patched.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::AdminDirectoryV1::PrintServer] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::AdminDirectoryV1::PrintServer]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_customer_chrome_print_server(name, print_server_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'admin/directory/v1/{+name}', options)
+          command.request_representation = Google::Apis::AdminDirectoryV1::PrintServer::Representation
+          command.request_object = print_server_object
+          command.response_representation = Google::Apis::AdminDirectoryV1::PrintServer::Representation
+          command.response_class = Google::Apis::AdminDirectoryV1::PrintServer
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -785,6 +1055,12 @@ module Google
         # @param [String] filter
         #   Search query. Search syntax is shared between this api and Admin Console
         #   printers pages.
+        # @param [String] order_by
+        #   The order to sort results by. Must be one of display_name, description,
+        #   make_and_model, or create_time. Default order is ascending, but descending
+        #   order can be returned by appending "desc" to the order_by field. For instance,
+        #   "description desc" will return the printers sorted by description in
+        #   descending order.
         # @param [String] org_unit_id
         #   Organization Unit that we want to list the printers for. When org_unit is not
         #   present in the request then all printers of the customer are returned (or
@@ -813,12 +1089,13 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_customer_chrome_printers(parent, filter: nil, org_unit_id: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_customer_chrome_printers(parent, filter: nil, order_by: nil, org_unit_id: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'admin/directory/v1/{+parent}/chrome/printers', options)
           command.response_representation = Google::Apis::AdminDirectoryV1::ListPrintersResponse::Representation
           command.response_class = Google::Apis::AdminDirectoryV1::ListPrintersResponse
           command.params['parent'] = parent unless parent.nil?
           command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
           command.query['orgUnitId'] = org_unit_id unless org_unit_id.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
@@ -945,7 +1222,12 @@ module Google
         
         # Retrieves a domain alias of the customer.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] domain_alias_name
         #   Name of domain alias to be retrieved.
         # @param [String] fields
@@ -1011,7 +1293,12 @@ module Google
         
         # Lists the domain aliases of the customer.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] parent_domain_name
         #   Name of the parent domain for which domain aliases are to be fetched.
         # @param [String] fields
@@ -1075,7 +1362,12 @@ module Google
         
         # Retrieves a domain of the customer.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] domain_name
         #   Name of domain to be retrieved
         # @param [String] fields
@@ -1141,7 +1433,12 @@ module Google
         
         # Lists the domains of the customer.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1262,12 +1559,13 @@ module Google
         # Retrieves all groups of a domain or of a user given a userKey (paginated).
         # @param [String] customer
         #   The unique ID for the customer's Google Workspace account. In case of a multi-
-        #   domain account, to fetch all groups for a customer, fill this field instead of
-        #   domain. As an account administrator, you can also use the `my_customer` alias
-        #   to represent your account's `customerId`. The `customerId` is also returned as
-        #   part of the [Users](/admin-sdk/directory/v1/reference/users)
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] domain
-        #   The domain name. Use this field to get fields from only one domain. To return
+        #   The domain name. Use this field to get groups from only one domain. To return
         #   all domains for a customer account, use the `customer` query parameter instead.
         # @param [Fixnum] max_results
         #   Maximum number of results to return. Max allowed value is 200.
@@ -1556,7 +1854,12 @@ module Google
         end
         
         # Checks whether the given user is a member of the group. Membership can be
-        # direct or nested.
+        # direct or nested, but if nested, the `memberKey` and `groupKey` must be
+        # entities in the same domain or an `Invalid input` error is returned. To check
+        # for nested memberships that include entities outside of the group's domain,
+        # use the [`checkTransitiveMembership()`](https://cloud.google.com/identity/docs/
+        # reference/rest/v1/groups.memberships/checkTransitiveMembership) method in the
+        # Cloud Identity Groups API.
         # @param [String] group_key
         #   Identifies the group in the API request. The value can be the group's email
         #   address, group alias, or the unique group ID.
@@ -1625,7 +1928,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Retrieves a paginated list of all members in a group.
+        # Retrieves a paginated list of all members in a group. This method times out
+        # after 60 minutes. For more information, see [Troubleshoot error codes](https://
+        # developers.google.com/admin-sdk/directory/v1/guides/troubleshoot-error-codes).
         # @param [String] group_key
         #   Identifies the group in the API request. The value can be the group's email
         #   address, group alias, or the unique group ID.
@@ -1860,7 +2165,12 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Retrieves a paginated list of all mobile devices for an account.
+        # Retrieves a paginated list of all user-owned mobile devices for an account. To
+        # retrieve a list that includes company-owned devices, use the Cloud Identity [
+        # Devices API](https://cloud.google.com/identity/docs/concepts/overview-devices)
+        # instead. This method times out after 60 minutes. For more information, see [
+        # Troubleshoot error codes](https://developers.google.com/admin-sdk/directory/v1/
+        # guides/troubleshoot-error-codes).
         # @param [String] customer_id
         #   The unique ID for the customer's Google Workspace account. As an account
         #   administrator, you can also use the `my_customer` alias to represent your
@@ -1920,7 +2230,8 @@ module Google
         #   account's `customerId`. The `customerId` is also returned as part of the [
         #   Users resource](/admin-sdk/directory/v1/reference/users).
         # @param [String] org_unit_path
-        #   The full path of the organizational unit or its unique ID.
+        #   The full path of the organizational unit (minus the leading `/`) or its unique
+        #   ID.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1954,7 +2265,8 @@ module Google
         #   account's `customerId`. The `customerId` is also returned as part of the [
         #   Users resource](/admin-sdk/directory/v1/reference/users).
         # @param [String] org_unit_path
-        #   The full path of the organizational unit or its unique ID.
+        #   The full path of the organizational unit (minus the leading `/`) or its unique
+        #   ID.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2067,7 +2379,8 @@ module Google
         #   account's `customerId`. The `customerId` is also returned as part of the [
         #   Users resource](/admin-sdk/directory/v1/reference/users).
         # @param [String] org_unit_path
-        #   The full path of the organizational unit or its unique ID.
+        #   The full path of the organizational unit (minus the leading `/`) or its unique
+        #   ID.
         # @param [Google::Apis::AdminDirectoryV1::OrgUnit] org_unit_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2106,7 +2419,8 @@ module Google
         #   account's `customerId`. The `customerId` is also returned as part of the [
         #   Users resource](/admin-sdk/directory/v1/reference/users).
         # @param [String] org_unit_path
-        #   The full path of the organizational unit or its unique ID.
+        #   The full path of the organizational unit (minus the leading `/`) or its unique
+        #   ID.
         # @param [Google::Apis::AdminDirectoryV1::OrgUnit] org_unit_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2140,7 +2454,12 @@ module Google
         
         # Retrieves a paginated list of all privileges for a customer.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2918,7 +3237,12 @@ module Google
         
         # Retrieves a role assignment.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] role_assignment_id
         #   Immutable ID of the role assignment.
         # @param [String] fields
@@ -2984,7 +3308,12 @@ module Google
         
         # Retrieves a paginated list of all roleAssignments.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [Fixnum] max_results
         #   Maximum number of results to return.
         # @param [String] page_token
@@ -3059,7 +3388,12 @@ module Google
         
         # Retrieves a role.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] role_id
         #   Immutable ID of the role.
         # @param [String] fields
@@ -3125,7 +3459,12 @@ module Google
         
         # Retrieves a paginated list of all the roles in a domain.
         # @param [String] customer
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [Fixnum] max_results
         #   Maximum number of results to return.
         # @param [String] page_token
@@ -3264,7 +3603,12 @@ module Google
         
         # Retrieves a schema.
         # @param [String] customer_id
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] schema_key
         #   Name or immutable ID of the schema.
         # @param [String] fields
@@ -3330,7 +3674,12 @@ module Google
         
         # Retrieves all schemas for a customer.
         # @param [String] customer_id
-        #   Immutable ID of the Google Workspace account.
+        #   The unique ID for the customer's Google Workspace account. In case of a multi-
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3664,13 +4013,13 @@ module Google
         #   fetched. This should only be set when `projection=custom`.
         # @param [String] customer
         #   The unique ID for the customer's Google Workspace account. In case of a multi-
-        #   domain account, to fetch all groups for a customer, fill this field instead of
-        #   domain. You can also use the `my_customer` alias to represent your account's `
-        #   customerId`. The `customerId` is also returned as part of the [Users resource](
-        #   /admin-sdk/directory/v1/reference/users). Either the `customer` or the `domain`
-        #   parameter must be provided.
+        #   domain account, to fetch all groups for a customer, use this field instead of `
+        #   domain`. You can also use the `my_customer` alias to represent your account's `
+        #   customerId`. The `customerId` is also returned as part of the [Users](/admin-
+        #   sdk/directory/v1/reference/users) resource. You must provide either the `
+        #   customer` or the `domain` parameter.
         # @param [String] domain
-        #   The domain name. Use this field to get fields from only one domain. To return
+        #   The domain name. Use this field to get groups from only one domain. To return
         #   all domains for a customer account, use the `customer` query parameter instead.
         #   Either the `customer` or the `domain` parameter must be provided.
         # @param [String] event
@@ -3690,7 +4039,7 @@ module Google
         # @param [String] show_deleted
         #   If set to `true`, retrieves the list of deleted users. (Default: `false`)
         # @param [String] sort_order
-        #   Whether to return results in ascending or descending order.
+        #   Whether to return results in ascending or descending order, ignoring case.
         # @param [String] view_type
         #   Whether to fetch the administrator-only or domain-wide public view of the user.
         #   For more information, see [Retrieve a user as a non-administrator](/admin-sdk/
@@ -3766,9 +4115,12 @@ module Google
         end
         
         # Updates a user using patch semantics. The update method should be used instead,
-        # since it also supports patch semantics and has better performance. This
-        # method is unable to clear fields that contain repeated objects (`addresses`, `
-        # phones`, etc). Use the update method instead.
+        # because it also supports patch semantics and has better performance. If you'
+        # re mapping an external identity to a Google identity, use the [`update`](https:
+        # //developers.google.com/admin-sdk/directory/v1/reference/users/update) method
+        # instead of the `patch` method. This method is unable to clear fields that
+        # contain repeated objects (`addresses`, `phones`, etc). Use the update method
+        # instead.
         # @param [String] user_key
         #   Identifies the user in the API request. The value can be the user's primary
         #   email address, alias email address, or unique user ID.
@@ -3863,9 +4215,14 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a user. This method supports patch semantics, meaning you only need to
-        # include the fields you wish to update. Fields that are not present in the
-        # request will be preserved, and fields set to `null` will be cleared.
+        # Updates a user. This method supports patch semantics, meaning that you only
+        # need to include the fields you wish to update. Fields that are not present in
+        # the request will be preserved, and fields set to `null` will be cleared. For
+        # repeating fields that contain arrays, individual items in the array can't be
+        # patched piecemeal; they must be supplied in the request body with the desired
+        # values for all items. See the [user accounts guide](https://developers.google.
+        # com/admin-sdk/directory/v1/guides/manage-users#update_user) for more
+        # information.
         # @param [String] user_key
         #   Identifies the user in the API request. The value can be the user's primary
         #   email address, alias email address, or unique user ID.

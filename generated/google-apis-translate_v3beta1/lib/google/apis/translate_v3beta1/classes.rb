@@ -64,6 +64,19 @@ module Google
       class BatchTranslateDocumentRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. This flag is to support user customized attribution. If not provided,
+        # the default is `Machine Translated by Google`. Customized attribution should
+        # follow rules in https://cloud.google.com/translate/attribution#
+        # attribution_and_logos
+        # Corresponds to the JSON property `customizedAttribution`
+        # @return [String]
+        attr_accessor :customized_attribution
+      
+        # Optional.
+        # Corresponds to the JSON property `formatConversions`
+        # @return [Hash<String,String>]
+        attr_accessor :format_conversions
+      
         # Optional. Glossaries to be applied. It's keyed by target language code.
         # Corresponds to the JSON property `glossaries`
         # @return [Hash<String,Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig>]
@@ -94,8 +107,8 @@ module Google
         attr_accessor :output_config
       
         # Required. The BCP-47 language code of the input document if known, for example,
-        # "en-US" or "sr-Latn". Supported language codes are listed in Language Support
-        # (https://cloud.google.com/translate/docs/languages).
+        # "en-US" or "sr-Latn". Supported language codes are listed in [Language
+        # Support](https://cloud.google.com/translate/docs/languages).
         # Corresponds to the JSON property `sourceLanguageCode`
         # @return [String]
         attr_accessor :source_language_code
@@ -112,6 +125,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @customized_attribution = args[:customized_attribution] if args.key?(:customized_attribution)
+          @format_conversions = args[:format_conversions] if args.key?(:format_conversions)
           @glossaries = args[:glossaries] if args.key?(:glossaries)
           @input_configs = args[:input_configs] if args.key?(:input_configs)
           @models = args[:models] if args.key?(:models)
@@ -405,8 +420,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -921,6 +935,14 @@ module Google
       class TranslateDocumentRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. This flag is to support user customized attribution. If not provided,
+        # the default is `Machine Translated by Google`. Customized attribution should
+        # follow rules in https://cloud.google.com/translate/attribution#
+        # attribution_and_logos
+        # Corresponds to the JSON property `customizedAttribution`
+        # @return [String]
+        attr_accessor :customized_attribution
+      
         # A document translation request input config.
         # Corresponds to the JSON property `documentInputConfig`
         # @return [Google::Apis::TranslateV3beta1::DocumentInputConfig]
@@ -931,11 +953,27 @@ module Google
         # @return [Google::Apis::TranslateV3beta1::DocumentOutputConfig]
         attr_accessor :document_output_config
       
+        # Optional. If true, use the text removal server to remove the shadow text on
+        # background image for native pdf translation. Shadow removal feature can only
+        # be enabled when is_translate_native_pdf_only: false && pdf_native_only: false
+        # Corresponds to the JSON property `enableShadowRemovalNativePdf`
+        # @return [Boolean]
+        attr_accessor :enable_shadow_removal_native_pdf
+        alias_method :enable_shadow_removal_native_pdf?, :enable_shadow_removal_native_pdf
+      
         # Configures which glossary should be used for a specific target language, and
         # defines options for applying that glossary.
         # Corresponds to the JSON property `glossaryConfig`
         # @return [Google::Apis::TranslateV3beta1::TranslateTextGlossaryConfig]
         attr_accessor :glossary_config
+      
+        # Optional. is_translate_native_pdf_only field for external customers. If true,
+        # the page limit of online native pdf translation is 300 and only native pdf
+        # pages will be translated.
+        # Corresponds to the JSON property `isTranslateNativePdfOnly`
+        # @return [Boolean]
+        attr_accessor :is_translate_native_pdf_only
+        alias_method :is_translate_native_pdf_only?, :is_translate_native_pdf_only
       
         # Optional. The labels with user-defined metadata for the request. Label keys
         # and values can be no longer than 63 characters (Unicode codepoints), can only
@@ -978,9 +1016,12 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @customized_attribution = args[:customized_attribution] if args.key?(:customized_attribution)
           @document_input_config = args[:document_input_config] if args.key?(:document_input_config)
           @document_output_config = args[:document_output_config] if args.key?(:document_output_config)
+          @enable_shadow_removal_native_pdf = args[:enable_shadow_removal_native_pdf] if args.key?(:enable_shadow_removal_native_pdf)
           @glossary_config = args[:glossary_config] if args.key?(:glossary_config)
+          @is_translate_native_pdf_only = args[:is_translate_native_pdf_only] if args.key?(:is_translate_native_pdf_only)
           @labels = args[:labels] if args.key?(:labels)
           @model = args[:model] if args.key?(:model)
           @source_language_code = args[:source_language_code] if args.key?(:source_language_code)

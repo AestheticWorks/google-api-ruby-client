@@ -22,6 +22,12 @@ module Google
   module Apis
     module PaymentsresellersubscriptionV1
       
+      class GoogleCloudPaymentsResellerSubscriptionV1Amount
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -70,6 +76,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -94,7 +118,37 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleCloudPaymentsResellerSubscriptionV1Promotion
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -107,6 +161,24 @@ module Google
       end
       
       class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -130,10 +202,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleTypeLocalizedText
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1Amount
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :amount_micros, :numeric_string => true, as: 'amountMicros'
+          property :currency_code, as: 'currencyCode'
+        end
       end
       
       class GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
@@ -188,6 +274,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :cycle_end_time, as: 'cycleEndTime'
           property :free_trial_end_time, as: 'freeTrialEndTime'
+          property :renewal_time, as: 'renewalTime'
         end
       end
       
@@ -197,6 +284,34 @@ module Google
           property :duration, as: 'duration', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration::Representation
       
           property :partner_user_token, as: 'partnerUserToken'
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :filter, as: 'filter'
+          property :page_size, as: 'pageSize'
+          property :page_token, as: 'pageToken'
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :promotions, as: 'promotions', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Promotion, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Promotion::Representation
+      
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :campaigns, as: 'campaigns'
+          property :offering, as: 'offering'
+          property :sales_channel, as: 'salesChannel'
+          property :store_id, as: 'storeId'
         end
       end
       
@@ -230,11 +345,32 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
+          collection :price_configs, as: 'priceConfigs', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig::Representation
+      
           collection :region_codes, as: 'regionCodes'
           property :subscription_billing_cycle_duration, as: 'subscriptionBillingCycleDuration', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration::Representation
       
           collection :titles, as: 'titles', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleTypeLocalizedText, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleTypeLocalizedText::Representation
       
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :google_one_payload, as: 'googleOnePayload', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload::Representation
+      
+          property :youtube_payload, as: 'youtubePayload', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload::Representation
+      
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :amount, as: 'amount', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount::Representation
+      
+          property :region_code, as: 'regionCode'
         end
       end
       
@@ -245,11 +381,41 @@ module Google
           property :end_time, as: 'endTime'
           property :free_trial_duration, as: 'freeTrialDuration', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration::Representation
       
+          property :introductory_pricing_details, as: 'introductoryPricingDetails', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails::Representation
+      
           property :name, as: 'name'
+          property :promotion_type, as: 'promotionType'
           collection :region_codes, as: 'regionCodes'
           property :start_time, as: 'startTime'
           collection :titles, as: 'titles', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleTypeLocalizedText, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleTypeLocalizedText::Representation
       
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :introductory_pricing_specs, as: 'introductoryPricingSpecs', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec::Representation
+      
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :discount_amount, as: 'discountAmount', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount::Representation
+      
+          property :discount_ratio_micros, :numeric_string => true, as: 'discountRatioMicros'
+          property :recurrence_count, as: 'recurrenceCount'
+          property :region_code, as: 'regionCode'
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
         end
       end
       
@@ -262,12 +428,17 @@ module Google
           property :cycle_end_time, as: 'cycleEndTime'
           property :end_user_entitled, as: 'endUserEntitled'
           property :free_trial_end_time, as: 'freeTrialEndTime'
+          collection :line_items, as: 'lineItems', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem::Representation
+      
           property :name, as: 'name'
           property :partner_user_token, as: 'partnerUserToken'
           property :processing_state, as: 'processingState'
           collection :products, as: 'products'
+          collection :promotion_specs, as: 'promotionSpecs', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec::Representation
+      
           collection :promotions, as: 'promotions'
           property :redirect_uri, as: 'redirectUri'
+          property :renewal_time, as: 'renewalTime'
           property :service_location, as: 'serviceLocation', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Location, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Location::Representation
       
           property :state, as: 'state'
@@ -281,6 +452,45 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :reason, as: 'reason'
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :amount, as: 'amount', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Amount::Representation
+      
+          property :description, as: 'description'
+          property :line_item_free_trial_end_time, as: 'lineItemFreeTrialEndTime'
+          collection :line_item_promotion_specs, as: 'lineItemPromotionSpecs', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec::Representation
+      
+          property :one_time_recurrence_details, as: 'oneTimeRecurrenceDetails', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails::Representation
+      
+          property :product, as: 'product'
+          property :product_payload, as: 'productPayload', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPayload, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ProductPayload::Representation
+      
+          property :recurrence_type, as: 'recurrenceType'
+          property :state, as: 'state'
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :service_period, as: 'servicePeriod', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod::Representation
+      
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :free_trial_duration, as: 'freeTrialDuration', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Duration::Representation
+      
+          property :introductory_pricing_details, as: 'introductoryPricingDetails', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails::Representation
+      
+          property :promotion, as: 'promotion'
+          property :type, as: 'type'
         end
       end
       
@@ -303,6 +513,13 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :subscription, as: 'subscription', class: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Subscription, decorator: Google::Apis::PaymentsresellersubscriptionV1::GoogleCloudPaymentsResellerSubscriptionV1Subscription::Representation
       
+        end
+      end
+      
+      class GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :partner_eligibility_ids, as: 'partnerEligibilityIds'
         end
       end
       

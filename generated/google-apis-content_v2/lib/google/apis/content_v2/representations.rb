@@ -250,6 +250,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Address
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Amount
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -455,54 +461,6 @@ module Google
       end
       
       class Installment
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class Inventory
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class BatchInventoryRequest
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class InventoryBatchRequestEntry
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class BatchInventoryResponse
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class InventoryBatchResponseEntry
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class InventoryPickup
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class SetInventoryRequest
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class SetInventoryResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1636,7 +1594,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Warehouse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class WarehouseBasedDeliveryTime
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class WarehouseCutoffTime
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -2059,6 +2029,17 @@ module Google
         end
       end
       
+      class Address
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :administrative_area, as: 'administrativeArea'
+          property :city, as: 'city'
+          property :country, as: 'country'
+          property :postal_code, as: 'postalCode'
+          property :street_address, as: 'streetAddress'
+        end
+      end
+      
       class Amount
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2438,113 +2419,6 @@ module Google
           property :amount, as: 'amount', class: Google::Apis::ContentV2::Price, decorator: Google::Apis::ContentV2::Price::Representation
       
           property :months, :numeric_string => true, as: 'months'
-        end
-      end
-      
-      class Inventory
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :availability, as: 'availability'
-          property :custom_label0, as: 'customLabel0'
-          property :custom_label1, as: 'customLabel1'
-          property :custom_label2, as: 'customLabel2'
-          property :custom_label3, as: 'customLabel3'
-          property :custom_label4, as: 'customLabel4'
-          property :installment, as: 'installment', class: Google::Apis::ContentV2::Installment, decorator: Google::Apis::ContentV2::Installment::Representation
-      
-          property :instore_product_location, as: 'instoreProductLocation'
-          property :kind, as: 'kind'
-          property :loyalty_points, as: 'loyaltyPoints', class: Google::Apis::ContentV2::LoyaltyPoints, decorator: Google::Apis::ContentV2::LoyaltyPoints::Representation
-      
-          property :pickup, as: 'pickup', class: Google::Apis::ContentV2::InventoryPickup, decorator: Google::Apis::ContentV2::InventoryPickup::Representation
-      
-          property :price, as: 'price', class: Google::Apis::ContentV2::Price, decorator: Google::Apis::ContentV2::Price::Representation
-      
-          property :quantity, as: 'quantity'
-          property :sale_price, as: 'salePrice', class: Google::Apis::ContentV2::Price, decorator: Google::Apis::ContentV2::Price::Representation
-      
-          property :sale_price_effective_date, as: 'salePriceEffectiveDate'
-          property :sell_on_google_quantity, as: 'sellOnGoogleQuantity'
-        end
-      end
-      
-      class BatchInventoryRequest
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          collection :entries, as: 'entries', class: Google::Apis::ContentV2::InventoryBatchRequestEntry, decorator: Google::Apis::ContentV2::InventoryBatchRequestEntry::Representation
-      
-        end
-      end
-      
-      class InventoryBatchRequestEntry
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :batch_id, as: 'batchId'
-          property :inventory, as: 'inventory', class: Google::Apis::ContentV2::Inventory, decorator: Google::Apis::ContentV2::Inventory::Representation
-      
-          property :merchant_id, :numeric_string => true, as: 'merchantId'
-          property :product_id, as: 'productId'
-          property :store_code, as: 'storeCode'
-        end
-      end
-      
-      class BatchInventoryResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          collection :entries, as: 'entries', class: Google::Apis::ContentV2::InventoryBatchResponseEntry, decorator: Google::Apis::ContentV2::InventoryBatchResponseEntry::Representation
-      
-          property :kind, as: 'kind'
-        end
-      end
-      
-      class InventoryBatchResponseEntry
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :batch_id, as: 'batchId'
-          property :errors, as: 'errors', class: Google::Apis::ContentV2::Errors, decorator: Google::Apis::ContentV2::Errors::Representation
-      
-          property :kind, as: 'kind'
-        end
-      end
-      
-      class InventoryPickup
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :pickup_method, as: 'pickupMethod'
-          property :pickup_sla, as: 'pickupSla'
-        end
-      end
-      
-      class SetInventoryRequest
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :availability, as: 'availability'
-          property :custom_label0, as: 'customLabel0'
-          property :custom_label1, as: 'customLabel1'
-          property :custom_label2, as: 'customLabel2'
-          property :custom_label3, as: 'customLabel3'
-          property :custom_label4, as: 'customLabel4'
-          property :installment, as: 'installment', class: Google::Apis::ContentV2::Installment, decorator: Google::Apis::ContentV2::Installment::Representation
-      
-          property :instore_product_location, as: 'instoreProductLocation'
-          property :loyalty_points, as: 'loyaltyPoints', class: Google::Apis::ContentV2::LoyaltyPoints, decorator: Google::Apis::ContentV2::LoyaltyPoints::Representation
-      
-          property :pickup, as: 'pickup', class: Google::Apis::ContentV2::InventoryPickup, decorator: Google::Apis::ContentV2::InventoryPickup::Representation
-      
-          property :price, as: 'price', class: Google::Apis::ContentV2::Price, decorator: Google::Apis::ContentV2::Price::Representation
-      
-          property :quantity, as: 'quantity'
-          property :sale_price, as: 'salePrice', class: Google::Apis::ContentV2::Price, decorator: Google::Apis::ContentV2::Price::Representation
-      
-          property :sale_price_effective_date, as: 'salePriceEffectiveDate'
-          property :sell_on_google_quantity, as: 'sellOnGoogleQuantity'
-        end
-      end
-      
-      class SetInventoryResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :kind, as: 'kind'
         end
       end
       
@@ -4005,9 +3879,14 @@ module Google
       class PosStore
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :gcid_category, as: 'gcidCategory'
           property :kind, as: 'kind'
+          property :phone_number, as: 'phoneNumber'
+          property :place_id, as: 'placeId'
           property :store_address, as: 'storeAddress'
           property :store_code, as: 'storeCode'
+          property :store_name, as: 'storeName'
+          property :website_url, as: 'websiteUrl'
         end
       end
       
@@ -4504,6 +4383,8 @@ module Google
       
           collection :services, as: 'services', class: Google::Apis::ContentV2::Service, decorator: Google::Apis::ContentV2::Service::Representation
       
+          collection :warehouses, as: 'warehouses', class: Google::Apis::ContentV2::Warehouse, decorator: Google::Apis::ContentV2::Warehouse::Representation
+      
         end
       end
       
@@ -4763,6 +4644,20 @@ module Google
         end
       end
       
+      class Warehouse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :business_day_config, as: 'businessDayConfig', class: Google::Apis::ContentV2::BusinessDayConfig, decorator: Google::Apis::ContentV2::BusinessDayConfig::Representation
+      
+          property :cutoff_time, as: 'cutoffTime', class: Google::Apis::ContentV2::WarehouseCutoffTime, decorator: Google::Apis::ContentV2::WarehouseCutoffTime::Representation
+      
+          property :handling_days, :numeric_string => true, as: 'handlingDays'
+          property :name, as: 'name'
+          property :shipping_address, as: 'shippingAddress', class: Google::Apis::ContentV2::Address, decorator: Google::Apis::ContentV2::Address::Representation
+      
+        end
+      end
+      
       class WarehouseBasedDeliveryTime
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -4773,6 +4668,15 @@ module Google
           property :origin_country, as: 'originCountry'
           property :origin_postal_code, as: 'originPostalCode'
           property :origin_street_address, as: 'originStreetAddress'
+          property :warehouse_name, as: 'warehouseName'
+        end
+      end
+      
+      class WarehouseCutoffTime
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hour, as: 'hour'
+          property :minute, as: 'minute'
         end
       end
       

@@ -180,6 +180,27 @@ module Google
         end
       end
       
+      # A widget that groups the other widgets. All widgets that are within the area
+      # spanned by the grouping widget are considered member widgets.
+      class CollapsibleGroup
+        include Google::Apis::Core::Hashable
+      
+        # The collapsed state of the widget on first page load.
+        # Corresponds to the JSON property `collapsed`
+        # @return [Boolean]
+        attr_accessor :collapsed
+        alias_method :collapsed?, :collapsed
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @collapsed = args[:collapsed] if args.key?(:collapsed)
+        end
+      end
+      
       # Defines the layout properties and content for a column.
       class Column
         include Google::Apis::Core::Hashable
@@ -228,6 +249,32 @@ module Google
         end
       end
       
+      # The persistent settings for a table's columns.
+      class ColumnSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required. The id of the column.
+        # Corresponds to the JSON property `column`
+        # @return [String]
+        attr_accessor :column
+      
+        # Required. Whether the column should be visible on page load.
+        # Corresponds to the JSON property `visible`
+        # @return [Boolean]
+        attr_accessor :visible
+        alias_method :visible?, :visible
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @column = args[:column] if args.key?(:column)
+          @visible = args[:visible] if args.key?(:visible)
+        end
+      end
+      
       # A Google Stackdriver dashboard. Dashboards define the content and layout of
       # pages in the Stackdriver web application.
       class Dashboard
@@ -238,6 +285,11 @@ module Google
         # Corresponds to the JSON property `columnLayout`
         # @return [Google::Apis::MonitoringV1::ColumnLayout]
         attr_accessor :column_layout
+      
+        # Filters to reduce the amount of data charted based on the filter criteria.
+        # Corresponds to the JSON property `dashboardFilters`
+        # @return [Array<Google::Apis::MonitoringV1::DashboardFilter>]
+        attr_accessor :dashboard_filters
       
         # Required. The mutable, human-readable name.
         # Corresponds to the JSON property `displayName`
@@ -259,6 +311,11 @@ module Google
         # Corresponds to the JSON property `gridLayout`
         # @return [Google::Apis::MonitoringV1::GridLayout]
         attr_accessor :grid_layout
+      
+        # Labels applied to the dashboard
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
       
         # A mosaic layout divides the available space into a grid of blocks, and
         # overlays the grid with tiles. Unlike GridLayout, tiles may span multiple grid
@@ -285,12 +342,53 @@ module Google
         # Update properties of this object
         def update!(**args)
           @column_layout = args[:column_layout] if args.key?(:column_layout)
+          @dashboard_filters = args[:dashboard_filters] if args.key?(:dashboard_filters)
           @display_name = args[:display_name] if args.key?(:display_name)
           @etag = args[:etag] if args.key?(:etag)
           @grid_layout = args[:grid_layout] if args.key?(:grid_layout)
+          @labels = args[:labels] if args.key?(:labels)
           @mosaic_layout = args[:mosaic_layout] if args.key?(:mosaic_layout)
           @name = args[:name] if args.key?(:name)
           @row_layout = args[:row_layout] if args.key?(:row_layout)
+        end
+      end
+      
+      # A filter to reduce the amount of data charted in relevant widgets.
+      class DashboardFilter
+        include Google::Apis::Core::Hashable
+      
+        # The specified filter type
+        # Corresponds to the JSON property `filterType`
+        # @return [String]
+        attr_accessor :filter_type
+      
+        # Required. The key for the label
+        # Corresponds to the JSON property `labelKey`
+        # @return [String]
+        attr_accessor :label_key
+      
+        # A variable-length string value.
+        # Corresponds to the JSON property `stringValue`
+        # @return [String]
+        attr_accessor :string_value
+      
+        # The placeholder text that can be referenced in a filter string or MQL query.
+        # If omitted, the dashboard filter will be applied to all relevant widgets in
+        # the dashboard.
+        # Corresponds to the JSON property `templateVariable`
+        # @return [String]
+        attr_accessor :template_variable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter_type = args[:filter_type] if args.key?(:filter_type)
+          @label_key = args[:label_key] if args.key?(:label_key)
+          @string_value = args[:string_value] if args.key?(:string_value)
+          @template_variable = args[:template_variable] if args.key?(:template_variable)
         end
       end
       
@@ -377,8 +475,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -523,6 +620,54 @@ module Google
         end
       end
       
+      # Message that represents an arbitrary HTTP body. It should only be used for
+      # payload formats that can't be represented as JSON, such as raw binary or an
+      # HTML page.This message can be used both in streaming and non-streaming API
+      # methods in the request as well as the response.It can be used as a top-level
+      # request field, which is convenient if one wants to extract parameters from
+      # either the URL or HTTP template into the request fields and also want access
+      # to the raw HTTP body.Example: message GetResourceRequest ` // A unique request
+      # id. string request_id = 1; // The raw HTTP body is bound to this field. google.
+      # api.HttpBody http_body = 2; ` service ResourceService ` rpc GetResource(
+      # GetResourceRequest) returns (google.api.HttpBody); rpc UpdateResource(google.
+      # api.HttpBody) returns (google.protobuf.Empty); ` Example with streaming
+      # methods: service CaldavService ` rpc GetCalendar(stream google.api.HttpBody)
+      # returns (stream google.api.HttpBody); rpc UpdateCalendar(stream google.api.
+      # HttpBody) returns (stream google.api.HttpBody); ` Use of this type only
+      # changes how the request and response bodies are handled, all other features
+      # will continue to work unchanged.
+      class HttpBody
+        include Google::Apis::Core::Hashable
+      
+        # The HTTP Content-Type header value specifying the content type of the body.
+        # Corresponds to the JSON property `contentType`
+        # @return [String]
+        attr_accessor :content_type
+      
+        # The HTTP request/response body as raw binary.
+        # Corresponds to the JSON property `data`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :data
+      
+        # Application specific response metadata. Must be set in the first response for
+        # streaming APIs.
+        # Corresponds to the JSON property `extensions`
+        # @return [Array<Hash<String,Object>>]
+        attr_accessor :extensions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_type = args[:content_type] if args.key?(:content_type)
+          @data = args[:data] if args.key?(:data)
+          @extensions = args[:extensions] if args.key?(:extensions)
+        end
+      end
+      
       # The ListDashboards request.
       class ListDashboardsResponse
         include Google::Apis::Core::Hashable
@@ -550,6 +695,41 @@ module Google
         end
       end
       
+      # ListLabelsRequest holds all parameters of the Prometheus upstream API for
+      # returning a list of label names.
+      class ListLabelsRequest
+        include Google::Apis::Core::Hashable
+      
+        # The end time to evaluate the query for. Either floating point UNIX seconds or
+        # RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `end`
+        # @return [String]
+        attr_accessor :end
+      
+        # A list of matchers encoded in the Prometheus label matcher format to constrain
+        # the values to series that satisfy them.
+        # Corresponds to the JSON property `match`
+        # @return [String]
+        attr_accessor :match
+      
+        # The start time to evaluate the query for. Either floating point UNIX seconds
+        # or RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `start`
+        # @return [String]
+        attr_accessor :start
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end = args[:end] if args.key?(:end)
+          @match = args[:match] if args.key?(:match)
+          @start = args[:start] if args.key?(:start)
+        end
+      end
+      
       # Response for the ListMetricsScopesByMonitoredProject method.
       class ListMetricsScopesByMonitoredProjectResponse
         include Google::Apis::Core::Hashable
@@ -567,6 +747,34 @@ module Google
         # Update properties of this object
         def update!(**args)
           @metrics_scopes = args[:metrics_scopes] if args.key?(:metrics_scopes)
+        end
+      end
+      
+      # A widget that displays a stream of log.
+      class LogsPanel
+        include Google::Apis::Core::Hashable
+      
+        # A filter that chooses which log entries to return. See Advanced Logs Queries (
+        # https://cloud.google.com/logging/docs/view/advanced-queries). Only log entries
+        # that match the filter are returned. An empty filter matches all log entries.
+        # Corresponds to the JSON property `filter`
+        # @return [String]
+        attr_accessor :filter
+      
+        # The names of logging resources to collect logs for. Currently only projects
+        # are supported. If empty, the widget will default to the host project.
+        # Corresponds to the JSON property `resourceNames`
+        # @return [Array<String>]
+        attr_accessor :resource_names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter = args[:filter] if args.key?(:filter)
+          @resource_names = args[:resource_names] if args.key?(:resource_names)
         end
       end
       
@@ -830,6 +1038,162 @@ module Google
           @direction = args[:direction] if args.key?(:direction)
           @num_time_series = args[:num_time_series] if args.key?(:num_time_series)
           @ranking_method = args[:ranking_method] if args.key?(:ranking_method)
+        end
+      end
+      
+      # QueryExemplarsRequest holds all parameters of the Prometheus upstream API for
+      # querying exemplars.
+      class QueryExemplarsRequest
+        include Google::Apis::Core::Hashable
+      
+        # The end time to evaluate the query for. Either floating point UNIX seconds or
+        # RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `end`
+        # @return [String]
+        attr_accessor :end
+      
+        # A PromQL query string. Query lanauge documentation: https://prometheus.io/docs/
+        # prometheus/latest/querying/basics/.
+        # Corresponds to the JSON property `query`
+        # @return [String]
+        attr_accessor :query
+      
+        # The start time to evaluate the query for. Either floating point UNIX seconds
+        # or RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `start`
+        # @return [String]
+        attr_accessor :start
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end = args[:end] if args.key?(:end)
+          @query = args[:query] if args.key?(:query)
+          @start = args[:start] if args.key?(:start)
+        end
+      end
+      
+      # QueryInstantRequest holds all parameters of the Prometheus upstream instant
+      # query API plus GCM specific parameters.
+      class QueryInstantRequest
+        include Google::Apis::Core::Hashable
+      
+        # A PromQL query string. Query lanauge documentation: https://prometheus.io/docs/
+        # prometheus/latest/querying/basics/.
+        # Corresponds to the JSON property `query`
+        # @return [String]
+        attr_accessor :query
+      
+        # The single point in time to evaluate the query for. Either floating point UNIX
+        # seconds or RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `time`
+        # @return [String]
+        attr_accessor :time
+      
+        # An upper bound timeout for the query. Either a Prometheus duration string (
+        # https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations)
+        # or floating point seconds. This non-standard encoding must be used for
+        # compatibility with the open source API. Clients may still implement timeouts
+        # at the connection level while ignoring this field.
+        # Corresponds to the JSON property `timeout`
+        # @return [String]
+        attr_accessor :timeout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @query = args[:query] if args.key?(:query)
+          @time = args[:time] if args.key?(:time)
+          @timeout = args[:timeout] if args.key?(:timeout)
+        end
+      end
+      
+      # QueryRangeRequest holds all parameters of the Prometheus upstream range query
+      # API plus GCM specific parameters.
+      class QueryRangeRequest
+        include Google::Apis::Core::Hashable
+      
+        # The end time to evaluate the query for. Either floating point UNIX seconds or
+        # RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `end`
+        # @return [String]
+        attr_accessor :end
+      
+        # A PromQL query string. Query lanauge documentation: https://prometheus.io/docs/
+        # prometheus/latest/querying/basics/.
+        # Corresponds to the JSON property `query`
+        # @return [String]
+        attr_accessor :query
+      
+        # The start time to evaluate the query for. Either floating point UNIX seconds
+        # or RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `start`
+        # @return [String]
+        attr_accessor :start
+      
+        # The resolution of query result. Either a Prometheus duration string (https://
+        # prometheus.io/docs/prometheus/latest/querying/basics/#time-durations) or
+        # floating point seconds. This non-standard encoding must be used for
+        # compatibility with the open source API. Clients may still implement timeouts
+        # at the connection level while ignoring this field.
+        # Corresponds to the JSON property `step`
+        # @return [String]
+        attr_accessor :step
+      
+        # An upper bound timeout for the query. Either a Prometheus duration string (
+        # https://prometheus.io/docs/prometheus/latest/querying/basics/#time-durations)
+        # or floating point seconds. This non-standard encoding must be used for
+        # compatibility with the open source API. Clients may still implement timeouts
+        # at the connection level while ignoring this field.
+        # Corresponds to the JSON property `timeout`
+        # @return [String]
+        attr_accessor :timeout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end = args[:end] if args.key?(:end)
+          @query = args[:query] if args.key?(:query)
+          @start = args[:start] if args.key?(:start)
+          @step = args[:step] if args.key?(:step)
+          @timeout = args[:timeout] if args.key?(:timeout)
+        end
+      end
+      
+      # QuerySeries holds all parameters of the Prometheus upstream API for querying
+      # series.
+      class QuerySeriesRequest
+        include Google::Apis::Core::Hashable
+      
+        # The end time to evaluate the query for. Either floating point UNIX seconds or
+        # RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `end`
+        # @return [String]
+        attr_accessor :end
+      
+        # The start time to evaluate the query for. Either floating point UNIX seconds
+        # or RFC3339 formatted timestamp.
+        # Corresponds to the JSON property `start`
+        # @return [String]
+        attr_accessor :start
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end = args[:end] if args.key?(:end)
+          @start = args[:start] if args.key?(:start)
         end
       end
       
@@ -1179,9 +1543,8 @@ module Google
       class TableDisplayOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. Columns to display in the table. Leave empty to display all
-        # available columns. Note: This field is for future features and is not
-        # currently used.
+        # Optional. This field is unused and has been replaced by TimeSeriesTable.
+        # column_settings
         # Corresponds to the JSON property `shownColumns`
         # @return [Array<String>]
         attr_accessor :shown_columns
@@ -1488,6 +1851,11 @@ module Google
       class TimeSeriesQuery
         include Google::Apis::Core::Hashable
       
+        # A query used to fetch time series with PromQL.
+        # Corresponds to the JSON property `prometheusQuery`
+        # @return [String]
+        attr_accessor :prometheus_query
+      
         # A filter that defines a subset of time series data that is displayed in a
         # widget. Time series data is fetched using the ListTimeSeries (https://cloud.
         # google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list) method.
@@ -1502,7 +1870,7 @@ module Google
         # @return [Google::Apis::MonitoringV1::TimeSeriesFilterRatio]
         attr_accessor :time_series_filter_ratio
       
-        # A query used to fetch time series.
+        # A query used to fetch time series with MQL.
         # Corresponds to the JSON property `timeSeriesQueryLanguage`
         # @return [String]
         attr_accessor :time_series_query_language
@@ -1521,6 +1889,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @prometheus_query = args[:prometheus_query] if args.key?(:prometheus_query)
           @time_series_filter = args[:time_series_filter] if args.key?(:time_series_filter)
           @time_series_filter_ratio = args[:time_series_filter_ratio] if args.key?(:time_series_filter_ratio)
           @time_series_query_language = args[:time_series_query_language] if args.key?(:time_series_query_language)
@@ -1532,10 +1901,20 @@ module Google
       class TimeSeriesTable
         include Google::Apis::Core::Hashable
       
+        # Optional. The list of the persistent column settings for the table.
+        # Corresponds to the JSON property `columnSettings`
+        # @return [Array<Google::Apis::MonitoringV1::ColumnSettings>]
+        attr_accessor :column_settings
+      
         # Required. The data displayed in this table.
         # Corresponds to the JSON property `dataSets`
         # @return [Array<Google::Apis::MonitoringV1::TableDataSet>]
         attr_accessor :data_sets
+      
+        # Optional. Store rendering strategy
+        # Corresponds to the JSON property `metricVisualization`
+        # @return [String]
+        attr_accessor :metric_visualization
       
         def initialize(**args)
            update!(**args)
@@ -1543,7 +1922,9 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @column_settings = args[:column_settings] if args.key?(:column_settings)
           @data_sets = args[:data_sets] if args.key?(:data_sets)
+          @metric_visualization = args[:metric_visualization] if args.key?(:metric_visualization)
         end
       end
       
@@ -1610,11 +1991,21 @@ module Google
         # A generic empty message that you can re-use to avoid defining duplicated empty
         # messages in your APIs. A typical example is to use it as the request or the
         # response type of an API method. For instance: service Foo ` rpc Bar(google.
-        # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-        # Empty is empty JSON object ``.
+        # protobuf.Empty) returns (google.protobuf.Empty); `
         # Corresponds to the JSON property `blank`
         # @return [Google::Apis::MonitoringV1::Empty]
         attr_accessor :blank
+      
+        # A widget that groups the other widgets. All widgets that are within the area
+        # spanned by the grouping widget are considered member widgets.
+        # Corresponds to the JSON property `collapsibleGroup`
+        # @return [Google::Apis::MonitoringV1::CollapsibleGroup]
+        attr_accessor :collapsible_group
+      
+        # A widget that displays a stream of log.
+        # Corresponds to the JSON property `logsPanel`
+        # @return [Google::Apis::MonitoringV1::LogsPanel]
+        attr_accessor :logs_panel
       
         # A widget showing the latest value of a metric, and how this value relates to
         # one or more thresholds.
@@ -1650,6 +2041,8 @@ module Google
         def update!(**args)
           @alert_chart = args[:alert_chart] if args.key?(:alert_chart)
           @blank = args[:blank] if args.key?(:blank)
+          @collapsible_group = args[:collapsible_group] if args.key?(:collapsible_group)
+          @logs_panel = args[:logs_panel] if args.key?(:logs_panel)
           @scorecard = args[:scorecard] if args.key?(:scorecard)
           @text = args[:text] if args.key?(:text)
           @time_series_table = args[:time_series_table] if args.key?(:time_series_table)

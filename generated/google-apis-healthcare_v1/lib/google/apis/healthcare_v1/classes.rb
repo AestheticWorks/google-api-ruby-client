@@ -248,8 +248,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -306,7 +306,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -329,38 +329,43 @@ module Google
         # @return [Google::Apis::HealthcareV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `deleted:user:`emailid`?uid=`uniqueid``: An email address (plus unique
+        # identifier) representing a user that has been recently deleted. For example, `
+        # alice@example.com?uid=123456789012345678901`. If the user is recovered, this
+        # value reverts to `user:`emailid`` and the recovered user retains the role in
+        # the binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email
+        # address (plus unique identifier) representing a service account that has been
+        # recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding. * `
+        # domain:`domain``: The G Suite domain (primary) that represents all the users
+        # of that domain. For example, `google.com` or `example.com`.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -747,12 +752,22 @@ module Google
         include Google::Apis::Core::Hashable
       
         # An AES 128/192/256 bit key. Causes the hash to be computed based on this key.
-        # A default key is generated for each Deidentify operation and is used wherever
-        # crypto_key is not specified.
+        # A default key is generated for each Deidentify operation and is used when
+        # neither `crypto_key` nor `kms_wrapped` is specified. Must not be set if `
+        # kms_wrapped` is set.
         # Corresponds to the JSON property `cryptoKey`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
         attr_accessor :crypto_key
+      
+        # Include to use an existing data crypto key wrapped by KMS. The wrapped key
+        # must be a 128-, 192-, or 256-bit key. The key must grant the Cloud IAM
+        # permission `cloudkms.cryptoKeyVersions.useToDecrypt` to the project's Cloud
+        # Healthcare Service Agent service account. For more information, see [Creating
+        # a wrapped key] (https://cloud.google.com/dlp/docs/create-wrapped-key).
+        # Corresponds to the JSON property `kmsWrapped`
+        # @return [Google::Apis::HealthcareV1::KmsWrappedCryptoKey]
+        attr_accessor :kms_wrapped
       
         def initialize(**args)
            update!(**args)
@@ -761,6 +776,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @crypto_key = args[:crypto_key] if args.key?(:crypto_key)
+          @kms_wrapped = args[:kms_wrapped] if args.key?(:kms_wrapped)
         end
       end
       
@@ -801,13 +817,25 @@ module Google
       class DateShiftConfig
         include Google::Apis::Core::Hashable
       
-        # An AES 128/192/256 bit key. Causes the shift to be computed based on this key
-        # and the patient ID. A default key is generated for each Deidentify operation
-        # and is used wherever crypto_key is not specified.
+        # An AES 128/192/256 bit key. The date shift is computed based on this key and
+        # the patient ID. If the patient ID is empty for a DICOM resource, the date
+        # shift is computed based on this key and the study instance UID. If `crypto_key`
+        # is not set, then `kms_wrapped` is used to calculate the date shift. If
+        # neither is set, a default key is generated for each de-identify operation.
+        # Must not be set if `kms_wrapped` is set.
         # Corresponds to the JSON property `cryptoKey`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
         attr_accessor :crypto_key
+      
+        # Include to use an existing data crypto key wrapped by KMS. The wrapped key
+        # must be a 128-, 192-, or 256-bit key. The key must grant the Cloud IAM
+        # permission `cloudkms.cryptoKeyVersions.useToDecrypt` to the project's Cloud
+        # Healthcare Service Agent service account. For more information, see [Creating
+        # a wrapped key] (https://cloud.google.com/dlp/docs/create-wrapped-key).
+        # Corresponds to the JSON property `kmsWrapped`
+        # @return [Google::Apis::HealthcareV1::KmsWrappedCryptoKey]
+        attr_accessor :kms_wrapped
       
         def initialize(**args)
            update!(**args)
@@ -816,6 +844,36 @@ module Google
         # Update properties of this object
         def update!(**args)
           @crypto_key = args[:crypto_key] if args.key?(:crypto_key)
+          @kms_wrapped = args[:kms_wrapped] if args.key?(:kms_wrapped)
+        end
+      end
+      
+      # Contains configuration for streaming de-identified FHIR export.
+      class DeidentifiedStoreDestination
+        include Google::Apis::Core::Hashable
+      
+        # Configures de-id options specific to different types of content. Each
+        # submessage customizes the handling of an https://tools.ietf.org/html/rfc6838
+        # media type or subtype. Configs are applied in a nested manner at runtime.
+        # Corresponds to the JSON property `config`
+        # @return [Google::Apis::HealthcareV1::DeidentifyConfig]
+        attr_accessor :config
+      
+        # The full resource name of a Cloud Healthcare FHIR store, for example, `
+        # projects/`project_id`/locations/`location_id`/datasets/`dataset_id`/fhirStores/
+        # `fhir_store_id``.
+        # Corresponds to the JSON property `store`
+        # @return [String]
+        attr_accessor :store
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @config = args[:config] if args.key?(:config)
+          @store = args[:store] if args.key?(:store)
         end
       end
       
@@ -878,6 +936,16 @@ module Google
         # @return [String]
         attr_accessor :destination_dataset
       
+        # Cloud Storage location to read the JSON cloud.healthcare.deidentify.
+        # DeidentifyConfig from, overriding the default config. Must be of the form `gs:/
+        # /`bucket_id`/path/to/object`. The Cloud Storage location must grant the Cloud
+        # IAM role `roles/storage.objectViewer` to the project's Cloud Healthcare
+        # Service Agent service account. Only one of `config` and `gcs_config_uri` can
+        # be specified.
+        # Corresponds to the JSON property `gcsConfigUri`
+        # @return [String]
+        attr_accessor :gcs_config_uri
+      
         def initialize(**args)
            update!(**args)
         end
@@ -886,6 +954,7 @@ module Google
         def update!(**args)
           @config = args[:config] if args.key?(:config)
           @destination_dataset = args[:destination_dataset] if args.key?(:destination_dataset)
+          @gcs_config_uri = args[:gcs_config_uri] if args.key?(:gcs_config_uri)
         end
       end
       
@@ -916,6 +985,16 @@ module Google
         # @return [Google::Apis::HealthcareV1::DicomFilterConfig]
         attr_accessor :filter_config
       
+        # Cloud Storage location to read the JSON cloud.healthcare.deidentify.
+        # DeidentifyConfig from, overriding the default config. Must be of the form `gs:/
+        # /`bucket_id`/path/to/object`. The Cloud Storage location must grant the Cloud
+        # IAM role `roles/storage.objectViewer` to the project's Cloud Healthcare
+        # Service Agent service account. Only one of `config` and `gcs_config_uri` can
+        # be specified.
+        # Corresponds to the JSON property `gcsConfigUri`
+        # @return [String]
+        attr_accessor :gcs_config_uri
+      
         def initialize(**args)
            update!(**args)
         end
@@ -925,6 +1004,7 @@ module Google
           @config = args[:config] if args.key?(:config)
           @destination_store = args[:destination_store] if args.key?(:destination_store)
           @filter_config = args[:filter_config] if args.key?(:filter_config)
+          @gcs_config_uri = args[:gcs_config_uri] if args.key?(:gcs_config_uri)
         end
       end
       
@@ -950,10 +1030,27 @@ module Google
         # @return [String]
         attr_accessor :destination_store
       
+        # Cloud Storage location to read the JSON cloud.healthcare.deidentify.
+        # DeidentifyConfig from, overriding the default config. Must be of the form `gs:/
+        # /`bucket_id`/path/to/object`. The Cloud Storage location must grant the Cloud
+        # IAM role `roles/storage.objectViewer` to the project's Cloud Healthcare
+        # Service Agent service account. Only one of `config` and `gcs_config_uri` can
+        # be specified.
+        # Corresponds to the JSON property `gcsConfigUri`
+        # @return [String]
+        attr_accessor :gcs_config_uri
+      
         # Filter configuration.
         # Corresponds to the JSON property `resourceFilter`
         # @return [Google::Apis::HealthcareV1::FhirFilter]
         attr_accessor :resource_filter
+      
+        # If true, skips resources that are created or modified after the de-identify
+        # operation is created.
+        # Corresponds to the JSON property `skipModifiedResources`
+        # @return [Boolean]
+        attr_accessor :skip_modified_resources
+        alias_method :skip_modified_resources?, :skip_modified_resources
       
         def initialize(**args)
            update!(**args)
@@ -963,7 +1060,9 @@ module Google
         def update!(**args)
           @config = args[:config] if args.key?(:config)
           @destination_store = args[:destination_store] if args.key?(:destination_store)
+          @gcs_config_uri = args[:gcs_config_uri] if args.key?(:gcs_config_uri)
           @resource_filter = args[:resource_filter] if args.key?(:resource_filter)
+          @skip_modified_resources = args[:skip_modified_resources] if args.key?(:skip_modified_resources)
         end
       end
       
@@ -1091,8 +1190,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1159,7 +1257,7 @@ module Google
         attr_accessor :confidence
       
         # linked_entities are candidate ontological concepts that this entity mention
-        # may refer to. They are sorted by decreasing confidence.it
+        # may refer to. They are sorted by decreasing confidence.
         # Corresponds to the JSON property `linkedEntities`
         # @return [Array<Google::Apis::HealthcareV1::LinkedEntity>]
         attr_accessor :linked_entities
@@ -1374,9 +1472,80 @@ module Google
         end
       end
       
+      # Request to schedule an export.
+      class ExportMessagesRequest
+        include Google::Apis::Core::Hashable
+      
+        # The end of the range in `send_time` (MSH.7, https://www.hl7.org/documentcenter/
+        # public_temp_2E58C1F9-1C23-BA17-0C6126475344DA9D/wg/conf/HL7MSH.htm) to process.
+        # If not specified, the time when the export is scheduled is used. This value
+        # has to come after the `start_time` defined below. Only messages whose `
+        # send_time` lies in the range `start_time` (inclusive) to `end_time` (exclusive)
+        # are exported.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The Cloud Storage output destination. The Cloud Healthcare Service Agent
+        # requires the `roles/storage.objectAdmin` Cloud IAM roles on the Cloud Storage
+        # location.
+        # Corresponds to the JSON property `gcsDestination`
+        # @return [Google::Apis::HealthcareV1::GcsDestination]
+        attr_accessor :gcs_destination
+      
+        # The start of the range in `send_time` (MSH.7, https://www.hl7.org/
+        # documentcenter/public_temp_2E58C1F9-1C23-BA17-0C6126475344DA9D/wg/conf/HL7MSH.
+        # htm) to process. If not specified, the UNIX epoch (1970-01-01T00:00:00Z) is
+        # used. This value has to come before the `end_time` defined below. Only
+        # messages whose `send_time` lies in the range `start_time` (inclusive) to `
+        # end_time` (exclusive) are exported.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @gcs_destination = args[:gcs_destination] if args.key?(:gcs_destination)
+          @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
+      # Final response for the export operation. This structure is included in the
+      # response to describe the detailed outcome.
+      class ExportMessagesResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Request to export resources.
       class ExportResourcesRequest
         include Google::Apis::Core::Hashable
+      
+        # If provided, only resources updated after this time are exported. The time
+        # uses the format YYYY-MM-DDThh:mm:ss.sss+zz:zz. For example, `2015-02-07T13:28:
+        # 17.239+02:00` or `2017-01-01T00:00:00Z`. The time must be specified to the
+        # second and include a time zone.
+        # Corresponds to the JSON property `_since`
+        # @return [String]
+        attr_accessor :_since
+      
+        # String of comma-delimited FHIR resource types. If provided, only resources of
+        # the specified resource type(s) are exported.
+        # Corresponds to the JSON property `_type`
+        # @return [String]
+        attr_accessor :_type
       
         # The configuration for exporting to BigQuery.
         # Corresponds to the JSON property `bigqueryDestination`
@@ -1394,6 +1563,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @_since = args[:_since] if args.key?(:_since)
+          @_type = args[:_type] if args.key?(:_type)
           @bigquery_destination = args[:bigquery_destination] if args.key?(:bigquery_destination)
           @gcs_destination = args[:gcs_destination] if args.key?(:gcs_destination)
         end
@@ -1498,9 +1669,18 @@ module Google
       class FhirConfig
         include Google::Apis::Core::Hashable
       
+        # The behaviour for handling FHIR extensions that aren't otherwise specified for
+        # de-identification. If true, all extensions are preserved during de-
+        # identification by default. If false or unspecified, all extensions are removed
+        # during de-identification by default.
+        # Corresponds to the JSON property `defaultKeepExtensions`
+        # @return [Boolean]
+        attr_accessor :default_keep_extensions
+        alias_method :default_keep_extensions?, :default_keep_extensions
+      
         # Specifies FHIR paths to match and how to transform them. Any field that is not
         # matched by a FieldMetadata is passed through to the output dataset unmodified.
-        # All extensions are removed in the output.
+        # All extensions will be processed according to `default_keep_extensions`.
         # Corresponds to the JSON property `fieldMetadataList`
         # @return [Array<Google::Apis::HealthcareV1::FieldMetadata>]
         attr_accessor :field_metadata_list
@@ -1511,6 +1691,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @default_keep_extensions = args[:default_keep_extensions] if args.key?(:default_keep_extensions)
           @field_metadata_list = args[:field_metadata_list] if args.key?(:field_metadata_list)
         end
       end
@@ -1537,6 +1718,18 @@ module Google
       # Represents a FHIR store.
       class FhirStore
         include Google::Apis::Core::Hashable
+      
+        # Enable parsing of references within complex FHIR data types such as Extensions.
+        # If this value is set to ENABLED, then features like referential integrity and
+        # Bundle reference rewriting apply to all references. If this flag has not been
+        # specified the behavior of the FHIR store will not change, references in
+        # complex data types will not be parsed. New stores will have this value set to
+        # ENABLED after a notification period. Warning: turning on this flag causes
+        # processing existing resources to fail if they contain references to non-
+        # existent resources.
+        # Corresponds to the JSON property `complexDataTypeReferenceParsing`
+        # @return [String]
+        attr_accessor :complex_data_type_reference_parsing
       
         # If true, overrides the default search behavior for this FHIR store to `
         # handling=strict` which returns an error for unrecognized search parameters. If
@@ -1625,6 +1818,11 @@ module Google
         # @return [Array<Google::Apis::HealthcareV1::StreamConfig>]
         attr_accessor :stream_configs
       
+        # Contains the configuration for FHIR profiles and validation.
+        # Corresponds to the JSON property `validationConfig`
+        # @return [Google::Apis::HealthcareV1::ValidationConfig]
+        attr_accessor :validation_config
+      
         # Immutable. The FHIR specification version that this FHIR store supports
         # natively. This field is immutable after store creation. Requests are rejected
         # if they contain FHIR resources of a different version. Version is required for
@@ -1639,6 +1837,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @complex_data_type_reference_parsing = args[:complex_data_type_reference_parsing] if args.key?(:complex_data_type_reference_parsing)
           @default_search_handling_strict = args[:default_search_handling_strict] if args.key?(:default_search_handling_strict)
           @disable_referential_integrity = args[:disable_referential_integrity] if args.key?(:disable_referential_integrity)
           @disable_resource_versioning = args[:disable_resource_versioning] if args.key?(:disable_resource_versioning)
@@ -1647,6 +1846,7 @@ module Google
           @name = args[:name] if args.key?(:name)
           @notification_config = args[:notification_config] if args.key?(:notification_config)
           @stream_configs = args[:stream_configs] if args.key?(:stream_configs)
+          @validation_config = args[:validation_config] if args.key?(:validation_config)
           @version = args[:version] if args.key?(:version)
         end
       end
@@ -1712,9 +1912,9 @@ module Google
         # example: Patient, HumanName. For "choice" types (those defined in the FHIR
         # spec with the form: field[x]) we use two separate components. For example, "
         # deceasedAge.unit" is matched by "Deceased.Age.unit". Supported types are:
-        # AdministrativeGenderCode, Code, Date, DateTime, Decimal, HumanName, Id,
-        # LanguageCode, Markdown, Oid, String, Uri, Uuid, Xhtml. Base64Binary is also
-        # supported, but may only be kept as-is or have all the content removed.
+        # AdministrativeGenderCode, Base64Binary, Boolean, Code, Date, DateTime, Decimal,
+        # HumanName, Id, Instant, Integer, LanguageCode, Markdown, Oid, PositiveInt,
+        # String, UnsignedInt, Uri, Uuid, Xhtml.
         # Corresponds to the JSON property `paths`
         # @return [Array<String>]
         attr_accessor :paths
@@ -1727,6 +1927,71 @@ module Google
         def update!(**args)
           @action = args[:action] if args.key?(:action)
           @paths = args[:paths] if args.key?(:paths)
+        end
+      end
+      
+      # The Cloud Storage output destination. The Cloud Healthcare Service Agent
+      # requires the `roles/storage.objectAdmin` Cloud IAM roles on the Cloud Storage
+      # location.
+      class GcsDestination
+        include Google::Apis::Core::Hashable
+      
+        # The format of the exported HL7v2 message files.
+        # Corresponds to the JSON property `contentStructure`
+        # @return [String]
+        attr_accessor :content_structure
+      
+        # Specifies the parts of the Message resource to include in the export. If not
+        # specified, FULL is used.
+        # Corresponds to the JSON property `messageView`
+        # @return [String]
+        attr_accessor :message_view
+      
+        # URI of an existing Cloud Storage directory where the server writes result
+        # files, in the format `gs://`bucket-id`/`path/to/destination/dir``. If there is
+        # no trailing slash, the service appends one when composing the object path.
+        # Corresponds to the JSON property `uriPrefix`
+        # @return [String]
+        attr_accessor :uri_prefix
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @content_structure = args[:content_structure] if args.key?(:content_structure)
+          @message_view = args[:message_view] if args.key?(:message_view)
+          @uri_prefix = args[:uri_prefix] if args.key?(:uri_prefix)
+        end
+      end
+      
+      # Specifies the configuration for importing data from Cloud Storage.
+      class GcsSource
+        include Google::Apis::Core::Hashable
+      
+        # Points to a Cloud Storage URI containing file(s) to import. The URI must be in
+        # the following format: `gs://`bucket_id`/`object_id``. The URI can include
+        # wildcards in `object_id` and thus identify multiple files. Supported wildcards:
+        # * `*` to match 0 or more non-separator characters * `**` to match 0 or more
+        # characters (including separators). Must be used at the end of a path and with
+        # no other wildcards in the path. Can also be used with a file extension (such
+        # as .ndjson), which imports all files with the extension in the specified
+        # directory and its sub-directories. For example, `gs://my-bucket/my-directory/**
+        # .ndjson` imports all files with `.ndjson` extensions in `my-directory/` and
+        # its sub-directories. * `?` to match 1 character Files matching the wildcard
+        # are expected to contain content only, no metadata.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       
@@ -1825,9 +2090,9 @@ module Google
       class GoogleCloudHealthcareV1DicomBigQueryDestination
         include Google::Apis::Core::Hashable
       
-        # If the destination table already exists and this flag is `TRUE`, the table is
-        # overwritten by the contents of the DICOM store. If the flag is not set and the
-        # destination table already exists, the export call returns an error.
+        # Use `write_disposition` instead. If `write_disposition` is specified, this
+        # parameter is ignored. force=false is equivalent to write_disposition=
+        # WRITE_EMPTY and force=true is equivalent to write_disposition=WRITE_TRUNCATE.
         # Corresponds to the JSON property `force`
         # @return [Boolean]
         attr_accessor :force
@@ -1839,6 +2104,13 @@ module Google
         # @return [String]
         attr_accessor :table_uri
       
+        # Determines whether the existing table in the destination is to be overwritten
+        # or appended to. If a write_disposition is specified, the `force` parameter is
+        # ignored.
+        # Corresponds to the JSON property `writeDisposition`
+        # @return [String]
+        attr_accessor :write_disposition
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1847,6 +2119,7 @@ module Google
         def update!(**args)
           @force = args[:force] if args.key?(:force)
           @table_uri = args[:table_uri] if args.key?(:table_uri)
+          @write_disposition = args[:write_disposition] if args.key?(:write_disposition)
         end
       end
       
@@ -2196,8 +2469,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :labels
       
-        # Resource name of the HL7v2 store, of the form `projects/`project_id`/datasets/`
-        # dataset_id`/hl7V2Stores/`hl7v2_store_id``.
+        # Resource name of the HL7v2 store, of the form `projects/`project_id`/locations/
+        # `location_id`/datasets/`dataset_id`/hl7V2Stores/`hl7v2_store_id``.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -2379,6 +2652,40 @@ module Google
         end
       end
       
+      # Request to import messages.
+      class ImportMessagesRequest
+        include Google::Apis::Core::Hashable
+      
+        # Specifies the configuration for importing data from Cloud Storage.
+        # Corresponds to the JSON property `gcsSource`
+        # @return [Google::Apis::HealthcareV1::GcsSource]
+        attr_accessor :gcs_source
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gcs_source = args[:gcs_source] if args.key?(:gcs_source)
+        end
+      end
+      
+      # Final response of importing messages. This structure is included in the
+      # response to describe the detailed outcome. It is only included when the
+      # operation finishes successfully.
+      class ImportMessagesResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Request to import resources.
       class ImportResourcesRequest
         include Google::Apis::Core::Hashable
@@ -2520,6 +2827,38 @@ module Google
         def update!(**args)
           @hl7_ack = args[:hl7_ack] if args.key?(:hl7_ack)
           @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # Include to use an existing data crypto key wrapped by KMS. The wrapped key
+      # must be a 128-, 192-, or 256-bit key. The key must grant the Cloud IAM
+      # permission `cloudkms.cryptoKeyVersions.useToDecrypt` to the project's Cloud
+      # Healthcare Service Agent service account. For more information, see [Creating
+      # a wrapped key] (https://cloud.google.com/dlp/docs/create-wrapped-key).
+      class KmsWrappedCryptoKey
+        include Google::Apis::Core::Hashable
+      
+        # Required. The resource name of the KMS CryptoKey to use for unwrapping. For
+        # example, `projects/`project_id`/locations/`location_id`/keyRings/`keyring`/
+        # cryptoKeys/`key``.
+        # Corresponds to the JSON property `cryptoKey`
+        # @return [String]
+        attr_accessor :crypto_key
+      
+        # Required. The wrapped data crypto key.
+        # Corresponds to the JSON property `wrappedKey`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :wrapped_key
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @crypto_key = args[:crypto_key] if args.key?(:crypto_key)
+          @wrapped_key = args[:wrapped_key] if args.key?(:wrapped_key)
         end
       end
       
@@ -2972,9 +3311,9 @@ module Google
         # @return [String]
         attr_accessor :message_type
       
-        # Resource name of the Message, of the form `projects/`project_id`/datasets/`
-        # dataset_id`/hl7V2Stores/`hl7_v2_store_id`/messages/`message_id``. Assigned by
-        # the server.
+        # Resource name of the Message, of the form `projects/`project_id`/locations/`
+        # location_id`/datasets/`dataset_id`/hl7V2Stores/`hl7_v2_store_id`/messages/`
+        # message_id``. Assigned by the server.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -3214,8 +3553,9 @@ module Google
         # @return [String]
         attr_accessor :segment_terminator
       
-        # Immutable. Determines the version of the unschematized parser to be used when `
-        # schema` is not given. This field is immutable after store creation.
+        # Immutable. Determines the version of both the default parser to be used when `
+        # schema` is not given, as well as the schematized parser used when `schema` is
+        # specified. This field is immutable after HL7v2 store creation.
         # Corresponds to the JSON property `version`
         # @return [String]
         attr_accessor :version
@@ -3260,31 +3600,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -3293,9 +3633,14 @@ module Google
         # @return [Array<Google::Apis::HealthcareV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::HealthcareV1::Binding>]
         attr_accessor :bindings
@@ -3823,31 +4168,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::HealthcareV1::Policy]
         attr_accessor :policy
@@ -3956,6 +4301,11 @@ module Google
         # @return [Google::Apis::HealthcareV1::GoogleCloudHealthcareV1FhirBigQueryDestination]
         attr_accessor :bigquery_destination
       
+        # Contains configuration for streaming de-identified FHIR export.
+        # Corresponds to the JSON property `deidentifiedStoreDestination`
+        # @return [Google::Apis::HealthcareV1::DeidentifiedStoreDestination]
+        attr_accessor :deidentified_store_destination
+      
         # Supply a FHIR resource type (such as "Patient" or "Observation"). See https://
         # www.hl7.org/fhir/valueset-resource-types.html for a list of all FHIR resource
         # types. The server treats an empty list as an intent to stream all the
@@ -3971,6 +4321,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @bigquery_destination = args[:bigquery_destination] if args.key?(:bigquery_destination)
+          @deidentified_store_destination = args[:deidentified_store_destination] if args.key?(:deidentified_store_destination)
           @resource_types = args[:resource_types] if args.key?(:resource_types)
         end
       end
@@ -4002,7 +4353,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -4041,7 +4392,8 @@ module Google
       class TextConfig
         include Google::Apis::Core::Hashable
       
-        # The transformations to apply to the detected data.
+        # The transformations to apply to the detected data. Deprecated. Use `
+        # additional_transformations` instead.
         # Corresponds to the JSON property `transformations`
         # @return [Array<Google::Apis::HealthcareV1::InfoTypeTransformation>]
         attr_accessor :transformations
@@ -4166,6 +4518,79 @@ module Google
           @name = args[:name] if args.key?(:name)
           @resource_attributes = args[:resource_attributes] if args.key?(:resource_attributes)
           @user_id = args[:user_id] if args.key?(:user_id)
+        end
+      end
+      
+      # Contains the configuration for FHIR profiles and validation.
+      class ValidationConfig
+        include Google::Apis::Core::Hashable
+      
+        # Whether to disable FHIRPath validation for incoming resources. Set this to
+        # true to disable checking incoming resources for conformance against FHIRPath
+        # requirement defined in the FHIR specification. This property only affects
+        # resource types that do not have profiles configured for them, any rules in
+        # enabled implementation guides will still be enforced.
+        # Corresponds to the JSON property `disableFhirpathValidation`
+        # @return [Boolean]
+        attr_accessor :disable_fhirpath_validation
+        alias_method :disable_fhirpath_validation?, :disable_fhirpath_validation
+      
+        # Whether to disable profile validation for this FHIR store. Set this to true to
+        # disable checking incoming resources for conformance against structure
+        # definitions in this FHIR store.
+        # Corresponds to the JSON property `disableProfileValidation`
+        # @return [Boolean]
+        attr_accessor :disable_profile_validation
+        alias_method :disable_profile_validation?, :disable_profile_validation
+      
+        # Whether to disable reference type validation for incoming resources. Set this
+        # to true to disable checking incoming resources for conformance against
+        # reference type requirement defined in the FHIR specification. This property
+        # only affects resource types that do not have profiles configured for them, any
+        # rules in enabled implementation guides will still be enforced.
+        # Corresponds to the JSON property `disableReferenceTypeValidation`
+        # @return [Boolean]
+        attr_accessor :disable_reference_type_validation
+        alias_method :disable_reference_type_validation?, :disable_reference_type_validation
+      
+        # Whether to disable required fields validation for incoming resources. Set this
+        # to true to disable checking incoming resources for conformance against
+        # required fields requirement defined in the FHIR specification. This property
+        # only affects resource types that do not have profiles configured for them, any
+        # rules in enabled implementation guides will still be enforced.
+        # Corresponds to the JSON property `disableRequiredFieldValidation`
+        # @return [Boolean]
+        attr_accessor :disable_required_field_validation
+        alias_method :disable_required_field_validation?, :disable_required_field_validation
+      
+        # A list of implementation guide URLs in this FHIR store that are used to
+        # configure the profiles to use for validation. For example, to use the US Core
+        # profiles for validation, set `enabled_implementation_guides` to `["http://hl7.
+        # org/fhir/us/core/ImplementationGuide/ig"]`. If `enabled_implementation_guides`
+        # is empty or omitted, then incoming resources are only required to conform to
+        # the base FHIR profiles. Otherwise, a resource must conform to at least one
+        # profile listed in the `global` property of one of the enabled
+        # ImplementationGuides. The Cloud Healthcare API does not currently enforce all
+        # of the rules in a StructureDefinition. The following rules are supported: -
+        # min/max - minValue/maxValue - maxLength - type - fixed[x] - pattern[x] on
+        # simple types - slicing, when using "value" as the discriminator type When a
+        # URL cannot be resolved (for example, in a type assertion), the server does not
+        # return an error.
+        # Corresponds to the JSON property `enabledImplementationGuides`
+        # @return [Array<String>]
+        attr_accessor :enabled_implementation_guides
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @disable_fhirpath_validation = args[:disable_fhirpath_validation] if args.key?(:disable_fhirpath_validation)
+          @disable_profile_validation = args[:disable_profile_validation] if args.key?(:disable_profile_validation)
+          @disable_reference_type_validation = args[:disable_reference_type_validation] if args.key?(:disable_reference_type_validation)
+          @disable_required_field_validation = args[:disable_required_field_validation] if args.key?(:disable_required_field_validation)
+          @enabled_implementation_guides = args[:enabled_implementation_guides] if args.key?(:enabled_implementation_guides)
         end
       end
       

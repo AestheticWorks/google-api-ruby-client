@@ -22,6 +22,24 @@ module Google
   module Apis
     module CloudidentityV1
       
+      class AddIdpCredentialOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AddIdpCredentialRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CancelUserInvitationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CheckTransitiveMembershipResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -29,6 +47,18 @@ module Google
       end
       
       class CreateGroupMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CreateInboundSamlSsoProfileOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CreateInboundSsoAssignmentOperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -46,7 +76,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DeleteIdpCredentialOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DeleteInboundSamlSsoProfileOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DeleteInboundSsoAssignmentOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DeleteMembershipMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DsaPublicKeyInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -310,13 +364,61 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class IdpCredential
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InboundSamlSsoProfile
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InboundSsoAssignment
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IsInvitableUserResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListGroupsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListIdpCredentialsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListInboundSamlSsoProfilesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListInboundSsoAssignmentsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListMembershipsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListUserInvitationsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -340,6 +442,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MemberRestriction
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Membership
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -353,6 +461,12 @@ module Google
       end
       
       class MembershipRole
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MembershipRoleRestrictionEvaluation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -376,6 +490,42 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RestrictionEvaluation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RestrictionEvaluations
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RsaPublicKeyInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SamlIdpConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SamlSpConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SamlSsoInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SearchGroupsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -389,6 +539,24 @@ module Google
       end
       
       class SearchTransitiveMembershipsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SecuritySettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SendUserInvitationRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SignInBehavior
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -412,6 +580,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UpdateInboundSamlSsoProfileOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UpdateInboundSsoAssignmentOperationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class UpdateMembershipMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -430,6 +610,25 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AddIdpCredentialOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class AddIdpCredentialRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :pem_data, as: 'pemData'
+        end
+      end
+      
+      class CancelUserInvitationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class CheckTransitiveMembershipResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -438,6 +637,18 @@ module Google
       end
       
       class CreateGroupMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CreateInboundSamlSsoProfileOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class CreateInboundSsoAssignmentOperationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end
@@ -455,9 +666,34 @@ module Google
         end
       end
       
+      class DeleteIdpCredentialOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class DeleteInboundSamlSsoProfileOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class DeleteInboundSsoAssignmentOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class DeleteMembershipMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class DsaPublicKeyInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :key_size, as: 'keySize'
         end
       end
       
@@ -670,6 +906,7 @@ module Google
           property :build_number, as: 'buildNumber'
           property :compromised_state, as: 'compromisedState'
           property :create_time, as: 'createTime'
+          property :device_id, as: 'deviceId'
           property :device_type, as: 'deviceType'
           property :enabled_developer_options, as: 'enabledDeveloperOptions'
           property :enabled_usb_debugging, as: 'enabledUsbDebugging'
@@ -779,6 +1016,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :customer, as: 'customer'
+          property :remove_reset_lock, as: 'removeResetLock'
         end
       end
       
@@ -842,10 +1080,85 @@ module Google
         end
       end
       
+      class IdpCredential
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dsa_key_info, as: 'dsaKeyInfo', class: Google::Apis::CloudidentityV1::DsaPublicKeyInfo, decorator: Google::Apis::CloudidentityV1::DsaPublicKeyInfo::Representation
+      
+          property :name, as: 'name'
+          property :rsa_key_info, as: 'rsaKeyInfo', class: Google::Apis::CloudidentityV1::RsaPublicKeyInfo, decorator: Google::Apis::CloudidentityV1::RsaPublicKeyInfo::Representation
+      
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class InboundSamlSsoProfile
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :customer, as: 'customer'
+          property :display_name, as: 'displayName'
+          property :idp_config, as: 'idpConfig', class: Google::Apis::CloudidentityV1::SamlIdpConfig, decorator: Google::Apis::CloudidentityV1::SamlIdpConfig::Representation
+      
+          property :name, as: 'name'
+          property :sp_config, as: 'spConfig', class: Google::Apis::CloudidentityV1::SamlSpConfig, decorator: Google::Apis::CloudidentityV1::SamlSpConfig::Representation
+      
+        end
+      end
+      
+      class InboundSsoAssignment
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :customer, as: 'customer'
+          property :name, as: 'name'
+          property :rank, as: 'rank'
+          property :saml_sso_info, as: 'samlSsoInfo', class: Google::Apis::CloudidentityV1::SamlSsoInfo, decorator: Google::Apis::CloudidentityV1::SamlSsoInfo::Representation
+      
+          property :sign_in_behavior, as: 'signInBehavior', class: Google::Apis::CloudidentityV1::SignInBehavior, decorator: Google::Apis::CloudidentityV1::SignInBehavior::Representation
+      
+          property :sso_mode, as: 'ssoMode'
+          property :target_group, as: 'targetGroup'
+          property :target_org_unit, as: 'targetOrgUnit'
+        end
+      end
+      
+      class IsInvitableUserResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :is_invitable_user, as: 'isInvitableUser'
+        end
+      end
+      
       class ListGroupsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :groups, as: 'groups', class: Google::Apis::CloudidentityV1::Group, decorator: Google::Apis::CloudidentityV1::Group::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListIdpCredentialsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :idp_credentials, as: 'idpCredentials', class: Google::Apis::CloudidentityV1::IdpCredential, decorator: Google::Apis::CloudidentityV1::IdpCredential::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListInboundSamlSsoProfilesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :inbound_saml_sso_profiles, as: 'inboundSamlSsoProfiles', class: Google::Apis::CloudidentityV1::InboundSamlSsoProfile, decorator: Google::Apis::CloudidentityV1::InboundSamlSsoProfile::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListInboundSsoAssignmentsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :inbound_sso_assignments, as: 'inboundSsoAssignments', class: Google::Apis::CloudidentityV1::InboundSsoAssignment, decorator: Google::Apis::CloudidentityV1::InboundSsoAssignment::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -857,6 +1170,15 @@ module Google
           collection :memberships, as: 'memberships', class: Google::Apis::CloudidentityV1::Membership, decorator: Google::Apis::CloudidentityV1::Membership::Representation
       
           property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListUserInvitationsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :user_invitations, as: 'userInvitations', class: Google::Apis::CloudidentityV1::UserInvitation, decorator: Google::Apis::CloudidentityV1::UserInvitation::Representation
+      
         end
       end
       
@@ -883,6 +1205,15 @@ module Google
           property :relation_type, as: 'relationType'
           collection :roles, as: 'roles', class: Google::Apis::CloudidentityV1::TransitiveMembershipRole, decorator: Google::Apis::CloudidentityV1::TransitiveMembershipRole::Representation
       
+        end
+      end
+      
+      class MemberRestriction
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :evaluation, as: 'evaluation', class: Google::Apis::CloudidentityV1::RestrictionEvaluation, decorator: Google::Apis::CloudidentityV1::RestrictionEvaluation::Representation
+      
+          property :query, as: 'query'
         end
       end
       
@@ -915,6 +1246,15 @@ module Google
           property :expiry_detail, as: 'expiryDetail', class: Google::Apis::CloudidentityV1::ExpiryDetail, decorator: Google::Apis::CloudidentityV1::ExpiryDetail::Representation
       
           property :name, as: 'name'
+          property :restriction_evaluations, as: 'restrictionEvaluations', class: Google::Apis::CloudidentityV1::RestrictionEvaluations, decorator: Google::Apis::CloudidentityV1::RestrictionEvaluations::Representation
+      
+        end
+      end
+      
+      class MembershipRoleRestrictionEvaluation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :state, as: 'state'
         end
       end
       
@@ -949,6 +1289,53 @@ module Google
         end
       end
       
+      class RestrictionEvaluation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :state, as: 'state'
+        end
+      end
+      
+      class RestrictionEvaluations
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :member_restriction_evaluation, as: 'memberRestrictionEvaluation', class: Google::Apis::CloudidentityV1::MembershipRoleRestrictionEvaluation, decorator: Google::Apis::CloudidentityV1::MembershipRoleRestrictionEvaluation::Representation
+      
+        end
+      end
+      
+      class RsaPublicKeyInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :key_size, as: 'keySize'
+        end
+      end
+      
+      class SamlIdpConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :change_password_uri, as: 'changePasswordUri'
+          property :entity_id, as: 'entityId'
+          property :logout_redirect_uri, as: 'logoutRedirectUri'
+          property :single_sign_on_service_uri, as: 'singleSignOnServiceUri'
+        end
+      end
+      
+      class SamlSpConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :assertion_consumer_service_uri, as: 'assertionConsumerServiceUri'
+          property :entity_id, as: 'entityId'
+        end
+      end
+      
+      class SamlSsoInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :inbound_saml_sso_profile, as: 'inboundSamlSsoProfile'
+        end
+      end
+      
       class SearchGroupsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -976,6 +1363,28 @@ module Google
         end
       end
       
+      class SecuritySettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :member_restriction, as: 'memberRestriction', class: Google::Apis::CloudidentityV1::MemberRestriction, decorator: Google::Apis::CloudidentityV1::MemberRestriction::Representation
+      
+          property :name, as: 'name'
+        end
+      end
+      
+      class SendUserInvitationRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class SignInBehavior
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :redirect_condition, as: 'redirectCondition'
+        end
+      end
+      
       class Status
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -993,6 +1402,18 @@ module Google
       end
       
       class UpdateGroupMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class UpdateInboundSamlSsoProfileOperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class UpdateInboundSsoAssignmentOperationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
         end

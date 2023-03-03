@@ -22,7 +22,19 @@ module Google
   module Apis
     module LoggingV2
       
+      class BigQueryDataset
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BigQueryOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BucketMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -64,6 +76,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CreateBucketRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CreateLinkRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DeleteLinkRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Empty
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -88,6 +118,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class IndexConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LabelDescriptor
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -100,6 +136,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Link
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LinkMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListBucketsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -107,6 +155,12 @@ module Google
       end
       
       class ListExclusionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListLinksResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -172,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class LocationMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LogBucket
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -215,6 +275,12 @@ module Google
       end
       
       class LogSink
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LogSplit
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -268,6 +334,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Settings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SourceLocation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -292,18 +364,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class TableFieldSchema
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class TableSchema
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class TailLogEntriesRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -322,6 +382,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UpdateBucketRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class WriteLogEntriesRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -334,11 +400,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BigQueryDataset
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :dataset_id, as: 'datasetId'
+        end
+      end
+      
       class BigQueryOptions
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :use_partitioned_tables, as: 'usePartitionedTables'
           property :uses_timestamp_column_partitioning, as: 'usesTimestampColumnPartitioning'
+        end
+      end
+      
+      class BucketMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_bucket_request, as: 'createBucketRequest', class: Google::Apis::LoggingV2::CreateBucketRequest, decorator: Google::Apis::LoggingV2::CreateBucketRequest::Representation
+      
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+          property :state, as: 'state'
+          property :update_bucket_request, as: 'updateBucketRequest', class: Google::Apis::LoggingV2::UpdateBucketRequest, decorator: Google::Apis::LoggingV2::UpdateBucketRequest::Representation
+      
         end
       end
       
@@ -364,6 +450,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :kms_key_name, as: 'kmsKeyName'
+          property :kms_key_version_name, as: 'kmsKeyVersionName'
           property :name, as: 'name'
           property :service_account_id, as: 'serviceAccountId'
         end
@@ -396,6 +483,33 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :log_entries_copied_count, :numeric_string => true, as: 'logEntriesCopiedCount'
+        end
+      end
+      
+      class CreateBucketRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket, as: 'bucket', class: Google::Apis::LoggingV2::LogBucket, decorator: Google::Apis::LoggingV2::LogBucket::Representation
+      
+          property :bucket_id, as: 'bucketId'
+          property :parent, as: 'parent'
+        end
+      end
+      
+      class CreateLinkRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :link, as: 'link', class: Google::Apis::LoggingV2::Link, decorator: Google::Apis::LoggingV2::Link::Representation
+      
+          property :link_id, as: 'linkId'
+          property :parent, as: 'parent'
+        end
+      end
+      
+      class DeleteLinkRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
         end
       end
       
@@ -442,6 +556,15 @@ module Google
         end
       end
       
+      class IndexConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :field_path, as: 'fieldPath'
+          property :type, as: 'type'
+        end
+      end
+      
       class LabelDescriptor
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -460,6 +583,31 @@ module Google
         end
       end
       
+      class Link
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bigquery_dataset, as: 'bigqueryDataset', class: Google::Apis::LoggingV2::BigQueryDataset, decorator: Google::Apis::LoggingV2::BigQueryDataset::Representation
+      
+          property :create_time, as: 'createTime'
+          property :description, as: 'description'
+          property :lifecycle_state, as: 'lifecycleState'
+          property :name, as: 'name'
+        end
+      end
+      
+      class LinkMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_link_request, as: 'createLinkRequest', class: Google::Apis::LoggingV2::CreateLinkRequest, decorator: Google::Apis::LoggingV2::CreateLinkRequest::Representation
+      
+          property :delete_link_request, as: 'deleteLinkRequest', class: Google::Apis::LoggingV2::DeleteLinkRequest, decorator: Google::Apis::LoggingV2::DeleteLinkRequest::Representation
+      
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+          property :state, as: 'state'
+        end
+      end
+      
       class ListBucketsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -473,6 +621,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :exclusions, as: 'exclusions', class: Google::Apis::LoggingV2::LogExclusion, decorator: Google::Apis::LoggingV2::LogExclusion::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListLinksResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :links, as: 'links', class: Google::Apis::LoggingV2::Link, decorator: Google::Apis::LoggingV2::Link::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -572,11 +729,23 @@ module Google
         end
       end
       
+      class LocationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :log_analytics_enabled, as: 'logAnalyticsEnabled'
+        end
+      end
+      
       class LogBucket
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :analytics_enabled, as: 'analyticsEnabled'
+          property :cmek_settings, as: 'cmekSettings', class: Google::Apis::LoggingV2::CmekSettings, decorator: Google::Apis::LoggingV2::CmekSettings::Representation
+      
           property :create_time, as: 'createTime'
           property :description, as: 'description'
+          collection :index_configs, as: 'indexConfigs', class: Google::Apis::LoggingV2::IndexConfig, decorator: Google::Apis::LoggingV2::IndexConfig::Representation
+      
           property :lifecycle_state, as: 'lifecycleState'
           property :locked, as: 'locked'
           property :name, as: 'name'
@@ -607,6 +776,8 @@ module Google
           property :source_location, as: 'sourceLocation', class: Google::Apis::LoggingV2::LogEntrySourceLocation, decorator: Google::Apis::LoggingV2::LogEntrySourceLocation::Representation
       
           property :span_id, as: 'spanId'
+          property :split, as: 'split', class: Google::Apis::LoggingV2::LogSplit, decorator: Google::Apis::LoggingV2::LogSplit::Representation
+      
           property :text_payload, as: 'textPayload'
           property :timestamp, as: 'timestamp'
           property :trace, as: 'trace'
@@ -659,6 +830,7 @@ module Google
       class LogMetric
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket_name, as: 'bucketName'
           property :bucket_options, as: 'bucketOptions', class: Google::Apis::LoggingV2::BucketOptions, decorator: Google::Apis::LoggingV2::BucketOptions::Representation
       
           property :create_time, as: 'createTime'
@@ -695,6 +867,15 @@ module Google
         end
       end
       
+      class LogSplit
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :index, as: 'index'
+          property :total_splits, as: 'totalSplits'
+          property :uid, as: 'uid'
+        end
+      end
+      
       class LogView
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -702,8 +883,6 @@ module Google
           property :description, as: 'description'
           property :filter, as: 'filter'
           property :name, as: 'name'
-          property :schema, as: 'schema', class: Google::Apis::LoggingV2::TableSchema, decorator: Google::Apis::LoggingV2::TableSchema::Representation
-      
           property :update_time, as: 'updateTime'
         end
       end
@@ -805,6 +984,7 @@ module Google
           property :response_size, :numeric_string => true, as: 'responseSize'
           collection :source_reference, as: 'sourceReference', class: Google::Apis::LoggingV2::SourceReference, decorator: Google::Apis::LoggingV2::SourceReference::Representation
       
+          property :span_id, as: 'spanId'
           property :start_time, as: 'startTime'
           property :status, as: 'status'
           property :task_name, as: 'taskName'
@@ -815,6 +995,17 @@ module Google
           property :user_agent, as: 'userAgent'
           property :version_id, as: 'versionId'
           property :was_loading_request, as: 'wasLoadingRequest'
+        end
+      end
+      
+      class Settings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :disable_default_sink, as: 'disableDefaultSink'
+          property :kms_key_name, as: 'kmsKeyName'
+          property :kms_service_account_id, as: 'kmsServiceAccountId'
+          property :name, as: 'name'
+          property :storage_location, as: 'storageLocation'
         end
       end
       
@@ -852,26 +1043,6 @@ module Google
         end
       end
       
-      class TableFieldSchema
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :description, as: 'description'
-          collection :fields, as: 'fields', class: Google::Apis::LoggingV2::TableFieldSchema, decorator: Google::Apis::LoggingV2::TableFieldSchema::Representation
-      
-          property :mode, as: 'mode'
-          property :name, as: 'name'
-          property :type, as: 'type'
-        end
-      end
-      
-      class TableSchema
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          collection :fields, as: 'fields', class: Google::Apis::LoggingV2::TableFieldSchema, decorator: Google::Apis::LoggingV2::TableFieldSchema::Representation
-      
-        end
-      end
-      
       class TailLogEntriesRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -894,6 +1065,16 @@ module Google
       class UndeleteBucketRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class UpdateBucketRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket, as: 'bucket', class: Google::Apis::LoggingV2::LogBucket, decorator: Google::Apis::LoggingV2::LogBucket::Representation
+      
+          property :name, as: 'name'
+          property :update_mask, as: 'updateMask'
         end
       end
       

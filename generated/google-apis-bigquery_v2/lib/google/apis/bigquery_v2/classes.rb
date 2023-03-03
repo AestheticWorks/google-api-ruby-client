@@ -97,10 +97,12 @@ module Google
         # @return [String]
         attr_accessor :argument_kind
       
-        # The type of a variable, e.g., a function argument. Examples: INT64: `type_kind=
-        # "INT64"` ARRAY: `type_kind="ARRAY", array_element_type="STRING"` STRUCT>: `
-        # type_kind="STRUCT", struct_type=`fields=[ `name="x", type=`type_kind="STRING"``
-        # , `name="y", type=`type_kind="ARRAY", array_element_type="DATE"`` ]``
+        # The data type of a variable such as a function argument. Examples include: *
+        # INT64: ``"typeKind": "INT64"`` * ARRAY: ` "typeKind": "ARRAY", "
+        # arrayElementType": `"typeKind": "STRING"` ` * STRUCT>: ` "typeKind": "STRUCT",
+        # "structType": ` "fields": [ ` "name": "x", "type": `"typeKind": "STRING"` `, `
+        # "name": "y", "type": ` "typeKind": "ARRAY", "arrayElementType": `"typeKind": "
+        # DATE"` ` ` ] ` `
         # Corresponds to the JSON property `dataType`
         # @return [Google::Apis::BigqueryV2::StandardSqlDataType]
         attr_accessor :data_type
@@ -479,8 +481,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -591,6 +593,12 @@ module Google
       
         # [Output-only] Specifies which mode of BI Engine acceleration was performed (if
         # any).
+        # Corresponds to the JSON property `accelerationMode`
+        # @return [String]
+        attr_accessor :acceleration_mode
+      
+        # [Output-only] Specifies which mode of BI Engine acceleration was performed (if
+        # any).
         # Corresponds to the JSON property `biEngineMode`
         # @return [String]
         attr_accessor :bi_engine_mode
@@ -608,6 +616,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @acceleration_mode = args[:acceleration_mode] if args.key?(:acceleration_mode)
           @bi_engine_mode = args[:bi_engine_mode] if args.key?(:bi_engine_mode)
           @bi_engine_reasons = args[:bi_engine_reasons] if args.key?(:bi_engine_reasons)
         end
@@ -922,7 +931,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -945,38 +954,43 @@ module Google
         # @return [Google::Apis::BigqueryV2::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -1205,6 +1219,32 @@ module Google
         end
       end
       
+      # 
+      class CloneDefinition
+        include Google::Apis::Core::Hashable
+      
+        # [Required] Reference describing the ID of the table that was cloned.
+        # Corresponds to the JSON property `baseTableReference`
+        # @return [Google::Apis::BigqueryV2::TableReference]
+        attr_accessor :base_table_reference
+      
+        # [Required] The time at which the base table was cloned. This value is reported
+        # in the JSON response using RFC3339 format.
+        # Corresponds to the JSON property `cloneTime`
+        # @return [DateTime]
+        attr_accessor :clone_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @base_table_reference = args[:base_table_reference] if args.key?(:base_table_reference)
+          @clone_time = args[:clone_time] if args.key?(:clone_time)
+        end
+      end
+      
       # Message containing the information about one cluster.
       class Cluster
         include Google::Apis::Core::Hashable
@@ -1415,6 +1455,14 @@ module Google
         # @return [String]
         attr_accessor :null_marker
       
+        # [Optional] Preserves the embedded ASCII control characters (the first 32
+        # characters in the ASCII-table, from '\x00' to '\x1F') when loading from CSV.
+        # Only applicable to CSV, ignored for other formats.
+        # Corresponds to the JSON property `preserveAsciiControlCharacters`
+        # @return [Boolean]
+        attr_accessor :preserve_ascii_control_characters
+        alias_method :preserve_ascii_control_characters?, :preserve_ascii_control_characters
+      
         # [Optional] The value that is used to quote data sections in a CSV file.
         # BigQuery converts the string to ISO-8859-1 encoding, and then uses the first
         # byte of the encoded string to split the data in its raw, binary state. The
@@ -1452,8 +1500,33 @@ module Google
           @encoding = args[:encoding] if args.key?(:encoding)
           @field_delimiter = args[:field_delimiter] if args.key?(:field_delimiter)
           @null_marker = args[:null_marker] if args.key?(:null_marker)
+          @preserve_ascii_control_characters = args[:preserve_ascii_control_characters] if args.key?(:preserve_ascii_control_characters)
           @quote = args[:quote] if args.key?(:quote)
           @skip_leading_rows = args[:skip_leading_rows] if args.key?(:skip_leading_rows)
+        end
+      end
+      
+      # 
+      class DataMaskingStatistics
+        include Google::Apis::Core::Hashable
+      
+        # [Output-only] [Preview] Whether any accessed data was protected by data
+        # masking. The actual evaluation is done by accessStats.masked_field_count > 0.
+        # Since this is only used for the discovery_doc generation purpose, as long as
+        # the type (boolean) matches, client library can leverage this. The actual
+        # evaluation of the variable is done else-where.
+        # Corresponds to the JSON property `dataMaskingApplied`
+        # @return [Boolean]
+        attr_accessor :data_masking_applied
+        alias_method :data_masking_applied?, :data_masking_applied
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @data_masking_applied = args[:data_masking_applied] if args.key?(:data_masking_applied)
         end
       end
       
@@ -1467,6 +1540,11 @@ module Google
         # @return [Google::Apis::BigqueryV2::TableReference]
         attr_accessor :evaluation_table
       
+        # Table reference of the test data after split.
+        # Corresponds to the JSON property `testTable`
+        # @return [Google::Apis::BigqueryV2::TableReference]
+        attr_accessor :test_table
+      
         # Table reference of the training data after split.
         # Corresponds to the JSON property `trainingTable`
         # @return [Google::Apis::BigqueryV2::TableReference]
@@ -1479,6 +1557,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @evaluation_table = args[:evaluation_table] if args.key?(:evaluation_table)
+          @test_table = args[:test_table] if args.key?(:test_table)
           @training_table = args[:training_table] if args.key?(:training_table)
         end
       end
@@ -1535,6 +1614,11 @@ module Google
         # Corresponds to the JSON property `defaultPartitionExpirationMs`
         # @return [Fixnum]
         attr_accessor :default_partition_expiration_ms
+      
+        # [Output-only] The default rounding mode of the dataset.
+        # Corresponds to the JSON property `defaultRoundingMode`
+        # @return [String]
+        attr_accessor :default_rounding_mode
       
         # [Optional] The default lifetime of all tables in the dataset, in milliseconds.
         # The minimum value is 3600000 milliseconds (one hour). Once this property is
@@ -1603,8 +1687,14 @@ module Google
         # @return [String]
         attr_accessor :location
       
+        # [Optional] Number of hours for the max time travel for all tables in the
+        # dataset.
+        # Corresponds to the JSON property `maxTimeTravelHours`
+        # @return [Fixnum]
+        attr_accessor :max_time_travel_hours
+      
         # [Output-only] Reserved for future use.
-        # Corresponds to the JSON property `satisfiesPZS`
+        # Corresponds to the JSON property `satisfiesPzs`
         # @return [Boolean]
         attr_accessor :satisfies_pzs
         alias_method :satisfies_pzs?, :satisfies_pzs
@@ -1614,6 +1704,17 @@ module Google
         # Corresponds to the JSON property `selfLink`
         # @return [String]
         attr_accessor :self_link
+      
+        # [Optional] Storage billing model to be used for all tables in the dataset. Can
+        # be set to PHYSICAL. Default is LOGICAL.
+        # Corresponds to the JSON property `storageBillingModel`
+        # @return [String]
+        attr_accessor :storage_billing_model
+      
+        # [Optional]The tags associated with this dataset. Tag keys are globally unique.
+        # Corresponds to the JSON property `tags`
+        # @return [Array<Google::Apis::BigqueryV2::Dataset::Tag>]
+        attr_accessor :tags
       
         def initialize(**args)
            update!(**args)
@@ -1627,6 +1728,7 @@ module Google
           @default_collation = args[:default_collation] if args.key?(:default_collation)
           @default_encryption_configuration = args[:default_encryption_configuration] if args.key?(:default_encryption_configuration)
           @default_partition_expiration_ms = args[:default_partition_expiration_ms] if args.key?(:default_partition_expiration_ms)
+          @default_rounding_mode = args[:default_rounding_mode] if args.key?(:default_rounding_mode)
           @default_table_expiration_ms = args[:default_table_expiration_ms] if args.key?(:default_table_expiration_ms)
           @description = args[:description] if args.key?(:description)
           @etag = args[:etag] if args.key?(:etag)
@@ -1637,8 +1739,11 @@ module Google
           @labels = args[:labels] if args.key?(:labels)
           @last_modified_time = args[:last_modified_time] if args.key?(:last_modified_time)
           @location = args[:location] if args.key?(:location)
+          @max_time_travel_hours = args[:max_time_travel_hours] if args.key?(:max_time_travel_hours)
           @satisfies_pzs = args[:satisfies_pzs] if args.key?(:satisfies_pzs)
           @self_link = args[:self_link] if args.key?(:self_link)
+          @storage_billing_model = args[:storage_billing_model] if args.key?(:storage_billing_model)
+          @tags = args[:tags] if args.key?(:tags)
         end
         
         # 
@@ -1733,6 +1838,32 @@ module Google
             @view = args[:view] if args.key?(:view)
           end
         end
+        
+        # 
+        class Tag
+          include Google::Apis::Core::Hashable
+        
+          # [Required] The namespaced friendly name of the tag key, e.g. "12345/
+          # environment" where 12345 is org id.
+          # Corresponds to the JSON property `tagKey`
+          # @return [String]
+          attr_accessor :tag_key
+        
+          # [Required] Friendly short name of the tag value, e.g. "production".
+          # Corresponds to the JSON property `tagValue`
+          # @return [String]
+          attr_accessor :tag_value
+        
+          def initialize(**args)
+             update!(**args)
+          end
+        
+          # Update properties of this object
+          def update!(**args)
+            @tag_key = args[:tag_key] if args.key?(:tag_key)
+            @tag_value = args[:tag_value] if args.key?(:tag_value)
+          end
+        end
       end
       
       # 
@@ -1745,8 +1876,8 @@ module Google
         attr_accessor :dataset
       
         # 
-        # Corresponds to the JSON property `target_types`
-        # @return [Array<Google::Apis::BigqueryV2::DatasetAccessEntry::TargetType>]
+        # Corresponds to the JSON property `targetTypes`
+        # @return [Array<String>]
         attr_accessor :target_types
       
         def initialize(**args)
@@ -1757,27 +1888,6 @@ module Google
         def update!(**args)
           @dataset = args[:dataset] if args.key?(:dataset)
           @target_types = args[:target_types] if args.key?(:target_types)
-        end
-        
-        # 
-        class TargetType
-          include Google::Apis::Core::Hashable
-        
-          # [Required] Which resources in the dataset this entry applies to. Currently,
-          # only views are supported, but additional target types may be added in the
-          # future. Possible values: VIEWS: This entry applies to all views in the dataset.
-          # Corresponds to the JSON property `targetType`
-          # @return [String]
-          attr_accessor :target_type
-        
-          def initialize(**args)
-             update!(**args)
-          end
-        
-          # Update properties of this object
-          def update!(**args)
-            @target_type = args[:target_type] if args.key?(:target_type)
-          end
         end
       end
       
@@ -1912,6 +2022,11 @@ module Google
         # @return [String]
         attr_accessor :description
       
+        # [Internal] This field is for Google internal use only.
+        # Corresponds to the JSON property `expirationTime`
+        # @return [DateTime]
+        attr_accessor :expiration_time
+      
         # [Optional] The friendly name for the destination table. This will only be used
         # if the destination table is newly created. If the table already exists and a
         # value different than the current friendly name is provided, the job will fail.
@@ -1934,8 +2049,28 @@ module Google
         # Update properties of this object
         def update!(**args)
           @description = args[:description] if args.key?(:description)
+          @expiration_time = args[:expiration_time] if args.key?(:expiration_time)
           @friendly_name = args[:friendly_name] if args.key?(:friendly_name)
           @labels = args[:labels] if args.key?(:labels)
+        end
+      end
+      
+      # Model evaluation metrics for dimensionality reduction models.
+      class DimensionalityReductionMetrics
+        include Google::Apis::Core::Hashable
+      
+        # Total percentage of variance explained by the selected principal components.
+        # Corresponds to the JSON property `totalExplainedVarianceRatio`
+        # @return [Float]
+        attr_accessor :total_explained_variance_ratio
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @total_explained_variance_ratio = args[:total_explained_variance_ratio] if args.key?(:total_explained_variance_ratio)
         end
       end
       
@@ -1967,6 +2102,75 @@ module Google
           @deleted_row_count = args[:deleted_row_count] if args.key?(:deleted_row_count)
           @inserted_row_count = args[:inserted_row_count] if args.key?(:inserted_row_count)
           @updated_row_count = args[:updated_row_count] if args.key?(:updated_row_count)
+        end
+      end
+      
+      # Discrete candidates of a double hyperparameter.
+      class DoubleCandidates
+        include Google::Apis::Core::Hashable
+      
+        # Candidates for the double parameter in increasing order.
+        # Corresponds to the JSON property `candidates`
+        # @return [Array<Float>]
+        attr_accessor :candidates
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+        end
+      end
+      
+      # Search space for a double hyperparameter.
+      class DoubleHparamSearchSpace
+        include Google::Apis::Core::Hashable
+      
+        # Discrete candidates of a double hyperparameter.
+        # Corresponds to the JSON property `candidates`
+        # @return [Google::Apis::BigqueryV2::DoubleCandidates]
+        attr_accessor :candidates
+      
+        # Range of a double hyperparameter.
+        # Corresponds to the JSON property `range`
+        # @return [Google::Apis::BigqueryV2::DoubleRange]
+        attr_accessor :range
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+          @range = args[:range] if args.key?(:range)
+        end
+      end
+      
+      # Range of a double hyperparameter.
+      class DoubleRange
+        include Google::Apis::Core::Hashable
+      
+        # Max value of the double parameter.
+        # Corresponds to the JSON property `max`
+        # @return [Float]
+        attr_accessor :max
+      
+        # Min value of the double parameter.
+        # Corresponds to the JSON property `min`
+        # @return [Float]
+        attr_accessor :min
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @max = args[:max] if args.key?(:max)
+          @min = args[:min] if args.key?(:min)
         end
       end
       
@@ -2076,6 +2280,11 @@ module Google
         # @return [Google::Apis::BigqueryV2::ClusteringMetrics]
         attr_accessor :clustering_metrics
       
+        # Model evaluation metrics for dimensionality reduction models.
+        # Corresponds to the JSON property `dimensionalityReductionMetrics`
+        # @return [Google::Apis::BigqueryV2::DimensionalityReductionMetrics]
+        attr_accessor :dimensionality_reduction_metrics
+      
         # Evaluation metrics for multi-class classification/classifier models.
         # Corresponds to the JSON property `multiClassClassificationMetrics`
         # @return [Google::Apis::BigqueryV2::MultiClassClassificationMetrics]
@@ -2102,6 +2311,7 @@ module Google
           @arima_forecasting_metrics = args[:arima_forecasting_metrics] if args.key?(:arima_forecasting_metrics)
           @binary_classification_metrics = args[:binary_classification_metrics] if args.key?(:binary_classification_metrics)
           @clustering_metrics = args[:clustering_metrics] if args.key?(:clustering_metrics)
+          @dimensionality_reduction_metrics = args[:dimensionality_reduction_metrics] if args.key?(:dimensionality_reduction_metrics)
           @multi_class_classification_metrics = args[:multi_class_classification_metrics] if args.key?(:multi_class_classification_metrics)
           @ranking_metrics = args[:ranking_metrics] if args.key?(:ranking_metrics)
           @regression_metrics = args[:regression_metrics] if args.key?(:regression_metrics)
@@ -2327,6 +2537,32 @@ module Google
         end
       end
       
+      # Explanation for a single feature.
+      class Explanation
+        include Google::Apis::Core::Hashable
+      
+        # Attribution of feature.
+        # Corresponds to the JSON property `attribution`
+        # @return [Float]
+        attr_accessor :attribution
+      
+        # The full feature name. For non-numerical features, will be formatted like `.`.
+        # Overall size of feature name will always be truncated to first 120 characters.
+        # Corresponds to the JSON property `featureName`
+        # @return [String]
+        attr_accessor :feature_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @attribution = args[:attribution] if args.key?(:attribution)
+          @feature_name = args[:feature_name] if args.key?(:feature_name)
+        end
+      end
+      
       # Represents a textual expression in the Common Expression Language (CEL) syntax.
       # CEL is a C-like expression language. The syntax and semantics of CEL are
       # documented at https://github.com/google/cel-spec. Example (Comparison): title:
@@ -2474,10 +2710,30 @@ module Google
         # @return [Fixnum]
         attr_accessor :max_bad_records
       
+        # [Optional] Metadata Cache Mode for the table. Set this to enable caching of
+        # metadata from external data source.
+        # Corresponds to the JSON property `metadataCacheMode`
+        # @return [String]
+        attr_accessor :metadata_cache_mode
+      
+        # ObjectMetadata is used to create Object Tables. Object Tables contain a
+        # listing of objects (with their metadata) found at the source_uris. If
+        # ObjectMetadata is set, source_format should be omitted. Currently SIMPLE is
+        # the only supported Object Metadata type.
+        # Corresponds to the JSON property `objectMetadata`
+        # @return [String]
+        attr_accessor :object_metadata
+      
         # Additional properties to set if sourceFormat is set to Parquet.
         # Corresponds to the JSON property `parquetOptions`
         # @return [Google::Apis::BigqueryV2::ParquetOptions]
         attr_accessor :parquet_options
+      
+        # [Optional] Provide a referencing file with the expected table schema. Enabled
+        # for the format: AVRO, PARQUET, ORC.
+        # Corresponds to the JSON property `referenceFileSchemaUri`
+        # @return [String]
+        attr_accessor :reference_file_schema_uri
       
         # [Optional] The schema for the data. Schema is required for CSV and JSON
         # formats. Schema is disallowed for Google Cloud Bigtable, Cloud Datastore
@@ -2523,7 +2779,10 @@ module Google
           @hive_partitioning_options = args[:hive_partitioning_options] if args.key?(:hive_partitioning_options)
           @ignore_unknown_values = args[:ignore_unknown_values] if args.key?(:ignore_unknown_values)
           @max_bad_records = args[:max_bad_records] if args.key?(:max_bad_records)
+          @metadata_cache_mode = args[:metadata_cache_mode] if args.key?(:metadata_cache_mode)
+          @object_metadata = args[:object_metadata] if args.key?(:object_metadata)
           @parquet_options = args[:parquet_options] if args.key?(:parquet_options)
+          @reference_file_schema_uri = args[:reference_file_schema_uri] if args.key?(:reference_file_schema_uri)
           @schema = args[:schema] if args.key?(:schema)
           @source_format = args[:source_format] if args.key?(:source_format)
           @source_uris = args[:source_uris] if args.key?(:source_uris)
@@ -2584,13 +2843,16 @@ module Google
       class GetPolicyOptions
         include Google::Apis::Core::Hashable
       
-        # Optional. The policy format version to be returned. Valid values are 0, 1, and
-        # 3. Requests specifying an invalid value will be rejected. Requests for
-        # policies with any conditional bindings must specify version 3. Policies
-        # without any conditional bindings may specify any valid value or leave the
-        # field unset. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies).
+        # Optional. The maximum policy version that will be used to format the policy.
+        # Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        # rejected. Requests for policies with any conditional role bindings must
+        # specify version 3. Policies with no conditional role bindings may specify any
+        # valid value or leave the field unset. The policy in the response might use the
+        # policy version that you specified, or it might use a lower policy version. For
+        # example, if you specify version 3, but the policy has no conditional role
+        # bindings, the response uses version 1. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies).
         # Corresponds to the JSON property `requestedPolicyVersion`
         # @return [Fixnum]
         attr_accessor :requested_policy_version
@@ -2731,6 +2993,34 @@ module Google
         end
       end
       
+      # Global explanations containing the top most important features after training.
+      class GlobalExplanation
+        include Google::Apis::Core::Hashable
+      
+        # Class label for this set of global explanations. Will be empty/null for binary
+        # logistic and linear regression models. Sorted alphabetically in descending
+        # order.
+        # Corresponds to the JSON property `classLabel`
+        # @return [String]
+        attr_accessor :class_label
+      
+        # A list of the top global explanations. Sorted by absolute value of attribution
+        # in descending order.
+        # Corresponds to the JSON property `explanations`
+        # @return [Array<Google::Apis::BigqueryV2::Explanation>]
+        attr_accessor :explanations
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @class_label = args[:class_label] if args.key?(:class_label)
+          @explanations = args[:explanations] if args.key?(:explanations)
+        end
+      end
+      
       # 
       class GoogleSheetsOptions
         include Google::Apis::Core::Hashable
@@ -2818,20 +3108,379 @@ module Google
         end
       end
       
-      # Information about a single iteration of the training run.
-      class IterationResult
+      # Hyperparameter search spaces. These should be a subset of training_options.
+      class HparamSearchSpaces
         include Google::Apis::Core::Hashable
       
-        # (Auto-)arima fitting result. Wrap everything in ArimaResult for easier
-        # refactoring if we want to use model-specific iteration results.
-        # Corresponds to the JSON property `arimaResult`
-        # @return [Google::Apis::BigqueryV2::ArimaResult]
-        attr_accessor :arima_result
+        # Search space for string and enum.
+        # Corresponds to the JSON property `activationFn`
+        # @return [Google::Apis::BigqueryV2::StringHparamSearchSpace]
+        attr_accessor :activation_fn
       
-        # Information about top clusters for clustering models.
-        # Corresponds to the JSON property `clusterInfos`
-        # @return [Array<Google::Apis::BigqueryV2::ClusterInfo>]
-        attr_accessor :cluster_infos
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `batchSize`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :batch_size
+      
+        # Search space for string and enum.
+        # Corresponds to the JSON property `boosterType`
+        # @return [Google::Apis::BigqueryV2::StringHparamSearchSpace]
+        attr_accessor :booster_type
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `colsampleBylevel`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :colsample_bylevel
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `colsampleBynode`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :colsample_bynode
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `colsampleBytree`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :colsample_bytree
+      
+        # Search space for string and enum.
+        # Corresponds to the JSON property `dartNormalizeType`
+        # @return [Google::Apis::BigqueryV2::StringHparamSearchSpace]
+        attr_accessor :dart_normalize_type
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `dropout`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :dropout
+      
+        # Search space for int array.
+        # Corresponds to the JSON property `hiddenUnits`
+        # @return [Google::Apis::BigqueryV2::IntArrayHparamSearchSpace]
+        attr_accessor :hidden_units
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `l1Reg`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :l1_reg
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `l2Reg`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :l2_reg
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `learnRate`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :learn_rate
+      
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `maxTreeDepth`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :max_tree_depth
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `minSplitLoss`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :min_split_loss
+      
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `minTreeChildWeight`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :min_tree_child_weight
+      
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `numClusters`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :num_clusters
+      
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `numFactors`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :num_factors
+      
+        # Search space for an int hyperparameter.
+        # Corresponds to the JSON property `numParallelTree`
+        # @return [Google::Apis::BigqueryV2::IntHparamSearchSpace]
+        attr_accessor :num_parallel_tree
+      
+        # Search space for string and enum.
+        # Corresponds to the JSON property `optimizer`
+        # @return [Google::Apis::BigqueryV2::StringHparamSearchSpace]
+        attr_accessor :optimizer
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `subsample`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :subsample
+      
+        # Search space for string and enum.
+        # Corresponds to the JSON property `treeMethod`
+        # @return [Google::Apis::BigqueryV2::StringHparamSearchSpace]
+        attr_accessor :tree_method
+      
+        # Search space for a double hyperparameter.
+        # Corresponds to the JSON property `walsAlpha`
+        # @return [Google::Apis::BigqueryV2::DoubleHparamSearchSpace]
+        attr_accessor :wals_alpha
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @activation_fn = args[:activation_fn] if args.key?(:activation_fn)
+          @batch_size = args[:batch_size] if args.key?(:batch_size)
+          @booster_type = args[:booster_type] if args.key?(:booster_type)
+          @colsample_bylevel = args[:colsample_bylevel] if args.key?(:colsample_bylevel)
+          @colsample_bynode = args[:colsample_bynode] if args.key?(:colsample_bynode)
+          @colsample_bytree = args[:colsample_bytree] if args.key?(:colsample_bytree)
+          @dart_normalize_type = args[:dart_normalize_type] if args.key?(:dart_normalize_type)
+          @dropout = args[:dropout] if args.key?(:dropout)
+          @hidden_units = args[:hidden_units] if args.key?(:hidden_units)
+          @l1_reg = args[:l1_reg] if args.key?(:l1_reg)
+          @l2_reg = args[:l2_reg] if args.key?(:l2_reg)
+          @learn_rate = args[:learn_rate] if args.key?(:learn_rate)
+          @max_tree_depth = args[:max_tree_depth] if args.key?(:max_tree_depth)
+          @min_split_loss = args[:min_split_loss] if args.key?(:min_split_loss)
+          @min_tree_child_weight = args[:min_tree_child_weight] if args.key?(:min_tree_child_weight)
+          @num_clusters = args[:num_clusters] if args.key?(:num_clusters)
+          @num_factors = args[:num_factors] if args.key?(:num_factors)
+          @num_parallel_tree = args[:num_parallel_tree] if args.key?(:num_parallel_tree)
+          @optimizer = args[:optimizer] if args.key?(:optimizer)
+          @subsample = args[:subsample] if args.key?(:subsample)
+          @tree_method = args[:tree_method] if args.key?(:tree_method)
+          @wals_alpha = args[:wals_alpha] if args.key?(:wals_alpha)
+        end
+      end
+      
+      # Training info of a trial in [hyperparameter tuning](/bigquery-ml/docs/
+      # reference/standard-sql/bigqueryml-syntax-hp-tuning-overview) models.
+      class HparamTuningTrial
+        include Google::Apis::Core::Hashable
+      
+        # Ending time of the trial.
+        # Corresponds to the JSON property `endTimeMs`
+        # @return [Fixnum]
+        attr_accessor :end_time_ms
+      
+        # Error message for FAILED and INFEASIBLE trial.
+        # Corresponds to the JSON property `errorMessage`
+        # @return [String]
+        attr_accessor :error_message
+      
+        # Loss computed on the eval data at the end of trial.
+        # Corresponds to the JSON property `evalLoss`
+        # @return [Float]
+        attr_accessor :eval_loss
+      
+        # Evaluation metrics of a model. These are either computed on all training data
+        # or just the eval data based on whether eval data was used during training.
+        # These are not present for imported models.
+        # Corresponds to the JSON property `evaluationMetrics`
+        # @return [Google::Apis::BigqueryV2::EvaluationMetrics]
+        attr_accessor :evaluation_metrics
+      
+        # Evaluation metrics of a model. These are either computed on all training data
+        # or just the eval data based on whether eval data was used during training.
+        # These are not present for imported models.
+        # Corresponds to the JSON property `hparamTuningEvaluationMetrics`
+        # @return [Google::Apis::BigqueryV2::EvaluationMetrics]
+        attr_accessor :hparam_tuning_evaluation_metrics
+      
+        # Options used in model training.
+        # Corresponds to the JSON property `hparams`
+        # @return [Google::Apis::BigqueryV2::TrainingOptions]
+        attr_accessor :hparams
+      
+        # Starting time of the trial.
+        # Corresponds to the JSON property `startTimeMs`
+        # @return [Fixnum]
+        attr_accessor :start_time_ms
+      
+        # The status of the trial.
+        # Corresponds to the JSON property `status`
+        # @return [String]
+        attr_accessor :status
+      
+        # Loss computed on the training data at the end of trial.
+        # Corresponds to the JSON property `trainingLoss`
+        # @return [Float]
+        attr_accessor :training_loss
+      
+        # 1-based index of the trial.
+        # Corresponds to the JSON property `trialId`
+        # @return [Fixnum]
+        attr_accessor :trial_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_time_ms = args[:end_time_ms] if args.key?(:end_time_ms)
+          @error_message = args[:error_message] if args.key?(:error_message)
+          @eval_loss = args[:eval_loss] if args.key?(:eval_loss)
+          @evaluation_metrics = args[:evaluation_metrics] if args.key?(:evaluation_metrics)
+          @hparam_tuning_evaluation_metrics = args[:hparam_tuning_evaluation_metrics] if args.key?(:hparam_tuning_evaluation_metrics)
+          @hparams = args[:hparams] if args.key?(:hparams)
+          @start_time_ms = args[:start_time_ms] if args.key?(:start_time_ms)
+          @status = args[:status] if args.key?(:status)
+          @training_loss = args[:training_loss] if args.key?(:training_loss)
+          @trial_id = args[:trial_id] if args.key?(:trial_id)
+        end
+      end
+      
+      # 
+      class IndexUnusedReason
+        include Google::Apis::Core::Hashable
+      
+        # [Output-only] Specifies the base table involved in the reason that no search
+        # index was used.
+        # Corresponds to the JSON property `base_table`
+        # @return [Google::Apis::BigqueryV2::TableReference]
+        attr_accessor :base_table
+      
+        # [Output-only] Specifies the high-level reason for the scenario when no search
+        # index was used.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        # [Output-only] Specifies the name of the unused search index, if available.
+        # Corresponds to the JSON property `index_name`
+        # @return [String]
+        attr_accessor :index_name
+      
+        # [Output-only] Free form human-readable reason for the scenario when no search
+        # index was used.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @base_table = args[:base_table] if args.key?(:base_table)
+          @code = args[:code] if args.key?(:code)
+          @index_name = args[:index_name] if args.key?(:index_name)
+          @message = args[:message] if args.key?(:message)
+        end
+      end
+      
+      # An array of int.
+      class IntArray
+        include Google::Apis::Core::Hashable
+      
+        # Elements in the int array.
+        # Corresponds to the JSON property `elements`
+        # @return [Array<Fixnum>]
+        attr_accessor :elements
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @elements = args[:elements] if args.key?(:elements)
+        end
+      end
+      
+      # Search space for int array.
+      class IntArrayHparamSearchSpace
+        include Google::Apis::Core::Hashable
+      
+        # Candidates for the int array parameter.
+        # Corresponds to the JSON property `candidates`
+        # @return [Array<Google::Apis::BigqueryV2::IntArray>]
+        attr_accessor :candidates
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+        end
+      end
+      
+      # Discrete candidates of an int hyperparameter.
+      class IntCandidates
+        include Google::Apis::Core::Hashable
+      
+        # Candidates for the int parameter in increasing order.
+        # Corresponds to the JSON property `candidates`
+        # @return [Array<Fixnum>]
+        attr_accessor :candidates
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+        end
+      end
+      
+      # Search space for an int hyperparameter.
+      class IntHparamSearchSpace
+        include Google::Apis::Core::Hashable
+      
+        # Discrete candidates of an int hyperparameter.
+        # Corresponds to the JSON property `candidates`
+        # @return [Google::Apis::BigqueryV2::IntCandidates]
+        attr_accessor :candidates
+      
+        # Range of an int hyperparameter.
+        # Corresponds to the JSON property `range`
+        # @return [Google::Apis::BigqueryV2::IntRange]
+        attr_accessor :range
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+          @range = args[:range] if args.key?(:range)
+        end
+      end
+      
+      # Range of an int hyperparameter.
+      class IntRange
+        include Google::Apis::Core::Hashable
+      
+        # Max value of the int parameter.
+        # Corresponds to the JSON property `max`
+        # @return [Fixnum]
+        attr_accessor :max
+      
+        # Min value of the int parameter.
+        # Corresponds to the JSON property `min`
+        # @return [Fixnum]
+        attr_accessor :min
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @max = args[:max] if args.key?(:max)
+          @min = args[:min] if args.key?(:min)
+        end
+      end
+      
+      # 
+      class IterationResult
+        include Google::Apis::Core::Hashable
       
         # Time taken to run the iteration in milliseconds.
         # Corresponds to the JSON property `durationMs`
@@ -2864,8 +3513,6 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @arima_result = args[:arima_result] if args.key?(:arima_result)
-          @cluster_infos = args[:cluster_infos] if args.key?(:cluster_infos)
           @duration_ms = args[:duration_ms] if args.key?(:duration_ms)
           @eval_loss = args[:eval_loss] if args.key?(:eval_loss)
           @index = args[:index] if args.key?(:index)
@@ -3157,6 +3804,11 @@ module Google
         # @return [Google::Apis::BigqueryV2::Clustering]
         attr_accessor :clustering
       
+        # Connection properties.
+        # Corresponds to the JSON property `connectionProperties`
+        # @return [Array<Google::Apis::BigqueryV2::ConnectionProperty>]
+        attr_accessor :connection_properties
+      
         # [Optional] Specifies whether the job is allowed to create new tables. The
         # following values are supported: CREATE_IF_NEEDED: If the table does not exist,
         # BigQuery creates the table. CREATE_NEVER: The table must already exist. If it
@@ -3166,6 +3818,14 @@ module Google
         # Corresponds to the JSON property `createDisposition`
         # @return [String]
         attr_accessor :create_disposition
+      
+        # If true, creates a new session, where session id will be a server generated
+        # random id. If false, runs query with an existing session_id passed in
+        # ConnectionProperty, otherwise runs the load job in non-session mode.
+        # Corresponds to the JSON property `createSession`
+        # @return [Boolean]
+        attr_accessor :create_session
+        alias_method :create_session?, :create_session
       
         # [Optional] Defines the list of possible SQL data types to which the source
         # decimal values are converted. This list and the precision and the scale
@@ -3270,6 +3930,14 @@ module Google
         # @return [Google::Apis::BigqueryV2::ParquetOptions]
         attr_accessor :parquet_options
       
+        # [Optional] Preserves the embedded ASCII control characters (the first 32
+        # characters in the ASCII-table, from '\x00' to '\x1F') when loading from CSV.
+        # Only applicable to CSV, ignored for other formats.
+        # Corresponds to the JSON property `preserveAsciiControlCharacters`
+        # @return [Boolean]
+        attr_accessor :preserve_ascii_control_characters
+        alias_method :preserve_ascii_control_characters?, :preserve_ascii_control_characters
+      
         # If sourceFormat is set to "DATASTORE_BACKUP", indicates which entity
         # properties to load into BigQuery from a Cloud Datastore backup. Property names
         # are case sensitive and must be top-level properties. If no properties are
@@ -3295,6 +3963,12 @@ module Google
         # Corresponds to the JSON property `rangePartitioning`
         # @return [Google::Apis::BigqueryV2::RangePartitioning]
         attr_accessor :range_partitioning
+      
+        # User provided referencing file with the expected reader schema, Available for
+        # the format: AVRO, PARQUET, ORC.
+        # Corresponds to the JSON property `referenceFileSchemaUri`
+        # @return [String]
+        attr_accessor :reference_file_schema_uri
       
         # [Optional] The schema for the destination table. The schema can be omitted if
         # the destination table already exists, or if you're loading data from Google
@@ -3389,7 +4063,9 @@ module Google
           @allow_quoted_newlines = args[:allow_quoted_newlines] if args.key?(:allow_quoted_newlines)
           @autodetect = args[:autodetect] if args.key?(:autodetect)
           @clustering = args[:clustering] if args.key?(:clustering)
+          @connection_properties = args[:connection_properties] if args.key?(:connection_properties)
           @create_disposition = args[:create_disposition] if args.key?(:create_disposition)
+          @create_session = args[:create_session] if args.key?(:create_session)
           @decimal_target_types = args[:decimal_target_types] if args.key?(:decimal_target_types)
           @destination_encryption_configuration = args[:destination_encryption_configuration] if args.key?(:destination_encryption_configuration)
           @destination_table = args[:destination_table] if args.key?(:destination_table)
@@ -3402,9 +4078,11 @@ module Google
           @max_bad_records = args[:max_bad_records] if args.key?(:max_bad_records)
           @null_marker = args[:null_marker] if args.key?(:null_marker)
           @parquet_options = args[:parquet_options] if args.key?(:parquet_options)
+          @preserve_ascii_control_characters = args[:preserve_ascii_control_characters] if args.key?(:preserve_ascii_control_characters)
           @projection_fields = args[:projection_fields] if args.key?(:projection_fields)
           @quote = args[:quote] if args.key?(:quote)
           @range_partitioning = args[:range_partitioning] if args.key?(:range_partitioning)
+          @reference_file_schema_uri = args[:reference_file_schema_uri] if args.key?(:reference_file_schema_uri)
           @schema = args[:schema] if args.key?(:schema)
           @schema_inline = args[:schema_inline] if args.key?(:schema_inline)
           @schema_inline_format = args[:schema_inline_format] if args.key?(:schema_inline_format)
@@ -3858,11 +4536,22 @@ module Google
         # @return [Float]
         attr_accessor :completion_ratio
       
+        # [Output-only] Statistics for a copy job.
+        # Corresponds to the JSON property `copy`
+        # @return [Google::Apis::BigqueryV2::JobStatistics5]
+        attr_accessor :copy
+      
         # [Output-only] Creation time of this job, in milliseconds since the epoch. This
         # field will be present on all jobs.
         # Corresponds to the JSON property `creationTime`
         # @return [Fixnum]
         attr_accessor :creation_time
+      
+        # [Output-only] Statistics for data masking. Present only for query and extract
+        # jobs.
+        # Corresponds to the JSON property `dataMaskingStatistics`
+        # @return [Google::Apis::BigqueryV2::DataMaskingStatistics]
+        attr_accessor :data_masking_statistics
       
         # [Output-only] End time of this job, in milliseconds since the epoch. This
         # field will be present whenever a job is in the DONE state.
@@ -3959,7 +4648,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @completion_ratio = args[:completion_ratio] if args.key?(:completion_ratio)
+          @copy = args[:copy] if args.key?(:copy)
           @creation_time = args[:creation_time] if args.key?(:creation_time)
+          @data_masking_statistics = args[:data_masking_statistics] if args.key?(:data_masking_statistics)
           @end_time = args[:end_time] if args.key?(:end_time)
           @extract = args[:extract] if args.key?(:extract)
           @load = args[:load] if args.key?(:load)
@@ -4008,29 +4699,29 @@ module Google
       class JobStatistics2
         include Google::Apis::Core::Hashable
       
-        # BI Engine specific Statistics. [Output-only] BI Engine specific Statistics.
+        # BI Engine specific Statistics. [Output only] BI Engine specific Statistics.
         # Corresponds to the JSON property `biEngineStatistics`
         # @return [Google::Apis::BigqueryV2::BiEngineStatistics]
         attr_accessor :bi_engine_statistics
       
-        # [Output-only] Billing tier for the job.
+        # [Output only] Billing tier for the job.
         # Corresponds to the JSON property `billingTier`
         # @return [Fixnum]
         attr_accessor :billing_tier
       
-        # [Output-only] Whether the query result was fetched from the query cache.
+        # [Output only] Whether the query result was fetched from the query cache.
         # Corresponds to the JSON property `cacheHit`
         # @return [Boolean]
         attr_accessor :cache_hit
         alias_method :cache_hit?, :cache_hit
       
-        # [Output-only] [Preview] The number of row access policies affected by a DDL
+        # [Output only] [Preview] The number of row access policies affected by a DDL
         # statement. Present only for DROP ALL ROW ACCESS POLICIES queries.
         # Corresponds to the JSON property `ddlAffectedRowAccessPolicyCount`
         # @return [Fixnum]
         attr_accessor :ddl_affected_row_access_policy_count
       
-        # [Output-only] The DDL destination table. Present only for ALTER TABLE RENAME
+        # [Output only] The DDL destination table. Present only for ALTER TABLE RENAME
         # TO queries. Note that ddl_target_table is used just for its type information.
         # Corresponds to the JSON property `ddlDestinationTable`
         # @return [Google::Apis::BigqueryV2::TableReference]
@@ -4047,7 +4738,7 @@ module Google
         # @return [String]
         attr_accessor :ddl_operation_performed
       
-        # [Output-only] The DDL target dataset. Present only for CREATE/ALTER/DROP
+        # [Output only] The DDL target dataset. Present only for CREATE/ALTER/DROP
         # SCHEMA queries.
         # Corresponds to the JSON property `ddlTargetDataset`
         # @return [Google::Apis::BigqueryV2::DatasetReference]
@@ -4059,77 +4750,92 @@ module Google
         # @return [Google::Apis::BigqueryV2::RoutineReference]
         attr_accessor :ddl_target_routine
       
-        # [Output-only] [Preview] The DDL target row access policy. Present only for
+        # [Output only] [Preview] The DDL target row access policy. Present only for
         # CREATE/DROP ROW ACCESS POLICY queries.
         # Corresponds to the JSON property `ddlTargetRowAccessPolicy`
         # @return [Google::Apis::BigqueryV2::RowAccessPolicyReference]
         attr_accessor :ddl_target_row_access_policy
       
-        # [Output-only] The DDL target table. Present only for CREATE/DROP TABLE/VIEW
+        # [Output only] The DDL target table. Present only for CREATE/DROP TABLE/VIEW
         # and DROP ALL ROW ACCESS POLICIES queries.
         # Corresponds to the JSON property `ddlTargetTable`
         # @return [Google::Apis::BigqueryV2::TableReference]
         attr_accessor :ddl_target_table
       
-        # [Output-only] Detailed statistics for DML statements Present only for DML
+        # [Output only] Detailed statistics for DML statements Present only for DML
         # statements INSERT, UPDATE, DELETE or TRUNCATE.
         # Corresponds to the JSON property `dmlStats`
         # @return [Google::Apis::BigqueryV2::DmlStatistics]
         attr_accessor :dml_stats
       
-        # [Output-only] The original estimate of bytes processed for the job.
+        # [Output only] The original estimate of bytes processed for the job.
         # Corresponds to the JSON property `estimatedBytesProcessed`
         # @return [Fixnum]
         attr_accessor :estimated_bytes_processed
       
-        # [Output-only, Beta] Information about create model query job progress.
+        # [Output only] Statistics of a BigQuery ML training job.
+        # Corresponds to the JSON property `mlStatistics`
+        # @return [Google::Apis::BigqueryV2::MlStatistics]
+        attr_accessor :ml_statistics
+      
+        # [Output only, Beta] Information about create model query job progress.
         # Corresponds to the JSON property `modelTraining`
         # @return [Google::Apis::BigqueryV2::BigQueryModelTraining]
         attr_accessor :model_training
       
-        # [Output-only, Beta] Deprecated; do not use.
+        # [Output only, Beta] Deprecated; do not use.
         # Corresponds to the JSON property `modelTrainingCurrentIteration`
         # @return [Fixnum]
         attr_accessor :model_training_current_iteration
       
-        # [Output-only, Beta] Deprecated; do not use.
+        # [Output only, Beta] Deprecated; do not use.
         # Corresponds to the JSON property `modelTrainingExpectedTotalIteration`
         # @return [Fixnum]
         attr_accessor :model_training_expected_total_iteration
       
-        # [Output-only] The number of rows affected by a DML statement. Present only for
+        # [Output only] The number of rows affected by a DML statement. Present only for
         # DML statements INSERT, UPDATE or DELETE.
         # Corresponds to the JSON property `numDmlAffectedRows`
         # @return [Fixnum]
         attr_accessor :num_dml_affected_rows
       
-        # [Output-only] Describes execution plan for the query.
+        # [Output only] Describes execution plan for the query.
         # Corresponds to the JSON property `queryPlan`
         # @return [Array<Google::Apis::BigqueryV2::ExplainQueryStage>]
         attr_accessor :query_plan
       
-        # [Output-only] Referenced routines (persistent user-defined functions and
+        # [Output only] Referenced routines (persistent user-defined functions and
         # stored procedures) for the job.
         # Corresponds to the JSON property `referencedRoutines`
         # @return [Array<Google::Apis::BigqueryV2::RoutineReference>]
         attr_accessor :referenced_routines
       
-        # [Output-only] Referenced tables for the job. Queries that reference more than
+        # [Output only] Referenced tables for the job. Queries that reference more than
         # 50 tables will not have a complete list.
         # Corresponds to the JSON property `referencedTables`
         # @return [Array<Google::Apis::BigqueryV2::TableReference>]
         attr_accessor :referenced_tables
       
-        # [Output-only] Job resource usage breakdown by reservation.
+        # [Output only] Job resource usage breakdown by reservation.
         # Corresponds to the JSON property `reservationUsage`
         # @return [Array<Google::Apis::BigqueryV2::JobStatistics2::ReservationUsage>]
         attr_accessor :reservation_usage
       
-        # [Output-only] The schema of the results. Present only for successful dry run
+        # [Output only] The schema of the results. Present only for successful dry run
         # of non-legacy SQL queries.
         # Corresponds to the JSON property `schema`
         # @return [Google::Apis::BigqueryV2::TableSchema]
         attr_accessor :schema
+      
+        # [Output only] Search query specific statistics.
+        # Corresponds to the JSON property `searchStatistics`
+        # @return [Google::Apis::BigqueryV2::SearchStatistics]
+        attr_accessor :search_statistics
+      
+        # [Output only] Statistics of a Spark procedure job.
+        # Corresponds to the JSON property `sparkStatistics`
+        # @return [Google::Apis::BigqueryV2::SparkStatistics]
+        attr_accessor :spark_statistics
       
         # The type of query statement, if valid. Possible values (new values might be
         # added in the future): "SELECT": SELECT query. "INSERT": INSERT query; see
@@ -4151,22 +4857,22 @@ module Google
         # @return [String]
         attr_accessor :statement_type
       
-        # [Output-only] [Beta] Describes a timeline of job execution.
+        # [Output only] [Beta] Describes a timeline of job execution.
         # Corresponds to the JSON property `timeline`
         # @return [Array<Google::Apis::BigqueryV2::QueryTimelineSample>]
         attr_accessor :timeline
       
-        # [Output-only] Total bytes billed for the job.
+        # [Output only] Total bytes billed for the job.
         # Corresponds to the JSON property `totalBytesBilled`
         # @return [Fixnum]
         attr_accessor :total_bytes_billed
       
-        # [Output-only] Total bytes processed for the job.
+        # [Output only] Total bytes processed for the job.
         # Corresponds to the JSON property `totalBytesProcessed`
         # @return [Fixnum]
         attr_accessor :total_bytes_processed
       
-        # [Output-only] For dry-run jobs, totalBytesProcessed is an estimate and this
+        # [Output only] For dry-run jobs, totalBytesProcessed is an estimate and this
         # field specifies the accuracy of the estimate. Possible values can be: UNKNOWN:
         # accuracy of the estimate is unknown. PRECISE: estimate is precise. LOWER_BOUND:
         # estimate is lower bound of what the query would cost. UPPER_BOUND: estimate
@@ -4175,16 +4881,22 @@ module Google
         # @return [String]
         attr_accessor :total_bytes_processed_accuracy
       
-        # [Output-only] Total number of partitions processed from all partitioned tables
+        # [Output only] Total number of partitions processed from all partitioned tables
         # referenced in the job.
         # Corresponds to the JSON property `totalPartitionsProcessed`
         # @return [Fixnum]
         attr_accessor :total_partitions_processed
       
-        # [Output-only] Slot-milliseconds for the job.
+        # [Output only] Slot-milliseconds for the job.
         # Corresponds to the JSON property `totalSlotMs`
         # @return [Fixnum]
         attr_accessor :total_slot_ms
+      
+        # [Output-only] Total bytes transferred for cross-cloud queries such as Cross
+        # Cloud Transfer and CREATE TABLE AS SELECT (CTAS).
+        # Corresponds to the JSON property `transferredBytes`
+        # @return [Fixnum]
+        attr_accessor :transferred_bytes
       
         # Standard SQL only: list of undeclared query parameters detected during a dry
         # run validation.
@@ -4210,6 +4922,7 @@ module Google
           @ddl_target_table = args[:ddl_target_table] if args.key?(:ddl_target_table)
           @dml_stats = args[:dml_stats] if args.key?(:dml_stats)
           @estimated_bytes_processed = args[:estimated_bytes_processed] if args.key?(:estimated_bytes_processed)
+          @ml_statistics = args[:ml_statistics] if args.key?(:ml_statistics)
           @model_training = args[:model_training] if args.key?(:model_training)
           @model_training_current_iteration = args[:model_training_current_iteration] if args.key?(:model_training_current_iteration)
           @model_training_expected_total_iteration = args[:model_training_expected_total_iteration] if args.key?(:model_training_expected_total_iteration)
@@ -4219,6 +4932,8 @@ module Google
           @referenced_tables = args[:referenced_tables] if args.key?(:referenced_tables)
           @reservation_usage = args[:reservation_usage] if args.key?(:reservation_usage)
           @schema = args[:schema] if args.key?(:schema)
+          @search_statistics = args[:search_statistics] if args.key?(:search_statistics)
+          @spark_statistics = args[:spark_statistics] if args.key?(:spark_statistics)
           @statement_type = args[:statement_type] if args.key?(:statement_type)
           @timeline = args[:timeline] if args.key?(:timeline)
           @total_bytes_billed = args[:total_bytes_billed] if args.key?(:total_bytes_billed)
@@ -4226,6 +4941,7 @@ module Google
           @total_bytes_processed_accuracy = args[:total_bytes_processed_accuracy] if args.key?(:total_bytes_processed_accuracy)
           @total_partitions_processed = args[:total_partitions_processed] if args.key?(:total_partitions_processed)
           @total_slot_ms = args[:total_slot_ms] if args.key?(:total_slot_ms)
+          @transferred_bytes = args[:transferred_bytes] if args.key?(:transferred_bytes)
           @undeclared_query_parameters = args[:undeclared_query_parameters] if args.key?(:undeclared_query_parameters)
         end
         
@@ -4233,12 +4949,12 @@ module Google
         class ReservationUsage
           include Google::Apis::Core::Hashable
         
-          # [Output-only] Reservation name or "unreserved" for on-demand resources usage.
+          # [Output only] Reservation name or "unreserved" for on-demand resources usage.
           # Corresponds to the JSON property `name`
           # @return [String]
           attr_accessor :name
         
-          # [Output-only] Slot-milliseconds the job spent in the given reservation.
+          # [Output only] Slot-milliseconds the job spent in the given reservation.
           # Corresponds to the JSON property `slotMs`
           # @return [Fixnum]
           attr_accessor :slot_ms
@@ -4332,6 +5048,31 @@ module Google
       end
       
       # 
+      class JobStatistics5
+        include Google::Apis::Core::Hashable
+      
+        # [Output-only] Number of logical bytes copied to the destination table.
+        # Corresponds to the JSON property `copied_logical_bytes`
+        # @return [Fixnum]
+        attr_accessor :copied_logical_bytes
+      
+        # [Output-only] Number of rows copied to the destination table.
+        # Corresponds to the JSON property `copied_rows`
+        # @return [Fixnum]
+        attr_accessor :copied_rows
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @copied_logical_bytes = args[:copied_logical_bytes] if args.key?(:copied_logical_bytes)
+          @copied_rows = args[:copied_rows] if args.key?(:copied_rows)
+        end
+      end
+      
+      # 
       class JobStatus
         include Google::Apis::Core::Hashable
       
@@ -4403,7 +5144,8 @@ module Google
       
         # Routines in the requested dataset. Unless read_mask is set in the request,
         # only the following fields are populated: etag, project_id, dataset_id,
-        # routine_id, routine_type, creation_time, last_modified_time, and language.
+        # routine_id, routine_type, creation_time, last_modified_time, language, and
+        # remote_function_options.
         # Corresponds to the JSON property `routines`
         # @return [Array<Google::Apis::BigqueryV2::Routine>]
         attr_accessor :routines
@@ -4469,6 +5211,13 @@ module Google
       class MaterializedViewDefinition
         include Google::Apis::Core::Hashable
       
+        # [Optional] Allow non incremental materialized view definition. The default
+        # value is "false".
+        # Corresponds to the JSON property `allow_non_incremental_definition`
+        # @return [Boolean]
+        attr_accessor :allow_non_incremental_definition
+        alias_method :allow_non_incremental_definition?, :allow_non_incremental_definition
+      
         # [Optional] [TrustedTester] Enable automatic refresh of the materialized view
         # when the base table is updated. The default value is "true".
         # Corresponds to the JSON property `enableRefresh`
@@ -4481,6 +5230,13 @@ module Google
         # Corresponds to the JSON property `lastRefreshTime`
         # @return [Fixnum]
         attr_accessor :last_refresh_time
+      
+        # [Optional] Max staleness of data that could be returned when materizlized view
+        # is queried (formatted as Google SQL Interval type).
+        # Corresponds to the JSON property `maxStaleness`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :max_staleness
       
         # [Required] A query whose result is persisted.
         # Corresponds to the JSON property `query`
@@ -4499,10 +5255,39 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @allow_non_incremental_definition = args[:allow_non_incremental_definition] if args.key?(:allow_non_incremental_definition)
           @enable_refresh = args[:enable_refresh] if args.key?(:enable_refresh)
           @last_refresh_time = args[:last_refresh_time] if args.key?(:last_refresh_time)
+          @max_staleness = args[:max_staleness] if args.key?(:max_staleness)
           @query = args[:query] if args.key?(:query)
           @refresh_interval_ms = args[:refresh_interval_ms] if args.key?(:refresh_interval_ms)
+        end
+      end
+      
+      # 
+      class MlStatistics
+        include Google::Apis::Core::Hashable
+      
+        # Results for all completed iterations.
+        # Corresponds to the JSON property `iterationResults`
+        # @return [Array<Google::Apis::BigqueryV2::IterationResult>]
+        attr_accessor :iteration_results
+      
+        # Maximum number of iterations specified as max_iterations in the 'CREATE MODEL'
+        # query. The actual number of iterations may be less than this number due to
+        # early stop.
+        # Corresponds to the JSON property `maxIterations`
+        # @return [Fixnum]
+        attr_accessor :max_iterations
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @iteration_results = args[:iteration_results] if args.key?(:iteration_results)
+          @max_iterations = args[:max_iterations] if args.key?(:max_iterations)
         end
       end
       
@@ -4520,6 +5305,16 @@ module Google
         # Corresponds to the JSON property `creationTime`
         # @return [Fixnum]
         attr_accessor :creation_time
+      
+        # Output only. The default trial_id to use in TVFs when the trial_id is not
+        # passed in. For single-objective [hyperparameter tuning](/bigquery-ml/docs/
+        # reference/standard-sql/bigqueryml-syntax-hp-tuning-overview) models, this is
+        # the best trial ID. For multi-objective [hyperparameter tuning](/bigquery-ml/
+        # docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview) models, this
+        # is the smallest trial ID among all Pareto optimal trials.
+        # Corresponds to the JSON property `defaultTrialId`
+        # @return [Fixnum]
+        attr_accessor :default_trial_id
       
         # Optional. A user-friendly description of this model.
         # Corresponds to the JSON property `description`
@@ -4558,6 +5353,17 @@ module Google
         # @return [String]
         attr_accessor :friendly_name
       
+        # Hyperparameter search spaces. These should be a subset of training_options.
+        # Corresponds to the JSON property `hparamSearchSpaces`
+        # @return [Google::Apis::BigqueryV2::HparamSearchSpaces]
+        attr_accessor :hparam_search_spaces
+      
+        # Output only. Trials of a [hyperparameter tuning](/bigquery-ml/docs/reference/
+        # standard-sql/bigqueryml-syntax-hp-tuning-overview) model sorted by trial_id.
+        # Corresponds to the JSON property `hparamTrials`
+        # @return [Array<Google::Apis::BigqueryV2::HparamTuningTrial>]
+        attr_accessor :hparam_trials
+      
         # Output only. Label columns that were used to train this model. The output of
         # the model will have a "predicted_" prefix to these columns.
         # Corresponds to the JSON property `labelColumns`
@@ -4595,8 +5401,16 @@ module Google
         # @return [String]
         attr_accessor :model_type
       
-        # Output only. Information for all training runs in increasing order of
-        # start_time.
+        # Output only. For single-objective [hyperparameter tuning](/bigquery-ml/docs/
+        # reference/standard-sql/bigqueryml-syntax-hp-tuning-overview) models, it only
+        # contains the best trial. For multi-objective [hyperparameter tuning](/bigquery-
+        # ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-overview) models,
+        # it contains all Pareto optimal trials sorted by trial_id.
+        # Corresponds to the JSON property `optimalTrialIds`
+        # @return [Array<Fixnum>]
+        attr_accessor :optimal_trial_ids
+      
+        # Information for all training runs in increasing order of start_time.
         # Corresponds to the JSON property `trainingRuns`
         # @return [Array<Google::Apis::BigqueryV2::TrainingRun>]
         attr_accessor :training_runs
@@ -4609,18 +5423,22 @@ module Google
         def update!(**args)
           @best_trial_id = args[:best_trial_id] if args.key?(:best_trial_id)
           @creation_time = args[:creation_time] if args.key?(:creation_time)
+          @default_trial_id = args[:default_trial_id] if args.key?(:default_trial_id)
           @description = args[:description] if args.key?(:description)
           @encryption_configuration = args[:encryption_configuration] if args.key?(:encryption_configuration)
           @etag = args[:etag] if args.key?(:etag)
           @expiration_time = args[:expiration_time] if args.key?(:expiration_time)
           @feature_columns = args[:feature_columns] if args.key?(:feature_columns)
           @friendly_name = args[:friendly_name] if args.key?(:friendly_name)
+          @hparam_search_spaces = args[:hparam_search_spaces] if args.key?(:hparam_search_spaces)
+          @hparam_trials = args[:hparam_trials] if args.key?(:hparam_trials)
           @label_columns = args[:label_columns] if args.key?(:label_columns)
           @labels = args[:labels] if args.key?(:labels)
           @last_modified_time = args[:last_modified_time] if args.key?(:last_modified_time)
           @location = args[:location] if args.key?(:location)
           @model_reference = args[:model_reference] if args.key?(:model_reference)
           @model_type = args[:model_type] if args.key?(:model_type)
+          @optimal_trial_ids = args[:optimal_trial_ids] if args.key?(:optimal_trial_ids)
           @training_runs = args[:training_runs] if args.key?(:training_runs)
         end
       end
@@ -4780,31 +5598,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -4813,9 +5631,14 @@ module Google
         # @return [Array<Google::Apis::BigqueryV2::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::BigqueryV2::Binding>]
         attr_accessor :bindings
@@ -4865,6 +5688,45 @@ module Google
           @bindings = args[:bindings] if args.key?(:bindings)
           @etag = args[:etag] if args.key?(:etag)
           @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # Principal component infos, used only for eigen decomposition based models, e.g.
+      # , PCA. Ordered by explained_variance in the descending order.
+      class PrincipalComponentInfo
+        include Google::Apis::Core::Hashable
+      
+        # The explained_variance is pre-ordered in the descending order to compute the
+        # cumulative explained variance ratio.
+        # Corresponds to the JSON property `cumulativeExplainedVarianceRatio`
+        # @return [Float]
+        attr_accessor :cumulative_explained_variance_ratio
+      
+        # Explained variance by this principal component, which is simply the eigenvalue.
+        # Corresponds to the JSON property `explainedVariance`
+        # @return [Float]
+        attr_accessor :explained_variance
+      
+        # Explained_variance over the total explained variance.
+        # Corresponds to the JSON property `explainedVarianceRatio`
+        # @return [Float]
+        attr_accessor :explained_variance_ratio
+      
+        # Id of the principal component.
+        # Corresponds to the JSON property `principalComponentId`
+        # @return [Fixnum]
+        attr_accessor :principal_component_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cumulative_explained_variance_ratio = args[:cumulative_explained_variance_ratio] if args.key?(:cumulative_explained_variance_ratio)
+          @explained_variance = args[:explained_variance] if args.key?(:explained_variance)
+          @explained_variance_ratio = args[:explained_variance_ratio] if args.key?(:explained_variance_ratio)
+          @principal_component_id = args[:principal_component_id] if args.key?(:principal_component_id)
         end
       end
       
@@ -5398,7 +6260,15 @@ module Google
         # @return [Fixnum]
         attr_accessor :elapsed_ms
       
-        # Total parallel units of work remaining for the active stages.
+        # Units of work that can be scheduled immediately. Providing additional slots
+        # for these units of work will speed up the query, provided no other query in
+        # the reservation needs additional slots.
+        # Corresponds to the JSON property `estimatedRunnableUnits`
+        # @return [Fixnum]
+        attr_accessor :estimated_runnable_units
+      
+        # Total units of work remaining for the query. This number can be revised (
+        # increased or decreased) while the query is running.
         # Corresponds to the JSON property `pendingUnits`
         # @return [Fixnum]
         attr_accessor :pending_units
@@ -5417,6 +6287,7 @@ module Google
           @active_units = args[:active_units] if args.key?(:active_units)
           @completed_units = args[:completed_units] if args.key?(:completed_units)
           @elapsed_ms = args[:elapsed_ms] if args.key?(:elapsed_ms)
+          @estimated_runnable_units = args[:estimated_runnable_units] if args.key?(:estimated_runnable_units)
           @pending_units = args[:pending_units] if args.key?(:pending_units)
           @total_slot_ms = args[:total_slot_ms] if args.key?(:total_slot_ms)
         end
@@ -5568,6 +6439,50 @@ module Google
         end
       end
       
+      # Options for a remote user-defined function.
+      class RemoteFunctionOptions
+        include Google::Apis::Core::Hashable
+      
+        # Fully qualified name of the user-provided connection object which holds the
+        # authentication information to send requests to the remote service. Format: ```"
+        # projects/`projectId`/locations/`locationId`/connections/`connectionId`"```
+        # Corresponds to the JSON property `connection`
+        # @return [String]
+        attr_accessor :connection
+      
+        # Endpoint of the user-provided remote service, e.g. ```https://us-east1-
+        # my_gcf_project.cloudfunctions.net/remote_add```
+        # Corresponds to the JSON property `endpoint`
+        # @return [String]
+        attr_accessor :endpoint
+      
+        # Max number of rows in each batch sent to the remote service. If absent or if 0,
+        # BigQuery dynamically decides the number of rows in a batch.
+        # Corresponds to the JSON property `maxBatchingRows`
+        # @return [Fixnum]
+        attr_accessor :max_batching_rows
+      
+        # User-defined context as a set of key/value pairs, which will be sent as
+        # function invocation context together with batched arguments in the requests to
+        # the remote service. The total number of bytes of keys and values must be less
+        # than 8KB.
+        # Corresponds to the JSON property `userDefinedContext`
+        # @return [Hash<String,String>]
+        attr_accessor :user_defined_context
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @connection = args[:connection] if args.key?(:connection)
+          @endpoint = args[:endpoint] if args.key?(:endpoint)
+          @max_batching_rows = args[:max_batching_rows] if args.key?(:max_batching_rows)
+          @user_defined_context = args[:user_defined_context] if args.key?(:user_defined_context)
+        end
+      end
+      
       # A user-defined function or a stored procedure.
       class Routine
         include Google::Apis::Core::Hashable
@@ -5618,7 +6533,8 @@ module Google
         # @return [Array<String>]
         attr_accessor :imported_libraries
       
-        # Optional. Defaults to "SQL".
+        # Optional. Defaults to "SQL" if remote_function_options field is absent, not
+        # set otherwise.
         # Corresponds to the JSON property `language`
         # @return [String]
         attr_accessor :language
@@ -5629,15 +6545,22 @@ module Google
         # @return [Fixnum]
         attr_accessor :last_modified_time
       
+        # Options for a remote user-defined function.
+        # Corresponds to the JSON property `remoteFunctionOptions`
+        # @return [Google::Apis::BigqueryV2::RemoteFunctionOptions]
+        attr_accessor :remote_function_options
+      
         # A table type
         # Corresponds to the JSON property `returnTableType`
         # @return [Google::Apis::BigqueryV2::StandardSqlTableType]
         attr_accessor :return_table_type
       
-        # The type of a variable, e.g., a function argument. Examples: INT64: `type_kind=
-        # "INT64"` ARRAY: `type_kind="ARRAY", array_element_type="STRING"` STRUCT>: `
-        # type_kind="STRUCT", struct_type=`fields=[ `name="x", type=`type_kind="STRING"``
-        # , `name="y", type=`type_kind="ARRAY", array_element_type="DATE"`` ]``
+        # The data type of a variable such as a function argument. Examples include: *
+        # INT64: ``"typeKind": "INT64"`` * ARRAY: ` "typeKind": "ARRAY", "
+        # arrayElementType": `"typeKind": "STRING"` ` * STRUCT>: ` "typeKind": "STRUCT",
+        # "structType": ` "fields": [ ` "name": "x", "type": `"typeKind": "STRING"` `, `
+        # "name": "y", "type": ` "typeKind": "ARRAY", "arrayElementType": `"typeKind": "
+        # DATE"` ` ` ] ` `
         # Corresponds to the JSON property `returnType`
         # @return [Google::Apis::BigqueryV2::StandardSqlDataType]
         attr_accessor :return_type
@@ -5651,6 +6574,11 @@ module Google
         # Corresponds to the JSON property `routineType`
         # @return [String]
         attr_accessor :routine_type
+      
+        # Options for a user-defined Spark routine.
+        # Corresponds to the JSON property `sparkOptions`
+        # @return [Google::Apis::BigqueryV2::SparkOptions]
+        attr_accessor :spark_options
       
         # Optional. Can be set for procedures only. If true (default), the definition
         # body will be validated in the creation and the updates of the procedure. For
@@ -5677,10 +6605,12 @@ module Google
           @imported_libraries = args[:imported_libraries] if args.key?(:imported_libraries)
           @language = args[:language] if args.key?(:language)
           @last_modified_time = args[:last_modified_time] if args.key?(:last_modified_time)
+          @remote_function_options = args[:remote_function_options] if args.key?(:remote_function_options)
           @return_table_type = args[:return_table_type] if args.key?(:return_table_type)
           @return_type = args[:return_type] if args.key?(:return_type)
           @routine_reference = args[:routine_reference] if args.key?(:routine_reference)
           @routine_type = args[:routine_type] if args.key?(:routine_type)
+          @spark_options = args[:spark_options] if args.key?(:spark_options)
           @strict_mode = args[:strict_mode] if args.key?(:strict_mode)
         end
       end
@@ -5929,6 +6859,33 @@ module Google
       end
       
       # 
+      class SearchStatistics
+        include Google::Apis::Core::Hashable
+      
+        # When index_usage_mode is UNUSED or PARTIALLY_USED, this field explains why
+        # index was not used in all or part of the search query. If index_usage_mode is
+        # FULLLY_USED, this field is not populated.
+        # Corresponds to the JSON property `indexUnusedReason`
+        # @return [Array<Google::Apis::BigqueryV2::IndexUnusedReason>]
+        attr_accessor :index_unused_reason
+      
+        # Specifies index usage mode for the query.
+        # Corresponds to the JSON property `indexUsageMode`
+        # @return [String]
+        attr_accessor :index_usage_mode
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @index_unused_reason = args[:index_unused_reason] if args.key?(:index_unused_reason)
+          @index_usage_mode = args[:index_usage_mode] if args.key?(:index_usage_mode)
+        end
+      end
+      
+      # 
       class SessionInfo
         include Google::Apis::Core::Hashable
       
@@ -5953,31 +6910,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::BigqueryV2::Policy]
         attr_accessor :policy
@@ -6026,17 +6983,164 @@ module Google
         end
       end
       
-      # The type of a variable, e.g., a function argument. Examples: INT64: `type_kind=
-      # "INT64"` ARRAY: `type_kind="ARRAY", array_element_type="STRING"` STRUCT>: `
-      # type_kind="STRUCT", struct_type=`fields=[ `name="x", type=`type_kind="STRING"``
-      # , `name="y", type=`type_kind="ARRAY", array_element_type="DATE"`` ]``
+      # 
+      class SparkLoggingInfo
+        include Google::Apis::Core::Hashable
+      
+        # [Output-only] Project ID used for logging
+        # Corresponds to the JSON property `project_id`
+        # @return [String]
+        attr_accessor :project_id
+      
+        # [Output-only] Resource type used for logging
+        # Corresponds to the JSON property `resource_type`
+        # @return [String]
+        attr_accessor :resource_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @project_id = args[:project_id] if args.key?(:project_id)
+          @resource_type = args[:resource_type] if args.key?(:resource_type)
+        end
+      end
+      
+      # Options for a user-defined Spark routine.
+      class SparkOptions
+        include Google::Apis::Core::Hashable
+      
+        # Archive files to be extracted into the working directory of each executor. For
+        # more information about Apache Spark, see [Apache Spark](https://spark.apache.
+        # org/docs/latest/index.html).
+        # Corresponds to the JSON property `archiveUris`
+        # @return [Array<String>]
+        attr_accessor :archive_uris
+      
+        # Fully qualified name of the user-provided Spark connection object. Format: ```"
+        # projects/`project_id`/locations/`location_id`/connections/`connection_id`"```
+        # Corresponds to the JSON property `connection`
+        # @return [String]
+        attr_accessor :connection
+      
+        # Custom container image for the runtime environment.
+        # Corresponds to the JSON property `containerImage`
+        # @return [String]
+        attr_accessor :container_image
+      
+        # Files to be placed in the working directory of each executor. For more
+        # information about Apache Spark, see [Apache Spark](https://spark.apache.org/
+        # docs/latest/index.html).
+        # Corresponds to the JSON property `fileUris`
+        # @return [Array<String>]
+        attr_accessor :file_uris
+      
+        # JARs to include on the driver and executor CLASSPATH. For more information
+        # about Apache Spark, see [Apache Spark](https://spark.apache.org/docs/latest/
+        # index.html).
+        # Corresponds to the JSON property `jarUris`
+        # @return [Array<String>]
+        attr_accessor :jar_uris
+      
+        # The main file/jar URI of the Spark application. Exactly one of the
+        # definition_body field and the main_file_uri field must be set for Python.
+        # Exactly one of main_class and main_file_uri field should be set for Java/Scala
+        # language type.
+        # Corresponds to the JSON property `mainFileUri`
+        # @return [String]
+        attr_accessor :main_file_uri
+      
+        # Configuration properties as a set of key/value pairs, which will be passed on
+        # to the Spark application. For more information, see [Apache Spark](https://
+        # spark.apache.org/docs/latest/index.html).
+        # Corresponds to the JSON property `properties`
+        # @return [Hash<String,String>]
+        attr_accessor :properties
+      
+        # Python files to be placed on the PYTHONPATH for PySpark application. Supported
+        # file types: `.py`, `.egg`, and `.zip`. For more information about Apache Spark,
+        # see [Apache Spark](https://spark.apache.org/docs/latest/index.html).
+        # Corresponds to the JSON property `pyFileUris`
+        # @return [Array<String>]
+        attr_accessor :py_file_uris
+      
+        # Runtime version. If not specified, the default runtime version is used.
+        # Corresponds to the JSON property `runtimeVersion`
+        # @return [String]
+        attr_accessor :runtime_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @archive_uris = args[:archive_uris] if args.key?(:archive_uris)
+          @connection = args[:connection] if args.key?(:connection)
+          @container_image = args[:container_image] if args.key?(:container_image)
+          @file_uris = args[:file_uris] if args.key?(:file_uris)
+          @jar_uris = args[:jar_uris] if args.key?(:jar_uris)
+          @main_file_uri = args[:main_file_uri] if args.key?(:main_file_uri)
+          @properties = args[:properties] if args.key?(:properties)
+          @py_file_uris = args[:py_file_uris] if args.key?(:py_file_uris)
+          @runtime_version = args[:runtime_version] if args.key?(:runtime_version)
+        end
+      end
+      
+      # 
+      class SparkStatistics
+        include Google::Apis::Core::Hashable
+      
+        # [Output-only] Endpoints generated for the Spark job.
+        # Corresponds to the JSON property `endpoints`
+        # @return [Hash<String,String>]
+        attr_accessor :endpoints
+      
+        # [Output-only] Logging info is used to generate a link to Cloud Logging.
+        # Corresponds to the JSON property `logging_info`
+        # @return [Google::Apis::BigqueryV2::SparkLoggingInfo]
+        attr_accessor :logging_info
+      
+        # [Output-only] Spark job id if a Spark job is created successfully.
+        # Corresponds to the JSON property `spark_job_id`
+        # @return [String]
+        attr_accessor :spark_job_id
+      
+        # [Output-only] Location where the Spark job is executed.
+        # Corresponds to the JSON property `spark_job_location`
+        # @return [String]
+        attr_accessor :spark_job_location
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @endpoints = args[:endpoints] if args.key?(:endpoints)
+          @logging_info = args[:logging_info] if args.key?(:logging_info)
+          @spark_job_id = args[:spark_job_id] if args.key?(:spark_job_id)
+          @spark_job_location = args[:spark_job_location] if args.key?(:spark_job_location)
+        end
+      end
+      
+      # The data type of a variable such as a function argument. Examples include: *
+      # INT64: ``"typeKind": "INT64"`` * ARRAY: ` "typeKind": "ARRAY", "
+      # arrayElementType": `"typeKind": "STRING"` ` * STRUCT>: ` "typeKind": "STRUCT",
+      # "structType": ` "fields": [ ` "name": "x", "type": `"typeKind": "STRING"` `, `
+      # "name": "y", "type": ` "typeKind": "ARRAY", "arrayElementType": `"typeKind": "
+      # DATE"` ` ` ] ` `
       class StandardSqlDataType
         include Google::Apis::Core::Hashable
       
-        # The type of a variable, e.g., a function argument. Examples: INT64: `type_kind=
-        # "INT64"` ARRAY: `type_kind="ARRAY", array_element_type="STRING"` STRUCT>: `
-        # type_kind="STRUCT", struct_type=`fields=[ `name="x", type=`type_kind="STRING"``
-        # , `name="y", type=`type_kind="ARRAY", array_element_type="DATE"`` ]``
+        # The data type of a variable such as a function argument. Examples include: *
+        # INT64: ``"typeKind": "INT64"`` * ARRAY: ` "typeKind": "ARRAY", "
+        # arrayElementType": `"typeKind": "STRING"` ` * STRUCT>: ` "typeKind": "STRUCT",
+        # "structType": ` "fields": [ ` "name": "x", "type": `"typeKind": "STRING"` `, `
+        # "name": "y", "type": ` "typeKind": "ARRAY", "arrayElementType": `"typeKind": "
+        # DATE"` ` ` ] ` `
         # Corresponds to the JSON property `arrayElementType`
         # @return [Google::Apis::BigqueryV2::StandardSqlDataType]
         attr_accessor :array_element_type
@@ -6073,10 +7177,12 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # The type of a variable, e.g., a function argument. Examples: INT64: `type_kind=
-        # "INT64"` ARRAY: `type_kind="ARRAY", array_element_type="STRING"` STRUCT>: `
-        # type_kind="STRUCT", struct_type=`fields=[ `name="x", type=`type_kind="STRING"``
-        # , `name="y", type=`type_kind="ARRAY", array_element_type="DATE"`` ]``
+        # The data type of a variable such as a function argument. Examples include: *
+        # INT64: ``"typeKind": "INT64"`` * ARRAY: ` "typeKind": "ARRAY", "
+        # arrayElementType": `"typeKind": "STRING"` ` * STRUCT>: ` "typeKind": "STRUCT",
+        # "structType": ` "fields": [ ` "name": "x", "type": `"typeKind": "STRING"` `, `
+        # "name": "y", "type": ` "typeKind": "ARRAY", "arrayElementType": `"typeKind": "
+        # DATE"` ` ` ] ` `
         # Corresponds to the JSON property `type`
         # @return [Google::Apis::BigqueryV2::StandardSqlDataType]
         attr_accessor :type
@@ -6164,9 +7270,33 @@ module Google
         end
       end
       
+      # Search space for string and enum.
+      class StringHparamSearchSpace
+        include Google::Apis::Core::Hashable
+      
+        # Canididates for the string or enum parameter in lower case.
+        # Corresponds to the JSON property `candidates`
+        # @return [Array<String>]
+        attr_accessor :candidates
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @candidates = args[:candidates] if args.key?(:candidates)
+        end
+      end
+      
       # 
       class Table
         include Google::Apis::Core::Hashable
+      
+        # [Output-only] Clone definition.
+        # Corresponds to the JSON property `cloneDefinition`
+        # @return [Google::Apis::BigqueryV2::CloneDefinition]
+        attr_accessor :clone_definition
       
         # [Beta] Clustering specification for the table. Must be specified with
         # partitioning, data in the table will be first partitioned and subsequently
@@ -6185,6 +7315,11 @@ module Google
         # Corresponds to the JSON property `defaultCollation`
         # @return [String]
         attr_accessor :default_collation
+      
+        # [Output-only] The default rounding mode of the table.
+        # Corresponds to the JSON property `defaultRoundingMode`
+        # @return [String]
+        attr_accessor :default_rounding_mode
       
         # [Optional] A user-friendly description of this table.
         # Corresponds to the JSON property `description`
@@ -6261,6 +7396,13 @@ module Google
         # @return [Google::Apis::BigqueryV2::MaterializedViewDefinition]
         attr_accessor :materialized_view
       
+        # [Optional] Max staleness of data that could be returned when table or
+        # materialized view is queried (formatted as Google SQL Interval type).
+        # Corresponds to the JSON property `maxStaleness`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :max_staleness
+      
         # [Output-only, Beta] Present iff this table represents a ML model. Describes
         # the training information for the model, and it is required to run 'PREDICT'
         # queries.
@@ -6292,6 +7434,54 @@ module Google
         # Corresponds to the JSON property `numRows`
         # @return [Fixnum]
         attr_accessor :num_rows
+      
+        # [Output-only] Number of logical bytes that are less than 90 days old.
+        # Corresponds to the JSON property `num_active_logical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_active_logical_bytes
+      
+        # [Output-only] Number of physical bytes less than 90 days old. This data is not
+        # kept in real time, and might be delayed by a few seconds to a few minutes.
+        # Corresponds to the JSON property `num_active_physical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_active_physical_bytes
+      
+        # [Output-only] Number of logical bytes that are more than 90 days old.
+        # Corresponds to the JSON property `num_long_term_logical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_long_term_logical_bytes
+      
+        # [Output-only] Number of physical bytes more than 90 days old. This data is not
+        # kept in real time, and might be delayed by a few seconds to a few minutes.
+        # Corresponds to the JSON property `num_long_term_physical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_long_term_physical_bytes
+      
+        # [Output-only] The number of partitions present in the table or materialized
+        # view. This data is not kept in real time, and might be delayed by a few
+        # seconds to a few minutes.
+        # Corresponds to the JSON property `num_partitions`
+        # @return [Fixnum]
+        attr_accessor :num_partitions
+      
+        # [Output-only] Number of physical bytes used by time travel storage (deleted or
+        # changed data). This data is not kept in real time, and might be delayed by a
+        # few seconds to a few minutes.
+        # Corresponds to the JSON property `num_time_travel_physical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_time_travel_physical_bytes
+      
+        # [Output-only] Total number of logical bytes in the table or materialized view.
+        # Corresponds to the JSON property `num_total_logical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_total_logical_bytes
+      
+        # [Output-only] The physical size of this table in bytes. This also includes
+        # storage used for time travel. This data is not kept in real time, and might be
+        # delayed by a few seconds to a few minutes.
+        # Corresponds to the JSON property `num_total_physical_bytes`
+        # @return [Fixnum]
+        attr_accessor :num_total_physical_bytes
       
         # [TrustedTester] Range partitioning specification for this table. Only one of
         # timePartitioning and rangePartitioning should be specified.
@@ -6360,9 +7550,11 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @clone_definition = args[:clone_definition] if args.key?(:clone_definition)
           @clustering = args[:clustering] if args.key?(:clustering)
           @creation_time = args[:creation_time] if args.key?(:creation_time)
           @default_collation = args[:default_collation] if args.key?(:default_collation)
+          @default_rounding_mode = args[:default_rounding_mode] if args.key?(:default_rounding_mode)
           @description = args[:description] if args.key?(:description)
           @encryption_configuration = args[:encryption_configuration] if args.key?(:encryption_configuration)
           @etag = args[:etag] if args.key?(:etag)
@@ -6375,11 +7567,20 @@ module Google
           @last_modified_time = args[:last_modified_time] if args.key?(:last_modified_time)
           @location = args[:location] if args.key?(:location)
           @materialized_view = args[:materialized_view] if args.key?(:materialized_view)
+          @max_staleness = args[:max_staleness] if args.key?(:max_staleness)
           @model = args[:model] if args.key?(:model)
           @num_bytes = args[:num_bytes] if args.key?(:num_bytes)
           @num_long_term_bytes = args[:num_long_term_bytes] if args.key?(:num_long_term_bytes)
           @num_physical_bytes = args[:num_physical_bytes] if args.key?(:num_physical_bytes)
           @num_rows = args[:num_rows] if args.key?(:num_rows)
+          @num_active_logical_bytes = args[:num_active_logical_bytes] if args.key?(:num_active_logical_bytes)
+          @num_active_physical_bytes = args[:num_active_physical_bytes] if args.key?(:num_active_physical_bytes)
+          @num_long_term_logical_bytes = args[:num_long_term_logical_bytes] if args.key?(:num_long_term_logical_bytes)
+          @num_long_term_physical_bytes = args[:num_long_term_physical_bytes] if args.key?(:num_long_term_physical_bytes)
+          @num_partitions = args[:num_partitions] if args.key?(:num_partitions)
+          @num_time_travel_physical_bytes = args[:num_time_travel_physical_bytes] if args.key?(:num_time_travel_physical_bytes)
+          @num_total_logical_bytes = args[:num_total_logical_bytes] if args.key?(:num_total_logical_bytes)
+          @num_total_physical_bytes = args[:num_total_physical_bytes] if args.key?(:num_total_physical_bytes)
           @range_partitioning = args[:range_partitioning] if args.key?(:range_partitioning)
           @require_partition_filter = args[:require_partition_filter] if args.key?(:require_partition_filter)
           @schema = args[:schema] if args.key?(:schema)
@@ -6598,9 +7799,21 @@ module Google
       
         # Optional. Collation specification of the field. It only can be set on string
         # type field.
-        # Corresponds to the JSON property `collationSpec`
+        # Corresponds to the JSON property `collation`
         # @return [String]
-        attr_accessor :collation_spec
+        attr_accessor :collation
+      
+        # Optional. A SQL expression to specify the default value for this field. It can
+        # only be set for top level fields (columns). You can use struct or array
+        # expression to specify default value for the entire struct or array. The valid
+        # SQL expressions are: - Literals for all data types, including STRUCT and ARRAY.
+        # - Following functions: - CURRENT_TIMESTAMP - CURRENT_TIME - CURRENT_DATE -
+        # CURRENT_DATETIME - GENERATE_UUID - RAND - SESSION_USER - ST_GEOGPOINT - Struct
+        # or array composed with the above allowed functions, for example, [CURRENT_DATE(
+        # ), DATE '2020-01-01']
+        # Corresponds to the JSON property `defaultValueExpression`
+        # @return [String]
+        attr_accessor :default_value_expression
       
         # [Optional] The field description. The maximum length is 1,024 characters.
         # Corresponds to the JSON property `description`
@@ -6661,6 +7874,12 @@ module Google
         # @return [Fixnum]
         attr_accessor :precision
       
+        # Optional. Rounding Mode specification of the field. It only can be set on
+        # NUMERIC or BIGNUMERIC type fields.
+        # Corresponds to the JSON property `roundingMode`
+        # @return [String]
+        attr_accessor :rounding_mode
+      
         # [Optional] See documentation for precision.
         # Corresponds to the JSON property `scale`
         # @return [Fixnum]
@@ -6682,7 +7901,8 @@ module Google
         # Update properties of this object
         def update!(**args)
           @categories = args[:categories] if args.key?(:categories)
-          @collation_spec = args[:collation_spec] if args.key?(:collation_spec)
+          @collation = args[:collation] if args.key?(:collation)
+          @default_value_expression = args[:default_value_expression] if args.key?(:default_value_expression)
           @description = args[:description] if args.key?(:description)
           @fields = args[:fields] if args.key?(:fields)
           @max_length = args[:max_length] if args.key?(:max_length)
@@ -6690,6 +7910,7 @@ module Google
           @name = args[:name] if args.key?(:name)
           @policy_tags = args[:policy_tags] if args.key?(:policy_tags)
           @precision = args[:precision] if args.key?(:precision)
+          @rounding_mode = args[:rounding_mode] if args.key?(:rounding_mode)
           @scale = args[:scale] if args.key?(:scale)
           @type = args[:type] if args.key?(:type)
         end
@@ -6962,7 +8183,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -7074,11 +8295,24 @@ module Google
         # @return [String]
         attr_accessor :booster_type
       
+        # Whether or not p-value test should be computed for this model. Only available
+        # for linear and logistic regression models.
+        # Corresponds to the JSON property `calculatePValues`
+        # @return [Boolean]
+        attr_accessor :calculate_p_values
+        alias_method :calculate_p_values?, :calculate_p_values
+      
         # If true, clean spikes and dips in the input time series.
         # Corresponds to the JSON property `cleanSpikesAndDips`
         # @return [Boolean]
         attr_accessor :clean_spikes_and_dips
         alias_method :clean_spikes_and_dips?, :clean_spikes_and_dips
+      
+        # Enums for color space, used for processing images in Object Table. See more
+        # details at https://www.tensorflow.org/io/tutorials/colorspace.
+        # Corresponds to the JSON property `colorSpace`
+        # @return [String]
+        attr_accessor :color_space
       
         # Subsample ratio of columns for each level for boosted tree models.
         # Corresponds to the JSON property `colsampleBylevel`
@@ -7153,6 +8387,12 @@ module Google
         attr_accessor :early_stop
         alias_method :early_stop?, :early_stop
       
+        # If true, enable global explanation during training.
+        # Corresponds to the JSON property `enableGlobalExplain`
+        # @return [Boolean]
+        attr_accessor :enable_global_explain
+        alias_method :enable_global_explain?, :enable_global_explain
+      
         # Feedback type that specifies which algorithm to run for matrix factorization.
         # Corresponds to the JSON property `feedbackType`
         # @return [String]
@@ -7175,6 +8415,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :horizon
       
+        # The target evaluation metrics to optimize the hyperparameters for.
+        # Corresponds to the JSON property `hparamTuningObjectives`
+        # @return [Array<String>]
+        attr_accessor :hparam_tuning_objectives
+      
         # Include drift when fitting an ARIMA model.
         # Corresponds to the JSON property `includeDrift`
         # @return [Boolean]
@@ -7190,6 +8435,11 @@ module Google
         # Corresponds to the JSON property `inputLabelColumns`
         # @return [Array<String>]
         attr_accessor :input_label_columns
+      
+        # Number of integral steps for the integrated gradients explain method.
+        # Corresponds to the JSON property `integratedGradientsNumSteps`
+        # @return [Fixnum]
+        attr_accessor :integrated_gradients_num_steps
       
         # Item column specified for matrix factorization models.
         # Corresponds to the JSON property `itemColumn`
@@ -7244,6 +8494,17 @@ module Google
         # @return [Fixnum]
         attr_accessor :max_iterations
       
+        # Maximum number of trials to run in parallel.
+        # Corresponds to the JSON property `maxParallelTrials`
+        # @return [Fixnum]
+        attr_accessor :max_parallel_trials
+      
+        # Get truncated length by last n points in time series. Use separately from
+        # time_series_length_fraction and min_time_series_length.
+        # Corresponds to the JSON property `maxTimeSeriesLength`
+        # @return [Fixnum]
+        attr_accessor :max_time_series_length
+      
         # Maximum depth of a tree for boosted tree models.
         # Corresponds to the JSON property `maxTreeDepth`
         # @return [Fixnum]
@@ -7259,6 +8520,12 @@ module Google
         # Corresponds to the JSON property `minSplitLoss`
         # @return [Float]
         attr_accessor :min_split_loss
+      
+        # Set fast trend ARIMA_PLUS model minimum training length. Use in pair with
+        # time_series_length_fraction.
+        # Corresponds to the JSON property `minTimeSeriesLength`
+        # @return [Fixnum]
+        attr_accessor :min_time_series_length
       
         # Minimum sum of instance weight needed in a child for boosted tree models.
         # Corresponds to the JSON property `minTreeChildWeight`
@@ -7292,6 +8559,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :num_parallel_tree
       
+        # Number of trials to run this hyperparameter tuning job.
+        # Corresponds to the JSON property `numTrials`
+        # @return [Fixnum]
+        attr_accessor :num_trials
+      
         # Optimization strategy for training linear regression models.
         # Corresponds to the JSON property `optimizationStrategy`
         # @return [String]
@@ -7304,6 +8576,11 @@ module Google
         # @return [Boolean]
         attr_accessor :preserve_input_structs
         alias_method :preserve_input_structs?, :preserve_input_structs
+      
+        # Number of paths for the sampled Shapley explain method.
+        # Corresponds to the JSON property `sampledShapleyNumPaths`
+        # @return [Fixnum]
+        attr_accessor :sampled_shapley_num_paths
       
         # Subsample fraction of the training data to grow tree to prevent overfitting
         # for boosted tree models.
@@ -7326,6 +8603,11 @@ module Google
         # @return [Array<String>]
         attr_accessor :time_series_id_columns
       
+        # Get truncated length by fraction in time series.
+        # Corresponds to the JSON property `timeSeriesLengthFraction`
+        # @return [Float]
+        attr_accessor :time_series_length_fraction
+      
         # Column to be designated as time series timestamp for ARIMA model.
         # Corresponds to the JSON property `timeSeriesTimestampColumn`
         # @return [String]
@@ -7335,6 +8617,11 @@ module Google
         # Corresponds to the JSON property `treeMethod`
         # @return [String]
         attr_accessor :tree_method
+      
+        # The smoothing window size for the trend component of the time series.
+        # Corresponds to the JSON property `trendSmoothingWindowSize`
+        # @return [Fixnum]
+        attr_accessor :trend_smoothing_window_size
       
         # User column specified for matrix factorization models.
         # Corresponds to the JSON property `userColumn`
@@ -7363,7 +8650,9 @@ module Google
           @auto_arima_max_order = args[:auto_arima_max_order] if args.key?(:auto_arima_max_order)
           @batch_size = args[:batch_size] if args.key?(:batch_size)
           @booster_type = args[:booster_type] if args.key?(:booster_type)
+          @calculate_p_values = args[:calculate_p_values] if args.key?(:calculate_p_values)
           @clean_spikes_and_dips = args[:clean_spikes_and_dips] if args.key?(:clean_spikes_and_dips)
+          @color_space = args[:color_space] if args.key?(:color_space)
           @colsample_bylevel = args[:colsample_bylevel] if args.key?(:colsample_bylevel)
           @colsample_bynode = args[:colsample_bynode] if args.key?(:colsample_bynode)
           @colsample_bytree = args[:colsample_bytree] if args.key?(:colsample_bytree)
@@ -7376,13 +8665,16 @@ module Google
           @distance_type = args[:distance_type] if args.key?(:distance_type)
           @dropout = args[:dropout] if args.key?(:dropout)
           @early_stop = args[:early_stop] if args.key?(:early_stop)
+          @enable_global_explain = args[:enable_global_explain] if args.key?(:enable_global_explain)
           @feedback_type = args[:feedback_type] if args.key?(:feedback_type)
           @hidden_units = args[:hidden_units] if args.key?(:hidden_units)
           @holiday_region = args[:holiday_region] if args.key?(:holiday_region)
           @horizon = args[:horizon] if args.key?(:horizon)
+          @hparam_tuning_objectives = args[:hparam_tuning_objectives] if args.key?(:hparam_tuning_objectives)
           @include_drift = args[:include_drift] if args.key?(:include_drift)
           @initial_learn_rate = args[:initial_learn_rate] if args.key?(:initial_learn_rate)
           @input_label_columns = args[:input_label_columns] if args.key?(:input_label_columns)
+          @integrated_gradients_num_steps = args[:integrated_gradients_num_steps] if args.key?(:integrated_gradients_num_steps)
           @item_column = args[:item_column] if args.key?(:item_column)
           @kmeans_initialization_column = args[:kmeans_initialization_column] if args.key?(:kmeans_initialization_column)
           @kmeans_initialization_method = args[:kmeans_initialization_method] if args.key?(:kmeans_initialization_method)
@@ -7393,23 +8685,30 @@ module Google
           @learn_rate_strategy = args[:learn_rate_strategy] if args.key?(:learn_rate_strategy)
           @loss_type = args[:loss_type] if args.key?(:loss_type)
           @max_iterations = args[:max_iterations] if args.key?(:max_iterations)
+          @max_parallel_trials = args[:max_parallel_trials] if args.key?(:max_parallel_trials)
+          @max_time_series_length = args[:max_time_series_length] if args.key?(:max_time_series_length)
           @max_tree_depth = args[:max_tree_depth] if args.key?(:max_tree_depth)
           @min_relative_progress = args[:min_relative_progress] if args.key?(:min_relative_progress)
           @min_split_loss = args[:min_split_loss] if args.key?(:min_split_loss)
+          @min_time_series_length = args[:min_time_series_length] if args.key?(:min_time_series_length)
           @min_tree_child_weight = args[:min_tree_child_weight] if args.key?(:min_tree_child_weight)
           @model_uri = args[:model_uri] if args.key?(:model_uri)
           @non_seasonal_order = args[:non_seasonal_order] if args.key?(:non_seasonal_order)
           @num_clusters = args[:num_clusters] if args.key?(:num_clusters)
           @num_factors = args[:num_factors] if args.key?(:num_factors)
           @num_parallel_tree = args[:num_parallel_tree] if args.key?(:num_parallel_tree)
+          @num_trials = args[:num_trials] if args.key?(:num_trials)
           @optimization_strategy = args[:optimization_strategy] if args.key?(:optimization_strategy)
           @preserve_input_structs = args[:preserve_input_structs] if args.key?(:preserve_input_structs)
+          @sampled_shapley_num_paths = args[:sampled_shapley_num_paths] if args.key?(:sampled_shapley_num_paths)
           @subsample = args[:subsample] if args.key?(:subsample)
           @time_series_data_column = args[:time_series_data_column] if args.key?(:time_series_data_column)
           @time_series_id_column = args[:time_series_id_column] if args.key?(:time_series_id_column)
           @time_series_id_columns = args[:time_series_id_columns] if args.key?(:time_series_id_columns)
+          @time_series_length_fraction = args[:time_series_length_fraction] if args.key?(:time_series_length_fraction)
           @time_series_timestamp_column = args[:time_series_timestamp_column] if args.key?(:time_series_timestamp_column)
           @tree_method = args[:tree_method] if args.key?(:tree_method)
+          @trend_smoothing_window_size = args[:trend_smoothing_window_size] if args.key?(:trend_smoothing_window_size)
           @user_column = args[:user_column] if args.key?(:user_column)
           @wals_alpha = args[:wals_alpha] if args.key?(:wals_alpha)
           @warm_start = args[:warm_start] if args.key?(:warm_start)
@@ -7419,6 +8718,12 @@ module Google
       # Information about a single training query run for the model.
       class TrainingRun
         include Google::Apis::Core::Hashable
+      
+        # Output only. Global explanation contains the explanation of top features on
+        # the class level. Applies to classification models only.
+        # Corresponds to the JSON property `classLevelGlobalExplanations`
+        # @return [Array<Google::Apis::BigqueryV2::GlobalExplanation>]
+        attr_accessor :class_level_global_explanations
       
         # Data split result. This contains references to the training and evaluation
         # data tables that were used to train the model.
@@ -7433,12 +8738,17 @@ module Google
         # @return [Google::Apis::BigqueryV2::EvaluationMetrics]
         attr_accessor :evaluation_metrics
       
-        # Output of each iteration run, results.size() <= max_iterations.
+        # Global explanations containing the top most important features after training.
+        # Corresponds to the JSON property `modelLevelGlobalExplanation`
+        # @return [Google::Apis::BigqueryV2::GlobalExplanation]
+        attr_accessor :model_level_global_explanation
+      
+        # Output only. Output of each iteration run, results.size() <= max_iterations.
         # Corresponds to the JSON property `results`
         # @return [Array<Google::Apis::BigqueryV2::IterationResult>]
         attr_accessor :results
       
-        # The start time of this training run.
+        # Output only. The start time of this training run.
         # Corresponds to the JSON property `startTime`
         # @return [String]
         attr_accessor :start_time
@@ -7448,17 +8758,39 @@ module Google
         # @return [Google::Apis::BigqueryV2::TrainingOptions]
         attr_accessor :training_options
       
+        # Output only. The start time of this training run, in milliseconds since epoch.
+        # Corresponds to the JSON property `trainingStartTime`
+        # @return [Fixnum]
+        attr_accessor :training_start_time
+      
+        # The model id in the [Vertex AI Model Registry](https://cloud.google.com/vertex-
+        # ai/docs/model-registry/introduction) for this training run.
+        # Corresponds to the JSON property `vertexAiModelId`
+        # @return [String]
+        attr_accessor :vertex_ai_model_id
+      
+        # Output only. The model version in the [Vertex AI Model Registry](https://cloud.
+        # google.com/vertex-ai/docs/model-registry/introduction) for this training run.
+        # Corresponds to the JSON property `vertexAiModelVersion`
+        # @return [String]
+        attr_accessor :vertex_ai_model_version
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @class_level_global_explanations = args[:class_level_global_explanations] if args.key?(:class_level_global_explanations)
           @data_split_result = args[:data_split_result] if args.key?(:data_split_result)
           @evaluation_metrics = args[:evaluation_metrics] if args.key?(:evaluation_metrics)
+          @model_level_global_explanation = args[:model_level_global_explanation] if args.key?(:model_level_global_explanation)
           @results = args[:results] if args.key?(:results)
           @start_time = args[:start_time] if args.key?(:start_time)
           @training_options = args[:training_options] if args.key?(:training_options)
+          @training_start_time = args[:training_start_time] if args.key?(:training_start_time)
+          @vertex_ai_model_id = args[:vertex_ai_model_id] if args.key?(:vertex_ai_model_id)
+          @vertex_ai_model_version = args[:vertex_ai_model_version] if args.key?(:vertex_ai_model_version)
         end
       end
       

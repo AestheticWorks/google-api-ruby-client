@@ -196,7 +196,11 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Create an instance within a project.
+        # Create an instance within a project. Note that exactly one of Cluster.
+        # serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set.
+        # If serve_nodes is set to non-zero, then the cluster is manually scaled. If
+        # cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+        # enabled.
         # @param [String] parent
         #   Required. The unique name of the project in which to create the new instance.
         #   Values are of the form `projects/`project``.
@@ -295,8 +299,9 @@ module Google
         # Gets the access control policy for an instance resource. Returns an empty
         # policy if an instance exists but does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -403,8 +408,9 @@ module Google
         # Sets the access control policy on an instance resource. Replaces any existing
         # policy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -437,8 +443,9 @@ module Google
         
         # Returns permissions that the caller has on the specified instance resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -697,7 +704,11 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a cluster within an instance.
+        # Creates a cluster within an instance. Note that exactly one of Cluster.
+        # serve_nodes and Cluster.cluster_config.cluster_autoscaling_config can be set.
+        # If serve_nodes is set to non-zero, then the cluster is manually scaled. If
+        # cluster_config.cluster_autoscaling_config is non-empty, then autoscaling is
+        # enabled.
         # @param [String] parent
         #   Required. The unique name of the instance in which to create the new cluster.
         #   Values are of the form `projects/`project`/instances/`instance``.
@@ -835,14 +846,20 @@ module Google
         end
         
         # Partially updates a cluster within a project. This method is the preferred way
-        # to update a Cluster.
+        # to update a Cluster. To enable and update autoscaling, set cluster_config.
+        # cluster_autoscaling_config. When autoscaling is enabled, serve_nodes is
+        # treated as an OUTPUT_ONLY field, meaning that updates to it are ignored. Note
+        # that an update cannot simultaneously set serve_nodes to non-zero and
+        # cluster_config.cluster_autoscaling_config to non-empty, and also specify both
+        # in the update_mask. To disable autoscaling, clear cluster_config.
+        # cluster_autoscaling_config, and explicitly set a serve_node count via the
+        # update_mask.
         # @param [String] name
         #   The unique name of the cluster. Values are of the form `projects/`project`/
         #   instances/`instance`/clusters/a-z*`.
         # @param [Google::Apis::BigtableadminV2::Cluster] cluster_object
         # @param [String] update_mask
-        #   Required. The subset of Cluster fields which should be replaced. Must be
-        #   explicitly set.
+        #   Required. The subset of Cluster fields which should be replaced.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -873,8 +890,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates a cluster within an instance. UpdateCluster is deprecated. Please use
-        # PartialUpdateCluster instead.
+        # Updates a cluster within an instance. Note that UpdateCluster does not support
+        # updating cluster_config.cluster_autoscaling_config. In order to update it, you
+        # must use PartialUpdateCluster.
         # @param [String] name
         #   The unique name of the cluster. Values are of the form `projects/`project`/
         #   instances/`instance`/clusters/a-z*`.
@@ -903,6 +921,42 @@ module Google
           command.response_representation = Google::Apis::BigtableadminV2::Operation::Representation
           command.response_class = Google::Apis::BigtableadminV2::Operation
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Copy a Cloud Bigtable backup to a new backup in the destination cluster
+        # located in the destination instance and project.
+        # @param [String] parent
+        #   Required. The name of the destination cluster that will contain the backup
+        #   copy. The cluster must already exists. Values are of the form: `projects/`
+        #   project`/instances/`instance`/clusters/`cluster``.
+        # @param [Google::Apis::BigtableadminV2::CopyBackupRequest] copy_backup_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::BigtableadminV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::BigtableadminV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def copy_backup(parent, copy_backup_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/backups:copy', options)
+          command.request_representation = Google::Apis::BigtableadminV2::CopyBackupRequest::Representation
+          command.request_object = copy_backup_request_object
+          command.response_representation = Google::Apis::BigtableadminV2::Operation::Representation
+          command.response_class = Google::Apis::BigtableadminV2::Operation
+          command.params['parent'] = parent unless parent.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1018,8 +1072,9 @@ module Google
         # Gets the access control policy for a Table resource. Returns an empty policy
         # if the resource exists but does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1172,8 +1227,9 @@ module Google
         # Sets the access control policy on a Table resource. Replaces any existing
         # policy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1206,8 +1262,9 @@ module Google
         
         # Returns permissions that the caller has on the specified table resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1233,6 +1290,60 @@ module Google
           command.response_representation = Google::Apis::BigtableadminV2::TestIamPermissionsResponse::Representation
           command.response_class = Google::Apis::BigtableadminV2::TestIamPermissionsResponse
           command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists hot tablets in a cluster, within the time range provided. Hot tablets
+        # are ordered based on CPU usage.
+        # @param [String] parent
+        #   Required. The cluster name to list hot tablets. Value is in the following form:
+        #   `projects/`project`/instances/`instance`/clusters/`cluster``.
+        # @param [String] end_time
+        #   The end time to list hot tablets.
+        # @param [Fixnum] page_size
+        #   Maximum number of results per page. A page_size that is empty or zero lets the
+        #   server choose the number of items to return. A page_size which is strictly
+        #   positive will return at most that many items. A negative page_size will cause
+        #   an error. Following the first request, subsequent paginated calls do not need
+        #   a page_size field. If a page_size is set in subsequent calls, it must match
+        #   the page_size given in the first request.
+        # @param [String] page_token
+        #   The value of `next_page_token` returned by a previous call.
+        # @param [String] start_time
+        #   The start time to list hot tablets. The hot tablets in the response will have
+        #   start times between the requested start time and end time. Start time defaults
+        #   to Now if it is unset, and end time defaults to Now - 24 hours if it is unset.
+        #   The start time should be less than the end time, and the maximum allowed time
+        #   range between start time and end time is 48 hours. Start time and end time
+        #   should have values between Now and Now - 14 days.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::BigtableadminV2::ListHotTabletsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::BigtableadminV2::ListHotTabletsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_instance_cluster_hot_tablets(parent, end_time: nil, page_size: nil, page_token: nil, start_time: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/hotTablets', options)
+          command.response_representation = Google::Apis::BigtableadminV2::ListHotTabletsResponse::Representation
+          command.response_class = Google::Apis::BigtableadminV2::ListHotTabletsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['endTime'] = end_time unless end_time.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['startTime'] = start_time unless start_time.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1454,8 +1565,9 @@ module Google
         # Gets the access control policy for a Table resource. Returns an empty policy
         # if the resource exists but does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1501,7 +1613,7 @@ module Google
         #   The value of `next_page_token` returned by a previous call.
         # @param [String] view
         #   The view to be applied to the returned tables' fields. Only NAME_ONLY view (
-        #   default) and REPLICATION_VIEW are supported.
+        #   default), REPLICATION_VIEW and ENCRYPTION_VIEW are supported.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1570,15 +1682,57 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Create a new table by restoring from a completed backup. The new table must be
-        # in the same project as the instance containing the backup. The returned table
+        # Updates a specified table.
+        # @param [String] name
+        #   The unique name of the table. Values are of the form `projects/`project`/
+        #   instances/`instance`/tables/_a-zA-Z0-9*`. Views: `NAME_ONLY`, `SCHEMA_VIEW`, `
+        #   REPLICATION_VIEW`, `STATS_VIEW`, `FULL`
+        # @param [Google::Apis::BigtableadminV2::Table] table_object
+        # @param [String] update_mask
+        #   Required. The list of fields to update. A mask specifying which fields (e.g. `
+        #   change_stream_config`) in the `table` field should be updated. This mask is
+        #   relative to the `table` field, not to the request message. The wildcard (*)
+        #   path is currently not supported. Currently UpdateTable is only supported for
+        #   the following fields: * `change_stream_config` * `change_stream_config.
+        #   retention_period` * `deletion_protection` If `column_families` is set in `
+        #   update_mask`, it will return an UNIMPLEMENTED error.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::BigtableadminV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::BigtableadminV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_instance_table(name, table_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v2/{+name}', options)
+          command.request_representation = Google::Apis::BigtableadminV2::Table::Representation
+          command.request_object = table_object
+          command.response_representation = Google::Apis::BigtableadminV2::Operation::Representation
+          command.response_class = Google::Apis::BigtableadminV2::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Create a new table by restoring from a completed backup. The returned table
         # long-running operation can be used to track the progress of the operation, and
         # to cancel it. The metadata field type is RestoreTableMetadata. The response
         # type is Table, if successful.
         # @param [String] parent
-        #   Required. The name of the instance in which to create the restored table. This
-        #   instance must be in the same project as the source backup. Values are of the
-        #   form `projects//instances/`.
+        #   Required. The name of the instance in which to create the restored table.
+        #   Values are of the form `projects//instances/`.
         # @param [Google::Apis::BigtableadminV2::RestoreTableRequest] restore_table_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1612,8 +1766,9 @@ module Google
         # Sets the access control policy on a Table resource. Replaces any existing
         # policy.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1646,8 +1801,9 @@ module Google
         
         # Returns permissions that the caller has on the specified table resource.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::BigtableadminV2::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1673,6 +1829,40 @@ module Google
           command.response_representation = Google::Apis::BigtableadminV2::TestIamPermissionsResponse::Representation
           command.response_class = Google::Apis::BigtableadminV2::TestIamPermissionsResponse
           command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Restores a specified table which was accidentally deleted.
+        # @param [String] name
+        #   Required. The unique name of the table to be restored. Values are of the form `
+        #   projects/`project`/instances/`instance`/tables/`table``.
+        # @param [Google::Apis::BigtableadminV2::UndeleteTableRequest] undelete_table_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::BigtableadminV2::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::BigtableadminV2::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_table(name, undelete_table_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:undelete', options)
+          command.request_representation = Google::Apis::BigtableadminV2::UndeleteTableRequest::Representation
+          command.request_object = undelete_table_request_object
+          command.response_representation = Google::Apis::BigtableadminV2::Operation::Representation
+          command.response_class = Google::Apis::BigtableadminV2::Operation
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -1713,8 +1903,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.

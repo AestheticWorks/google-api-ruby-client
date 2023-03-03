@@ -35,8 +35,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -93,7 +93,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -116,38 +116,43 @@ module Google
         # @return [Google::Apis::EventarcV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -164,13 +169,150 @@ module Google
         end
       end
       
+      # A representation of the Channel resource. A Channel is a resource on which
+      # event providers publish their events. The published events are delivered
+      # through the transport associated with the channel. Note that a channel is
+      # associated with exactly one event provider.
+      class Channel
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The activation token for the channel. The token must be used by
+        # the provider to register the channel for publishing.
+        # Corresponds to the JSON property `activationToken`
+        # @return [String]
+        attr_accessor :activation_token
+      
+        # Output only. The creation time.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Optional. Resource name of a KMS crypto key (managed by the user) used to
+        # encrypt/decrypt their event data. It must match the pattern `projects/*/
+        # locations/*/keyRings/*/cryptoKeys/*`.
+        # Corresponds to the JSON property `cryptoKeyName`
+        # @return [String]
+        attr_accessor :crypto_key_name
+      
+        # Required. The resource name of the channel. Must be unique within the location
+        # on the project and must be in `projects/`project`/locations/`location`/
+        # channels/`channel_id`` format.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The name of the event provider (e.g. Eventarc SaaS partner) associated with
+        # the channel. This provider will be granted permissions to publish events to
+        # the channel. Format: `projects/`project`/locations/`location`/providers/`
+        # provider_id``.
+        # Corresponds to the JSON property `provider`
+        # @return [String]
+        attr_accessor :provider
+      
+        # Output only. The name of the Pub/Sub topic created and managed by Eventarc
+        # system as a transport for the event delivery. Format: `projects/`project`/
+        # topics/`topic_id``.
+        # Corresponds to the JSON property `pubsubTopic`
+        # @return [String]
+        attr_accessor :pubsub_topic
+      
+        # Output only. The state of a Channel.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # Output only. Server assigned unique identifier for the channel. The value is a
+        # UUID4 string and guaranteed to remain unchanged until the resource is deleted.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        # Output only. The last-modified time.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @activation_token = args[:activation_token] if args.key?(:activation_token)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @crypto_key_name = args[:crypto_key_name] if args.key?(:crypto_key_name)
+          @name = args[:name] if args.key?(:name)
+          @provider = args[:provider] if args.key?(:provider)
+          @pubsub_topic = args[:pubsub_topic] if args.key?(:pubsub_topic)
+          @state = args[:state] if args.key?(:state)
+          @uid = args[:uid] if args.key?(:uid)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # A representation of the ChannelConnection resource. A ChannelConnection is a
+      # resource which event providers create during the activation process to
+      # establish a connection between the provider and the subscriber channel.
+      class ChannelConnection
+        include Google::Apis::Core::Hashable
+      
+        # Input only. Activation token for the channel. The token will be used during
+        # the creation of ChannelConnection to bind the channel with the provider
+        # project. This field will not be stored in the provider resource.
+        # Corresponds to the JSON property `activationToken`
+        # @return [String]
+        attr_accessor :activation_token
+      
+        # Required. The name of the connected subscriber Channel. This is a weak
+        # reference to avoid cross project and cross accounts references. This must be
+        # in `projects/`project`/location/`location`/channels/`channel_id`` format.
+        # Corresponds to the JSON property `channel`
+        # @return [String]
+        attr_accessor :channel
+      
+        # Output only. The creation time.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Required. The name of the connection.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. Server assigned ID of the resource. The server guarantees
+        # uniqueness and immutability until deleted.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        # Output only. The last-modified time.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @activation_token = args[:activation_token] if args.key?(:activation_token)
+          @channel = args[:channel] if args.key?(:channel)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @name = args[:name] if args.key?(:name)
+          @uid = args[:uid] if args.key?(:uid)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
       # Represents a Cloud Run destination.
       class CloudRun
         include Google::Apis::Core::Hashable
       
         # Optional. The relative path on the Cloud Run service the events should be sent
-        # to. The value must conform to the definition of URI path segment (section 3.3
-        # of RFC2396). Examples: "/route", "route", "route/subroute".
+        # to. The value must conform to the definition of a URI path segment (section 3.
+        # 3 of RFC2396). Examples: "/route", "route", "route/subroute".
         # Corresponds to the JSON property `path`
         # @return [String]
         attr_accessor :path
@@ -182,7 +324,7 @@ module Google
       
         # Required. The name of the Cloud Run service being addressed. See https://cloud.
         # google.com/run/docs/reference/rest/v1/namespaces.services. Only services
-        # located in the same project of the trigger object can be addressed.
+        # located in the same project as the trigger object can be addressed.
         # Corresponds to the JSON property `service`
         # @return [String]
         attr_accessor :service
@@ -203,10 +345,30 @@ module Google
       class Destination
         include Google::Apis::Core::Hashable
       
+        # The Cloud Function resource name. Only Cloud Functions V2 is supported. Format:
+        # `projects/`project`/locations/`location`/functions/`function`` This is a read-
+        # only field. Creating Cloud Functions V2 triggers is only supported via the
+        # Cloud Functions product. An error will be returned if the user sets this value.
+        # Corresponds to the JSON property `cloudFunction`
+        # @return [String]
+        attr_accessor :cloud_function
+      
         # Represents a Cloud Run destination.
         # Corresponds to the JSON property `cloudRun`
         # @return [Google::Apis::EventarcV1::CloudRun]
         attr_accessor :cloud_run
+      
+        # Represents a GKE destination.
+        # Corresponds to the JSON property `gke`
+        # @return [Google::Apis::EventarcV1::Gke]
+        attr_accessor :gke
+      
+        # The resource name of the Workflow whose Executions are triggered by the events.
+        # The Workflow resource should be deployed in the same project as the trigger.
+        # Format: `projects/`project`/locations/`location`/workflows/`workflow``
+        # Corresponds to the JSON property `workflow`
+        # @return [String]
+        attr_accessor :workflow
       
         def initialize(**args)
            update!(**args)
@@ -214,15 +376,17 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cloud_function = args[:cloud_function] if args.key?(:cloud_function)
           @cloud_run = args[:cloud_run] if args.key?(:cloud_run)
+          @gke = args[:gke] if args.key?(:gke)
+          @workflow = args[:workflow] if args.key?(:workflow)
         end
       end
       
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -246,6 +410,14 @@ module Google
         # @return [String]
         attr_accessor :attribute
       
+        # Optional. The operator used for matching the events with the value of the
+        # filter. If not specified, only events that have an exact key-value pair
+        # specified in the filter are matched. The only allowed value is `match-path-
+        # pattern`.
+        # Corresponds to the JSON property `operator`
+        # @return [String]
+        attr_accessor :operator
+      
         # Required. The value for the attribute.
         # Corresponds to the JSON property `value`
         # @return [String]
@@ -258,7 +430,52 @@ module Google
         # Update properties of this object
         def update!(**args)
           @attribute = args[:attribute] if args.key?(:attribute)
+          @operator = args[:operator] if args.key?(:operator)
           @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # A representation of the event type resource.
+      class EventType
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Human friendly description of what the event type is about. For
+        # example "Bucket created in Cloud Storage".
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. URI for the event schema. For example "https://github.com/
+        # googleapis/google-cloudevents/blob/master/proto/google/events/cloud/storage/v1/
+        # events.proto"
+        # Corresponds to the JSON property `eventSchemaUri`
+        # @return [String]
+        attr_accessor :event_schema_uri
+      
+        # Output only. Filtering attributes for the event type.
+        # Corresponds to the JSON property `filteringAttributes`
+        # @return [Array<Google::Apis::EventarcV1::FilteringAttribute>]
+        attr_accessor :filtering_attributes
+      
+        # Output only. The full name of the event type (for example, "google.cloud.
+        # storage.object.v1.finalized"). In the form of `provider-specific-prefix`.`
+        # resource`.`version`.`verb`. Types MUST be versioned and event schemas are
+        # guaranteed to remain backward compatible within one version. Note that event
+        # type versions and API versions do not need to match.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @description = args[:description] if args.key?(:description)
+          @event_schema_uri = args[:event_schema_uri] if args.key?(:event_schema_uri)
+          @filtering_attributes = args[:filtering_attributes] if args.key?(:filtering_attributes)
+          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -313,6 +530,133 @@ module Google
           @expression = args[:expression] if args.key?(:expression)
           @location = args[:location] if args.key?(:location)
           @title = args[:title] if args.key?(:title)
+        end
+      end
+      
+      # A representation of the FilteringAttribute resource. Filtering attributes are
+      # per event type.
+      class FilteringAttribute
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Attribute used for filtering the event type.
+        # Corresponds to the JSON property `attribute`
+        # @return [String]
+        attr_accessor :attribute
+      
+        # Output only. Description of the purpose of the attribute.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. If true, the attribute accepts matching expressions in the
+        # Eventarc PathPattern format.
+        # Corresponds to the JSON property `pathPatternSupported`
+        # @return [Boolean]
+        attr_accessor :path_pattern_supported
+        alias_method :path_pattern_supported?, :path_pattern_supported
+      
+        # Output only. If true, the triggers for this provider should always specify a
+        # filter on these attributes. Trigger creation will fail otherwise.
+        # Corresponds to the JSON property `required`
+        # @return [Boolean]
+        attr_accessor :required
+        alias_method :required?, :required
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @attribute = args[:attribute] if args.key?(:attribute)
+          @description = args[:description] if args.key?(:description)
+          @path_pattern_supported = args[:path_pattern_supported] if args.key?(:path_pattern_supported)
+          @required = args[:required] if args.key?(:required)
+        end
+      end
+      
+      # Represents a GKE destination.
+      class Gke
+        include Google::Apis::Core::Hashable
+      
+        # Required. The name of the cluster the GKE service is running in. The cluster
+        # must be running in the same project as the trigger being created.
+        # Corresponds to the JSON property `cluster`
+        # @return [String]
+        attr_accessor :cluster
+      
+        # Required. The name of the Google Compute Engine in which the cluster resides,
+        # which can either be compute zone (for example, us-central1-a) for the zonal
+        # clusters or region (for example, us-central1) for regional clusters.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # Required. The namespace the GKE service is running in.
+        # Corresponds to the JSON property `namespace`
+        # @return [String]
+        attr_accessor :namespace
+      
+        # Optional. The relative path on the GKE service the events should be sent to.
+        # The value must conform to the definition of a URI path segment (section 3.3 of
+        # RFC2396). Examples: "/route", "route", "route/subroute".
+        # Corresponds to the JSON property `path`
+        # @return [String]
+        attr_accessor :path
+      
+        # Required. Name of the GKE service.
+        # Corresponds to the JSON property `service`
+        # @return [String]
+        attr_accessor :service
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster = args[:cluster] if args.key?(:cluster)
+          @location = args[:location] if args.key?(:location)
+          @namespace = args[:namespace] if args.key?(:namespace)
+          @path = args[:path] if args.key?(:path)
+          @service = args[:service] if args.key?(:service)
+        end
+      end
+      
+      # A GoogleChannelConfig is a resource that stores the custom settings respected
+      # by Eventarc first-party triggers in the matching region. Once configured,
+      # first-party event data will be protected using the specified custom managed
+      # encryption key instead of Google-managed encryption keys.
+      class GoogleChannelConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Resource name of a KMS crypto key (managed by the user) used to
+        # encrypt/decrypt their event data. It must match the pattern `projects/*/
+        # locations/*/keyRings/*/cryptoKeys/*`.
+        # Corresponds to the JSON property `cryptoKeyName`
+        # @return [String]
+        attr_accessor :crypto_key_name
+      
+        # Required. The resource name of the config. Must be in the format of, `projects/
+        # `project`/locations/`location`/googleChannelConfig`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. The last-modified time.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @crypto_key_name = args[:crypto_key_name] if args.key?(:crypto_key_name)
+          @name = args[:name] if args.key?(:name)
+          @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
       
@@ -455,6 +799,70 @@ module Google
         end
       end
       
+      # The response message for the `ListChannelConnections` method.
+      class ListChannelConnectionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The requested channel connections, up to the number specified in `page_size`.
+        # Corresponds to the JSON property `channelConnections`
+        # @return [Array<Google::Apis::EventarcV1::ChannelConnection>]
+        attr_accessor :channel_connections
+      
+        # A page token that can be sent to `ListChannelConnections` to request the next
+        # page. If this is empty, then there are no more pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Unreachable resources, if any.
+        # Corresponds to the JSON property `unreachable`
+        # @return [Array<String>]
+        attr_accessor :unreachable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @channel_connections = args[:channel_connections] if args.key?(:channel_connections)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @unreachable = args[:unreachable] if args.key?(:unreachable)
+        end
+      end
+      
+      # The response message for the `ListChannels` method.
+      class ListChannelsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The requested channels, up to the number specified in `page_size`.
+        # Corresponds to the JSON property `channels`
+        # @return [Array<Google::Apis::EventarcV1::Channel>]
+        attr_accessor :channels
+      
+        # A page token that can be sent to `ListChannels` to request the next page. If
+        # this is empty, then there are no more pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # Unreachable resources, if any.
+        # Corresponds to the JSON property `unreachable`
+        # @return [Array<String>]
+        attr_accessor :unreachable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @channels = args[:channels] if args.key?(:channels)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @unreachable = args[:unreachable] if args.key?(:unreachable)
+        end
+      end
+      
       # The response message for Locations.ListLocations.
       class ListLocationsResponse
         include Google::Apis::Core::Hashable
@@ -480,11 +888,43 @@ module Google
         end
       end
       
-      # The response message for the ListTriggers method.
+      # The response message for the `ListProviders` method.
+      class ListProvidersResponse
+        include Google::Apis::Core::Hashable
+      
+        # A page token that can be sent to `ListProviders` to request the next page. If
+        # this is empty, then there are no more pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The requested providers, up to the number specified in `page_size`.
+        # Corresponds to the JSON property `providers`
+        # @return [Array<Google::Apis::EventarcV1::Provider>]
+        attr_accessor :providers
+      
+        # Unreachable resources, if any.
+        # Corresponds to the JSON property `unreachable`
+        # @return [Array<String>]
+        attr_accessor :unreachable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @providers = args[:providers] if args.key?(:providers)
+          @unreachable = args[:unreachable] if args.key?(:unreachable)
+        end
+      end
+      
+      # The response message for the `ListTriggers` method.
       class ListTriggersResponse
         include Google::Apis::Core::Hashable
       
-        # A page token that can be sent to ListTriggers to request the next page. If
+        # A page token that can be sent to `ListTriggers` to request the next page. If
         # this is empty, then there are no more pages.
         # Corresponds to the JSON property `nextPageToken`
         # @return [String]
@@ -620,31 +1060,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -653,9 +1093,14 @@ module Google
         # @return [Array<Google::Apis::EventarcV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::EventarcV1::Binding>]
         attr_accessor :bindings
@@ -708,22 +1153,54 @@ module Google
         end
       end
       
+      # A representation of the Provider resource.
+      class Provider
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Human friendly name for the Provider. For example "Cloud Storage".
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Output only. Event types for this provider.
+        # Corresponds to the JSON property `eventTypes`
+        # @return [Array<Google::Apis::EventarcV1::EventType>]
+        attr_accessor :event_types
+      
+        # Output only. In `projects/`project`/locations/`location`/providers/`
+        # provider_id`` format.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @event_types = args[:event_types] if args.key?(:event_types)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # Represents a Pub/Sub transport.
       class Pubsub
         include Google::Apis::Core::Hashable
       
         # Output only. The name of the Pub/Sub subscription created and managed by
-        # Eventarc system as a transport for the event delivery. Format: `projects/`
-        # PROJECT_ID`/subscriptions/`SUBSCRIPTION_NAME``.
+        # Eventarc as a transport for the event delivery. Format: `projects/`PROJECT_ID`/
+        # subscriptions/`SUBSCRIPTION_NAME``.
         # Corresponds to the JSON property `subscription`
         # @return [String]
         attr_accessor :subscription
       
-        # Optional. The name of the Pub/Sub topic created and managed by Eventarc system
-        # as a transport for the event delivery. Format: `projects/`PROJECT_ID`/topics/`
-        # TOPIC_NAME``. You may set an existing topic for triggers of the type `google.
-        # cloud.pubsub.topic.v1.messagePublished` only. The topic you provide here will
-        # not be deleted by Eventarc at trigger deletion.
+        # Optional. The name of the Pub/Sub topic created and managed by Eventarc as a
+        # transport for the event delivery. Format: `projects/`PROJECT_ID`/topics/`
+        # TOPIC_NAME``. You can set an existing topic for triggers of the type `google.
+        # cloud.pubsub.topic.v1.messagePublished`. The topic you provide here is not
+        # deleted by Eventarc at trigger deletion.
         # Corresponds to the JSON property `topic`
         # @return [String]
         attr_accessor :topic
@@ -745,31 +1222,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::EventarcV1::Policy]
         attr_accessor :policy
@@ -792,12 +1269,37 @@ module Google
         end
       end
       
+      # A condition that is part of the trigger state computation.
+      class StateCondition
+        include Google::Apis::Core::Hashable
+      
+        # The canonical code of the condition.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        # Human-readable message.
+        # Corresponds to the JSON property `message`
+        # @return [String]
+        attr_accessor :message
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+          @message = args[:message] if args.key?(:message)
+        end
+      end
+      
       # Request message for `TestIamPermissions` method.
       class TestIamPermissionsRequest
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -832,8 +1334,8 @@ module Google
         end
       end
       
-      # Represents the transport intermediaries created for the trigger in order to
-      # deliver events.
+      # Represents the transport intermediaries created for the trigger to deliver
+      # events.
       class Transport
         include Google::Apis::Core::Hashable
       
@@ -856,6 +1358,18 @@ module Google
       class Trigger
         include Google::Apis::Core::Hashable
       
+        # Optional. The name of the channel associated with the trigger in `projects/`
+        # project`/locations/`location`/channels/`channel`` format. You must provide a
+        # channel to receive events from Eventarc SaaS partners.
+        # Corresponds to the JSON property `channel`
+        # @return [String]
+        attr_accessor :channel
+      
+        # Output only. The reason(s) why a trigger is in FAILED state.
+        # Corresponds to the JSON property `conditions`
+        # @return [Hash<String,Google::Apis::EventarcV1::StateCondition>]
+        attr_accessor :conditions
+      
         # Output only. The creation time.
         # Corresponds to the JSON property `createTime`
         # @return [String]
@@ -867,14 +1381,14 @@ module Google
         attr_accessor :destination
       
         # Output only. This checksum is computed by the server based on the value of
-        # other fields, and may be sent only on create requests to ensure the client has
-        # an up-to-date value before proceeding.
+        # other fields, and might be sent only on create requests to ensure that the
+        # client has an up-to-date value before proceeding.
         # Corresponds to the JSON property `etag`
         # @return [String]
         attr_accessor :etag
       
-        # Required. null The list of filters that applies to event attributes. Only
-        # events that match all the provided filters will be sent to the destination.
+        # Required. Unordered list. The list of filters that applies to event attributes.
+        # Only events that match all the provided filters are sent to the destination.
         # Corresponds to the JSON property `eventFilters`
         # @return [Array<Google::Apis::EventarcV1::EventFilter>]
         attr_accessor :event_filters
@@ -886,7 +1400,7 @@ module Google
         attr_accessor :labels
       
         # Required. The resource name of the trigger. Must be unique within the location
-        # on the project and must be in `projects/`project`/locations/`location`/
+        # of the project and must be in `projects/`project`/locations/`location`/
         # triggers/`trigger`` format.
         # Corresponds to the JSON property `name`
         # @return [String]
@@ -894,25 +1408,25 @@ module Google
       
         # Optional. The IAM service account email associated with the trigger. The
         # service account represents the identity of the trigger. The principal who
-        # calls this API must have `iam.serviceAccounts.actAs` permission in the service
-        # account. See https://cloud.google.com/iam/docs/understanding-service-accounts?
-        # hl=en#sa_common for more information. For Cloud Run destinations, this service
-        # account is used to generate identity tokens when invoking the service. See
-        # https://cloud.google.com/run/docs/triggering/pubsub-push#create-service-
-        # account for information on how to invoke authenticated Cloud Run services. In
-        # order to create Audit Log triggers, the service account should also have `
-        # roles/eventarc.eventReceiver` IAM role.
+        # calls this API must have the `iam.serviceAccounts.actAs` permission in the
+        # service account. See https://cloud.google.com/iam/docs/understanding-service-
+        # accounts?hl=en#sa_common for more information. For Cloud Run destinations,
+        # this service account is used to generate identity tokens when invoking the
+        # service. See https://cloud.google.com/run/docs/triggering/pubsub-push#create-
+        # service-account for information on how to invoke authenticated Cloud Run
+        # services. To create Audit Log triggers, the service account should also have
+        # the `roles/eventarc.eventReceiver` IAM role.
         # Corresponds to the JSON property `serviceAccount`
         # @return [String]
         attr_accessor :service_account
       
-        # Represents the transport intermediaries created for the trigger in order to
-        # deliver events.
+        # Represents the transport intermediaries created for the trigger to deliver
+        # events.
         # Corresponds to the JSON property `transport`
         # @return [Google::Apis::EventarcV1::Transport]
         attr_accessor :transport
       
-        # Output only. Server assigned unique identifier for the trigger. The value is a
+        # Output only. Server-assigned unique identifier for the trigger. The value is a
         # UUID4 string and guaranteed to remain unchanged until the resource is deleted.
         # Corresponds to the JSON property `uid`
         # @return [String]
@@ -929,6 +1443,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @channel = args[:channel] if args.key?(:channel)
+          @conditions = args[:conditions] if args.key?(:conditions)
           @create_time = args[:create_time] if args.key?(:create_time)
           @destination = args[:destination] if args.key?(:destination)
           @etag = args[:etag] if args.key?(:etag)

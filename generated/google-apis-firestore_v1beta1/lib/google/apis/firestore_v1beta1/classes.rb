@@ -22,6 +22,62 @@ module Google
   module Apis
     module FirestoreV1beta1
       
+      # Defines a aggregation that produces a single result.
+      class Aggregation
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional name of the field to store the result of the aggregation
+        # into. If not provided, Firestore will pick a default name following the format
+        # `field_`. For example: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1,
+        # COUNT_UP_TO(2), COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) OVER ( ... ); `
+        # `` becomes: ``` AGGREGATE COUNT_UP_TO(1) AS count_up_to_1, COUNT_UP_TO(2) AS
+        # field_1, COUNT_UP_TO(3) AS count_up_to_3, COUNT_UP_TO(4) AS field_2 OVER ( ...
+        # ); ``` Requires: * Must be unique across all aggregation aliases. * Conform to
+        # document field name limitations.
+        # Corresponds to the JSON property `alias`
+        # @return [String]
+        attr_accessor :alias
+      
+        # Count of documents that match the query. The `COUNT(*)` aggregation function
+        # operates on the entire document so it does not require a field reference.
+        # Corresponds to the JSON property `count`
+        # @return [Google::Apis::FirestoreV1beta1::Count]
+        attr_accessor :count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @alias = args[:alias] if args.key?(:alias)
+          @count = args[:count] if args.key?(:count)
+        end
+      end
+      
+      # The result of a single bucket from a Firestore aggregation query. The keys of `
+      # aggregate_fields` are the same for all results in an aggregation query, unlike
+      # document queries which can have different fields present for each result.
+      class AggregationResult
+        include Google::Apis::Core::Hashable
+      
+        # The result of the aggregation functions, ex: `COUNT(*) AS total_docs`. The key
+        # is the alias assigned to the aggregation function on input and the size of
+        # this map equals the number of aggregation functions in the query.
+        # Corresponds to the JSON property `aggregateFields`
+        # @return [Hash<String,Google::Apis::FirestoreV1beta1::Value>]
+        attr_accessor :aggregate_fields
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregate_fields = args[:aggregate_fields] if args.key?(:aggregate_fields)
+        end
+      end
+      
       # An array value.
       class ArrayValue
         include Google::Apis::Core::Hashable
@@ -313,7 +369,7 @@ module Google
       class CompositeFilter
         include Google::Apis::Core::Hashable
       
-        # The list of filters to combine. Must contain at least one filter.
+        # The list of filters to combine. Requires: * At least one filter is present.
         # Corresponds to the JSON property `filters`
         # @return [Array<Google::Apis::FirestoreV1beta1::Filter>]
         attr_accessor :filters
@@ -331,6 +387,30 @@ module Google
         def update!(**args)
           @filters = args[:filters] if args.key?(:filters)
           @op = args[:op] if args.key?(:op)
+        end
+      end
+      
+      # Count of documents that match the query. The `COUNT(*)` aggregation function
+      # operates on the entire document so it does not require a field reference.
+      class Count
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Optional constraint on the maximum number of documents to count.
+        # This provides a way to set an upper bound on the number of documents to scan,
+        # limiting latency and cost. Unspecified is interpreted as no bound. High-Level
+        # Example: ``` AGGREGATE COUNT_UP_TO(1000) OVER ( SELECT * FROM k ); ```
+        # Requires: * Must be greater than zero when present.
+        # Corresponds to the JSON property `upTo`
+        # @return [Fixnum]
+        attr_accessor :up_to
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @up_to = args[:up_to] if args.key?(:up_to)
         end
       end
       
@@ -598,8 +678,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -643,7 +722,7 @@ module Google
       class FieldFilter
         include Google::Apis::Core::Hashable
       
-        # A reference to a field, such as `max(messages.time) as max_time`.
+        # A reference to a field in a document, ex: `stats.operations`.
         # Corresponds to the JSON property `field`
         # @return [Google::Apis::FirestoreV1beta1::FieldReference]
         attr_accessor :field
@@ -670,11 +749,12 @@ module Google
         end
       end
       
-      # A reference to a field, such as `max(messages.time) as max_time`.
+      # A reference to a field in a document, ex: `stats.operations`.
       class FieldReference
         include Google::Apis::Core::Hashable
       
-        # 
+        # The relative path of the document being referenced. Requires: * Conform to
+        # document field name limitations.
         # Corresponds to the JSON property `fieldPath`
         # @return [String]
         attr_accessor :field_path
@@ -772,6 +852,19 @@ module Google
           @composite_filter = args[:composite_filter] if args.key?(:composite_filter)
           @field_filter = args[:field_filter] if args.key?(:field_filter)
           @unary_filter = args[:unary_filter] if args.key?(:unary_filter)
+        end
+      end
+      
+      # Metadata related to the update database operation.
+      class GoogleFirestoreAdminV1UpdateDatabaseMetadata
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -1256,6 +1349,12 @@ module Google
         # @return [String]
         attr_accessor :page_token
       
+        # Reads documents as they were at the given time. This may not be older than 270
+        # seconds.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1264,6 +1363,7 @@ module Google
         def update!(**args)
           @page_size = args[:page_size] if args.key?(:page_size)
           @page_token = args[:page_token] if args.key?(:page_token)
+          @read_time = args[:read_time] if args.key?(:read_time)
         end
       end
       
@@ -1301,7 +1401,8 @@ module Google
         # @return [Array<Google::Apis::FirestoreV1beta1::Document>]
         attr_accessor :documents
       
-        # The next page token.
+        # A token to retrieve the next page of documents. If this field is omitted,
+        # there are no subsequent pages.
         # Corresponds to the JSON property `nextPageToken`
         # @return [String]
         attr_accessor :next_page_token
@@ -1432,7 +1533,7 @@ module Google
         # @return [String]
         attr_accessor :direction
       
-        # A reference to a field, such as `max(messages.time) as max_time`.
+        # A reference to a field in a document, ex: `stats.operations`.
         # Corresponds to the JSON property `field`
         # @return [Google::Apis::FirestoreV1beta1::FieldReference]
         attr_accessor :field
@@ -1484,6 +1585,12 @@ module Google
         # @return [Fixnum]
         attr_accessor :partition_count
       
+        # Reads documents as they were at the given time. This may not be older than 270
+        # seconds.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
         # A Firestore query.
         # Corresponds to the JSON property `structuredQuery`
         # @return [Google::Apis::FirestoreV1beta1::StructuredQuery]
@@ -1498,6 +1605,7 @@ module Google
           @page_size = args[:page_size] if args.key?(:page_size)
           @page_token = args[:page_token] if args.key?(:page_token)
           @partition_count = args[:partition_count] if args.key?(:partition_count)
+          @read_time = args[:read_time] if args.key?(:read_time)
           @structured_query = args[:structured_query] if args.key?(:structured_query)
         end
       end
@@ -1549,7 +1657,7 @@ module Google
         alias_method :exists?, :exists
       
         # When set, the target document must exist and have been last updated at that
-        # time.
+        # time. Timestamp must be microsecond aligned.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
         attr_accessor :update_time
@@ -1673,6 +1781,81 @@ module Google
         end
       end
       
+      # The request for Firestore.RunAggregationQuery.
+      class RunAggregationQueryRequest
+        include Google::Apis::Core::Hashable
+      
+        # Options for creating a new transaction.
+        # Corresponds to the JSON property `newTransaction`
+        # @return [Google::Apis::FirestoreV1beta1::TransactionOptions]
+        attr_accessor :new_transaction
+      
+        # Executes the query at the given timestamp. Requires: * Cannot be more than 270
+        # seconds in the past.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
+        # Firestore query for running an aggregation over a StructuredQuery.
+        # Corresponds to the JSON property `structuredAggregationQuery`
+        # @return [Google::Apis::FirestoreV1beta1::StructuredAggregationQuery]
+        attr_accessor :structured_aggregation_query
+      
+        # Run the aggregation within an already active transaction. The value here is
+        # the opaque transaction ID to execute the query in.
+        # Corresponds to the JSON property `transaction`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :transaction
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @new_transaction = args[:new_transaction] if args.key?(:new_transaction)
+          @read_time = args[:read_time] if args.key?(:read_time)
+          @structured_aggregation_query = args[:structured_aggregation_query] if args.key?(:structured_aggregation_query)
+          @transaction = args[:transaction] if args.key?(:transaction)
+        end
+      end
+      
+      # The response for Firestore.RunAggregationQuery.
+      class RunAggregationQueryResponse
+        include Google::Apis::Core::Hashable
+      
+        # The time at which the aggregate value is valid for.
+        # Corresponds to the JSON property `readTime`
+        # @return [String]
+        attr_accessor :read_time
+      
+        # The result of a single bucket from a Firestore aggregation query. The keys of `
+        # aggregate_fields` are the same for all results in an aggregation query, unlike
+        # document queries which can have different fields present for each result.
+        # Corresponds to the JSON property `result`
+        # @return [Google::Apis::FirestoreV1beta1::AggregationResult]
+        attr_accessor :result
+      
+        # The transaction that was started as part of this request. Only present on the
+        # first response when the request requested to start a new transaction.
+        # Corresponds to the JSON property `transaction`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :transaction
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @read_time = args[:read_time] if args.key?(:read_time)
+          @result = args[:result] if args.key?(:result)
+          @transaction = args[:transaction] if args.key?(:transaction)
+        end
+      end
+      
       # The request for Firestore.RunQuery.
       class RunQueryRequest
         include Google::Apis::Core::Hashable
@@ -1693,7 +1876,8 @@ module Google
         # @return [Google::Apis::FirestoreV1beta1::StructuredQuery]
         attr_accessor :structured_query
       
-        # Reads documents in a transaction.
+        # Run the query within an already active transaction. The value here is the
+        # opaque transaction ID to execute the query in.
         # Corresponds to the JSON property `transaction`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
@@ -1720,6 +1904,13 @@ module Google
         # Corresponds to the JSON property `document`
         # @return [Google::Apis::FirestoreV1beta1::Document]
         attr_accessor :document
+      
+        # If present, Firestore has completely finished the request and no more
+        # documents will be returned.
+        # Corresponds to the JSON property `done`
+        # @return [Boolean]
+        attr_accessor :done
+        alias_method :done?, :done
       
         # The time at which the document was read. This may be monotonically increasing;
         # in this case, the previous documents in the result stream are guaranteed not
@@ -1751,6 +1942,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @document = args[:document] if args.key?(:document)
+          @done = args[:done] if args.key?(:done)
           @read_time = args[:read_time] if args.key?(:read_time)
           @skipped_results = args[:skipped_results] if args.key?(:skipped_results)
           @transaction = args[:transaction] if args.key?(:transaction)
@@ -1796,6 +1988,33 @@ module Google
         end
       end
       
+      # Firestore query for running an aggregation over a StructuredQuery.
+      class StructuredAggregationQuery
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Series of aggregations to apply over the results of the `
+        # structured_query`. Requires: * A minimum of one and maximum of five
+        # aggregations per query.
+        # Corresponds to the JSON property `aggregations`
+        # @return [Array<Google::Apis::FirestoreV1beta1::Aggregation>]
+        attr_accessor :aggregations
+      
+        # A Firestore query.
+        # Corresponds to the JSON property `structuredQuery`
+        # @return [Google::Apis::FirestoreV1beta1::StructuredQuery]
+        attr_accessor :structured_query
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @aggregations = args[:aggregations] if args.key?(:aggregations)
+          @structured_query = args[:structured_query] if args.key?(:structured_query)
+        end
+      end
+      
       # A Firestore query.
       class StructuredQuery
         include Google::Apis::Core::Hashable
@@ -1811,27 +2030,32 @@ module Google
         attr_accessor :from
       
         # The maximum number of results to return. Applies after all other constraints.
-        # Must be >= 0 if specified.
+        # Requires: * The value must be greater than or equal to zero if specified.
         # Corresponds to the JSON property `limit`
         # @return [Fixnum]
         attr_accessor :limit
       
-        # The number of results to skip. Applies before limit, but after all other
-        # constraints. Must be >= 0 if specified.
+        # The number of documents to skip before returning the first result. This
+        # applies after the constraints specified by the `WHERE`, `START AT`, & `END AT`
+        # but before the `LIMIT` clause. Requires: * The value must be greater than or
+        # equal to zero if specified.
         # Corresponds to the JSON property `offset`
         # @return [Fixnum]
         attr_accessor :offset
       
-        # The order to apply to the query results. Firestore guarantees a stable
-        # ordering through the following rules: * Any field required to appear in `
-        # order_by`, that is not already specified in `order_by`, is appended to the
-        # order in field name order by default. * If an order on `__name__` is not
-        # specified, it is appended by default. Fields are appended with the same sort
-        # direction as the last order specified, or 'ASCENDING' if no order was
-        # specified. For example: * `SELECT * FROM Foo ORDER BY A` becomes `SELECT *
-        # FROM Foo ORDER BY A, __name__` * `SELECT * FROM Foo ORDER BY A DESC` becomes `
-        # SELECT * FROM Foo ORDER BY A DESC, __name__ DESC` * `SELECT * FROM Foo WHERE A
-        # > 1` becomes `SELECT * FROM Foo WHERE A > 1 ORDER BY A, __name__`
+        # The order to apply to the query results. Firestore allows callers to provide a
+        # full ordering, a partial ordering, or no ordering at all. In all cases,
+        # Firestore guarantees a stable ordering through the following rules: * The `
+        # order_by` is required to reference all fields used with an inequality filter. *
+        # All fields that are required to be in the `order_by` but are not already
+        # present are appended in lexicographical ordering of the field name. * If an
+        # order on `__name__` is not specified, it is appended by default. Fields are
+        # appended with the same sort direction as the last order specified, or '
+        # ASCENDING' if no order was specified. For example: * `ORDER BY a` becomes `
+        # ORDER BY a ASC, __name__ ASC` * `ORDER BY a DESC` becomes `ORDER BY a DESC,
+        # __name__ DESC` * `WHERE a > 1` becomes `WHERE a > 1 ORDER BY a ASC, __name__
+        # ASC` * `WHERE __name__ > ... AND a > 1` becomes `WHERE __name__ > ... AND a >
+        # 1 ORDER BY a ASC, __name__ ASC`
         # Corresponds to the JSON property `orderBy`
         # @return [Array<Google::Apis::FirestoreV1beta1::Order>]
         attr_accessor :order_by
@@ -2008,7 +2232,7 @@ module Google
       class UnaryFilter
         include Google::Apis::Core::Hashable
       
-        # A reference to a field, such as `max(messages.time) as max_time`.
+        # A reference to a field in a document, ex: `stats.operations`.
         # Corresponds to the JSON property `field`
         # @return [Google::Apis::FirestoreV1beta1::FieldReference]
         attr_accessor :field

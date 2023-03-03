@@ -85,8 +85,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -234,7 +234,7 @@ module Google
         end
         
         # Creates a new workflow. If a workflow with the specified name already exists
-        # in the specified project and location, the long running operation will return
+        # in the specified project and location, the long running operation returns a
         # ALREADY_EXISTS error.
         # @param [String] parent
         #   Required. Project and location in which the workflow should be created. Format:
@@ -308,10 +308,16 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets details of a single Workflow.
+        # Gets details of a single workflow.
         # @param [String] name
-        #   Required. Name of the workflow which information should be retrieved. Format:
-        #   projects/`project`/locations/`location`/workflows/`workflow`
+        #   Required. Name of the workflow for which information should be retrieved.
+        #   Format: projects/`project`/locations/`location`/workflows/`workflow`
+        # @param [String] revision_id
+        #   Optional. Optional. The revision of the workflow to retrieve. If the
+        #   revision_id is empty, the latest revision is retrieved. The format is "000001-
+        #   a4d", where the first 6 characters define the zero-padded decimal revision
+        #   number. They are followed by a hyphen and 3 hexadecimal characters. (go/
+        #   wf_adr_clh_1)
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -329,17 +335,18 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def get_project_location_workflow(name, fields: nil, quota_user: nil, options: nil, &block)
+        def get_project_location_workflow(name, revision_id: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::WorkflowsV1::Workflow::Representation
           command.response_class = Google::Apis::WorkflowsV1::Workflow
           command.params['name'] = name unless name.nil?
+          command.query['revisionId'] = revision_id unless revision_id.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
         end
         
-        # Lists Workflows in a given project and location. The default order is not
+        # Lists workflows in a given project and location. The default order is not
         # specified.
         # @param [String] parent
         #   Required. Project and location from which the workflows should be listed.
@@ -347,15 +354,15 @@ module Google
         # @param [String] filter
         #   Filter to restrict results to specific workflows.
         # @param [String] order_by
-        #   Comma-separated list of fields that that specify the order of the results.
-        #   Default sorting order for a field is ascending. To specify descending order
-        #   for a field, append a " desc" suffix. If not specified, the results will be
-        #   returned in an unspecified order.
+        #   Comma-separated list of fields that specify the order of the results. Default
+        #   sorting order for a field is ascending. To specify descending order for a
+        #   field, append a "desc" suffix. If not specified, the results are returned in
+        #   an unspecified order.
         # @param [Fixnum] page_size
-        #   Maximum number of workflows to return per call. The service may return fewer
-        #   than this value. If the value is not specified, a default value of 500 will be
-        #   used. The maximum permitted value is 1000 and values greater than 1000 will be
-        #   coerced down to 1000.
+        #   Maximum number of workflows to return per call. The service might return fewer
+        #   than this value even if not at the end of the collection. If a value is not
+        #   specified, a default value of 500 is used. The maximum permitted value is 1000
+        #   and values greater than 1000 are coerced down to 1000.
         # @param [String] page_token
         #   A page token, received from a previous `ListWorkflows` call. Provide this to
         #   retrieve the subsequent page. When paginating, all other parameters provided
@@ -392,9 +399,9 @@ module Google
         end
         
         # Updates an existing workflow. Running this method has no impact on already
-        # running executions of the workflow. A new revision of the workflow may be
-        # created as a result of a successful update operation. In that case, such
-        # revision will be used in new workflow executions.
+        # running executions of the workflow. A new revision of the workflow might be
+        # created as a result of a successful update operation. In that case, the new
+        # revision is used in new workflow executions.
         # @param [String] name
         #   The resource name of the workflow. Format: projects/`project`/locations/`
         #   location`/workflows/`workflow`

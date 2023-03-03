@@ -286,6 +286,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Metadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class NetworkConfiguration
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -305,6 +311,18 @@ module Google
       end
       
       class Orientation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PerAndroidVersionInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PerIosVersionInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -436,6 +454,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UsesFeature
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class XcodeVersion
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -520,6 +544,8 @@ module Google
           property :low_fps_video_recording, as: 'lowFpsVideoRecording'
           property :manufacturer, as: 'manufacturer'
           property :name, as: 'name'
+          collection :per_version_info, as: 'perVersionInfo', class: Google::Apis::TestingV1::PerAndroidVersionInfo, decorator: Google::Apis::TestingV1::PerAndroidVersionInfo::Representation
+      
           property :screen_density, as: 'screenDensity'
           property :screen_x, as: 'screenX'
           property :screen_y, as: 'screenY'
@@ -613,10 +639,16 @@ module Google
           collection :intent_filters, as: 'intentFilters', class: Google::Apis::TestingV1::IntentFilter, decorator: Google::Apis::TestingV1::IntentFilter::Representation
       
           property :max_sdk_version, as: 'maxSdkVersion'
+          collection :metadata, as: 'metadata', class: Google::Apis::TestingV1::Metadata, decorator: Google::Apis::TestingV1::Metadata::Representation
+      
           property :min_sdk_version, as: 'minSdkVersion'
           property :package_name, as: 'packageName'
           property :target_sdk_version, as: 'targetSdkVersion'
+          collection :uses_feature, as: 'usesFeature', class: Google::Apis::TestingV1::UsesFeature, decorator: Google::Apis::TestingV1::UsesFeature::Representation
+      
           collection :uses_permission, as: 'usesPermission'
+          property :version_code, :numeric_string => true, as: 'versionCode'
+          property :version_name, as: 'versionName'
         end
       end
       
@@ -813,6 +845,8 @@ module Google
           property :form_factor, as: 'formFactor'
           property :id, as: 'id'
           property :name, as: 'name'
+          collection :per_version_info, as: 'perVersionInfo', class: Google::Apis::TestingV1::PerIosVersionInfo, decorator: Google::Apis::TestingV1::PerIosVersionInfo::Representation
+      
           property :screen_density, as: 'screenDensity'
           property :screen_x, as: 'screenX'
           property :screen_y, as: 'screenY'
@@ -902,6 +936,14 @@ module Google
         end
       end
       
+      class Metadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :name, as: 'name'
+          property :value, as: 'value'
+        end
+      end
+      
       class NetworkConfiguration
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -936,6 +978,22 @@ module Google
           property :id, as: 'id'
           property :name, as: 'name'
           collection :tags, as: 'tags'
+        end
+      end
+      
+      class PerAndroidVersionInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :device_capacity, as: 'deviceCapacity'
+          property :version_id, as: 'versionId'
+        end
+      end
+      
+      class PerIosVersionInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :device_capacity, as: 'deviceCapacity'
+          property :version_id, as: 'versionId'
         end
       end
       
@@ -1185,6 +1243,14 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :num_shards, as: 'numShards'
+        end
+      end
+      
+      class UsesFeature
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :is_required, as: 'isRequired'
+          property :name, as: 'name'
         end
       end
       

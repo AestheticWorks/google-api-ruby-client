@@ -102,8 +102,8 @@ module Google
         #   project_id.topic_id` * ``pubsub.project_id.`topic.id.with.dots` `` * `bigquery.
         #   table.project_id.dataset_id.table_id` * `bigquery.dataset.project_id.
         #   dataset_id` * `datacatalog.entry.project_id.location_id.entry_group_id.
-        #   entry_id` `*_id`s shoud satisfy the standard SQL rules for identifiers. https:/
-        #   /cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
+        #   entry_id` `*_id`s should satisfy the standard SQL rules for identifiers. https:
+        #   //cloud.google.com/bigquery/docs/reference/standard-sql/lexical.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -256,8 +256,9 @@ module Google
         # templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `
         # datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -381,8 +382,9 @@ module Google
         # policies on entries. - `datacatalog.entryGroups.setIamPolicy` to set policies
         # on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -420,8 +422,9 @@ module Google
         # external Google Cloud Platform resources synced to Data Catalog. A caller is
         # not required to have Google IAM permission to make this request.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -570,8 +573,9 @@ module Google
         # templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `
         # datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -704,8 +708,9 @@ module Google
         # external Google Cloud Platform resources synced to Data Catalog. A caller is
         # not required to have Google IAM permission to make this request.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -809,7 +814,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists the tags on an Entry.
+        # Lists tags assigned to an Entry. The columns in the response are lowercased.
         # @param [String] parent
         #   Required. The name of the Data Catalog resource to list the tags of. The
         #   resource could be an Entry or an EntryGroup. Examples: * projects/`project_id`/
@@ -965,7 +970,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists the tags on an Entry.
+        # Lists tags assigned to an Entry. The columns in the response are lowercased.
         # @param [String] parent
         #   Required. The name of the Data Catalog resource to list the tags of. The
         #   resource could be an Entry or an EntryGroup. Examples: * projects/`project_id`/
@@ -1169,8 +1174,9 @@ module Google
         # templates. - `datacatalog.entries.getIamPolicy` to get policies on entries. - `
         # datacatalog.entryGroups.getIamPolicy` to get policies on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1257,8 +1263,9 @@ module Google
         # policies on entries. - `datacatalog.entryGroups.setIamPolicy` to set policies
         # on entry groups.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1296,8 +1303,9 @@ module Google
         # external Google Cloud Platform resources synced to Data Catalog. A caller is
         # not required to have Google IAM permission to make this request.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1672,8 +1680,9 @@ module Google
         
         # Gets the IAM policy for a taxonomy or a policy tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1743,6 +1752,9 @@ module Google
         # permission to view.
         # @param [String] parent
         #   Required. Resource name of the project to list the taxonomies of.
+        # @param [String] filter
+        #   Supported field for filter is 'service' and value is 'dataplex'. Eg: service=
+        #   dataplex.
         # @param [Fixnum] page_size
         #   The maximum number of items to return. Must be a value between 1 and 1000. If
         #   not set, defaults to 50.
@@ -1766,11 +1778,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_taxonomies(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_taxonomies(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta1/{+parent}/taxonomies', options)
           command.response_representation = Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse::Representation
           command.response_class = Google::Apis::DatacatalogV1beta1::GoogleCloudDatacatalogV1beta1ListTaxonomiesResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -1819,8 +1832,9 @@ module Google
         
         # Sets the IAM policy for a taxonomy or a policy tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1854,8 +1868,9 @@ module Google
         # Returns the permissions that a caller has on the specified taxonomy or policy
         # tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1982,8 +1997,9 @@ module Google
         
         # Gets the IAM policy for a taxonomy or a policy tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2098,8 +2114,9 @@ module Google
         
         # Sets the IAM policy for a taxonomy or a policy tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2133,8 +2150,9 @@ module Google
         # Returns the permissions that a caller has on the specified taxonomy or policy
         # tag.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DatacatalogV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.

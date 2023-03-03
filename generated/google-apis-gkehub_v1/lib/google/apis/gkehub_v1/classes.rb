@@ -22,6 +22,59 @@ module Google
   module Apis
     module GkehubV1
       
+      # Spec for App Dev Experience Feature.
+      class AppDevExperienceFeatureSpec
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # State for App Dev Exp Feature.
+      class AppDevExperienceFeatureState
+        include Google::Apis::Core::Hashable
+      
+        # Status specifies state for the subcomponent.
+        # Corresponds to the JSON property `networkingInstallSucceeded`
+        # @return [Google::Apis::GkehubV1::Status]
+        attr_accessor :networking_install_succeeded
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @networking_install_succeeded = args[:networking_install_succeeded] if args.key?(:networking_install_succeeded)
+        end
+      end
+      
+      # ApplianceCluster contains information specific to GDC Edge Appliance Clusters.
+      class ApplianceCluster
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. Self-link of the GCP resource for the Appliance Cluster. For
+        # example: //transferappliance.googleapis.com/projects/my-project/locations/us-
+        # west1-a/appliances/my-appliance
+        # Corresponds to the JSON property `resourceLink`
+        # @return [String]
+        attr_accessor :resource_link
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @resource_link = args[:resource_link] if args.key?(:resource_link)
+        end
+      end
+      
       # Specifies the audit configuration for a service. The configuration determines
       # which permission types are logged, and what identities, if any, are exempted
       # from logging. An AuditConfig must have one or more AuditLogConfigs. If there
@@ -35,8 +88,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -147,7 +200,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -170,38 +223,43 @@ module Google
         # @return [Google::Apis::GkehubV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -235,6 +293,16 @@ module Google
       class CommonFeatureSpec
         include Google::Apis::Core::Hashable
       
+        # Spec for App Dev Experience Feature.
+        # Corresponds to the JSON property `appdevexperience`
+        # @return [Google::Apis::GkehubV1::AppDevExperienceFeatureSpec]
+        attr_accessor :appdevexperience
+      
+        # **Fleet Observability**: The Hub-wide input for the FleetObservability feature.
+        # Corresponds to the JSON property `fleetobservability`
+        # @return [Google::Apis::GkehubV1::FleetObservabilityFeatureSpec]
+        attr_accessor :fleetobservability
+      
         # **Multi-cluster Ingress**: The configuration for the MultiClusterIngress
         # feature.
         # Corresponds to the JSON property `multiclusteringress`
@@ -247,6 +315,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @appdevexperience = args[:appdevexperience] if args.key?(:appdevexperience)
+          @fleetobservability = args[:fleetobservability] if args.key?(:fleetobservability)
           @multiclusteringress = args[:multiclusteringress] if args.key?(:multiclusteringress)
         end
       end
@@ -254,6 +324,17 @@ module Google
       # CommonFeatureState contains Hub-wide Feature status information.
       class CommonFeatureState
         include Google::Apis::Core::Hashable
+      
+        # State for App Dev Exp Feature.
+        # Corresponds to the JSON property `appdevexperience`
+        # @return [Google::Apis::GkehubV1::AppDevExperienceFeatureState]
+        attr_accessor :appdevexperience
+      
+        # **FleetObservability**: An empty state left as an example Hub-wide Feature
+        # state.
+        # Corresponds to the JSON property `fleetobservability`
+        # @return [Google::Apis::GkehubV1::FleetObservabilityFeatureState]
+        attr_accessor :fleetobservability
       
         # FeatureState describes the high-level state of a Feature. It may be used to
         # describe a Feature's state at the environ-level, or per-membershop, depending
@@ -268,7 +349,23 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @appdevexperience = args[:appdevexperience] if args.key?(:appdevexperience)
+          @fleetobservability = args[:fleetobservability] if args.key?(:fleetobservability)
           @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # CommonFleetDefaultMemberConfigSpec contains default configuration information
+      # for memberships of a fleet
+      class CommonFleetDefaultMemberConfigSpec
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -276,17 +373,42 @@ module Google
       class ConfigManagementConfigSync
         include Google::Apis::Core::Hashable
       
+        # Set to true to allow the vertical scaling. Defaults to false which disallows
+        # vertical scaling. This field is deprecated.
+        # Corresponds to the JSON property `allowVerticalScale`
+        # @return [Boolean]
+        attr_accessor :allow_vertical_scale
+        alias_method :allow_vertical_scale?, :allow_vertical_scale
+      
+        # Enables the installation of ConfigSync. If set to true, ConfigSync resources
+        # will be created and the other ConfigSync fields will be applied if exist. If
+        # set to false, all other ConfigSync fields will be ignored, ConfigSync
+        # resources will be deleted. If omitted, ConfigSync resources will be managed
+        # depends on the presence of git field.
+        # Corresponds to the JSON property `enabled`
+        # @return [Boolean]
+        attr_accessor :enabled
+        alias_method :enabled?, :enabled
+      
         # Git repo configuration for a single cluster.
         # Corresponds to the JSON property `git`
         # @return [Google::Apis::GkehubV1::ConfigManagementGitConfig]
         attr_accessor :git
       
-        # Specifies CPU and memory limits for containers, keyed by container name
-        # Corresponds to the JSON property `resourceRequirements`
-        # @return [Hash<String,Google::Apis::GkehubV1::ConfigManagementContainerResourceRequirements>]
-        attr_accessor :resource_requirements
+        # OCI repo configuration for a single cluster
+        # Corresponds to the JSON property `oci`
+        # @return [Google::Apis::GkehubV1::ConfigManagementOciConfig]
+        attr_accessor :oci
       
-        # Specifies whether the Config Sync Repo is in “hierarchical” or “unstructured”
+        # Set to true to enable the Config Sync admission webhook to prevent drifts. If
+        # set to `false`, disables the Config Sync admission webhook and does not
+        # prevent drifts.
+        # Corresponds to the JSON property `preventDrift`
+        # @return [Boolean]
+        attr_accessor :prevent_drift
+        alias_method :prevent_drift?, :prevent_drift
+      
+        # Specifies whether the Config Sync Repo is in "hierarchical" or "unstructured"
         # mode.
         # Corresponds to the JSON property `sourceFormat`
         # @return [String]
@@ -298,8 +420,11 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @allow_vertical_scale = args[:allow_vertical_scale] if args.key?(:allow_vertical_scale)
+          @enabled = args[:enabled] if args.key?(:enabled)
           @git = args[:git] if args.key?(:git)
-          @resource_requirements = args[:resource_requirements] if args.key?(:resource_requirements)
+          @oci = args[:oci] if args.key?(:oci)
+          @prevent_drift = args[:prevent_drift] if args.key?(:prevent_drift)
           @source_format = args[:source_format] if args.key?(:source_format)
         end
       end
@@ -445,42 +570,6 @@ module Google
         end
       end
       
-      # ResourceRequirements allows to override the CPU and memory resource
-      # requirements of a container.
-      class ConfigManagementContainerResourceRequirements
-        include Google::Apis::Core::Hashable
-      
-        # Name of the container
-        # Corresponds to the JSON property `containerName`
-        # @return [String]
-        attr_accessor :container_name
-      
-        # The view model of a single quantity, e.g. "800 MiB". Corresponds to https://
-        # github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/
-        # pkg/api/resource/generated.proto
-        # Corresponds to the JSON property `cpuLimit`
-        # @return [Google::Apis::GkehubV1::ConfigManagementQuantity]
-        attr_accessor :cpu_limit
-      
-        # The view model of a single quantity, e.g. "800 MiB". Corresponds to https://
-        # github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/
-        # pkg/api/resource/generated.proto
-        # Corresponds to the JSON property `memoryLimit`
-        # @return [Google::Apis::GkehubV1::ConfigManagementQuantity]
-        attr_accessor :memory_limit
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @container_name = args[:container_name] if args.key?(:container_name)
-          @cpu_limit = args[:cpu_limit] if args.key?(:cpu_limit)
-          @memory_limit = args[:memory_limit] if args.key?(:memory_limit)
-        end
-      end
-      
       # Model for a config file in the git repo with an associated Sync error
       class ConfigManagementErrorResource
         include Google::Apis::Core::Hashable
@@ -532,6 +621,11 @@ module Google
         # @return [String]
         attr_accessor :gatekeeper_controller_manager_state
       
+        # Status of the pod serving the mutation webhook.
+        # Corresponds to the JSON property `gatekeeperMutation`
+        # @return [String]
+        attr_accessor :gatekeeper_mutation
+      
         def initialize(**args)
            update!(**args)
         end
@@ -540,6 +634,7 @@ module Google
         def update!(**args)
           @gatekeeper_audit = args[:gatekeeper_audit] if args.key?(:gatekeeper_audit)
           @gatekeeper_controller_manager_state = args[:gatekeeper_controller_manager_state] if args.key?(:gatekeeper_controller_manager_state)
+          @gatekeeper_mutation = args[:gatekeeper_mutation] if args.key?(:gatekeeper_mutation)
         end
       end
       
@@ -558,19 +653,15 @@ module Google
         # @return [String]
         attr_accessor :https_proxy
       
-        # Enable or disable the SSL certificate verification Default: false.
-        # Corresponds to the JSON property `noSslVerify`
-        # @return [Boolean]
-        attr_accessor :no_ssl_verify
-        alias_method :no_ssl_verify?, :no_ssl_verify
-      
         # The path within the Git repository that represents the top level of the repo
         # to sync. Default: the root directory of the repository.
         # Corresponds to the JSON property `policyDir`
         # @return [String]
         attr_accessor :policy_dir
       
-        # Type of secret configured for access to the Git repo.
+        # Type of secret configured for access to the Git repo. Must be one of ssh,
+        # cookiefile, gcenode, token, gcpserviceaccount or none. The validation of this
+        # is case-sensitive. Required.
         # Corresponds to the JSON property `secretType`
         # @return [String]
         attr_accessor :secret_type
@@ -579,11 +670,6 @@ module Google
         # Corresponds to the JSON property `syncBranch`
         # @return [String]
         attr_accessor :sync_branch
-      
-        # The depth of git commits synced by the git-sync container.
-        # Corresponds to the JSON property `syncDepth`
-        # @return [Fixnum]
-        attr_accessor :sync_depth
       
         # The URL of the Git repository to use as the source of truth.
         # Corresponds to the JSON property `syncRepo`
@@ -608,11 +694,9 @@ module Google
         def update!(**args)
           @gcp_service_account_email = args[:gcp_service_account_email] if args.key?(:gcp_service_account_email)
           @https_proxy = args[:https_proxy] if args.key?(:https_proxy)
-          @no_ssl_verify = args[:no_ssl_verify] if args.key?(:no_ssl_verify)
           @policy_dir = args[:policy_dir] if args.key?(:policy_dir)
           @secret_type = args[:secret_type] if args.key?(:secret_type)
           @sync_branch = args[:sync_branch] if args.key?(:sync_branch)
-          @sync_depth = args[:sync_depth] if args.key?(:sync_depth)
           @sync_repo = args[:sync_repo] if args.key?(:sync_repo)
           @sync_rev = args[:sync_rev] if args.key?(:sync_rev)
           @sync_wait_secs = args[:sync_wait_secs] if args.key?(:sync_wait_secs)
@@ -869,6 +953,52 @@ module Google
         end
       end
       
+      # OCI repo configuration for a single cluster
+      class ConfigManagementOciConfig
+        include Google::Apis::Core::Hashable
+      
+        # The GCP Service Account Email used for auth when secret_type is
+        # gcpServiceAccount.
+        # Corresponds to the JSON property `gcpServiceAccountEmail`
+        # @return [String]
+        attr_accessor :gcp_service_account_email
+      
+        # The absolute path of the directory that contains the local resources. Default:
+        # the root directory of the image.
+        # Corresponds to the JSON property `policyDir`
+        # @return [String]
+        attr_accessor :policy_dir
+      
+        # Type of secret configured for access to the Git repo.
+        # Corresponds to the JSON property `secretType`
+        # @return [String]
+        attr_accessor :secret_type
+      
+        # The OCI image repository URL for the package to sync from. e.g. `LOCATION-
+        # docker.pkg.dev/PROJECT_ID/REPOSITORY_NAME/PACKAGE_NAME`.
+        # Corresponds to the JSON property `syncRepo`
+        # @return [String]
+        attr_accessor :sync_repo
+      
+        # Period in seconds between consecutive syncs. Default: 15.
+        # Corresponds to the JSON property `syncWaitSecs`
+        # @return [Fixnum]
+        attr_accessor :sync_wait_secs
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gcp_service_account_email = args[:gcp_service_account_email] if args.key?(:gcp_service_account_email)
+          @policy_dir = args[:policy_dir] if args.key?(:policy_dir)
+          @secret_type = args[:secret_type] if args.key?(:secret_type)
+          @sync_repo = args[:sync_repo] if args.key?(:sync_repo)
+          @sync_wait_secs = args[:sync_wait_secs] if args.key?(:sync_wait_secs)
+        end
+      end
+      
       # State information for an ACM's Operator
       class ConfigManagementOperatorState
         include Google::Apis::Core::Hashable
@@ -929,6 +1059,20 @@ module Google
         attr_accessor :log_denies_enabled
         alias_method :log_denies_enabled?, :log_denies_enabled
       
+        # PolicyControllerMonitoring specifies the backends Policy Controller should
+        # export metrics to. For example, to specify metrics should be exported to Cloud
+        # Monitoring and Prometheus, specify backends: ["cloudmonitoring", "prometheus"]
+        # Corresponds to the JSON property `monitoring`
+        # @return [Google::Apis::GkehubV1::ConfigManagementPolicyControllerMonitoring]
+        attr_accessor :monitoring
+      
+        # Enable or disable mutation in policy controller. If true, mutation CRDs,
+        # webhook and controller deployment will be deployed to the cluster.
+        # Corresponds to the JSON property `mutationEnabled`
+        # @return [Boolean]
+        attr_accessor :mutation_enabled
+        alias_method :mutation_enabled?, :mutation_enabled
+      
         # Enables the ability to use Constraint Templates that reference to objects
         # other than the object currently being evaluated.
         # Corresponds to the JSON property `referentialRulesEnabled`
@@ -952,8 +1096,51 @@ module Google
           @enabled = args[:enabled] if args.key?(:enabled)
           @exemptable_namespaces = args[:exemptable_namespaces] if args.key?(:exemptable_namespaces)
           @log_denies_enabled = args[:log_denies_enabled] if args.key?(:log_denies_enabled)
+          @monitoring = args[:monitoring] if args.key?(:monitoring)
+          @mutation_enabled = args[:mutation_enabled] if args.key?(:mutation_enabled)
           @referential_rules_enabled = args[:referential_rules_enabled] if args.key?(:referential_rules_enabled)
           @template_library_installed = args[:template_library_installed] if args.key?(:template_library_installed)
+        end
+      end
+      
+      # State for the migration of PolicyController from ACM -> PoCo Hub.
+      class ConfigManagementPolicyControllerMigration
+        include Google::Apis::Core::Hashable
+      
+        # Stage of the migration.
+        # Corresponds to the JSON property `stage`
+        # @return [String]
+        attr_accessor :stage
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @stage = args[:stage] if args.key?(:stage)
+        end
+      end
+      
+      # PolicyControllerMonitoring specifies the backends Policy Controller should
+      # export metrics to. For example, to specify metrics should be exported to Cloud
+      # Monitoring and Prometheus, specify backends: ["cloudmonitoring", "prometheus"]
+      class ConfigManagementPolicyControllerMonitoring
+        include Google::Apis::Core::Hashable
+      
+        # Specifies the list of backends Policy Controller will export to. An empty list
+        # would effectively disable metrics export.
+        # Corresponds to the JSON property `backends`
+        # @return [Array<String>]
+        attr_accessor :backends
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @backends = args[:backends] if args.key?(:backends)
         end
       end
       
@@ -965,6 +1152,11 @@ module Google
         # Corresponds to the JSON property `deploymentState`
         # @return [Google::Apis::GkehubV1::ConfigManagementGatekeeperDeploymentState]
         attr_accessor :deployment_state
+      
+        # State for the migration of PolicyController from ACM -> PoCo Hub.
+        # Corresponds to the JSON property `migration`
+        # @return [Google::Apis::GkehubV1::ConfigManagementPolicyControllerMigration]
+        attr_accessor :migration
       
         # The build version of Gatekeeper Policy Controller is using.
         # Corresponds to the JSON property `version`
@@ -978,6 +1170,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @deployment_state = args[:deployment_state] if args.key?(:deployment_state)
+          @migration = args[:migration] if args.key?(:migration)
           @version = args[:version] if args.key?(:version)
         end
       end
@@ -999,27 +1192,6 @@ module Google
         # Update properties of this object
         def update!(**args)
           @version = args[:version] if args.key?(:version)
-        end
-      end
-      
-      # The view model of a single quantity, e.g. "800 MiB". Corresponds to https://
-      # github.com/kubernetes/kubernetes/blob/master/staging/src/k8s.io/apimachinery/
-      # pkg/api/resource/generated.proto
-      class ConfigManagementQuantity
-        include Google::Apis::Core::Hashable
-      
-        # Stringified version of the quantity, e.g., "800 MiB".
-        # Corresponds to the JSON property `string`
-        # @return [String]
-        attr_accessor :string
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @string = args[:string] if args.key?(:string)
         end
       end
       
@@ -1140,11 +1312,31 @@ module Google
         end
       end
       
+      # EdgeCluster contains information specific to Google Edge Clusters.
+      class EdgeCluster
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. Self-link of the GCP resource for the Edge Cluster. For example: //
+        # edgecontainer.googleapis.com/projects/my-project/locations/us-west1-a/clusters/
+        # my-cluster
+        # Corresponds to the JSON property `resourceLink`
+        # @return [String]
+        attr_accessor :resource_link
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @resource_link = args[:resource_link] if args.key?(:resource_link)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1225,6 +1417,12 @@ module Google
         # @return [String]
         attr_accessor :delete_time
       
+        # CommonFleetDefaultMemberConfigSpec contains default configuration information
+        # for memberships of a fleet
+        # Corresponds to the JSON property `fleetDefaultMemberConfig`
+        # @return [Google::Apis::GkehubV1::CommonFleetDefaultMemberConfigSpec]
+        attr_accessor :fleet_default_member_config
+      
         # GCP labels for this Feature.
         # Corresponds to the JSON property `labels`
         # @return [Hash<String,String>]
@@ -1268,6 +1466,29 @@ module Google
         # @return [Google::Apis::GkehubV1::FeatureResourceState]
         attr_accessor :resource_state
       
+        # Optional. Scope-specific configuration for this Feature. If this Feature does
+        # not support any per-Scope configuration, this field may be unused. The keys
+        # indicate which Scope the configuration is for, in the form: `projects/`p`/
+        # locations/global/scopes/`s`` Where `p` is the project, `s` is a valid Scope in
+        # this project. `p` WILL match the Feature's project. `p` will always be
+        # returned as the project number, but the project ID is also accepted during
+        # input. If the same Scope is specified in the map twice (using the project ID
+        # form, and the project number form), exactly ONE of the entries will be saved,
+        # with no guarantees as to which. For this reason, it is recommended the same
+        # format be used for all entries when mutating a Feature.
+        # Corresponds to the JSON property `scopeSpecs`
+        # @return [Hash<String,Google::Apis::GkehubV1::ScopeFeatureSpec>]
+        attr_accessor :scope_specs
+      
+        # Output only. Scope-specific Feature status. If this Feature does report any
+        # per-Scope status, this field may be unused. The keys indicate which Scope the
+        # state is for, in the form: `projects/`p`/locations/global/scopes/`s`` Where `p`
+        # is the project, `s` is a valid Scope in this project. `p` WILL match the
+        # Feature's project.
+        # Corresponds to the JSON property `scopeStates`
+        # @return [Hash<String,Google::Apis::GkehubV1::ScopeFeatureState>]
+        attr_accessor :scope_states
+      
         # CommonFeatureSpec contains Hub-wide configuration information
         # Corresponds to the JSON property `spec`
         # @return [Google::Apis::GkehubV1::CommonFeatureSpec]
@@ -1291,11 +1512,14 @@ module Google
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
           @delete_time = args[:delete_time] if args.key?(:delete_time)
+          @fleet_default_member_config = args[:fleet_default_member_config] if args.key?(:fleet_default_member_config)
           @labels = args[:labels] if args.key?(:labels)
           @membership_specs = args[:membership_specs] if args.key?(:membership_specs)
           @membership_states = args[:membership_states] if args.key?(:membership_states)
           @name = args[:name] if args.key?(:name)
           @resource_state = args[:resource_state] if args.key?(:resource_state)
+          @scope_specs = args[:scope_specs] if args.key?(:scope_specs)
+          @scope_states = args[:scope_states] if args.key?(:scope_states)
           @spec = args[:spec] if args.key?(:spec)
           @state = args[:state] if args.key?(:state)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -1353,6 +1577,61 @@ module Google
           @code = args[:code] if args.key?(:code)
           @description = args[:description] if args.key?(:description)
           @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # **Fleet Observability**: The Hub-wide input for the FleetObservability feature.
+      class FleetObservabilityFeatureSpec
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # **FleetObservability**: An empty state left as an example Hub-wide Feature
+      # state.
+      class FleetObservabilityFeatureState
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # **FleetObservability**: The membership-specific input for FleetObservability
+      # feature.
+      class FleetObservabilityMembershipSpec
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # **FleetObservability**: An empty state left as an example membership-specific
+      # Feature state.
+      class FleetObservabilityMembershipState
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -1445,6 +1724,277 @@ module Google
         end
       end
       
+      # Configuration of an auth method for a member/cluster. Only one authentication
+      # method (e.g., OIDC and LDAP) can be set per AuthMethod.
+      class IdentityServiceAuthMethod
+        include Google::Apis::Core::Hashable
+      
+        # Configuration for the AzureAD Auth flow.
+        # Corresponds to the JSON property `azureadConfig`
+        # @return [Google::Apis::GkehubV1::IdentityServiceAzureAdConfig]
+        attr_accessor :azuread_config
+      
+        # Configuration for the Google Plugin Auth flow.
+        # Corresponds to the JSON property `googleConfig`
+        # @return [Google::Apis::GkehubV1::IdentityServiceGoogleConfig]
+        attr_accessor :google_config
+      
+        # Identifier for auth config.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Configuration for OIDC Auth flow.
+        # Corresponds to the JSON property `oidcConfig`
+        # @return [Google::Apis::GkehubV1::IdentityServiceOidcConfig]
+        attr_accessor :oidc_config
+      
+        # Proxy server address to use for auth method.
+        # Corresponds to the JSON property `proxy`
+        # @return [String]
+        attr_accessor :proxy
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @azuread_config = args[:azuread_config] if args.key?(:azuread_config)
+          @google_config = args[:google_config] if args.key?(:google_config)
+          @name = args[:name] if args.key?(:name)
+          @oidc_config = args[:oidc_config] if args.key?(:oidc_config)
+          @proxy = args[:proxy] if args.key?(:proxy)
+        end
+      end
+      
+      # Configuration for the AzureAD Auth flow.
+      class IdentityServiceAzureAdConfig
+        include Google::Apis::Core::Hashable
+      
+        # ID for the registered client application that makes authentication requests to
+        # the Azure AD identity provider.
+        # Corresponds to the JSON property `clientId`
+        # @return [String]
+        attr_accessor :client_id
+      
+        # Input only. Unencrypted AzureAD client secret will be passed to the GKE Hub
+        # CLH.
+        # Corresponds to the JSON property `clientSecret`
+        # @return [String]
+        attr_accessor :client_secret
+      
+        # Output only. Encrypted AzureAD client secret.
+        # Corresponds to the JSON property `encryptedClientSecret`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :encrypted_client_secret
+      
+        # The redirect URL that kubectl uses for authorization.
+        # Corresponds to the JSON property `kubectlRedirectUri`
+        # @return [String]
+        attr_accessor :kubectl_redirect_uri
+      
+        # Kind of Azure AD account to be authenticated. Supported values are or for
+        # accounts belonging to a specific tenant.
+        # Corresponds to the JSON property `tenant`
+        # @return [String]
+        attr_accessor :tenant
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @client_id = args[:client_id] if args.key?(:client_id)
+          @client_secret = args[:client_secret] if args.key?(:client_secret)
+          @encrypted_client_secret = args[:encrypted_client_secret] if args.key?(:encrypted_client_secret)
+          @kubectl_redirect_uri = args[:kubectl_redirect_uri] if args.key?(:kubectl_redirect_uri)
+          @tenant = args[:tenant] if args.key?(:tenant)
+        end
+      end
+      
+      # Configuration for the Google Plugin Auth flow.
+      class IdentityServiceGoogleConfig
+        include Google::Apis::Core::Hashable
+      
+        # Disable automatic configuration of Google Plugin on supported platforms.
+        # Corresponds to the JSON property `disable`
+        # @return [Boolean]
+        attr_accessor :disable
+        alias_method :disable?, :disable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @disable = args[:disable] if args.key?(:disable)
+        end
+      end
+      
+      # **Anthos Identity Service**: Configuration for a single Membership.
+      class IdentityServiceMembershipSpec
+        include Google::Apis::Core::Hashable
+      
+        # A member may support multiple auth methods.
+        # Corresponds to the JSON property `authMethods`
+        # @return [Array<Google::Apis::GkehubV1::IdentityServiceAuthMethod>]
+        attr_accessor :auth_methods
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @auth_methods = args[:auth_methods] if args.key?(:auth_methods)
+        end
+      end
+      
+      # **Anthos Identity Service**: State for a single Membership.
+      class IdentityServiceMembershipState
+        include Google::Apis::Core::Hashable
+      
+        # The reason of the failure.
+        # Corresponds to the JSON property `failureReason`
+        # @return [String]
+        attr_accessor :failure_reason
+      
+        # Installed AIS version. This is the AIS version installed on this member. The
+        # values makes sense iff state is OK.
+        # Corresponds to the JSON property `installedVersion`
+        # @return [String]
+        attr_accessor :installed_version
+      
+        # **Anthos Identity Service**: Configuration for a single Membership.
+        # Corresponds to the JSON property `memberConfig`
+        # @return [Google::Apis::GkehubV1::IdentityServiceMembershipSpec]
+        attr_accessor :member_config
+      
+        # Deployment state on this member
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failure_reason = args[:failure_reason] if args.key?(:failure_reason)
+          @installed_version = args[:installed_version] if args.key?(:installed_version)
+          @member_config = args[:member_config] if args.key?(:member_config)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Configuration for OIDC Auth flow.
+      class IdentityServiceOidcConfig
+        include Google::Apis::Core::Hashable
+      
+        # PEM-encoded CA for OIDC provider.
+        # Corresponds to the JSON property `certificateAuthorityData`
+        # @return [String]
+        attr_accessor :certificate_authority_data
+      
+        # ID for OIDC client application.
+        # Corresponds to the JSON property `clientId`
+        # @return [String]
+        attr_accessor :client_id
+      
+        # Input only. Unencrypted OIDC client secret will be passed to the GKE Hub CLH.
+        # Corresponds to the JSON property `clientSecret`
+        # @return [String]
+        attr_accessor :client_secret
+      
+        # Flag to denote if reverse proxy is used to connect to auth provider. This flag
+        # should be set to true when provider is not reachable by Google Cloud Console.
+        # Corresponds to the JSON property `deployCloudConsoleProxy`
+        # @return [Boolean]
+        attr_accessor :deploy_cloud_console_proxy
+        alias_method :deploy_cloud_console_proxy?, :deploy_cloud_console_proxy
+      
+        # Enable access token.
+        # Corresponds to the JSON property `enableAccessToken`
+        # @return [Boolean]
+        attr_accessor :enable_access_token
+        alias_method :enable_access_token?, :enable_access_token
+      
+        # Output only. Encrypted OIDC Client secret
+        # Corresponds to the JSON property `encryptedClientSecret`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :encrypted_client_secret
+      
+        # Comma-separated list of key-value pairs.
+        # Corresponds to the JSON property `extraParams`
+        # @return [String]
+        attr_accessor :extra_params
+      
+        # Prefix to prepend to group name.
+        # Corresponds to the JSON property `groupPrefix`
+        # @return [String]
+        attr_accessor :group_prefix
+      
+        # Claim in OIDC ID token that holds group information.
+        # Corresponds to the JSON property `groupsClaim`
+        # @return [String]
+        attr_accessor :groups_claim
+      
+        # URI for the OIDC provider. This should point to the level below .well-known/
+        # openid-configuration.
+        # Corresponds to the JSON property `issuerUri`
+        # @return [String]
+        attr_accessor :issuer_uri
+      
+        # Registered redirect uri to redirect users going through OAuth flow using
+        # kubectl plugin.
+        # Corresponds to the JSON property `kubectlRedirectUri`
+        # @return [String]
+        attr_accessor :kubectl_redirect_uri
+      
+        # Comma-separated list of identifiers.
+        # Corresponds to the JSON property `scopes`
+        # @return [String]
+        attr_accessor :scopes
+      
+        # Claim in OIDC ID token that holds username.
+        # Corresponds to the JSON property `userClaim`
+        # @return [String]
+        attr_accessor :user_claim
+      
+        # Prefix to prepend to user name.
+        # Corresponds to the JSON property `userPrefix`
+        # @return [String]
+        attr_accessor :user_prefix
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @certificate_authority_data = args[:certificate_authority_data] if args.key?(:certificate_authority_data)
+          @client_id = args[:client_id] if args.key?(:client_id)
+          @client_secret = args[:client_secret] if args.key?(:client_secret)
+          @deploy_cloud_console_proxy = args[:deploy_cloud_console_proxy] if args.key?(:deploy_cloud_console_proxy)
+          @enable_access_token = args[:enable_access_token] if args.key?(:enable_access_token)
+          @encrypted_client_secret = args[:encrypted_client_secret] if args.key?(:encrypted_client_secret)
+          @extra_params = args[:extra_params] if args.key?(:extra_params)
+          @group_prefix = args[:group_prefix] if args.key?(:group_prefix)
+          @groups_claim = args[:groups_claim] if args.key?(:groups_claim)
+          @issuer_uri = args[:issuer_uri] if args.key?(:issuer_uri)
+          @kubectl_redirect_uri = args[:kubectl_redirect_uri] if args.key?(:kubectl_redirect_uri)
+          @scopes = args[:scopes] if args.key?(:scopes)
+          @user_claim = args[:user_claim] if args.key?(:user_claim)
+          @user_prefix = args[:user_prefix] if args.key?(:user_prefix)
+        end
+      end
+      
       # KubernetesMetadata provides informational metadata for Memberships
       # representing Kubernetes clusters.
       class KubernetesMetadata
@@ -1501,6 +2051,61 @@ module Google
         end
       end
       
+      # KubernetesResource contains the YAML manifests and configuration for
+      # Membership Kubernetes resources in the cluster. After CreateMembership or
+      # UpdateMembership, these resources should be re-applied in the cluster.
+      class KubernetesResource
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The Kubernetes resources for installing the GKE Connect agent
+        # This field is only populated in the Membership returned from a successful long-
+        # running operation from CreateMembership or UpdateMembership. It is not
+        # populated during normal GetMembership or ListMemberships requests. To get the
+        # resource manifest after the initial registration, the caller should make a
+        # UpdateMembership call with an empty field mask.
+        # Corresponds to the JSON property `connectResources`
+        # @return [Array<Google::Apis::GkehubV1::ResourceManifest>]
+        attr_accessor :connect_resources
+      
+        # Input only. The YAML representation of the Membership CR. This field is
+        # ignored for GKE clusters where Hub can read the CR directly. Callers should
+        # provide the CR that is currently present in the cluster during
+        # CreateMembership or UpdateMembership, or leave this field empty if none exists.
+        # The CR manifest is used to validate the cluster has not been registered with
+        # another Membership.
+        # Corresponds to the JSON property `membershipCrManifest`
+        # @return [String]
+        attr_accessor :membership_cr_manifest
+      
+        # Output only. Additional Kubernetes resources that need to be applied to the
+        # cluster after Membership creation, and after every update. This field is only
+        # populated in the Membership returned from a successful long-running operation
+        # from CreateMembership or UpdateMembership. It is not populated during normal
+        # GetMembership or ListMemberships requests. To get the resource manifest after
+        # the initial registration, the caller should make a UpdateMembership call with
+        # an empty field mask.
+        # Corresponds to the JSON property `membershipResources`
+        # @return [Array<Google::Apis::GkehubV1::ResourceManifest>]
+        attr_accessor :membership_resources
+      
+        # ResourceOptions represent options for Kubernetes resource generation.
+        # Corresponds to the JSON property `resourceOptions`
+        # @return [Google::Apis::GkehubV1::ResourceOptions]
+        attr_accessor :resource_options
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @connect_resources = args[:connect_resources] if args.key?(:connect_resources)
+          @membership_cr_manifest = args[:membership_cr_manifest] if args.key?(:membership_cr_manifest)
+          @membership_resources = args[:membership_resources] if args.key?(:membership_resources)
+          @resource_options = args[:resource_options] if args.key?(:resource_options)
+        end
+      end
+      
       # Response message for the `GkeHub.ListFeatures` method.
       class ListFeaturesResponse
         include Google::Apis::Core::Hashable
@@ -1548,6 +2153,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @locations = args[:locations] if args.key?(:locations)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # List of MembershipBindings.
+      class ListMembershipBindingsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of membership_bindings
+        # Corresponds to the JSON property `membershipBindings`
+        # @return [Array<Google::Apis::GkehubV1::MembershipBinding>]
+        attr_accessor :membership_bindings
+      
+        # A token to request the next page of resources from the `ListMembershipBindings`
+        # method. The value of an empty string means that there are no more resources
+        # to return.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @membership_bindings = args[:membership_bindings] if args.key?(:membership_bindings)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -1607,6 +2239,32 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @operations = args[:operations] if args.key?(:operations)
+        end
+      end
+      
+      # List of Scopes.
+      class ListScopesResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token to request the next page of resources from the `ListScopes` method.
+        # The value of an empty string means that there are no more resources to return.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The list of Scopes
+        # Corresponds to the JSON property `scopes`
+        # @return [Array<Google::Apis::GkehubV1::Scope>]
+        attr_accessor :scopes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @scopes = args[:scopes] if args.key?(:scopes)
         end
       end
       
@@ -1760,21 +2418,131 @@ module Google
         end
       end
       
+      # MembershipBinding is a subresource of a Membership, representing what Fleet
+      # Scopes (or other, future Fleet resources) a Membership is bound to.
+      class MembershipBinding
+        include Google::Apis::Core::Hashable
+      
+        # Output only. When the membership binding was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. When the membership binding was deleted.
+        # Corresponds to the JSON property `deleteTime`
+        # @return [String]
+        attr_accessor :delete_time
+      
+        # Whether the membershipbinding is Fleet-wide; true means that this Membership
+        # should be bound to all Namespaces in this entire Fleet.
+        # Corresponds to the JSON property `fleet`
+        # @return [Boolean]
+        attr_accessor :fleet
+        alias_method :fleet?, :fleet
+      
+        # The resource name for the membershipbinding itself `projects/`project`/
+        # locations/`location`/memberships/`membership`/bindings/`membershipbinding``
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # A Workspace resource name in the format `projects/*/locations/*/scopes/*`.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        # MembershipBindingLifecycleState describes the state of a Binding resource.
+        # Corresponds to the JSON property `state`
+        # @return [Google::Apis::GkehubV1::MembershipBindingLifecycleState]
+        attr_accessor :state
+      
+        # Output only. Google-generated UUID for this resource. This is unique across
+        # all membershipbinding resources. If a membershipbinding resource is deleted
+        # and another resource with the same name is created, it gets a different uid.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        # Output only. When the membership binding was last updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @delete_time = args[:delete_time] if args.key?(:delete_time)
+          @fleet = args[:fleet] if args.key?(:fleet)
+          @name = args[:name] if args.key?(:name)
+          @scope = args[:scope] if args.key?(:scope)
+          @state = args[:state] if args.key?(:state)
+          @uid = args[:uid] if args.key?(:uid)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # MembershipBindingLifecycleState describes the state of a Binding resource.
+      class MembershipBindingLifecycleState
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The current state of the MembershipBinding resource.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+        end
+      end
+      
       # MembershipEndpoint contains information needed to contact a Kubernetes API,
       # endpoint and any additional Kubernetes metadata.
       class MembershipEndpoint
         include Google::Apis::Core::Hashable
+      
+        # ApplianceCluster contains information specific to GDC Edge Appliance Clusters.
+        # Corresponds to the JSON property `applianceCluster`
+        # @return [Google::Apis::GkehubV1::ApplianceCluster]
+        attr_accessor :appliance_cluster
+      
+        # EdgeCluster contains information specific to Google Edge Clusters.
+        # Corresponds to the JSON property `edgeCluster`
+        # @return [Google::Apis::GkehubV1::EdgeCluster]
+        attr_accessor :edge_cluster
       
         # GkeCluster contains information specific to GKE clusters.
         # Corresponds to the JSON property `gkeCluster`
         # @return [Google::Apis::GkehubV1::GkeCluster]
         attr_accessor :gke_cluster
       
+        # Output only. Whether the lifecycle of this membership is managed by a google
+        # cluster platform service.
+        # Corresponds to the JSON property `googleManaged`
+        # @return [Boolean]
+        attr_accessor :google_managed
+        alias_method :google_managed?, :google_managed
+      
         # KubernetesMetadata provides informational metadata for Memberships
         # representing Kubernetes clusters.
         # Corresponds to the JSON property `kubernetesMetadata`
         # @return [Google::Apis::GkehubV1::KubernetesMetadata]
         attr_accessor :kubernetes_metadata
+      
+        # KubernetesResource contains the YAML manifests and configuration for
+        # Membership Kubernetes resources in the cluster. After CreateMembership or
+        # UpdateMembership, these resources should be re-applied in the cluster.
+        # Corresponds to the JSON property `kubernetesResource`
+        # @return [Google::Apis::GkehubV1::KubernetesResource]
+        attr_accessor :kubernetes_resource
       
         # MultiCloudCluster contains information specific to GKE Multi-Cloud clusters.
         # Corresponds to the JSON property `multiCloudCluster`
@@ -1792,8 +2560,12 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @appliance_cluster = args[:appliance_cluster] if args.key?(:appliance_cluster)
+          @edge_cluster = args[:edge_cluster] if args.key?(:edge_cluster)
           @gke_cluster = args[:gke_cluster] if args.key?(:gke_cluster)
+          @google_managed = args[:google_managed] if args.key?(:google_managed)
           @kubernetes_metadata = args[:kubernetes_metadata] if args.key?(:kubernetes_metadata)
+          @kubernetes_resource = args[:kubernetes_resource] if args.key?(:kubernetes_resource)
           @multi_cloud_cluster = args[:multi_cloud_cluster] if args.key?(:multi_cloud_cluster)
           @on_prem_cluster = args[:on_prem_cluster] if args.key?(:on_prem_cluster)
         end
@@ -1810,6 +2582,28 @@ module Google
         # @return [Google::Apis::GkehubV1::ConfigManagementMembershipSpec]
         attr_accessor :configmanagement
       
+        # True if value of `feature_spec` was inherited from a fleet-level default.
+        # Corresponds to the JSON property `fleetInherited`
+        # @return [Boolean]
+        attr_accessor :fleet_inherited
+        alias_method :fleet_inherited?, :fleet_inherited
+      
+        # **FleetObservability**: The membership-specific input for FleetObservability
+        # feature.
+        # Corresponds to the JSON property `fleetobservability`
+        # @return [Google::Apis::GkehubV1::FleetObservabilityMembershipSpec]
+        attr_accessor :fleetobservability
+      
+        # **Anthos Identity Service**: Configuration for a single Membership.
+        # Corresponds to the JSON property `identityservice`
+        # @return [Google::Apis::GkehubV1::IdentityServiceMembershipSpec]
+        attr_accessor :identityservice
+      
+        # **Service Mesh**: Spec for a single Membership for the servicemesh feature
+        # Corresponds to the JSON property `mesh`
+        # @return [Google::Apis::GkehubV1::ServiceMeshMembershipSpec]
+        attr_accessor :mesh
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1817,6 +2611,10 @@ module Google
         # Update properties of this object
         def update!(**args)
           @configmanagement = args[:configmanagement] if args.key?(:configmanagement)
+          @fleet_inherited = args[:fleet_inherited] if args.key?(:fleet_inherited)
+          @fleetobservability = args[:fleetobservability] if args.key?(:fleetobservability)
+          @identityservice = args[:identityservice] if args.key?(:identityservice)
+          @mesh = args[:mesh] if args.key?(:mesh)
         end
       end
       
@@ -1825,10 +2623,32 @@ module Google
       class MembershipFeatureState
         include Google::Apis::Core::Hashable
       
+        # State for App Dev Exp Feature.
+        # Corresponds to the JSON property `appdevexperience`
+        # @return [Google::Apis::GkehubV1::AppDevExperienceFeatureState]
+        attr_accessor :appdevexperience
+      
         # **Anthos Config Management**: State for a single cluster.
         # Corresponds to the JSON property `configmanagement`
         # @return [Google::Apis::GkehubV1::ConfigManagementMembershipState]
         attr_accessor :configmanagement
+      
+        # **FleetObservability**: An empty state left as an example membership-specific
+        # Feature state.
+        # Corresponds to the JSON property `fleetobservability`
+        # @return [Google::Apis::GkehubV1::FleetObservabilityMembershipState]
+        attr_accessor :fleetobservability
+      
+        # **Anthos Identity Service**: State for a single Membership.
+        # Corresponds to the JSON property `identityservice`
+        # @return [Google::Apis::GkehubV1::IdentityServiceMembershipState]
+        attr_accessor :identityservice
+      
+        # **Service Mesh**: State for a single Membership, as analyzed by the Service
+        # Mesh Hub Controller.
+        # Corresponds to the JSON property `servicemesh`
+        # @return [Google::Apis::GkehubV1::ServiceMeshMembershipState]
+        attr_accessor :servicemesh
       
         # FeatureState describes the high-level state of a Feature. It may be used to
         # describe a Feature's state at the environ-level, or per-membershop, depending
@@ -1843,7 +2663,11 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @appdevexperience = args[:appdevexperience] if args.key?(:appdevexperience)
           @configmanagement = args[:configmanagement] if args.key?(:configmanagement)
+          @fleetobservability = args[:fleetobservability] if args.key?(:fleetobservability)
+          @identityservice = args[:identityservice] if args.key?(:identityservice)
+          @servicemesh = args[:servicemesh] if args.key?(:servicemesh)
           @state = args[:state] if args.key?(:state)
         end
       end
@@ -1881,7 +2705,8 @@ module Google
         # Immutable. Self-link of the GCP resource for the GKE Multi-Cloud cluster. For
         # example: //gkemulticloud.googleapis.com/projects/my-project/locations/us-west1-
         # a/awsClusters/my-cluster //gkemulticloud.googleapis.com/projects/my-project/
-        # locations/us-west1-a/azureClusters/my-cluster
+        # locations/us-west1-a/azureClusters/my-cluster //gkemulticloud.googleapis.com/
+        # projects/my-project/locations/us-west1-a/attachedClusters/my-cluster
         # Corresponds to the JSON property `resourceLink`
         # @return [String]
         attr_accessor :resource_link
@@ -1935,6 +2760,11 @@ module Google
         attr_accessor :cluster_missing
         alias_method :cluster_missing?, :cluster_missing
       
+        # Immutable. The on prem cluster's type.
+        # Corresponds to the JSON property `clusterType`
+        # @return [String]
+        attr_accessor :cluster_type
+      
         # Immutable. Self-link of the GCP resource for the GKE On-Prem cluster. For
         # example: //gkeonprem.googleapis.com/projects/my-project/locations/us-west1-a/
         # vmwareClusters/my-cluster //gkeonprem.googleapis.com/projects/my-project/
@@ -1951,6 +2781,7 @@ module Google
         def update!(**args)
           @admin_cluster = args[:admin_cluster] if args.key?(:admin_cluster)
           @cluster_missing = args[:cluster_missing] if args.key?(:cluster_missing)
+          @cluster_type = args[:cluster_type] if args.key?(:cluster_type)
           @resource_link = args[:resource_link] if args.key?(:resource_link)
         end
       end
@@ -2078,31 +2909,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -2111,9 +2942,14 @@ module Google
         # @return [Array<Google::Apis::GkehubV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::GkehubV1::Binding>]
         attr_accessor :bindings
@@ -2166,37 +3002,335 @@ module Google
         end
       end
       
+      # ResourceManifest represents a single Kubernetes resource to be applied to the
+      # cluster.
+      class ResourceManifest
+        include Google::Apis::Core::Hashable
+      
+        # Whether the resource provided in the manifest is `cluster_scoped`. If unset,
+        # the manifest is assumed to be namespace scoped. This field is used for REST
+        # mapping when applying the resource in a cluster.
+        # Corresponds to the JSON property `clusterScoped`
+        # @return [Boolean]
+        attr_accessor :cluster_scoped
+        alias_method :cluster_scoped?, :cluster_scoped
+      
+        # YAML manifest of the resource.
+        # Corresponds to the JSON property `manifest`
+        # @return [String]
+        attr_accessor :manifest
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_scoped = args[:cluster_scoped] if args.key?(:cluster_scoped)
+          @manifest = args[:manifest] if args.key?(:manifest)
+        end
+      end
+      
+      # ResourceOptions represent options for Kubernetes resource generation.
+      class ResourceOptions
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The Connect agent version to use for connect_resources. Defaults to
+        # the latest GKE Connect version. The version must be a currently supported
+        # version, obsolete versions will be rejected.
+        # Corresponds to the JSON property `connectVersion`
+        # @return [String]
+        attr_accessor :connect_version
+      
+        # Optional. Major version of the Kubernetes cluster. This is only used to
+        # determine which version to use for the CustomResourceDefinition resources, `
+        # apiextensions/v1beta1` or`apiextensions/v1`.
+        # Corresponds to the JSON property `k8sVersion`
+        # @return [String]
+        attr_accessor :k8s_version
+      
+        # Optional. Use `apiextensions/v1beta1` instead of `apiextensions/v1` for
+        # CustomResourceDefinition resources. This option should be set for clusters
+        # with Kubernetes apiserver versions <1.16.
+        # Corresponds to the JSON property `v1beta1Crd`
+        # @return [Boolean]
+        attr_accessor :v1beta1_crd
+        alias_method :v1beta1_crd?, :v1beta1_crd
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @connect_version = args[:connect_version] if args.key?(:connect_version)
+          @k8s_version = args[:k8s_version] if args.key?(:k8s_version)
+          @v1beta1_crd = args[:v1beta1_crd] if args.key?(:v1beta1_crd)
+        end
+      end
+      
+      # Scope represents a Scope in a Fleet.
+      class Scope
+        include Google::Apis::Core::Hashable
+      
+        # Output only. When the scope was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. When the scope was deleted.
+        # Corresponds to the JSON property `deleteTime`
+        # @return [String]
+        attr_accessor :delete_time
+      
+        # The resource name for the scope `projects/`project`/locations/`location`/
+        # scopes/`scope``
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # ScopeLifecycleState describes the state of a Scope resource.
+        # Corresponds to the JSON property `state`
+        # @return [Google::Apis::GkehubV1::ScopeLifecycleState]
+        attr_accessor :state
+      
+        # Output only. Google-generated UUID for this resource. This is unique across
+        # all scope resources. If a scope resource is deleted and another resource with
+        # the same name is created, it gets a different uid.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        # Output only. When the scope was last updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @delete_time = args[:delete_time] if args.key?(:delete_time)
+          @name = args[:name] if args.key?(:name)
+          @state = args[:state] if args.key?(:state)
+          @uid = args[:uid] if args.key?(:uid)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
+      # ScopeFeatureSpec contains feature specs for a fleet scope.
+      class ScopeFeatureSpec
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # ScopeFeatureState contains Scope-wide Feature status information.
+      class ScopeFeatureState
+        include Google::Apis::Core::Hashable
+      
+        # FeatureState describes the high-level state of a Feature. It may be used to
+        # describe a Feature's state at the environ-level, or per-membershop, depending
+        # on the context.
+        # Corresponds to the JSON property `state`
+        # @return [Google::Apis::GkehubV1::FeatureState]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # ScopeLifecycleState describes the state of a Scope resource.
+      class ScopeLifecycleState
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The current state of the scope resource.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+        end
+      end
+      
+      # Status of control plane management.
+      class ServiceMeshControlPlaneManagement
+        include Google::Apis::Core::Hashable
+      
+        # Explanation of state.
+        # Corresponds to the JSON property `details`
+        # @return [Array<Google::Apis::GkehubV1::ServiceMeshStatusDetails>]
+        attr_accessor :details
+      
+        # LifecycleState of control plane management.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @details = args[:details] if args.key?(:details)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Status of data plane management. Only reported per-member.
+      class ServiceMeshDataPlaneManagement
+        include Google::Apis::Core::Hashable
+      
+        # Explanation of the status.
+        # Corresponds to the JSON property `details`
+        # @return [Array<Google::Apis::GkehubV1::ServiceMeshStatusDetails>]
+        attr_accessor :details
+      
+        # Lifecycle status of data plane management.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @details = args[:details] if args.key?(:details)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # **Service Mesh**: Spec for a single Membership for the servicemesh feature
+      class ServiceMeshMembershipSpec
+        include Google::Apis::Core::Hashable
+      
+        # Enables automatic control plane management.
+        # Corresponds to the JSON property `controlPlane`
+        # @return [String]
+        attr_accessor :control_plane
+      
+        # Enables automatic Service Mesh management.
+        # Corresponds to the JSON property `management`
+        # @return [String]
+        attr_accessor :management
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @control_plane = args[:control_plane] if args.key?(:control_plane)
+          @management = args[:management] if args.key?(:management)
+        end
+      end
+      
+      # **Service Mesh**: State for a single Membership, as analyzed by the Service
+      # Mesh Hub Controller.
+      class ServiceMeshMembershipState
+        include Google::Apis::Core::Hashable
+      
+        # Status of control plane management.
+        # Corresponds to the JSON property `controlPlaneManagement`
+        # @return [Google::Apis::GkehubV1::ServiceMeshControlPlaneManagement]
+        attr_accessor :control_plane_management
+      
+        # Status of data plane management. Only reported per-member.
+        # Corresponds to the JSON property `dataPlaneManagement`
+        # @return [Google::Apis::GkehubV1::ServiceMeshDataPlaneManagement]
+        attr_accessor :data_plane_management
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @control_plane_management = args[:control_plane_management] if args.key?(:control_plane_management)
+          @data_plane_management = args[:data_plane_management] if args.key?(:data_plane_management)
+        end
+      end
+      
+      # Structured and human-readable details for a status.
+      class ServiceMeshStatusDetails
+        include Google::Apis::Core::Hashable
+      
+        # A machine-readable code that further describes a broad status.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        # Human-readable explanation of code.
+        # Corresponds to the JSON property `details`
+        # @return [String]
+        attr_accessor :details
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+          @details = args[:details] if args.key?(:details)
+        end
+      end
+      
       # Request message for `SetIamPolicy` method.
       class SetIamPolicyRequest
         include Google::Apis::Core::Hashable
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::GkehubV1::Policy]
         attr_accessor :policy
@@ -2219,12 +3353,37 @@ module Google
         end
       end
       
+      # Status specifies state for the subcomponent.
+      class Status
+        include Google::Apis::Core::Hashable
+      
+        # Code specifies AppDevExperienceFeature's subcomponent ready state.
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        # Description is populated if Code is Failed, explaining why it has failed.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @code = args[:code] if args.key?(:code)
+          @description = args[:description] if args.key?(:description)
+        end
+      end
+      
       # Request message for `TestIamPermissions` method.
       class TestIamPermissionsRequest
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]

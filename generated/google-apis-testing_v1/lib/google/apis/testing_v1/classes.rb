@@ -167,7 +167,7 @@ module Google
       
         # The option of whether running each test within its own invocation of
         # instrumentation with Android Test Orchestrator or not. ** Orchestrator is only
-        # compatible with AndroidJUnitRunner version 1.0 or higher! ** Orchestrator
+        # compatible with AndroidJUnitRunner version 1.1 or higher! ** Orchestrator
         # offers the following benefits: - No shared state - Crashes are isolated - Logs
         # are scoped per test See for more information about Android Test Orchestrator.
         # If not set, the test will be run without the orchestrator.
@@ -316,6 +316,11 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Version-specific information of an Android model.
+        # Corresponds to the JSON property `perVersionInfo`
+        # @return [Array<Google::Apis::TestingV1::PerAndroidVersionInfo>]
+        attr_accessor :per_version_info
+      
         # Screen density in DPI. This corresponds to ro.sf.lcd_density
         # Corresponds to the JSON property `screenDensity`
         # @return [Fixnum]
@@ -351,8 +356,7 @@ module Google
         # @return [Array<String>]
         attr_accessor :tags
       
-        # URL of a thumbnail image (photo) of the device. e.g. https://lh3.
-        # googleusercontent.com/90WcauuJiCYABEl8U0lcZeuS5STUbf2yW...
+        # URL of a thumbnail image (photo) of the device.
         # Corresponds to the JSON property `thumbnailUrl`
         # @return [String]
         attr_accessor :thumbnail_url
@@ -371,6 +375,7 @@ module Google
           @low_fps_video_recording = args[:low_fps_video_recording] if args.key?(:low_fps_video_recording)
           @manufacturer = args[:manufacturer] if args.key?(:manufacturer)
           @name = args[:name] if args.key?(:name)
+          @per_version_info = args[:per_version_info] if args.key?(:per_version_info)
           @screen_density = args[:screen_density] if args.key?(:screen_density)
           @screen_x = args[:screen_x] if args.key?(:screen_x)
           @screen_y = args[:screen_y] if args.key?(:screen_y)
@@ -572,11 +577,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `releaseDate`
         # @return [Google::Apis::TestingV1::Date]
         attr_accessor :release_date
@@ -674,6 +679,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :max_sdk_version
       
+        # Meta-data tags defined in the manifest.
+        # Corresponds to the JSON property `metadata`
+        # @return [Array<Google::Apis::TestingV1::Metadata>]
+        attr_accessor :metadata
+      
         # Minimum API level required for the application to run.
         # Corresponds to the JSON property `minSdkVersion`
         # @return [Fixnum]
@@ -689,10 +699,25 @@ module Google
         # @return [Fixnum]
         attr_accessor :target_sdk_version
       
+        # Feature usage tags defined in the manifest.
+        # Corresponds to the JSON property `usesFeature`
+        # @return [Array<Google::Apis::TestingV1::UsesFeature>]
+        attr_accessor :uses_feature
+      
         # Permissions declared to be used by the application
         # Corresponds to the JSON property `usesPermission`
         # @return [Array<String>]
         attr_accessor :uses_permission
+      
+        # Version number used internally by the app.
+        # Corresponds to the JSON property `versionCode`
+        # @return [Fixnum]
+        attr_accessor :version_code
+      
+        # Version number shown to users.
+        # Corresponds to the JSON property `versionName`
+        # @return [String]
+        attr_accessor :version_name
       
         def initialize(**args)
            update!(**args)
@@ -703,10 +728,14 @@ module Google
           @application_label = args[:application_label] if args.key?(:application_label)
           @intent_filters = args[:intent_filters] if args.key?(:intent_filters)
           @max_sdk_version = args[:max_sdk_version] if args.key?(:max_sdk_version)
+          @metadata = args[:metadata] if args.key?(:metadata)
           @min_sdk_version = args[:min_sdk_version] if args.key?(:min_sdk_version)
           @package_name = args[:package_name] if args.key?(:package_name)
           @target_sdk_version = args[:target_sdk_version] if args.key?(:target_sdk_version)
+          @uses_feature = args[:uses_feature] if args.key?(:uses_feature)
           @uses_permission = args[:uses_permission] if args.key?(:uses_permission)
+          @version_code = args[:version_code] if args.key?(:version_code)
+          @version_name = args[:version_name] if args.key?(:version_name)
         end
       end
       
@@ -806,11 +835,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -876,11 +905,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `addedDate`
         # @return [Google::Apis::TestingV1::Date]
         attr_accessor :added_date
@@ -1307,6 +1336,11 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Version-specific information of an iOS model.
+        # Corresponds to the JSON property `perVersionInfo`
+        # @return [Array<Google::Apis::TestingV1::PerIosVersionInfo>]
+        attr_accessor :per_version_info
+      
         # Screen density in DPI.
         # Corresponds to the JSON property `screenDensity`
         # @return [Fixnum]
@@ -1342,6 +1376,7 @@ module Google
           @form_factor = args[:form_factor] if args.key?(:form_factor)
           @id = args[:id] if args.key?(:id)
           @name = args[:name] if args.key?(:name)
+          @per_version_info = args[:per_version_info] if args.key?(:per_version_info)
           @screen_density = args[:screen_density] if args.key?(:screen_density)
           @screen_x = args[:screen_x] if args.key?(:screen_x)
           @screen_y = args[:screen_y] if args.key?(:screen_y)
@@ -1606,9 +1641,11 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Required. Group of packages, classes, and/or test methods to be run for each
-        # shard. When any physical devices are selected, the number of
-        # test_targets_for_shard must be >= 1 and <= 50. When no physical devices are
-        # selected, the number must be >= 1 and <= 500.
+        # manually-created shard. You must specify at least one shard if this field is
+        # present. When you select one or more physical devices, the number of repeated
+        # test_targets_for_shard must be <= 50. When you select one or more ARM virtual
+        # devices, it must be <= 100. When you select only x86 virtual devices, it must
+        # be <= 500.
         # Corresponds to the JSON property `testTargetsForShard`
         # @return [Array<Google::Apis::TestingV1::TestTargetsForShard>]
         attr_accessor :test_targets_for_shard
@@ -1620,6 +1657,32 @@ module Google
         # Update properties of this object
         def update!(**args)
           @test_targets_for_shard = args[:test_targets_for_shard] if args.key?(:test_targets_for_shard)
+        end
+      end
+      
+      # A tag within a manifest. https://developer.android.com/guide/topics/manifest/
+      # meta-data-element.html
+      class Metadata
+        include Google::Apis::Core::Hashable
+      
+        # The android:name value
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # The android:value value
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+          @value = args[:value] if args.key?(:value)
         end
       end
       
@@ -1728,6 +1791,56 @@ module Google
           @id = args[:id] if args.key?(:id)
           @name = args[:name] if args.key?(:name)
           @tags = args[:tags] if args.key?(:tags)
+        end
+      end
+      
+      # A version-specific information of an Android model.
+      class PerAndroidVersionInfo
+        include Google::Apis::Core::Hashable
+      
+        # The number of online devices for an Android version.
+        # Corresponds to the JSON property `deviceCapacity`
+        # @return [String]
+        attr_accessor :device_capacity
+      
+        # An Android version.
+        # Corresponds to the JSON property `versionId`
+        # @return [String]
+        attr_accessor :version_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_capacity = args[:device_capacity] if args.key?(:device_capacity)
+          @version_id = args[:version_id] if args.key?(:version_id)
+        end
+      end
+      
+      # A version-specific information of an iOS model.
+      class PerIosVersionInfo
+        include Google::Apis::Core::Hashable
+      
+        # The number of online devices for an iOS version.
+        # Corresponds to the JSON property `deviceCapacity`
+        # @return [String]
+        attr_accessor :device_capacity
+      
+        # An iOS version.
+        # Corresponds to the JSON property `versionId`
+        # @return [String]
+        attr_accessor :version_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @device_capacity = args[:device_capacity] if args.key?(:device_capacity)
+          @version_id = args[:version_id] if args.key?(:version_id)
         end
       end
       
@@ -1944,9 +2057,11 @@ module Google
         attr_accessor :manual_sharding
       
         # Uniformly shards test cases given a total number of shards. For
-        # Instrumentation test, it will be translated to "-e numShard" "-e shardIndex"
-        # AndroidJUnitRunner arguments. With uniform sharding enabled, specifying these
-        # sharding arguments via environment_variables is invalid.
+        # instrumentation tests, it will be translated to "-e numShard" and "-e
+        # shardIndex" AndroidJUnitRunner arguments. With uniform sharding enabled,
+        # specifying either of these sharding arguments via `environment_variables` is
+        # invalid. Based on the sharding mechanism AndroidJUnitRunner uses, there is no
+        # guarantee that test cases will be distributed uniformly across all shards.
         # Corresponds to the JSON property `uniformSharding`
         # @return [Google::Apis::TestingV1::UniformSharding]
         attr_accessor :uniform_sharding
@@ -2437,7 +2552,7 @@ module Google
         # Group of packages, classes, and/or test methods to be run for each shard. The
         # targets need to be specified in AndroidJUnitRunner argument format. For
         # example, "package com.my.packages" "class com.my.package.MyClass". The number
-        # of shard_test_targets must be greater than 0.
+        # of test_targets must be greater than 0.
         # Corresponds to the JSON property `testTargets`
         # @return [Array<String>]
         attr_accessor :test_targets
@@ -2591,15 +2706,19 @@ module Google
       end
       
       # Uniformly shards test cases given a total number of shards. For
-      # Instrumentation test, it will be translated to "-e numShard" "-e shardIndex"
-      # AndroidJUnitRunner arguments. With uniform sharding enabled, specifying these
-      # sharding arguments via environment_variables is invalid.
+      # instrumentation tests, it will be translated to "-e numShard" and "-e
+      # shardIndex" AndroidJUnitRunner arguments. With uniform sharding enabled,
+      # specifying either of these sharding arguments via `environment_variables` is
+      # invalid. Based on the sharding mechanism AndroidJUnitRunner uses, there is no
+      # guarantee that test cases will be distributed uniformly across all shards.
       class UniformSharding
         include Google::Apis::Core::Hashable
       
-        # Required. Total number of shards. When any physical devices are selected, the
-        # number must be >= 1 and <= 50. When no physical devices are selected, the
-        # number must be >= 1 and <= 500.
+        # Required. The total number of shards to create. This must always be a positive
+        # number that is no greater than the total number of test cases. When you select
+        # one or more physical devices, the number of shards must be <= 50. When you
+        # select one or more ARM virtual devices, it must be <= 100. When you select
+        # only x86 virtual devices, it must be <= 500.
         # Corresponds to the JSON property `numShards`
         # @return [Fixnum]
         attr_accessor :num_shards
@@ -2611,6 +2730,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @num_shards = args[:num_shards] if args.key?(:num_shards)
+        end
+      end
+      
+      # A tag within a manifest. https://developer.android.com/guide/topics/manifest/
+      # uses-feature-element.html
+      class UsesFeature
+        include Google::Apis::Core::Hashable
+      
+        # The android:required value
+        # Corresponds to the JSON property `isRequired`
+        # @return [Boolean]
+        attr_accessor :is_required
+        alias_method :is_required?, :is_required
+      
+        # The android:name value
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @is_required = args[:is_required] if args.key?(:is_required)
+          @name = args[:name] if args.key?(:name)
         end
       end
       

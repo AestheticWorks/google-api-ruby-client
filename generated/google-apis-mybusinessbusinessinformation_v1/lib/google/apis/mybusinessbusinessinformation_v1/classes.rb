@@ -451,11 +451,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -492,8 +492,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -874,11 +873,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `storefrontAddress`
         # @return [Google::Apis::MybusinessbusinessinformationV1::PostalAddress]
         attr_accessor :storefront_address
@@ -943,6 +942,12 @@ module Google
         attr_accessor :can_delete
         alias_method :can_delete?, :can_delete
       
+        # Output only. Indicates if the listing is eligible for business calls.
+        # Corresponds to the JSON property `canHaveBusinessCalls`
+        # @return [Boolean]
+        attr_accessor :can_have_business_calls
+        alias_method :can_have_business_calls?, :can_have_business_calls
+      
         # Output only. Indicates if the listing is eligible for food menu.
         # Corresponds to the JSON property `canHaveFoodMenus`
         # @return [Boolean]
@@ -994,6 +999,14 @@ module Google
         attr_accessor :has_pending_edits
         alias_method :has_pending_edits?, :has_pending_edits
       
+        # Output only. Indicates if the listing has Voice of Merchant. If this boolean
+        # is false, you should call the locations.getVoiceOfMerchantState API to get
+        # details as to why they do not have Voice of Merchant.
+        # Corresponds to the JSON property `hasVoiceOfMerchant`
+        # @return [Boolean]
+        attr_accessor :has_voice_of_merchant
+        alias_method :has_voice_of_merchant?, :has_voice_of_merchant
+      
         # Output only. A link to the location on Maps.
         # Corresponds to the JSON property `mapsUri`
         # @return [String]
@@ -1019,6 +1032,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @can_delete = args[:can_delete] if args.key?(:can_delete)
+          @can_have_business_calls = args[:can_have_business_calls] if args.key?(:can_have_business_calls)
           @can_have_food_menus = args[:can_have_food_menus] if args.key?(:can_have_food_menus)
           @can_modify_service_list = args[:can_modify_service_list] if args.key?(:can_modify_service_list)
           @can_operate_health_data = args[:can_operate_health_data] if args.key?(:can_operate_health_data)
@@ -1027,6 +1041,7 @@ module Google
           @duplicate_location = args[:duplicate_location] if args.key?(:duplicate_location)
           @has_google_updated = args[:has_google_updated] if args.key?(:has_google_updated)
           @has_pending_edits = args[:has_pending_edits] if args.key?(:has_pending_edits)
+          @has_voice_of_merchant = args[:has_voice_of_merchant] if args.key?(:has_voice_of_merchant)
           @maps_uri = args[:maps_uri] if args.key?(:maps_uri)
           @new_review_uri = args[:new_review_uri] if args.key?(:new_review_uri)
           @place_id = args[:place_id] if args.key?(:place_id)
@@ -1140,11 +1155,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `openingDate`
         # @return [Google::Apis::MybusinessbusinessinformationV1::Date]
         attr_accessor :opening_date
@@ -1249,11 +1264,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -1328,8 +1343,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]
@@ -1703,11 +1718,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `endDate`
         # @return [Google::Apis::MybusinessbusinessinformationV1::Date]
         attr_accessor :end_date
@@ -1722,11 +1737,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `startDate`
         # @return [Google::Apis::MybusinessbusinessinformationV1::Date]
         attr_accessor :start_date

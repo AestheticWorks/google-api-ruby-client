@@ -29,8 +29,7 @@ module Google
         # A generic empty message that you can re-use to avoid defining duplicated empty
         # messages in your APIs. A typical example is to use it as the request or the
         # response type of an API method. For instance: service Foo ` rpc Bar(google.
-        # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-        # `Empty` is empty JSON object ````.
+        # protobuf.Empty) returns (google.protobuf.Empty); `
         # Corresponds to the JSON property `anyValue`
         # @return [Google::Apis::FirebaserulesV1::Empty]
         attr_accessor :any_value
@@ -54,8 +53,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -105,7 +103,7 @@ module Google
       class File
         include Google::Apis::Core::Hashable
       
-        # Textual Content.
+        # Required. Textual Content.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -116,7 +114,7 @@ module Google
         # @return [String]
         attr_accessor :fingerprint
       
-        # File name.
+        # Required. File name.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -363,13 +361,13 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
-        # Format: `projects/`project_id`/releases/`release_id``
+        # Required. Format: `projects/`project_id`/releases/`release_id``
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # Name of the `Ruleset` referred to by this `Release`. The `Ruleset` must exist
-        # the `Release` to be created.
+        # Required. Name of the `Ruleset` referred to by this `Release`. The `Ruleset`
+        # must exist for the `Release` to be created.
         # Corresponds to the JSON property `rulesetName`
         # @return [String]
         attr_accessor :ruleset_name
@@ -399,8 +397,7 @@ module Google
         # A generic empty message that you can re-use to avoid defining duplicated empty
         # messages in your APIs. A typical example is to use it as the request or the
         # response type of an API method. For instance: service Foo ` rpc Bar(google.
-        # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-        # `Empty` is empty JSON object ````.
+        # protobuf.Empty) returns (google.protobuf.Empty); `
         # Corresponds to the JSON property `undefined`
         # @return [Google::Apis::FirebaserulesV1::Empty]
         attr_accessor :undefined
@@ -465,7 +462,7 @@ module Google
       class Source
         include Google::Apis::Core::Hashable
       
-        # `File` set constituting the `Source` bundle.
+        # Required. `File` set constituting the `Source` bundle.
         # Corresponds to the JSON property `files`
         # @return [Array<Google::Apis::FirebaserulesV1::File>]
         attr_accessor :files

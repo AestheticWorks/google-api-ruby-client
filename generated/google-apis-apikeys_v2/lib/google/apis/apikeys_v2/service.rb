@@ -113,42 +113,6 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Clones the existing key's restriction and display name to a new API key. The
-        # service account must have the `apikeys.keys.get` and `apikeys.keys.create`
-        # permissions in the project. NOTE: Key is a global resource; hence the only
-        # supported value for location is `global`.
-        # @param [String] name
-        #   Required. The resource name of the API key to be cloned in the same project.
-        # @param [Google::Apis::ApikeysV2::V2CloneKeyRequest] v2_clone_key_request_object
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::ApikeysV2::Operation] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::ApikeysV2::Operation]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def clone_project_location_key(name, v2_clone_key_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:post, 'v2/{+name}:clone', options)
-          command.request_representation = Google::Apis::ApikeysV2::V2CloneKeyRequest::Representation
-          command.request_object = v2_clone_key_request_object
-          command.response_representation = Google::Apis::ApikeysV2::Operation::Representation
-          command.response_class = Google::Apis::ApikeysV2::Operation
-          command.params['name'] = name unless name.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
         # Creates a new API key. NOTE: Key is a global resource; hence the only
         # supported value for location is `global`.
         # @param [String] parent
@@ -295,14 +259,13 @@ module Google
         # supported value for location is `global`.
         # @param [String] parent
         #   Required. Lists all API keys associated with this project.
-        # @param [String] filter
-        #   Optional. Only list keys that conform to the specified filter. The allowed
-        #   filter strings are `state:ACTIVE` and `state:DELETED`. By default, ListKeys
-        #   returns only active keys.
         # @param [Fixnum] page_size
         #   Optional. Specifies the maximum number of results to be returned at a time.
         # @param [String] page_token
         #   Optional. Requests a specific page of results.
+        # @param [Boolean] show_deleted
+        #   Optional. Indicate that keys deleted in the past 30 days should also be
+        #   returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -320,14 +283,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_keys(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_keys(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/keys', options)
           command.response_representation = Google::Apis::ApikeysV2::V2ListKeysResponse::Representation
           command.response_class = Google::Apis::ApikeysV2::V2ListKeysResponse
           command.params['parent'] = parent unless parent.nil?
-          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -344,11 +307,11 @@ module Google
         # @param [Google::Apis::ApikeysV2::V2Key] v2_key_object
         # @param [String] update_mask
         #   The field mask specifies which fields to be updated as part of this request.
-        #   All other fields are ignored. Mutable fields are: `display_name` and `
-        #   restrictions`. If an update mask is not provided, the service treats it as an
-        #   implied mask equivalent to all allowed fields that are set on the wire. If the
-        #   field mask has a special value "*", the service treats it equivalent to
-        #   replace all allowed mutable fields.
+        #   All other fields are ignored. Mutable fields are: `display_name`, `
+        #   restrictions`, and `annotations`. If an update mask is not provided, the
+        #   service treats it as an implied mask equivalent to all allowed fields that are
+        #   set on the wire. If the field mask has a special value "*", the service treats
+        #   it equivalent to replace all allowed mutable fields.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user

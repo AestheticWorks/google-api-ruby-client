@@ -22,7 +22,55 @@ module Google
   module Apis
     module SpeechV1
       
+      class AbnfGrammar
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ClassItem
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CreateCustomClassRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CreatePhraseSetRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class CustomClass
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Empty
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListCustomClassesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListOperationsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListPhraseSetResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -47,6 +95,18 @@ module Google
       end
       
       class Operation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Phrase
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PhraseSet
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -88,6 +148,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SpeechAdaptation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SpeechAdaptationInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SpeechContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -124,11 +196,77 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AbnfGrammar
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :abnf_strings, as: 'abnfStrings'
+        end
+      end
+      
+      class ClassItem
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :value, as: 'value'
+        end
+      end
+      
+      class CreateCustomClassRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :custom_class, as: 'customClass', class: Google::Apis::SpeechV1::CustomClass, decorator: Google::Apis::SpeechV1::CustomClass::Representation
+      
+          property :custom_class_id, as: 'customClassId'
+        end
+      end
+      
+      class CreatePhraseSetRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :phrase_set, as: 'phraseSet', class: Google::Apis::SpeechV1::PhraseSet, decorator: Google::Apis::SpeechV1::PhraseSet::Representation
+      
+          property :phrase_set_id, as: 'phraseSetId'
+        end
+      end
+      
+      class CustomClass
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :custom_class_id, as: 'customClassId'
+          collection :items, as: 'items', class: Google::Apis::SpeechV1::ClassItem, decorator: Google::Apis::SpeechV1::ClassItem::Representation
+      
+          property :name, as: 'name'
+        end
+      end
+      
+      class Empty
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class ListCustomClassesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :custom_classes, as: 'customClasses', class: Google::Apis::SpeechV1::CustomClass, decorator: Google::Apis::SpeechV1::CustomClass::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
       class ListOperationsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :next_page_token, as: 'nextPageToken'
           collection :operations, as: 'operations', class: Google::Apis::SpeechV1::Operation, decorator: Google::Apis::SpeechV1::Operation::Representation
+      
+        end
+      end
+      
+      class ListPhraseSetResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :phrase_sets, as: 'phraseSets', class: Google::Apis::SpeechV1::PhraseSet, decorator: Google::Apis::SpeechV1::PhraseSet::Representation
       
         end
       end
@@ -158,7 +296,14 @@ module Google
       class LongRunningRecognizeResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :output_config, as: 'outputConfig', class: Google::Apis::SpeechV1::TranscriptOutputConfig, decorator: Google::Apis::SpeechV1::TranscriptOutputConfig::Representation
+      
+          property :output_error, as: 'outputError', class: Google::Apis::SpeechV1::Status, decorator: Google::Apis::SpeechV1::Status::Representation
+      
+          property :request_id, :numeric_string => true, as: 'requestId'
           collection :results, as: 'results', class: Google::Apis::SpeechV1::SpeechRecognitionResult, decorator: Google::Apis::SpeechV1::SpeechRecognitionResult::Representation
+      
+          property :speech_adaptation_info, as: 'speechAdaptationInfo', class: Google::Apis::SpeechV1::SpeechAdaptationInfo, decorator: Google::Apis::SpeechV1::SpeechAdaptationInfo::Representation
       
           property :total_billed_time, as: 'totalBilledTime'
         end
@@ -176,6 +321,24 @@ module Google
         end
       end
       
+      class Phrase
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :boost, as: 'boost'
+          property :value, as: 'value'
+        end
+      end
+      
+      class PhraseSet
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :boost, as: 'boost'
+          property :name, as: 'name'
+          collection :phrases, as: 'phrases', class: Google::Apis::SpeechV1::Phrase, decorator: Google::Apis::SpeechV1::Phrase::Representation
+      
+        end
+      end
+      
       class RecognitionAudio
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -187,11 +350,17 @@ module Google
       class RecognitionConfig
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :adaptation, as: 'adaptation', class: Google::Apis::SpeechV1::SpeechAdaptation, decorator: Google::Apis::SpeechV1::SpeechAdaptation::Representation
+      
+          collection :alternative_language_codes, as: 'alternativeLanguageCodes'
           property :audio_channel_count, as: 'audioChannelCount'
           property :diarization_config, as: 'diarizationConfig', class: Google::Apis::SpeechV1::SpeakerDiarizationConfig, decorator: Google::Apis::SpeechV1::SpeakerDiarizationConfig::Representation
       
           property :enable_automatic_punctuation, as: 'enableAutomaticPunctuation'
           property :enable_separate_recognition_per_channel, as: 'enableSeparateRecognitionPerChannel'
+          property :enable_spoken_emojis, as: 'enableSpokenEmojis'
+          property :enable_spoken_punctuation, as: 'enableSpokenPunctuation'
+          property :enable_word_confidence, as: 'enableWordConfidence'
           property :enable_word_time_offsets, as: 'enableWordTimeOffsets'
           property :encoding, as: 'encoding'
           property :language_code, as: 'languageCode'
@@ -234,7 +403,10 @@ module Google
       class RecognizeResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, :numeric_string => true, as: 'requestId'
           collection :results, as: 'results', class: Google::Apis::SpeechV1::SpeechRecognitionResult, decorator: Google::Apis::SpeechV1::SpeechRecognitionResult::Representation
+      
+          property :speech_adaptation_info, as: 'speechAdaptationInfo', class: Google::Apis::SpeechV1::SpeechAdaptationInfo, decorator: Google::Apis::SpeechV1::SpeechAdaptationInfo::Representation
       
           property :total_billed_time, as: 'totalBilledTime'
         end
@@ -250,9 +422,31 @@ module Google
         end
       end
       
+      class SpeechAdaptation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :abnf_grammar, as: 'abnfGrammar', class: Google::Apis::SpeechV1::AbnfGrammar, decorator: Google::Apis::SpeechV1::AbnfGrammar::Representation
+      
+          collection :custom_classes, as: 'customClasses', class: Google::Apis::SpeechV1::CustomClass, decorator: Google::Apis::SpeechV1::CustomClass::Representation
+      
+          collection :phrase_set_references, as: 'phraseSetReferences'
+          collection :phrase_sets, as: 'phraseSets', class: Google::Apis::SpeechV1::PhraseSet, decorator: Google::Apis::SpeechV1::PhraseSet::Representation
+      
+        end
+      end
+      
+      class SpeechAdaptationInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :adaptation_timeout, as: 'adaptationTimeout'
+          property :timeout_message, as: 'timeoutMessage'
+        end
+      end
+      
       class SpeechContext
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :boost, as: 'boost'
           collection :phrases, as: 'phrases'
         end
       end
@@ -273,6 +467,8 @@ module Google
           collection :alternatives, as: 'alternatives', class: Google::Apis::SpeechV1::SpeechRecognitionAlternative, decorator: Google::Apis::SpeechV1::SpeechRecognitionAlternative::Representation
       
           property :channel_tag, as: 'channelTag'
+          property :language_code, as: 'languageCode'
+          property :result_end_time, as: 'resultEndTime'
         end
       end
       
@@ -295,6 +491,7 @@ module Google
       class WordInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :confidence, as: 'confidence'
           property :end_time, as: 'endTime'
           property :speaker_tag, as: 'speakerTag'
           property :start_time, as: 'startTime'

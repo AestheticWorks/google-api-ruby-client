@@ -55,7 +55,8 @@ module Google
         # @param [String] instance
         #   Cloud SQL instance ID. This does not include the project ID.
         # @param [Fixnum] id
-        #   The ID of the backup run to delete. To find a backup run ID, use the list
+        #   The ID of the backup run to delete. To find a backup run ID, use the [list](
+        #   https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1beta4/backupRuns/list)
         #   method.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -712,9 +713,10 @@ module Google
         
         # Initiates a manual failover of a high availability (HA) primary instance to a
         # standby instance, which becomes the primary instance. Users are then rerouted
-        # to the new primary. For more information, see the Overview of high
-        # availability page in the Cloud SQL documentation. If using Legacy HA (MySQL
-        # only), this causes the instance to failover to its failover replica instance.
+        # to the new primary. For more information, see the [Overview of high
+        # availability](https://cloud.google.com/sql/docs/mysql/high-availability) page
+        # in the Cloud SQL documentation. If using Legacy HA (MySQL only), this causes
+        # the instance to failover to its failover replica instance.
         # @param [String] project
         #   ID of the project that contains the read replica.
         # @param [String] instance
@@ -866,7 +868,9 @@ module Google
         #   CLOUD_SQL_INSTANCE'. By default, each expression is an AND expression. However,
         #   you can include AND and OR expressions explicitly.
         # @param [Fixnum] max_results
-        #   The maximum number of results to return per response.
+        #   The maximum number of instances to return. The service may return fewer than
+        #   this value. If unspecified, at most 500 instances are returned. The maximum
+        #   value is 1000; values above 1000 are coerced to 1000.
         # @param [String] page_token
         #   A previously-returned page token representing part of the larger set of
         #   results to view.
@@ -937,7 +941,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates settings of a Cloud SQL instance. This method supports patch semantics.
+        # Partially updates settings of a Cloud SQL instance by merging the request with
+        # the current configuration. This method supports patch semantics.
         # @param [String] project
         #   Project ID of the project that contains the instance.
         # @param [String] instance
@@ -1653,8 +1658,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists all available machine types (tiers) for Cloud SQL, for example, db-
-        # custom-1-3840. For related information, see Pricing.
+        # Lists all available machine types (tiers) for Cloud SQL, for example, `db-
+        # custom-1-3840`. For related information, see [Pricing](/sql/pricing).
         # @param [String] project
         #   Project ID of the project for which to list tiers.
         # @param [String] fields
@@ -1718,6 +1723,45 @@ module Google
           command.params['instance'] = instance unless instance.nil?
           command.query['host'] = host unless host.nil?
           command.query['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves a resource containing information about a user.
+        # @param [String] project
+        #   Project ID of the project that contains the instance.
+        # @param [String] instance
+        #   Database instance ID. This does not include the project ID.
+        # @param [String] name
+        #   User of the instance.
+        # @param [String] host
+        #   Host of a user of the instance.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::SqladminV1beta4::User] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::SqladminV1beta4::User]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_user(project, instance, name, host: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'sql/v1beta4/projects/{project}/instances/{instance}/users/{name}', options)
+          command.response_representation = Google::Apis::SqladminV1beta4::User::Representation
+          command.response_class = Google::Apis::SqladminV1beta4::User
+          command.params['project'] = project unless project.nil?
+          command.params['instance'] = instance unless instance.nil?
+          command.params['name'] = name unless name.nil?
+          command.query['host'] = host unless host.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

@@ -22,8 +22,8 @@ module Google
   module Apis
     module AppengineV1
       
-      # Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/
-      # endpoints/) configuration for API handlers.
+      # Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration for
+      # API handlers.
       class ApiConfigHandler
         include Google::Apis::Core::Hashable
       
@@ -809,8 +809,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -823,7 +822,7 @@ module Google
         end
       end
       
-      # Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The
+      # Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The
       # Endpoints API Service provides tooling for serving Open API and gRPC endpoints
       # via an NGINX proxy. Only valid for App Engine Flexible environment deployments.
       # The fields here refer to the name and configuration ID of a "service" resource
@@ -1040,6 +1039,31 @@ module Google
         end
       end
       
+      # Runtime settings for the App Engine flexible environment.
+      class FlexibleRuntimeSettings
+        include Google::Apis::Core::Hashable
+      
+        # The operating system of the application runtime.
+        # Corresponds to the JSON property `operatingSystem`
+        # @return [String]
+        attr_accessor :operating_system
+      
+        # The runtime version of an App Engine flexible application.
+        # Corresponds to the JSON property `runtimeVersion`
+        # @return [String]
+        attr_accessor :runtime_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @operating_system = args[:operating_system] if args.key?(:operating_system)
+          @runtime_version = args[:runtime_version] if args.key?(:runtime_version)
+        end
+      end
+      
       # Metadata for the given google.cloud.location.Location.
       class GoogleAppengineV1betaLocationMetadata
         include Google::Apis::Core::Hashable
@@ -1072,150 +1096,6 @@ module Google
           @flexible_environment_available = args[:flexible_environment_available] if args.key?(:flexible_environment_available)
           @search_api_available = args[:search_api_available] if args.key?(:search_api_available)
           @standard_environment_available = args[:standard_environment_available] if args.key?(:standard_environment_available)
-        end
-      end
-      
-      # Represents the metadata of the long-running operation.
-      class GoogleAppengineV2OperationMetadata
-        include Google::Apis::Core::Hashable
-      
-        # Output only. API version used to start the operation.
-        # Corresponds to the JSON property `apiVersion`
-        # @return [String]
-        attr_accessor :api_version
-      
-        # Output only. The time the operation was created.
-        # Corresponds to the JSON property `createTime`
-        # @return [String]
-        attr_accessor :create_time
-      
-        # Output only. The time the operation finished running.
-        # Corresponds to the JSON property `endTime`
-        # @return [String]
-        attr_accessor :end_time
-      
-        # Output only. Ephemeral message that may change every time the operation is
-        # polled.
-        # Corresponds to the JSON property `ephemeralMessage`
-        # @return [String]
-        attr_accessor :ephemeral_message
-      
-        # Output only. Identifies whether the user has requested cancellation of the
-        # operation. Operations that have been cancelled successfully have Operation.
-        # error value with a google.rpc.Status.code of 1, corresponding to Code.
-        # CANCELLED.
-        # Corresponds to the JSON property `requestedCancellation`
-        # @return [Boolean]
-        attr_accessor :requested_cancellation
-        alias_method :requested_cancellation?, :requested_cancellation
-      
-        # Output only. Human-readable status of the operation, if any.
-        # Corresponds to the JSON property `statusMessage`
-        # @return [String]
-        attr_accessor :status_message
-      
-        # Output only. Server-defined resource path for the target of the operation.
-        # Corresponds to the JSON property `target`
-        # @return [String]
-        attr_accessor :target
-      
-        # Output only. Name of the verb executed by the operation.
-        # Corresponds to the JSON property `verb`
-        # @return [String]
-        attr_accessor :verb
-      
-        # Output only. Durable messages that persist on every operation poll.
-        # Corresponds to the JSON property `warning`
-        # @return [Array<String>]
-        attr_accessor :warning
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @api_version = args[:api_version] if args.key?(:api_version)
-          @create_time = args[:create_time] if args.key?(:create_time)
-          @end_time = args[:end_time] if args.key?(:end_time)
-          @ephemeral_message = args[:ephemeral_message] if args.key?(:ephemeral_message)
-          @requested_cancellation = args[:requested_cancellation] if args.key?(:requested_cancellation)
-          @status_message = args[:status_message] if args.key?(:status_message)
-          @target = args[:target] if args.key?(:target)
-          @verb = args[:verb] if args.key?(:verb)
-          @warning = args[:warning] if args.key?(:warning)
-        end
-      end
-      
-      # Represents the metadata of the long-running operation.
-      class GoogleAppengineV2mainOperationMetadata
-        include Google::Apis::Core::Hashable
-      
-        # Output only. API version used to start the operation.
-        # Corresponds to the JSON property `apiVersion`
-        # @return [String]
-        attr_accessor :api_version
-      
-        # Output only. The time the operation was created.
-        # Corresponds to the JSON property `createTime`
-        # @return [String]
-        attr_accessor :create_time
-      
-        # Output only. The time the operation finished running.
-        # Corresponds to the JSON property `endTime`
-        # @return [String]
-        attr_accessor :end_time
-      
-        # Output only. Ephemeral message that may change every time the operation is
-        # polled.
-        # Corresponds to the JSON property `ephemeralMessage`
-        # @return [String]
-        attr_accessor :ephemeral_message
-      
-        # Output only. Identifies whether the user has requested cancellation of the
-        # operation. Operations that have been cancelled successfully have Operation.
-        # error value with a google.rpc.Status.code of 1, corresponding to Code.
-        # CANCELLED.
-        # Corresponds to the JSON property `requestedCancellation`
-        # @return [Boolean]
-        attr_accessor :requested_cancellation
-        alias_method :requested_cancellation?, :requested_cancellation
-      
-        # Output only. Human-readable status of the operation, if any.
-        # Corresponds to the JSON property `statusMessage`
-        # @return [String]
-        attr_accessor :status_message
-      
-        # Output only. Server-defined resource path for the target of the operation.
-        # Corresponds to the JSON property `target`
-        # @return [String]
-        attr_accessor :target
-      
-        # Output only. Name of the verb executed by the operation.
-        # Corresponds to the JSON property `verb`
-        # @return [String]
-        attr_accessor :verb
-      
-        # Output only. Durable messages that persist on every operation poll.
-        # Corresponds to the JSON property `warning`
-        # @return [Array<String>]
-        attr_accessor :warning
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @api_version = args[:api_version] if args.key?(:api_version)
-          @create_time = args[:create_time] if args.key?(:create_time)
-          @end_time = args[:end_time] if args.key?(:end_time)
-          @ephemeral_message = args[:ephemeral_message] if args.key?(:ephemeral_message)
-          @requested_cancellation = args[:requested_cancellation] if args.key?(:requested_cancellation)
-          @status_message = args[:status_message] if args.key?(:status_message)
-          @target = args[:target] if args.key?(:target)
-          @verb = args[:verb] if args.key?(:verb)
-          @warning = args[:warning] if args.key?(:warning)
         end
       end
       
@@ -1899,6 +1779,12 @@ module Google
         # @return [Array<String>]
         attr_accessor :forwarded_ports
       
+        # The IP mode for instances. Only applicable in the App Engine flexible
+        # environment.
+        # Corresponds to the JSON property `instanceIpMode`
+        # @return [String]
+        attr_accessor :instance_ip_mode
+      
         # Tag to apply to the instance during creation. Only applicable in the App
         # Engine flexible environment.
         # Corresponds to the JSON property `instanceTag`
@@ -1942,6 +1828,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @forwarded_ports = args[:forwarded_ports] if args.key?(:forwarded_ports)
+          @instance_ip_mode = args[:instance_ip_mode] if args.key?(:instance_ip_mode)
           @instance_tag = args[:instance_tag] if args.key?(:instance_tag)
           @name = args[:name] if args.key?(:name)
           @session_affinity = args[:session_affinity] if args.key?(:session_affinity)
@@ -2264,6 +2151,157 @@ module Google
         end
       end
       
+      # The request sent to CLHs during project events.
+      class ProjectEvent
+        include Google::Apis::Core::Hashable
+      
+        # The unique ID for this project event. CLHs can use this value to dedup
+        # repeated calls. required
+        # Corresponds to the JSON property `eventId`
+        # @return [String]
+        attr_accessor :event_id
+      
+        # 
+        # Corresponds to the JSON property `phase`
+        # @return [String]
+        attr_accessor :phase
+      
+        # ProjectsMetadata is the metadata CCFE stores about the all the relevant
+        # projects (tenant, consumer, producer).
+        # Corresponds to the JSON property `projectMetadata`
+        # @return [Google::Apis::AppengineV1::ProjectsMetadata]
+        attr_accessor :project_metadata
+      
+        # ProjectState contains the externally-visible project state that is used to
+        # communicate the state and reasoning for that state to the CLH. This data is
+        # not persisted by CCFE, but is instead derived from CCFE's internal
+        # representation of the project state.
+        # Corresponds to the JSON property `state`
+        # @return [Google::Apis::AppengineV1::ProjectState]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @event_id = args[:event_id] if args.key?(:event_id)
+          @phase = args[:phase] if args.key?(:phase)
+          @project_metadata = args[:project_metadata] if args.key?(:project_metadata)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # ProjectState contains the externally-visible project state that is used to
+      # communicate the state and reasoning for that state to the CLH. This data is
+      # not persisted by CCFE, but is instead derived from CCFE's internal
+      # representation of the project state.
+      class ProjectState
+        include Google::Apis::Core::Hashable
+      
+        # Projects transition between and within states based on reasons sent from
+        # various systems. CCFE will provide the CLH with reasons for the current state
+        # per system.The current systems that CCFE supports are: Service Management (
+        # Inception) Data Governance (Wipeout) Abuse (Ares) Billing (Internal Cloud
+        # Billing API)
+        # Corresponds to the JSON property `currentReasons`
+        # @return [Google::Apis::AppengineV1::Reasons]
+        attr_accessor :current_reasons
+      
+        # Projects transition between and within states based on reasons sent from
+        # various systems. CCFE will provide the CLH with reasons for the current state
+        # per system.The current systems that CCFE supports are: Service Management (
+        # Inception) Data Governance (Wipeout) Abuse (Ares) Billing (Internal Cloud
+        # Billing API)
+        # Corresponds to the JSON property `previousReasons`
+        # @return [Google::Apis::AppengineV1::Reasons]
+        attr_accessor :previous_reasons
+      
+        # The current state of the project. This state is the culmination of all of the
+        # opinions from external systems that CCFE knows about of the project.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @current_reasons = args[:current_reasons] if args.key?(:current_reasons)
+          @previous_reasons = args[:previous_reasons] if args.key?(:previous_reasons)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # ProjectsMetadata is the metadata CCFE stores about the all the relevant
+      # projects (tenant, consumer, producer).
+      class ProjectsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The consumer project id.
+        # Corresponds to the JSON property `consumerProjectId`
+        # @return [String]
+        attr_accessor :consumer_project_id
+      
+        # The consumer project number.
+        # Corresponds to the JSON property `consumerProjectNumber`
+        # @return [Fixnum]
+        attr_accessor :consumer_project_number
+      
+        # The CCFE state of the consumer project. It is the same state that is
+        # communicated to the CLH during project events. Notice that this field is not
+        # set in the DB, it is only set in this proto when communicated to CLH in the
+        # side channel.
+        # Corresponds to the JSON property `consumerProjectState`
+        # @return [String]
+        attr_accessor :consumer_project_state
+      
+        # The service account authorized to operate on the consumer project. Note: CCFE
+        # only propagates P4SA with default tag to CLH.
+        # Corresponds to the JSON property `p4ServiceAccount`
+        # @return [String]
+        attr_accessor :p4_service_account
+      
+        # The producer project id.
+        # Corresponds to the JSON property `producerProjectId`
+        # @return [String]
+        attr_accessor :producer_project_id
+      
+        # The producer project number.
+        # Corresponds to the JSON property `producerProjectNumber`
+        # @return [Fixnum]
+        attr_accessor :producer_project_number
+      
+        # The tenant project id.
+        # Corresponds to the JSON property `tenantProjectId`
+        # @return [String]
+        attr_accessor :tenant_project_id
+      
+        # The tenant project number.
+        # Corresponds to the JSON property `tenantProjectNumber`
+        # @return [Fixnum]
+        attr_accessor :tenant_project_number
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consumer_project_id = args[:consumer_project_id] if args.key?(:consumer_project_id)
+          @consumer_project_number = args[:consumer_project_number] if args.key?(:consumer_project_number)
+          @consumer_project_state = args[:consumer_project_state] if args.key?(:consumer_project_state)
+          @p4_service_account = args[:p4_service_account] if args.key?(:p4_service_account)
+          @producer_project_id = args[:producer_project_id] if args.key?(:producer_project_id)
+          @producer_project_number = args[:producer_project_number] if args.key?(:producer_project_number)
+          @tenant_project_id = args[:tenant_project_id] if args.key?(:tenant_project_id)
+          @tenant_project_number = args[:tenant_project_number] if args.key?(:tenant_project_number)
+        end
+      end
+      
       # Readiness checking configuration for VM instances. Unhealthy instances are
       # removed from traffic rotation.
       class ReadinessCheck
@@ -2320,6 +2358,47 @@ module Google
           @path = args[:path] if args.key?(:path)
           @success_threshold = args[:success_threshold] if args.key?(:success_threshold)
           @timeout = args[:timeout] if args.key?(:timeout)
+        end
+      end
+      
+      # Projects transition between and within states based on reasons sent from
+      # various systems. CCFE will provide the CLH with reasons for the current state
+      # per system.The current systems that CCFE supports are: Service Management (
+      # Inception) Data Governance (Wipeout) Abuse (Ares) Billing (Internal Cloud
+      # Billing API)
+      class Reasons
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `abuse`
+        # @return [String]
+        attr_accessor :abuse
+      
+        # 
+        # Corresponds to the JSON property `billing`
+        # @return [String]
+        attr_accessor :billing
+      
+        # 
+        # Corresponds to the JSON property `dataGovernance`
+        # @return [String]
+        attr_accessor :data_governance
+      
+        # 
+        # Corresponds to the JSON property `serviceManagement`
+        # @return [String]
+        attr_accessor :service_management
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @abuse = args[:abuse] if args.key?(:abuse)
+          @billing = args[:billing] if args.key?(:billing)
+          @data_governance = args[:data_governance] if args.key?(:data_governance)
+          @service_management = args[:service_management] if args.key?(:service_management)
         end
       end
       
@@ -2479,7 +2558,7 @@ module Google
         # usage and billing reports, enabling fine-grain analysis of costs. An example
         # of using labels is to tag resources belonging to different environments (e.g.,
         # "env=prod", "env=qa"). Label keys and values can be no longer than 63
-        # characters, can only contain lowercase letters, numeric characters,
+        # characters and can only contain lowercase letters, numeric characters,
         # underscores, dashes, and international characters. Label keys must start with
         # a lowercase letter or an international character. Each service can have at
         # most 32 labels.
@@ -2853,11 +2932,18 @@ module Google
       class Version
         include Google::Apis::Core::Hashable
       
-        # Google Cloud Endpoints (https://cloud.google.com/appengine/docs/python/
-        # endpoints/) configuration for API handlers.
+        # Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration for
+        # API handlers.
         # Corresponds to the JSON property `apiConfig`
         # @return [Google::Apis::AppengineV1::ApiConfigHandler]
         attr_accessor :api_config
+      
+        # Allows App Engine second generation runtimes to access the legacy bundled
+        # services.
+        # Corresponds to the JSON property `appEngineApis`
+        # @return [Boolean]
+        attr_accessor :app_engine_apis
+        alias_method :app_engine_apis?, :app_engine_apis
       
         # Automatic scaling is based on request rate, response latencies, and other
         # application metrics.
@@ -2915,7 +3001,7 @@ module Google
         # @return [Fixnum]
         attr_accessor :disk_usage_bytes
       
-        # Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The
+        # Google Cloud Endpoints (https://cloud.google.com/endpoints) configuration. The
         # Endpoints API Service provides tooling for serving Open API and gRPC endpoints
         # via an NGINX proxy. Only valid for App Engine Flexible environment deployments.
         # The fields here refer to the name and configuration ID of a "service" resource
@@ -2946,6 +3032,11 @@ module Google
         # Corresponds to the JSON property `errorHandlers`
         # @return [Array<Google::Apis::AppengineV1::ErrorHandler>]
         attr_accessor :error_handlers
+      
+        # Runtime settings for the App Engine flexible environment.
+        # Corresponds to the JSON property `flexibleRuntimeSettings`
+        # @return [Google::Apis::AppengineV1::FlexibleRuntimeSettings]
+        attr_accessor :flexible_runtime_settings
       
         # An ordered list of URL-matching patterns that should be applied to incoming
         # requests. The first matching URL handles the request and other request
@@ -3101,6 +3192,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @api_config = args[:api_config] if args.key?(:api_config)
+          @app_engine_apis = args[:app_engine_apis] if args.key?(:app_engine_apis)
           @automatic_scaling = args[:automatic_scaling] if args.key?(:automatic_scaling)
           @basic_scaling = args[:basic_scaling] if args.key?(:basic_scaling)
           @beta_settings = args[:beta_settings] if args.key?(:beta_settings)
@@ -3115,6 +3207,7 @@ module Google
           @env = args[:env] if args.key?(:env)
           @env_variables = args[:env_variables] if args.key?(:env_variables)
           @error_handlers = args[:error_handlers] if args.key?(:error_handlers)
+          @flexible_runtime_settings = args[:flexible_runtime_settings] if args.key?(:flexible_runtime_settings)
           @handlers = args[:handlers] if args.key?(:handlers)
           @health_check = args[:health_check] if args.key?(:health_check)
           @id = args[:id] if args.key?(:id)

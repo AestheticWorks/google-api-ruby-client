@@ -359,8 +359,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -595,6 +594,52 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # OS policy assignment operation metadata provided by OS policy assignment API
+      # methods that return long running operations.
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The OS policy assignment API method.
+        # Corresponds to the JSON property `apiMethod`
+        # @return [String]
+        attr_accessor :api_method
+      
+        # Reference to the `OSPolicyAssignment` API resource. Format: `projects/`
+        # project_number`/locations/`location`/osPolicyAssignments/`
+        # os_policy_assignment_id@revision_id``
+        # Corresponds to the JSON property `osPolicyAssignment`
+        # @return [String]
+        attr_accessor :os_policy_assignment
+      
+        # Rollout start time
+        # Corresponds to the JSON property `rolloutStartTime`
+        # @return [String]
+        attr_accessor :rollout_start_time
+      
+        # State of the rollout
+        # Corresponds to the JSON property `rolloutState`
+        # @return [String]
+        attr_accessor :rollout_state
+      
+        # Rollout update time
+        # Corresponds to the JSON property `rolloutUpdateTime`
+        # @return [String]
+        attr_accessor :rollout_update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_method = args[:api_method] if args.key?(:api_method)
+          @os_policy_assignment = args[:os_policy_assignment] if args.key?(:os_policy_assignment)
+          @rollout_start_time = args[:rollout_start_time] if args.key?(:rollout_start_time)
+          @rollout_state = args[:rollout_state] if args.key?(:rollout_state)
+          @rollout_update_time = args[:rollout_update_time] if args.key?(:rollout_update_time)
         end
       end
       
@@ -1013,6 +1058,12 @@ module Google
         # @return [Google::Apis::OsconfigV1beta::GooSettings]
         attr_accessor :goo
       
+        # Allows the patch job to run on Managed instance groups (MIGs).
+        # Corresponds to the JSON property `migInstancesAllowed`
+        # @return [Boolean]
+        attr_accessor :mig_instances_allowed
+        alias_method :mig_instances_allowed?, :mig_instances_allowed
+      
         # A step that runs an executable for a PatchJob.
         # Corresponds to the JSON property `postStep`
         # @return [Google::Apis::OsconfigV1beta::ExecStep]
@@ -1054,6 +1105,7 @@ module Google
         def update!(**args)
           @apt = args[:apt] if args.key?(:apt)
           @goo = args[:goo] if args.key?(:goo)
+          @mig_instances_allowed = args[:mig_instances_allowed] if args.key?(:mig_instances_allowed)
           @post_step = args[:post_step] if args.key?(:post_step)
           @pre_step = args[:pre_step] if args.key?(:pre_step)
           @reboot_config = args[:reboot_config] if args.key?(:reboot_config)
@@ -1132,6 +1184,11 @@ module Google
         # @return [Google::Apis::OsconfigV1beta::PatchRollout]
         attr_accessor :rollout
       
+        # Output only. Current state of the patch deployment.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
         # Output only. Time the patch deployment was last updated. Timestamp is in [
         # RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
         # Corresponds to the JSON property `updateTime`
@@ -1154,6 +1211,7 @@ module Google
           @patch_config = args[:patch_config] if args.key?(:patch_config)
           @recurring_schedule = args[:recurring_schedule] if args.key?(:recurring_schedule)
           @rollout = args[:rollout] if args.key?(:rollout)
+          @state = args[:state] if args.key?(:state)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -1534,6 +1592,19 @@ module Google
         end
       end
       
+      # A request message for pausing a patch deployment.
+      class PausePatchDeploymentRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Sets the time for recurring patch deployments.
       class RecurringSchedule
         include Google::Apis::Core::Hashable
@@ -1604,6 +1675,19 @@ module Google
           @time_of_day = args[:time_of_day] if args.key?(:time_of_day)
           @time_zone = args[:time_zone] if args.key?(:time_zone)
           @weekly = args[:weekly] if args.key?(:weekly)
+        end
+      end
+      
+      # A request message for resuming a patch deployment.
+      class ResumePatchDeploymentRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -2143,6 +2227,17 @@ module Google
         # @return [String]
         attr_accessor :day_of_week
       
+        # Optional. Represents the number of days before or after the given week day of
+        # month that the patch deployment is scheduled for. For example if `week_ordinal`
+        # and `day_of_week` values point to the second day of the month and this `
+        # day_offset` value is set to `3`, the patch deployment takes place three days
+        # after the second Tuesday of the month. If this value is negative, for example -
+        # 5, the patches are deployed five days before before the second Tuesday of the
+        # month. Allowed values are in range [-30, 30].
+        # Corresponds to the JSON property `dayOffset`
+        # @return [Fixnum]
+        attr_accessor :day_offset
+      
         # Required. Week number in a month. 1-4 indicates the 1st to 4th week of the
         # month. -1 indicates the last week of the month.
         # Corresponds to the JSON property `weekOrdinal`
@@ -2156,6 +2251,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @day_of_week = args[:day_of_week] if args.key?(:day_of_week)
+          @day_offset = args[:day_offset] if args.key?(:day_offset)
           @week_ordinal = args[:week_ordinal] if args.key?(:week_ordinal)
         end
       end

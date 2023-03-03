@@ -82,6 +82,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CardWithId
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ChatAppLogEntry
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Color
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -352,6 +364,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MatchedUrl
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Media
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -401,6 +419,18 @@ module Google
       end
       
       class Space
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SpaceDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Status
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -564,6 +594,25 @@ module Google
         end
       end
       
+      class CardWithId
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :card, as: 'card', class: Google::Apis::ChatV1::GoogleAppsCardV1Card, decorator: Google::Apis::ChatV1::GoogleAppsCardV1Card::Representation
+      
+          property :card_id, as: 'cardId'
+        end
+      end
+      
+      class ChatAppLogEntry
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :deployment, as: 'deployment'
+          property :deployment_function, as: 'deploymentFunction'
+          property :error, as: 'error', class: Google::Apis::ChatV1::Status, decorator: Google::Apis::ChatV1::Status::Representation
+      
+        end
+      end
+      
       class Color
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -672,6 +721,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :function, as: 'function'
+          property :interaction, as: 'interaction'
           property :load_indicator, as: 'loadIndicator'
           collection :parameters, as: 'parameters', class: Google::Apis::ChatV1::GoogleAppsCardV1ActionParameter, decorator: Google::Apis::ChatV1::GoogleAppsCardV1ActionParameter::Representation
       
@@ -831,7 +881,6 @@ module Google
       
           property :layout, as: 'layout'
           property :subtitle, as: 'subtitle'
-          property :text_alignment, as: 'textAlignment'
           property :title, as: 'title'
         end
       end
@@ -996,7 +1045,6 @@ module Google
       
           property :grid, as: 'grid', class: Google::Apis::ChatV1::GoogleAppsCardV1Grid, decorator: Google::Apis::ChatV1::GoogleAppsCardV1Grid::Representation
       
-          property :horizontal_alignment, as: 'horizontalAlignment'
           property :image, as: 'image', class: Google::Apis::ChatV1::GoogleAppsCardV1Image, decorator: Google::Apis::ChatV1::GoogleAppsCardV1Image::Representation
       
           property :selection_input, as: 'selectionInput', class: Google::Apis::ChatV1::GoogleAppsCardV1SelectionInput, decorator: Google::Apis::ChatV1::GoogleAppsCardV1SelectionInput::Representation
@@ -1077,6 +1125,13 @@ module Google
         end
       end
       
+      class MatchedUrl
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :url, as: 'url'
+        end
+      end
+      
       class Media
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1091,6 +1146,7 @@ module Google
           property :member, as: 'member', class: Google::Apis::ChatV1::User, decorator: Google::Apis::ChatV1::User::Representation
       
           property :name, as: 'name'
+          property :role, as: 'role'
           property :state, as: 'state'
         end
       end
@@ -1107,11 +1163,15 @@ module Google
       
           collection :cards, as: 'cards', class: Google::Apis::ChatV1::Card, decorator: Google::Apis::ChatV1::Card::Representation
       
+          collection :cards_v2, as: 'cardsV2', class: Google::Apis::ChatV1::CardWithId, decorator: Google::Apis::ChatV1::CardWithId::Representation
+      
+          property :client_assigned_message_id, as: 'clientAssignedMessageId'
           property :create_time, as: 'createTime'
           property :fallback_text, as: 'fallbackText'
           property :last_update_time, as: 'lastUpdateTime'
+          property :matched_url, as: 'matchedUrl', class: Google::Apis::ChatV1::MatchedUrl, decorator: Google::Apis::ChatV1::MatchedUrl::Representation
+      
           property :name, as: 'name'
-          property :preview_text, as: 'previewText'
           property :sender, as: 'sender', class: Google::Apis::ChatV1::User, decorator: Google::Apis::ChatV1::User::Representation
       
           property :slash_command, as: 'slashCommand', class: Google::Apis::ChatV1::SlashCommand, decorator: Google::Apis::ChatV1::SlashCommand::Representation
@@ -1121,6 +1181,7 @@ module Google
           property :text, as: 'text'
           property :thread, as: 'thread', class: Google::Apis::ChatV1::Thread, decorator: Google::Apis::ChatV1::Thread::Representation
       
+          property :thread_reply, as: 'threadReply'
         end
       end
       
@@ -1172,11 +1233,32 @@ module Google
       class Space
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :admin_installed, as: 'adminInstalled'
           property :display_name, as: 'displayName'
           property :name, as: 'name'
           property :single_user_bot_dm, as: 'singleUserBotDm'
+          property :space_details, as: 'spaceDetails', class: Google::Apis::ChatV1::SpaceDetails, decorator: Google::Apis::ChatV1::SpaceDetails::Representation
+      
+          property :space_threading_state, as: 'spaceThreadingState'
           property :threaded, as: 'threaded'
           property :type, as: 'type'
+        end
+      end
+      
+      class SpaceDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :guidelines, as: 'guidelines'
+        end
+      end
+      
+      class Status
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          collection :details, as: 'details'
+          property :message, as: 'message'
         end
       end
       
@@ -1207,6 +1289,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
+          property :thread_key, as: 'threadKey'
         end
       end
       

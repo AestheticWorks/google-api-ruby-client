@@ -23,8 +23,9 @@ module Google
     module NotebooksV1
       
       # Definition of a hardware accelerator. Note that not all combinations of `type`
-      # and `core_count` are valid. Check [GPUs on Compute Engine](/compute/docs/gpus/#
-      # gpus-list) to find a valid combination. TPUs are not supported.
+      # and `core_count` are valid. Check [GPUs on Compute Engine](https://cloud.
+      # google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are
+      # not supported.
       class AcceleratorConfig
         include Google::Apis::Core::Hashable
       
@@ -49,7 +50,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -72,38 +73,43 @@ module Google
         # @return [Google::Apis::NotebooksV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -117,6 +123,20 @@ module Google
           @condition = args[:condition] if args.key?(:condition)
           @members = args[:members] if args.key?(:members)
           @role = args[:role] if args.key?(:role)
+        end
+      end
+      
+      # Definition of the boot image used by the Runtime. Used to facilitate runtime
+      # upgradeability.
+      class BootImage
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -165,8 +185,8 @@ module Google
       class DataprocParameters
         include Google::Apis::Core::Hashable
       
-        # URI for cluster used to run Dataproc execution. Format: 'projects/`PROJECT_ID`/
-        # regions/`REGION`/clusters/`CLUSTER_NAME`
+        # URI for cluster used to run Dataproc execution. Format: `projects/`PROJECT_ID`/
+        # regions/`REGION`/clusters/`CLUSTER_NAME``
         # Corresponds to the JSON property `cluster`
         # @return [String]
         attr_accessor :cluster
@@ -178,6 +198,99 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cluster = args[:cluster] if args.key?(:cluster)
+        end
+      end
+      
+      # Request for creating a notebook instance diagnostic file.
+      class DiagnoseInstanceRequest
+        include Google::Apis::Core::Hashable
+      
+        # Defines flags that are used to run the diagnostic tool
+        # Corresponds to the JSON property `diagnosticConfig`
+        # @return [Google::Apis::NotebooksV1::DiagnosticConfig]
+        attr_accessor :diagnostic_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @diagnostic_config = args[:diagnostic_config] if args.key?(:diagnostic_config)
+        end
+      end
+      
+      # Request for creating a notebook instance diagnostic file.
+      class DiagnoseRuntimeRequest
+        include Google::Apis::Core::Hashable
+      
+        # Defines flags that are used to run the diagnostic tool
+        # Corresponds to the JSON property `diagnosticConfig`
+        # @return [Google::Apis::NotebooksV1::DiagnosticConfig]
+        attr_accessor :diagnostic_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @diagnostic_config = args[:diagnostic_config] if args.key?(:diagnostic_config)
+        end
+      end
+      
+      # Defines flags that are used to run the diagnostic tool
+      class DiagnosticConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Enables flag to copy all `/home/jupyter` folder contents
+        # Corresponds to the JSON property `copyHomeFilesFlagEnabled`
+        # @return [Boolean]
+        attr_accessor :copy_home_files_flag_enabled
+        alias_method :copy_home_files_flag_enabled?, :copy_home_files_flag_enabled
+      
+        # Required. User Cloud Storage bucket location (REQUIRED). Must be formatted
+        # with path prefix (`gs://$GCS_BUCKET`). Permissions: User Managed Notebooks: -
+        # storage.buckets.writer: Must be given to the project's service account
+        # attached to VM. Google Managed Notebooks: - storage.buckets.writer: Must be
+        # given to the project's service account or user credentials attached to VM
+        # depending on authentication mode. Cloud Storage bucket Log file will be
+        # written to `gs://$GCS_BUCKET/$RELATIVE_PATH/$VM_DATE_$TIME.tar.gz`
+        # Corresponds to the JSON property `gcsBucket`
+        # @return [String]
+        attr_accessor :gcs_bucket
+      
+        # Optional. Enables flag to capture packets from the instance for 30 seconds
+        # Corresponds to the JSON property `packetCaptureFlagEnabled`
+        # @return [Boolean]
+        attr_accessor :packet_capture_flag_enabled
+        alias_method :packet_capture_flag_enabled?, :packet_capture_flag_enabled
+      
+        # Optional. Defines the relative storage path in the Cloud Storage bucket where
+        # the diagnostic logs will be written: Default path will be the root directory
+        # of the Cloud Storage bucket (`gs://$GCS_BUCKET/$DATE_$TIME.tar.gz`) Example of
+        # full path where Log file will be written: `gs://$GCS_BUCKET/$RELATIVE_PATH/`
+        # Corresponds to the JSON property `relativePath`
+        # @return [String]
+        attr_accessor :relative_path
+      
+        # Optional. Enables flag to repair service for instance
+        # Corresponds to the JSON property `repairFlagEnabled`
+        # @return [Boolean]
+        attr_accessor :repair_flag_enabled
+        alias_method :repair_flag_enabled?, :repair_flag_enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @copy_home_files_flag_enabled = args[:copy_home_files_flag_enabled] if args.key?(:copy_home_files_flag_enabled)
+          @gcs_bucket = args[:gcs_bucket] if args.key?(:gcs_bucket)
+          @packet_capture_flag_enabled = args[:packet_capture_flag_enabled] if args.key?(:packet_capture_flag_enabled)
+          @relative_path = args[:relative_path] if args.key?(:relative_path)
+          @repair_flag_enabled = args[:repair_flag_enabled] if args.key?(:repair_flag_enabled)
         end
       end
       
@@ -199,8 +312,8 @@ module Google
         attr_accessor :boot
         alias_method :boot?, :boot
       
-        # Indicates a unique device name of your choice that is reflected into the /dev/
-        # disk/by-id/google-* tree of a Linux operating system running within the
+        # Indicates a unique device name of your choice that is reflected into the `/dev/
+        # disk/by-id/google-*` tree of a Linux operating system running within the
         # instance. This name can be used to reference the device for mounting, resizing,
         # and so on, from within the instance. If not specified, the server chooses a
         # default device name to apply to this disk, in the form persistent-disk-x,
@@ -233,8 +346,8 @@ module Google
         # SCSI or NVME. The default is SCSI. Persistent disks must always use SCSI and
         # the request will fail if you attempt to attach a persistent disk in any other
         # format than SCSI. Local SSDs can use either NVME or SCSI. For performance
-        # characteristics of SCSI over NVMe, see Local SSD performance. Valid values: *
-        # NVME * SCSI
+        # characteristics of SCSI over NVMe, see Local SSD performance. Valid values: * `
+        # NVME` * `SCSI`
         # Corresponds to the JSON property `interface`
         # @return [String]
         attr_accessor :interface
@@ -250,9 +363,9 @@ module Google
         # @return [Array<String>]
         attr_accessor :licenses
       
-        # The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not
-        # specified, the default is to attach the disk in READ_WRITE mode. Valid values:
-        # * READ_ONLY * READ_WRITE
+        # The mode in which to attach this disk, either `READ_WRITE` or `READ_ONLY`. If
+        # not specified, the default is to attach the disk in `READ_WRITE` mode. Valid
+        # values: * `READ_ONLY` * `READ_WRITE`
         # Corresponds to the JSON property `mode`
         # @return [String]
         attr_accessor :mode
@@ -262,8 +375,8 @@ module Google
         # @return [String]
         attr_accessor :source
       
-        # Indicates the type of the disk, either SCRATCH or PERSISTENT. Valid values: *
-        # PERSISTENT * SCRATCH
+        # Indicates the type of the disk, either `SCRATCH` or `PERSISTENT`. Valid values:
+        # * `PERSISTENT` * `SCRATCH`
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -292,8 +405,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -392,6 +504,11 @@ module Google
       class Event
         include Google::Apis::Core::Hashable
       
+        # Optional. Event details. This field is used to pass event information.
+        # Corresponds to the JSON property `details`
+        # @return [Hash<String,String>]
+        attr_accessor :details
+      
         # Event report time.
         # Corresponds to the JSON property `reportTime`
         # @return [String]
@@ -408,6 +525,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @details = args[:details] if args.key?(:details)
           @report_time = args[:report_time] if args.key?(:report_time)
           @type = args[:type] if args.key?(:type)
         end
@@ -507,8 +625,8 @@ module Google
         attr_accessor :dataproc_parameters
       
         # Path to the notebook file to execute. Must be in a Google Cloud Storage bucket.
-        # Format: gs://`bucket_name`/`folder`/`notebook_file_name` Ex: gs://
-        # notebook_user/scheduled_notebooks/sentiment_notebook.ipynb
+        # Format: `gs://`bucket_name`/`folder`/`notebook_file_name`` Ex: `gs://
+        # notebook_user/scheduled_notebooks/sentiment_notebook.ipynb`
         # Corresponds to the JSON property `inputNotebookFile`
         # @return [String]
         attr_accessor :input_notebook_file
@@ -517,6 +635,12 @@ module Google
         # Corresponds to the JSON property `jobType`
         # @return [String]
         attr_accessor :job_type
+      
+        # Name of the kernel spec to use. This must be specified if the kernel spec name
+        # on the execution target does not match the name in the input notebook file.
+        # Corresponds to the JSON property `kernelSpec`
+        # @return [String]
+        attr_accessor :kernel_spec
       
         # Labels for execution. If execution is scheduled, a field included will be 'nbs-
         # scheduled'. Otherwise, it is an immediate execution, and an included field
@@ -547,8 +671,8 @@ module Google
         attr_accessor :master_type
       
         # Path to the notebook folder to write to. Must be in a Google Cloud Storage
-        # bucket path. Format: gs://`bucket_name`/`folder` Ex: gs://notebook_user/
-        # scheduled_notebooks
+        # bucket path. Format: `gs://`bucket_name`/`folder`` Ex: `gs://notebook_user/
+        # scheduled_notebooks`
         # Corresponds to the JSON property `outputNotebookFolder`
         # @return [String]
         attr_accessor :output_notebook_folder
@@ -561,7 +685,7 @@ module Google
         # Parameters to be overridden in the notebook during execution. Ref https://
         # papermill.readthedocs.io/en/latest/usage-parameterize.html on how to
         # specifying parameters in the input notebook and pass them here in an YAML file.
-        # Ex: gs://notebook_user/scheduled_notebooks/sentiment_notebook_params.yaml
+        # Ex: `gs://notebook_user/scheduled_notebooks/sentiment_notebook_params.yaml`
         # Corresponds to the JSON property `paramsYamlFile`
         # @return [String]
         attr_accessor :params_yaml_file
@@ -579,6 +703,13 @@ module Google
         # @return [String]
         attr_accessor :service_account
       
+        # The name of a Vertex AI [Tensorboard] resource to which this execution will
+        # upload Tensorboard logs. Format: `projects/`project`/locations/`location`/
+        # tensorboards/`tensorboard``
+        # Corresponds to the JSON property `tensorboard`
+        # @return [String]
+        attr_accessor :tensorboard
+      
         # Parameters used in Vertex AI JobType executions.
         # Corresponds to the JSON property `vertexAiParameters`
         # @return [Google::Apis::NotebooksV1::VertexAiParameters]
@@ -595,6 +726,7 @@ module Google
           @dataproc_parameters = args[:dataproc_parameters] if args.key?(:dataproc_parameters)
           @input_notebook_file = args[:input_notebook_file] if args.key?(:input_notebook_file)
           @job_type = args[:job_type] if args.key?(:job_type)
+          @kernel_spec = args[:kernel_spec] if args.key?(:kernel_spec)
           @labels = args[:labels] if args.key?(:labels)
           @master_type = args[:master_type] if args.key?(:master_type)
           @output_notebook_folder = args[:output_notebook_folder] if args.key?(:output_notebook_folder)
@@ -602,6 +734,7 @@ module Google
           @params_yaml_file = args[:params_yaml_file] if args.key?(:params_yaml_file)
           @scale_tier = args[:scale_tier] if args.key?(:scale_tier)
           @service_account = args[:service_account] if args.key?(:service_account)
+          @tensorboard = args[:tensorboard] if args.key?(:tensorboard)
           @vertex_ai_parameters = args[:vertex_ai_parameters] if args.key?(:vertex_ai_parameters)
         end
       end
@@ -693,9 +826,9 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The ID of a supported feature. Read Enabling guest operating system features
-        # to see a list of available options. Valid values: * FEATURE_TYPE_UNSPECIFIED *
-        # MULTI_IP_SUBNET * SECURE_BOOT * UEFI_COMPATIBLE * VIRTIO_SCSI_MULTIQUEUE *
-        # WINDOWS
+        # to see a list of available options. Valid values: * `FEATURE_TYPE_UNSPECIFIED`
+        # * `MULTI_IP_SUBNET` * `SECURE_BOOT` * `UEFI_COMPATIBLE` * `
+        # VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -715,8 +848,9 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Definition of a hardware accelerator. Note that not all combinations of `type`
-        # and `core_count` are valid. Check [GPUs on Compute Engine](/compute/docs/gpus/#
-        # gpus-list) to find a valid combination. TPUs are not supported.
+        # and `core_count` are valid. Check [GPUs on Compute Engine](https://cloud.
+        # google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are
+        # not supported.
         # Corresponds to the JSON property `acceleratorConfig`
         # @return [Google::Apis::NotebooksV1::AcceleratorConfig]
         attr_accessor :accelerator_config
@@ -734,6 +868,13 @@ module Google
         # @return [String]
         attr_accessor :boot_disk_type
       
+        # Optional. Flag to enable ip forwarding or not, default false/off. https://
+        # cloud.google.com/vpc/docs/using-routes#canipforward
+        # Corresponds to the JSON property `canIpForward`
+        # @return [Boolean]
+        attr_accessor :can_ip_forward
+        alias_method :can_ip_forward?, :can_ip_forward
+      
         # Definition of a container image for starting a notebook instance with the
         # environment installed in a container.
         # Corresponds to the JSON property `containerImage`
@@ -744,6 +885,11 @@ module Google
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
+      
+        # Output only. Email address of entity that sent original CreateInstance request.
+        # Corresponds to the JSON property `creator`
+        # @return [String]
+        attr_accessor :creator
       
         # Specify a custom Cloud Storage path where the GPU driver is stored. If not
         # specified, we'll automatically choose from official GPU drivers.
@@ -804,8 +950,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :labels
       
-        # Required. The [Compute Engine machine type](/compute/docs/machine-types) of
-        # this instance.
+        # Required. The [Compute Engine machine type](https://cloud.google.com/compute/
+        # docs/machine-types) of this instance.
         # Corresponds to the JSON property `machineType`
         # @return [String]
         attr_accessor :machine_type
@@ -853,8 +999,8 @@ module Google
         alias_method :no_remove_data_disk?, :no_remove_data_disk
       
         # Path to a Bash script that automatically runs after a notebook instance fully
-        # boots up. The path must be a URL or Cloud Storage path (gs://path-to-file/file-
-        # name).
+        # boots up. The path must be a URL or Cloud Storage path (`gs://path-to-file/
+        # file-name`).
         # Corresponds to the JSON property `postStartupScript`
         # @return [String]
         attr_accessor :post_startup_script
@@ -889,7 +1035,8 @@ module Google
         attr_accessor :service_account_scopes
       
         # A set of Shielded Instance options. Check [Images using supported Shielded VM
-        # features] Not all combinations are valid.
+        # features](https://cloud.google.com/compute/docs/instances/modifying-shielded-
+        # vm). Not all combinations are valid.
         # Corresponds to the JSON property `shieldedInstanceConfig`
         # @return [Google::Apis::NotebooksV1::ShieldedInstanceConfig]
         attr_accessor :shielded_instance_config
@@ -936,8 +1083,10 @@ module Google
           @accelerator_config = args[:accelerator_config] if args.key?(:accelerator_config)
           @boot_disk_size_gb = args[:boot_disk_size_gb] if args.key?(:boot_disk_size_gb)
           @boot_disk_type = args[:boot_disk_type] if args.key?(:boot_disk_type)
+          @can_ip_forward = args[:can_ip_forward] if args.key?(:can_ip_forward)
           @container_image = args[:container_image] if args.key?(:container_image)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @creator = args[:creator] if args.key?(:creator)
           @custom_gpu_driver_path = args[:custom_gpu_driver_path] if args.key?(:custom_gpu_driver_path)
           @data_disk_size_gb = args[:data_disk_size_gb] if args.key?(:data_disk_size_gb)
           @data_disk_type = args[:data_disk_type] if args.key?(:data_disk_type)
@@ -1085,9 +1234,9 @@ module Google
         # @return [String]
         attr_accessor :next_page_token
       
-        # Executions IDs that could not be reached. For example, ['projects/`project_id`/
+        # Executions IDs that could not be reached. For example: ['projects/`project_id`/
         # location/`location`/executions/imagenet_test1', 'projects/`project_id`/
-        # location/`location`/executions/classifier_train1'].
+        # location/`location`/executions/classifier_train1']
         # Corresponds to the JSON property `unreachable`
         # @return [Array<String>]
         attr_accessor :unreachable
@@ -1119,8 +1268,8 @@ module Google
         # @return [String]
         attr_accessor :next_page_token
       
-        # Locations that could not be reached. For example, ['us-west1-a', 'us-central1-
-        # b']. A ListInstancesResponse will only contain either instances or
+        # Locations that could not be reached. For example, `['us-west1-a', 'us-central1-
+        # b']`. A ListInstancesResponse will only contain either instances or
         # unreachables,
         # Corresponds to the JSON property `unreachable`
         # @return [Array<String>]
@@ -1203,8 +1352,8 @@ module Google
         # @return [Array<Google::Apis::NotebooksV1::Runtime>]
         attr_accessor :runtimes
       
-        # Locations that could not be reached. For example, ['us-west1', 'us-central1'].
-        # A ListRuntimesResponse will only contain either runtimes or unreachables,
+        # Locations that could not be reached. For example, `['us-west1', 'us-central1']`
+        # . A ListRuntimesResponse will only contain either runtimes or unreachables,
         # Corresponds to the JSON property `unreachable`
         # @return [Array<String>]
         attr_accessor :unreachable
@@ -1236,9 +1385,9 @@ module Google
         # @return [Array<Google::Apis::NotebooksV1::Schedule>]
         attr_accessor :schedules
       
-        # Schedules that could not be reached. For example, ['projects/`project_id`/
+        # Schedules that could not be reached. For example: ['projects/`project_id`/
         # location/`location`/schedules/monthly_digest', 'projects/`project_id`/location/
-        # `location`/schedules/weekly_sentiment'].
+        # `location`/schedules/weekly_sentiment']
         # Corresponds to the JSON property `unreachable`
         # @return [Array<String>]
         attr_accessor :unreachable
@@ -1274,7 +1423,7 @@ module Google
         alias_method :boot?, :boot
       
         # Optional. Output only. Specifies a unique device name of your choice that is
-        # reflected into the /dev/disk/by-id/google-* tree of a Linux operating system
+        # reflected into the `/dev/disk/by-id/google-*` tree of a Linux operating system
         # running within the instance. This name can be used to reference the device for
         # mounting, resizing, and so on, from within the instance. If not specified, the
         # server chooses a default device name to apply to this disk, in the form
@@ -1310,8 +1459,8 @@ module Google
         # SCSI or NVME. The default is SCSI. Persistent disks must always use SCSI and
         # the request will fail if you attempt to attach a persistent disk in any other
         # format than SCSI. Local SSDs can use either NVME or SCSI. For performance
-        # characteristics of SCSI over NVMe, see Local SSD performance. Valid values: *
-        # NVME * SCSI
+        # characteristics of SCSI over NVMe, see Local SSD performance. Valid values: * `
+        # NVME` * `SCSI`
         # Corresponds to the JSON property `interface`
         # @return [String]
         attr_accessor :interface
@@ -1327,9 +1476,9 @@ module Google
         # @return [Array<String>]
         attr_accessor :licenses
       
-        # The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not
-        # specified, the default is to attach the disk in READ_WRITE mode. Valid values:
-        # * READ_ONLY * READ_WRITE
+        # The mode in which to attach this disk, either `READ_WRITE` or `READ_ONLY`. If
+        # not specified, the default is to attach the disk in `READ_WRITE` mode. Valid
+        # values: * `READ_ONLY` * `READ_WRITE`
         # Corresponds to the JSON property `mode`
         # @return [String]
         attr_accessor :mode
@@ -1339,8 +1488,9 @@ module Google
         # @return [String]
         attr_accessor :source
       
-        # Specifies the type of the disk, either SCRATCH or PERSISTENT. If not specified,
-        # the default is PERSISTENT. Valid values: * PERSISTENT * SCRATCH
+        # Specifies the type of the disk, either `SCRATCH` or `PERSISTENT`. If not
+        # specified, the default is `PERSISTENT`. Valid values: * `PERSISTENT` * `
+        # SCRATCH`
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -1593,37 +1743,42 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::NotebooksV1::Binding>]
         attr_accessor :bindings
@@ -1675,6 +1830,51 @@ module Google
         end
       end
       
+      # Request for getting a new access token.
+      class RefreshRuntimeTokenInternalRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The VM hardware token for authenticating the VM. https://cloud.
+        # google.com/compute/docs/instances/verifying-instance-identity
+        # Corresponds to the JSON property `vmId`
+        # @return [String]
+        attr_accessor :vm_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @vm_id = args[:vm_id] if args.key?(:vm_id)
+        end
+      end
+      
+      # Response with a new access token.
+      class RefreshRuntimeTokenInternalResponse
+        include Google::Apis::Core::Hashable
+      
+        # The OAuth 2.0 access token.
+        # Corresponds to the JSON property `accessToken`
+        # @return [String]
+        attr_accessor :access_token
+      
+        # Output only. Token expiration time.
+        # Corresponds to the JSON property `expireTime`
+        # @return [String]
+        attr_accessor :expire_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_token = args[:access_token] if args.key?(:access_token)
+          @expire_time = args[:expire_time] if args.key?(:expire_time)
+        end
+      end
+      
       # Request for registering a notebook instance.
       class RegisterInstanceRequest
         include Google::Apis::Core::Hashable
@@ -1694,6 +1894,32 @@ module Google
         # Update properties of this object
         def update!(**args)
           @instance_id = args[:instance_id] if args.key?(:instance_id)
+        end
+      end
+      
+      # Request for reporting a Managed Notebook Event.
+      class ReportInstanceEventRequest
+        include Google::Apis::Core::Hashable
+      
+        # The definition of an Event for a managed / semi-managed notebook instance.
+        # Corresponds to the JSON property `event`
+        # @return [Google::Apis::NotebooksV1::Event]
+        attr_accessor :event
+      
+        # Required. The VM hardware token for authenticating the VM. https://cloud.
+        # google.com/compute/docs/instances/verifying-instance-identity
+        # Corresponds to the JSON property `vmId`
+        # @return [String]
+        attr_accessor :vm_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @event = args[:event] if args.key?(:event)
+          @vm_id = args[:vm_id] if args.key?(:vm_id)
         end
       end
       
@@ -1781,7 +2007,7 @@ module Google
         end
       end
       
-      # Request for reseting a notebook instance
+      # Request for resetting a notebook instance
       class ResetInstanceRequest
         include Google::Apis::Core::Hashable
       
@@ -1794,9 +2020,14 @@ module Google
         end
       end
       
-      # Request for reseting a Managed Notebook Runtime.
+      # Request for resetting a Managed Notebook Runtime.
       class ResetRuntimeRequest
         include Google::Apis::Core::Hashable
+      
+        # Idempotent request UUID.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
       
         def initialize(**args)
            update!(**args)
@@ -1804,6 +2035,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
       
@@ -1811,8 +2043,8 @@ module Google
       class RollbackInstanceRequest
         include Google::Apis::Core::Hashable
       
-        # Required. The snapshot for rollback. Example: "projects/test-project/global/
-        # snapshots/krwlzipynril".
+        # Required. The snapshot for rollback. Example: `projects/test-project/global/
+        # snapshots/krwlzipynril`.
         # Corresponds to the JSON property `targetSnapshot`
         # @return [String]
         attr_accessor :target_snapshot
@@ -1846,6 +2078,16 @@ module Google
         # @return [String]
         attr_accessor :health_state
       
+        # Optional. The labels to associate with this Managed Notebook or Runtime. Label
+        # **keys** must contain 1 to 63 characters, and must conform to [RFC 1035](https:
+        # //www.ietf.org/rfc/rfc1035.txt). Label **values** may be empty, but, if
+        # present, must contain 1 to 63 characters, and must conform to [RFC 1035](https:
+        # //www.ietf.org/rfc/rfc1035.txt). No more than 32 labels can be associated with
+        # a cluster.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
         # Contains runtime daemon metrics, such as OS and kernels and sessions stats.
         # Corresponds to the JSON property `metrics`
         # @return [Google::Apis::NotebooksV1::RuntimeMetrics]
@@ -1860,7 +2102,7 @@ module Google
         # Specifies the selection and configuration of software inside the runtime. The
         # properties to set on runtime. Properties keys are specified in `key:value`
         # format, for example: * `idle_shutdown: true` * `idle_shutdown_timeout: 180` * `
-        # report-system-health: true`
+        # enable_health_monitoring: true`
         # Corresponds to the JSON property `softwareConfig`
         # @return [Google::Apis::NotebooksV1::RuntimeSoftwareConfig]
         attr_accessor :software_config
@@ -1889,6 +2131,7 @@ module Google
           @access_config = args[:access_config] if args.key?(:access_config)
           @create_time = args[:create_time] if args.key?(:create_time)
           @health_state = args[:health_state] if args.key?(:health_state)
+          @labels = args[:labels] if args.key?(:labels)
           @metrics = args[:metrics] if args.key?(:metrics)
           @name = args[:name] if args.key?(:name)
           @software_config = args[:software_config] if args.key?(:software_config)
@@ -1970,9 +2213,9 @@ module Google
       
         # The ID of a supported feature. Read [Enabling guest operating system features](
         # https://cloud.google.com/compute/docs/images/create-delete-deprecate-private-
-        # images#guest-os-features) to see a list of available options. Valid values: *
-        # FEATURE_TYPE_UNSPECIFIED * MULTI_IP_SUBNET * SECURE_BOOT * UEFI_COMPATIBLE *
-        # VIRTIO_SCSI_MULTIQUEUE * WINDOWS
+        # images#guest-os-features) to see a list of available options. Valid values: * `
+        # FEATURE_TYPE_UNSPECIFIED` * `MULTI_IP_SUBNET` * `SECURE_BOOT` * `
+        # UEFI_COMPATIBLE` * `VIRTIO_SCSI_MULTIQUEUE` * `WINDOWS`
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -2052,7 +2295,7 @@ module Google
       # Specifies the selection and configuration of software inside the runtime. The
       # properties to set on runtime. Properties keys are specified in `key:value`
       # format, for example: * `idle_shutdown: true` * `idle_shutdown_timeout: 180` * `
-      # report-system-health: true`
+      # enable_health_monitoring: true`
       class RuntimeSoftwareConfig
         include Google::Apis::Core::Hashable
       
@@ -2061,6 +2304,13 @@ module Google
         # Corresponds to the JSON property `customGpuDriverPath`
         # @return [String]
         attr_accessor :custom_gpu_driver_path
+      
+        # Bool indicating whether JupyterLab terminal will be available or not. Default:
+        # False
+        # Corresponds to the JSON property `disableTerminal`
+        # @return [Boolean]
+        attr_accessor :disable_terminal
+        alias_method :disable_terminal?, :disable_terminal
       
         # Verifies core internal services are running. Default: True
         # Corresponds to the JSON property `enableHealthMonitoring`
@@ -2079,11 +2329,17 @@ module Google
         # @return [Fixnum]
         attr_accessor :idle_shutdown_timeout
       
-        # Install Nvidia Driver automatically.
+        # Install Nvidia Driver automatically. Default: True
         # Corresponds to the JSON property `installGpuDriver`
         # @return [Boolean]
         attr_accessor :install_gpu_driver
         alias_method :install_gpu_driver?, :install_gpu_driver
+      
+        # Optional. Use a list of container images to use as Kernels in the notebook
+        # instance.
+        # Corresponds to the JSON property `kernels`
+        # @return [Array<Google::Apis::NotebooksV1::ContainerImage>]
+        attr_accessor :kernels
       
         # Cron expression in UTC timezone, used to schedule instance auto upgrade.
         # Please follow the [cron format](https://en.wikipedia.org/wiki/Cron).
@@ -2092,11 +2348,29 @@ module Google
         attr_accessor :notebook_upgrade_schedule
       
         # Path to a Bash script that automatically runs after a notebook instance fully
-        # boots up. The path must be a URL or Cloud Storage path (gs://path-to-file/file-
-        # name).
+        # boots up. The path must be a URL or Cloud Storage path (`gs://path-to-file/
+        # file-name`).
         # Corresponds to the JSON property `postStartupScript`
         # @return [String]
         attr_accessor :post_startup_script
+      
+        # Behavior for the post startup script.
+        # Corresponds to the JSON property `postStartupScriptBehavior`
+        # @return [String]
+        attr_accessor :post_startup_script_behavior
+      
+        # Output only. Bool indicating whether an newer image is available in an image
+        # family.
+        # Corresponds to the JSON property `upgradeable`
+        # @return [Boolean]
+        attr_accessor :upgradeable
+        alias_method :upgradeable?, :upgradeable
+      
+        # Output only. version of boot image such as M100, from release label of the
+        # image.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
       
         def initialize(**args)
            update!(**args)
@@ -2105,12 +2379,17 @@ module Google
         # Update properties of this object
         def update!(**args)
           @custom_gpu_driver_path = args[:custom_gpu_driver_path] if args.key?(:custom_gpu_driver_path)
+          @disable_terminal = args[:disable_terminal] if args.key?(:disable_terminal)
           @enable_health_monitoring = args[:enable_health_monitoring] if args.key?(:enable_health_monitoring)
           @idle_shutdown = args[:idle_shutdown] if args.key?(:idle_shutdown)
           @idle_shutdown_timeout = args[:idle_shutdown_timeout] if args.key?(:idle_shutdown_timeout)
           @install_gpu_driver = args[:install_gpu_driver] if args.key?(:install_gpu_driver)
+          @kernels = args[:kernels] if args.key?(:kernels)
           @notebook_upgrade_schedule = args[:notebook_upgrade_schedule] if args.key?(:notebook_upgrade_schedule)
           @post_startup_script = args[:post_startup_script] if args.key?(:post_startup_script)
+          @post_startup_script_behavior = args[:post_startup_script_behavior] if args.key?(:post_startup_script_behavior)
+          @upgradeable = args[:upgradeable] if args.key?(:upgradeable)
+          @version = args[:version] if args.key?(:version)
         end
       end
       
@@ -2124,7 +2403,7 @@ module Google
         attr_accessor :create_time
       
         # Cron-tab formatted schedule by which the job will execute. Format: minute,
-        # hour, day of month, month, day of week, e.g. 0 0 * * WED = every Wednesday
+        # hour, day of month, month, day of week, e.g. `0 0 * * WED` = every Wednesday
         # More examples: https://crontab.guru/examples.html
         # Corresponds to the JSON property `cronSchedule`
         # @return [String]
@@ -2136,7 +2415,7 @@ module Google
         attr_accessor :description
       
         # Output only. Display name used for UI purposes. Name can only contain
-        # alphanumeric characters, hyphens '-', and underscores '_'.
+        # alphanumeric characters, hyphens `-`, and underscores `_`.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
@@ -2231,31 +2510,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::NotebooksV1::Policy]
         attr_accessor :policy
@@ -2339,7 +2618,8 @@ module Google
       end
       
       # A set of Shielded Instance options. Check [Images using supported Shielded VM
-      # features] Not all combinations are valid.
+      # features](https://cloud.google.com/compute/docs/instances/modifying-shielded-
+      # vm). Not all combinations are valid.
       class ShieldedInstanceConfig
         include Google::Apis::Core::Hashable
       
@@ -2397,12 +2677,18 @@ module Google
       class StartRuntimeRequest
         include Google::Apis::Core::Hashable
       
+        # Idempotent request UUID.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
       
@@ -2462,12 +2748,18 @@ module Google
       class StopRuntimeRequest
         include Google::Apis::Core::Hashable
       
+        # Idempotent request UUID.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
       
@@ -2490,6 +2782,11 @@ module Google
         # @return [String]
         attr_accessor :machine_type
       
+        # Idempotent request UUID.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
+      
         def initialize(**args)
            update!(**args)
         end
@@ -2498,6 +2795,7 @@ module Google
         def update!(**args)
           @accelerator_config = args[:accelerator_config] if args.key?(:accelerator_config)
           @machine_type = args[:machine_type] if args.key?(:machine_type)
+          @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
       
@@ -2506,7 +2804,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -2573,13 +2871,52 @@ module Google
         end
       end
       
+      # Request for adding/changing metadata items for an instance.
+      class UpdateInstanceMetadataItemsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Metadata items to add/update for the instance.
+        # Corresponds to the JSON property `items`
+        # @return [Hash<String,String>]
+        attr_accessor :items
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @items = args[:items] if args.key?(:items)
+        end
+      end
+      
+      # Response for adding/changing metadata items for an instance.
+      class UpdateInstanceMetadataItemsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Map of items that were added/updated to/in the metadata.
+        # Corresponds to the JSON property `items`
+        # @return [Hash<String,String>]
+        attr_accessor :items
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @items = args[:items] if args.key?(:items)
+        end
+      end
+      
       # Request for updating the Shielded Instance config for a notebook instance. You
       # can only use this method on a stopped instance
       class UpdateShieldedInstanceConfigRequest
         include Google::Apis::Core::Hashable
       
         # A set of Shielded Instance options. Check [Images using supported Shielded VM
-        # features] Not all combinations are valid.
+        # features](https://cloud.google.com/compute/docs/instances/modifying-shielded-
+        # vm). Not all combinations are valid.
         # Corresponds to the JSON property `shieldedInstanceConfig`
         # @return [Google::Apis::NotebooksV1::ShieldedInstanceConfig]
         attr_accessor :shielded_instance_config
@@ -2628,7 +2965,7 @@ module Google
         # @return [String]
         attr_accessor :state
       
-        # Target VM Image. Format: ainotebooks-vm/project/image-name/name.
+        # Target VM Image. Format: `ainotebooks-vm/project/image-name/name`.
         # Corresponds to the JSON property `targetImage`
         # @return [String]
         attr_accessor :target_image
@@ -2671,6 +3008,12 @@ module Google
       class UpgradeInstanceInternalRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. The optional UpgradeType. Setting this field will search for
+        # additional compute images to upgrade this instance.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
         # Required. The VM hardware token for authenticating the VM. https://cloud.
         # google.com/compute/docs/instances/verifying-instance-identity
         # Corresponds to the JSON property `vmId`
@@ -2683,6 +3026,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @type = args[:type] if args.key?(:type)
           @vm_id = args[:vm_id] if args.key?(:vm_id)
         end
       end
@@ -2691,12 +3035,39 @@ module Google
       class UpgradeInstanceRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. The optional UpgradeType. Setting this field will search for
+        # additional compute images to upgrade this instance.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
+      # Request for upgrading a Managed Notebook Runtime to the latest version. option
+      # (google.api.message_visibility).restriction = "TRUSTED_TESTER,SPECIAL_TESTER";
+      class UpgradeRuntimeRequest
+        include Google::Apis::Core::Hashable
+      
+        # Idempotent request UUID.
+        # Corresponds to the JSON property `requestId`
+        # @return [String]
+        attr_accessor :request_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @request_id = args[:request_id] if args.key?(:request_id)
         end
       end
       
@@ -2704,13 +3075,20 @@ module Google
       class VertexAiParameters
         include Google::Apis::Core::Hashable
       
-        # The full name of the Compute Engine [network](/compute/docs/networks-and-
-        # firewalls#networks) to which the Job should be peered. For example, `projects/
-        # 12345/global/networks/myVPC`. [Format](https://cloud.google.com/compute/docs/
-        # reference/rest/v1/networks/insert) is of the form `projects/`project`/global/
-        # networks/`network``. Where `project` is a project number, as in `12345`, and `
-        # network` is a network name. Private services access must already be configured
-        # for the network. If left unspecified, the job is not peered with any network.
+        # Environment variables. At most 100 environment variables can be specified and
+        # unique. Example: `GCP_BUCKET=gs://my-bucket/samples/`
+        # Corresponds to the JSON property `env`
+        # @return [Hash<String,String>]
+        attr_accessor :env
+      
+        # The full name of the Compute Engine [network](https://cloud.google.com/compute/
+        # docs/networks-and-firewalls#networks) to which the Job should be peered. For
+        # example, `projects/12345/global/networks/myVPC`. [Format](https://cloud.google.
+        # com/compute/docs/reference/rest/v1/networks/insert) is of the form `projects/`
+        # project`/global/networks/`network``. Where ``project`` is a project number, as
+        # in `12345`, and ``network`` is a network name. Private services access must
+        # already be configured for the network. If left unspecified, the job is not
+        # peered with any network.
         # Corresponds to the JSON property `network`
         # @return [String]
         attr_accessor :network
@@ -2721,6 +3099,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @env = args[:env] if args.key?(:env)
           @network = args[:network] if args.key?(:network)
         end
       end
@@ -2770,7 +3149,14 @@ module Google
         # @return [Google::Apis::NotebooksV1::RuntimeAcceleratorConfig]
         attr_accessor :accelerator_config
       
-        # Optional. Use a list of container images to start the notebook instance.
+        # Definition of the boot image used by the Runtime. Used to facilitate runtime
+        # upgradeability.
+        # Corresponds to the JSON property `bootImage`
+        # @return [Google::Apis::NotebooksV1::BootImage]
+        attr_accessor :boot_image
+      
+        # Optional. Use a list of container images to use as Kernels in the notebook
+        # instance.
         # Corresponds to the JSON property `containerImages`
         # @return [Array<Google::Apis::NotebooksV1::ContainerImage>]
         attr_accessor :container_images
@@ -2829,8 +3215,8 @@ module Google
         # Cannot be specified with subnetwork. If neither `network` nor `subnet` is
         # specified, the "default" network of the project is used, if it exists. A full
         # URL or partial URI. Examples: * `https://www.googleapis.com/compute/v1/
-        # projects/[project_id]/regions/global/default` * `projects/[project_id]/regions/
-        # global/default` Runtimes are managed resources inside Google Infrastructure.
+        # projects/[project_id]/global/networks/default` * `projects/[project_id]/global/
+        # networks/default` Runtimes are managed resources inside Google Infrastructure.
         # Runtimes support the following network configurations: * Google Managed
         # Network (Network & subnet are empty) * Consumer Project VPC (network & subnet
         # are required). Requires configuring Private Service Access. * Shared VPC (
@@ -2844,6 +3230,17 @@ module Google
         # Corresponds to the JSON property `nicType`
         # @return [String]
         attr_accessor :nic_type
+      
+        # Optional. Reserved IP Range name is used for VPC Peering. The subnetwork
+        # allocation will use the range *name* if it's assigned. Example: managed-
+        # notebooks-range-c PEERING_RANGE_NAME_3=managed-notebooks-range-c gcloud
+        # compute addresses create $PEERING_RANGE_NAME_3 \ --global \ --prefix-length=24
+        # \ --description="Google Cloud Managed Notebooks Range 24 c" \ --network=$
+        # NETWORK \ --addresses=192.168.0.0 \ --purpose=VPC_PEERING Field value will be:
+        # `managed-notebooks-range-c`
+        # Corresponds to the JSON property `reservedIpRange`
+        # @return [String]
+        attr_accessor :reserved_ip_range
       
         # A set of Shielded Instance options. Check [Images using supported Shielded VM
         # features](https://cloud.google.com/compute/docs/instances/modifying-shielded-
@@ -2882,6 +3279,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @accelerator_config = args[:accelerator_config] if args.key?(:accelerator_config)
+          @boot_image = args[:boot_image] if args.key?(:boot_image)
           @container_images = args[:container_images] if args.key?(:container_images)
           @data_disk = args[:data_disk] if args.key?(:data_disk)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
@@ -2892,6 +3290,7 @@ module Google
           @metadata = args[:metadata] if args.key?(:metadata)
           @network = args[:network] if args.key?(:network)
           @nic_type = args[:nic_type] if args.key?(:nic_type)
+          @reserved_ip_range = args[:reserved_ip_range] if args.key?(:reserved_ip_range)
           @shielded_instance_config = args[:shielded_instance_config] if args.key?(:shielded_instance_config)
           @subnet = args[:subnet] if args.key?(:subnet)
           @tags = args[:tags] if args.key?(:tags)
@@ -2916,7 +3315,7 @@ module Google
         attr_accessor :image_name
       
         # Required. The name of the Google Cloud project that this VM image belongs to.
-        # Format: `projects/`project_id``
+        # Format: ``project_id``
         # Corresponds to the JSON property `project`
         # @return [String]
         attr_accessor :project

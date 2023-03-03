@@ -22,6 +22,12 @@ module Google
   module Apis
     module SpeechV1p1beta1
       
+      class AbnfGrammar
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ClassItem
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -154,6 +160,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SpeechAdaptationInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SpeechContext
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -194,6 +206,13 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AbnfGrammar
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :abnf_strings, as: 'abnfStrings'
+        end
       end
       
       class ClassItem
@@ -304,7 +323,10 @@ module Google
       
           property :output_error, as: 'outputError', class: Google::Apis::SpeechV1p1beta1::Status, decorator: Google::Apis::SpeechV1p1beta1::Status::Representation
       
+          property :request_id, :numeric_string => true, as: 'requestId'
           collection :results, as: 'results', class: Google::Apis::SpeechV1p1beta1::SpeechRecognitionResult, decorator: Google::Apis::SpeechV1p1beta1::SpeechRecognitionResult::Representation
+      
+          property :speech_adaptation_info, as: 'speechAdaptationInfo', class: Google::Apis::SpeechV1p1beta1::SpeechAdaptationInfo, decorator: Google::Apis::SpeechV1p1beta1::SpeechAdaptationInfo::Representation
       
           property :total_billed_time, as: 'totalBilledTime'
         end
@@ -409,7 +431,10 @@ module Google
       class RecognizeResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :request_id, :numeric_string => true, as: 'requestId'
           collection :results, as: 'results', class: Google::Apis::SpeechV1p1beta1::SpeechRecognitionResult, decorator: Google::Apis::SpeechV1p1beta1::SpeechRecognitionResult::Representation
+      
+          property :speech_adaptation_info, as: 'speechAdaptationInfo', class: Google::Apis::SpeechV1p1beta1::SpeechAdaptationInfo, decorator: Google::Apis::SpeechV1p1beta1::SpeechAdaptationInfo::Representation
       
           property :total_billed_time, as: 'totalBilledTime'
         end
@@ -428,11 +453,21 @@ module Google
       class SpeechAdaptation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :abnf_grammar, as: 'abnfGrammar', class: Google::Apis::SpeechV1p1beta1::AbnfGrammar, decorator: Google::Apis::SpeechV1p1beta1::AbnfGrammar::Representation
+      
           collection :custom_classes, as: 'customClasses', class: Google::Apis::SpeechV1p1beta1::CustomClass, decorator: Google::Apis::SpeechV1p1beta1::CustomClass::Representation
       
           collection :phrase_set_references, as: 'phraseSetReferences'
           collection :phrase_sets, as: 'phraseSets', class: Google::Apis::SpeechV1p1beta1::PhraseSet, decorator: Google::Apis::SpeechV1p1beta1::PhraseSet::Representation
       
+        end
+      end
+      
+      class SpeechAdaptationInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :adaptation_timeout, as: 'adaptationTimeout'
+          property :timeout_message, as: 'timeoutMessage'
         end
       end
       
@@ -461,6 +496,7 @@ module Google
       
           property :channel_tag, as: 'channelTag'
           property :language_code, as: 'languageCode'
+          property :result_end_time, as: 'resultEndTime'
         end
       end
       

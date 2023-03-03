@@ -55,7 +55,8 @@ module Google
         #   The maximum number of customers to show in a page of results. A number between
         #   1 and 100 (inclusive).
         # @param [String] page_token
-        #   A token specifying which result page to return.
+        #   A token specifying which result page to return. This field has custom
+        #   validations in ListCustomersRequestValidator
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -88,7 +89,8 @@ module Google
         # configuration to devices.
         # @param [String] parent
         #   Required. The customer that manages the configuration. An API resource name in
-        #   the format `customers/[CUSTOMER_ID]`.
+        #   the format `customers/[CUSTOMER_ID]`. This field has custom validation in
+        #   CreateConfigurationRequestValidator
         # @param [Google::Apis::AndroiddeviceprovisioningV1::Configuration] configuration_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -736,7 +738,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Updates reseller metadata associated with the device.
+        # Updates reseller metadata associated with the device. Android devices only.
         # @param [Fixnum] metadata_owner_id
         #   Required. The owner of the newly set metadata. Set this to the partner ID.
         # @param [Fixnum] device_id
@@ -843,7 +845,7 @@ module Google
         # Updates the reseller metadata attached to a batch of devices. This method
         # updates devices asynchronously and returns an `Operation` that can be used to
         # track progress. Read [Long‑running batch operations](/zero-touch/guides/how-it-
-        # works#operations).
+        # works#operations). Android Devices only.
         # @param [Fixnum] partner_id
         #   Required. The reseller partner ID.
         # @param [Google::Apis::AndroiddeviceprovisioningV1::UpdateDeviceMetadataInBatchRequest] update_device_metadata_in_batch_request_object

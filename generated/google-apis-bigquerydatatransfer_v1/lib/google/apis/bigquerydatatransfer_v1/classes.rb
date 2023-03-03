@@ -59,8 +59,7 @@ module Google
         end
       end
       
-      # Represents data source metadata. Metadata is sufficient to render UI and
-      # request proper OAuth tokens.
+      # Defines the properties and custom parameters for a data source.
       class DataSource
         include Google::Apis::Core::Hashable
       
@@ -194,11 +193,7 @@ module Google
         end
       end
       
-      # Represents a data source parameter with validation rules, so that parameters
-      # can be rendered in the UI. These parameters are given to us by supported data
-      # sources, and include all needed information for rendering and validation. Thus,
-      # whoever uses this api can decide to generate either generic ui, or custom
-      # data source specific forms.
+      # A parameter used to define custom fields in a data source definition.
       class DataSourceParameter
         include Google::Apis::Core::Hashable
       
@@ -235,7 +230,7 @@ module Google
         attr_accessor :immutable
         alias_method :immutable?, :immutable
       
-        # For integer and double values specifies maxminum allowed value.
+        # For integer and double values specifies maximum allowed value.
         # Corresponds to the JSON property `maxValue`
         # @return [Float]
         attr_accessor :max_value
@@ -337,8 +332,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -774,7 +768,10 @@ module Google
         # @return [Fixnum]
         attr_accessor :data_refresh_window_days
       
-        # Data source id. Cannot be changed once data transfer is created.
+        # Data source ID. This cannot be changed once data transfer is created. The full
+        # list of available data source IDs can be returned through an API call: https://
+        # cloud.google.com/bigquery-transfer/docs/reference/datatransfer/rest/v1/
+        # projects.locations.dataSources/list
         # Corresponds to the JSON property `dataSourceId`
         # @return [String]
         attr_accessor :data_source_id
@@ -845,8 +842,9 @@ module Google
         # 3rd monday of month 15:30`, `every wed,fri of jan,jun 13:15`, and `first
         # sunday of quarter 00:00`. See more explanation about the format here: https://
         # cloud.google.com/appengine/docs/flexible/python/scheduling-jobs-with-cron-yaml#
-        # the_schedule_format NOTE: the granularity should be at least 8 hours, or less
-        # frequent.
+        # the_schedule_format NOTE: The minimum interval time between recurring
+        # transfers depends on the data source; refer to the documentation for your data
+        # source.
         # Corresponds to the JSON property `schedule`
         # @return [String]
         attr_accessor :schedule

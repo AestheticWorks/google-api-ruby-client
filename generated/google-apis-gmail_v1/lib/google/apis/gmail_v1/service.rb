@@ -800,16 +800,18 @@ module Google
         end
         
         # Imports a message into only this user's mailbox, with standard email delivery
-        # scanning and classification similar to receiving via SMTP. Does not send a
-        # message. Note: This function doesn't trigger forwarding rules or filters set
-        # up by the user.
+        # scanning and classification similar to receiving via SMTP. This method doesn't
+        # perform SPF checks, so it might not work for some spam messages, such as those
+        # attempting to perform domain spoofing. This method does not send a message.
+        # Note: This function doesn't trigger forwarding rules or filters set up by the
+        # user.
         # @param [String] user_id
         #   The user's email address. The special value `me` can be used to indicate the
         #   authenticated user.
         # @param [Google::Apis::GmailV1::Message] message_object
         # @param [Boolean] deleted
         #   Mark the email as permanently deleted (not TRASH) and only visible in Google
-        #   Vault to a Vault administrator. Only used for G Suite accounts.
+        #   Vault to a Vault administrator. Only used for Google Workspace accounts.
         # @param [String] internal_date_source
         #   Source for Gmail's internal date of the message.
         # @param [Boolean] never_mark_spam
@@ -869,7 +871,7 @@ module Google
         # @param [Google::Apis::GmailV1::Message] message_object
         # @param [Boolean] deleted
         #   Mark the email as permanently deleted (not TRASH) and only visible in Google
-        #   Vault to a Vault administrator. Only used for G Suite accounts.
+        #   Vault to a Vault administrator. Only used for Google Workspace accounts.
         # @param [String] internal_date_source
         #   Source for Gmail's internal date of the message.
         # @param [String] fields
@@ -1001,7 +1003,8 @@ module Google
         end
         
         # Sends the specified message to the recipients in the `To`, `Cc`, and `Bcc`
-        # headers.
+        # headers. For example usage, see [Sending email](https://developers.google.com/
+        # gmail/api/guides/sending).
         # @param [String] user_id
         #   The user's email address. The special value `me` can be used to indicate the
         #   authenticated user.
@@ -1482,17 +1485,430 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates and configures a client-side encryption identity that's authorized to
+        # send mail from the user account. Google publishes the S/MIME certificate to a
+        # shared domain-wide directory so that people within a Google Workspace
+        # organization can encrypt and send mail to the identity.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [Google::Apis::GmailV1::CseIdentity] cse_identity_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseIdentity] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseIdentity]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_user_setting_cse_identity(user_id, cse_identity_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'gmail/v1/users/{userId}/settings/cse/identities', options)
+          command.request_representation = Google::Apis::GmailV1::CseIdentity::Representation
+          command.request_object = cse_identity_object
+          command.response_representation = Google::Apis::GmailV1::CseIdentity::Representation
+          command.response_class = Google::Apis::GmailV1::CseIdentity
+          command.params['userId'] = user_id unless user_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a client-side encryption identity. The authenticated user can no
+        # longer use the identity to send encrypted messages. You cannot restore the
+        # identity after you delete it. Instead, use the CreateCseIdentity method to
+        # create another identity with the same configuration.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] cse_email_address
+        #   The primary email address associated with the client-side encryption identity
+        #   configuration that's removed.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_user_setting_cse_identity(user_id, cse_email_address, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}', options)
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['cseEmailAddress'] = cse_email_address unless cse_email_address.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves a client-side encryption identity configuration.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] cse_email_address
+        #   The primary email address associated with the client-side encryption identity
+        #   configuration that's retrieved.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseIdentity] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseIdentity]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_user_setting_cse_identity(user_id, cse_email_address, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'gmail/v1/users/{userId}/settings/cse/identities/{cseEmailAddress}', options)
+          command.response_representation = Google::Apis::GmailV1::CseIdentity::Representation
+          command.response_class = Google::Apis::GmailV1::CseIdentity
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['cseEmailAddress'] = cse_email_address unless cse_email_address.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the client-side encrypted identities for an authenticated user.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [Fixnum] page_size
+        #   The number of identities to return. If not provided, the page size will
+        #   default to 20 entries.
+        # @param [String] page_token
+        #   Pagination token indicating which page of identities to return. If the token
+        #   is not supplied, then the API will return the first page of results.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::ListCseIdentitiesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::ListCseIdentitiesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_user_setting_cse_identities(user_id, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'gmail/v1/users/{userId}/settings/cse/identities', options)
+          command.response_representation = Google::Apis::GmailV1::ListCseIdentitiesResponse::Representation
+          command.response_class = Google::Apis::GmailV1::ListCseIdentitiesResponse
+          command.params['userId'] = user_id unless user_id.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Associates a different key pair with an existing client-side encryption
+        # identity. The updated key pair must validate against Google's [S/MIME
+        # certificate profiles](https://support.google.com/a/answer/7300887).
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] email_address
+        #   The email address of the client-side encryption identity to update.
+        # @param [Google::Apis::GmailV1::CseIdentity] cse_identity_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseIdentity] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseIdentity]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_user_setting_cse_identity(user_id, email_address, cse_identity_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'gmail/v1/users/{userId}/settings/cse/identities/{emailAddress}', options)
+          command.request_representation = Google::Apis::GmailV1::CseIdentity::Representation
+          command.request_object = cse_identity_object
+          command.response_representation = Google::Apis::GmailV1::CseIdentity::Representation
+          command.response_class = Google::Apis::GmailV1::CseIdentity
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['emailAddress'] = email_address unless email_address.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates and uploads a client-side encryption S/MIME public key certificate
+        # chain and private key metadata for the authenticated user.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [Google::Apis::GmailV1::CseKeyPair] cse_key_pair_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseKeyPair] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseKeyPair]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_user_setting_cse_keypair(user_id, cse_key_pair_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'gmail/v1/users/{userId}/settings/cse/keypairs', options)
+          command.request_representation = Google::Apis::GmailV1::CseKeyPair::Representation
+          command.request_object = cse_key_pair_object
+          command.response_representation = Google::Apis::GmailV1::CseKeyPair::Representation
+          command.response_class = Google::Apis::GmailV1::CseKeyPair
+          command.params['userId'] = user_id unless user_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Turns off a client-side encryption key pair. The authenticated user can no
+        # longer use the key pair to decrypt incoming CSE message texts or sign outgoing
+        # CSE mail. To regain access, use the EnableCseKeyPair to turn on the key pair.
+        # After 30 days, you can permanently delete the key pair by using the
+        # ObliterateCseKeyPair method.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] key_pair_id
+        #   The identifier of the key pair to turn off.
+        # @param [Google::Apis::GmailV1::DisableCseKeyPairRequest] disable_cse_key_pair_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseKeyPair] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseKeyPair]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def disable_keypair_cse_key_pair(user_id, key_pair_id, disable_cse_key_pair_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:disable', options)
+          command.request_representation = Google::Apis::GmailV1::DisableCseKeyPairRequest::Representation
+          command.request_object = disable_cse_key_pair_request_object
+          command.response_representation = Google::Apis::GmailV1::CseKeyPair::Representation
+          command.response_class = Google::Apis::GmailV1::CseKeyPair
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['keyPairId'] = key_pair_id unless key_pair_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Turns on a client-side encryption key pair that was turned off. The key pair
+        # becomes active again for any associated client-side encryption identities.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] key_pair_id
+        #   The identifier of the key pair to turn on.
+        # @param [Google::Apis::GmailV1::EnableCseKeyPairRequest] enable_cse_key_pair_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseKeyPair] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseKeyPair]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def enable_keypair_cse_key_pair(user_id, key_pair_id, enable_cse_key_pair_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:enable', options)
+          command.request_representation = Google::Apis::GmailV1::EnableCseKeyPairRequest::Representation
+          command.request_object = enable_cse_key_pair_request_object
+          command.response_representation = Google::Apis::GmailV1::CseKeyPair::Representation
+          command.response_class = Google::Apis::GmailV1::CseKeyPair
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['keyPairId'] = key_pair_id unless key_pair_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves an existing client-side encryption key pair.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] key_pair_id
+        #   The identifier of the key pair to retrieve.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::CseKeyPair] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::CseKeyPair]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_user_setting_cse_keypair(user_id, key_pair_id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}', options)
+          command.response_representation = Google::Apis::GmailV1::CseKeyPair::Representation
+          command.response_class = Google::Apis::GmailV1::CseKeyPair
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['keyPairId'] = key_pair_id unless key_pair_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists client-side encryption key pairs for an authenticated user.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [Fixnum] page_size
+        #   The number of key pairs to return. If not provided, the page size will default
+        #   to 20 entries.
+        # @param [String] page_token
+        #   Pagination token indicating which page of key pairs to return. If the token is
+        #   not supplied, then the API will return the first page of results.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::GmailV1::ListCseKeyPairsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::GmailV1::ListCseKeyPairsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_user_setting_cse_keypairs(user_id, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'gmail/v1/users/{userId}/settings/cse/keypairs', options)
+          command.response_representation = Google::Apis::GmailV1::ListCseKeyPairsResponse::Representation
+          command.response_class = Google::Apis::GmailV1::ListCseKeyPairsResponse
+          command.params['userId'] = user_id unless user_id.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a client-side encryption key pair permanently and immediately. You can
+        # only permanently delete key pairs that have been turned off for more than 30
+        # days. To turn off a key pair, use the DisableCseKeyPair method. Gmail can't
+        # restore or decrypt any messages that were encrypted by an obliterated key.
+        # Authenticated users and Google Workspace administrators lose access to reading
+        # the encrypted messages.
+        # @param [String] user_id
+        #   The requester's primary email address. To indicate the authenticated user, you
+        #   can use the special value `me`.
+        # @param [String] key_pair_id
+        #   The identifier of the key pair to obliterate.
+        # @param [Google::Apis::GmailV1::ObliterateCseKeyPairRequest] obliterate_cse_key_pair_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [NilClass] No result returned for this method
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [void]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def obliterate_keypair_cse_key_pair(user_id, key_pair_id, obliterate_cse_key_pair_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'gmail/v1/users/{userId}/settings/cse/keypairs/{keyPairId}:obliterate', options)
+          command.request_representation = Google::Apis::GmailV1::ObliterateCseKeyPairRequest::Representation
+          command.request_object = obliterate_cse_key_pair_request_object
+          command.params['userId'] = user_id unless user_id.nil?
+          command.params['keyPairId'] = key_pair_id unless key_pair_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Adds a delegate with its verification status set directly to `accepted`,
         # without sending any verification email. The delegate user must be a member of
-        # the same G Suite organization as the delegator user. Gmail imposes limitations
-        # on the number of delegates and delegators each user in a G Suite organization
-        # can have. These limits depend on your organization, but in general each user
-        # can have up to 25 delegates and up to 10 delegators. Note that a delegate user
-        # must be referred to by their primary email address, and not an email alias.
-        # Also note that when a new delegate is created, there may be up to a one minute
-        # delay before the new delegate is available for use. This method is only
-        # available to service account clients that have been delegated domain-wide
-        # authority.
+        # the same Google Workspace organization as the delegator user. Gmail imposes
+        # limitations on the number of delegates and delegators each user in a Google
+        # Workspace organization can have. These limits depend on your organization, but
+        # in general each user can have up to 25 delegates and up to 10 delegators. Note
+        # that a delegate user must be referred to by their primary email address, and
+        # not an email alias. Also note that when a new delegate is created, there may
+        # be up to a one minute delay before the new delegate is available for use. This
+        # method is only available to service account clients that have been delegated
+        # domain-wide authority.
         # @param [String] user_id
         #   User's email address. The special value "me" can be used to indicate the
         #   authenticated user.
@@ -1665,7 +2081,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a filter.
+        # Immediately and permanently deletes the specified filter.
         # @param [String] user_id
         #   User's email address. The special value "me" can be used to indicate the
         #   authenticated user.
@@ -2338,8 +2754,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Immediately and permanently deletes the specified thread. This operation
-        # cannot be undone. Prefer `threads.trash` instead.
+        # Immediately and permanently deletes the specified thread. Any messages that
+        # belong to the thread are also deleted. This operation cannot be undone. Prefer
+        # `threads.trash` instead.
         # @param [String] user_id
         #   The user's email address. The special value `me` can be used to indicate the
         #   authenticated user.
@@ -2499,7 +2916,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Moves the specified thread to the trash.
+        # Moves the specified thread to the trash. Any messages that belong to the
+        # thread are also moved to the trash.
         # @param [String] user_id
         #   The user's email address. The special value `me` can be used to indicate the
         #   authenticated user.
@@ -2533,7 +2951,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Removes the specified thread from the trash.
+        # Removes the specified thread from the trash. Any messages that belong to the
+        # thread are also removed from the trash.
         # @param [String] user_id
         #   The user's email address. The special value `me` can be used to indicate the
         #   authenticated user.

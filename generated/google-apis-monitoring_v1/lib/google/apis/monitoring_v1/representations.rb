@@ -46,6 +46,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CollapsibleGroup
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Column
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -58,7 +64,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ColumnSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Dashboard
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DashboardFilter
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -100,13 +118,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class HttpBody
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListDashboardsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListLabelsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListMetricsScopesByMonitoredProjectResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LogsPanel
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -149,6 +185,30 @@ module Google
       end
       
       class PickTimeSeriesFilter
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryExemplarsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryInstantRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryRangeRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QuerySeriesRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -312,6 +372,13 @@ module Google
         end
       end
       
+      class CollapsibleGroup
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :collapsed, as: 'collapsed'
+        end
+      end
+      
       class Column
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -329,20 +396,41 @@ module Google
         end
       end
       
+      class ColumnSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :column, as: 'column'
+          property :visible, as: 'visible'
+        end
+      end
+      
       class Dashboard
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :column_layout, as: 'columnLayout', class: Google::Apis::MonitoringV1::ColumnLayout, decorator: Google::Apis::MonitoringV1::ColumnLayout::Representation
       
+          collection :dashboard_filters, as: 'dashboardFilters', class: Google::Apis::MonitoringV1::DashboardFilter, decorator: Google::Apis::MonitoringV1::DashboardFilter::Representation
+      
           property :display_name, as: 'displayName'
           property :etag, as: 'etag'
           property :grid_layout, as: 'gridLayout', class: Google::Apis::MonitoringV1::GridLayout, decorator: Google::Apis::MonitoringV1::GridLayout::Representation
       
+          hash :labels, as: 'labels'
           property :mosaic_layout, as: 'mosaicLayout', class: Google::Apis::MonitoringV1::MosaicLayout, decorator: Google::Apis::MonitoringV1::MosaicLayout::Representation
       
           property :name, as: 'name'
           property :row_layout, as: 'rowLayout', class: Google::Apis::MonitoringV1::RowLayout, decorator: Google::Apis::MonitoringV1::RowLayout::Representation
       
+        end
+      end
+      
+      class DashboardFilter
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :filter_type, as: 'filterType'
+          property :label_key, as: 'labelKey'
+          property :string_value, as: 'stringValue'
+          property :template_variable, as: 'templateVariable'
         end
       end
       
@@ -405,6 +493,15 @@ module Google
         end
       end
       
+      class HttpBody
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_type, as: 'contentType'
+          property :data, :base64 => true, as: 'data'
+          collection :extensions, as: 'extensions'
+        end
+      end
+      
       class ListDashboardsResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -414,11 +511,28 @@ module Google
         end
       end
       
+      class ListLabelsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end, as: 'end'
+          property :match, as: 'match'
+          property :start, as: 'start'
+        end
+      end
+      
       class ListMetricsScopesByMonitoredProjectResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :metrics_scopes, as: 'metricsScopes', class: Google::Apis::MonitoringV1::MetricsScope, decorator: Google::Apis::MonitoringV1::MetricsScope::Representation
       
+        end
+      end
+      
+      class LogsPanel
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :filter, as: 'filter'
+          collection :resource_names, as: 'resourceNames'
         end
       end
       
@@ -485,6 +599,43 @@ module Google
           property :direction, as: 'direction'
           property :num_time_series, as: 'numTimeSeries'
           property :ranking_method, as: 'rankingMethod'
+        end
+      end
+      
+      class QueryExemplarsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end, as: 'end'
+          property :query, as: 'query'
+          property :start, as: 'start'
+        end
+      end
+      
+      class QueryInstantRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :query, as: 'query'
+          property :time, as: 'time'
+          property :timeout, as: 'timeout'
+        end
+      end
+      
+      class QueryRangeRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end, as: 'end'
+          property :query, as: 'query'
+          property :start, as: 'start'
+          property :step, as: 'step'
+          property :timeout, as: 'timeout'
+        end
+      end
+      
+      class QuerySeriesRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end, as: 'end'
+          property :start, as: 'start'
         end
       end
       
@@ -651,6 +802,7 @@ module Google
       class TimeSeriesQuery
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :prometheus_query, as: 'prometheusQuery'
           property :time_series_filter, as: 'timeSeriesFilter', class: Google::Apis::MonitoringV1::TimeSeriesFilter, decorator: Google::Apis::MonitoringV1::TimeSeriesFilter::Representation
       
           property :time_series_filter_ratio, as: 'timeSeriesFilterRatio', class: Google::Apis::MonitoringV1::TimeSeriesFilterRatio, decorator: Google::Apis::MonitoringV1::TimeSeriesFilterRatio::Representation
@@ -663,8 +815,11 @@ module Google
       class TimeSeriesTable
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :column_settings, as: 'columnSettings', class: Google::Apis::MonitoringV1::ColumnSettings, decorator: Google::Apis::MonitoringV1::ColumnSettings::Representation
+      
           collection :data_sets, as: 'dataSets', class: Google::Apis::MonitoringV1::TableDataSet, decorator: Google::Apis::MonitoringV1::TableDataSet::Representation
       
+          property :metric_visualization, as: 'metricVisualization'
         end
       end
       
@@ -689,6 +844,10 @@ module Google
           property :alert_chart, as: 'alertChart', class: Google::Apis::MonitoringV1::AlertChart, decorator: Google::Apis::MonitoringV1::AlertChart::Representation
       
           property :blank, as: 'blank', class: Google::Apis::MonitoringV1::Empty, decorator: Google::Apis::MonitoringV1::Empty::Representation
+      
+          property :collapsible_group, as: 'collapsibleGroup', class: Google::Apis::MonitoringV1::CollapsibleGroup, decorator: Google::Apis::MonitoringV1::CollapsibleGroup::Representation
+      
+          property :logs_panel, as: 'logsPanel', class: Google::Apis::MonitoringV1::LogsPanel, decorator: Google::Apis::MonitoringV1::LogsPanel::Representation
       
           property :scorecard, as: 'scorecard', class: Google::Apis::MonitoringV1::Scorecard, decorator: Google::Apis::MonitoringV1::Scorecard::Representation
       

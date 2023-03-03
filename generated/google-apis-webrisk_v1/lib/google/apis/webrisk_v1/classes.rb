@@ -307,7 +307,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # ThreatTypes found to be associated with the submitted URI after reviewing it.
-        # This may be empty if the URI was not added to any list.
+        # This might be empty if the URI was not added to any list.
         # Corresponds to the JSON property `threatTypes`
         # @return [Array<String>]
         attr_accessor :threat_types
@@ -492,17 +492,12 @@ module Google
         # @return [Google::Apis::WebriskV1::GoogleRpcStatus]
         attr_accessor :error
       
-        # Service-specific metadata associated with the operation. It typically contains
-        # progress information and common metadata such as create time. Some services
-        # might not provide such metadata. Any method that returns a long-running
-        # operation should document the metadata type, if any.
+        # Contains a `SubmitUriMetadata` object.
         # Corresponds to the JSON property `metadata`
         # @return [Hash<String,Object>]
         attr_accessor :metadata
       
-        # The server-assigned name, which is only unique within the same service that
-        # originally returns it. If you use the default HTTP mapping, the `name` should
-        # be a resource name ending with `operations/`unique_id``.
+        # Matches the `/v1/`project-name`/operations/`operation-id`` pattern.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -535,8 +530,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class GoogleProtobufEmpty
         include Google::Apis::Core::Hashable
       

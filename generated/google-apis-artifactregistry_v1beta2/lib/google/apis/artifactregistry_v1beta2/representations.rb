@@ -70,6 +70,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ImportAptArtifactsMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ImportAptArtifactsRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -89,6 +95,12 @@ module Google
       end
       
       class ImportYumArtifactsGcsSource
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ImportYumArtifactsMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -148,7 +160,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class MavenRepositoryConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Operation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -161,6 +185,12 @@ module Google
       end
       
       class Policy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectSettings
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -208,6 +238,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UploadAptArtifactMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class UploadAptArtifactRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -221,6 +257,12 @@ module Google
       end
       
       class UploadYumArtifactMediaResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UploadYumArtifactMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -327,6 +369,12 @@ module Google
         end
       end
       
+      class ImportAptArtifactsMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class ImportAptArtifactsRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -360,6 +408,12 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :uris, as: 'uris'
           property :use_wildcards, as: 'useWildcards'
+        end
+      end
+      
+      class ImportYumArtifactsMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -446,6 +500,14 @@ module Google
         end
       end
       
+      class MavenRepositoryConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_snapshot_overwrites, as: 'allowSnapshotOverwrites'
+          property :version_policy, as: 'versionPolicy'
+        end
+      end
+      
       class Operation
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -455,6 +517,12 @@ module Google
           hash :metadata, as: 'metadata'
           property :name, as: 'name'
           hash :response, as: 'response'
+        end
+      end
+      
+      class OperationMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -478,6 +546,14 @@ module Google
         end
       end
       
+      class ProjectSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :legacy_redirection_state, as: 'legacyRedirectionState'
+          property :name, as: 'name'
+        end
+      end
+      
       class Repository
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -486,7 +562,11 @@ module Google
           property :format, as: 'format'
           property :kms_key_name, as: 'kmsKeyName'
           hash :labels, as: 'labels'
+          property :maven_config, as: 'mavenConfig', class: Google::Apis::ArtifactregistryV1beta2::MavenRepositoryConfig, decorator: Google::Apis::ArtifactregistryV1beta2::MavenRepositoryConfig::Representation
+      
           property :name, as: 'name'
+          property :satisfies_pzs, as: 'satisfiesPzs'
+          property :size_bytes, :numeric_string => true, as: 'sizeBytes'
           property :update_time, as: 'updateTime'
         end
       end
@@ -538,6 +618,12 @@ module Google
         end
       end
       
+      class UploadAptArtifactMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
       class UploadAptArtifactRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -557,6 +643,12 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :operation, as: 'operation', class: Google::Apis::ArtifactregistryV1beta2::Operation, decorator: Google::Apis::ArtifactregistryV1beta2::Operation::Representation
       
+        end
+      end
+      
+      class UploadYumArtifactMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       

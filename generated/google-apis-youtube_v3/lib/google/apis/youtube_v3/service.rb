@@ -1394,6 +1394,73 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Insert cuepoints in a broadcast
+        # @param [Google::Apis::YoutubeV3::Cuepoint] cuepoint_object
+        # @param [String] id
+        #   Broadcast to insert ads to, or equivalently `external_video_id` for internal
+        #   use.
+        # @param [String] on_behalf_of_content_owner
+        #   *Note:* This parameter is intended exclusively for YouTube content partners.
+        #   The *onBehalfOfContentOwner* parameter indicates that the request's
+        #   authorization credentials identify a YouTube CMS user who is acting on behalf
+        #   of the content owner specified in the parameter value. This parameter is
+        #   intended for YouTube content partners that own and manage many different
+        #   YouTube channels. It allows content owners to authenticate once and get access
+        #   to all their video and channel data, without having to provide authentication
+        #   credentials for each individual channel. The CMS account that the user
+        #   authenticates with must be linked to the specified YouTube content owner.
+        # @param [String] on_behalf_of_content_owner_channel
+        #   This parameter can only be used in a properly authorized request. *Note:* This
+        #   parameter is intended exclusively for YouTube content partners. The *
+        #   onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID of
+        #   the channel to which a video is being added. This parameter is required when a
+        #   request specifies a value for the onBehalfOfContentOwner parameter, and it can
+        #   only be used in conjunction with that parameter. In addition, the request must
+        #   be authorized using a CMS account that is linked to the content owner that the
+        #   onBehalfOfContentOwner parameter specifies. Finally, the channel that the
+        #   onBehalfOfContentOwnerChannel parameter value specifies must be linked to the
+        #   content owner that the onBehalfOfContentOwner parameter specifies. This
+        #   parameter is intended for YouTube content partners that own and manage many
+        #   different YouTube channels. It allows content owners to authenticate once and
+        #   perform actions on behalf of the channel specified in the parameter value,
+        #   without having to provide authentication credentials for each separate channel.
+        # @param [Array<String>, String] part
+        #   The *part* parameter specifies a comma-separated list of one or more
+        #   liveBroadcast resource properties that the API response will include. The part
+        #   names that you can include in the parameter value are id, snippet,
+        #   contentDetails, and status.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::YoutubeV3::Cuepoint] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::YoutubeV3::Cuepoint]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def insert_live_broadcast_cuepoint(cuepoint_object = nil, id: nil, on_behalf_of_content_owner: nil, on_behalf_of_content_owner_channel: nil, part: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'youtube/v3/liveBroadcasts/cuepoint', options)
+          command.request_representation = Google::Apis::YoutubeV3::Cuepoint::Representation
+          command.request_object = cuepoint_object
+          command.response_representation = Google::Apis::YoutubeV3::Cuepoint::Representation
+          command.response_class = Google::Apis::YoutubeV3::Cuepoint
+          command.query['id'] = id unless id.nil?
+          command.query['onBehalfOfContentOwner'] = on_behalf_of_content_owner unless on_behalf_of_content_owner.nil?
+          command.query['onBehalfOfContentOwnerChannel'] = on_behalf_of_content_owner_channel unless on_behalf_of_content_owner_channel.nil?
+          command.query['part'] = part unless part.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Retrieve the list of broadcasts associated with the given channel.
         # @param [Array<String>, String] part
         #   The *part* parameter specifies a comma-separated list of one or more
@@ -2544,7 +2611,7 @@ module Google
         # @param [String] channel_id
         #   Return the playlists owned by the specified channel ID.
         # @param [String] hl
-        #   Returen content in specified language
+        #   Return content in specified language
         # @param [Array<String>, String] id
         #   Return the playlists with the given IDs for Stubby or Apiary.
         # @param [Fixnum] max_results
@@ -3128,18 +3195,18 @@ module Google
         #   Request-specific options
         #
         # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::YoutubeV3::ThirdPartyLink] parsed result object
+        # @yieldparam result [Google::Apis::YoutubeV3::ThirdPartyLinkListResponse] parsed result object
         # @yieldparam err [StandardError] error object if request failed
         #
-        # @return [Google::Apis::YoutubeV3::ThirdPartyLink]
+        # @return [Google::Apis::YoutubeV3::ThirdPartyLinkListResponse]
         #
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
         def list_third_party_links(part, external_channel_id: nil, linking_token: nil, type: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'youtube/v3/thirdPartyLinks', options)
-          command.response_representation = Google::Apis::YoutubeV3::ThirdPartyLink::Representation
-          command.response_class = Google::Apis::YoutubeV3::ThirdPartyLink
+          command.response_representation = Google::Apis::YoutubeV3::ThirdPartyLinkListResponse::Representation
+          command.response_class = Google::Apis::YoutubeV3::ThirdPartyLinkListResponse
           command.query['externalChannelId'] = external_channel_id unless external_channel_id.nil?
           command.query['linkingToken'] = linking_token unless linking_token.nil?
           command.query['part'] = part unless part.nil?

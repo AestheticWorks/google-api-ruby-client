@@ -166,6 +166,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ProductMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ProjectInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -173,6 +179,24 @@ module Google
       end
       
       class RemoveAnalyticsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveAndroidAppRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveIosAppRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RemoveWebAppRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -203,6 +227,24 @@ module Google
       end
       
       class StreamMapping
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UndeleteAndroidAppRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UndeleteIosAppRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UndeleteWebAppRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -258,6 +300,7 @@ module Google
       class AnalyticsProperty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :analytics_account_id, as: 'analyticsAccountId'
           property :display_name, as: 'displayName'
           property :id, as: 'id'
         end
@@ -266,11 +309,17 @@ module Google
       class AndroidApp
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_key_id, as: 'apiKeyId'
           property :app_id, as: 'appId'
           property :display_name, as: 'displayName'
+          property :etag, as: 'etag'
+          property :expire_time, as: 'expireTime'
           property :name, as: 'name'
           property :package_name, as: 'packageName'
           property :project_id, as: 'projectId'
+          collection :sha1_hashes, as: 'sha1Hashes'
+          collection :sha256_hashes, as: 'sha256Hashes'
+          property :state, as: 'state'
         end
       end
       
@@ -308,18 +357,23 @@ module Google
       class FirebaseAppInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_key_id, as: 'apiKeyId'
           property :app_id, as: 'appId'
           property :display_name, as: 'displayName'
+          property :expire_time, as: 'expireTime'
           property :name, as: 'name'
           property :namespace, as: 'namespace'
           property :platform, as: 'platform'
+          property :state, as: 'state'
         end
       end
       
       class FirebaseProject
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :annotations, as: 'annotations'
           property :display_name, as: 'displayName'
+          property :etag, as: 'etag'
           property :name, as: 'name'
           property :project_id, as: 'projectId'
           property :project_number, :numeric_string => true, as: 'projectNumber'
@@ -332,12 +386,17 @@ module Google
       class IosApp
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_key_id, as: 'apiKeyId'
           property :app_id, as: 'appId'
           property :app_store_id, as: 'appStoreId'
           property :bundle_id, as: 'bundleId'
           property :display_name, as: 'displayName'
+          property :etag, as: 'etag'
+          property :expire_time, as: 'expireTime'
           property :name, as: 'name'
           property :project_id, as: 'projectId'
+          property :state, as: 'state'
+          property :team_id, as: 'teamId'
         end
       end
       
@@ -438,6 +497,13 @@ module Google
         end
       end
       
+      class ProductMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :warning_messages, as: 'warningMessages'
+        end
+      end
+      
       class ProjectInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -451,6 +517,36 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :analytics_property_id, as: 'analyticsPropertyId'
+        end
+      end
+      
+      class RemoveAndroidAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_missing, as: 'allowMissing'
+          property :etag, as: 'etag'
+          property :immediate, as: 'immediate'
+          property :validate_only, as: 'validateOnly'
+        end
+      end
+      
+      class RemoveIosAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_missing, as: 'allowMissing'
+          property :etag, as: 'etag'
+          property :immediate, as: 'immediate'
+          property :validate_only, as: 'validateOnly'
+        end
+      end
+      
+      class RemoveWebAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_missing, as: 'allowMissing'
+          property :etag, as: 'etag'
+          property :immediate, as: 'immediate'
+          property :validate_only, as: 'validateOnly'
         end
       end
       
@@ -502,14 +598,42 @@ module Google
         end
       end
       
+      class UndeleteAndroidAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :etag, as: 'etag'
+          property :validate_only, as: 'validateOnly'
+        end
+      end
+      
+      class UndeleteIosAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :etag, as: 'etag'
+          property :validate_only, as: 'validateOnly'
+        end
+      end
+      
+      class UndeleteWebAppRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :etag, as: 'etag'
+          property :validate_only, as: 'validateOnly'
+        end
+      end
+      
       class WebApp
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :api_key_id, as: 'apiKeyId'
           property :app_id, as: 'appId'
           collection :app_urls, as: 'appUrls'
           property :display_name, as: 'displayName'
+          property :etag, as: 'etag'
+          property :expire_time, as: 'expireTime'
           property :name, as: 'name'
           property :project_id, as: 'projectId'
+          property :state, as: 'state'
           property :web_id, as: 'webId'
         end
       end

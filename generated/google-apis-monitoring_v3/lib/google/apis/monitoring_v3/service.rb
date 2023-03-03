@@ -22,12 +22,7 @@ module Google
     module MonitoringV3
       # Cloud Monitoring API
       #
-      # Manages your Cloud Monitoring data and configurations. Most projects must be
-      #  associated with a Workspace, with a few exceptions as noted on the individual
-      #  method pages. The table entries below are presented in alphabetical order, not
-      #  in order of common use. For explanations of the concepts found in the table
-      #  entries, read the Cloud Monitoring documentation (https://cloud.google.com/
-      #  monitoring/docs).
+      # Manages your Cloud Monitoring data and configurations.
       #
       # @example
       #    require 'google/apis/monitoring_v3'
@@ -54,8 +49,7 @@ module Google
           @batch_path = 'batch'
         end
         
-        # Lists time series that match a filter. This method does not require a
-        # Workspace.
+        # Lists time series that match a filter.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   , organization or folder on which to execute the request. The format is:
@@ -219,8 +213,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists time series that match a filter. This method does not require a
-        # Workspace.
+        # Lists time series that match a filter.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   , organization or folder on which to execute the request. The format is:
@@ -384,16 +377,19 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new alerting policy.
+        # Creates a new alerting policy.Design your application to single-thread API
+        # calls that modify the state of alerting policies in a single project. This
+        # includes calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   in which to create the alerting policy. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER] Note that this field names the parent container in which
         #   the alerting policy will be written, not the name of the created policy. |name|
-        #   must be a host project of a workspace, otherwise INVALID_ARGUMENT error will
-        #   return. The alerting policy that is returned will have a name that contains a
-        #   normalized representation of this name as a prefix but adds a suffix of the
-        #   form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in the container.
+        #   must be a host project of a Metrics Scope, otherwise INVALID_ARGUMENT error
+        #   will return. The alerting policy that is returned will have a name that
+        #   contains a normalized representation of this name as a prefix but adds a
+        #   suffix of the form /alertPolicies/[ALERT_POLICY_ID], identifying the policy in
+        #   the container.
         # @param [Google::Apis::MonitoringV3::AlertPolicy] alert_policy_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -424,7 +420,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an alerting policy.
+        # Deletes an alerting policy.Design your application to single-thread API calls
+        # that modify the state of alerting policies in a single project. This includes
+        # calls to CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
         # @param [String] name
         #   Required. The alerting policy to delete. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] For more information,
@@ -544,13 +542,15 @@ module Google
         # Updates an alerting policy. You can either replace the entire policy with a
         # new one or replace only certain fields in the current alerting policy by
         # specifying the fields to be updated via updateMask. Returns the updated
-        # alerting policy.
+        # alerting policy.Design your application to single-thread API calls that modify
+        # the state of alerting policies in a single project. This includes calls to
+        # CreateAlertPolicy, DeleteAlertPolicy and UpdateAlertPolicy.
         # @param [String] name
         #   Required if the policy exists. The resource name for this policy. The format
         #   is: projects/[PROJECT_ID_OR_NUMBER]/alertPolicies/[ALERT_POLICY_ID] [
-        #   ALERT_POLICY_ID] is assigned by Stackdriver Monitoring when the policy is
-        #   created. When calling the alertPolicies.create method, do not include the name
-        #   field in the alerting policy passed as part of the request.
+        #   ALERT_POLICY_ID] is assigned by Cloud Monitoring when the policy is created.
+        #   When calling the alertPolicies.create method, do not include the name field in
+        #   the alerting policy passed as part of the request.
         # @param [Google::Apis::MonitoringV3::AlertPolicy] alert_policy_object
         # @param [String] update_mask
         #   Optional. A list of alerting policy field names. If this field is not empty,
@@ -598,9 +598,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Stackdriver Monitoring Agent only: Creates a new time series.This method is
-        # only for use by the Stackdriver Monitoring Agent. Use projects.timeSeries.
-        # create instead.
+        # Cloud Monitoring Agent only: Creates a new time series.This method is only for
+        # use by the Cloud Monitoring Agent. Use projects.timeSeries.create instead.
         # @param [String] name
         #   The project (https://cloud.google.com/monitoring/api/v3#project_name) in which
         #   to create the time series. The format is: projects/[PROJECT_ID_OR_NUMBER]
@@ -887,10 +886,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a new metric descriptor. The creation is executed asynchronously and
-        # callers may check the returned operation to track its progress. User-created
-        # metric descriptors define custom metrics (https://cloud.google.com/monitoring/
-        # custom-metrics).
+        # Creates a new metric descriptor. The creation is executed asynchronously. User-
+        # created metric descriptors define custom metrics (https://cloud.google.com/
+        # monitoring/custom-metrics). The metric descriptor is updated if it already
+        # exists, except that metric labels are never removed.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   on which to execute the request. The format is: 4 projects/
@@ -958,7 +957,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets a single metric descriptor. This method does not require a Workspace.
+        # Gets a single metric descriptor.
         # @param [String] name
         #   Required. The metric descriptor on which to execute the request. The format is:
         #   projects/[PROJECT_ID_OR_NUMBER]/metricDescriptors/[METRIC_ID] An example
@@ -991,8 +990,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists metric descriptors that match a filter. This method does not require a
-        # Workspace.
+        # Lists metric descriptors that match a filter.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   on which to execute the request. The format is: projects/[
@@ -1040,8 +1038,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Gets a single monitored resource descriptor. This method does not require a
-        # Workspace.
+        # Gets a single monitored resource descriptor.
         # @param [String] name
         #   Required. The monitored resource descriptor to get. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER]/monitoredResourceDescriptors/[RESOURCE_TYPE] The [
@@ -1073,8 +1070,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists monitored resource descriptors that match a filter. This method does not
-        # require a Workspace.
+        # Lists monitored resource descriptors that match a filter.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   on which to execute the request. The format is: projects/[
@@ -1198,7 +1194,11 @@ module Google
         end
         
         # Creates a new notification channel, representing a single notification
-        # endpoint such as an email address, SMS number, or PagerDuty service.
+        # endpoint such as an email address, SMS number, or PagerDuty service.Design
+        # your application to single-thread API calls that modify the state of
+        # notification channels in a single project. This includes calls to
+        # CreateNotificationChannel, DeleteNotificationChannel and
+        # UpdateNotificationChannel.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   on which to execute the request. The format is: projects/[
@@ -1236,7 +1236,10 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a notification channel.
+        # Deletes a notification channel.Design your application to single-thread API
+        # calls that modify the state of notification channels in a single project. This
+        # includes calls to CreateNotificationChannel, DeleteNotificationChannel and
+        # UpdateNotificationChannel.
         # @param [String] name
         #   Required. The channel for which to execute the request. The format is:
         #   projects/[PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID]
@@ -1417,7 +1420,10 @@ module Google
         end
         
         # Updates a notification channel. Fields not specified in the field mask remain
-        # unchanged.
+        # unchanged.Design your application to single-thread API calls that modify the
+        # state of notification channels in a single project. This includes calls to
+        # CreateNotificationChannel, DeleteNotificationChannel and
+        # UpdateNotificationChannel.
         # @param [String] name
         #   The full REST resource name for this channel. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER]/notificationChannels/[CHANNEL_ID] The [CHANNEL_ID] is
@@ -1523,6 +1529,172 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a Snooze that will prevent alerts, which match the provided criteria,
+        # from being opened. The Snooze applies for a specific time interval.
+        # @param [String] parent
+        #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
+        #   in which a Snooze should be created. The format is: projects/[
+        #   PROJECT_ID_OR_NUMBER]
+        # @param [Google::Apis::MonitoringV3::Snooze] snooze_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MonitoringV3::Snooze] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MonitoringV3::Snooze]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_snooze(parent, snooze_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v3/{+parent}/snoozes', options)
+          command.request_representation = Google::Apis::MonitoringV3::Snooze::Representation
+          command.request_object = snooze_object
+          command.response_representation = Google::Apis::MonitoringV3::Snooze::Representation
+          command.response_class = Google::Apis::MonitoringV3::Snooze
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves a Snooze by name.
+        # @param [String] name
+        #   Required. The ID of the Snooze to retrieve. The format is: projects/[
+        #   PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID]
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MonitoringV3::Snooze] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MonitoringV3::Snooze]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_snooze(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v3/{+name}', options)
+          command.response_representation = Google::Apis::MonitoringV3::Snooze::Representation
+          command.response_class = Google::Apis::MonitoringV3::Snooze
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists the Snoozes associated with a project. Can optionally pass in filter,
+        # which specifies predicates to match Snoozes.
+        # @param [String] parent
+        #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
+        #   whose Snoozes should be listed. The format is: projects/[PROJECT_ID_OR_NUMBER]
+        #   
+        # @param [String] filter
+        #   Optional. Optional filter to restrict results to the given criteria. The
+        #   following fields are supported. interval.start_time interval.end_timeFor
+        #   example: ``` interval.start_time > "2022-03-11T00:00:00-08:00" AND interval.
+        #   end_time < "2022-03-12T00:00:00-08:00" ```
+        # @param [Fixnum] page_size
+        #   Optional. The maximum number of results to return for a single query. The
+        #   server may further constrain the maximum number of results returned in a
+        #   single page. The value should be in the range 1, 1000. If the value given is
+        #   outside this range, the server will decide the number of results to be
+        #   returned.
+        # @param [String] page_token
+        #   Optional. The next_page_token from a previous call to ListSnoozesRequest to
+        #   get the next page of results.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MonitoringV3::ListSnoozesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MonitoringV3::ListSnoozesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_snoozes(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v3/{+parent}/snoozes', options)
+          command.response_representation = Google::Apis::MonitoringV3::ListSnoozesResponse::Representation
+          command.response_class = Google::Apis::MonitoringV3::ListSnoozesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates a Snooze, identified by its name, with the parameters in the given
+        # Snooze object.
+        # @param [String] name
+        #   Required. The name of the Snooze. The format is: projects/[
+        #   PROJECT_ID_OR_NUMBER]/snoozes/[SNOOZE_ID] The ID of the Snooze will be
+        #   generated by the system.
+        # @param [Google::Apis::MonitoringV3::Snooze] snooze_object
+        # @param [String] update_mask
+        #   Required. The fields to update.For each field listed in update_mask: If the
+        #   Snooze object supplied in the UpdateSnoozeRequest has a value for that field,
+        #   the value of the field in the existing Snooze will be set to the value of the
+        #   field in the supplied Snooze. If the field does not have a value in the
+        #   supplied Snooze, the field in the existing Snooze is set to its default value.
+        #   Fields not listed retain their existing value.The following are the field
+        #   names that are accepted in update_mask: display_name interval.start_time
+        #   interval.end_timeThat said, the start time and end time of the Snooze
+        #   determines which fields can legally be updated. Before attempting an update,
+        #   users should consult the documentation for UpdateSnoozeRequest, which talks
+        #   about which fields can be updated.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MonitoringV3::Snooze] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MonitoringV3::Snooze]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_project_snooze(name, snooze_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v3/{+name}', options)
+          command.request_representation = Google::Apis::MonitoringV3::Snooze::Representation
+          command.request_object = snooze_object
+          command.response_representation = Google::Apis::MonitoringV3::Snooze::Representation
+          command.response_class = Google::Apis::MonitoringV3::Snooze
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates or adds data to one or more time series. The response is empty if all
         # time series in the request were written. If any time series could not be
         # written, a corresponding failure message is included in the error response.
@@ -1560,8 +1732,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Lists time series that match a filter. This method does not require a
-        # Workspace.
+        # Creates or adds data to one or more service time series. A service time series
+        # is a time series for a metric from a Google Cloud service. The response is
+        # empty if all time series in the request were written. If any time series could
+        # not be written, a corresponding failure message is included in the error
+        # response. This endpoint rejects writes to user-defined metrics. This method is
+        # only for use by Google Cloud services. Use projects.timeSeries.create instead.
+        # @param [String] name
+        #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
+        #   on which to execute the request. The format is: projects/[
+        #   PROJECT_ID_OR_NUMBER]
+        # @param [Google::Apis::MonitoringV3::CreateTimeSeriesRequest] create_time_series_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::MonitoringV3::Empty] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::MonitoringV3::Empty]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_time_series_service(name, create_time_series_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v3/{+name}/timeSeries:createService', options)
+          command.request_representation = Google::Apis::MonitoringV3::CreateTimeSeriesRequest::Representation
+          command.request_object = create_time_series_request_object
+          command.response_representation = Google::Apis::MonitoringV3::Empty::Representation
+          command.response_class = Google::Apis::MonitoringV3::Empty
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists time series that match a filter.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   , organization or folder on which to execute the request. The format is:
@@ -1725,8 +1936,7 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Queries time series using Monitoring Query Language. This method does not
-        # require a Workspace.
+        # Queries time series using Monitoring Query Language.
         # @param [String] name
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   on which to execute the request. The format is: projects/[
@@ -1866,6 +2076,11 @@ module Google
         #   Required. The project (https://cloud.google.com/monitoring/api/v3#project_name)
         #   whose Uptime check configurations are listed. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER]
+        # @param [String] filter
+        #   If provided, this field specifies the criteria that must be met by uptime
+        #   checks to be included in the response.For more details, see Filtering syntax (
+        #   https://cloud.google.com/monitoring/api/v3/sorting-and-filtering#filter_syntax)
+        #   .
         # @param [Fixnum] page_size
         #   The maximum number of results to return in a single response. The server may
         #   further constrain the maximum number of results returned in a single page. If
@@ -1892,11 +2107,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_uptime_check_configs(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_uptime_check_configs(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v3/{+parent}/uptimeCheckConfigs', options)
           command.response_representation = Google::Apis::MonitoringV3::ListUptimeCheckConfigsResponse::Representation
           command.response_class = Google::Apis::MonitoringV3::ListUptimeCheckConfigsResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -1954,7 +2170,7 @@ module Google
         # Create a Service.
         # @param [String] parent
         #   Required. Resource name (https://cloud.google.com/monitoring/api/v3#
-        #   project_name) of the parent workspace. The format is: projects/[
+        #   project_name) of the parent Metrics Scope. The format is: projects/[
         #   PROJECT_ID_OR_NUMBER]
         # @param [Google::Apis::MonitoringV3::Service] service_object
         # @param [String] service_id
@@ -2052,24 +2268,28 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # List Services for this workspace.
+        # List Services for this Metrics Scope.
         # @param [String] parent
         #   Required. Resource name of the parent containing the listed services, either a
         #   project (https://cloud.google.com/monitoring/api/v3#project_name) or a
-        #   Monitoring Workspace. The formats are: projects/[PROJECT_ID_OR_NUMBER]
+        #   Monitoring Metrics Scope. The formats are: projects/[PROJECT_ID_OR_NUMBER]
         #   workspaces/[HOST_PROJECT_ID_OR_NUMBER]
         # @param [String] filter
-        #   A filter specifying what Services to return. The filter currently supports the
-        #   following fields: - `identifier_case` - `app_engine.module_id` - `
-        #   cloud_endpoints.service` (reserved for future use) - `mesh_istio.mesh_uid` - `
-        #   mesh_istio.service_namespace` - `mesh_istio.service_name` - `cluster_istio.
-        #   location` (deprecated) - `cluster_istio.cluster_name` (deprecated) - `
-        #   cluster_istio.service_namespace` (deprecated) - `cluster_istio.service_name` (
-        #   deprecated) identifier_case refers to which option in the identifier oneof is
-        #   populated. For example, the filter identifier_case = "CUSTOM" would match all
-        #   services with a value for the custom field. Valid options are "CUSTOM", "
-        #   APP_ENGINE", "MESH_ISTIO", plus "CLUSTER_ISTIO" (deprecated) and "
-        #   CLOUD_ENDPOINTS" (reserved for future use).
+        #   A filter specifying what Services to return. The filter supports filtering on
+        #   a particular service-identifier type or one of its attributes.To filter on a
+        #   particular service-identifier type, the identifier_case refers to which option
+        #   in the identifier field is populated. For example, the filter identifier_case =
+        #   "CUSTOM" would match all services with a value for the custom field. Valid
+        #   options include "CUSTOM", "APP_ENGINE", "MESH_ISTIO", and the other options
+        #   listed at https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#
+        #   ServiceTo filter on an attribute of a service-identifier type, apply the
+        #   filter name by using the snake case of the service-identifier type and the
+        #   attribute of that service-identifier type, and join the two with a period. For
+        #   example, to filter by the meshUid field of the MeshIstio service-identifier
+        #   type, you must filter on mesh_istio.mesh_uid = "123" to match all services
+        #   with mesh UID "123". Service-identifier types and their attributes are
+        #   described at https://cloud.google.com/monitoring/api/ref_v3/rest/v3/services#
+        #   Service
         # @param [Fixnum] page_size
         #   A non-negative number that is the maximum number of results to return. When 0,
         #   use default page size.
@@ -2255,7 +2475,7 @@ module Google
         # List the ServiceLevelObjectives for the given Service.
         # @param [String] parent
         #   Required. Resource name of the parent containing the listed SLOs, either a
-        #   project or a Monitoring Workspace. The formats are: projects/[
+        #   project or a Monitoring Metrics Scope. The formats are: projects/[
         #   PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] workspaces/[
         #   HOST_PROJECT_ID_OR_NUMBER]/services/-
         # @param [String] filter

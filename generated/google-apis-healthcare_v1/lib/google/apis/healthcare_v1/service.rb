@@ -84,8 +84,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -271,16 +271,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -390,8 +394,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -428,8 +433,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -634,16 +640,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -814,8 +824,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -852,8 +863,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1939,7 +1951,8 @@ module Google
         # identification fails for some DICOM instances. The output DICOM store will not
         # contain these failed resources. Failed resource totals are tracked in
         # Operation.metadata. Error details are also logged to Cloud Logging (see [
-        # Viewing error logs in Cloud Logging](/healthcare/docs/how-tos/logging)).
+        # Viewing error logs in Cloud Logging](https://cloud.google.com/healthcare/docs/
+        # how-tos/logging)).
         # @param [String] source_store
         #   Source DICOM store resource name. For example, `projects/`project_id`/
         #   locations/`location_id`/datasets/`dataset_id`/dicomStores/`dicom_store_id``.
@@ -2075,16 +2088,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2384,8 +2401,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2468,8 +2486,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -3376,16 +3395,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3605,8 +3628,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -3643,8 +3667,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -3694,8 +3719,8 @@ module Google
         # fhir/stu3/compartmentdefinition-patient.html), [R4](http://hl7.org/fhir/R4/
         # compartmentdefinition-patient.html)), which details the eligible resource
         # types and referencing search parameters. For samples that show how to call `
-        # Patient-everything`, see [Getting all patient compartment resources](/
-        # healthcare/docs/how-tos/fhir-resources#
+        # Patient-everything`, see [Getting all patient compartment resources](https://
+        # cloud.google.com/healthcare/docs/how-tos/fhir-resources#
         # getting_all_patient_compartment_resources).
         # @param [String] name
         #   Name of the `Patient` resource for which the information is required.
@@ -3717,11 +3742,13 @@ module Google
         #   String of comma-delimited FHIR resource types. If provided, only resources of
         #   the specified resource type(s) are returned.
         # @param [String] end_
-        #   The response includes records prior to the end date. If no end date is
-        #   provided, all records subsequent to the start date are in scope.
+        #   The response includes records prior to the end date. The date uses the format
+        #   YYYY-MM-DD. If no end date is provided, all records subsequent to the start
+        #   date are in scope.
         # @param [String] start
-        #   The response includes records subsequent to the start date. If no start date
-        #   is provided, all records prior to the end date are in scope.
+        #   The response includes records subsequent to the start date. The date uses the
+        #   format YYYY-MM-DD. If no start date is provided, all records prior to the end
+        #   date are in scope.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -3759,8 +3786,9 @@ module Google
         # version) from the FHIR store. To remove all versions of a resource, first
         # delete the current version and then call this method. This is not a FHIR
         # standard operation. For samples that show how to call `Resource-purge`, see [
-        # Deleting historical versions of a FHIR resource](/healthcare/docs/how-tos/fhir-
-        # resources#deleting_historical_versions_of_a_fhir_resource).
+        # Deleting historical versions of a FHIR resource](https://cloud.google.com/
+        # healthcare/docs/how-tos/fhir-resources#
+        # deleting_historical_versions_of_a_fhir_resource).
         # @param [String] name
         #   The name of the resource to purge.
         # @param [String] fields
@@ -3785,6 +3813,66 @@ module Google
           command.response_representation = Google::Apis::HealthcareV1::Empty::Representation
           command.response_class = Google::Apis::HealthcareV1::Empty
           command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Validates an input FHIR resource's conformance to its profiles and the
+        # profiles configured on the FHIR store. Implements the FHIR extended operation $
+        # validate ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/resource-
+        # operations.html#validate), [STU3](http://hl7.org/implement/standards/fhir/STU3/
+        # resource-operations.html#validate), or [R4](http://hl7.org/implement/standards/
+        # fhir/R4/resource-operation-validate.html)). The request body must contain a
+        # JSON-encoded FHIR resource, and the request headers must contain `Content-Type:
+        # application/fhir+json`. The `Parameters` input syntax is not supported. The `
+        # profile` query parameter can be used to request that the resource only be
+        # validated against a specific profile. If a profile with the given URL cannot
+        # be found in the FHIR store then an error is returned. Errors generated by
+        # validation contain a JSON-encoded `OperationOutcome` resource describing the
+        # reason for the error. If the request cannot be mapped to a valid API method on
+        # a FHIR store, a generic GCP error might be returned instead.
+        # @param [String] parent
+        #   The name of the FHIR store that holds the profiles being used for validation.
+        # @param [String] type
+        #   The FHIR resource type of the resource being validated. For a complete list,
+        #   see the FHIR Resource Index ([DSTU2](http://hl7.org/implement/standards/fhir/
+        #   DSTU2/resourcelist.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/
+        #   resourcelist.html), or [R4](http://hl7.org/implement/standards/fhir/R4/
+        #   resourcelist.html)). Must match the resource type in the provided content.
+        # @param [Google::Apis::HealthcareV1::HttpBody] http_body_object
+        # @param [String] profile
+        #   The canonical URL of a profile that this resource should be validated against.
+        #   For example, to validate a Patient resource against the US Core Patient
+        #   profile this parameter would be `http://hl7.org/fhir/us/core/
+        #   StructureDefinition/us-core-patient`. A StructureDefinition with this
+        #   canonical URL must exist in the FHIR store.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::HealthcareV1::HttpBody] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::HealthcareV1::HttpBody]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def resource_project_location_dataset_fhir_store_fhir_validate(parent, type, http_body_object = nil, profile: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/fhir/{+type}/$validate', options)
+          command.request_representation = Google::Apis::HealthcareV1::HttpBody::Representation
+          command.request_object = http_body_object
+          command.response_representation = Google::Apis::HealthcareV1::HttpBody::Representation
+          command.response_class = Google::Apis::HealthcareV1::HttpBody
+          command.params['parent'] = parent unless parent.nil?
+          command.params['type'] = type unless type.nil?
+          command.query['profile'] = profile unless profile.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3842,8 +3930,8 @@ module Google
         # contain a JSON-encoded `OperationOutcome` resource describing the reason for
         # the error. If the request cannot be mapped to a valid API method on a FHIR
         # store, a generic GCP error might be returned instead. For samples that show
-        # how to call `create`, see [Creating a FHIR resource](/healthcare/docs/how-tos/
-        # fhir-resources#creating_a_fhir_resource).
+        # how to call `create`, see [Creating a FHIR resource](https://cloud.google.com/
+        # healthcare/docs/how-tos/fhir-resources#creating_a_fhir_resource).
         # @param [String] parent
         #   The name of the FHIR store this resource belongs to.
         # @param [String] type
@@ -3892,8 +3980,8 @@ module Google
         # FHIR store, the deleted resources will be moved to a history repository that
         # can still be retrieved through vread and related methods, unless they are
         # removed by the purge method. For samples that show how to call `delete`, see [
-        # Deleting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#
-        # deleting_a_fhir_resource).
+        # Deleting a FHIR resource](https://cloud.google.com/healthcare/docs/how-tos/
+        # fhir-resources#deleting_a_fhir_resource).
         # @param [String] name
         #   The name of the resource to delete.
         # @param [String] fields
@@ -3924,29 +4012,38 @@ module Google
         end
         
         # Executes all the requests in the given Bundle. Implements the FHIR standard
-        # batch/transaction interaction ([DSTU2](http://hl7.org/implement/standards/fhir/
-        # DSTU2/http.html#transaction), [STU3](http://hl7.org/implement/standards/fhir/
-        # STU3/http.html#transaction), [R4](http://hl7.org/implement/standards/fhir/R4/
-        # http.html#transaction)). Supports all interactions within a bundle, except
-        # search. This method accepts Bundles of type `batch` and `transaction`,
-        # processing them according to the batch processing rules ([DSTU2](http://hl7.
-        # org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.1), [STU3](http://hl7.
-        # org/implement/standards/fhir/STU3/http.html#2.21.0.17.1), [R4](http://hl7.org/
+        # batch/transaction interaction ([DSTU2](https://hl7.org/implement/standards/
+        # fhir/DSTU2/http.html#transaction), [STU3](https://hl7.org/implement/standards/
+        # fhir/STU3/http.html#transaction), [R4](https://hl7.org/implement/standards/
+        # fhir/R4/http.html#transaction)). Supports all interactions within a bundle,
+        # except search. This method accepts Bundles of type `batch` and `transaction`,
+        # processing them according to the batch processing rules ([DSTU2](https://hl7.
+        # org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.1), [STU3](https://hl7.
+        # org/implement/standards/fhir/STU3/http.html#2.21.0.17.1), [R4](https://hl7.org/
         # implement/standards/fhir/R4/http.html#brules)) and transaction processing
-        # rules ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.
-        # 16.2), [STU3](http://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.
-        # 2), [R4](http://hl7.org/implement/standards/fhir/R4/http.html#trules)). The
-        # request body must contain a JSON-encoded FHIR `Bundle` resource, and the
+        # rules ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.
+        # 16.2), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.
+        # 17.2), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#trules)).
+        # The request body must contain a JSON-encoded FHIR `Bundle` resource, and the
         # request headers must contain `Content-Type: application/fhir+json`. For a
-        # batch bundle or a successful transaction the response body will contain a JSON-
+        # batch bundle or a successful transaction, the response body contains a JSON-
         # encoded representation of a `Bundle` resource of type `batch-response` or `
         # transaction-response` containing one entry for each entry in the request, with
         # the outcome of processing the entry. In the case of an error for a transaction
-        # bundle, the response body will contain a JSON-encoded `OperationOutcome`
-        # resource describing the reason for the error. If the request cannot be mapped
-        # to a valid API method on a FHIR store, a generic GCP error might be returned
-        # instead. For samples that show how to call `executeBundle`, see [Managing FHIR
-        # resources using FHIR bundles](/healthcare/docs/how-tos/fhir-bundles).
+        # bundle, the response body contains a JSON-encoded `OperationOutcome` resource
+        # describing the reason for the error. If the request cannot be mapped to a
+        # valid API method on a FHIR store, a generic GCP error might be returned
+        # instead. This method checks permissions for each request in the bundle. The `
+        # executeBundle` permission is required to call this method, but you must also
+        # grant sufficient permissions to execute the individual requests in the bundle.
+        # For example, if the bundle contains a request to create a FHIR resource, the
+        # caller must also have been granted the `healthcare.fhirResources.create`
+        # permission. You can use audit logs to view the permissions for `executeBundle`
+        # and each request in the bundle. For more information, see [Viewing Cloud Audit
+        # logs](https://cloud.google.com/healthcare-api/docs/how-tos/audit-logging). For
+        # samples that show how to call `executeBundle`, see [Managing FHIR resources
+        # using FHIR bundles](https://cloud.google.com/healthcare/docs/how-tos/fhir-
+        # bundles).
         # @param [String] parent
         #   Name of the FHIR store in which this bundle will be executed.
         # @param [Google::Apis::HealthcareV1::HttpBody] http_body_object
@@ -3991,8 +4088,8 @@ module Google
         # describing the reason for the error. If the request cannot be mapped to a
         # valid API method on a FHIR store, a generic GCP error might be returned
         # instead. For samples that show how to call `history`, see [Listing FHIR
-        # resource versions](/healthcare/docs/how-tos/fhir-resources#
-        # listing_fhir_resource_versions).
+        # resource versions](https://cloud.google.com/healthcare/docs/how-tos/fhir-
+        # resources#listing_fhir_resource_versions).
         # @param [String] name
         #   The name of the resource to retrieve.
         # @param [String] _at
@@ -4059,7 +4156,8 @@ module Google
         # describing the reason for the error. If the request cannot be mapped to a
         # valid API method on a FHIR store, a generic GCP error might be returned
         # instead. For samples that show how to call `patch`, see [Patching a FHIR
-        # resource](/healthcare/docs/how-tos/fhir-resources#patching_a_fhir_resource).
+        # resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#
+        # patching_a_fhir_resource).
         # @param [String] name
         #   The name of the resource to update.
         # @param [Google::Apis::HealthcareV1::HttpBody] http_body_object
@@ -4106,8 +4204,8 @@ module Google
         # OperationOutcome` resource describing the reason for the error. If the request
         # cannot be mapped to a valid API method on a FHIR store, a generic GCP error
         # might be returned instead. For samples that show how to call `read`, see [
-        # Getting a FHIR resource](/healthcare/docs/how-tos/fhir-resources#
-        # getting_a_fhir_resource).
+        # Getting a FHIR resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-
+        # resources#getting_a_fhir_resource).
         # @param [String] name
         #   The name of the resource to retrieve.
         # @param [String] fields
@@ -4166,21 +4264,22 @@ module Google
         # http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
         # FHIR search parameters for DSTU2 can be found on each resource's definition
         # page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `
-        # :in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`.
-        # Supported search result parameters: `_sort`, `_count`, `_include`, `
-        # _revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum
-        # number of search results returned defaults to 100, which can be overridden by
-        # the `_count` parameter up to a maximum limit of 1000. If there are additional
-        # results, the returned `Bundle` contains a link of `relation` "next", which has
-        # a `_page_token` parameter for an opaque pagination token that can be used to
-        # retrieve the next page. Resources with a total size larger than 5MB or a field
-        # count larger than 50,000 might not be fully searchable as the server might
-        # trim its generated search index in those cases. Note: FHIR resources are
-        # indexed asynchronously, so there might be a slight delay between the time a
-        # resource is created or changes and when the change is reflected in search
-        # results. For samples and detailed information, see [Searching for FHIR
-        # resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search
-        # features](/healthcare/docs/how-tos/fhir-advanced-search).
+        # :in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2
+        # and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `
+        # _count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `
+        # _elements`. The maximum number of search results returned defaults to 100,
+        # which can be overridden by the `_count` parameter up to a maximum limit of
+        # 1000. If there are additional results, the returned `Bundle` contains a link
+        # of `relation` "next", which has a `_page_token` parameter for an opaque
+        # pagination token that can be used to retrieve the next page. Resources with a
+        # total size larger than 5MB or a field count larger than 50,000 might not be
+        # fully searchable as the server might trim its generated search index in those
+        # cases. Note: FHIR resources are indexed asynchronously, so there might be a
+        # slight delay between the time a resource is created or changes and when the
+        # change is reflected in search results. For samples and detailed information,
+        # see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/
+        # how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.
+        # com/healthcare/docs/how-tos/fhir-advanced-search).
         # @param [String] parent
         #   Name of the FHIR store to retrieve resources from.
         # @param [Google::Apis::HealthcareV1::SearchResourcesRequest] search_resources_request_object
@@ -4242,21 +4341,22 @@ module Google
         # http://hl7.org/implement/standards/fhir/R4/searchparameter-registry.html)).
         # FHIR search parameters for DSTU2 can be found on each resource's definition
         # page. Supported search modifiers: `:missing`, `:exact`, `:contains`, `:text`, `
-        # :in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`.
-        # Supported search result parameters: `_sort`, `_count`, `_include`, `
-        # _revinclude`, `_summary=text`, `_summary=data`, and `_elements`. The maximum
-        # number of search results returned defaults to 100, which can be overridden by
-        # the `_count` parameter up to a maximum limit of 1000. If there are additional
-        # results, the returned `Bundle` contains a link of `relation` "next", which has
-        # a `_page_token` parameter for an opaque pagination token that can be used to
-        # retrieve the next page. Resources with a total size larger than 5MB or a field
-        # count larger than 50,000 might not be fully searchable as the server might
-        # trim its generated search index in those cases. Note: FHIR resources are
-        # indexed asynchronously, so there might be a slight delay between the time a
-        # resource is created or changes and when the change is reflected in search
-        # results. For samples and detailed information, see [Searching for FHIR
-        # resources](/healthcare/docs/how-tos/fhir-search) and [Advanced FHIR search
-        # features](/healthcare/docs/how-tos/fhir-advanced-search).
+        # :in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `recurse` (DSTU2
+        # and STU3) or `:iterate` (R4). Supported search result parameters: `_sort`, `
+        # _count`, `_include`, `_revinclude`, `_summary=text`, `_summary=data`, and `
+        # _elements`. The maximum number of search results returned defaults to 100,
+        # which can be overridden by the `_count` parameter up to a maximum limit of
+        # 1000. If there are additional results, the returned `Bundle` contains a link
+        # of `relation` "next", which has a `_page_token` parameter for an opaque
+        # pagination token that can be used to retrieve the next page. Resources with a
+        # total size larger than 5MB or a field count larger than 50,000 might not be
+        # fully searchable as the server might trim its generated search index in those
+        # cases. Note: FHIR resources are indexed asynchronously, so there might be a
+        # slight delay between the time a resource is created or changes and when the
+        # change is reflected in search results. For samples and detailed information,
+        # see [Searching for FHIR resources](https://cloud.google.com/healthcare/docs/
+        # how-tos/fhir-search) and [Advanced FHIR search features](https://cloud.google.
+        # com/healthcare/docs/how-tos/fhir-advanced-search).
         # @param [String] parent
         #   Name of the FHIR store to retrieve resources from.
         # @param [String] resource_type
@@ -4315,7 +4415,8 @@ module Google
         # describing the reason for the error. If the request cannot be mapped to a
         # valid API method on a FHIR store, a generic GCP error might be returned
         # instead. For samples that show how to call `update`, see [Updating a FHIR
-        # resource](/healthcare/docs/how-tos/fhir-resources#updating_a_fhir_resource).
+        # resource](https://cloud.google.com/healthcare/docs/how-tos/fhir-resources#
+        # updating_a_fhir_resource).
         # @param [String] name
         #   The name of the resource to update.
         # @param [Google::Apis::HealthcareV1::HttpBody] http_body_object
@@ -4357,8 +4458,9 @@ module Google
         # store contain a JSON-encoded `OperationOutcome` resource describing the reason
         # for the error. If the request cannot be mapped to a valid API method on a FHIR
         # store, a generic GCP error might be returned instead. For samples that show
-        # how to call `vread`, see [Retrieving a FHIR resource version](/healthcare/docs/
-        # how-tos/fhir-resources#retrieving_a_fhir_resource_version).
+        # how to call `vread`, see [Retrieving a FHIR resource version](https://cloud.
+        # google.com/healthcare/docs/how-tos/fhir-resources#
+        # retrieving_a_fhir_resource_version).
         # @param [String] name
         #   The name of the resource version to retrieve.
         # @param [String] fields
@@ -4455,6 +4557,46 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Exports the messages to a destination. To filter messages to be exported,
+        # define a filter using the start and end time, relative to the message
+        # generation time (MSH.7). This API returns an Operation that can be used to
+        # track the status of the job by calling GetOperation. Immediate fatal errors
+        # appear in the error field. Otherwise, when the operation finishes, a detailed
+        # response of type ExportMessagesResponse is returned in the response field. The
+        # metadata field type for this operation is OperationMetadata.
+        # @param [String] name
+        #   The name of the source HL7v2 store, in the format `projects/`project_id`/
+        #   locations/`location_id`/datasets/`dataset_id`/hl7v2Stores/`hl7v2_store_id``
+        # @param [Google::Apis::HealthcareV1::ExportMessagesRequest] export_messages_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::HealthcareV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::HealthcareV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def export_hl7_v2_store_messages(name, export_messages_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:export', options)
+          command.request_representation = Google::Apis::HealthcareV1::ExportMessagesRequest::Representation
+          command.request_object = export_messages_request_object
+          command.response_representation = Google::Apis::HealthcareV1::Operation::Representation
+          command.response_class = Google::Apis::HealthcareV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets the specified HL7v2 store.
         # @param [String] name
         #   The resource name of the HL7v2 store to get.
@@ -4488,16 +4630,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -4521,6 +4667,63 @@ module Google
           command.response_class = Google::Apis::HealthcareV1::Policy
           command.params['resource'] = resource unless resource.nil?
           command.query['options.requestedPolicyVersion'] = options_requested_policy_version unless options_requested_policy_version.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Import messages to the HL7v2 store by loading data from the specified sources.
+        # This method is optimized to load large quantities of data using import
+        # semantics that ignore some HL7v2 store configuration options and are not
+        # suitable for all use cases. It is primarily intended to load data into an
+        # empty HL7v2 store that is not being used by other clients. An existing message
+        # will be overwritten if a duplicate message is imported. A duplicate message is
+        # a message with the same raw bytes as a message that already exists in this
+        # HL7v2 store. When a message is overwritten, its labels will also be
+        # overwritten. The import operation is idempotent unless the input data contains
+        # multiple valid messages with the same raw bytes but different labels. In that
+        # case, after the import completes, the store contains exactly one message with
+        # those raw bytes but there is no ordering guarantee on which version of the
+        # labels it has. The operation result counters do not count duplicated raw bytes
+        # as an error and count one success for each message in the input, which might
+        # result in a success count larger than the number of messages in the HL7v2
+        # store. If some messages fail to import, for example due to parsing errors,
+        # successfully imported messages are not rolled back. This method returns an
+        # Operation that can be used to track the status of the import by calling
+        # GetOperation. Immediate fatal errors appear in the error field, errors are
+        # also logged to Cloud Logging (see [Viewing error logs in Cloud Logging](https:/
+        # /cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when the
+        # operation finishes, a response of type ImportMessagesResponse is returned in
+        # the response field. The metadata field type for this operation is
+        # OperationMetadata.
+        # @param [String] name
+        #   The name of the target HL7v2 store, in the format `projects/`project_id`/
+        #   locations/`location_id`/datasets/`dataset_id`/hl7v2Stores/`hl7v2_store_id``
+        # @param [Google::Apis::HealthcareV1::ImportMessagesRequest] import_messages_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::HealthcareV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::HealthcareV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_hl7_v2_store_messages(name, import_messages_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:import', options)
+          command.request_representation = Google::Apis::HealthcareV1::ImportMessagesRequest::Representation
+          command.request_object = import_messages_request_object
+          command.response_representation = Google::Apis::HealthcareV1::Operation::Representation
+          command.response_class = Google::Apis::HealthcareV1::Operation
+          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -4589,8 +4792,8 @@ module Google
         
         # Updates the HL7v2 store.
         # @param [String] name
-        #   Resource name of the HL7v2 store, of the form `projects/`project_id`/datasets/`
-        #   dataset_id`/hl7V2Stores/`hl7v2_store_id``.
+        #   Resource name of the HL7v2 store, of the form `projects/`project_id`/locations/
+        #   `location_id`/datasets/`dataset_id`/hl7V2Stores/`hl7v2_store_id``.
         # @param [Google::Apis::HealthcareV1::Hl7V2Store] hl7_v2_store_object
         # @param [String] update_mask
         #   The update mask applies to the resource. For the `FieldMask` definition, see
@@ -4630,8 +4833,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -4668,8 +4872,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::HealthcareV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -4938,9 +5143,9 @@ module Google
         # request are merged with the existing set of labels. Existing labels with the
         # same keys are updated.
         # @param [String] name
-        #   Resource name of the Message, of the form `projects/`project_id`/datasets/`
-        #   dataset_id`/hl7V2Stores/`hl7_v2_store_id`/messages/`message_id``. Assigned by
-        #   the server.
+        #   Resource name of the Message, of the form `projects/`project_id`/locations/`
+        #   location_id`/datasets/`dataset_id`/hl7V2Stores/`hl7_v2_store_id`/messages/`
+        #   message_id``. Assigned by the server.
         # @param [Google::Apis::HealthcareV1::Message] message_object
         # @param [String] update_mask
         #   The update mask applies to the resource. For the `FieldMask` definition, see

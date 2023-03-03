@@ -119,6 +119,28 @@ module Google
       class AsymmetricSignRequest
         include Google::Apis::Core::Hashable
       
+        # Optional. The data to sign. It can't be supplied if AsymmetricSignRequest.
+        # digest is supplied.
+        # Corresponds to the JSON property `data`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :data
+      
+        # Optional. An optional CRC32C checksum of the AsymmetricSignRequest.data. If
+        # specified, KeyManagementService will verify the integrity of the received
+        # AsymmetricSignRequest.data using this checksum. KeyManagementService will
+        # report an error if the checksum verification fails. If you receive a checksum
+        # error, your client should verify that CRC32C(AsymmetricSignRequest.data) is
+        # equal to AsymmetricSignRequest.data_crc32c, and if so, perform a limited
+        # number of retries. A persistent mismatch may indicate an issue in your
+        # computation of the CRC32C checksum. Note: This field is defined as int64 for
+        # reasons of compatibility across different languages. However, it is a non-
+        # negative integer, which will never exceed 2^32-1, and can be safely
+        # downconverted to uint32 in languages that support this type.
+        # Corresponds to the JSON property `dataCrc32c`
+        # @return [Fixnum]
+        attr_accessor :data_crc32c
+      
         # A Digest holds a cryptographic message digest.
         # Corresponds to the JSON property `digest`
         # @return [Google::Apis::CloudkmsV1::Digest]
@@ -145,6 +167,8 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @data = args[:data] if args.key?(:data)
+          @data_crc32c = args[:data_crc32c] if args.key?(:data_crc32c)
           @digest = args[:digest] if args.key?(:digest)
           @digest_crc32c = args[:digest_crc32c] if args.key?(:digest_crc32c)
         end
@@ -186,6 +210,18 @@ module Google
         attr_accessor :signature_crc32c
       
         # Integrity verification field. A flag indicating whether AsymmetricSignRequest.
+        # data_crc32c was received by KeyManagementService and used for the integrity
+        # verification of the data. A false value of this field indicates either that
+        # AsymmetricSignRequest.data_crc32c was left unset or that it was not delivered
+        # to KeyManagementService. If you've set AsymmetricSignRequest.data_crc32c but
+        # this field is still false, discard the response and perform a limited number
+        # of retries.
+        # Corresponds to the JSON property `verifiedDataCrc32c`
+        # @return [Boolean]
+        attr_accessor :verified_data_crc32c
+        alias_method :verified_data_crc32c?, :verified_data_crc32c
+      
+        # Integrity verification field. A flag indicating whether AsymmetricSignRequest.
         # digest_crc32c was received by KeyManagementService and used for the integrity
         # verification of the digest. A false value of this field indicates either that
         # AsymmetricSignRequest.digest_crc32c was left unset or that it was not
@@ -207,6 +243,7 @@ module Google
           @protection_level = args[:protection_level] if args.key?(:protection_level)
           @signature = args[:signature] if args.key?(:signature)
           @signature_crc32c = args[:signature_crc32c] if args.key?(:signature_crc32c)
+          @verified_data_crc32c = args[:verified_data_crc32c] if args.key?(:verified_data_crc32c)
           @verified_digest_crc32c = args[:verified_digest_crc32c] if args.key?(:verified_digest_crc32c)
         end
       end
@@ -224,8 +261,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -282,7 +319,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -305,38 +342,43 @@ module Google
         # @return [Google::Apis::CloudkmsV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -350,6 +392,82 @@ module Google
           @condition = args[:condition] if args.key?(:condition)
           @members = args[:members] if args.key?(:members)
           @role = args[:role] if args.key?(:role)
+        end
+      end
+      
+      # A Certificate represents an X.509 certificate used to authenticate HTTPS
+      # connections to EKM replicas.
+      class Certificate
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The issuer distinguished name in RFC 2253 format. Only present if
+        # parsed is true.
+        # Corresponds to the JSON property `issuer`
+        # @return [String]
+        attr_accessor :issuer
+      
+        # Output only. The certificate is not valid after this time. Only present if
+        # parsed is true.
+        # Corresponds to the JSON property `notAfterTime`
+        # @return [String]
+        attr_accessor :not_after_time
+      
+        # Output only. The certificate is not valid before this time. Only present if
+        # parsed is true.
+        # Corresponds to the JSON property `notBeforeTime`
+        # @return [String]
+        attr_accessor :not_before_time
+      
+        # Output only. True if the certificate was parsed successfully.
+        # Corresponds to the JSON property `parsed`
+        # @return [Boolean]
+        attr_accessor :parsed
+        alias_method :parsed?, :parsed
+      
+        # Required. The raw certificate bytes in DER format.
+        # Corresponds to the JSON property `rawDer`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :raw_der
+      
+        # Output only. The certificate serial number as a hex string. Only present if
+        # parsed is true.
+        # Corresponds to the JSON property `serialNumber`
+        # @return [String]
+        attr_accessor :serial_number
+      
+        # Output only. The SHA-256 certificate fingerprint as a hex string. Only present
+        # if parsed is true.
+        # Corresponds to the JSON property `sha256Fingerprint`
+        # @return [String]
+        attr_accessor :sha256_fingerprint
+      
+        # Output only. The subject distinguished name in RFC 2253 format. Only present
+        # if parsed is true.
+        # Corresponds to the JSON property `subject`
+        # @return [String]
+        attr_accessor :subject
+      
+        # Output only. The subject Alternative DNS names. Only present if parsed is true.
+        # Corresponds to the JSON property `subjectAlternativeDnsNames`
+        # @return [Array<String>]
+        attr_accessor :subject_alternative_dns_names
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @issuer = args[:issuer] if args.key?(:issuer)
+          @not_after_time = args[:not_after_time] if args.key?(:not_after_time)
+          @not_before_time = args[:not_before_time] if args.key?(:not_before_time)
+          @parsed = args[:parsed] if args.key?(:parsed)
+          @raw_der = args[:raw_der] if args.key?(:raw_der)
+          @serial_number = args[:serial_number] if args.key?(:serial_number)
+          @sha256_fingerprint = args[:sha256_fingerprint] if args.key?(:sha256_fingerprint)
+          @subject = args[:subject] if args.key?(:subject)
+          @subject_alternative_dns_names = args[:subject_alternative_dns_names] if args.key?(:subject_alternative_dns_names)
         end
       end
       
@@ -396,6 +514,16 @@ module Google
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
+      
+        # Immutable. The resource name of the backend environment where the key material
+        # for all CryptoKeyVersions associated with this CryptoKey reside and where all
+        # related cryptographic operations are performed. Only applicable if
+        # CryptoKeyVersions have a ProtectionLevel of EXTERNAL_VPC, with the resource
+        # name in the format `projects/*/locations/*/ekmConnections/*`. Note, this list
+        # is non-exhaustive and may apply to additional ProtectionLevels in the future.
+        # Corresponds to the JSON property `cryptoKeyBackend`
+        # @return [String]
+        attr_accessor :crypto_key_backend
       
         # Immutable. The period of time that versions of this key spend in the
         # DESTROY_SCHEDULED state before transitioning to DESTROYED. If not specified at
@@ -470,6 +598,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @crypto_key_backend = args[:crypto_key_backend] if args.key?(:crypto_key_backend)
           @destroy_scheduled_duration = args[:destroy_scheduled_duration] if args.key?(:destroy_scheduled_duration)
           @import_only = args[:import_only] if args.key?(:import_only)
           @labels = args[:labels] if args.key?(:labels)
@@ -522,7 +651,7 @@ module Google
       
         # ExternalProtectionLevelOptions stores a group of additional fields for
         # configuring a CryptoKeyVersion that are specific to the EXTERNAL protection
-        # level.
+        # level and EXTERNAL_VPC protection levels.
         # Corresponds to the JSON property `externalProtectionLevelOptions`
         # @return [Google::Apis::CloudkmsV1::ExternalProtectionLevelOptions]
         attr_accessor :external_protection_level_options
@@ -786,15 +915,59 @@ module Google
         end
       end
       
+      # An EkmConnection represents an individual EKM connection. It can be used for
+      # creating CryptoKeys and CryptoKeyVersions with a ProtectionLevel of
+      # EXTERNAL_VPC, as well as performing cryptographic operations using keys
+      # created within the EkmConnection.
+      class EkmConnection
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time at which the EkmConnection was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Optional. Etag of the currently stored EkmConnection.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Output only. The resource name for the EkmConnection in the format `projects/*/
+        # locations/*/ekmConnections/*`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # A list of ServiceResolvers where the EKM can be reached. There should be one
+        # ServiceResolver per EKM replica. Currently, only a single ServiceResolver is
+        # supported.
+        # Corresponds to the JSON property `serviceResolvers`
+        # @return [Array<Google::Apis::CloudkmsV1::ServiceResolver>]
+        attr_accessor :service_resolvers
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @etag = args[:etag] if args.key?(:etag)
+          @name = args[:name] if args.key?(:name)
+          @service_resolvers = args[:service_resolvers] if args.key?(:service_resolvers)
+        end
+      end
+      
       # Request message for KeyManagementService.Encrypt.
       class EncryptRequest
         include Google::Apis::Core::Hashable
       
         # Optional. Optional data that, if specified, must also be provided during
         # decryption through DecryptRequest.additional_authenticated_data. The maximum
-        # size depends on the key version's protection_level. For SOFTWARE keys, the AAD
-        # must be no larger than 64KiB. For HSM keys, the combined length of the
-        # plaintext and additional_authenticated_data fields must be no larger than 8KiB.
+        # size depends on the key version's protection_level. For SOFTWARE, EXTERNAL,
+        # and EXTERNAL_VPC keys the AAD must be no larger than 64KiB. For HSM keys, the
+        # combined length of the plaintext and additional_authenticated_data fields must
+        # be no larger than 8KiB.
         # Corresponds to the JSON property `additionalAuthenticatedData`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
@@ -817,10 +990,10 @@ module Google
         attr_accessor :additional_authenticated_data_crc32c
       
         # Required. The data to encrypt. Must be no larger than 64KiB. The maximum size
-        # depends on the key version's protection_level. For SOFTWARE keys, the
-        # plaintext must be no larger than 64KiB. For HSM keys, the combined length of
-        # the plaintext and additional_authenticated_data fields must be no larger than
-        # 8KiB.
+        # depends on the key version's protection_level. For SOFTWARE, EXTERNAL, and
+        # EXTERNAL_VPC keys, the plaintext must be no larger than 64KiB. For HSM keys,
+        # the combined length of the plaintext and additional_authenticated_data fields
+        # must be no larger than 8KiB.
         # Corresponds to the JSON property `plaintext`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
@@ -984,9 +1157,16 @@ module Google
       
       # ExternalProtectionLevelOptions stores a group of additional fields for
       # configuring a CryptoKeyVersion that are specific to the EXTERNAL protection
-      # level.
+      # level and EXTERNAL_VPC protection levels.
       class ExternalProtectionLevelOptions
         include Google::Apis::Core::Hashable
+      
+        # The path to the external key material on the EKM when using EkmConnection e.g.,
+        # "v0/my/key". Set this field instead of external_key_uri when using an
+        # EkmConnection.
+        # Corresponds to the JSON property `ekmConnectionKeyPath`
+        # @return [String]
+        attr_accessor :ekm_connection_key_path
       
         # The URI for an external resource that this CryptoKeyVersion represents.
         # Corresponds to the JSON property `externalKeyUri`
@@ -999,6 +1179,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @ekm_connection_key_path = args[:ekm_connection_key_path] if args.key?(:ekm_connection_key_path)
           @external_key_uri = args[:external_key_uri] if args.key?(:external_key_uri)
         end
       end
@@ -1013,8 +1194,8 @@ module Google
         # @return [Fixnum]
         attr_accessor :length_bytes
       
-        # The ProtectionLevel to use when generating the random data. Defaults to
-        # SOFTWARE.
+        # The ProtectionLevel to use when generating the random data. Currently, only
+        # HSM protection level is supported.
         # Corresponds to the JSON property `protectionLevel`
         # @return [String]
         attr_accessor :protection_level
@@ -1093,20 +1274,33 @@ module Google
         # @return [String]
         attr_accessor :import_job
       
-        # Wrapped key material produced with RSA_OAEP_3072_SHA1_AES_256 or
-        # RSA_OAEP_4096_SHA1_AES_256. This field contains the concatenation of two
-        # wrapped keys: 1. An ephemeral AES-256 wrapping key wrapped with the public_key
-        # using RSAES-OAEP with SHA-1, MGF1 with SHA-1, and an empty label. 2. The key
-        # to be imported, wrapped with the ephemeral AES-256 key using AES-KWP (RFC 5649)
-        # . If importing symmetric key material, it is expected that the unwrapped key
-        # contains plain bytes. If importing asymmetric key material, it is expected
-        # that the unwrapped key is in PKCS#8-encoded DER format (the PrivateKeyInfo
-        # structure from RFC 5208). This format is the same as the format produced by
-        # PKCS#11 mechanism CKM_RSA_AES_KEY_WRAP.
+        # Optional. This field has the same meaning as wrapped_key. Prefer to use that
+        # field in new work. Either that field or this field (but not both) must be
+        # specified.
         # Corresponds to the JSON property `rsaAesWrappedKey`
         # NOTE: Values are automatically base64 encoded/decoded in the client library.
         # @return [String]
         attr_accessor :rsa_aes_wrapped_key
+      
+        # Optional. The wrapped key material to import. Before wrapping, key material
+        # must be formatted. If importing symmetric key material, the expected key
+        # material format is plain bytes. If importing asymmetric key material, the
+        # expected key material format is PKCS#8-encoded DER (the PrivateKeyInfo
+        # structure from RFC 5208). When wrapping with import methods (
+        # RSA_OAEP_3072_SHA1_AES_256 or RSA_OAEP_4096_SHA1_AES_256 or
+        # RSA_OAEP_3072_SHA256_AES_256 or RSA_OAEP_4096_SHA256_AES_256), this field must
+        # contain the concatenation of: 1. An ephemeral AES-256 wrapping key wrapped
+        # with the public_key using RSAES-OAEP with SHA-1/SHA-256, MGF1 with SHA-1/SHA-
+        # 256, and an empty label. 2. The formatted key to be imported, wrapped with the
+        # ephemeral AES-256 key using AES-KWP (RFC 5649). This format is the same as the
+        # format produced by PKCS#11 mechanism CKM_RSA_AES_KEY_WRAP. When wrapping with
+        # import methods (RSA_OAEP_3072_SHA256 or RSA_OAEP_4096_SHA256), this field must
+        # contain the formatted key to be imported, wrapped with the public_key using
+        # RSAES-OAEP with SHA-256, MGF1 with SHA-256, and an empty label.
+        # Corresponds to the JSON property `wrappedKey`
+        # NOTE: Values are automatically base64 encoded/decoded in the client library.
+        # @return [String]
+        attr_accessor :wrapped_key
       
         def initialize(**args)
            update!(**args)
@@ -1118,6 +1312,7 @@ module Google
           @crypto_key_version = args[:crypto_key_version] if args.key?(:crypto_key_version)
           @import_job = args[:import_job] if args.key?(:import_job)
           @rsa_aes_wrapped_key = args[:rsa_aes_wrapped_key] if args.key?(:rsa_aes_wrapped_key)
+          @wrapped_key = args[:wrapped_key] if args.key?(:wrapped_key)
         end
       end
       
@@ -1339,6 +1534,38 @@ module Google
         # Update properties of this object
         def update!(**args)
           @crypto_keys = args[:crypto_keys] if args.key?(:crypto_keys)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @total_size = args[:total_size] if args.key?(:total_size)
+        end
+      end
+      
+      # Response message for EkmService.ListEkmConnections.
+      class ListEkmConnectionsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The list of EkmConnections.
+        # Corresponds to the JSON property `ekmConnections`
+        # @return [Array<Google::Apis::CloudkmsV1::EkmConnection>]
+        attr_accessor :ekm_connections
+      
+        # A token to retrieve next page of results. Pass this value in
+        # ListEkmConnectionsRequest.page_token to retrieve the next page of results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The total number of EkmConnections that matched the query.
+        # Corresponds to the JSON property `totalSize`
+        # @return [Fixnum]
+        attr_accessor :total_size
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @ekm_connections = args[:ekm_connections] if args.key?(:ekm_connections)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @total_size = args[:total_size] if args.key?(:total_size)
         end
@@ -1737,31 +1964,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -1770,9 +1997,14 @@ module Google
         # @return [Array<Google::Apis::CloudkmsV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::CloudkmsV1::Binding>]
         attr_accessor :bindings
@@ -1894,37 +2126,82 @@ module Google
         end
       end
       
+      # A ServiceResolver represents an EKM replica that can be reached within an
+      # EkmConnection.
+      class ServiceResolver
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The filter applied to the endpoints of the resolved service. If no
+        # filter is specified, all endpoints will be considered. An endpoint will be
+        # chosen arbitrarily from the filtered list for each request. For endpoint
+        # filter syntax and examples, see https://cloud.google.com/service-directory/
+        # docs/reference/rpc/google.cloud.servicedirectory.v1#resolveservicerequest.
+        # Corresponds to the JSON property `endpointFilter`
+        # @return [String]
+        attr_accessor :endpoint_filter
+      
+        # Required. The hostname of the EKM replica used at TLS and HTTP layers.
+        # Corresponds to the JSON property `hostname`
+        # @return [String]
+        attr_accessor :hostname
+      
+        # Required. A list of leaf server certificates used to authenticate HTTPS
+        # connections to the EKM replica. Currently, a maximum of 10 Certificate is
+        # supported.
+        # Corresponds to the JSON property `serverCertificates`
+        # @return [Array<Google::Apis::CloudkmsV1::Certificate>]
+        attr_accessor :server_certificates
+      
+        # Required. The resource name of the Service Directory service pointing to an
+        # EKM replica, in the format `projects/*/locations/*/namespaces/*/services/*`.
+        # Corresponds to the JSON property `serviceDirectoryService`
+        # @return [String]
+        attr_accessor :service_directory_service
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @endpoint_filter = args[:endpoint_filter] if args.key?(:endpoint_filter)
+          @hostname = args[:hostname] if args.key?(:hostname)
+          @server_certificates = args[:server_certificates] if args.key?(:server_certificates)
+          @service_directory_service = args[:service_directory_service] if args.key?(:service_directory_service)
+        end
+      end
+      
       # Request message for `SetIamPolicy` method.
       class SetIamPolicyRequest
         include Google::Apis::Core::Hashable
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::CloudkmsV1::Policy]
         attr_accessor :policy
@@ -1952,7 +2229,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]

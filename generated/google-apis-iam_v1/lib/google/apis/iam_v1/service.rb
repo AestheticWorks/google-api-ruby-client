@@ -116,21 +116,782 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a new WorkforcePool. You cannot reuse the name of a deleted pool until
+        # 30 days after deletion.
+        # @param [String] location
+        #   The location of the pool to create. Format: `locations/`location``.
+        # @param [Google::Apis::IamV1::WorkforcePool] workforce_pool_object
+        # @param [String] workforce_pool_id
+        #   The ID to use for the pool, which becomes the final component of the resource
+        #   name. The IDs must be a globally unique string of 6 to 63 lowercase letters,
+        #   digits, or hyphens. It must start with a letter, and cannot have a trailing
+        #   hyphen. The prefix `gcp-` is reserved for use by Google, and may not be
+        #   specified.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_location_workforce_pool(location, workforce_pool_object = nil, workforce_pool_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+location}/workforcePools', options)
+          command.request_representation = Google::Apis::IamV1::WorkforcePool::Representation
+          command.request_object = workforce_pool_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['location'] = location unless location.nil?
+          command.query['workforcePoolId'] = workforce_pool_id unless workforce_pool_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a WorkforcePool. You cannot use a deleted WorkforcePool to exchange
+        # external credentials for Google Cloud credentials. However, deletion does not
+        # revoke credentials that have already been issued. Credentials issued for a
+        # deleted pool do not grant access to resources. If the pool is undeleted, and
+        # the credentials are not expired, they grant access again. You can undelete a
+        # pool for 30 days. After 30 days, deletion is permanent. You cannot update
+        # deleted pools. However, you can view and list them.
+        # @param [String] name
+        #   Required. The name of the pool to delete. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_location_workforce_pool(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets an individual WorkforcePool.
+        # @param [String] name
+        #   Required. The name of the pool to retrieve. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::WorkforcePool] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::WorkforcePool]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::WorkforcePool::Representation
+          command.response_class = Google::Apis::IamV1::WorkforcePool
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets IAM policies on a WorkforcePool.
+        # @param [String] resource
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
+        # @param [Google::Apis::IamV1::GetIamPolicyRequest] get_iam_policy_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Policy] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Policy]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_workforce_pool_iam_policy(resource, get_iam_policy_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+resource}:getIamPolicy', options)
+          command.request_representation = Google::Apis::IamV1::GetIamPolicyRequest::Representation
+          command.request_object = get_iam_policy_request_object
+          command.response_representation = Google::Apis::IamV1::Policy::Representation
+          command.response_class = Google::Apis::IamV1::Policy
+          command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists all non-deleted WorkforcePools under the specified parent. If `
+        # show_deleted` is set to `true`, then deleted pools are also listed.
+        # @param [String] location
+        #   The location of the pool. Format: `locations/`location``.
+        # @param [Fixnum] page_size
+        #   The maximum number of pools to return. If unspecified, at most 50 pools will
+        #   be returned. The maximum value is 1000; values above 1000 are truncated to
+        #   1000.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListWorkforcePools` call. Provide this
+        #   to retrieve the subsequent page.
+        # @param [String] parent
+        #   Required. The parent resource to list pools for. Format: `organizations/`org-
+        #   id``.
+        # @param [Boolean] show_deleted
+        #   Whether to return soft-deleted pools.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::ListWorkforcePoolsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::ListWorkforcePoolsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_location_workforce_pools(location, page_size: nil, page_token: nil, parent: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+location}/workforcePools', options)
+          command.response_representation = Google::Apis::IamV1::ListWorkforcePoolsResponse::Representation
+          command.response_class = Google::Apis::IamV1::ListWorkforcePoolsResponse
+          command.params['location'] = location unless location.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['parent'] = parent unless parent.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing WorkforcePool.
+        # @param [String] name
+        #   Output only. The resource name of the pool. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [Google::Apis::IamV1::WorkforcePool] workforce_pool_object
+        # @param [String] update_mask
+        #   Required. The list of fields to update.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_location_workforce_pool(name, workforce_pool_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::IamV1::WorkforcePool::Representation
+          command.request_object = workforce_pool_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Sets IAM policies on a WorkforcePool.
+        # @param [String] resource
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
+        # @param [Google::Apis::IamV1::SetIamPolicyRequest] set_iam_policy_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Policy] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Policy]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_workforce_pool_iam_policy(resource, set_iam_policy_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+resource}:setIamPolicy', options)
+          command.request_representation = Google::Apis::IamV1::SetIamPolicyRequest::Representation
+          command.request_object = set_iam_policy_request_object
+          command.response_representation = Google::Apis::IamV1::Policy::Representation
+          command.response_class = Google::Apis::IamV1::Policy
+          command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns the caller's permissions on the WorkforcePool. If the pool does not
+        # exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
+        # @param [String] resource
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
+        # @param [Google::Apis::IamV1::TestIamPermissionsRequest] test_iam_permissions_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::TestIamPermissionsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::TestIamPermissionsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def test_workforce_pool_iam_permissions(resource, test_iam_permissions_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+resource}:testIamPermissions', options)
+          command.request_representation = Google::Apis::IamV1::TestIamPermissionsRequest::Representation
+          command.request_object = test_iam_permissions_request_object
+          command.response_representation = Google::Apis::IamV1::TestIamPermissionsResponse::Representation
+          command.response_class = Google::Apis::IamV1::TestIamPermissionsResponse
+          command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Undeletes a WorkforcePool, as long as it was deleted fewer than 30 days ago.
+        # @param [String] name
+        #   Required. The name of the pool to undelete. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [Google::Apis::IamV1::UndeleteWorkforcePoolRequest] undelete_workforce_pool_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_workforce_pool(name, undelete_workforce_pool_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::IamV1::UndeleteWorkforcePoolRequest::Representation
+          command.request_object = undelete_workforce_pool_request_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new WorkforcePoolProvider in a WorkforcePool. You cannot reuse the
+        # name of a deleted provider until 30 days after deletion.
+        # @param [String] parent
+        #   Required. The pool to create this provider in. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [Google::Apis::IamV1::WorkforcePoolProvider] workforce_pool_provider_object
+        # @param [String] workforce_pool_provider_id
+        #   Required. The ID for the provider, which becomes the final component of the
+        #   resource name. This value must be 4-32 characters, and may contain the
+        #   characters [a-z0-9-]. The prefix `gcp-` is reserved for use by Google, and may
+        #   not be specified.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_location_workforce_pool_provider(parent, workforce_pool_provider_object = nil, workforce_pool_provider_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+parent}/providers', options)
+          command.request_representation = Google::Apis::IamV1::WorkforcePoolProvider::Representation
+          command.request_object = workforce_pool_provider_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['workforcePoolProviderId'] = workforce_pool_provider_id unless workforce_pool_provider_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a WorkforcePoolProvider. Deleting a provider does not revoke
+        # credentials that have already been\ issued; they continue to grant access. You
+        # can undelete a provider for 30 days. After 30 days, deletion is permanent. You
+        # cannot update deleted providers. However, you can view and list them.
+        # @param [String] name
+        #   Required. The name of the provider to delete. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id`/providers/`provider_id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_location_workforce_pool_provider(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets an individual WorkforcePoolProvider.
+        # @param [String] name
+        #   Required. The name of the provider to retrieve. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id`/providers/`provider_id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::WorkforcePoolProvider] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::WorkforcePoolProvider]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool_provider(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::WorkforcePoolProvider::Representation
+          command.response_class = Google::Apis::IamV1::WorkforcePoolProvider
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists all non-deleted WorkforcePoolProviders in a WorkforcePool. If `
+        # show_deleted` is set to `true`, then deleted providers are also listed.
+        # @param [String] parent
+        #   Required. The pool to list providers for. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id``
+        # @param [Fixnum] page_size
+        #   The maximum number of providers to return. If unspecified, at most 50
+        #   providers are returned. The maximum value is 100; values above 100 are
+        #   truncated to 100.
+        # @param [String] page_token
+        #   A page token, received from a previous `ListWorkforcePoolProviders` call.
+        #   Provide this to retrieve the subsequent page.
+        # @param [Boolean] show_deleted
+        #   Whether to return soft-deleted providers.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::ListWorkforcePoolProvidersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::ListWorkforcePoolProvidersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_location_workforce_pool_providers(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+parent}/providers', options)
+          command.response_representation = Google::Apis::IamV1::ListWorkforcePoolProvidersResponse::Representation
+          command.response_class = Google::Apis::IamV1::ListWorkforcePoolProvidersResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing WorkforcePoolProvider.
+        # @param [String] name
+        #   Output only. The resource name of the provider. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id`/providers/`provider_id``
+        # @param [Google::Apis::IamV1::WorkforcePoolProvider] workforce_pool_provider_object
+        # @param [String] update_mask
+        #   Required. The list of fields to update.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_location_workforce_pool_provider(name, workforce_pool_provider_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/{+name}', options)
+          command.request_representation = Google::Apis::IamV1::WorkforcePoolProvider::Representation
+          command.request_object = workforce_pool_provider_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Undeletes a WorkforcePoolProvider, as long as it was deleted fewer than 30
+        # days ago.
+        # @param [String] name
+        #   Required. The name of the provider to undelete. Format: `locations/`location`/
+        #   workforcePools/`workforce_pool_id`/providers/`provider_id``
+        # @param [Google::Apis::IamV1::UndeleteWorkforcePoolProviderRequest] undelete_workforce_pool_provider_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_workforce_pool_provider(name, undelete_workforce_pool_provider_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::IamV1::UndeleteWorkforcePoolProviderRequest::Representation
+          command.request_object = undelete_workforce_pool_provider_request_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool_provider_key_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool_provider_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a WorkforcePoolSubject. Subject must not already be in a deleted state.
+        # A WorkforcePoolSubject is automatically created the first time an external
+        # credential is exchanged for a Google Cloud credential with a mapped `google.
+        # subject` attribute. There is no path to manually create WorkforcePoolSubjects.
+        # Once deleted, the WorkforcePoolSubject may not be used for 30 days. After 30
+        # days, the WorkforcePoolSubject will be deleted forever and can be reused in
+        # token exchanges with Google Cloud STS. This will automatically create a new
+        # WorkforcePoolSubject that is independent of the previously deleted
+        # WorkforcePoolSubject with the same google.subject value.
+        # @param [String] name
+        #   Required. The resource name of the WorkforcePoolSubject. Special characters,
+        #   like '/' and ':', must be escaped, because all URLs need to conform to the "
+        #   When to Escape and Unescape" section of [RFC3986](https://www.ietf.org/rfc/
+        #   rfc2396.txt). Format: `locations/`location`/workforcePools/`workforce_pool_id`/
+        #   subjects/`subject_id``
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_location_workforce_pool_subject(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Undeletes a WorkforcePoolSubject, as long as it was deleted fewer than 30 days
+        # ago.
+        # @param [String] name
+        #   Required. The resource name of the WorkforcePoolSubject. Special characters,
+        #   like '/' and ':', must be escaped, because all URLs need to conform to the "
+        #   When to Escape and Unescape" section of [RFC3986](https://www.ietf.org/rfc/
+        #   rfc2396.txt). Format: `locations/`location`/workforcePools/`workforce_pool_id`/
+        #   subjects/`subject_id``
+        # @param [Google::Apis::IamV1::UndeleteWorkforcePoolSubjectRequest] undelete_workforce_pool_subject_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_workforce_pool_subject(name, undelete_workforce_pool_subject_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/{+name}:undelete', options)
+          command.request_representation = Google::Apis::IamV1::UndeleteWorkforcePoolSubjectRequest::Representation
+          command.request_object = undelete_workforce_pool_subject_request_object
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_location_workforce_pool_subject_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a new custom Role.
         # @param [String] parent
         #   The `parent` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `parent`
-        #   value format is described below: * [`projects.roles.create()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `parent` value format is described
+        #   below: * [`projects.roles.create()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/create): `projects/`PROJECT_ID``. This method creates
-        #   project-level [custom roles](/iam/docs/understanding-custom-roles). Example
-        #   request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/roles` * [`
-        #   organizations.roles.create()`](/iam/reference/rest/v1/organizations.roles/
-        #   create): `organizations/`ORGANIZATION_ID``. This method creates organization-
-        #   level [custom roles](/iam/docs/understanding-custom-roles). Example request
-        #   URL: `https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles`
-        #   Note: Wildcard (*) values are invalid; you must specify a complete project ID
-        #   or organization ID.
+        #   project-level [custom roles](https://cloud.google.com/iam/docs/understanding-
+        #   custom-roles). Example request URL: `https://iam.googleapis.com/v1/projects/`
+        #   PROJECT_ID`/roles` * [`organizations.roles.create()`](https://cloud.google.com/
+        #   iam/reference/rest/v1/organizations.roles/create): `organizations/`
+        #   ORGANIZATION_ID``. This method creates organization-level [custom roles](https:
+        #   //cloud.google.com/iam/docs/understanding-custom-roles). Example request URL: `
+        #   https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles` Note:
+        #   Wildcard (*) values are invalid; you must specify a complete project ID or
+        #   organization ID.
         # @param [Google::Apis::IamV1::CreateRoleRequest] create_role_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -162,7 +923,7 @@ module Google
         end
         
         # Deletes a custom Role. When you delete a custom role, the following changes
-        # occur immediately: * You cannot bind a member to the custom role in an IAM
+        # occur immediately: * You cannot bind a principal to the custom role in an IAM
         # Policy. * Existing bindings to the custom role are not changed, but they have
         # no effect. * By default, the response from ListRoles does not include the
         # custom role. You have 7 days to undelete the custom role. After 7 days, the
@@ -171,16 +932,18 @@ module Google
         # binding is permanently removed.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.delete()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.delete()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/delete): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``.
-        #   This method deletes only [custom roles](/iam/docs/understanding-custom-roles)
-        #   that have been created at the project level. Example request URL: `https://iam.
-        #   googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` * [`
-        #   organizations.roles.delete()`](/iam/reference/rest/v1/organizations.roles/
-        #   delete): `organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method
-        #   deletes only [custom roles](/iam/docs/understanding-custom-roles) that have
+        #   This method deletes only [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles) that have been created at the project level.
+        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.delete()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/delete): `organizations/`
+        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method deletes only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
         #   been created at the organization level. Example request URL: `https://iam.
         #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
         #   Wildcard (*) values are invalid; you must specify a complete project ID or
@@ -218,24 +981,26 @@ module Google
         # Gets the definition of a Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `name` value format is described
-        #   below: * [`roles.get()`](/iam/reference/rest/v1/roles/get): `roles/`ROLE_NAME``
-        #   . This method returns results from all [predefined roles](/iam/docs/
-        #   understanding-roles#predefined_roles) in Cloud IAM. Example request URL: `
-        #   https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`projects.roles.get()`](/
-        #   iam/reference/rest/v1/projects.roles/get): `projects/`PROJECT_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the project level.
-        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
-        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.get()`](/iam/reference/rest/v1/
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `name` value format is described below: * [`roles.
+        #   get()`](https://cloud.google.com/iam/reference/rest/v1/roles/get): `roles/`
+        #   ROLE_NAME``. This method returns results from all [predefined roles](https://
+        #   cloud.google.com/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+        #   Example request URL: `https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`
+        #   projects.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles/get): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``. This method
+        #   returns only [custom roles](https://cloud.google.com/iam/docs/understanding-
+        #   custom-roles) that have been created at the project level. Example request URL:
+        #   `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` *
+        #   [`organizations.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/
         #   organizations.roles/get): `organizations/`ORGANIZATION_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the organization level.
-        #   Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*) values are invalid;
-        #   you must specify a complete project ID or organization ID.
+        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](https://cloud.google.
+        #   com/iam/docs/understanding-custom-roles) that have been created at the
+        #   organization level. Example request URL: `https://iam.googleapis.com/v1/
+        #   organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*)
+        #   values are invalid; you must specify a complete project ID or organization ID.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -267,22 +1032,25 @@ module Google
         # defined for an organization or project.
         # @param [String] parent
         #   The `parent` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `parent` value format is described
-        #   below: * [`roles.list()`](/iam/reference/rest/v1/roles/list): An empty string.
-        #   This method doesn't require a resource; it simply returns all [predefined
-        #   roles](/iam/docs/understanding-roles#predefined_roles) in Cloud IAM. Example
-        #   request URL: `https://iam.googleapis.com/v1/roles` * [`projects.roles.list()`](
-        #   /iam/reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This
-        #   method lists all project-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/projects/`
-        #   PROJECT_ID`/roles` * [`organizations.roles.list()`](/iam/reference/rest/v1/
-        #   organizations.roles/list): `organizations/`ORGANIZATION_ID``. This method
-        #   lists all organization-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles` Note: Wildcard (*) values are invalid; you must
-        #   specify a complete project ID or organization ID.
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `parent` value format is described below: * [`
+        #   roles.list()`](https://cloud.google.com/iam/reference/rest/v1/roles/list): An
+        #   empty string. This method doesn't require a resource; it simply returns all [
+        #   predefined roles](https://cloud.google.com/iam/docs/understanding-roles#
+        #   predefined_roles) in Cloud IAM. Example request URL: `https://iam.googleapis.
+        #   com/v1/roles` * [`projects.roles.list()`](https://cloud.google.com/iam/
+        #   reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This method
+        #   lists all project-level [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles). Example request URL: `https://iam.googleapis.com/
+        #   v1/projects/`PROJECT_ID`/roles` * [`organizations.roles.list()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/list): `organizations/`
+        #   ORGANIZATION_ID``. This method lists all organization-level [custom roles](
+        #   https://cloud.google.com/iam/docs/understanding-custom-roles). Example request
+        #   URL: `https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles`
+        #   Note: Wildcard (*) values are invalid; you must specify a complete project ID
+        #   or organization ID.
         # @param [Fixnum] page_size
         #   Optional limit on the number of roles to include in the response. The default
         #   is 300, and the maximum is 1,000.
@@ -329,16 +1097,18 @@ module Google
         # Updates the definition of a custom Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.patch()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.patch()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/patch): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``.
-        #   This method updates only [custom roles](/iam/docs/understanding-custom-roles)
-        #   that have been created at the project level. Example request URL: `https://iam.
-        #   googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` * [`
-        #   organizations.roles.patch()`](/iam/reference/rest/v1/organizations.roles/patch)
-        #   : `organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method
-        #   updates only [custom roles](/iam/docs/understanding-custom-roles) that have
+        #   This method updates only [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles) that have been created at the project level.
+        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.patch()`](https://cloud.google.
+        #   com/iam/reference/rest/v1/organizations.roles/patch): `organizations/`
+        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method updates only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
         #   been created at the organization level. Example request URL: `https://iam.
         #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
         #   Wildcard (*) values are invalid; you must specify a complete project ID or
@@ -379,20 +1149,22 @@ module Google
         # Undeletes a custom Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.undelete()`](/iam/
-        #   reference/rest/v1/projects.roles/undelete): `projects/`PROJECT_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method undeletes only [custom roles](/iam/docs/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.undelete()`](https://cloud.google.com/iam/reference/
+        #   rest/v1/projects.roles/undelete): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`
+        #   `. This method undeletes only [custom roles](https://cloud.google.com/iam/docs/
         #   understanding-custom-roles) that have been created at the project level.
         #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
-        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.undelete()`](/iam/reference/
-        #   rest/v1/organizations.roles/undelete): `organizations/`ORGANIZATION_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method undeletes only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the organization level.
-        #   Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*) values are invalid;
-        #   you must specify a complete project ID or organization ID.
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.undelete()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/undelete): `organizations/
+        #   `ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method undeletes only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
+        #   been created at the organization level. Example request URL: `https://iam.
+        #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
+        #   Wildcard (*) values are invalid; you must specify a complete project ID or
+        #   organization ID.
         # @param [Google::Apis::IamV1::UndeleteRoleRequest] undelete_role_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -424,7 +1196,8 @@ module Google
         end
         
         # Lists every permission that you can test on a resource. A permission is
-        # testable if you can check whether a member has that permission on the resource.
+        # testable if you can check whether a principal has that permission on the
+        # resource.
         # @param [Google::Apis::IamV1::QueryTestablePermissionsRequest] query_testable_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -941,6 +1714,37 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_workload_identity_pool_provider_key_operation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/{+name}', options)
+          command.response_representation = Google::Apis::IamV1::Operation::Representation
+          command.response_class = Google::Apis::IamV1::Operation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets the latest state of a long-running operation. Clients can use this method
+        # to poll the operation result at intervals as recommended by the API service.
+        # @param [String] name
+        #   The name of the operation resource.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::IamV1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::IamV1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
         def get_project_location_workload_identity_pool_provider_operation(name, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1/{+name}', options)
           command.response_representation = Google::Apis::IamV1::Operation::Representation
@@ -954,18 +1758,20 @@ module Google
         # Creates a new custom Role.
         # @param [String] parent
         #   The `parent` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `parent`
-        #   value format is described below: * [`projects.roles.create()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `parent` value format is described
+        #   below: * [`projects.roles.create()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/create): `projects/`PROJECT_ID``. This method creates
-        #   project-level [custom roles](/iam/docs/understanding-custom-roles). Example
-        #   request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/roles` * [`
-        #   organizations.roles.create()`](/iam/reference/rest/v1/organizations.roles/
-        #   create): `organizations/`ORGANIZATION_ID``. This method creates organization-
-        #   level [custom roles](/iam/docs/understanding-custom-roles). Example request
-        #   URL: `https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles`
-        #   Note: Wildcard (*) values are invalid; you must specify a complete project ID
-        #   or organization ID.
+        #   project-level [custom roles](https://cloud.google.com/iam/docs/understanding-
+        #   custom-roles). Example request URL: `https://iam.googleapis.com/v1/projects/`
+        #   PROJECT_ID`/roles` * [`organizations.roles.create()`](https://cloud.google.com/
+        #   iam/reference/rest/v1/organizations.roles/create): `organizations/`
+        #   ORGANIZATION_ID``. This method creates organization-level [custom roles](https:
+        #   //cloud.google.com/iam/docs/understanding-custom-roles). Example request URL: `
+        #   https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles` Note:
+        #   Wildcard (*) values are invalid; you must specify a complete project ID or
+        #   organization ID.
         # @param [Google::Apis::IamV1::CreateRoleRequest] create_role_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -997,7 +1803,7 @@ module Google
         end
         
         # Deletes a custom Role. When you delete a custom role, the following changes
-        # occur immediately: * You cannot bind a member to the custom role in an IAM
+        # occur immediately: * You cannot bind a principal to the custom role in an IAM
         # Policy. * Existing bindings to the custom role are not changed, but they have
         # no effect. * By default, the response from ListRoles does not include the
         # custom role. You have 7 days to undelete the custom role. After 7 days, the
@@ -1006,16 +1812,18 @@ module Google
         # binding is permanently removed.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.delete()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.delete()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/delete): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``.
-        #   This method deletes only [custom roles](/iam/docs/understanding-custom-roles)
-        #   that have been created at the project level. Example request URL: `https://iam.
-        #   googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` * [`
-        #   organizations.roles.delete()`](/iam/reference/rest/v1/organizations.roles/
-        #   delete): `organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method
-        #   deletes only [custom roles](/iam/docs/understanding-custom-roles) that have
+        #   This method deletes only [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles) that have been created at the project level.
+        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.delete()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/delete): `organizations/`
+        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method deletes only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
         #   been created at the organization level. Example request URL: `https://iam.
         #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
         #   Wildcard (*) values are invalid; you must specify a complete project ID or
@@ -1053,24 +1861,26 @@ module Google
         # Gets the definition of a Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `name` value format is described
-        #   below: * [`roles.get()`](/iam/reference/rest/v1/roles/get): `roles/`ROLE_NAME``
-        #   . This method returns results from all [predefined roles](/iam/docs/
-        #   understanding-roles#predefined_roles) in Cloud IAM. Example request URL: `
-        #   https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`projects.roles.get()`](/
-        #   iam/reference/rest/v1/projects.roles/get): `projects/`PROJECT_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the project level.
-        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
-        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.get()`](/iam/reference/rest/v1/
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `name` value format is described below: * [`roles.
+        #   get()`](https://cloud.google.com/iam/reference/rest/v1/roles/get): `roles/`
+        #   ROLE_NAME``. This method returns results from all [predefined roles](https://
+        #   cloud.google.com/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+        #   Example request URL: `https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`
+        #   projects.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles/get): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``. This method
+        #   returns only [custom roles](https://cloud.google.com/iam/docs/understanding-
+        #   custom-roles) that have been created at the project level. Example request URL:
+        #   `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` *
+        #   [`organizations.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/
         #   organizations.roles/get): `organizations/`ORGANIZATION_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the organization level.
-        #   Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*) values are invalid;
-        #   you must specify a complete project ID or organization ID.
+        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](https://cloud.google.
+        #   com/iam/docs/understanding-custom-roles) that have been created at the
+        #   organization level. Example request URL: `https://iam.googleapis.com/v1/
+        #   organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*)
+        #   values are invalid; you must specify a complete project ID or organization ID.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1102,22 +1912,25 @@ module Google
         # defined for an organization or project.
         # @param [String] parent
         #   The `parent` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `parent` value format is described
-        #   below: * [`roles.list()`](/iam/reference/rest/v1/roles/list): An empty string.
-        #   This method doesn't require a resource; it simply returns all [predefined
-        #   roles](/iam/docs/understanding-roles#predefined_roles) in Cloud IAM. Example
-        #   request URL: `https://iam.googleapis.com/v1/roles` * [`projects.roles.list()`](
-        #   /iam/reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This
-        #   method lists all project-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/projects/`
-        #   PROJECT_ID`/roles` * [`organizations.roles.list()`](/iam/reference/rest/v1/
-        #   organizations.roles/list): `organizations/`ORGANIZATION_ID``. This method
-        #   lists all organization-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles` Note: Wildcard (*) values are invalid; you must
-        #   specify a complete project ID or organization ID.
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `parent` value format is described below: * [`
+        #   roles.list()`](https://cloud.google.com/iam/reference/rest/v1/roles/list): An
+        #   empty string. This method doesn't require a resource; it simply returns all [
+        #   predefined roles](https://cloud.google.com/iam/docs/understanding-roles#
+        #   predefined_roles) in Cloud IAM. Example request URL: `https://iam.googleapis.
+        #   com/v1/roles` * [`projects.roles.list()`](https://cloud.google.com/iam/
+        #   reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This method
+        #   lists all project-level [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles). Example request URL: `https://iam.googleapis.com/
+        #   v1/projects/`PROJECT_ID`/roles` * [`organizations.roles.list()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/list): `organizations/`
+        #   ORGANIZATION_ID``. This method lists all organization-level [custom roles](
+        #   https://cloud.google.com/iam/docs/understanding-custom-roles). Example request
+        #   URL: `https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles`
+        #   Note: Wildcard (*) values are invalid; you must specify a complete project ID
+        #   or organization ID.
         # @param [Fixnum] page_size
         #   Optional limit on the number of roles to include in the response. The default
         #   is 300, and the maximum is 1,000.
@@ -1164,16 +1977,18 @@ module Google
         # Updates the definition of a custom Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.patch()`](/iam/reference/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.patch()`](https://cloud.google.com/iam/reference/
         #   rest/v1/projects.roles/patch): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``.
-        #   This method updates only [custom roles](/iam/docs/understanding-custom-roles)
-        #   that have been created at the project level. Example request URL: `https://iam.
-        #   googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` * [`
-        #   organizations.roles.patch()`](/iam/reference/rest/v1/organizations.roles/patch)
-        #   : `organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method
-        #   updates only [custom roles](/iam/docs/understanding-custom-roles) that have
+        #   This method updates only [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles) that have been created at the project level.
+        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.patch()`](https://cloud.google.
+        #   com/iam/reference/rest/v1/organizations.roles/patch): `organizations/`
+        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method updates only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
         #   been created at the organization level. Example request URL: `https://iam.
         #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
         #   Wildcard (*) values are invalid; you must specify a complete project ID or
@@ -1214,20 +2029,22 @@ module Google
         # Undeletes a custom Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`projects`](/iam/reference/rest/v1/projects.roles) or [`organizations`]
-        #   (/iam/reference/rest/v1/organizations.roles). Each resource type's `name`
-        #   value format is described below: * [`projects.roles.undelete()`](/iam/
-        #   reference/rest/v1/projects.roles/undelete): `projects/`PROJECT_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method undeletes only [custom roles](/iam/docs/
+        #   namely [`projects`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles) or [`organizations`](https://cloud.google.com/iam/reference/rest/v1/
+        #   organizations.roles). Each resource type's `name` value format is described
+        #   below: * [`projects.roles.undelete()`](https://cloud.google.com/iam/reference/
+        #   rest/v1/projects.roles/undelete): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`
+        #   `. This method undeletes only [custom roles](https://cloud.google.com/iam/docs/
         #   understanding-custom-roles) that have been created at the project level.
         #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
-        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.undelete()`](/iam/reference/
-        #   rest/v1/organizations.roles/undelete): `organizations/`ORGANIZATION_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method undeletes only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the organization level.
-        #   Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*) values are invalid;
-        #   you must specify a complete project ID or organization ID.
+        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.undelete()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/undelete): `organizations/
+        #   `ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID``. This method undeletes only [custom
+        #   roles](https://cloud.google.com/iam/docs/understanding-custom-roles) that have
+        #   been created at the organization level. Example request URL: `https://iam.
+        #   googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note:
+        #   Wildcard (*) values are invalid; you must specify a complete project ID or
+        #   organization ID.
         # @param [Google::Apis::IamV1::UndeleteRoleRequest] undelete_role_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1303,10 +2120,16 @@ module Google
         # hours and watch for unintended consequences. If there are no unintended
         # consequences, you can delete the service account.
         # @param [String] name
-        #   Required. The resource name of the service account in the following format: `
-        #   projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for
-        #   the `PROJECT_ID` will infer the project from the account. The `ACCOUNT` value
-        #   can be the `email` address or the `unique_id` of the service account.
+        #   Required. The resource name of the service account. Use one of the following
+        #   formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/
+        #   `PROJECT_ID`/serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-
+        #   ` wildcard character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1346,10 +2169,16 @@ module Google
         # consequences. If there are no unintended consequences, you can delete the
         # service account with DeleteServiceAccount.
         # @param [String] name
-        #   The resource name of the service account in the following format: `projects/`
-        #   PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for the `
-        #   PROJECT_ID` will infer the project from the account. The `ACCOUNT` value can
-        #   be the `email` address or the `unique_id` of the service account.
+        #   The resource name of the service account. Use one of the following formats: * `
+        #   projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`
+        #   /serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-` wildcard
+        #   character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::DisableServiceAccountRequest] disable_service_account_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1386,10 +2215,16 @@ module Google
         # the service account because it was compromised—you cannot use this method to
         # enable the service account.
         # @param [String] name
-        #   The resource name of the service account in the following format: `projects/`
-        #   PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for the `
-        #   PROJECT_ID` will infer the project from the account. The `ACCOUNT` value can
-        #   be the `email` address or the `unique_id` of the service account.
+        #   The resource name of the service account. Use one of the following formats: * `
+        #   projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`
+        #   /serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-` wildcard
+        #   character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::EnableServiceAccountRequest] enable_service_account_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1422,10 +2257,16 @@ module Google
         
         # Gets a ServiceAccount.
         # @param [String] name
-        #   Required. The resource name of the service account in the following format: `
-        #   projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for
-        #   the `PROJECT_ID` will infer the project from the account. The `ACCOUNT` value
-        #   can be the `email` address or the `unique_id` of the service account.
+        #   Required. The resource name of the service account. Use one of the following
+        #   formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/
+        #   `PROJECT_ID`/serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-
+        #   ` wildcard character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1454,24 +2295,28 @@ module Google
         end
         
         # Gets the IAM policy that is attached to a ServiceAccount. This IAM policy
-        # specifies which members have access to the service account. This method does
-        # not tell you whether the service account has been granted any roles on other
-        # resources. To check whether a service account has role grants on a resource,
-        # use the `getIamPolicy` method for that resource. For example, to view the role
-        # grants for a project, call the Resource Manager API's [`projects.getIamPolicy`]
-        # (https://cloud.google.com/resource-manager/reference/rest/v1/projects/
-        # getIamPolicy) method.
+        # specifies which principals have access to the service account. This method
+        # does not tell you whether the service account has been granted any roles on
+        # other resources. To check whether a service account has role grants on a
+        # resource, use the `getIamPolicy` method for that resource. For example, to
+        # view the role grants for a project, call the Resource Manager API's [`projects.
+        # getIamPolicy`](https://cloud.google.com/resource-manager/reference/rest/v1/
+        # projects/getIamPolicy) method.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1549,10 +2394,10 @@ module Google
         #   character instead of the project ID: * `projects/-/serviceAccounts/`
         #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
         #   avoid using the `-` wildcard character, because it can cause response messages
-        #   to contain misleading error codes. For example, if you try to get the service
-        #   account `projects/-/serviceAccounts/fake@example.com`, which does not exist,
-        #   the response contains an HTTP `403 Forbidden` error instead of a `404 Not
-        #   Found` error.
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::PatchServiceAccountRequest] patch_service_account_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1585,18 +2430,20 @@ module Google
         
         # Sets the IAM policy that is attached to a ServiceAccount. Use this method to
         # grant or revoke access to the service account. For example, you could grant a
-        # member the ability to impersonate the service account. This method does not
+        # principal the ability to impersonate the service account. This method does not
         # enable the service account to access other resources. To grant roles to a
         # service account on a resource, follow these steps: 1. Call the resource's `
         # getIamPolicy` method to get its current IAM policy. 2. Edit the policy so that
         # it binds the service account to an IAM role for the resource. 3. Call the
         # resource's `setIamPolicy` method to update its IAM policy. For detailed
-        # instructions, see [Granting roles to a service account for specific resources](
-        # https://cloud.google.com/iam/help/service-accounts/granting-access-to-service-
-        # accounts).
+        # instructions, see [Manage access to project, folders, and organizations](https:
+        # //cloud.google.com/iam/help/service-accounts/granting-access-to-service-
+        # accounts) or [Manage access to other resources](https://cloud.google.com/iam/
+        # help/access/manage-other-resources).
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::IamV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1636,10 +2483,15 @@ module Google
         # @param [String] name
         #   Required. Deprecated. [Migrate to Service Account Credentials API](https://
         #   cloud.google.com/iam/help/credentials/migrate-api). The resource name of the
-        #   service account in the following format: `projects/`PROJECT_ID`/
-        #   serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for the `PROJECT_ID` will
-        #   infer the project from the account. The `ACCOUNT` value can be the `email`
-        #   address or the `unique_id` of the service account.
+        #   service account. Use one of the following formats: * `projects/`PROJECT_ID`/
+        #   serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`/serviceAccounts/`
+        #   UNIQUE_ID`` As an alternative, you can use the `-` wildcard character instead
+        #   of the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`` * `projects/-
+        #   /serviceAccounts/`UNIQUE_ID`` When possible, avoid using the `-` wildcard
+        #   character, because it can cause response messages to contain misleading error
+        #   codes. For example, if you try to access the service account `projects/-/
+        #   serviceAccounts/fake@example.com`, which does not exist, the response contains
+        #   an HTTP `403 Forbidden` error instead of a `404 Not Found` error.
         # @param [Google::Apis::IamV1::SignBlobRequest] sign_blob_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1679,10 +2531,15 @@ module Google
         # @param [String] name
         #   Required. Deprecated. [Migrate to Service Account Credentials API](https://
         #   cloud.google.com/iam/help/credentials/migrate-api). The resource name of the
-        #   service account in the following format: `projects/`PROJECT_ID`/
-        #   serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for the `PROJECT_ID` will
-        #   infer the project from the account. The `ACCOUNT` value can be the `email`
-        #   address or the `unique_id` of the service account.
+        #   service account. Use one of the following formats: * `projects/`PROJECT_ID`/
+        #   serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`/serviceAccounts/`
+        #   UNIQUE_ID`` As an alternative, you can use the `-` wildcard character instead
+        #   of the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`` * `projects/-
+        #   /serviceAccounts/`UNIQUE_ID`` When possible, avoid using the `-` wildcard
+        #   character, because it can cause response messages to contain misleading error
+        #   codes. For example, if you try to access the service account `projects/-/
+        #   serviceAccounts/fake@example.com`, which does not exist, the response contains
+        #   an HTTP `403 Forbidden` error instead of a `404 Not Found` error.
         # @param [Google::Apis::IamV1::SignJwtRequest] sign_jwt_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1715,8 +2572,9 @@ module Google
         
         # Tests whether the caller has the specified permissions on a ServiceAccount.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::IamV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1753,9 +2611,16 @@ module Google
         # account 30 days later. There is no way to restore a deleted service account
         # that has been permanently removed.
         # @param [String] name
-        #   The resource name of the service account in the following format: `projects/`
-        #   PROJECT_ID`/serviceAccounts/`ACCOUNT_UNIQUE_ID``. Using `-` as a wildcard for
-        #   the `PROJECT_ID` will infer the project from the account.
+        #   The resource name of the service account. Use one of the following formats: * `
+        #   projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`
+        #   /serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-` wildcard
+        #   character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::UndeleteServiceAccountRequest] undelete_service_account_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1788,7 +2653,7 @@ module Google
         
         # **Note:** We are in the process of deprecating this method. Use
         # PatchServiceAccount instead. Updates a ServiceAccount. You can update only the
-        # `display_name` and `description` fields.
+        # `display_name` field.
         # @param [String] name
         #   The resource name of the service account. Use one of the following formats: * `
         #   projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/`PROJECT_ID`
@@ -1796,10 +2661,10 @@ module Google
         #   character instead of the project ID: * `projects/-/serviceAccounts/`
         #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
         #   avoid using the `-` wildcard character, because it can cause response messages
-        #   to contain misleading error codes. For example, if you try to get the service
-        #   account `projects/-/serviceAccounts/fake@example.com`, which does not exist,
-        #   the response contains an HTTP `403 Forbidden` error instead of a `404 Not
-        #   Found` error.
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::ServiceAccount] service_account_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1832,10 +2697,16 @@ module Google
         
         # Creates a ServiceAccountKey.
         # @param [String] name
-        #   Required. The resource name of the service account in the following format: `
-        #   projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for
-        #   the `PROJECT_ID` will infer the project from the account. The `ACCOUNT` value
-        #   can be the `email` address or the `unique_id` of the service account.
+        #   Required. The resource name of the service account. Use one of the following
+        #   formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/
+        #   `PROJECT_ID`/serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-
+        #   ` wildcard character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::CreateServiceAccountKeyRequest] create_service_account_key_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1869,11 +2740,17 @@ module Google
         # Deletes a ServiceAccountKey. Deleting a service account key does not revoke
         # short-lived credentials that have been issued based on the service account key.
         # @param [String] name
-        #   Required. The resource name of the service account key in the following format:
-        #   `projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT`/keys/`key``. Using `-` as a
-        #   wildcard for the `PROJECT_ID` will infer the project from the account. The `
-        #   ACCOUNT` value can be the `email` address or the `unique_id` of the service
-        #   account.
+        #   Required. The resource name of the service account key. Use one of the
+        #   following formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`/
+        #   keys/`KEY_ID`` * `projects/`PROJECT_ID`/serviceAccounts/`UNIQUE_ID`/keys/`
+        #   KEY_ID`` As an alternative, you can use the `-` wildcard character instead of
+        #   the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`/keys/`KEY_ID`` *
+        #   `projects/-/serviceAccounts/`UNIQUE_ID`/keys/`KEY_ID`` When possible, avoid
+        #   using the `-` wildcard character, because it can cause response messages to
+        #   contain misleading error codes. For example, if you try to access the service
+        #   account key `projects/-/serviceAccounts/fake@example.com/keys/fake-key`, which
+        #   does not exist, the response contains an HTTP `403 Forbidden` error instead of
+        #   a `404 Not Found` error.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1901,14 +2778,20 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Disable a ServiceAccountKey. A disabled service account key can be enabled
-        # through EnableServiceAccountKey.
+        # Disable a ServiceAccountKey. A disabled service account key can be re-enabled
+        # with EnableServiceAccountKey.
         # @param [String] name
-        #   Required. The resource name of the service account key in the following format:
-        #   `projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT`/keys/`key``. Using `-` as a
-        #   wildcard for the `PROJECT_ID` will infer the project from the account. The `
-        #   ACCOUNT` value can be the `email` address or the `unique_id` of the service
-        #   account.
+        #   Required. The resource name of the service account key. Use one of the
+        #   following formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`/
+        #   keys/`KEY_ID`` * `projects/`PROJECT_ID`/serviceAccounts/`UNIQUE_ID`/keys/`
+        #   KEY_ID`` As an alternative, you can use the `-` wildcard character instead of
+        #   the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`/keys/`KEY_ID`` *
+        #   `projects/-/serviceAccounts/`UNIQUE_ID`/keys/`KEY_ID`` When possible, avoid
+        #   using the `-` wildcard character, because it can cause response messages to
+        #   contain misleading error codes. For example, if you try to access the service
+        #   account key `projects/-/serviceAccounts/fake@example.com/keys/fake-key`, which
+        #   does not exist, the response contains an HTTP `403 Forbidden` error instead of
+        #   a `404 Not Found` error.
         # @param [Google::Apis::IamV1::DisableServiceAccountKeyRequest] disable_service_account_key_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1941,11 +2824,17 @@ module Google
         
         # Enable a ServiceAccountKey.
         # @param [String] name
-        #   Required. The resource name of the service account key in the following format:
-        #   `projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT`/keys/`key``. Using `-` as a
-        #   wildcard for the `PROJECT_ID` will infer the project from the account. The `
-        #   ACCOUNT` value can be the `email` address or the `unique_id` of the service
-        #   account.
+        #   Required. The resource name of the service account key. Use one of the
+        #   following formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`/
+        #   keys/`KEY_ID`` * `projects/`PROJECT_ID`/serviceAccounts/`UNIQUE_ID`/keys/`
+        #   KEY_ID`` As an alternative, you can use the `-` wildcard character instead of
+        #   the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`/keys/`KEY_ID`` *
+        #   `projects/-/serviceAccounts/`UNIQUE_ID`/keys/`KEY_ID`` When possible, avoid
+        #   using the `-` wildcard character, because it can cause response messages to
+        #   contain misleading error codes. For example, if you try to access the service
+        #   account key `projects/-/serviceAccounts/fake@example.com/keys/fake-key`, which
+        #   does not exist, the response contains an HTTP `403 Forbidden` error instead of
+        #   a `404 Not Found` error.
         # @param [Google::Apis::IamV1::EnableServiceAccountKeyRequest] enable_service_account_key_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -1978,14 +2867,20 @@ module Google
         
         # Gets a ServiceAccountKey.
         # @param [String] name
-        #   Required. The resource name of the service account key in the following format:
-        #   `projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT`/keys/`key``. Using `-` as a
-        #   wildcard for the `PROJECT_ID` will infer the project from the account. The `
-        #   ACCOUNT` value can be the `email` address or the `unique_id` of the service
-        #   account.
+        #   Required. The resource name of the service account key. Use one of the
+        #   following formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`/
+        #   keys/`KEY_ID`` * `projects/`PROJECT_ID`/serviceAccounts/`UNIQUE_ID`/keys/`
+        #   KEY_ID`` As an alternative, you can use the `-` wildcard character instead of
+        #   the project ID: * `projects/-/serviceAccounts/`EMAIL_ADDRESS`/keys/`KEY_ID`` *
+        #   `projects/-/serviceAccounts/`UNIQUE_ID`/keys/`KEY_ID`` When possible, avoid
+        #   using the `-` wildcard character, because it can cause response messages to
+        #   contain misleading error codes. For example, if you try to access the service
+        #   account key `projects/-/serviceAccounts/fake@example.com/keys/fake-key`, which
+        #   does not exist, the response contains an HTTP `403 Forbidden` error instead of
+        #   a `404 Not Found` error.
         # @param [String] public_key_type
-        #   The output format of the public key requested. X509_PEM is the default output
-        #   format.
+        #   Optional. The output format of the public key. The default is `TYPE_NONE`,
+        #   which means that the public key is not returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2016,10 +2911,16 @@ module Google
         
         # Lists every ServiceAccountKey for a service account.
         # @param [String] name
-        #   Required. The resource name of the service account in the following format: `
-        #   projects/`PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for
-        #   the `PROJECT_ID`, will infer the project from the account. The `ACCOUNT` value
-        #   can be the `email` address or the `unique_id` of the service account.
+        #   Required. The resource name of the service account. Use one of the following
+        #   formats: * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/
+        #   `PROJECT_ID`/serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-
+        #   ` wildcard character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Array<String>, String] key_types
         #   Filters the types of keys the user wants to include in the list response.
         #   Duplicate key types are not allowed. If no key type is provided, all keys are
@@ -2052,12 +2953,20 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Creates a ServiceAccountKey, using a public key that you provide.
+        # Uploads the public key portion of a key pair that you manage, and associates
+        # the public key with a ServiceAccount. After you upload the public key, you can
+        # use the private key from the key pair as a service account key.
         # @param [String] name
-        #   The resource name of the service account in the following format: `projects/`
-        #   PROJECT_ID`/serviceAccounts/`ACCOUNT``. Using `-` as a wildcard for the `
-        #   PROJECT_ID` will infer the project from the account. The `ACCOUNT` value can
-        #   be the `email` address or the `unique_id` of the service account.
+        #   The resource name of the service account key. Use one of the following formats:
+        #   * `projects/`PROJECT_ID`/serviceAccounts/`EMAIL_ADDRESS`` * `projects/`
+        #   PROJECT_ID`/serviceAccounts/`UNIQUE_ID`` As an alternative, you can use the `-`
+        #   wildcard character instead of the project ID: * `projects/-/serviceAccounts/`
+        #   EMAIL_ADDRESS`` * `projects/-/serviceAccounts/`UNIQUE_ID`` When possible,
+        #   avoid using the `-` wildcard character, because it can cause response messages
+        #   to contain misleading error codes. For example, if you try to access the
+        #   service account `projects/-/serviceAccounts/fake@example.com`, which does not
+        #   exist, the response contains an HTTP `403 Forbidden` error instead of a `404
+        #   Not Found` error.
         # @param [Google::Apis::IamV1::UploadServiceAccountKeyRequest] upload_service_account_key_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2091,24 +3000,26 @@ module Google
         # Gets the definition of a Role.
         # @param [String] name
         #   The `name` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `name` value format is described
-        #   below: * [`roles.get()`](/iam/reference/rest/v1/roles/get): `roles/`ROLE_NAME``
-        #   . This method returns results from all [predefined roles](/iam/docs/
-        #   understanding-roles#predefined_roles) in Cloud IAM. Example request URL: `
-        #   https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`projects.roles.get()`](/
-        #   iam/reference/rest/v1/projects.roles/get): `projects/`PROJECT_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the project level.
-        #   Example request URL: `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/
-        #   roles/`CUSTOM_ROLE_ID`` * [`organizations.roles.get()`](/iam/reference/rest/v1/
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `name` value format is described below: * [`roles.
+        #   get()`](https://cloud.google.com/iam/reference/rest/v1/roles/get): `roles/`
+        #   ROLE_NAME``. This method returns results from all [predefined roles](https://
+        #   cloud.google.com/iam/docs/understanding-roles#predefined_roles) in Cloud IAM.
+        #   Example request URL: `https://iam.googleapis.com/v1/roles/`ROLE_NAME`` * [`
+        #   projects.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/projects.
+        #   roles/get): `projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID``. This method
+        #   returns only [custom roles](https://cloud.google.com/iam/docs/understanding-
+        #   custom-roles) that have been created at the project level. Example request URL:
+        #   `https://iam.googleapis.com/v1/projects/`PROJECT_ID`/roles/`CUSTOM_ROLE_ID`` *
+        #   [`organizations.roles.get()`](https://cloud.google.com/iam/reference/rest/v1/
         #   organizations.roles/get): `organizations/`ORGANIZATION_ID`/roles/`
-        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](/iam/docs/
-        #   understanding-custom-roles) that have been created at the organization level.
-        #   Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*) values are invalid;
-        #   you must specify a complete project ID or organization ID.
+        #   CUSTOM_ROLE_ID``. This method returns only [custom roles](https://cloud.google.
+        #   com/iam/docs/understanding-custom-roles) that have been created at the
+        #   organization level. Example request URL: `https://iam.googleapis.com/v1/
+        #   organizations/`ORGANIZATION_ID`/roles/`CUSTOM_ROLE_ID`` Note: Wildcard (*)
+        #   values are invalid; you must specify a complete project ID or organization ID.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2145,22 +3056,25 @@ module Google
         #   Optional pagination token returned in an earlier ListRolesResponse.
         # @param [String] parent
         #   The `parent` parameter's value depends on the target resource for the request,
-        #   namely [`roles`](/iam/reference/rest/v1/roles), [`projects`](/iam/reference/
-        #   rest/v1/projects.roles), or [`organizations`](/iam/reference/rest/v1/
-        #   organizations.roles). Each resource type's `parent` value format is described
-        #   below: * [`roles.list()`](/iam/reference/rest/v1/roles/list): An empty string.
-        #   This method doesn't require a resource; it simply returns all [predefined
-        #   roles](/iam/docs/understanding-roles#predefined_roles) in Cloud IAM. Example
-        #   request URL: `https://iam.googleapis.com/v1/roles` * [`projects.roles.list()`](
-        #   /iam/reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This
-        #   method lists all project-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/projects/`
-        #   PROJECT_ID`/roles` * [`organizations.roles.list()`](/iam/reference/rest/v1/
-        #   organizations.roles/list): `organizations/`ORGANIZATION_ID``. This method
-        #   lists all organization-level [custom roles](/iam/docs/understanding-custom-
-        #   roles). Example request URL: `https://iam.googleapis.com/v1/organizations/`
-        #   ORGANIZATION_ID`/roles` Note: Wildcard (*) values are invalid; you must
-        #   specify a complete project ID or organization ID.
+        #   namely [`roles`](https://cloud.google.com/iam/reference/rest/v1/roles), [`
+        #   projects`](https://cloud.google.com/iam/reference/rest/v1/projects.roles), or [
+        #   `organizations`](https://cloud.google.com/iam/reference/rest/v1/organizations.
+        #   roles). Each resource type's `parent` value format is described below: * [`
+        #   roles.list()`](https://cloud.google.com/iam/reference/rest/v1/roles/list): An
+        #   empty string. This method doesn't require a resource; it simply returns all [
+        #   predefined roles](https://cloud.google.com/iam/docs/understanding-roles#
+        #   predefined_roles) in Cloud IAM. Example request URL: `https://iam.googleapis.
+        #   com/v1/roles` * [`projects.roles.list()`](https://cloud.google.com/iam/
+        #   reference/rest/v1/projects.roles/list): `projects/`PROJECT_ID``. This method
+        #   lists all project-level [custom roles](https://cloud.google.com/iam/docs/
+        #   understanding-custom-roles). Example request URL: `https://iam.googleapis.com/
+        #   v1/projects/`PROJECT_ID`/roles` * [`organizations.roles.list()`](https://cloud.
+        #   google.com/iam/reference/rest/v1/organizations.roles/list): `organizations/`
+        #   ORGANIZATION_ID``. This method lists all organization-level [custom roles](
+        #   https://cloud.google.com/iam/docs/understanding-custom-roles). Example request
+        #   URL: `https://iam.googleapis.com/v1/organizations/`ORGANIZATION_ID`/roles`
+        #   Note: Wildcard (*) values are invalid; you must specify a complete project ID
+        #   or organization ID.
         # @param [Boolean] show_deleted
         #   Include Roles that have been deleted.
         # @param [String] view

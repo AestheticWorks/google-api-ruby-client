@@ -58,7 +58,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DnsPeering
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Empty
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EventPublishConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -77,6 +89,12 @@ module Google
       end
       
       class ListAvailableVersionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListDnsPeeringsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -214,9 +232,28 @@ module Google
         end
       end
       
+      class DnsPeering
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :domain, as: 'domain'
+          property :name, as: 'name'
+          property :target_network, as: 'targetNetwork'
+          property :target_project, as: 'targetProject'
+        end
+      end
+      
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class EventPublishConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enabled, as: 'enabled'
+          property :topic, as: 'topic'
         end
       end
       
@@ -243,10 +280,14 @@ module Google
       
           property :dataproc_service_account, as: 'dataprocServiceAccount'
           property :description, as: 'description'
+          collection :disabled_reason, as: 'disabledReason'
           property :display_name, as: 'displayName'
           property :enable_rbac, as: 'enableRbac'
           property :enable_stackdriver_logging, as: 'enableStackdriverLogging'
           property :enable_stackdriver_monitoring, as: 'enableStackdriverMonitoring'
+          property :enable_zone_separation, as: 'enableZoneSeparation'
+          property :event_publish_config, as: 'eventPublishConfig', class: Google::Apis::DatafusionV1::EventPublishConfig, decorator: Google::Apis::DatafusionV1::EventPublishConfig::Representation
+      
           property :gcs_bucket, as: 'gcsBucket'
           hash :labels, as: 'labels'
           property :name, as: 'name'
@@ -271,6 +312,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :available_versions, as: 'availableVersions', class: Google::Apis::DatafusionV1::Version, decorator: Google::Apis::DatafusionV1::Version::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListDnsPeeringsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :dns_peerings, as: 'dnsPeerings', class: Google::Apis::DatafusionV1::DnsPeering, decorator: Google::Apis::DatafusionV1::DnsPeering::Representation
       
           property :next_page_token, as: 'nextPageToken'
         end
@@ -404,6 +454,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :available_features, as: 'availableFeatures'
           property :default_version, as: 'defaultVersion'
+          property :type, as: 'type'
           property :version_number, as: 'versionNumber'
         end
       end

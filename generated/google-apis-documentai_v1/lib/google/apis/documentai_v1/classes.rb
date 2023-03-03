@@ -31,6 +31,21 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
         attr_accessor :common_metadata
       
+        # Total number of documents that failed to be deleted in storage.
+        # Corresponds to the JSON property `errorDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :error_document_count
+      
+        # The list of response details of each document.
+        # Corresponds to the JSON property `individualBatchDeleteStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus>]
+        attr_accessor :individual_batch_delete_statuses
+      
+        # Total number of documents deleting from dataset.
+        # Corresponds to the JSON property `totalDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :total_document_count
+      
         def initialize(**args)
            update!(**args)
         end
@@ -38,6 +53,39 @@ module Google
         # Update properties of this object
         def update!(**args)
           @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @error_document_count = args[:error_document_count] if args.key?(:error_document_count)
+          @individual_batch_delete_statuses = args[:individual_batch_delete_statuses] if args.key?(:individual_batch_delete_statuses)
+          @total_document_count = args[:total_document_count] if args.key?(:total_document_count)
+        end
+      end
+      
+      # The status of each individual document in the batch delete process.
+      class GoogleCloudDocumentaiUiv1beta3BatchDeleteDocumentsMetadataIndividualBatchDeleteStatus
+        include Google::Apis::Core::Hashable
+      
+        # Document Identifier.
+        # Corresponds to the JSON property `documentId`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3DocumentId]
+        attr_accessor :document_id
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @document_id = args[:document_id] if args.key?(:document_id)
+          @status = args[:status] if args.key?(:status)
         end
       end
       
@@ -63,6 +111,21 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
         attr_accessor :common_metadata
       
+        # The destination dataset split type.
+        # Corresponds to the JSON property `destDatasetType`
+        # @return [String]
+        attr_accessor :dest_dataset_type
+      
+        # The destination dataset split type.
+        # Corresponds to the JSON property `destSplitType`
+        # @return [String]
+        attr_accessor :dest_split_type
+      
+        # The list of response details of each document.
+        # Corresponds to the JSON property `individualBatchMoveStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus>]
+        attr_accessor :individual_batch_move_statuses
+      
         def initialize(**args)
            update!(**args)
         end
@@ -70,6 +133,39 @@ module Google
         # Update properties of this object
         def update!(**args)
           @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @dest_dataset_type = args[:dest_dataset_type] if args.key?(:dest_dataset_type)
+          @dest_split_type = args[:dest_split_type] if args.key?(:dest_split_type)
+          @individual_batch_move_statuses = args[:individual_batch_move_statuses] if args.key?(:individual_batch_move_statuses)
+        end
+      end
+      
+      # The status of each individual document in the batch move process.
+      class GoogleCloudDocumentaiUiv1beta3BatchMoveDocumentsMetadataIndividualBatchMoveStatus
+        include Google::Apis::Core::Hashable
+      
+        # Document Identifier.
+        # Corresponds to the JSON property `documentId`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3DocumentId]
+        attr_accessor :document_id
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @document_id = args[:document_id] if args.key?(:document_id)
+          @status = args[:status] if args.key?(:status)
         end
       end
       
@@ -95,6 +191,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # A related resource to this operation.
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
         # The state of the operation.
         # Corresponds to the JSON property `state`
         # @return [String]
@@ -117,6 +218,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @resource = args[:resource] if args.key?(:resource)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -264,6 +366,58 @@ module Google
         end
       end
       
+      # Document Identifier.
+      class GoogleCloudDocumentaiUiv1beta3DocumentId
+        include Google::Apis::Core::Hashable
+      
+        # Identifies a document uniquely within the scope of a dataset in the Cloud
+        # Storage option.
+        # Corresponds to the JSON property `gcsManagedDocId`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3DocumentIdGcsManagedDocumentId]
+        attr_accessor :gcs_managed_doc_id
+      
+        # The revision reference specifies which revision on the document to read.
+        # Corresponds to the JSON property `revisionRef`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3RevisionRef]
+        attr_accessor :revision_ref
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gcs_managed_doc_id = args[:gcs_managed_doc_id] if args.key?(:gcs_managed_doc_id)
+          @revision_ref = args[:revision_ref] if args.key?(:revision_ref)
+        end
+      end
+      
+      # Identifies a document uniquely within the scope of a dataset in the Cloud
+      # Storage option.
+      class GoogleCloudDocumentaiUiv1beta3DocumentIdGcsManagedDocumentId
+        include Google::Apis::Core::Hashable
+      
+        # Id of the document (indexed) managed by Content Warehouse.
+        # Corresponds to the JSON property `cwDocId`
+        # @return [String]
+        attr_accessor :cw_doc_id
+      
+        # Required. The Cloud Storage uri where the actual document is stored.
+        # Corresponds to the JSON property `gcsUri`
+        # @return [String]
+        attr_accessor :gcs_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cw_doc_id = args[:cw_doc_id] if args.key?(:cw_doc_id)
+          @gcs_uri = args[:gcs_uri] if args.key?(:gcs_uri)
+        end
+      end
+      
       # The long running operation metadata for enable processor method.
       class GoogleCloudDocumentaiUiv1beta3EnableProcessorMetadata
         include Google::Apis::Core::Hashable
@@ -335,6 +489,112 @@ module Google
         end
       end
       
+      # Metadata of the batch export documents operation.
+      class GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        # The list of response details of each document.
+        # Corresponds to the JSON property `individualExportStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus>]
+        attr_accessor :individual_export_statuses
+      
+        # The list of statistics for each dataset split type.
+        # Corresponds to the JSON property `splitExportStats`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat>]
+        attr_accessor :split_export_stats
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @individual_export_statuses = args[:individual_export_statuses] if args.key?(:individual_export_statuses)
+          @split_export_stats = args[:split_export_stats] if args.key?(:split_export_stats)
+        end
+      end
+      
+      # The status of each individual document in the export process.
+      class GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataIndividualExportStatus
+        include Google::Apis::Core::Hashable
+      
+        # Document Identifier.
+        # Corresponds to the JSON property `documentId`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3DocumentId]
+        attr_accessor :document_id
+      
+        # The output_gcs_destination of the exported document if it was successful,
+        # otherwise empty.
+        # Corresponds to the JSON property `outputGcsDestination`
+        # @return [String]
+        attr_accessor :output_gcs_destination
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @document_id = args[:document_id] if args.key?(:document_id)
+          @output_gcs_destination = args[:output_gcs_destination] if args.key?(:output_gcs_destination)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # The statistic representing a dataset split type for this export.
+      class GoogleCloudDocumentaiUiv1beta3ExportDocumentsMetadataSplitExportStat
+        include Google::Apis::Core::Hashable
+      
+        # The dataset split type.
+        # Corresponds to the JSON property `splitType`
+        # @return [String]
+        attr_accessor :split_type
+      
+        # Total number of documents with the given dataset split type to be exported.
+        # Corresponds to the JSON property `totalDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :total_document_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @split_type = args[:split_type] if args.key?(:split_type)
+          @total_document_count = args[:total_document_count] if args.key?(:total_document_count)
+        end
+      end
+      
+      # The response proto of ExportDocuments method.
+      class GoogleCloudDocumentaiUiv1beta3ExportDocumentsResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Metadata message associated with the ExportProcessorVersion operation.
       class GoogleCloudDocumentaiUiv1beta3ExportProcessorVersionMetadata
         include Google::Apis::Core::Hashable
@@ -382,6 +642,21 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
         attr_accessor :common_metadata
       
+        # Validation statuses of the batch documents import config.
+        # Corresponds to the JSON property `importConfigValidationResults`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult>]
+        attr_accessor :import_config_validation_results
+      
+        # The list of response details of each document.
+        # Corresponds to the JSON property `individualImportStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus>]
+        attr_accessor :individual_import_statuses
+      
+        # Total number of the documents that are qualified for importing.
+        # Corresponds to the JSON property `totalDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :total_document_count
+      
         def initialize(**args)
            update!(**args)
         end
@@ -389,6 +664,78 @@ module Google
         # Update properties of this object
         def update!(**args)
           @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @import_config_validation_results = args[:import_config_validation_results] if args.key?(:import_config_validation_results)
+          @individual_import_statuses = args[:individual_import_statuses] if args.key?(:individual_import_statuses)
+          @total_document_count = args[:total_document_count] if args.key?(:total_document_count)
+        end
+      end
+      
+      # The validation status of each import config. Status is set to errors if there
+      # is no documents to import in the import_config, or OK if the operation will
+      # try to proceed at least one document.
+      class GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataImportConfigValidationResult
+        include Google::Apis::Core::Hashable
+      
+        # The source Cloud Storage URI specified in the import config.
+        # Corresponds to the JSON property `inputGcsSource`
+        # @return [String]
+        attr_accessor :input_gcs_source
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @input_gcs_source = args[:input_gcs_source] if args.key?(:input_gcs_source)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # The status of each individual document in the import process.
+      class GoogleCloudDocumentaiUiv1beta3ImportDocumentsMetadataIndividualImportStatus
+        include Google::Apis::Core::Hashable
+      
+        # The source Cloud Storage URI of the document.
+        # Corresponds to the JSON property `inputGcsSource`
+        # @return [String]
+        attr_accessor :input_gcs_source
+      
+        # The output_gcs_destination of the processed document if it was successful,
+        # otherwise empty.
+        # Corresponds to the JSON property `outputGcsDestination`
+        # @return [String]
+        attr_accessor :output_gcs_destination
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @input_gcs_source = args[:input_gcs_source] if args.key?(:input_gcs_source)
+          @output_gcs_destination = args[:output_gcs_destination] if args.key?(:output_gcs_destination)
+          @status = args[:status] if args.key?(:status)
         end
       end
       
@@ -402,6 +749,189 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # The long running operation metadata for the ImportProcessorVersion method.
+      class GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+        end
+      end
+      
+      # The response message for the ImportProcessorVersion method.
+      class GoogleCloudDocumentaiUiv1beta3ImportProcessorVersionResponse
+        include Google::Apis::Core::Hashable
+      
+        # The destination processor version name.
+        # Corresponds to the JSON property `processorVersion`
+        # @return [String]
+        attr_accessor :processor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @processor_version = args[:processor_version] if args.key?(:processor_version)
+        end
+      end
+      
+      # The metadata proto of ResyncDataset method.
+      class GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        # The list of dataset resync statuses. Not checked when `dataset_documents` is
+        # specified in ResyncRequest.
+        # Corresponds to the JSON property `datasetResyncStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus>]
+        attr_accessor :dataset_resync_statuses
+      
+        # The list of document resync statuses. The same document could have multiple `
+        # individual_document_resync_statuses` if it has multiple inconsistencies.
+        # Corresponds to the JSON property `individualDocumentResyncStatuses`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus>]
+        attr_accessor :individual_document_resync_statuses
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @dataset_resync_statuses = args[:dataset_resync_statuses] if args.key?(:dataset_resync_statuses)
+          @individual_document_resync_statuses = args[:individual_document_resync_statuses] if args.key?(:individual_document_resync_statuses)
+        end
+      end
+      
+      # Resync status against inconsistency types on the dataset level.
+      class GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataDatasetResyncStatus
+        include Google::Apis::Core::Hashable
+      
+        # The type of the inconsistency of the dataset.
+        # Corresponds to the JSON property `datasetInconsistencyType`
+        # @return [String]
+        attr_accessor :dataset_inconsistency_type
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset_inconsistency_type = args[:dataset_inconsistency_type] if args.key?(:dataset_inconsistency_type)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # Resync status for each document per inconsistency type.
+      class GoogleCloudDocumentaiUiv1beta3ResyncDatasetMetadataIndividualDocumentResyncStatus
+        include Google::Apis::Core::Hashable
+      
+        # Document Identifier.
+        # Corresponds to the JSON property `documentId`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiUiv1beta3DocumentId]
+        attr_accessor :document_id
+      
+        # The type of document inconsistency.
+        # Corresponds to the JSON property `documentInconsistencyType`
+        # @return [String]
+        attr_accessor :document_inconsistency_type
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::DocumentaiV1::GoogleRpcStatus]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @document_id = args[:document_id] if args.key?(:document_id)
+          @document_inconsistency_type = args[:document_inconsistency_type] if args.key?(:document_inconsistency_type)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # The response proto of ResyncDataset method.
+      class GoogleCloudDocumentaiUiv1beta3ResyncDatasetResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # The revision reference specifies which revision on the document to read.
+      class GoogleCloudDocumentaiUiv1beta3RevisionRef
+        include Google::Apis::Core::Hashable
+      
+        # Reads the revision generated by the processor version. The format takes the
+        # full resource name of processor version. `projects/`project`/locations/`
+        # location`/processors/`processor`/processorVersions/`processorVersion``
+        # Corresponds to the JSON property `latestProcessorVersion`
+        # @return [String]
+        attr_accessor :latest_processor_version
+      
+        # Reads the revision by the predefined case.
+        # Corresponds to the JSON property `revisionCase`
+        # @return [String]
+        attr_accessor :revision_case
+      
+        # Reads the revision given by the id.
+        # Corresponds to the JSON property `revisionId`
+        # @return [String]
+        attr_accessor :revision_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @latest_processor_version = args[:latest_processor_version] if args.key?(:latest_processor_version)
+          @revision_case = args[:revision_case] if args.key?(:revision_case)
+          @revision_id = args[:revision_id] if args.key?(:revision_id)
         end
       end
       
@@ -620,6 +1150,48 @@ module Google
         end
       end
       
+      # Encodes the detailed information of a barcode.
+      class GoogleCloudDocumentaiV1Barcode
+        include Google::Apis::Core::Hashable
+      
+        # Format of a barcode. The supported formats are: - `CODE_128`: Code 128 type. -
+        # `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type. - `CODABAR`: Codabar type.
+        # - `DATA_MATRIX`: 2D Data Matrix type. - `ITF`: ITF type. - `EAN_13`: EAN-13
+        # type. - `EAN_8`: EAN-8 type. - `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A
+        # type. - `UPC_E`: UPC-E type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code
+        # type. - `DATABAR`: GS1 DataBar code type.
+        # Corresponds to the JSON property `format`
+        # @return [String]
+        attr_accessor :format
+      
+        # Raw value encoded in the barcode. For example: `'MEBKM:TITLE:Google;URL:https:/
+        # /www.google.com;;'`.
+        # Corresponds to the JSON property `rawValue`
+        # @return [String]
+        attr_accessor :raw_value
+      
+        # Value format describes the format of the value that a barcode encodes. The
+        # supported formats are: - `CONTACT_INFO`: Contact information. - `EMAIL`: Email
+        # address. - `ISBN`: ISBN identifier. - `PHONE`: Phone number. - `PRODUCT`:
+        # Product. - `SMS`: SMS message. - `TEXT`: Text string. - `URL`: URL address. - `
+        # WIFI`: Wifi information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`:
+        # Calendar event. - `DRIVER_LICENSE`: Driver's license.
+        # Corresponds to the JSON property `valueFormat`
+        # @return [String]
+        attr_accessor :value_format
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @format = args[:format] if args.key?(:format)
+          @raw_value = args[:raw_value] if args.key?(:raw_value)
+          @value_format = args[:value_format] if args.key?(:value_format)
+        end
+      end
+      
       # The common config to specify a set of documents used as input.
       class GoogleCloudDocumentaiV1BatchDocumentsInputConfig
         include Google::Apis::Core::Hashable
@@ -706,7 +1278,7 @@ module Google
         # @return [String]
         attr_accessor :input_gcs_source
       
-        # The output_gcs_destination (in the request as 'output_gcs_destination') of the
+        # The output_gcs_destination (in the request as `output_gcs_destination`) of the
         # processed document if it was successful, otherwise empty.
         # Corresponds to the JSON property `outputGcsDestination`
         # @return [String]
@@ -816,6 +1388,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # A related resource to this operation.
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
         # The state of the operation.
         # Corresponds to the JSON property `state`
         # @return [String]
@@ -838,6 +1415,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @resource = args[:resource] if args.key?(:resource)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -973,10 +1551,10 @@ module Google
         end
       end
       
-      # Document represents the canonical document resource in Document Understanding
-      # AI. It is an interchange format that provides insights into documents and
-      # allows for collaboration between users and Document Understanding AI to
-      # iterate and optimize for quality.
+      # Document represents the canonical document resource in Document AI. It is an
+      # interchange format that provides insights into documents and allows for
+      # collaboration between users and Document AI to iterate and optimize for
+      # quality.
       class GoogleCloudDocumentaiV1Document
         include Google::Apis::Core::Hashable
       
@@ -994,7 +1572,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentEntity>]
         attr_accessor :entities
       
-        # Relationship among Document.entities.
+        # Placeholder. Relationship among Document.entities.
         # Corresponds to the JSON property `entityRelations`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentEntityRelation>]
         attr_accessor :entity_relations
@@ -1021,7 +1599,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPage>]
         attr_accessor :pages
       
-        # Revision history of this document.
+        # Placeholder. Revision history of this document.
         # Corresponds to the JSON property `revisions`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentRevision>]
         attr_accessor :revisions
@@ -1037,9 +1615,9 @@ module Google
         # @return [String]
         attr_accessor :text
       
-        # A list of text corrections made to [Document.text]. This is usually used for
-        # annotating corrections to OCR mistakes. Text changes for a given revision may
-        # not overlap with each other.
+        # Placeholder. A list of text corrections made to Document.text. This is usually
+        # used for annotating corrections to OCR mistakes. Text changes for a given
+        # revision may not overlap with each other.
         # Corresponds to the JSON property `textChanges`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentTextChange>]
         attr_accessor :text_changes
@@ -1078,13 +1656,13 @@ module Google
         end
       end
       
-      # An entity that could be a phrase in the text or a property belongs to the
+      # An entity that could be a phrase in the text or a property that belongs to the
       # document. It is a known entity type, such as a person, an organization, or
       # location.
       class GoogleCloudDocumentaiV1DocumentEntity
         include Google::Apis::Core::Hashable
       
-        # Optional. Confidence of detected Schema entity. Range [0, 1].
+        # Optional. Confidence of detected Schema entity. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -1100,8 +1678,7 @@ module Google
         # @return [String]
         attr_accessor :mention_id
       
-        # Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the
-        # entity is not present in the document, this field will be empty.
+        # Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.
         # Corresponds to the JSON property `mentionText`
         # @return [String]
         attr_accessor :mention_text
@@ -1141,7 +1718,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentTextAnchor]
         attr_accessor :text_anchor
       
-        # Entity type from a schema e.g. `Address`.
+        # Required. Entity type from a schema e.g. `Address`.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -1175,11 +1752,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `addressValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypePostalAddress]
         attr_accessor :address_value
@@ -1193,11 +1770,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `dateValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypeDate]
         attr_accessor :date_value
@@ -1208,9 +1785,9 @@ module Google
         # from UTC. * When time_zone is set and utc_offset is unset: a civil time on a
         # calendar day in a particular time zone. * When neither time_zone nor
         # utc_offset is set: a civil time on a calendar day in local time. The date is
-        # relative to the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-        # considered not to have a specific year. month and day must have valid, non-
-        # zero values. This type may also be used to represent a physical time if all
+        # relative to the Proleptic Gregorian Calendar. If year, month, or day are 0,
+        # the DateTime is considered not to have a specific year, month, or day
+        # respectively. This type may also be used to represent a physical time if all
         # the date and time fields are set and either case of the `time_offset` oneof is
         # set. Consider using `Timestamp` message for physical time instead. If your use
         # case also would like to store the user's timezone, that can be done in another
@@ -1236,10 +1813,10 @@ module Google
         attr_accessor :money_value
       
         # Optional. An optional field to store a normalized string. For some entity
-        # types, one of respective 'structured_value' fields may also be populated. Also
-        # not all the types of 'structured_value' will be normalized. For example, some
-        # processors may not generate float or int normalized text by default. Below are
-        # sample formats mapped to structured values. - Money/Currency type (`
+        # types, one of respective `structured_value` fields may also be populated. Also
+        # not all the types of `structured_value` will be normalized. For example, some
+        # processors may not generate `float` or `integer` normalized text by default.
+        # Below are sample formats mapped to structured values. - Money/Currency type (`
         # money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in
         # the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO
         # 8601 text format.
@@ -1319,10 +1896,22 @@ module Google
       class GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfig
         include Google::Apis::Core::Hashable
       
+        # Specifies which fields to include in the output documents. Only supports top
+        # level document and pages field so it must be in the form of ``
+        # document_field_name`` or `pages.`page_field_name``.
+        # Corresponds to the JSON property `fieldMask`
+        # @return [String]
+        attr_accessor :field_mask
+      
         # The Cloud Storage uri (a directory) of the output.
         # Corresponds to the JSON property `gcsUri`
         # @return [String]
         attr_accessor :gcs_uri
+      
+        # The sharding config for the output document.
+        # Corresponds to the JSON property `shardingConfig`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfigShardingConfig]
+        attr_accessor :sharding_config
       
         def initialize(**args)
            update!(**args)
@@ -1330,7 +1919,34 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @field_mask = args[:field_mask] if args.key?(:field_mask)
           @gcs_uri = args[:gcs_uri] if args.key?(:gcs_uri)
+          @sharding_config = args[:sharding_config] if args.key?(:sharding_config)
+        end
+      end
+      
+      # The sharding config for the output document.
+      class GoogleCloudDocumentaiV1DocumentOutputConfigGcsOutputConfigShardingConfig
+        include Google::Apis::Core::Hashable
+      
+        # The number of overlapping pages between consecutive shards.
+        # Corresponds to the JSON property `pagesOverlap`
+        # @return [Fixnum]
+        attr_accessor :pages_overlap
+      
+        # The number of pages per shard.
+        # Corresponds to the JSON property `pagesPerShard`
+        # @return [Fixnum]
+        attr_accessor :pages_per_shard
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @pages_overlap = args[:pages_overlap] if args.key?(:pages_overlap)
+          @pages_per_shard = args[:pages_per_shard] if args.key?(:pages_per_shard)
         end
       end
       
@@ -1344,6 +1960,11 @@ module Google
         # Corresponds to the JSON property `blocks`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageBlock>]
         attr_accessor :blocks
+      
+        # A list of detected barcodes.
+        # Corresponds to the JSON property `detectedBarcodes`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageDetectedBarcode>]
+        attr_accessor :detected_barcodes
       
         # A list of detected languages together with confidence.
         # Corresponds to the JSON property `detectedLanguages`
@@ -1364,6 +1985,11 @@ module Google
         # Corresponds to the JSON property `image`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageImage]
         attr_accessor :image
+      
+        # Image Quality Scores for the page image
+        # Corresponds to the JSON property `imageQualityScores`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageImageQualityScores]
+        attr_accessor :image_quality_scores
       
         # Visual element describing a layout unit on a page.
         # Corresponds to the JSON property `layout`
@@ -1394,6 +2020,11 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentProvenance]
         attr_accessor :provenance
       
+        # A list of visually detected symbols on the page.
+        # Corresponds to the JSON property `symbols`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageSymbol>]
+        attr_accessor :symbols
+      
         # A list of visually detected tables on the page.
         # Corresponds to the JSON property `tables`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageTable>]
@@ -1423,15 +2054,18 @@ module Google
         # Update properties of this object
         def update!(**args)
           @blocks = args[:blocks] if args.key?(:blocks)
+          @detected_barcodes = args[:detected_barcodes] if args.key?(:detected_barcodes)
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @dimension = args[:dimension] if args.key?(:dimension)
           @form_fields = args[:form_fields] if args.key?(:form_fields)
           @image = args[:image] if args.key?(:image)
+          @image_quality_scores = args[:image_quality_scores] if args.key?(:image_quality_scores)
           @layout = args[:layout] if args.key?(:layout)
           @lines = args[:lines] if args.key?(:lines)
           @page_number = args[:page_number] if args.key?(:page_number)
           @paragraphs = args[:paragraphs] if args.key?(:paragraphs)
           @provenance = args[:provenance] if args.key?(:provenance)
+          @symbols = args[:symbols] if args.key?(:symbols)
           @tables = args[:tables] if args.key?(:tables)
           @tokens = args[:tokens] if args.key?(:tokens)
           @transforms = args[:transforms] if args.key?(:transforms)
@@ -1469,7 +2103,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1BoundingPoly]
         attr_accessor :bounding_poly
       
-        # Optional. Confidence of detected page element, if applicable. Range [0, 1].
+        # Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -1484,10 +2118,10 @@ module Google
         # @return [String]
         attr_accessor :layout_type
       
-        # Required. Index into the Document.pages element, for example using Document.
-        # pages to locate the related page element. This field is skipped when its value
-        # is the default 0. See https://developers.google.com/protocol-buffers/docs/
-        # proto3#json.
+        # Required. Index into the Document.pages element, for example using `Document.
+        # pages` to locate the related page element. This field is skipped when its
+        # value is the default `0`. See https://developers.google.com/protocol-buffers/
+        # docs/proto3#json.
         # Corresponds to the JSON property `page`
         # @return [Fixnum]
         attr_accessor :page
@@ -1539,17 +2173,42 @@ module Google
         end
       end
       
+      # A detected barcode.
+      class GoogleCloudDocumentaiV1DocumentPageDetectedBarcode
+        include Google::Apis::Core::Hashable
+      
+        # Encodes the detailed information of a barcode.
+        # Corresponds to the JSON property `barcode`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Barcode]
+        attr_accessor :barcode
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @barcode = args[:barcode] if args.key?(:barcode)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # Detected language for a structural component.
       class GoogleCloudDocumentaiV1DocumentPageDetectedLanguage
         include Google::Apis::Core::Hashable
       
-        # Confidence of detected language. Range [0, 1].
+        # Confidence of detected language. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
       
-        # The BCP-47 language code, such as "en-US" or "sr-Latn". For more information,
-        # see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+        # The BCP-47 language code, such as `en-US` or `sr-Latn`. For more information,
+        # see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
         # Corresponds to the JSON property `languageCode`
         # @return [String]
         attr_accessor :language_code
@@ -1641,8 +2300,8 @@ module Google
         attr_accessor :value_detected_languages
       
         # If the value is non-textual, this field represents the type. Current valid
-        # values are: - blank (this indicates the field_value is normal text) - "
-        # unfilled_checkbox" - "filled_checkbox"
+        # values are: - blank (this indicates the `field_value` is normal text) - `
+        # unfilled_checkbox` - `filled_checkbox`
         # Corresponds to the JSON property `valueType`
         # @return [String]
         attr_accessor :value_type
@@ -1702,6 +2361,60 @@ module Google
         end
       end
       
+      # Image Quality Scores for the page image
+      class GoogleCloudDocumentaiV1DocumentPageImageQualityScores
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected defects.
+        # Corresponds to the JSON property `detectedDefects`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect>]
+        attr_accessor :detected_defects
+      
+        # The overall quality score. Range `[0, 1]` where 1 is perfect quality.
+        # Corresponds to the JSON property `qualityScore`
+        # @return [Float]
+        attr_accessor :quality_score
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_defects = args[:detected_defects] if args.key?(:detected_defects)
+          @quality_score = args[:quality_score] if args.key?(:quality_score)
+        end
+      end
+      
+      # Image Quality Defects
+      class GoogleCloudDocumentaiV1DocumentPageImageQualityScoresDetectedDefect
+        include Google::Apis::Core::Hashable
+      
+        # Confidence of detected defect. Range `[0, 1]` where 1 indicates strong
+        # confidence of that the defect exists.
+        # Corresponds to the JSON property `confidence`
+        # @return [Float]
+        attr_accessor :confidence
+      
+        # Name of the defect type. Supported values are: - `quality/defect_blurry` - `
+        # quality/defect_noisy` - `quality/defect_dark` - `quality/defect_faint` - `
+        # quality/defect_text_too_small` - `quality/defect_document_cutoff` - `quality/
+        # defect_text_cutoff` - `quality/defect_glare`
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @confidence = args[:confidence] if args.key?(:confidence)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # Visual element describing a layout unit on a page.
       class GoogleCloudDocumentaiV1DocumentPageLayout
         include Google::Apis::Core::Hashable
@@ -1713,7 +2426,7 @@ module Google
       
         # Confidence of the current Layout within context of the object this layout is
         # for. e.g. confidence can be for a single token, a table, a visual element, etc.
-        # depending on context. Range [0, 1].
+        # depending on context. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -1848,6 +2561,31 @@ module Google
         end
       end
       
+      # A detected symbol.
+      class GoogleCloudDocumentaiV1DocumentPageSymbol
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected languages together with confidence.
+        # Corresponds to the JSON property `detectedLanguages`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageDetectedLanguage>]
+        attr_accessor :detected_languages
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # A table representation similar to HTML table structure.
       class GoogleCloudDocumentaiV1DocumentPageTable
         include Google::Apis::Core::Hashable
@@ -1872,6 +2610,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentPageLayout]
         attr_accessor :layout
       
+        # Structure to identify provenance relationships between annotations in
+        # different revisions.
+        # Corresponds to the JSON property `provenance`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentProvenance]
+        attr_accessor :provenance
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1882,6 +2626,7 @@ module Google
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @header_rows = args[:header_rows] if args.key?(:header_rows)
           @layout = args[:layout] if args.key?(:layout)
+          @provenance = args[:provenance] if args.key?(:provenance)
         end
       end
       
@@ -2067,8 +2812,8 @@ module Google
         end
       end
       
-      # Structure for referencing parent provenances. When an element replaces one of
-      # more other elements parent references identify the elements that are replaced.
+      # The parent element the current element is based on. Used for referencing/
+      # aligning, removal and replacement operations.
       class GoogleCloudDocumentaiV1DocumentProvenanceParent
         include Google::Apis::Core::Hashable
       
@@ -2078,12 +2823,12 @@ module Google
         attr_accessor :id
       
         # The index of the parent item in the corresponding item list (eg. list of
-        # entities, properties within entities, etc.) on parent revision.
+        # entities, properties within entities, etc.) in the parent revision.
         # Corresponds to the JSON property `index`
         # @return [Fixnum]
         attr_accessor :index
       
-        # The index of the [Document.revisions] identifying the parent revision.
+        # The index of the index into current revision's parent_ids list.
         # Corresponds to the JSON property `revision`
         # @return [Fixnum]
         attr_accessor :revision
@@ -2109,7 +2854,8 @@ module Google
         # @return [String]
         attr_accessor :agent
       
-        # The time that the revision was created.
+        # The time that the revision was created, internally generated by doc proto
+        # storage at the time of create.
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
@@ -2119,7 +2865,8 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentRevisionHumanReview]
         attr_accessor :human_review
       
-        # Id of the revision. Unique within the context of the document.
+        # Id of the revision, internally generated by doc proto storage. Unique within
+        # the context of the document.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -2130,6 +2877,13 @@ module Google
         # Corresponds to the JSON property `parent`
         # @return [Array<Fixnum>]
         attr_accessor :parent
+      
+        # The revisions that this revision is based on. Must include all the ids that
+        # have anything to do with this revision - eg. there are `provenance.parent.
+        # revision` fields that index into this field.
+        # Corresponds to the JSON property `parentIds`
+        # @return [Array<String>]
+        attr_accessor :parent_ids
       
         # If the annotation was made by processor identify the processor by its resource
         # name.
@@ -2148,6 +2902,7 @@ module Google
           @human_review = args[:human_review] if args.key?(:human_review)
           @id = args[:id] if args.key?(:id)
           @parent = args[:parent] if args.key?(:parent)
+          @parent_ids = args[:parent_ids] if args.key?(:parent_ids)
           @processor = args[:processor] if args.key?(:processor)
         end
       end
@@ -2175,6 +2930,193 @@ module Google
         def update!(**args)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
+        end
+      end
+      
+      # The schema defines the output of the processed document by a processor.
+      class GoogleCloudDocumentaiV1DocumentSchema
+        include Google::Apis::Core::Hashable
+      
+        # Description of the schema.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Display name to show to users.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Entity types of the schema.
+        # Corresponds to the JSON property `entityTypes`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchemaEntityType>]
+        attr_accessor :entity_types
+      
+        # Metadata for global schema behavior.
+        # Corresponds to the JSON property `metadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchemaMetadata]
+        attr_accessor :metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @description = args[:description] if args.key?(:description)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @entity_types = args[:entity_types] if args.key?(:entity_types)
+          @metadata = args[:metadata] if args.key?(:metadata)
+        end
+      end
+      
+      # EntityType is the wrapper of a label of the corresponding model with detailed
+      # attributes and limitations for entity-based processors. Multiple types can
+      # also compose a dependency tree to represent nested types.
+      class GoogleCloudDocumentaiV1DocumentSchemaEntityType
+        include Google::Apis::Core::Hashable
+      
+        # The entity type that this type is derived from. For now, one and only one
+        # should be set.
+        # Corresponds to the JSON property `baseTypes`
+        # @return [Array<String>]
+        attr_accessor :base_types
+      
+        # User defined name for the type.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Defines the a list of enum values.
+        # Corresponds to the JSON property `enumValues`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchemaEntityTypeEnumValues]
+        attr_accessor :enum_values
+      
+        # Name of the type. It must be unique within the schema file and cannot be a '
+        # Common Type'. Besides that we use the following naming conventions: - *use `
+        # snake_casing`* - name matching is case-sensitive - Maximum 64 characters. -
+        # Must start with a letter. - Allowed characters: ASCII letters `[a-z0-9_-]`. (
+        # For backward compatibility internal infrastructure and tooling can handle any
+        # ascii character) - The `/` is sometimes used to denote a property of a type.
+        # For example `line_item/amount`. This convention is deprecated, but will still
+        # be honored for backward compatibility.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Description the nested structure, or composition of an entity.
+        # Corresponds to the JSON property `properties`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty>]
+        attr_accessor :properties
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @base_types = args[:base_types] if args.key?(:base_types)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @enum_values = args[:enum_values] if args.key?(:enum_values)
+          @name = args[:name] if args.key?(:name)
+          @properties = args[:properties] if args.key?(:properties)
+        end
+      end
+      
+      # Defines the a list of enum values.
+      class GoogleCloudDocumentaiV1DocumentSchemaEntityTypeEnumValues
+        include Google::Apis::Core::Hashable
+      
+        # The individual values that this enum values type can include.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # Defines properties that can be part of the entity type.
+      class GoogleCloudDocumentaiV1DocumentSchemaEntityTypeProperty
+        include Google::Apis::Core::Hashable
+      
+        # The name of the property. Follows the same guidelines as the EntityType name.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Occurrence type limits the number of instances an entity type appears in the
+        # document.
+        # Corresponds to the JSON property `occurrenceType`
+        # @return [String]
+        attr_accessor :occurrence_type
+      
+        # A reference to the value type of the property. This type is subject to the
+        # same conventions as the `Entity.base_types` field.
+        # Corresponds to the JSON property `valueType`
+        # @return [String]
+        attr_accessor :value_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+          @occurrence_type = args[:occurrence_type] if args.key?(:occurrence_type)
+          @value_type = args[:value_type] if args.key?(:value_type)
+        end
+      end
+      
+      # Metadata for global schema behavior.
+      class GoogleCloudDocumentaiV1DocumentSchemaMetadata
+        include Google::Apis::Core::Hashable
+      
+        # If true, on a given page, there can be multiple `document` annotations
+        # covering it.
+        # Corresponds to the JSON property `documentAllowMultipleLabels`
+        # @return [Boolean]
+        attr_accessor :document_allow_multiple_labels
+        alias_method :document_allow_multiple_labels?, :document_allow_multiple_labels
+      
+        # If true, a `document` entity type can be applied to subdocument ( splitting).
+        # Otherwise, it can only be applied to the entire document (classification).
+        # Corresponds to the JSON property `documentSplitter`
+        # @return [Boolean]
+        attr_accessor :document_splitter
+        alias_method :document_splitter?, :document_splitter
+      
+        # If set, all the nested entities must be prefixed with the parents.
+        # Corresponds to the JSON property `prefixedNamingOnProperties`
+        # @return [Boolean]
+        attr_accessor :prefixed_naming_on_properties
+        alias_method :prefixed_naming_on_properties?, :prefixed_naming_on_properties
+      
+        # If set, we will skip the naming format validation in the schema. So the string
+        # values in `DocumentSchema.EntityType.name` and `DocumentSchema.EntityType.
+        # Property.name` will not be checked.
+        # Corresponds to the JSON property `skipNamingValidation`
+        # @return [Boolean]
+        attr_accessor :skip_naming_validation
+        alias_method :skip_naming_validation?, :skip_naming_validation
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @document_allow_multiple_labels = args[:document_allow_multiple_labels] if args.key?(:document_allow_multiple_labels)
+          @document_splitter = args[:document_splitter] if args.key?(:document_splitter)
+          @prefixed_naming_on_properties = args[:prefixed_naming_on_properties] if args.key?(:prefixed_naming_on_properties)
+          @skip_naming_validation = args[:skip_naming_validation] if args.key?(:skip_naming_validation)
         end
       end
       
@@ -2314,6 +3256,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleTypeColor]
         attr_accessor :color
       
+        # Font family such as `Arial`, `Times New Roman`. https://www.w3schools.com/
+        # cssref/pr_font_font-family.asp
+        # Corresponds to the JSON property `fontFamily`
+        # @return [String]
+        attr_accessor :font_family
+      
         # Font size with unit.
         # Corresponds to the JSON property `fontSize`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentStyleFontSize]
@@ -2350,6 +3298,7 @@ module Google
         def update!(**args)
           @background_color = args[:background_color] if args.key?(:background_color)
           @color = args[:color] if args.key?(:color)
+          @font_family = args[:font_family] if args.key?(:font_family)
           @font_size = args[:font_size] if args.key?(:font_size)
           @font_weight = args[:font_weight] if args.key?(:font_weight)
           @text_anchor = args[:text_anchor] if args.key?(:text_anchor)
@@ -2388,7 +3337,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Contains the content of the text span so that users do not have to look it up
-        # in the text_segments.
+        # in the text_segments. It is always populated for formFields.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -2513,6 +3462,184 @@ module Google
         end
       end
       
+      # Metadata of the EvaluateProcessorVersion method.
+      class GoogleCloudDocumentaiV1EvaluateProcessorVersionMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+        end
+      end
+      
+      # Evaluates the given ProcessorVersion against the supplied documents.
+      class GoogleCloudDocumentaiV1EvaluateProcessorVersionRequest
+        include Google::Apis::Core::Hashable
+      
+        # The common config to specify a set of documents used as input.
+        # Corresponds to the JSON property `evaluationDocuments`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1BatchDocumentsInputConfig]
+        attr_accessor :evaluation_documents
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @evaluation_documents = args[:evaluation_documents] if args.key?(:evaluation_documents)
+        end
+      end
+      
+      # Metadata of the EvaluateProcessorVersion method.
+      class GoogleCloudDocumentaiV1EvaluateProcessorVersionResponse
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the created evaluation.
+        # Corresponds to the JSON property `evaluation`
+        # @return [String]
+        attr_accessor :evaluation
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @evaluation = args[:evaluation] if args.key?(:evaluation)
+        end
+      end
+      
+      # An evaluation of a ProcessorVersion's performance.
+      class GoogleCloudDocumentaiV1Evaluation
+        include Google::Apis::Core::Hashable
+      
+        # Metrics across multiple confidence levels.
+        # Corresponds to the JSON property `allEntitiesMetrics`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics]
+        attr_accessor :all_entities_metrics
+      
+        # The time that the evaluation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Evaluation counters for the documents that were used.
+        # Corresponds to the JSON property `documentCounters`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationCounters]
+        attr_accessor :document_counters
+      
+        # Metrics across confidence levels, for different entities.
+        # Corresponds to the JSON property `entityMetrics`
+        # @return [Hash<String,Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics>]
+        attr_accessor :entity_metrics
+      
+        # The KMS key name used for encryption.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
+      
+        # The KMS key version with which data is encrypted.
+        # Corresponds to the JSON property `kmsKeyVersionName`
+        # @return [String]
+        attr_accessor :kms_key_version_name
+      
+        # The resource name of the evaluation. Format: `projects/`project`/locations/`
+        # location`/processors/`processor`/processorVersions/`processor_version`/
+        # evaluations/`evaluation``
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @all_entities_metrics = args[:all_entities_metrics] if args.key?(:all_entities_metrics)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @document_counters = args[:document_counters] if args.key?(:document_counters)
+          @entity_metrics = args[:entity_metrics] if args.key?(:entity_metrics)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
+          @kms_key_version_name = args[:kms_key_version_name] if args.key?(:kms_key_version_name)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # Evaluations metrics, at a specific confidence level.
+      class GoogleCloudDocumentaiV1EvaluationConfidenceLevelMetrics
+        include Google::Apis::Core::Hashable
+      
+        # The confidence level.
+        # Corresponds to the JSON property `confidenceLevel`
+        # @return [Float]
+        attr_accessor :confidence_level
+      
+        # Evaluation metrics, either in aggregate or about a specific entity.
+        # Corresponds to the JSON property `metrics`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationMetrics]
+        attr_accessor :metrics
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @confidence_level = args[:confidence_level] if args.key?(:confidence_level)
+          @metrics = args[:metrics] if args.key?(:metrics)
+        end
+      end
+      
+      # Evaluation counters for the documents that were used.
+      class GoogleCloudDocumentaiV1EvaluationCounters
+        include Google::Apis::Core::Hashable
+      
+        # How many documents were used in the evaluation.
+        # Corresponds to the JSON property `evaluatedDocumentsCount`
+        # @return [Fixnum]
+        attr_accessor :evaluated_documents_count
+      
+        # How many documents were not included in the evaluation as Document AI failed
+        # to process them.
+        # Corresponds to the JSON property `failedDocumentsCount`
+        # @return [Fixnum]
+        attr_accessor :failed_documents_count
+      
+        # How many documents were sent for evaluation.
+        # Corresponds to the JSON property `inputDocumentsCount`
+        # @return [Fixnum]
+        attr_accessor :input_documents_count
+      
+        # How many documents were not included in the evaluation as they didn't pass
+        # validation.
+        # Corresponds to the JSON property `invalidDocumentsCount`
+        # @return [Fixnum]
+        attr_accessor :invalid_documents_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @evaluated_documents_count = args[:evaluated_documents_count] if args.key?(:evaluated_documents_count)
+          @failed_documents_count = args[:failed_documents_count] if args.key?(:failed_documents_count)
+          @input_documents_count = args[:input_documents_count] if args.key?(:input_documents_count)
+          @invalid_documents_count = args[:invalid_documents_count] if args.key?(:invalid_documents_count)
+        end
+      end
+      
       # Evaluation metrics, either in aggregate or about a specific entity.
       class GoogleCloudDocumentaiV1EvaluationMetrics
         include Google::Apis::Core::Hashable
@@ -2532,6 +3659,11 @@ module Google
         # @return [Fixnum]
         attr_accessor :false_positives_count
       
+        # The amount of documents with a ground truth occurrence.
+        # Corresponds to the JSON property `groundTruthDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :ground_truth_document_count
+      
         # The amount of occurrences in ground truth documents.
         # Corresponds to the JSON property `groundTruthOccurrencesCount`
         # @return [Fixnum]
@@ -2541,6 +3673,11 @@ module Google
         # Corresponds to the JSON property `precision`
         # @return [Float]
         attr_accessor :precision
+      
+        # The amount of documents with a predicted occurrence.
+        # Corresponds to the JSON property `predictedDocumentCount`
+        # @return [Fixnum]
+        attr_accessor :predicted_document_count
       
         # The amount of occurrences in predicted documents.
         # Corresponds to the JSON property `predictedOccurrencesCount`
@@ -2571,12 +3708,72 @@ module Google
           @f1_score = args[:f1_score] if args.key?(:f1_score)
           @false_negatives_count = args[:false_negatives_count] if args.key?(:false_negatives_count)
           @false_positives_count = args[:false_positives_count] if args.key?(:false_positives_count)
+          @ground_truth_document_count = args[:ground_truth_document_count] if args.key?(:ground_truth_document_count)
           @ground_truth_occurrences_count = args[:ground_truth_occurrences_count] if args.key?(:ground_truth_occurrences_count)
           @precision = args[:precision] if args.key?(:precision)
+          @predicted_document_count = args[:predicted_document_count] if args.key?(:predicted_document_count)
           @predicted_occurrences_count = args[:predicted_occurrences_count] if args.key?(:predicted_occurrences_count)
           @recall = args[:recall] if args.key?(:recall)
           @total_documents_count = args[:total_documents_count] if args.key?(:total_documents_count)
           @true_positives_count = args[:true_positives_count] if args.key?(:true_positives_count)
+        end
+      end
+      
+      # Metrics across multiple confidence levels.
+      class GoogleCloudDocumentaiV1EvaluationMultiConfidenceMetrics
+        include Google::Apis::Core::Hashable
+      
+        # The calculated area under the precision recall curve (AUPRC), computed by
+        # integrating over all confidence thresholds.
+        # Corresponds to the JSON property `auprc`
+        # @return [Float]
+        attr_accessor :auprc
+      
+        # The AUPRC for metrics with fuzzy matching disabled, i.e., exact matching only.
+        # Corresponds to the JSON property `auprcExact`
+        # @return [Float]
+        attr_accessor :auprc_exact
+      
+        # Metrics across confidence levels with fuzzy matching enabled.
+        # Corresponds to the JSON property `confidenceLevelMetrics`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationConfidenceLevelMetrics>]
+        attr_accessor :confidence_level_metrics
+      
+        # Metrics across confidence levels with only exact matching.
+        # Corresponds to the JSON property `confidenceLevelMetricsExact`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationConfidenceLevelMetrics>]
+        attr_accessor :confidence_level_metrics_exact
+      
+        # The Estimated Calibration Error (ECE) of the confidence of the predicted
+        # entities.
+        # Corresponds to the JSON property `estimatedCalibrationError`
+        # @return [Float]
+        attr_accessor :estimated_calibration_error
+      
+        # The ECE for the predicted entities with fuzzy matching disabled, i.e., exact
+        # matching only.
+        # Corresponds to the JSON property `estimatedCalibrationErrorExact`
+        # @return [Float]
+        attr_accessor :estimated_calibration_error_exact
+      
+        # The metrics type for the label.
+        # Corresponds to the JSON property `metricsType`
+        # @return [String]
+        attr_accessor :metrics_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @auprc = args[:auprc] if args.key?(:auprc)
+          @auprc_exact = args[:auprc_exact] if args.key?(:auprc_exact)
+          @confidence_level_metrics = args[:confidence_level_metrics] if args.key?(:confidence_level_metrics)
+          @confidence_level_metrics_exact = args[:confidence_level_metrics_exact] if args.key?(:confidence_level_metrics_exact)
+          @estimated_calibration_error = args[:estimated_calibration_error] if args.key?(:estimated_calibration_error)
+          @estimated_calibration_error_exact = args[:estimated_calibration_error_exact] if args.key?(:estimated_calibration_error_exact)
+          @metrics_type = args[:metrics_type] if args.key?(:metrics_type)
         end
       end
       
@@ -2588,6 +3785,11 @@ module Google
         # Corresponds to the JSON property `aggregateMetrics`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationMetrics]
         attr_accessor :aggregate_metrics
+      
+        # Evaluation metrics, either in aggregate or about a specific entity.
+        # Corresponds to the JSON property `aggregateMetricsExact`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationMetrics]
+        attr_accessor :aggregate_metrics_exact
       
         # The resource name of the evaluation.
         # Corresponds to the JSON property `evaluation`
@@ -2606,6 +3808,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @aggregate_metrics = args[:aggregate_metrics] if args.key?(:aggregate_metrics)
+          @aggregate_metrics_exact = args[:aggregate_metrics_exact] if args.key?(:aggregate_metrics_exact)
           @evaluation = args[:evaluation] if args.key?(:evaluation)
           @operation = args[:operation] if args.key?(:operation)
         end
@@ -2727,6 +3930,57 @@ module Google
         end
       end
       
+      # The response from ListEvaluations.
+      class GoogleCloudDocumentaiV1ListEvaluationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The evaluations requested.
+        # Corresponds to the JSON property `evaluations`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Evaluation>]
+        attr_accessor :evaluations
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @evaluations = args[:evaluations] if args.key?(:evaluations)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response message for list processor types.
+      class GoogleCloudDocumentaiV1ListProcessorTypesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Points to the next page, otherwise empty.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The processor types.
+        # Corresponds to the JSON property `processorTypes`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1ProcessorType>]
+        attr_accessor :processor_types
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @processor_types = args[:processor_types] if args.key?(:processor_types)
+        end
+      end
+      
       # Response message for list processors.
       class GoogleCloudDocumentaiV1ListProcessorVersionsResponse
         include Google::Apis::Core::Hashable
@@ -2807,10 +4061,17 @@ module Google
       class GoogleCloudDocumentaiV1ProcessRequest
         include Google::Apis::Core::Hashable
       
-        # Document represents the canonical document resource in Document Understanding
-        # AI. It is an interchange format that provides insights into documents and
-        # allows for collaboration between users and Document Understanding AI to
-        # iterate and optimize for quality.
+        # Specifies which fields to include in ProcessResponse's document. Only supports
+        # top level document and pages field so it must be in the form of ``
+        # document_field_name`` or `pages.`page_field_name``.
+        # Corresponds to the JSON property `fieldMask`
+        # @return [String]
+        attr_accessor :field_mask
+      
+        # Document represents the canonical document resource in Document AI. It is an
+        # interchange format that provides insights into documents and allows for
+        # collaboration between users and Document AI to iterate and optimize for
+        # quality.
         # Corresponds to the JSON property `inlineDocument`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Document]
         attr_accessor :inline_document
@@ -2833,6 +4094,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @field_mask = args[:field_mask] if args.key?(:field_mask)
           @inline_document = args[:inline_document] if args.key?(:inline_document)
           @raw_document = args[:raw_document] if args.key?(:raw_document)
           @skip_human_review = args[:skip_human_review] if args.key?(:skip_human_review)
@@ -2843,10 +4105,10 @@ module Google
       class GoogleCloudDocumentaiV1ProcessResponse
         include Google::Apis::Core::Hashable
       
-        # Document represents the canonical document resource in Document Understanding
-        # AI. It is an interchange format that provides insights into documents and
-        # allows for collaboration between users and Document Understanding AI to
-        # iterate and optimize for quality.
+        # Document represents the canonical document resource in Document AI. It is an
+        # interchange format that provides insights into documents and allows for
+        # collaboration between users and Document AI to iterate and optimize for
+        # quality.
         # Corresponds to the JSON property `document`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Document]
         attr_accessor :document
@@ -2867,7 +4129,7 @@ module Google
         end
       end
       
-      # The first-class citizen for DAI. Each processor defines how to extract
+      # The first-class citizen for Document AI. Each processor defines how to extract
       # structural information from a document.
       class GoogleCloudDocumentaiV1Processor
         include Google::Apis::Core::Hashable
@@ -2893,8 +4155,8 @@ module Google
         # @return [String]
         attr_accessor :kms_key_name
       
-        # Output only. Immutable. The resource name of the processor. Format: projects/`
-        # project`/locations/`location`/processors/`processor`
+        # Output only. Immutable. The resource name of the processor. Format: `projects/`
+        # project`/locations/`location`/processors/`processor``
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -2910,7 +4172,8 @@ module Google
         # @return [String]
         attr_accessor :state
       
-        # The processor type, e.g., INVOICE_PARSING, W2_PARSING, etc.
+        # The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`, etc. To get a
+        # list of processors types, see FetchProcessorTypes.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -2933,26 +4196,12 @@ module Google
       end
       
       # A processor type is responsible for performing a certain document
-      # understanding task on a certain type of document. All processor types are
-      # created by the documentai service internally. User will only list all
-      # available processor types via UI. For different users (projects), the
-      # available processor types may be different since we'll expose the access of
-      # some types via EAP whitelisting. We make the ProcessorType a resource under
-      # location so we have a unified API and keep the possibility that UI will load
-      # different available processor types from different regions. But for alpha the
-      # behavior is that the user will always get the union of all available processor
-      # types among all regions no matter which regionalized endpoint is called, and
-      # then we use the 'available_locations' field to show under which regions a
-      # processor type is available. For example, users can call either the 'US' or '
-      # EU' endpoint to feach processor types. In the return, we will have an 'invoice
-      # parsing' processor with 'available_locations' field only containing 'US'. So
-      # the user can try to create an 'invoice parsing' processor under the location '
-      # US'. Such attempt of creating under the location 'EU' will fail. Next ID: 8.
+      # understanding task on a certain type of document.
       class GoogleCloudDocumentaiV1ProcessorType
         include Google::Apis::Core::Hashable
       
-        # Whether the processor type allows creation. If yes, user can create a
-        # processor of this processor type. Otherwise, user needs to request access.
+        # Whether the processor type allows creation. If true, users can create a
+        # processor of this processor type. Otherwise, users need to request access.
         # Corresponds to the JSON property `allowCreation`
         # @return [Boolean]
         attr_accessor :allow_creation
@@ -2968,13 +4217,23 @@ module Google
         # @return [String]
         attr_accessor :category
       
-        # The resource name of the processor type. Format: projects/`project`/
-        # processorTypes/`processor_type`
+        # Launch stage of the processor type
+        # Corresponds to the JSON property `launchStage`
+        # @return [String]
+        attr_accessor :launch_stage
+      
+        # The resource name of the processor type. Format: `projects/`project`/
+        # processorTypes/`processor_type``
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # The type of the processor, e.g, "invoice_parsing".
+        # A set of Cloud Storage URIs of sample documents for this processor.
+        # Corresponds to the JSON property `sampleDocumentUris`
+        # @return [Array<String>]
+        attr_accessor :sample_document_uris
+      
+        # The processor type, e.g., `OCR_PROCESSOR`, `INVOICE_PROCESSOR`, etc.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -2988,7 +4247,9 @@ module Google
           @allow_creation = args[:allow_creation] if args.key?(:allow_creation)
           @available_locations = args[:available_locations] if args.key?(:available_locations)
           @category = args[:category] if args.key?(:category)
+          @launch_stage = args[:launch_stage] if args.key?(:launch_stage)
           @name = args[:name] if args.key?(:name)
+          @sample_document_uris = args[:sample_document_uris] if args.key?(:sample_document_uris)
           @type = args[:type] if args.key?(:type)
         end
       end
@@ -3016,7 +4277,7 @@ module Google
       # have multiple versions, pre-trained by Google internally or up-trained by the
       # customer. At a time, a processor can only have one default version version. So
       # the processor's behavior (when processing documents) is defined by a default
-      # version.
+      # version
       class GoogleCloudDocumentaiV1ProcessorVersion
         include Google::Apis::Core::Hashable
       
@@ -3025,27 +4286,48 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # Information about the upcoming deprecation of this processor version.
+        # Corresponds to the JSON property `deprecationInfo`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo]
+        attr_accessor :deprecation_info
+      
         # The display name of the processor version.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # The schema defines the output of the processed document by a processor.
+        # Corresponds to the JSON property `documentSchema`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchema]
+        attr_accessor :document_schema
+      
+        # Denotes that this ProcessorVersion is managed by google.
+        # Corresponds to the JSON property `googleManaged`
+        # @return [Boolean]
+        attr_accessor :google_managed
+        alias_method :google_managed?, :google_managed
+      
+        # The KMS key name used for encryption.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
+      
+        # The KMS key version with which data is encrypted.
+        # Corresponds to the JSON property `kmsKeyVersionName`
+        # @return [String]
+        attr_accessor :kms_key_version_name
       
         # Gives a short summary of an evaluation, and links to the evaluation itself.
         # Corresponds to the JSON property `latestEvaluation`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1EvaluationReference]
         attr_accessor :latest_evaluation
       
-        # The resource name of the processor version. Format: projects/`project`/
+        # The resource name of the processor version. Format: `projects/`project`/
         # locations/`location`/processors/`processor`/processorVersions/`
-        # processor_version`
+        # processor_version``
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
-      
-        # The schema defines the output of the processed document by a processor.
-        # Corresponds to the JSON property `schema`
-        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Schema]
-        attr_accessor :schema
       
         # The state of the processor version.
         # Corresponds to the JSON property `state`
@@ -3059,11 +4341,40 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @deprecation_info = args[:deprecation_info] if args.key?(:deprecation_info)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @document_schema = args[:document_schema] if args.key?(:document_schema)
+          @google_managed = args[:google_managed] if args.key?(:google_managed)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
+          @kms_key_version_name = args[:kms_key_version_name] if args.key?(:kms_key_version_name)
           @latest_evaluation = args[:latest_evaluation] if args.key?(:latest_evaluation)
           @name = args[:name] if args.key?(:name)
-          @schema = args[:schema] if args.key?(:schema)
           @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Information about the upcoming deprecation of this processor version.
+      class GoogleCloudDocumentaiV1ProcessorVersionDeprecationInfo
+        include Google::Apis::Core::Hashable
+      
+        # The time at which this processor version will be deprecated.
+        # Corresponds to the JSON property `deprecationTime`
+        # @return [String]
+        attr_accessor :deprecation_time
+      
+        # If set, the processor version that will be used as a replacement.
+        # Corresponds to the JSON property `replacementProcessorVersion`
+        # @return [String]
+        attr_accessor :replacement_processor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @deprecation_time = args[:deprecation_time] if args.key?(:deprecation_time)
+          @replacement_processor_version = args[:replacement_processor_version] if args.key?(:replacement_processor_version)
         end
       end
       
@@ -3077,7 +4388,7 @@ module Google
         # @return [String]
         attr_accessor :content
       
-        # An IANA MIME type (RFC6838) indicating the nature and format of the [content].
+        # An IANA MIME type (RFC6838) indicating the nature and format of the content.
         # Corresponds to the JSON property `mimeType`
         # @return [String]
         attr_accessor :mime_type
@@ -3102,6 +4413,11 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1CommonOperationMetadata]
         attr_accessor :common_metadata
       
+        # The Crowd Compute question ID.
+        # Corresponds to the JSON property `questionId`
+        # @return [String]
+        attr_accessor :question_id
+      
         def initialize(**args)
            update!(**args)
         end
@@ -3109,12 +4425,18 @@ module Google
         # Update properties of this object
         def update!(**args)
           @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @question_id = args[:question_id] if args.key?(:question_id)
         end
       end
       
-      # Request message for review document method. Next Id: 6.
+      # Request message for review document method.
       class GoogleCloudDocumentaiV1ReviewDocumentRequest
         include Google::Apis::Core::Hashable
+      
+        # The schema defines the output of the processed document by a processor.
+        # Corresponds to the JSON property `documentSchema`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchema]
+        attr_accessor :document_schema
       
         # Whether the validation should be performed on the ad-hoc review request.
         # Corresponds to the JSON property `enableSchemaValidation`
@@ -3122,10 +4444,10 @@ module Google
         attr_accessor :enable_schema_validation
         alias_method :enable_schema_validation?, :enable_schema_validation
       
-        # Document represents the canonical document resource in Document Understanding
-        # AI. It is an interchange format that provides insights into documents and
-        # allows for collaboration between users and Document Understanding AI to
-        # iterate and optimize for quality.
+        # Document represents the canonical document resource in Document AI. It is an
+        # interchange format that provides insights into documents and allows for
+        # collaboration between users and Document AI to iterate and optimize for
+        # quality.
         # Corresponds to the JSON property `inlineDocument`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1Document]
         attr_accessor :inline_document
@@ -3141,6 +4463,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @document_schema = args[:document_schema] if args.key?(:document_schema)
           @enable_schema_validation = args[:enable_schema_validation] if args.key?(:enable_schema_validation)
           @inline_document = args[:inline_document] if args.key?(:inline_document)
           @priority = args[:priority] if args.key?(:priority)
@@ -3151,10 +4474,21 @@ module Google
       class GoogleCloudDocumentaiV1ReviewDocumentResponse
         include Google::Apis::Core::Hashable
       
-        # The Cloud Storage uri for the human reviewed document.
+        # The Cloud Storage uri for the human reviewed document if the review is
+        # succeeded.
         # Corresponds to the JSON property `gcsDestination`
         # @return [String]
         attr_accessor :gcs_destination
+      
+        # The reason why the review is rejected by reviewer.
+        # Corresponds to the JSON property `rejectionReason`
+        # @return [String]
+        attr_accessor :rejection_reason
+      
+        # The state of the review operation.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
       
         def initialize(**args)
            update!(**args)
@@ -3163,106 +4497,8 @@ module Google
         # Update properties of this object
         def update!(**args)
           @gcs_destination = args[:gcs_destination] if args.key?(:gcs_destination)
-        end
-      end
-      
-      # The schema defines the output of the processed document by a processor.
-      class GoogleCloudDocumentaiV1Schema
-        include Google::Apis::Core::Hashable
-      
-        # Description of the schema.
-        # Corresponds to the JSON property `description`
-        # @return [String]
-        attr_accessor :description
-      
-        # Display name to show to users.
-        # Corresponds to the JSON property `displayName`
-        # @return [String]
-        attr_accessor :display_name
-      
-        # Entity types of the schema.
-        # Corresponds to the JSON property `entityTypes`
-        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1SchemaEntityType>]
-        attr_accessor :entity_types
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @description = args[:description] if args.key?(:description)
-          @display_name = args[:display_name] if args.key?(:display_name)
-          @entity_types = args[:entity_types] if args.key?(:entity_types)
-        end
-      end
-      
-      # EntityType is the wrapper of a label of the corresponding model with detailed
-      # attributes and limitations for entity-based processors. Multiple types can
-      # also compose a dependency tree to represent nested types.
-      class GoogleCloudDocumentaiV1SchemaEntityType
-        include Google::Apis::Core::Hashable
-      
-        # Type of the entity. It must be one of the following: `document` - the entity
-        # represents a classification of a logical document. `object` - if the entity
-        # has properties it is likely an object (or or a document.) `datetime` - the
-        # entity is a date or time value. `money` - the entity represents a money value
-        # amount. `number` - the entity is a number - integer or floating point. `string`
-        # - the entity is a string value. `boolean` - the entity is a boolean value. `
-        # address` - the entity is a location address. `duration` - the entity is a
-        # duration.
-        # Corresponds to the JSON property `baseType`
-        # @return [String]
-        attr_accessor :base_type
-      
-        # Description of the entity type.
-        # Corresponds to the JSON property `description`
-        # @return [String]
-        attr_accessor :description
-      
-        # If specified, lists all the possible values for this entity.
-        # Corresponds to the JSON property `enumValues`
-        # @return [Array<String>]
-        attr_accessor :enum_values
-      
-        # Occurrence type limits the number of times an entity type appears in the
-        # document.
-        # Corresponds to the JSON property `occurrenceType`
-        # @return [String]
-        attr_accessor :occurrence_type
-      
-        # Describing the nested structure of an entity. An EntityType may consist of
-        # several other EntityTypes. For example, in a document there can be an
-        # EntityType 'ID', which consists of EntityType 'name' and 'address', with
-        # corresponding attributes, such as TEXT for both types and ONCE for occurrence
-        # types.
-        # Corresponds to the JSON property `properties`
-        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1SchemaEntityType>]
-        attr_accessor :properties
-      
-        # Source of this entity type.
-        # Corresponds to the JSON property `source`
-        # @return [String]
-        attr_accessor :source
-      
-        # Name of the type. It must be unique within the set of same level types.
-        # Corresponds to the JSON property `type`
-        # @return [String]
-        attr_accessor :type
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @base_type = args[:base_type] if args.key?(:base_type)
-          @description = args[:description] if args.key?(:description)
-          @enum_values = args[:enum_values] if args.key?(:enum_values)
-          @occurrence_type = args[:occurrence_type] if args.key?(:occurrence_type)
-          @properties = args[:properties] if args.key?(:properties)
-          @source = args[:source] if args.key?(:source)
-          @type = args[:type] if args.key?(:type)
+          @rejection_reason = args[:rejection_reason] if args.key?(:rejection_reason)
+          @state = args[:state] if args.key?(:state)
         end
       end
       
@@ -3290,6 +4526,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Required. The resource name of child ProcessorVersion to use as default.
+        # Format: `projects/`project`/locations/`location`/processors/`processor`/
+        # processorVersions/`version``
         # Corresponds to the JSON property `defaultProcessorVersion`
         # @return [String]
         attr_accessor :default_processor_version
@@ -3314,6 +4552,167 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # The metadata that represents a processor version being created.
+      class GoogleCloudDocumentaiV1TrainProcessorVersionMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        # The dataset validation information. This includes any and all errors with
+        # documents and the dataset.
+        # Corresponds to the JSON property `testDatasetValidation`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation]
+        attr_accessor :test_dataset_validation
+      
+        # The dataset validation information. This includes any and all errors with
+        # documents and the dataset.
+        # Corresponds to the JSON property `trainingDatasetValidation`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation]
+        attr_accessor :training_dataset_validation
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @test_dataset_validation = args[:test_dataset_validation] if args.key?(:test_dataset_validation)
+          @training_dataset_validation = args[:training_dataset_validation] if args.key?(:training_dataset_validation)
+        end
+      end
+      
+      # The dataset validation information. This includes any and all errors with
+      # documents and the dataset.
+      class GoogleCloudDocumentaiV1TrainProcessorVersionMetadataDatasetValidation
+        include Google::Apis::Core::Hashable
+      
+        # The total number of dataset errors.
+        # Corresponds to the JSON property `datasetErrorCount`
+        # @return [Fixnum]
+        attr_accessor :dataset_error_count
+      
+        # Error information for the dataset as a whole. A maximum of 10 dataset errors
+        # will be returned. A single dataset error is terminal for training.
+        # Corresponds to the JSON property `datasetErrors`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleRpcStatus>]
+        attr_accessor :dataset_errors
+      
+        # The total number of document errors.
+        # Corresponds to the JSON property `documentErrorCount`
+        # @return [Fixnum]
+        attr_accessor :document_error_count
+      
+        # Error information pertaining to specific documents. A maximum of 10 document
+        # errors will be returned. Any document with errors will not be used throughout
+        # training.
+        # Corresponds to the JSON property `documentErrors`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleRpcStatus>]
+        attr_accessor :document_errors
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset_error_count = args[:dataset_error_count] if args.key?(:dataset_error_count)
+          @dataset_errors = args[:dataset_errors] if args.key?(:dataset_errors)
+          @document_error_count = args[:document_error_count] if args.key?(:document_error_count)
+          @document_errors = args[:document_errors] if args.key?(:document_errors)
+        end
+      end
+      
+      # Request message for the create processor version method.
+      class GoogleCloudDocumentaiV1TrainProcessorVersionRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The processor version to use as a base for training. This processor
+        # version must be a child of `parent`. Format: `projects/`project`/locations/`
+        # location`/processors/`processor`/processorVersions/`processorVersion``.
+        # Corresponds to the JSON property `baseProcessorVersion`
+        # @return [String]
+        attr_accessor :base_processor_version
+      
+        # The schema defines the output of the processed document by a processor.
+        # Corresponds to the JSON property `documentSchema`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1DocumentSchema]
+        attr_accessor :document_schema
+      
+        # The input data used to train a new `ProcessorVersion`.
+        # Corresponds to the JSON property `inputData`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData]
+        attr_accessor :input_data
+      
+        # A processor version is an implementation of a processor. Each processor can
+        # have multiple versions, pre-trained by Google internally or up-trained by the
+        # customer. At a time, a processor can only have one default version version. So
+        # the processor's behavior (when processing documents) is defined by a default
+        # version
+        # Corresponds to the JSON property `processorVersion`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1ProcessorVersion]
+        attr_accessor :processor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @base_processor_version = args[:base_processor_version] if args.key?(:base_processor_version)
+          @document_schema = args[:document_schema] if args.key?(:document_schema)
+          @input_data = args[:input_data] if args.key?(:input_data)
+          @processor_version = args[:processor_version] if args.key?(:processor_version)
+        end
+      end
+      
+      # The input data used to train a new `ProcessorVersion`.
+      class GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData
+        include Google::Apis::Core::Hashable
+      
+        # The common config to specify a set of documents used as input.
+        # Corresponds to the JSON property `testDocuments`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1BatchDocumentsInputConfig]
+        attr_accessor :test_documents
+      
+        # The common config to specify a set of documents used as input.
+        # Corresponds to the JSON property `trainingDocuments`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1BatchDocumentsInputConfig]
+        attr_accessor :training_documents
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @test_documents = args[:test_documents] if args.key?(:test_documents)
+          @training_documents = args[:training_documents] if args.key?(:training_documents)
+        end
+      end
+      
+      # The response for the TrainProcessorVersion method.
+      class GoogleCloudDocumentaiV1TrainProcessorVersionResponse
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the processor version produced by training.
+        # Corresponds to the JSON property `processorVersion`
+        # @return [String]
+        attr_accessor :processor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @processor_version = args[:processor_version] if args.key?(:processor_version)
         end
       end
       
@@ -3388,6 +4787,48 @@ module Google
         end
       end
       
+      # Encodes the detailed information of a barcode.
+      class GoogleCloudDocumentaiV1beta1Barcode
+        include Google::Apis::Core::Hashable
+      
+        # Format of a barcode. The supported formats are: - `CODE_128`: Code 128 type. -
+        # `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type. - `CODABAR`: Codabar type.
+        # - `DATA_MATRIX`: 2D Data Matrix type. - `ITF`: ITF type. - `EAN_13`: EAN-13
+        # type. - `EAN_8`: EAN-8 type. - `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A
+        # type. - `UPC_E`: UPC-E type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code
+        # type. - `DATABAR`: GS1 DataBar code type.
+        # Corresponds to the JSON property `format`
+        # @return [String]
+        attr_accessor :format
+      
+        # Raw value encoded in the barcode. For example: `'MEBKM:TITLE:Google;URL:https:/
+        # /www.google.com;;'`.
+        # Corresponds to the JSON property `rawValue`
+        # @return [String]
+        attr_accessor :raw_value
+      
+        # Value format describes the format of the value that a barcode encodes. The
+        # supported formats are: - `CONTACT_INFO`: Contact information. - `EMAIL`: Email
+        # address. - `ISBN`: ISBN identifier. - `PHONE`: Phone number. - `PRODUCT`:
+        # Product. - `SMS`: SMS message. - `TEXT`: Text string. - `URL`: URL address. - `
+        # WIFI`: Wifi information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`:
+        # Calendar event. - `DRIVER_LICENSE`: Driver's license.
+        # Corresponds to the JSON property `valueFormat`
+        # @return [String]
+        attr_accessor :value_format
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @format = args[:format] if args.key?(:format)
+          @raw_value = args[:raw_value] if args.key?(:raw_value)
+          @value_format = args[:value_format] if args.key?(:value_format)
+        end
+      end
+      
       # Response to an batch document processing request. This is returned in the LRO
       # Operation after the operation is complete.
       class GoogleCloudDocumentaiV1beta1BatchProcessDocumentsResponse
@@ -3433,10 +4874,10 @@ module Google
         end
       end
       
-      # Document represents the canonical document resource in Document Understanding
-      # AI. It is an interchange format that provides insights into documents and
-      # allows for collaboration between users and Document Understanding AI to
-      # iterate and optimize for quality.
+      # Document represents the canonical document resource in Document AI. It is an
+      # interchange format that provides insights into documents and allows for
+      # collaboration between users and Document AI to iterate and optimize for
+      # quality.
       class GoogleCloudDocumentaiV1beta1Document
         include Google::Apis::Core::Hashable
       
@@ -3454,7 +4895,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentEntity>]
         attr_accessor :entities
       
-        # Relationship among Document.entities.
+        # Placeholder. Relationship among Document.entities.
         # Corresponds to the JSON property `entityRelations`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentEntityRelation>]
         attr_accessor :entity_relations
@@ -3481,7 +4922,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPage>]
         attr_accessor :pages
       
-        # Revision history of this document.
+        # Placeholder. Revision history of this document.
         # Corresponds to the JSON property `revisions`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentRevision>]
         attr_accessor :revisions
@@ -3497,9 +4938,9 @@ module Google
         # @return [String]
         attr_accessor :text
       
-        # A list of text corrections made to [Document.text]. This is usually used for
-        # annotating corrections to OCR mistakes. Text changes for a given revision may
-        # not overlap with each other.
+        # Placeholder. A list of text corrections made to Document.text. This is usually
+        # used for annotating corrections to OCR mistakes. Text changes for a given
+        # revision may not overlap with each other.
         # Corresponds to the JSON property `textChanges`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentTextChange>]
         attr_accessor :text_changes
@@ -3538,13 +4979,13 @@ module Google
         end
       end
       
-      # An entity that could be a phrase in the text or a property belongs to the
+      # An entity that could be a phrase in the text or a property that belongs to the
       # document. It is a known entity type, such as a person, an organization, or
       # location.
       class GoogleCloudDocumentaiV1beta1DocumentEntity
         include Google::Apis::Core::Hashable
       
-        # Optional. Confidence of detected Schema entity. Range [0, 1].
+        # Optional. Confidence of detected Schema entity. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -3560,8 +5001,7 @@ module Google
         # @return [String]
         attr_accessor :mention_id
       
-        # Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the
-        # entity is not present in the document, this field will be empty.
+        # Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.
         # Corresponds to the JSON property `mentionText`
         # @return [String]
         attr_accessor :mention_text
@@ -3601,7 +5041,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentTextAnchor]
         attr_accessor :text_anchor
       
-        # Entity type from a schema e.g. `Address`.
+        # Required. Entity type from a schema e.g. `Address`.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -3635,11 +5075,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `addressValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypePostalAddress]
         attr_accessor :address_value
@@ -3653,11 +5093,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `dateValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypeDate]
         attr_accessor :date_value
@@ -3668,9 +5108,9 @@ module Google
         # from UTC. * When time_zone is set and utc_offset is unset: a civil time on a
         # calendar day in a particular time zone. * When neither time_zone nor
         # utc_offset is set: a civil time on a calendar day in local time. The date is
-        # relative to the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-        # considered not to have a specific year. month and day must have valid, non-
-        # zero values. This type may also be used to represent a physical time if all
+        # relative to the Proleptic Gregorian Calendar. If year, month, or day are 0,
+        # the DateTime is considered not to have a specific year, month, or day
+        # respectively. This type may also be used to represent a physical time if all
         # the date and time fields are set and either case of the `time_offset` oneof is
         # set. Consider using `Timestamp` message for physical time instead. If your use
         # case also would like to store the user's timezone, that can be done in another
@@ -3696,10 +5136,10 @@ module Google
         attr_accessor :money_value
       
         # Optional. An optional field to store a normalized string. For some entity
-        # types, one of respective 'structured_value' fields may also be populated. Also
-        # not all the types of 'structured_value' will be normalized. For example, some
-        # processors may not generate float or int normalized text by default. Below are
-        # sample formats mapped to structured values. - Money/Currency type (`
+        # types, one of respective `structured_value` fields may also be populated. Also
+        # not all the types of `structured_value` will be normalized. For example, some
+        # processors may not generate `float` or `integer` normalized text by default.
+        # Below are sample formats mapped to structured values. - Money/Currency type (`
         # money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in
         # the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO
         # 8601 text format.
@@ -3766,6 +5206,11 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageBlock>]
         attr_accessor :blocks
       
+        # A list of detected barcodes.
+        # Corresponds to the JSON property `detectedBarcodes`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode>]
+        attr_accessor :detected_barcodes
+      
         # A list of detected languages together with confidence.
         # Corresponds to the JSON property `detectedLanguages`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage>]
@@ -3785,6 +5230,11 @@ module Google
         # Corresponds to the JSON property `image`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageImage]
         attr_accessor :image
+      
+        # Image Quality Scores for the page image
+        # Corresponds to the JSON property `imageQualityScores`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores]
+        attr_accessor :image_quality_scores
       
         # Visual element describing a layout unit on a page.
         # Corresponds to the JSON property `layout`
@@ -3815,6 +5265,11 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentProvenance]
         attr_accessor :provenance
       
+        # A list of visually detected symbols on the page.
+        # Corresponds to the JSON property `symbols`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageSymbol>]
+        attr_accessor :symbols
+      
         # A list of visually detected tables on the page.
         # Corresponds to the JSON property `tables`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageTable>]
@@ -3844,15 +5299,18 @@ module Google
         # Update properties of this object
         def update!(**args)
           @blocks = args[:blocks] if args.key?(:blocks)
+          @detected_barcodes = args[:detected_barcodes] if args.key?(:detected_barcodes)
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @dimension = args[:dimension] if args.key?(:dimension)
           @form_fields = args[:form_fields] if args.key?(:form_fields)
           @image = args[:image] if args.key?(:image)
+          @image_quality_scores = args[:image_quality_scores] if args.key?(:image_quality_scores)
           @layout = args[:layout] if args.key?(:layout)
           @lines = args[:lines] if args.key?(:lines)
           @page_number = args[:page_number] if args.key?(:page_number)
           @paragraphs = args[:paragraphs] if args.key?(:paragraphs)
           @provenance = args[:provenance] if args.key?(:provenance)
+          @symbols = args[:symbols] if args.key?(:symbols)
           @tables = args[:tables] if args.key?(:tables)
           @tokens = args[:tokens] if args.key?(:tokens)
           @transforms = args[:transforms] if args.key?(:transforms)
@@ -3890,7 +5348,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1BoundingPoly]
         attr_accessor :bounding_poly
       
-        # Optional. Confidence of detected page element, if applicable. Range [0, 1].
+        # Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -3905,10 +5363,10 @@ module Google
         # @return [String]
         attr_accessor :layout_type
       
-        # Required. Index into the Document.pages element, for example using Document.
-        # pages to locate the related page element. This field is skipped when its value
-        # is the default 0. See https://developers.google.com/protocol-buffers/docs/
-        # proto3#json.
+        # Required. Index into the Document.pages element, for example using `Document.
+        # pages` to locate the related page element. This field is skipped when its
+        # value is the default `0`. See https://developers.google.com/protocol-buffers/
+        # docs/proto3#json.
         # Corresponds to the JSON property `page`
         # @return [Fixnum]
         attr_accessor :page
@@ -3960,17 +5418,42 @@ module Google
         end
       end
       
+      # A detected barcode.
+      class GoogleCloudDocumentaiV1beta1DocumentPageDetectedBarcode
+        include Google::Apis::Core::Hashable
+      
+        # Encodes the detailed information of a barcode.
+        # Corresponds to the JSON property `barcode`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1Barcode]
+        attr_accessor :barcode
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @barcode = args[:barcode] if args.key?(:barcode)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # Detected language for a structural component.
       class GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage
         include Google::Apis::Core::Hashable
       
-        # Confidence of detected language. Range [0, 1].
+        # Confidence of detected language. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
       
-        # The BCP-47 language code, such as "en-US" or "sr-Latn". For more information,
-        # see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+        # The BCP-47 language code, such as `en-US` or `sr-Latn`. For more information,
+        # see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
         # Corresponds to the JSON property `languageCode`
         # @return [String]
         attr_accessor :language_code
@@ -4062,8 +5545,8 @@ module Google
         attr_accessor :value_detected_languages
       
         # If the value is non-textual, this field represents the type. Current valid
-        # values are: - blank (this indicates the field_value is normal text) - "
-        # unfilled_checkbox" - "filled_checkbox"
+        # values are: - blank (this indicates the `field_value` is normal text) - `
+        # unfilled_checkbox` - `filled_checkbox`
         # Corresponds to the JSON property `valueType`
         # @return [String]
         attr_accessor :value_type
@@ -4123,6 +5606,60 @@ module Google
         end
       end
       
+      # Image Quality Scores for the page image
+      class GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScores
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected defects.
+        # Corresponds to the JSON property `detectedDefects`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect>]
+        attr_accessor :detected_defects
+      
+        # The overall quality score. Range `[0, 1]` where 1 is perfect quality.
+        # Corresponds to the JSON property `qualityScore`
+        # @return [Float]
+        attr_accessor :quality_score
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_defects = args[:detected_defects] if args.key?(:detected_defects)
+          @quality_score = args[:quality_score] if args.key?(:quality_score)
+        end
+      end
+      
+      # Image Quality Defects
+      class GoogleCloudDocumentaiV1beta1DocumentPageImageQualityScoresDetectedDefect
+        include Google::Apis::Core::Hashable
+      
+        # Confidence of detected defect. Range `[0, 1]` where 1 indicates strong
+        # confidence of that the defect exists.
+        # Corresponds to the JSON property `confidence`
+        # @return [Float]
+        attr_accessor :confidence
+      
+        # Name of the defect type. Supported values are: - `quality/defect_blurry` - `
+        # quality/defect_noisy` - `quality/defect_dark` - `quality/defect_faint` - `
+        # quality/defect_text_too_small` - `quality/defect_document_cutoff` - `quality/
+        # defect_text_cutoff` - `quality/defect_glare`
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @confidence = args[:confidence] if args.key?(:confidence)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # Visual element describing a layout unit on a page.
       class GoogleCloudDocumentaiV1beta1DocumentPageLayout
         include Google::Apis::Core::Hashable
@@ -4134,7 +5671,7 @@ module Google
       
         # Confidence of the current Layout within context of the object this layout is
         # for. e.g. confidence can be for a single token, a table, a visual element, etc.
-        # depending on context. Range [0, 1].
+        # depending on context. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -4269,6 +5806,31 @@ module Google
         end
       end
       
+      # A detected symbol.
+      class GoogleCloudDocumentaiV1beta1DocumentPageSymbol
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected languages together with confidence.
+        # Corresponds to the JSON property `detectedLanguages`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageDetectedLanguage>]
+        attr_accessor :detected_languages
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # A table representation similar to HTML table structure.
       class GoogleCloudDocumentaiV1beta1DocumentPageTable
         include Google::Apis::Core::Hashable
@@ -4293,6 +5855,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentPageLayout]
         attr_accessor :layout
       
+        # Structure to identify provenance relationships between annotations in
+        # different revisions.
+        # Corresponds to the JSON property `provenance`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentProvenance]
+        attr_accessor :provenance
+      
         def initialize(**args)
            update!(**args)
         end
@@ -4303,6 +5871,7 @@ module Google
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @header_rows = args[:header_rows] if args.key?(:header_rows)
           @layout = args[:layout] if args.key?(:layout)
+          @provenance = args[:provenance] if args.key?(:provenance)
         end
       end
       
@@ -4488,8 +6057,8 @@ module Google
         end
       end
       
-      # Structure for referencing parent provenances. When an element replaces one of
-      # more other elements parent references identify the elements that are replaced.
+      # The parent element the current element is based on. Used for referencing/
+      # aligning, removal and replacement operations.
       class GoogleCloudDocumentaiV1beta1DocumentProvenanceParent
         include Google::Apis::Core::Hashable
       
@@ -4499,12 +6068,12 @@ module Google
         attr_accessor :id
       
         # The index of the parent item in the corresponding item list (eg. list of
-        # entities, properties within entities, etc.) on parent revision.
+        # entities, properties within entities, etc.) in the parent revision.
         # Corresponds to the JSON property `index`
         # @return [Fixnum]
         attr_accessor :index
       
-        # The index of the [Document.revisions] identifying the parent revision.
+        # The index of the index into current revision's parent_ids list.
         # Corresponds to the JSON property `revision`
         # @return [Fixnum]
         attr_accessor :revision
@@ -4530,7 +6099,8 @@ module Google
         # @return [String]
         attr_accessor :agent
       
-        # The time that the revision was created.
+        # The time that the revision was created, internally generated by doc proto
+        # storage at the time of create.
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
@@ -4540,7 +6110,8 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentRevisionHumanReview]
         attr_accessor :human_review
       
-        # Id of the revision. Unique within the context of the document.
+        # Id of the revision, internally generated by doc proto storage. Unique within
+        # the context of the document.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -4551,6 +6122,13 @@ module Google
         # Corresponds to the JSON property `parent`
         # @return [Array<Fixnum>]
         attr_accessor :parent
+      
+        # The revisions that this revision is based on. Must include all the ids that
+        # have anything to do with this revision - eg. there are `provenance.parent.
+        # revision` fields that index into this field.
+        # Corresponds to the JSON property `parentIds`
+        # @return [Array<String>]
+        attr_accessor :parent_ids
       
         # If the annotation was made by processor identify the processor by its resource
         # name.
@@ -4569,6 +6147,7 @@ module Google
           @human_review = args[:human_review] if args.key?(:human_review)
           @id = args[:id] if args.key?(:id)
           @parent = args[:parent] if args.key?(:parent)
+          @parent_ids = args[:parent_ids] if args.key?(:parent_ids)
           @processor = args[:processor] if args.key?(:processor)
         end
       end
@@ -4735,6 +6314,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleTypeColor]
         attr_accessor :color
       
+        # Font family such as `Arial`, `Times New Roman`. https://www.w3schools.com/
+        # cssref/pr_font_font-family.asp
+        # Corresponds to the JSON property `fontFamily`
+        # @return [String]
+        attr_accessor :font_family
+      
         # Font size with unit.
         # Corresponds to the JSON property `fontSize`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta1DocumentStyleFontSize]
@@ -4771,6 +6356,7 @@ module Google
         def update!(**args)
           @background_color = args[:background_color] if args.key?(:background_color)
           @color = args[:color] if args.key?(:color)
+          @font_family = args[:font_family] if args.key?(:font_family)
           @font_size = args[:font_size] if args.key?(:font_size)
           @font_weight = args[:font_weight] if args.key?(:font_weight)
           @text_anchor = args[:text_anchor] if args.key?(:text_anchor)
@@ -4809,7 +6395,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Contains the content of the text span so that users do not have to look it up
-        # in the text_segments.
+        # in the text_segments. It is always populated for formFields.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -5101,6 +6687,48 @@ module Google
         end
       end
       
+      # Encodes the detailed information of a barcode.
+      class GoogleCloudDocumentaiV1beta2Barcode
+        include Google::Apis::Core::Hashable
+      
+        # Format of a barcode. The supported formats are: - `CODE_128`: Code 128 type. -
+        # `CODE_39`: Code 39 type. - `CODE_93`: Code 93 type. - `CODABAR`: Codabar type.
+        # - `DATA_MATRIX`: 2D Data Matrix type. - `ITF`: ITF type. - `EAN_13`: EAN-13
+        # type. - `EAN_8`: EAN-8 type. - `QR_CODE`: 2D QR code type. - `UPC_A`: UPC-A
+        # type. - `UPC_E`: UPC-E type. - `PDF417`: PDF417 type. - `AZTEC`: 2D Aztec code
+        # type. - `DATABAR`: GS1 DataBar code type.
+        # Corresponds to the JSON property `format`
+        # @return [String]
+        attr_accessor :format
+      
+        # Raw value encoded in the barcode. For example: `'MEBKM:TITLE:Google;URL:https:/
+        # /www.google.com;;'`.
+        # Corresponds to the JSON property `rawValue`
+        # @return [String]
+        attr_accessor :raw_value
+      
+        # Value format describes the format of the value that a barcode encodes. The
+        # supported formats are: - `CONTACT_INFO`: Contact information. - `EMAIL`: Email
+        # address. - `ISBN`: ISBN identifier. - `PHONE`: Phone number. - `PRODUCT`:
+        # Product. - `SMS`: SMS message. - `TEXT`: Text string. - `URL`: URL address. - `
+        # WIFI`: Wifi information. - `GEO`: Geo-localization. - `CALENDAR_EVENT`:
+        # Calendar event. - `DRIVER_LICENSE`: Driver's license.
+        # Corresponds to the JSON property `valueFormat`
+        # @return [String]
+        attr_accessor :value_format
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @format = args[:format] if args.key?(:format)
+          @raw_value = args[:raw_value] if args.key?(:raw_value)
+          @value_format = args[:value_format] if args.key?(:value_format)
+        end
+      end
+      
       # Response to an batch document processing request. This is returned in the LRO
       # Operation after the operation is complete.
       class GoogleCloudDocumentaiV1beta2BatchProcessDocumentsResponse
@@ -5146,10 +6774,10 @@ module Google
         end
       end
       
-      # Document represents the canonical document resource in Document Understanding
-      # AI. It is an interchange format that provides insights into documents and
-      # allows for collaboration between users and Document Understanding AI to
-      # iterate and optimize for quality.
+      # Document represents the canonical document resource in Document AI. It is an
+      # interchange format that provides insights into documents and allows for
+      # collaboration between users and Document AI to iterate and optimize for
+      # quality.
       class GoogleCloudDocumentaiV1beta2Document
         include Google::Apis::Core::Hashable
       
@@ -5167,7 +6795,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentEntity>]
         attr_accessor :entities
       
-        # Relationship among Document.entities.
+        # Placeholder. Relationship among Document.entities.
         # Corresponds to the JSON property `entityRelations`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentEntityRelation>]
         attr_accessor :entity_relations
@@ -5199,7 +6827,7 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPage>]
         attr_accessor :pages
       
-        # Revision history of this document.
+        # Placeholder. Revision history of this document.
         # Corresponds to the JSON property `revisions`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentRevision>]
         attr_accessor :revisions
@@ -5215,9 +6843,9 @@ module Google
         # @return [String]
         attr_accessor :text
       
-        # A list of text corrections made to [Document.text]. This is usually used for
-        # annotating corrections to OCR mistakes. Text changes for a given revision may
-        # not overlap with each other.
+        # Placeholder. A list of text corrections made to Document.text. This is usually
+        # used for annotating corrections to OCR mistakes. Text changes for a given
+        # revision may not overlap with each other.
         # Corresponds to the JSON property `textChanges`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentTextChange>]
         attr_accessor :text_changes
@@ -5257,13 +6885,13 @@ module Google
         end
       end
       
-      # An entity that could be a phrase in the text or a property belongs to the
+      # An entity that could be a phrase in the text or a property that belongs to the
       # document. It is a known entity type, such as a person, an organization, or
       # location.
       class GoogleCloudDocumentaiV1beta2DocumentEntity
         include Google::Apis::Core::Hashable
       
-        # Optional. Confidence of detected Schema entity. Range [0, 1].
+        # Optional. Confidence of detected Schema entity. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -5279,8 +6907,7 @@ module Google
         # @return [String]
         attr_accessor :mention_id
       
-        # Optional. Text value in the document e.g. `1600 Amphitheatre Pkwy`. If the
-        # entity is not present in the document, this field will be empty.
+        # Optional. Text value of the entity e.g. `1600 Amphitheatre Pkwy`.
         # Corresponds to the JSON property `mentionText`
         # @return [String]
         attr_accessor :mention_text
@@ -5320,7 +6947,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentTextAnchor]
         attr_accessor :text_anchor
       
-        # Entity type from a schema e.g. `Address`.
+        # Required. Entity type from a schema e.g. `Address`.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -5354,11 +6981,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `addressValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypePostalAddress]
         attr_accessor :address_value
@@ -5372,11 +6999,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `dateValue`
         # @return [Google::Apis::DocumentaiV1::GoogleTypeDate]
         attr_accessor :date_value
@@ -5387,9 +7014,9 @@ module Google
         # from UTC. * When time_zone is set and utc_offset is unset: a civil time on a
         # calendar day in a particular time zone. * When neither time_zone nor
         # utc_offset is set: a civil time on a calendar day in local time. The date is
-        # relative to the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-        # considered not to have a specific year. month and day must have valid, non-
-        # zero values. This type may also be used to represent a physical time if all
+        # relative to the Proleptic Gregorian Calendar. If year, month, or day are 0,
+        # the DateTime is considered not to have a specific year, month, or day
+        # respectively. This type may also be used to represent a physical time if all
         # the date and time fields are set and either case of the `time_offset` oneof is
         # set. Consider using `Timestamp` message for physical time instead. If your use
         # case also would like to store the user's timezone, that can be done in another
@@ -5415,10 +7042,10 @@ module Google
         attr_accessor :money_value
       
         # Optional. An optional field to store a normalized string. For some entity
-        # types, one of respective 'structured_value' fields may also be populated. Also
-        # not all the types of 'structured_value' will be normalized. For example, some
-        # processors may not generate float or int normalized text by default. Below are
-        # sample formats mapped to structured values. - Money/Currency type (`
+        # types, one of respective `structured_value` fields may also be populated. Also
+        # not all the types of `structured_value` will be normalized. For example, some
+        # processors may not generate `float` or `integer` normalized text by default.
+        # Below are sample formats mapped to structured values. - Money/Currency type (`
         # money_value`) is in the ISO 4217 text format. - Date type (`date_value`) is in
         # the ISO 8601 text format. - Datetime type (`datetime_value`) is in the ISO
         # 8601 text format.
@@ -5522,6 +7149,11 @@ module Google
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageBlock>]
         attr_accessor :blocks
       
+        # A list of detected barcodes.
+        # Corresponds to the JSON property `detectedBarcodes`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode>]
+        attr_accessor :detected_barcodes
+      
         # A list of detected languages together with confidence.
         # Corresponds to the JSON property `detectedLanguages`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage>]
@@ -5541,6 +7173,11 @@ module Google
         # Corresponds to the JSON property `image`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageImage]
         attr_accessor :image
+      
+        # Image Quality Scores for the page image
+        # Corresponds to the JSON property `imageQualityScores`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores]
+        attr_accessor :image_quality_scores
       
         # Visual element describing a layout unit on a page.
         # Corresponds to the JSON property `layout`
@@ -5571,6 +7208,11 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentProvenance]
         attr_accessor :provenance
       
+        # A list of visually detected symbols on the page.
+        # Corresponds to the JSON property `symbols`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageSymbol>]
+        attr_accessor :symbols
+      
         # A list of visually detected tables on the page.
         # Corresponds to the JSON property `tables`
         # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageTable>]
@@ -5600,15 +7242,18 @@ module Google
         # Update properties of this object
         def update!(**args)
           @blocks = args[:blocks] if args.key?(:blocks)
+          @detected_barcodes = args[:detected_barcodes] if args.key?(:detected_barcodes)
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @dimension = args[:dimension] if args.key?(:dimension)
           @form_fields = args[:form_fields] if args.key?(:form_fields)
           @image = args[:image] if args.key?(:image)
+          @image_quality_scores = args[:image_quality_scores] if args.key?(:image_quality_scores)
           @layout = args[:layout] if args.key?(:layout)
           @lines = args[:lines] if args.key?(:lines)
           @page_number = args[:page_number] if args.key?(:page_number)
           @paragraphs = args[:paragraphs] if args.key?(:paragraphs)
           @provenance = args[:provenance] if args.key?(:provenance)
+          @symbols = args[:symbols] if args.key?(:symbols)
           @tables = args[:tables] if args.key?(:tables)
           @tokens = args[:tokens] if args.key?(:tokens)
           @transforms = args[:transforms] if args.key?(:transforms)
@@ -5646,7 +7291,7 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2BoundingPoly]
         attr_accessor :bounding_poly
       
-        # Optional. Confidence of detected page element, if applicable. Range [0, 1].
+        # Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -5661,10 +7306,10 @@ module Google
         # @return [String]
         attr_accessor :layout_type
       
-        # Required. Index into the Document.pages element, for example using Document.
-        # pages to locate the related page element. This field is skipped when its value
-        # is the default 0. See https://developers.google.com/protocol-buffers/docs/
-        # proto3#json.
+        # Required. Index into the Document.pages element, for example using `Document.
+        # pages` to locate the related page element. This field is skipped when its
+        # value is the default `0`. See https://developers.google.com/protocol-buffers/
+        # docs/proto3#json.
         # Corresponds to the JSON property `page`
         # @return [Fixnum]
         attr_accessor :page
@@ -5716,17 +7361,42 @@ module Google
         end
       end
       
+      # A detected barcode.
+      class GoogleCloudDocumentaiV1beta2DocumentPageDetectedBarcode
+        include Google::Apis::Core::Hashable
+      
+        # Encodes the detailed information of a barcode.
+        # Corresponds to the JSON property `barcode`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2Barcode]
+        attr_accessor :barcode
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @barcode = args[:barcode] if args.key?(:barcode)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # Detected language for a structural component.
       class GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage
         include Google::Apis::Core::Hashable
       
-        # Confidence of detected language. Range [0, 1].
+        # Confidence of detected language. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
       
-        # The BCP-47 language code, such as "en-US" or "sr-Latn". For more information,
-        # see http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+        # The BCP-47 language code, such as `en-US` or `sr-Latn`. For more information,
+        # see https://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
         # Corresponds to the JSON property `languageCode`
         # @return [String]
         attr_accessor :language_code
@@ -5818,8 +7488,8 @@ module Google
         attr_accessor :value_detected_languages
       
         # If the value is non-textual, this field represents the type. Current valid
-        # values are: - blank (this indicates the field_value is normal text) - "
-        # unfilled_checkbox" - "filled_checkbox"
+        # values are: - blank (this indicates the `field_value` is normal text) - `
+        # unfilled_checkbox` - `filled_checkbox`
         # Corresponds to the JSON property `valueType`
         # @return [String]
         attr_accessor :value_type
@@ -5879,6 +7549,60 @@ module Google
         end
       end
       
+      # Image Quality Scores for the page image
+      class GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScores
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected defects.
+        # Corresponds to the JSON property `detectedDefects`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect>]
+        attr_accessor :detected_defects
+      
+        # The overall quality score. Range `[0, 1]` where 1 is perfect quality.
+        # Corresponds to the JSON property `qualityScore`
+        # @return [Float]
+        attr_accessor :quality_score
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_defects = args[:detected_defects] if args.key?(:detected_defects)
+          @quality_score = args[:quality_score] if args.key?(:quality_score)
+        end
+      end
+      
+      # Image Quality Defects
+      class GoogleCloudDocumentaiV1beta2DocumentPageImageQualityScoresDetectedDefect
+        include Google::Apis::Core::Hashable
+      
+        # Confidence of detected defect. Range `[0, 1]` where 1 indicates strong
+        # confidence of that the defect exists.
+        # Corresponds to the JSON property `confidence`
+        # @return [Float]
+        attr_accessor :confidence
+      
+        # Name of the defect type. Supported values are: - `quality/defect_blurry` - `
+        # quality/defect_noisy` - `quality/defect_dark` - `quality/defect_faint` - `
+        # quality/defect_text_too_small` - `quality/defect_document_cutoff` - `quality/
+        # defect_text_cutoff` - `quality/defect_glare`
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @confidence = args[:confidence] if args.key?(:confidence)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # Visual element describing a layout unit on a page.
       class GoogleCloudDocumentaiV1beta2DocumentPageLayout
         include Google::Apis::Core::Hashable
@@ -5890,7 +7614,7 @@ module Google
       
         # Confidence of the current Layout within context of the object this layout is
         # for. e.g. confidence can be for a single token, a table, a visual element, etc.
-        # depending on context. Range [0, 1].
+        # depending on context. Range `[0, 1]`.
         # Corresponds to the JSON property `confidence`
         # @return [Float]
         attr_accessor :confidence
@@ -6025,6 +7749,31 @@ module Google
         end
       end
       
+      # A detected symbol.
+      class GoogleCloudDocumentaiV1beta2DocumentPageSymbol
+        include Google::Apis::Core::Hashable
+      
+        # A list of detected languages together with confidence.
+        # Corresponds to the JSON property `detectedLanguages`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageDetectedLanguage>]
+        attr_accessor :detected_languages
+      
+        # Visual element describing a layout unit on a page.
+        # Corresponds to the JSON property `layout`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageLayout]
+        attr_accessor :layout
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
+          @layout = args[:layout] if args.key?(:layout)
+        end
+      end
+      
       # A table representation similar to HTML table structure.
       class GoogleCloudDocumentaiV1beta2DocumentPageTable
         include Google::Apis::Core::Hashable
@@ -6049,6 +7798,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentPageLayout]
         attr_accessor :layout
       
+        # Structure to identify provenance relationships between annotations in
+        # different revisions.
+        # Corresponds to the JSON property `provenance`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentProvenance]
+        attr_accessor :provenance
+      
         def initialize(**args)
            update!(**args)
         end
@@ -6059,6 +7814,7 @@ module Google
           @detected_languages = args[:detected_languages] if args.key?(:detected_languages)
           @header_rows = args[:header_rows] if args.key?(:header_rows)
           @layout = args[:layout] if args.key?(:layout)
+          @provenance = args[:provenance] if args.key?(:provenance)
         end
       end
       
@@ -6244,8 +8000,8 @@ module Google
         end
       end
       
-      # Structure for referencing parent provenances. When an element replaces one of
-      # more other elements parent references identify the elements that are replaced.
+      # The parent element the current element is based on. Used for referencing/
+      # aligning, removal and replacement operations.
       class GoogleCloudDocumentaiV1beta2DocumentProvenanceParent
         include Google::Apis::Core::Hashable
       
@@ -6255,12 +8011,12 @@ module Google
         attr_accessor :id
       
         # The index of the parent item in the corresponding item list (eg. list of
-        # entities, properties within entities, etc.) on parent revision.
+        # entities, properties within entities, etc.) in the parent revision.
         # Corresponds to the JSON property `index`
         # @return [Fixnum]
         attr_accessor :index
       
-        # The index of the [Document.revisions] identifying the parent revision.
+        # The index of the index into current revision's parent_ids list.
         # Corresponds to the JSON property `revision`
         # @return [Fixnum]
         attr_accessor :revision
@@ -6286,7 +8042,8 @@ module Google
         # @return [String]
         attr_accessor :agent
       
-        # The time that the revision was created.
+        # The time that the revision was created, internally generated by doc proto
+        # storage at the time of create.
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
@@ -6296,7 +8053,8 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentRevisionHumanReview]
         attr_accessor :human_review
       
-        # Id of the revision. Unique within the context of the document.
+        # Id of the revision, internally generated by doc proto storage. Unique within
+        # the context of the document.
         # Corresponds to the JSON property `id`
         # @return [String]
         attr_accessor :id
@@ -6307,6 +8065,13 @@ module Google
         # Corresponds to the JSON property `parent`
         # @return [Array<Fixnum>]
         attr_accessor :parent
+      
+        # The revisions that this revision is based on. Must include all the ids that
+        # have anything to do with this revision - eg. there are `provenance.parent.
+        # revision` fields that index into this field.
+        # Corresponds to the JSON property `parentIds`
+        # @return [Array<String>]
+        attr_accessor :parent_ids
       
         # If the annotation was made by processor identify the processor by its resource
         # name.
@@ -6325,6 +8090,7 @@ module Google
           @human_review = args[:human_review] if args.key?(:human_review)
           @id = args[:id] if args.key?(:id)
           @parent = args[:parent] if args.key?(:parent)
+          @parent_ids = args[:parent_ids] if args.key?(:parent_ids)
           @processor = args[:processor] if args.key?(:processor)
         end
       end
@@ -6491,6 +8257,12 @@ module Google
         # @return [Google::Apis::DocumentaiV1::GoogleTypeColor]
         attr_accessor :color
       
+        # Font family such as `Arial`, `Times New Roman`. https://www.w3schools.com/
+        # cssref/pr_font_font-family.asp
+        # Corresponds to the JSON property `fontFamily`
+        # @return [String]
+        attr_accessor :font_family
+      
         # Font size with unit.
         # Corresponds to the JSON property `fontSize`
         # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta2DocumentStyleFontSize]
@@ -6527,6 +8299,7 @@ module Google
         def update!(**args)
           @background_color = args[:background_color] if args.key?(:background_color)
           @color = args[:color] if args.key?(:color)
+          @font_family = args[:font_family] if args.key?(:font_family)
           @font_size = args[:font_size] if args.key?(:font_size)
           @font_weight = args[:font_weight] if args.key?(:font_weight)
           @text_anchor = args[:text_anchor] if args.key?(:text_anchor)
@@ -6565,7 +8338,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Contains the content of the text span so that users do not have to look it up
-        # in the text_segments.
+        # in the text_segments. It is always populated for formFields.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -6936,7 +8709,7 @@ module Google
         # @return [String]
         attr_accessor :input_gcs_source
       
-        # The output_gcs_destination (in the request as 'output_gcs_destination') of the
+        # The output_gcs_destination (in the request as `output_gcs_destination`) of the
         # processed document if it was successful, otherwise empty.
         # Corresponds to the JSON property `outputGcsDestination`
         # @return [String]
@@ -6988,6 +8761,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # A related resource to this operation.
+        # Corresponds to the JSON property `resource`
+        # @return [String]
+        attr_accessor :resource
+      
         # The state of the operation.
         # Corresponds to the JSON property `state`
         # @return [String]
@@ -7010,6 +8788,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @resource = args[:resource] if args.key?(:resource)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -7152,6 +8931,44 @@ module Google
         end
       end
       
+      # Metadata of the EvaluateProcessorVersion method.
+      class GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta3CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+        end
+      end
+      
+      # Metadata of the EvaluateProcessorVersion method.
+      class GoogleCloudDocumentaiV1beta3EvaluateProcessorVersionResponse
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the created evaluation.
+        # Corresponds to the JSON property `evaluation`
+        # @return [String]
+        attr_accessor :evaluation
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @evaluation = args[:evaluation] if args.key?(:evaluation)
+        end
+      end
+      
       # The status of human review on a processed document.
       class GoogleCloudDocumentaiV1beta3HumanReviewStatus
         include Google::Apis::Core::Hashable
@@ -7200,6 +9017,11 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
+        # The Crowd Compute question ID.
+        # Corresponds to the JSON property `questionId`
+        # @return [String]
+        attr_accessor :question_id
+      
         # Used only when Operation.done is false.
         # Corresponds to the JSON property `state`
         # @return [String]
@@ -7224,6 +9046,7 @@ module Google
         def update!(**args)
           @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
           @create_time = args[:create_time] if args.key?(:create_time)
+          @question_id = args[:question_id] if args.key?(:question_id)
           @state = args[:state] if args.key?(:state)
           @state_message = args[:state_message] if args.key?(:state_message)
           @update_time = args[:update_time] if args.key?(:update_time)
@@ -7234,10 +9057,21 @@ module Google
       class GoogleCloudDocumentaiV1beta3ReviewDocumentResponse
         include Google::Apis::Core::Hashable
       
-        # The Cloud Storage uri for the human reviewed document.
+        # The Cloud Storage uri for the human reviewed document if the review is
+        # succeeded.
         # Corresponds to the JSON property `gcsDestination`
         # @return [String]
         attr_accessor :gcs_destination
+      
+        # The reason why the review is rejected by reviewer.
+        # Corresponds to the JSON property `rejectionReason`
+        # @return [String]
+        attr_accessor :rejection_reason
+      
+        # The state of the review operation.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
       
         def initialize(**args)
            update!(**args)
@@ -7246,6 +9080,8 @@ module Google
         # Update properties of this object
         def update!(**args)
           @gcs_destination = args[:gcs_destination] if args.key?(:gcs_destination)
+          @rejection_reason = args[:rejection_reason] if args.key?(:rejection_reason)
+          @state = args[:state] if args.key?(:state)
         end
       end
       
@@ -7278,6 +9114,99 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # The metadata that represents a processor version being created.
+      class GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The common metadata for long running operations.
+        # Corresponds to the JSON property `commonMetadata`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta3CommonOperationMetadata]
+        attr_accessor :common_metadata
+      
+        # The dataset validation information. This includes any and all errors with
+        # documents and the dataset.
+        # Corresponds to the JSON property `testDatasetValidation`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation]
+        attr_accessor :test_dataset_validation
+      
+        # The dataset validation information. This includes any and all errors with
+        # documents and the dataset.
+        # Corresponds to the JSON property `trainingDatasetValidation`
+        # @return [Google::Apis::DocumentaiV1::GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation]
+        attr_accessor :training_dataset_validation
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @common_metadata = args[:common_metadata] if args.key?(:common_metadata)
+          @test_dataset_validation = args[:test_dataset_validation] if args.key?(:test_dataset_validation)
+          @training_dataset_validation = args[:training_dataset_validation] if args.key?(:training_dataset_validation)
+        end
+      end
+      
+      # The dataset validation information. This includes any and all errors with
+      # documents and the dataset.
+      class GoogleCloudDocumentaiV1beta3TrainProcessorVersionMetadataDatasetValidation
+        include Google::Apis::Core::Hashable
+      
+        # The total number of dataset errors.
+        # Corresponds to the JSON property `datasetErrorCount`
+        # @return [Fixnum]
+        attr_accessor :dataset_error_count
+      
+        # Error information for the dataset as a whole. A maximum of 10 dataset errors
+        # will be returned. A single dataset error is terminal for training.
+        # Corresponds to the JSON property `datasetErrors`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleRpcStatus>]
+        attr_accessor :dataset_errors
+      
+        # The total number of document errors.
+        # Corresponds to the JSON property `documentErrorCount`
+        # @return [Fixnum]
+        attr_accessor :document_error_count
+      
+        # Error information pertaining to specific documents. A maximum of 10 document
+        # errors will be returned. Any document with errors will not be used throughout
+        # training.
+        # Corresponds to the JSON property `documentErrors`
+        # @return [Array<Google::Apis::DocumentaiV1::GoogleRpcStatus>]
+        attr_accessor :document_errors
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset_error_count = args[:dataset_error_count] if args.key?(:dataset_error_count)
+          @dataset_errors = args[:dataset_errors] if args.key?(:dataset_errors)
+          @document_error_count = args[:document_error_count] if args.key?(:document_error_count)
+          @document_errors = args[:document_errors] if args.key?(:document_errors)
+        end
+      end
+      
+      # The response for the TrainProcessorVersion method.
+      class GoogleCloudDocumentaiV1beta3TrainProcessorVersionResponse
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the processor version produced by training.
+        # Corresponds to the JSON property `processorVersion`
+        # @return [String]
+        attr_accessor :processor_version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @processor_version = args[:processor_version] if args.key?(:processor_version)
         end
       end
       
@@ -7475,8 +9404,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class GoogleProtobufEmpty
         include Google::Apis::Core::Hashable
       
@@ -7619,11 +9547,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class GoogleTypeDate
         include Google::Apis::Core::Hashable
       
@@ -7663,9 +9591,9 @@ module Google
       # from UTC. * When time_zone is set and utc_offset is unset: a civil time on a
       # calendar day in a particular time zone. * When neither time_zone nor
       # utc_offset is set: a civil time on a calendar day in local time. The date is
-      # relative to the Proleptic Gregorian Calendar. If year is 0, the DateTime is
-      # considered not to have a specific year. month and day must have valid, non-
-      # zero values. This type may also be used to represent a physical time if all
+      # relative to the Proleptic Gregorian Calendar. If year, month, or day are 0,
+      # the DateTime is considered not to have a specific year, month, or day
+      # respectively. This type may also be used to represent a physical time if all
       # the date and time fields are set and either case of the `time_offset` oneof is
       # set. Consider using `Timestamp` message for physical time instead. If your use
       # case also would like to store the user's timezone, that can be done in another
@@ -7674,34 +9602,38 @@ module Google
       class GoogleTypeDateTime
         include Google::Apis::Core::Hashable
       
-        # Required. Day of month. Must be from 1 to 31 and valid for the year and month.
+        # Optional. Day of month. Must be from 1 to 31 and valid for the year and month,
+        # or 0 if specifying a datetime without a day.
         # Corresponds to the JSON property `day`
         # @return [Fixnum]
         attr_accessor :day
       
-        # Required. Hours of day in 24 hour format. Should be from 0 to 23. An API may
-        # choose to allow the value "24:00:00" for scenarios like business closing time.
+        # Optional. Hours of day in 24 hour format. Should be from 0 to 23, defaults to
+        # 0 (midnight). An API may choose to allow the value "24:00:00" for scenarios
+        # like business closing time.
         # Corresponds to the JSON property `hours`
         # @return [Fixnum]
         attr_accessor :hours
       
-        # Required. Minutes of hour of day. Must be from 0 to 59.
+        # Optional. Minutes of hour of day. Must be from 0 to 59, defaults to 0.
         # Corresponds to the JSON property `minutes`
         # @return [Fixnum]
         attr_accessor :minutes
       
-        # Required. Month of year. Must be from 1 to 12.
+        # Optional. Month of year. Must be from 1 to 12, or 0 if specifying a datetime
+        # without a month.
         # Corresponds to the JSON property `month`
         # @return [Fixnum]
         attr_accessor :month
       
-        # Required. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+        # Optional. Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999,
+        # defaults to 0.
         # Corresponds to the JSON property `nanos`
         # @return [Fixnum]
         attr_accessor :nanos
       
-        # Required. Seconds of minutes of the time. Must normally be from 0 to 59. An
-        # API may allow the value 60 if it allows leap-seconds.
+        # Optional. Seconds of minutes of the time. Must normally be from 0 to 59,
+        # defaults to 0. An API may allow the value 60 if it allows leap-seconds.
         # Corresponds to the JSON property `seconds`
         # @return [Fixnum]
         attr_accessor :seconds
@@ -7783,11 +9715,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class GoogleTypePostalAddress
         include Google::Apis::Core::Hashable
       
@@ -7862,8 +9794,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]

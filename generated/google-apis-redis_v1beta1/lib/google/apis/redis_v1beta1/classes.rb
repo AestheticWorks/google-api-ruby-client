@@ -25,8 +25,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -252,13 +251,15 @@ module Google
         end
       end
       
-      # A Google Cloud Redis instance. next id = 37
+      # A Memorystore for Redis instance.
       class Instance
         include Google::Apis::Core::Hashable
       
-        # Optional. Only applicable to STANDARD_HA tier which protects the instance
-        # against zonal failures by provisioning it across two zones. If provided, it
-        # must be a different zone from the one provided in location_id.
+        # Optional. If specified, at least one node will be provisioned in this zone in
+        # addition to the zone specified in location_id. Only applicable to standard
+        # tier. If provided, it must be a different zone from the one provided in [
+        # location_id]. Additional nodes beyond the first 2 will be placed in zones
+        # selected by the service.
         # Corresponds to the JSON property `alternativeLocationId`
         # @return [String]
         attr_accessor :alternative_location_id
@@ -278,6 +279,11 @@ module Google
         # @return [String]
         attr_accessor :authorized_network
       
+        # Optional. The available maintenance versions that an instance could update to.
+        # Corresponds to the JSON property `availableMaintenanceVersions`
+        # @return [Array<String>]
+        attr_accessor :available_maintenance_versions
+      
         # Optional. The network connect mode of the Redis instance. If not provided, the
         # connect mode defaults to DIRECT_PEERING.
         # Corresponds to the JSON property `connectMode`
@@ -289,13 +295,18 @@ module Google
         # @return [String]
         attr_accessor :create_time
       
-        # Output only. The current zone where the Redis endpoint is placed. For Basic
-        # Tier instances, this will always be the same as the location_id provided by
-        # the user at creation time. For Standard Tier instances, this can be either
-        # location_id or alternative_location_id and can change after a failover event.
+        # Output only. The current zone where the Redis primary node is located. In
+        # basic tier, this will always be the same as [location_id]. In standard tier,
+        # this can be the zone of any node in the instance.
         # Corresponds to the JSON property `currentLocationId`
         # @return [String]
         attr_accessor :current_location_id
+      
+        # Optional. The KMS key reference that the customer provides when trying to
+        # create the instance.
+        # Corresponds to the JSON property `customerManagedKey`
+        # @return [String]
+        attr_accessor :customer_managed_key
       
         # An arbitrary and optional user-provided name for the instance.
         # Corresponds to the JSON property `displayName`
@@ -315,9 +326,9 @@ module Google
       
         # Optional. The zone where the instance will be provisioned. If not provided,
         # the service will choose a zone from the specified region for the instance. For
-        # standard tier, instances will be created across two zones for protection
-        # against zonal failures. If [alternative_location_id] is also provided, it must
-        # be different from [location_id].
+        # standard tier, additional nodes will be added across multiple zones for
+        # protection against zonal failures. If specified, at least one node will be
+        # provisioned in this zone.
         # Corresponds to the JSON property `locationId`
         # @return [String]
         attr_accessor :location_id
@@ -332,6 +343,12 @@ module Google
         # Corresponds to the JSON property `maintenanceSchedule`
         # @return [Google::Apis::RedisV1beta1::MaintenanceSchedule]
         attr_accessor :maintenance_schedule
+      
+        # Optional. The self service update maintenance version. The version is date
+        # based such as "20210712_00_00".
+        # Corresponds to the JSON property `maintenanceVersion`
+        # @return [String]
+        attr_accessor :maintenance_version
       
         # Required. Redis memory size in GiB.
         # Corresponds to the JSON property `memorySizeGb`
@@ -349,6 +366,16 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Output only. Info per node.
+        # Corresponds to the JSON property `nodes`
+        # @return [Array<Google::Apis::RedisV1beta1::NodeInfo>]
+        attr_accessor :nodes
+      
+        # Configuration of the persistence functionality.
+        # Corresponds to the JSON property `persistenceConfig`
+        # @return [Google::Apis::RedisV1beta1::PersistenceConfig]
+        attr_accessor :persistence_config
+      
         # Output only. Cloud IAM identity used by import / export operations to transfer
         # data to/from Cloud Storage. Format is "serviceAccount:". The value may change
         # over time for a given instance so should be checked before each import/export
@@ -361,6 +388,26 @@ module Google
         # Corresponds to the JSON property `port`
         # @return [Fixnum]
         attr_accessor :port
+      
+        # Output only. Hostname or IP address of the exposed readonly Redis endpoint.
+        # Standard tier only. Targets all healthy replica nodes in instance. Replication
+        # is asynchronous and replica nodes will exhibit some lag behind the primary.
+        # Write requests must target 'host'.
+        # Corresponds to the JSON property `readEndpoint`
+        # @return [String]
+        attr_accessor :read_endpoint
+      
+        # Output only. The port number of the exposed readonly redis endpoint. Standard
+        # tier only. Write requests should target 'port'.
+        # Corresponds to the JSON property `readEndpointPort`
+        # @return [Fixnum]
+        attr_accessor :read_endpoint_port
+      
+        # Optional. Read replicas mode for the instance. Defaults to
+        # READ_REPLICAS_DISABLED.
+        # Corresponds to the JSON property `readReplicasMode`
+        # @return [String]
+        attr_accessor :read_replicas_mode
       
         # Optional. Redis configuration parameters, according to http://redis.io/topics/
         # config. Currently, the only supported parameters are: Redis version 3.2 and
@@ -380,15 +427,33 @@ module Google
         # @return [String]
         attr_accessor :redis_version
       
+        # Optional. The number of replica nodes. The valid range for the Standard Tier
+        # with read replicas enabled is [1-5] and defaults to 2. If read replicas are
+        # not enabled for a Standard Tier instance, the only valid value is 1 and the
+        # default is 1. The valid value for basic tier is 0 and the default is also 0.
+        # Corresponds to the JSON property `replicaCount`
+        # @return [Fixnum]
+        attr_accessor :replica_count
+      
         # Optional. For DIRECT_PEERING mode, the CIDR range of internal addresses that
         # are reserved for this instance. Range must be unique and non-overlapping with
         # existing subnets in an authorized network. For PRIVATE_SERVICE_ACCESS mode,
         # the name of one allocated IP address ranges associated with this private
         # service access connection. If not provided, the service will choose an unused /
-        # 29 block, for example, 10.0.0.0/29 or 192.168.0.0/29.
+        # 29 block, for example, 10.0.0.0/29 or 192.168.0.0/29. For
+        # READ_REPLICAS_ENABLED the default block size is /28.
         # Corresponds to the JSON property `reservedIpRange`
         # @return [String]
         attr_accessor :reserved_ip_range
+      
+        # Optional. Additional IP range for node placement. Required when enabling read
+        # replicas on an existing instance. For DIRECT_PEERING mode value must be a CIDR
+        # range of size /28, or "auto". For PRIVATE_SERVICE_ACCESS mode value must be
+        # the name of an allocated address range associated with the private service
+        # access connection, or "auto".
+        # Corresponds to the JSON property `secondaryIpRange`
+        # @return [String]
+        attr_accessor :secondary_ip_range
       
         # Output only. List of server CA certificates for the instance.
         # Corresponds to the JSON property `serverCaCerts`
@@ -405,6 +470,11 @@ module Google
         # Corresponds to the JSON property `statusMessage`
         # @return [String]
         attr_accessor :status_message
+      
+        # Optional. reasons that causes instance in "SUSPENDED" state.
+        # Corresponds to the JSON property `suspensionReasons`
+        # @return [Array<String>]
+        attr_accessor :suspension_reasons
       
         # Required. The service tier of the instance.
         # Corresponds to the JSON property `tier`
@@ -426,25 +496,36 @@ module Google
           @alternative_location_id = args[:alternative_location_id] if args.key?(:alternative_location_id)
           @auth_enabled = args[:auth_enabled] if args.key?(:auth_enabled)
           @authorized_network = args[:authorized_network] if args.key?(:authorized_network)
+          @available_maintenance_versions = args[:available_maintenance_versions] if args.key?(:available_maintenance_versions)
           @connect_mode = args[:connect_mode] if args.key?(:connect_mode)
           @create_time = args[:create_time] if args.key?(:create_time)
           @current_location_id = args[:current_location_id] if args.key?(:current_location_id)
+          @customer_managed_key = args[:customer_managed_key] if args.key?(:customer_managed_key)
           @display_name = args[:display_name] if args.key?(:display_name)
           @host = args[:host] if args.key?(:host)
           @labels = args[:labels] if args.key?(:labels)
           @location_id = args[:location_id] if args.key?(:location_id)
           @maintenance_policy = args[:maintenance_policy] if args.key?(:maintenance_policy)
           @maintenance_schedule = args[:maintenance_schedule] if args.key?(:maintenance_schedule)
+          @maintenance_version = args[:maintenance_version] if args.key?(:maintenance_version)
           @memory_size_gb = args[:memory_size_gb] if args.key?(:memory_size_gb)
           @name = args[:name] if args.key?(:name)
+          @nodes = args[:nodes] if args.key?(:nodes)
+          @persistence_config = args[:persistence_config] if args.key?(:persistence_config)
           @persistence_iam_identity = args[:persistence_iam_identity] if args.key?(:persistence_iam_identity)
           @port = args[:port] if args.key?(:port)
+          @read_endpoint = args[:read_endpoint] if args.key?(:read_endpoint)
+          @read_endpoint_port = args[:read_endpoint_port] if args.key?(:read_endpoint_port)
+          @read_replicas_mode = args[:read_replicas_mode] if args.key?(:read_replicas_mode)
           @redis_configs = args[:redis_configs] if args.key?(:redis_configs)
           @redis_version = args[:redis_version] if args.key?(:redis_version)
+          @replica_count = args[:replica_count] if args.key?(:replica_count)
           @reserved_ip_range = args[:reserved_ip_range] if args.key?(:reserved_ip_range)
+          @secondary_ip_range = args[:secondary_ip_range] if args.key?(:secondary_ip_range)
           @server_ca_certs = args[:server_ca_certs] if args.key?(:server_ca_certs)
           @state = args[:state] if args.key?(:state)
           @status_message = args[:status_message] if args.key?(:status_message)
+          @suspension_reasons = args[:suspension_reasons] if args.key?(:suspension_reasons)
           @tier = args[:tier] if args.key?(:tier)
           @transit_encryption_mode = args[:transit_encryption_mode] if args.key?(:transit_encryption_mode)
         end
@@ -664,8 +745,8 @@ module Google
         # @return [String]
         attr_accessor :end_time
       
-        # Output only. The time deadline any schedule start time cannot go beyond,
-        # including reschedule.
+        # Output only. The deadline that the maintenance schedule start time can not go
+        # beyond, including reschedule.
         # Corresponds to the JSON property `scheduleDeadlineTime`
         # @return [String]
         attr_accessor :schedule_deadline_time
@@ -686,6 +767,31 @@ module Google
           @end_time = args[:end_time] if args.key?(:end_time)
           @schedule_deadline_time = args[:schedule_deadline_time] if args.key?(:schedule_deadline_time)
           @start_time = args[:start_time] if args.key?(:start_time)
+        end
+      end
+      
+      # Node specific properties.
+      class NodeInfo
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Node identifying string. e.g. 'node-0', 'node-1'
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Output only. Location of the node.
+        # Corresponds to the JSON property `zone`
+        # @return [String]
+        attr_accessor :zone
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+          @zone = args[:zone] if args.key?(:zone)
         end
       end
       
@@ -771,6 +877,77 @@ module Google
         # Update properties of this object
         def update!(**args)
           @gcs_destination = args[:gcs_destination] if args.key?(:gcs_destination)
+        end
+      end
+      
+      # Configuration of the persistence functionality.
+      class PersistenceConfig
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Controls whether Persistence features are enabled. If not provided,
+        # the existing value will be used.
+        # Corresponds to the JSON property `persistenceMode`
+        # @return [String]
+        attr_accessor :persistence_mode
+      
+        # Output only. The next time that a snapshot attempt is scheduled to occur.
+        # Corresponds to the JSON property `rdbNextSnapshotTime`
+        # @return [String]
+        attr_accessor :rdb_next_snapshot_time
+      
+        # Optional. Period between RDB snapshots. Snapshots will be attempted every
+        # period starting from the provided snapshot start time. For example, a start
+        # time of 01/01/2033 06:45 and SIX_HOURS snapshot period will do nothing until
+        # 01/01/2033, and then trigger snapshots every day at 06:45, 12:45, 18:45, and
+        # 00:45 the next day, and so on. If not provided, TWENTY_FOUR_HOURS will be used
+        # as default.
+        # Corresponds to the JSON property `rdbSnapshotPeriod`
+        # @return [String]
+        attr_accessor :rdb_snapshot_period
+      
+        # Optional. Date and time that the first snapshot was/will be attempted, and to
+        # which future snapshots will be aligned. If not provided, the current time will
+        # be used.
+        # Corresponds to the JSON property `rdbSnapshotStartTime`
+        # @return [String]
+        attr_accessor :rdb_snapshot_start_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @persistence_mode = args[:persistence_mode] if args.key?(:persistence_mode)
+          @rdb_next_snapshot_time = args[:rdb_next_snapshot_time] if args.key?(:rdb_next_snapshot_time)
+          @rdb_snapshot_period = args[:rdb_snapshot_period] if args.key?(:rdb_snapshot_period)
+          @rdb_snapshot_start_time = args[:rdb_snapshot_start_time] if args.key?(:rdb_snapshot_start_time)
+        end
+      end
+      
+      # Operation metadata returned by the CLH during resource state reconciliation.
+      class ReconciliationOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # DEPRECATED. Use exclusive_action instead.
+        # Corresponds to the JSON property `deleteResource`
+        # @return [Boolean]
+        attr_accessor :delete_resource
+        alias_method :delete_resource?, :delete_resource
+      
+        # Excluisive action returned by the CLH.
+        # Corresponds to the JSON property `exclusiveAction`
+        # @return [String]
+        attr_accessor :exclusive_action
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @delete_resource = args[:delete_resource] if args.key?(:delete_resource)
+          @exclusive_action = args[:exclusive_action] if args.key?(:exclusive_action)
         end
       end
       

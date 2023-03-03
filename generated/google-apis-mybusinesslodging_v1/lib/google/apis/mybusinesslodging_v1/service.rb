@@ -23,7 +23,8 @@ module Google
       # My Business Lodging API
       #
       # The My Business Lodging API enables managing lodging business information on
-      #  Google.
+      #  Google. Note - If you have a quota of 0 after enabling the API, please request
+      #  for GBP API access.
       #
       # @example
       #    require 'google/apis/mybusinesslodging_v1'
@@ -126,8 +127,8 @@ module Google
         
         # Returns the Google updated Lodging of a specific location.
         # @param [String] name
-        #   Required. Google identifier for this location in the form: `accounts/`
-        #   account_id`/locations/`location_id`/lodging`
+        #   Required. Google identifier for this location in the form: `locations/`
+        #   location_id`/lodging`
         # @param [String] read_mask
         #   Required. The specific fields to return. Use "*" to include all fields.
         #   Repeated field items cannot be individually specified.

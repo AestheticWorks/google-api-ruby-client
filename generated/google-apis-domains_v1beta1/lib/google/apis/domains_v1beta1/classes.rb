@@ -35,8 +35,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -113,7 +113,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -136,38 +136,43 @@ module Google
         # @return [Google::Apis::DomainsV1beta1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -204,7 +209,7 @@ module Google
       
         # Required. The field mask describing which fields to update as a comma-
         # separated list. For example, if only the registrant contact is being updated,
-        # the `update_mask` would be `"registrant_contact"`.
+        # the `update_mask` is `"registrant_contact"`.
         # Corresponds to the JSON property `updateMask`
         # @return [String]
         attr_accessor :update_mask
@@ -240,11 +245,11 @@ module Google
       
         # Required. The field mask describing which fields to update as a comma-
         # separated list. For example, if only the name servers are being updated for an
-        # existing Custom DNS configuration, the `update_mask` would be `"custom_dns.
+        # existing Custom DNS configuration, the `update_mask` is `"custom_dns.
         # name_servers"`. When changing the DNS provider from one type to another, pass
         # the new provider's field name as part of the field mask. For example, when
         # changing from a Google Domains DNS configuration to a Custom DNS configuration,
-        # the `update_mask` would be `"custom_dns"`. //
+        # the `update_mask` is `"custom_dns"`. //
         # Corresponds to the JSON property `updateMask`
         # @return [String]
         attr_accessor :update_mask
@@ -278,7 +283,7 @@ module Google
       
         # Required. The field mask describing which fields to update as a comma-
         # separated list. For example, if only the transfer lock is being updated, the `
-        # update_mask` would be `"transfer_lock_state"`.
+        # update_mask` is `"transfer_lock_state"`.
         # Corresponds to the JSON property `updateMask`
         # @return [String]
         attr_accessor :update_mask
@@ -320,11 +325,11 @@ module Google
         # Box or similar. It is not intended to model geographical locations (roads,
         # towns, mountains). In typical usage an address would be created via user input
         # or from importing existing data, depending on the type of process. Advice on
-        # address input / editing: - Use an i18n-ready address widget such as https://
-        # github.com/google/libaddressinput) - Users should not be presented with UI
-        # elements for input or editing of fields outside countries where that field is
-        # used. For more guidance on how to use this schema, please see: https://support.
-        # google.com/business/answer/6397478
+        # address input / editing: - Use an internationalization-ready address widget
+        # such as https://github.com/google/libaddressinput) - Users should not be
+        # presented with UI elements for input or editing of fields outside countries
+        # where that field is used. For more guidance on how to use this schema, please
+        # see: https://support.google.com/business/answer/6397478
         # Corresponds to the JSON property `postalAddress`
         # @return [Google::Apis::DomainsV1beta1::PostalAddress]
         attr_accessor :postal_address
@@ -443,6 +448,37 @@ module Google
           @custom_dns = args[:custom_dns] if args.key?(:custom_dns)
           @glue_records = args[:glue_records] if args.key?(:glue_records)
           @google_domains_dns = args[:google_domains_dns] if args.key?(:google_domains_dns)
+        end
+      end
+      
+      # A domain that the calling user manages in Google Domains.
+      class Domain
+        include Google::Apis::Core::Hashable
+      
+        # The domain name. Unicode domain names are expressed in Punycode format.
+        # Corresponds to the JSON property `domainName`
+        # @return [String]
+        attr_accessor :domain_name
+      
+        # The state of this domain as a `Registration` resource.
+        # Corresponds to the JSON property `resourceState`
+        # @return [String]
+        attr_accessor :resource_state
+      
+        # Represents an amount of money with its currency type.
+        # Corresponds to the JSON property `yearlyPrice`
+        # @return [Google::Apis::DomainsV1beta1::Money]
+        attr_accessor :yearly_price
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @domain_name = args[:domain_name] if args.key?(:domain_name)
+          @resource_state = args[:resource_state] if args.key?(:resource_state)
+          @yearly_price = args[:yearly_price] if args.key?(:yearly_price)
         end
       end
       
@@ -628,6 +664,32 @@ module Google
           @ds_records = args[:ds_records] if args.key?(:ds_records)
           @ds_state = args[:ds_state] if args.key?(:ds_state)
           @name_servers = args[:name_servers] if args.key?(:name_servers)
+        end
+      end
+      
+      # Request for the `ImportDomain` method.
+      class ImportDomainRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The domain name. Unicode domain names must be expressed in Punycode
+        # format.
+        # Corresponds to the JSON property `domainName`
+        # @return [String]
+        attr_accessor :domain_name
+      
+        # Set of labels associated with the `Registration`.
+        # Corresponds to the JSON property `labels`
+        # @return [Hash<String,String>]
+        attr_accessor :labels
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @domain_name = args[:domain_name] if args.key?(:domain_name)
+          @labels = args[:labels] if args.key?(:labels)
         end
       end
       
@@ -928,31 +990,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -961,9 +1023,14 @@ module Google
         # @return [Array<Google::Apis::DomainsV1beta1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::DomainsV1beta1::Binding>]
         attr_accessor :bindings
@@ -1021,11 +1088,11 @@ module Google
       # Box or similar. It is not intended to model geographical locations (roads,
       # towns, mountains). In typical usage an address would be created via user input
       # or from importing existing data, depending on the type of process. Advice on
-      # address input / editing: - Use an i18n-ready address widget such as https://
-      # github.com/google/libaddressinput) - Users should not be presented with UI
-      # elements for input or editing of fields outside countries where that field is
-      # used. For more guidance on how to use this schema, please see: https://support.
-      # google.com/business/answer/6397478
+      # address input / editing: - Use an internationalization-ready address widget
+      # such as https://github.com/google/libaddressinput) - Users should not be
+      # presented with UI elements for input or editing of fields outside countries
+      # where that field is used. For more guidance on how to use this schema, please
+      # see: https://support.google.com/business/answer/6397478
       class PostalAddress
         include Google::Apis::Core::Hashable
       
@@ -1100,8 +1167,8 @@ module Google
         attr_accessor :recipients
       
         # Required. CLDR region code of the country/region of the address. This is never
-        # inferred and it is up to the user to ensure the value is correct. See http://
-        # cldr.unicode.org/ and http://www.unicode.org/cldr/charts/30/supplemental/
+        # inferred and it is up to the user to ensure the value is correct. See https://
+        # cldr.unicode.org/ and https://www.unicode.org/cldr/charts/30/supplemental/
         # territory_information.html for details. Example: "CH" for Switzerland.
         # Corresponds to the JSON property `regionCode`
         # @return [String]
@@ -1166,16 +1233,26 @@ module Google
         attr_accessor :domain_notices
       
         # The `Registration` resource facilitates managing and configuring domain name
-        # registrations. To create a new `Registration` resource, find a suitable domain
-        # name by calling the `SearchDomains` method with a query to see available
-        # domain name options. After choosing a name, call `RetrieveRegisterParameters`
-        # to ensure availability and obtain information like pricing, which is needed to
-        # build a call to `RegisterDomain`.
+        # registrations. There are several ways to create a new `Registration` resource:
+        # To create a new `Registration` resource, find a suitable domain name by
+        # calling the `SearchDomains` method with a query to see available domain name
+        # options. After choosing a name, call `RetrieveRegisterParameters` to ensure
+        # availability and obtain information like pricing, which is needed to build a
+        # call to `RegisterDomain`. Another way to create a new `Registration` is to
+        # transfer an existing domain from another registrar. First, go to the current
+        # registrar to unlock the domain for transfer and retrieve the domain's transfer
+        # authorization code. Then call `RetrieveTransferParameters` to confirm that the
+        # domain is unlocked and to get values needed to build a call to `TransferDomain`
+        # . Finally, you can create a new `Registration` by importing an existing domain
+        # managed with [Google Domains](https://domains.google/). First, call `
+        # RetrieveImportableDomains` to list domains to which the calling user has
+        # sufficient access. Then call `ImportDomain` on any domain names you want to
+        # use with Cloud Domains.
         # Corresponds to the JSON property `registration`
         # @return [Google::Apis::DomainsV1beta1::Registration]
         attr_accessor :registration
       
-        # When true, only validation will be performed, without actually registering the
+        # When true, only validation is performed, without actually registering the
         # domain. Follows: https://cloud.google.com/apis/design/design_patterns#
         # request_validation
         # Corresponds to the JSON property `validateOnly`
@@ -1248,11 +1325,21 @@ module Google
       end
       
       # The `Registration` resource facilitates managing and configuring domain name
-      # registrations. To create a new `Registration` resource, find a suitable domain
-      # name by calling the `SearchDomains` method with a query to see available
-      # domain name options. After choosing a name, call `RetrieveRegisterParameters`
-      # to ensure availability and obtain information like pricing, which is needed to
-      # build a call to `RegisterDomain`.
+      # registrations. There are several ways to create a new `Registration` resource:
+      # To create a new `Registration` resource, find a suitable domain name by
+      # calling the `SearchDomains` method with a query to see available domain name
+      # options. After choosing a name, call `RetrieveRegisterParameters` to ensure
+      # availability and obtain information like pricing, which is needed to build a
+      # call to `RegisterDomain`. Another way to create a new `Registration` is to
+      # transfer an existing domain from another registrar. First, go to the current
+      # registrar to unlock the domain for transfer and retrieve the domain's transfer
+      # authorization code. Then call `RetrieveTransferParameters` to confirm that the
+      # domain is unlocked and to get values needed to build a call to `TransferDomain`
+      # . Finally, you can create a new `Registration` by importing an existing domain
+      # managed with [Google Domains](https://domains.google/). First, call `
+      # RetrieveImportableDomains` to list domains to which the calling user has
+      # sufficient access. Then call `ImportDomain` on any domain names you want to
+      # use with Cloud Domains.
       class Registration
         include Google::Apis::Core::Hashable
       
@@ -1315,6 +1402,12 @@ module Google
         # @return [Google::Apis::DomainsV1beta1::ContactSettings]
         attr_accessor :pending_contact_settings
       
+        # Output only. The reason the domain registration failed. Only set for domains
+        # in REGISTRATION_FAILED state.
+        # Corresponds to the JSON property `registerFailureReason`
+        # @return [String]
+        attr_accessor :register_failure_reason
+      
         # Output only. The state of the `Registration`
         # Corresponds to the JSON property `state`
         # @return [String]
@@ -1325,6 +1418,12 @@ module Google
         # Corresponds to the JSON property `supportedPrivacy`
         # @return [Array<String>]
         attr_accessor :supported_privacy
+      
+        # Output only. The reason the domain transfer failed. Only set for domains in
+        # TRANSFER_FAILED state.
+        # Corresponds to the JSON property `transferFailureReason`
+        # @return [String]
+        attr_accessor :transfer_failure_reason
       
         def initialize(**args)
            update!(**args)
@@ -1342,8 +1441,10 @@ module Google
           @management_settings = args[:management_settings] if args.key?(:management_settings)
           @name = args[:name] if args.key?(:name)
           @pending_contact_settings = args[:pending_contact_settings] if args.key?(:pending_contact_settings)
+          @register_failure_reason = args[:register_failure_reason] if args.key?(:register_failure_reason)
           @state = args[:state] if args.key?(:state)
           @supported_privacy = args[:supported_privacy] if args.key?(:supported_privacy)
+          @transfer_failure_reason = args[:transfer_failure_reason] if args.key?(:transfer_failure_reason)
         end
       end
       
@@ -1357,6 +1458,32 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # Response for the `RetrieveImportableDomains` method.
+      class RetrieveImportableDomainsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A list of domains that the calling user manages in Google Domains.
+        # Corresponds to the JSON property `domains`
+        # @return [Array<Google::Apis::DomainsV1beta1::Domain>]
+        attr_accessor :domains
+      
+        # When present, there are more results to retrieve. Set `page_token` to this
+        # value on a subsequent call to get the next page of results.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @domains = args[:domains] if args.key?(:domains)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
       
@@ -1376,6 +1503,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @register_parameters = args[:register_parameters] if args.key?(:register_parameters)
+        end
+      end
+      
+      # Response for the `RetrieveTransferParameters` method.
+      class RetrieveTransferParametersResponse
+        include Google::Apis::Core::Hashable
+      
+        # Parameters required to transfer a domain from another registrar.
+        # Corresponds to the JSON property `transferParameters`
+        # @return [Google::Apis::DomainsV1beta1::TransferParameters]
+        attr_accessor :transfer_parameters
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @transfer_parameters = args[:transfer_parameters] if args.key?(:transfer_parameters)
         end
       end
       
@@ -1404,31 +1550,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') - etag: BwWWja0YfJA= - version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::DomainsV1beta1::Policy]
         attr_accessor :policy
@@ -1495,7 +1641,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -1527,6 +1673,123 @@ module Google
         # Update properties of this object
         def update!(**args)
           @permissions = args[:permissions] if args.key?(:permissions)
+        end
+      end
+      
+      # Request for the `TransferDomain` method.
+      class TransferDomainRequest
+        include Google::Apis::Core::Hashable
+      
+        # Defines an authorization code.
+        # Corresponds to the JSON property `authorizationCode`
+        # @return [Google::Apis::DomainsV1beta1::AuthorizationCode]
+        attr_accessor :authorization_code
+      
+        # The list of contact notices that you acknowledge. The notices needed here
+        # depend on the values specified in `registration.contact_settings`.
+        # Corresponds to the JSON property `contactNotices`
+        # @return [Array<String>]
+        attr_accessor :contact_notices
+      
+        # The `Registration` resource facilitates managing and configuring domain name
+        # registrations. There are several ways to create a new `Registration` resource:
+        # To create a new `Registration` resource, find a suitable domain name by
+        # calling the `SearchDomains` method with a query to see available domain name
+        # options. After choosing a name, call `RetrieveRegisterParameters` to ensure
+        # availability and obtain information like pricing, which is needed to build a
+        # call to `RegisterDomain`. Another way to create a new `Registration` is to
+        # transfer an existing domain from another registrar. First, go to the current
+        # registrar to unlock the domain for transfer and retrieve the domain's transfer
+        # authorization code. Then call `RetrieveTransferParameters` to confirm that the
+        # domain is unlocked and to get values needed to build a call to `TransferDomain`
+        # . Finally, you can create a new `Registration` by importing an existing domain
+        # managed with [Google Domains](https://domains.google/). First, call `
+        # RetrieveImportableDomains` to list domains to which the calling user has
+        # sufficient access. Then call `ImportDomain` on any domain names you want to
+        # use with Cloud Domains.
+        # Corresponds to the JSON property `registration`
+        # @return [Google::Apis::DomainsV1beta1::Registration]
+        attr_accessor :registration
+      
+        # Validate the request without actually transferring the domain.
+        # Corresponds to the JSON property `validateOnly`
+        # @return [Boolean]
+        attr_accessor :validate_only
+        alias_method :validate_only?, :validate_only
+      
+        # Represents an amount of money with its currency type.
+        # Corresponds to the JSON property `yearlyPrice`
+        # @return [Google::Apis::DomainsV1beta1::Money]
+        attr_accessor :yearly_price
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @authorization_code = args[:authorization_code] if args.key?(:authorization_code)
+          @contact_notices = args[:contact_notices] if args.key?(:contact_notices)
+          @registration = args[:registration] if args.key?(:registration)
+          @validate_only = args[:validate_only] if args.key?(:validate_only)
+          @yearly_price = args[:yearly_price] if args.key?(:yearly_price)
+        end
+      end
+      
+      # Parameters required to transfer a domain from another registrar.
+      class TransferParameters
+        include Google::Apis::Core::Hashable
+      
+        # The registrar that currently manages the domain.
+        # Corresponds to the JSON property `currentRegistrar`
+        # @return [String]
+        attr_accessor :current_registrar
+      
+        # The URL of the registrar that currently manages the domain.
+        # Corresponds to the JSON property `currentRegistrarUri`
+        # @return [String]
+        attr_accessor :current_registrar_uri
+      
+        # The domain name. Unicode domain names are expressed in Punycode format.
+        # Corresponds to the JSON property `domainName`
+        # @return [String]
+        attr_accessor :domain_name
+      
+        # The name servers that currently store the configuration of the domain.
+        # Corresponds to the JSON property `nameServers`
+        # @return [Array<String>]
+        attr_accessor :name_servers
+      
+        # Contact privacy options that the domain supports.
+        # Corresponds to the JSON property `supportedPrivacy`
+        # @return [Array<String>]
+        attr_accessor :supported_privacy
+      
+        # Indicates whether the domain is protected by a transfer lock. For a transfer
+        # to succeed, this must show `UNLOCKED`. To unlock a domain, go to its current
+        # registrar.
+        # Corresponds to the JSON property `transferLockState`
+        # @return [String]
+        attr_accessor :transfer_lock_state
+      
+        # Represents an amount of money with its currency type.
+        # Corresponds to the JSON property `yearlyPrice`
+        # @return [Google::Apis::DomainsV1beta1::Money]
+        attr_accessor :yearly_price
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @current_registrar = args[:current_registrar] if args.key?(:current_registrar)
+          @current_registrar_uri = args[:current_registrar_uri] if args.key?(:current_registrar_uri)
+          @domain_name = args[:domain_name] if args.key?(:domain_name)
+          @name_servers = args[:name_servers] if args.key?(:name_servers)
+          @supported_privacy = args[:supported_privacy] if args.key?(:supported_privacy)
+          @transfer_lock_state = args[:transfer_lock_state] if args.key?(:transfer_lock_state)
+          @yearly_price = args[:yearly_price] if args.key?(:yearly_price)
         end
       end
     end

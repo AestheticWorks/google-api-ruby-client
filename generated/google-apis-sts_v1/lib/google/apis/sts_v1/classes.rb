@@ -22,7 +22,7 @@ module Google
   module Apis
     module StsV1
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class GoogleIamV1Binding
         include Google::Apis::Core::Hashable
       
@@ -45,38 +45,43 @@ module Google
         # @return [Google::Apis::StsV1::GoogleTypeExpr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -169,13 +174,153 @@ module Google
         end
       end
       
+      # Request message for ExchangeOauthToken
+      class GoogleIdentityStsV1ExchangeOauthTokenRequest
+        include Google::Apis::Core::Hashable
+      
+        # Optional. The client identifier for the OAuth 2.0 client that requested the
+        # provided token. It is REQUIRED when the [client] (https://www.rfc-editor.org/
+        # rfc/rfc6749#section-1.1) is not authenticating with the authorization server,
+        # i.e. when authentication method is [client authentication] (https://www.rfc-
+        # editor.org/rfc/rfc6749#section-3.2.1).
+        # Corresponds to the JSON property `clientId`
+        # @return [String]
+        attr_accessor :client_id
+      
+        # Optional. The authorization code that was previously from workforce identity
+        # federation's `authorize` endpoint. Required if the flow is authorization code
+        # flow, i.e. if grant_type is 'authorization_code'
+        # Corresponds to the JSON property `code`
+        # @return [String]
+        attr_accessor :code
+      
+        # Optional. The code verifier for the PKCE request, Google Cloud CLI originally
+        # generates it before the authorization request. PKCE is used to protect
+        # authorization code from interception attacks. See https://www.rfc-editor.org/
+        # rfc/rfc7636#section-1.1 and https://www.rfc-editor.org/rfc/rfc7636#section-3.
+        # It is required when the flow is authorization code flow, i.e. if grant_type is
+        # 'authorization_code'
+        # Corresponds to the JSON property `codeVerifier`
+        # @return [String]
+        attr_accessor :code_verifier
+      
+        # Required. The grant types are as follows: - 'authorization_code' : an
+        # authorization code flow, i.e. exchange of authorization code for the Oauth
+        # access token - 'refresh_token' : a refresh token flow, i.e. obtain a new
+        # access token by providing the refresh token. See https://www.rfc-editor.org/
+        # rfc/rfc6749#section-6
+        # Corresponds to the JSON property `grantType`
+        # @return [String]
+        attr_accessor :grant_type
+      
+        # Optional. redirect_url is required when the flow is authorization code flow i.
+        # e. if grant_type is `authorization_code` See https://www.rfc-editor.org/rfc/
+        # rfc6749#section-4.1.3
+        # Corresponds to the JSON property `redirectUri`
+        # @return [String]
+        attr_accessor :redirect_uri
+      
+        # Optional. The Refresh token is the credential that is used to obtain a new
+        # access token when the current access token becomes invalid or expires.
+        # Required when using refresh token flow, i.e. if `grant_type` is 'refresh_token'
+        # See https://www.rfc-editor.org/rfc/rfc6749#section-1.5 and https://www.rfc-
+        # editor.org/rfc/rfc6749#section-6
+        # Corresponds to the JSON property `refreshToken`
+        # @return [String]
+        attr_accessor :refresh_token
+      
+        # Optional. An optional list of scopes that are requested for the token to be
+        # returned. See https://www.rfc-editor.org/rfc/rfc6749#section-3.3 Must be a
+        # list of space-delimited, case-sensitive strings. Note: Currently, the scopes
+        # in the request are not supported
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @client_id = args[:client_id] if args.key?(:client_id)
+          @code = args[:code] if args.key?(:code)
+          @code_verifier = args[:code_verifier] if args.key?(:code_verifier)
+          @grant_type = args[:grant_type] if args.key?(:grant_type)
+          @redirect_uri = args[:redirect_uri] if args.key?(:redirect_uri)
+          @refresh_token = args[:refresh_token] if args.key?(:refresh_token)
+          @scope = args[:scope] if args.key?(:scope)
+        end
+      end
+      
+      # Response message for ExchangeOauthToken. see https://www.rfc-editor.org/rfc/
+      # rfc6749#section-5.1
+      class GoogleIdentityStsV1ExchangeOauthTokenResponse
+        include Google::Apis::Core::Hashable
+      
+        # An OAuth 2.0 security token, issued by Google, in response to the Oauth token
+        # exchange request for the authorization code and refresh token flows. The
+        # returned [access token](https://www.rfc-editor.org/rfc/rfc6749#section-4.1.4).
+        # Tokens can vary in size, depending, in part, on the size of mapped claims, up
+        # to a maximum of 12288 bytes (12 KB). Google reserves the right to change the
+        # token size and the maximum length at any time.
+        # Corresponds to the JSON property `access_token`
+        # @return [String]
+        attr_accessor :access_token
+      
+        # The amount of time, in seconds, between the time when the access token was
+        # issued and the time when the access token will expires.
+        # Corresponds to the JSON property `expires_in`
+        # @return [Fixnum]
+        attr_accessor :expires_in
+      
+        # Google issued ID token in response to the OAuth token exchange request for ID
+        # token flow.
+        # Corresponds to the JSON property `id_token`
+        # @return [String]
+        attr_accessor :id_token
+      
+        # A refresh token, issued by Google, in response to the OAuth token exchange
+        # request for refresh token flow
+        # Corresponds to the JSON property `refresh_token`
+        # @return [String]
+        attr_accessor :refresh_token
+      
+        # A list of scopes associated with the returned token.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        # The type of token. Field reserved for RFC compliance. See https://www.rfc-
+        # editor.org/rfc/rfc6749#section-5.1
+        # Corresponds to the JSON property `token_type`
+        # @return [String]
+        attr_accessor :token_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_token = args[:access_token] if args.key?(:access_token)
+          @expires_in = args[:expires_in] if args.key?(:expires_in)
+          @id_token = args[:id_token] if args.key?(:id_token)
+          @refresh_token = args[:refresh_token] if args.key?(:refresh_token)
+          @scope = args[:scope] if args.key?(:scope)
+          @token_type = args[:token_type] if args.key?(:token_type)
+        end
+      end
+      
       # Request message for ExchangeToken.
       class GoogleIdentityStsV1ExchangeTokenRequest
         include Google::Apis::Core::Hashable
       
         # The full resource name of the identity provider; for example: `//iam.
-        # googleapis.com/projects//locations/global/workloadIdentityPools//providers/`.
-        # Required when exchanging an external credential for a Google access token.
+        # googleapis.com/projects//locations/global/workloadIdentityPools//providers/`
+        # for workload identity pool providers, or `//iam.googleapis.com/locations/
+        # global/workforcePools//providers/` for workforce pool providers. Required when
+        # exchanging an external credential for a Google access token.
         # Corresponds to the JSON property `audience`
         # @return [String]
         attr_accessor :audience
@@ -188,7 +333,7 @@ module Google
       
         # A set of features that Security Token Service supports, in addition to the
         # standard OAuth 2.0 token exchange, formatted as a serialized JSON object of
-        # Options.
+        # Options. The size of the parameter value must not exceed 4096 characters.
         # Corresponds to the JSON property `options`
         # @return [String]
         attr_accessor :options
@@ -229,25 +374,28 @@ module Google
         # allowed audiences for the workload identity pool provider, or one of the
         # audiences allowed by default if no audiences were specified. See https://cloud.
         # google.com/iam/docs/reference/rest/v1/projects.locations.workloadIdentityPools.
-        # providers#oidc Example header: ``` ` "alg": "RS256", "kid": "us-east-11" ` ```
-        # Example payload: ``` ` "iss": "https://accounts.google.com", "iat": 1517963104,
-        # "exp": 1517966704, "aud": "//iam.googleapis.com/projects/1234567890123/
-        # locations/global/workloadIdentityPools/my-pool/providers/my-provider", "sub": "
-        # 113475438248934895348", "my_claims": ` "additional_claim": "value" ` ` ``` If `
-        # subject_token` is for AWS, it must be a serialized `GetCallerIdentity` token.
-        # This token contains the same information as a request to the AWS [`
-        # GetCallerIdentity()`](https://docs.aws.amazon.com/STS/latest/APIReference/
-        # API_GetCallerIdentity) method, as well as the AWS [signature](https://docs.aws.
-        # amazon.com/general/latest/gr/signing_aws_api_requests.html) for the request
-        # information. Use Signature Version 4. Format the request as URL-encoded JSON,
-        # and set the `subject_token_type` parameter to `urn:ietf:params:aws:token-type:
-        # aws4_request`. The following parameters are required: - `url`: The URL of the
-        # AWS STS endpoint for `GetCallerIdentity()`, such as `https://sts.amazonaws.com?
-        # Action=GetCallerIdentity&Version=2011-06-15`. Regional endpoints are also
-        # supported. - `method`: The HTTP request method: `POST`. - `headers`: The HTTP
-        # request headers, which must include: - `Authorization`: The request signature.
-        # - `x-amz-date`: The time you will send the request, formatted as an [ISO8601
-        # Basic](https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html#
+        # providers#oidc. For workforce pools, this must match the client ID specified
+        # in the provider configuration. See https://cloud.google.com/iam/docs/reference/
+        # rest/v1/locations.workforcePools.providers#oidc. Example header: ``` ` "alg": "
+        # RS256", "kid": "us-east-11" ` ``` Example payload: ``` ` "iss": "https://
+        # accounts.google.com", "iat": 1517963104, "exp": 1517966704, "aud": "//iam.
+        # googleapis.com/projects/1234567890123/locations/global/workloadIdentityPools/
+        # my-pool/providers/my-provider", "sub": "113475438248934895348", "my_claims": `
+        # "additional_claim": "value" ` ` ``` If `subject_token` is for AWS, it must be
+        # a serialized `GetCallerIdentity` token. This token contains the same
+        # information as a request to the AWS [`GetCallerIdentity()`](https://docs.aws.
+        # amazon.com/STS/latest/APIReference/API_GetCallerIdentity) method, as well as
+        # the AWS [signature](https://docs.aws.amazon.com/general/latest/gr/
+        # signing_aws_api_requests.html) for the request information. Use Signature
+        # Version 4. Format the request as URL-encoded JSON, and set the `
+        # subject_token_type` parameter to `urn:ietf:params:aws:token-type:aws4_request`.
+        # The following parameters are required: - `url`: The URL of the AWS STS
+        # endpoint for `GetCallerIdentity()`, such as `https://sts.amazonaws.com?Action=
+        # GetCallerIdentity&Version=2011-06-15`. Regional endpoints are also supported. -
+        # `method`: The HTTP request method: `POST`. - `headers`: The HTTP request
+        # headers, which must include: - `Authorization`: The request signature. - `x-
+        # amz-date`: The time you will send the request, formatted as an [ISO8601 Basic](
+        # https://docs.aws.amazon.com/general/latest/gr/sigv4_elements.html#
         # sigv4_elements_date) string. This value is typically set to the current time
         # and is used to help prevent replay attacks. - `host`: The hostname of the `url`
         # field; for example, `sts.amazonaws.com`. - `x-goog-cloud-target-resource`:
@@ -266,11 +414,18 @@ module Google
         # value": "//iam.googleapis.com/projects//locations/global/workloadIdentityPools/
         # /providers/"`, `"key": "host", "value": "sts.amazonaws.com"` . ], "method": "
         # POST", "url": "https://sts.amazonaws.com?Action=GetCallerIdentity&Version=2011-
-        # 06-15" ` ``` You can also use a Google-issued OAuth 2.0 access token with this
-        # field to obtain an access token with new security attributes applied, such as
-        # a Credential Access Boundary. In this case, set `subject_token_type` to `urn:
-        # ietf:params:oauth:token-type:access_token`. If an access token already
-        # contains security attributes, you cannot apply additional security attributes.
+        # 06-15" ` ``` If the token is a SAML 2.0 assertion, it must use the format
+        # defined in [the SAML 2.0 spec](https://www.oasis-open.org/committees/download.
+        # php/56776/sstc-saml-core-errata-2.0-wd-07.pdf), and the `subject_token_type`
+        # must be `urn:ietf:params:oauth:token-type:saml2`. See [Verification of
+        # external credentials](https://cloud.google.com/iam/docs/using-workload-
+        # identity-federation#verification_of_external_credentials) for details on how
+        # SAML 2.0 assertions are validated during token exchanges. You can also use a
+        # Google-issued OAuth 2.0 access token with this field to obtain an access token
+        # with new security attributes applied, such as a Credential Access Boundary. In
+        # this case, set `subject_token_type` to `urn:ietf:params:oauth:token-type:
+        # access_token`. If an access token already contains security attributes, you
+        # cannot apply additional security attributes.
         # Corresponds to the JSON property `subjectToken`
         # @return [String]
         attr_accessor :subject_token
@@ -278,7 +433,8 @@ module Google
         # Required. An identifier that indicates the type of the security token in the `
         # subject_token` parameter. Supported values are `urn:ietf:params:oauth:token-
         # type:jwt`, `urn:ietf:params:oauth:token-type:id_token`, `urn:ietf:params:aws:
-        # token-type:aws4_request`, and `urn:ietf:params:oauth:token-type:access_token`.
+        # token-type:aws4_request`, `urn:ietf:params:oauth:token-type:access_token`, and
+        # `urn:ietf:params:oauth:token-type:saml2`.
         # Corresponds to the JSON property `subjectTokenType`
         # @return [String]
         attr_accessor :subject_token_type
@@ -421,7 +577,10 @@ module Google
         # The human-readable identifier for the token principal subject. For example, if
         # the provided token is associated with a workload identity pool, this field
         # contains a value in the following format: `principal://iam.googleapis.com/
-        # projects//locations/global/workloadIdentityPools//subject/`
+        # projects//locations/global/workloadIdentityPools//subject/`. If the provided
+        # token is associated with a workforce pool, this field contains a value in the
+        # following format: `principal://iam.googleapis.com/locations/global/
+        # workforcePools//subject/`.
         # Corresponds to the JSON property `username`
         # @return [String]
         attr_accessor :username

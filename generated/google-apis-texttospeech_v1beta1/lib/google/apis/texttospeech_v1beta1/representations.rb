@@ -28,13 +28,55 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CustomVoiceParams
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListOperationsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListVoicesResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Operation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Status
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SynthesisInput
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SynthesizeLongAudioMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SynthesizeLongAudioRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -82,6 +124,31 @@ module Google
         end
       end
       
+      class CustomVoiceParams
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :model, as: 'model'
+          property :reported_usage, as: 'reportedUsage'
+        end
+      end
+      
+      class GoogleCloudTexttospeechV1beta1SynthesizeLongAudioMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :progress_percentage, as: 'progressPercentage'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class ListOperationsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :operations, as: 'operations', class: Google::Apis::TexttospeechV1beta1::Operation, decorator: Google::Apis::TexttospeechV1beta1::Operation::Representation
+      
+        end
+      end
+      
       class ListVoicesResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -90,11 +157,53 @@ module Google
         end
       end
       
+      class Operation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :done, as: 'done'
+          property :error, as: 'error', class: Google::Apis::TexttospeechV1beta1::Status, decorator: Google::Apis::TexttospeechV1beta1::Status::Representation
+      
+          hash :metadata, as: 'metadata'
+          property :name, as: 'name'
+          hash :response, as: 'response'
+        end
+      end
+      
+      class Status
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :code, as: 'code'
+          collection :details, as: 'details'
+          property :message, as: 'message'
+        end
+      end
+      
       class SynthesisInput
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :ssml, as: 'ssml'
           property :text, as: 'text'
+        end
+      end
+      
+      class SynthesizeLongAudioMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :progress_percentage, as: 'progressPercentage'
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class SynthesizeLongAudioRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :audio_config, as: 'audioConfig', class: Google::Apis::TexttospeechV1beta1::AudioConfig, decorator: Google::Apis::TexttospeechV1beta1::AudioConfig::Representation
+      
+          property :input, as: 'input', class: Google::Apis::TexttospeechV1beta1::SynthesisInput, decorator: Google::Apis::TexttospeechV1beta1::SynthesisInput::Representation
+      
+          property :output_gcs_uri, as: 'outputGcsUri'
+          property :voice, as: 'voice', class: Google::Apis::TexttospeechV1beta1::VoiceSelectionParams, decorator: Google::Apis::TexttospeechV1beta1::VoiceSelectionParams::Representation
+      
         end
       end
       
@@ -143,6 +252,8 @@ module Google
       class VoiceSelectionParams
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :custom_voice, as: 'customVoice', class: Google::Apis::TexttospeechV1beta1::CustomVoiceParams, decorator: Google::Apis::TexttospeechV1beta1::CustomVoiceParams::Representation
+      
           property :language_code, as: 'languageCode'
           property :name, as: 'name'
           property :ssml_gender, as: 'ssmlGender'

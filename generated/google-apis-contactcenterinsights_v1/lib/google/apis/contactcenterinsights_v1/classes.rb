@@ -31,6 +31,11 @@ module Google
         # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1AnalysisResult]
         attr_accessor :analysis_result
       
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1AnnotatorSelector]
+        attr_accessor :annotator_selector
+      
         # Output only. The time at which the analysis was created, which occurs when the
         # long-running operation completes.
         # Corresponds to the JSON property `createTime`
@@ -55,6 +60,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @analysis_result = args[:analysis_result] if args.key?(:analysis_result)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
           @create_time = args[:create_time] if args.key?(:create_time)
           @name = args[:name] if args.key?(:name)
           @request_time = args[:request_time] if args.key?(:request_time)
@@ -162,6 +168,89 @@ module Google
         end
       end
       
+      # Selector of all available annotators and phrase matchers to run.
+      class GoogleCloudContactcenterinsightsV1AnnotatorSelector
+        include Google::Apis::Core::Hashable
+      
+        # The issue model to run. If not provided, the most recently deployed topic
+        # model will be used. The provided issue model will only be used for inference
+        # if the issue model is deployed and if run_issue_model_annotator is set to true.
+        # If more than one issue model is provided, only the first provided issue model
+        # will be used for inference.
+        # Corresponds to the JSON property `issueModels`
+        # @return [Array<String>]
+        attr_accessor :issue_models
+      
+        # The list of phrase matchers to run. If not provided, all active phrase
+        # matchers will be used. If inactive phrase matchers are provided, they will not
+        # be used. Phrase matchers will be run only if run_phrase_matcher_annotator is
+        # set to true. Format: projects/`project`/locations/`location`/phraseMatchers/`
+        # phrase_matcher`
+        # Corresponds to the JSON property `phraseMatchers`
+        # @return [Array<String>]
+        attr_accessor :phrase_matchers
+      
+        # Whether to run the entity annotator.
+        # Corresponds to the JSON property `runEntityAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_entity_annotator
+        alias_method :run_entity_annotator?, :run_entity_annotator
+      
+        # Whether to run the intent annotator.
+        # Corresponds to the JSON property `runIntentAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_intent_annotator
+        alias_method :run_intent_annotator?, :run_intent_annotator
+      
+        # Whether to run the interruption annotator.
+        # Corresponds to the JSON property `runInterruptionAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_interruption_annotator
+        alias_method :run_interruption_annotator?, :run_interruption_annotator
+      
+        # Whether to run the issue model annotator. A model should have already been
+        # deployed for this to take effect.
+        # Corresponds to the JSON property `runIssueModelAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_issue_model_annotator
+        alias_method :run_issue_model_annotator?, :run_issue_model_annotator
+      
+        # Whether to run the active phrase matcher annotator(s).
+        # Corresponds to the JSON property `runPhraseMatcherAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_phrase_matcher_annotator
+        alias_method :run_phrase_matcher_annotator?, :run_phrase_matcher_annotator
+      
+        # Whether to run the sentiment annotator.
+        # Corresponds to the JSON property `runSentimentAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_sentiment_annotator
+        alias_method :run_sentiment_annotator?, :run_sentiment_annotator
+      
+        # Whether to run the silence annotator.
+        # Corresponds to the JSON property `runSilenceAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_silence_annotator
+        alias_method :run_silence_annotator?, :run_silence_annotator
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @issue_models = args[:issue_models] if args.key?(:issue_models)
+          @phrase_matchers = args[:phrase_matchers] if args.key?(:phrase_matchers)
+          @run_entity_annotator = args[:run_entity_annotator] if args.key?(:run_entity_annotator)
+          @run_intent_annotator = args[:run_intent_annotator] if args.key?(:run_intent_annotator)
+          @run_interruption_annotator = args[:run_interruption_annotator] if args.key?(:run_interruption_annotator)
+          @run_issue_model_annotator = args[:run_issue_model_annotator] if args.key?(:run_issue_model_annotator)
+          @run_phrase_matcher_annotator = args[:run_phrase_matcher_annotator] if args.key?(:run_phrase_matcher_annotator)
+          @run_sentiment_annotator = args[:run_sentiment_annotator] if args.key?(:run_sentiment_annotator)
+          @run_silence_annotator = args[:run_silence_annotator] if args.key?(:run_silence_annotator)
+        end
+      end
+      
       # The feedback that the customer has about a certain answer in the conversation.
       class GoogleCloudContactcenterinsightsV1AnswerFeedback
         include Google::Apis::Core::Hashable
@@ -213,8 +302,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :metadata
       
-        # Name of the query record. Format: projects/`project`/locations/`location`/
-        # queryRecords/`query_record`
+        # The name of the answer record. Format: projects/`project`/locations/`location`/
+        # answerRecords/`answer_record`
         # Corresponds to the JSON property `queryRecord`
         # @return [String]
         attr_accessor :query_record
@@ -247,6 +336,118 @@ module Google
           @source = args[:source] if args.key?(:source)
           @title = args[:title] if args.key?(:title)
           @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # The metadata for a bulk analyze conversations operation.
+      class GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The number of requested analyses that have completed successfully so far.
+        # Corresponds to the JSON property `completedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :completed_analyses_count
+      
+        # The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The number of requested analyses that have failed so far.
+        # Corresponds to the JSON property `failedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :failed_analyses_count
+      
+        # The request to analyze conversations in bulk.
+        # Corresponds to the JSON property `request`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest]
+        attr_accessor :request
+      
+        # Total number of analyses requested. Computed by the number of conversations
+        # returned by `filter` multiplied by `analysis_percentage` in the request.
+        # Corresponds to the JSON property `totalRequestedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :total_requested_analyses_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @completed_analyses_count = args[:completed_analyses_count] if args.key?(:completed_analyses_count)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @failed_analyses_count = args[:failed_analyses_count] if args.key?(:failed_analyses_count)
+          @request = args[:request] if args.key?(:request)
+          @total_requested_analyses_count = args[:total_requested_analyses_count] if args.key?(:total_requested_analyses_count)
+        end
+      end
+      
+      # The request to analyze conversations in bulk.
+      class GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. Percentage of selected conversation to analyze, between [0, 100].
+        # Corresponds to the JSON property `analysisPercentage`
+        # @return [Float]
+        attr_accessor :analysis_percentage
+      
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1AnnotatorSelector]
+        attr_accessor :annotator_selector
+      
+        # Required. Filter used to select the subset of conversations to analyze.
+        # Corresponds to the JSON property `filter`
+        # @return [String]
+        attr_accessor :filter
+      
+        # Required. The parent resource to create analyses in.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @analysis_percentage = args[:analysis_percentage] if args.key?(:analysis_percentage)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
+          @filter = args[:filter] if args.key?(:filter)
+          @parent = args[:parent] if args.key?(:parent)
+        end
+      end
+      
+      # The response for a bulk analyze conversations operation.
+      class GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Count of failed analyses.
+        # Corresponds to the JSON property `failedAnalysisCount`
+        # @return [Fixnum]
+        attr_accessor :failed_analysis_count
+      
+        # Count of successful analyses.
+        # Corresponds to the JSON property `successfulAnalysisCount`
+        # @return [Fixnum]
+        attr_accessor :successful_analysis_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failed_analysis_count = args[:failed_analysis_count] if args.key?(:failed_analysis_count)
+          @successful_analysis_count = args[:successful_analysis_count] if args.key?(:successful_analysis_count)
         end
       end
       
@@ -307,6 +508,13 @@ module Google
         # @return [Hash<String,Fixnum>]
         attr_accessor :issue_matches
       
+        # A map associating each issue resource name with its respective number of
+        # matches in the set of conversations. Key has the format: `projects//locations//
+        # issueModels//issues/`
+        # Corresponds to the JSON property `issueMatchesStats`
+        # @return [Hash<String,Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats>]
+        attr_accessor :issue_matches_stats
+      
         # A map associating each smart highlighter display name with its respective
         # number of matches in the set of conversations.
         # Corresponds to the JSON property `smartHighlighterMatches`
@@ -325,6 +533,7 @@ module Google
           @conversation_count_time_series = args[:conversation_count_time_series] if args.key?(:conversation_count_time_series)
           @custom_highlighter_matches = args[:custom_highlighter_matches] if args.key?(:custom_highlighter_matches)
           @issue_matches = args[:issue_matches] if args.key?(:issue_matches)
+          @issue_matches_stats = args[:issue_matches_stats] if args.key?(:issue_matches_stats)
           @smart_highlighter_matches = args[:smart_highlighter_matches] if args.key?(:smart_highlighter_matches)
         end
       end
@@ -423,6 +632,11 @@ module Google
         # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1InterruptionData]
         attr_accessor :interruption_data
       
+        # The data for an issue match annotation.
+        # Corresponds to the JSON property `issueMatchData`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IssueMatchData]
+        attr_accessor :issue_match_data
+      
         # The data for a matched phrase matcher. Represents information identifying a
         # phrase matcher for a given match.
         # Corresponds to the JSON property `phraseMatchData`
@@ -452,6 +666,7 @@ module Google
           @hold_data = args[:hold_data] if args.key?(:hold_data)
           @intent_match_data = args[:intent_match_data] if args.key?(:intent_match_data)
           @interruption_data = args[:interruption_data] if args.key?(:interruption_data)
+          @issue_match_data = args[:issue_match_data] if args.key?(:issue_match_data)
           @phrase_match_data = args[:phrase_match_data] if args.key?(:phrase_match_data)
           @sentiment_data = args[:sentiment_data] if args.key?(:sentiment_data)
           @silence_data = args[:silence_data] if args.key?(:silence_data)
@@ -517,7 +732,7 @@ module Google
         # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1Analysis]
         attr_accessor :latest_analysis
       
-        # Immutable. The conversation medium.
+        # Immutable. The conversation medium, if unspecified will default to PHONE_CALL.
         # Corresponds to the JSON property `medium`
         # @return [String]
         attr_accessor :medium
@@ -527,6 +742,11 @@ module Google
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Obfuscated user ID which the customer sent to us.
+        # Corresponds to the JSON property `obfuscatedUserId`
+        # @return [String]
+        attr_accessor :obfuscated_user_id
       
         # Output only. The annotations that were generated during the customer and agent
         # interaction.
@@ -578,6 +798,7 @@ module Google
           @latest_analysis = args[:latest_analysis] if args.key?(:latest_analysis)
           @medium = args[:medium] if args.key?(:medium)
           @name = args[:name] if args.key?(:name)
+          @obfuscated_user_id = args[:obfuscated_user_id] if args.key?(:obfuscated_user_id)
           @runtime_annotations = args[:runtime_annotations] if args.key?(:runtime_annotations)
           @start_time = args[:start_time] if args.key?(:start_time)
           @transcript = args[:transcript] if args.key?(:transcript)
@@ -864,6 +1085,11 @@ module Google
       class GoogleCloudContactcenterinsightsV1CreateAnalysisOperationMetadata
         include Google::Apis::Core::Hashable
       
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1AnnotatorSelector]
+        attr_accessor :annotator_selector
+      
         # Output only. The Conversation that this Analysis Operation belongs to.
         # Corresponds to the JSON property `conversation`
         # @return [String]
@@ -885,6 +1111,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
           @conversation = args[:conversation] if args.key?(:conversation)
           @create_time = args[:create_time] if args.key?(:create_time)
           @end_time = args[:end_time] if args.key?(:end_time)
@@ -1302,6 +1529,11 @@ module Google
         # @return [String]
         attr_accessor :parent
       
+        # Options for what to do if the destination table already exists.
+        # Corresponds to the JSON property `writeDisposition`
+        # @return [String]
+        attr_accessor :write_disposition
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1312,6 +1544,7 @@ module Google
           @filter = args[:filter] if args.key?(:filter)
           @kms_key = args[:kms_key] if args.key?(:kms_key)
           @parent = args[:parent] if args.key?(:parent)
+          @write_disposition = args[:write_disposition] if args.key?(:write_disposition)
         end
       end
       
@@ -1386,8 +1619,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :metadata
       
-        # Name of the query record. Format: projects/`project`/locations/`location`/
-        # queryRecords/`query_record`.
+        # The name of the answer record. Format: projects/`project`/locations/`location`/
+        # answerRecords/`answer_record`
         # Corresponds to the JSON property `queryRecord`
         # @return [String]
         attr_accessor :query_record
@@ -1446,6 +1679,198 @@ module Google
       
       # The data for a hold annotation.
       class GoogleCloudContactcenterinsightsV1HoldData
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # The metadata for an IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Statistics for IngestConversations operation.
+        # Corresponds to the JSON property `ingestConversationsStats`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats]
+        attr_accessor :ingest_conversations_stats
+      
+        # Output only. Partial errors during ingest operation that might cause the
+        # operation output to be incomplete.
+        # Corresponds to the JSON property `partialErrors`
+        # @return [Array<Google::Apis::ContactcenterinsightsV1::GoogleRpcStatus>]
+        attr_accessor :partial_errors
+      
+        # The request to ingest conversations.
+        # Corresponds to the JSON property `request`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IngestConversationsRequest]
+        attr_accessor :request
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @ingest_conversations_stats = args[:ingest_conversations_stats] if args.key?(:ingest_conversations_stats)
+          @partial_errors = args[:partial_errors] if args.key?(:partial_errors)
+          @request = args[:request] if args.key?(:request)
+        end
+      end
+      
+      # Statistics for IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsMetadataIngestConversationsStats
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The number of objects skipped because another conversation with
+        # the same transcript uri had already been ingested.
+        # Corresponds to the JSON property `duplicatesSkippedCount`
+        # @return [Fixnum]
+        attr_accessor :duplicates_skipped_count
+      
+        # Output only. The number of objects which were unable to be ingested due to
+        # errors. The errors are populated in the partial_errors field.
+        # Corresponds to the JSON property `failedIngestCount`
+        # @return [Fixnum]
+        attr_accessor :failed_ingest_count
+      
+        # Output only. The number of objects processed during the ingest operation.
+        # Corresponds to the JSON property `processedObjectCount`
+        # @return [Fixnum]
+        attr_accessor :processed_object_count
+      
+        # Output only. The number of new conversations added during this ingest
+        # operation.
+        # Corresponds to the JSON property `successfulIngestCount`
+        # @return [Fixnum]
+        attr_accessor :successful_ingest_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @duplicates_skipped_count = args[:duplicates_skipped_count] if args.key?(:duplicates_skipped_count)
+          @failed_ingest_count = args[:failed_ingest_count] if args.key?(:failed_ingest_count)
+          @processed_object_count = args[:processed_object_count] if args.key?(:processed_object_count)
+          @successful_ingest_count = args[:successful_ingest_count] if args.key?(:successful_ingest_count)
+        end
+      end
+      
+      # The request to ingest conversations.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Configuration that applies to all conversations.
+        # Corresponds to the JSON property `conversationConfig`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig]
+        attr_accessor :conversation_config
+      
+        # Configuration for Cloud Storage bucket sources.
+        # Corresponds to the JSON property `gcsSource`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource]
+        attr_accessor :gcs_source
+      
+        # Required. The parent resource for new conversations.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # Configuration for processing transcript objects.
+        # Corresponds to the JSON property `transcriptObjectConfig`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig]
+        attr_accessor :transcript_object_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @conversation_config = args[:conversation_config] if args.key?(:conversation_config)
+          @gcs_source = args[:gcs_source] if args.key?(:gcs_source)
+          @parent = args[:parent] if args.key?(:parent)
+          @transcript_object_config = args[:transcript_object_config] if args.key?(:transcript_object_config)
+        end
+      end
+      
+      # Configuration that applies to all conversations.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsRequestConversationConfig
+        include Google::Apis::Core::Hashable
+      
+        # An opaque, user-specified string representing the human agent who handled the
+        # conversations.
+        # Corresponds to the JSON property `agentId`
+        # @return [String]
+        attr_accessor :agent_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @agent_id = args[:agent_id] if args.key?(:agent_id)
+        end
+      end
+      
+      # Configuration for Cloud Storage bucket sources.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsRequestGcsSource
+        include Google::Apis::Core::Hashable
+      
+        # Required. The Cloud Storage bucket containing source objects.
+        # Corresponds to the JSON property `bucketUri`
+        # @return [String]
+        attr_accessor :bucket_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bucket_uri = args[:bucket_uri] if args.key?(:bucket_uri)
+        end
+      end
+      
+      # Configuration for processing transcript objects.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsRequestTranscriptObjectConfig
+        include Google::Apis::Core::Hashable
+      
+        # Required. The medium transcript objects represent.
+        # Corresponds to the JSON property `medium`
+        # @return [String]
+        attr_accessor :medium
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @medium = args[:medium] if args.key?(:medium)
+        end
+      end
+      
+      # The response to an IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1IngestConversationsResponse
         include Google::Apis::Core::Hashable
       
         def initialize(**args)
@@ -1538,6 +1963,12 @@ module Google
         # @return [String]
         attr_accessor :name
       
+        # Output only. Resource names of the sample representative utterances that match
+        # to this issue.
+        # Corresponds to the JSON property `sampleUtterances`
+        # @return [Array<String>]
+        attr_accessor :sample_utterances
+      
         # Output only. The most recent time that this issue was updated.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
@@ -1552,6 +1983,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @display_name = args[:display_name] if args.key?(:display_name)
           @name = args[:name] if args.key?(:name)
+          @sample_utterances = args[:sample_utterances] if args.key?(:sample_utterances)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -1589,6 +2021,25 @@ module Google
         end
       end
       
+      # The data for an issue match annotation.
+      class GoogleCloudContactcenterinsightsV1IssueMatchData
+        include Google::Apis::Core::Hashable
+      
+        # Information about the issue.
+        # Corresponds to the JSON property `issueAssignment`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IssueAssignment]
+        attr_accessor :issue_assignment
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @issue_assignment = args[:issue_assignment] if args.key?(:issue_assignment)
+        end
+      end
+      
       # The issue model resource.
       class GoogleCloudContactcenterinsightsV1IssueModel
         include Google::Apis::Core::Hashable
@@ -1607,6 +2058,11 @@ module Google
         # Corresponds to the JSON property `inputDataConfig`
         # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1IssueModelInputDataConfig]
         attr_accessor :input_data_config
+      
+        # Output only. Number of issues in this issue model.
+        # Corresponds to the JSON property `issueCount`
+        # @return [Fixnum]
+        attr_accessor :issue_count
       
         # Immutable. The resource name of the issue model. Format: projects/`project`/
         # locations/`location`/issueModels/`issue_model`
@@ -1638,6 +2094,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @display_name = args[:display_name] if args.key?(:display_name)
           @input_data_config = args[:input_data_config] if args.key?(:input_data_config)
+          @issue_count = args[:issue_count] if args.key?(:issue_count)
           @name = args[:name] if args.key?(:name)
           @state = args[:state] if args.key?(:state)
           @training_stats = args[:training_stats] if args.key?(:training_stats)
@@ -1715,6 +2172,11 @@ module Google
       class GoogleCloudContactcenterinsightsV1IssueModelLabelStatsIssueStats
         include Google::Apis::Core::Hashable
       
+        # Display name of the issue.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
         # Issue resource. Format: projects/`project`/locations/`location`/issueModels/`
         # issue_model`/issues/`issue`
         # Corresponds to the JSON property `issue`
@@ -1732,6 +2194,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
           @issue = args[:issue] if args.key?(:issue)
           @labeled_conversations_count = args[:labeled_conversations_count] if args.key?(:labeled_conversations_count)
         end
@@ -1741,7 +2204,8 @@ module Google
       class GoogleCloudContactcenterinsightsV1IssueModelResult
         include Google::Apis::Core::Hashable
       
-        # Issue model that generates the result.
+        # Issue model that generates the result. Format: projects/`project`/locations/`
+        # location`/issueModels/`issue_model`
         # Corresponds to the JSON property `issueModel`
         # @return [String]
         attr_accessor :issue_model
@@ -1876,6 +2340,32 @@ module Google
         def update!(**args)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
           @phrase_matchers = args[:phrase_matchers] if args.key?(:phrase_matchers)
+        end
+      end
+      
+      # The response of listing views.
+      class GoogleCloudContactcenterinsightsV1ListViewsResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # The views that match the request.
+        # Corresponds to the JSON property `views`
+        # @return [Array<Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1View>]
+        attr_accessor :views
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @views = args[:views] if args.key?(:views)
         end
       end
       
@@ -2244,6 +2734,11 @@ module Google
       class GoogleCloudContactcenterinsightsV1SettingsAnalysisConfig
         include Google::Apis::Core::Hashable
       
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1AnnotatorSelector]
+        attr_accessor :annotator_selector
+      
         # Percentage of conversations created using Dialogflow runtime integration to
         # analyze automatically, between [0, 100].
         # Corresponds to the JSON property `runtimeIntegrationAnalysisPercentage`
@@ -2256,6 +2751,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
           @runtime_integration_analysis_percentage = args[:runtime_integration_analysis_percentage] if args.key?(:runtime_integration_analysis_percentage)
         end
       end
@@ -2290,8 +2786,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :metadata
       
-        # Name of the query record. Format: projects/`project`/locations/`location`/
-        # queryRecords/`query_record`
+        # The name of the answer record. Format: projects/`project`/locations/`location`/
+        # answerRecords/`answer_record`
         # Corresponds to the JSON property `queryRecord`
         # @return [String]
         attr_accessor :query_record
@@ -2331,8 +2827,8 @@ module Google
         # @return [Hash<String,String>]
         attr_accessor :metadata
       
-        # Name of the query record. Format: projects/`project`/locations/`location`/
-        # queryRecords/`query_record`
+        # The name of the answer record. Format: projects/`project`/locations/`location`/
+        # answerRecords/`answer_record`
         # Corresponds to the JSON property `queryRecord`
         # @return [String]
         attr_accessor :query_record
@@ -2418,9 +2914,253 @@ module Google
         end
       end
       
+      # The View resource.
+      class GoogleCloudContactcenterinsightsV1View
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time at which this view was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The human-readable display name of the view.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Immutable. The resource name of the view. Format: projects/`project`/locations/
+        # `location`/views/`view`
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Output only. The most recent time at which the view was updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # String with specific view properties, must be non-empty.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @name = args[:name] if args.key?(:name)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Selector of all available annotators and phrase matchers to run.
+      class GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector
+        include Google::Apis::Core::Hashable
+      
+        # The issue model to run. If not provided, the most recently deployed topic
+        # model will be used. The provided issue model will only be used for inference
+        # if the issue model is deployed and if run_issue_model_annotator is set to true.
+        # If more than one issue model is provided, only the first provided issue model
+        # will be used for inference.
+        # Corresponds to the JSON property `issueModels`
+        # @return [Array<String>]
+        attr_accessor :issue_models
+      
+        # The list of phrase matchers to run. If not provided, all active phrase
+        # matchers will be used. If inactive phrase matchers are provided, they will not
+        # be used. Phrase matchers will be run only if run_phrase_matcher_annotator is
+        # set to true. Format: projects/`project`/locations/`location`/phraseMatchers/`
+        # phrase_matcher`
+        # Corresponds to the JSON property `phraseMatchers`
+        # @return [Array<String>]
+        attr_accessor :phrase_matchers
+      
+        # Whether to run the entity annotator.
+        # Corresponds to the JSON property `runEntityAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_entity_annotator
+        alias_method :run_entity_annotator?, :run_entity_annotator
+      
+        # Whether to run the intent annotator.
+        # Corresponds to the JSON property `runIntentAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_intent_annotator
+        alias_method :run_intent_annotator?, :run_intent_annotator
+      
+        # Whether to run the interruption annotator.
+        # Corresponds to the JSON property `runInterruptionAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_interruption_annotator
+        alias_method :run_interruption_annotator?, :run_interruption_annotator
+      
+        # Whether to run the issue model annotator. A model should have already been
+        # deployed for this to take effect.
+        # Corresponds to the JSON property `runIssueModelAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_issue_model_annotator
+        alias_method :run_issue_model_annotator?, :run_issue_model_annotator
+      
+        # Whether to run the active phrase matcher annotator(s).
+        # Corresponds to the JSON property `runPhraseMatcherAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_phrase_matcher_annotator
+        alias_method :run_phrase_matcher_annotator?, :run_phrase_matcher_annotator
+      
+        # Whether to run the sentiment annotator.
+        # Corresponds to the JSON property `runSentimentAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_sentiment_annotator
+        alias_method :run_sentiment_annotator?, :run_sentiment_annotator
+      
+        # Whether to run the silence annotator.
+        # Corresponds to the JSON property `runSilenceAnnotator`
+        # @return [Boolean]
+        attr_accessor :run_silence_annotator
+        alias_method :run_silence_annotator?, :run_silence_annotator
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @issue_models = args[:issue_models] if args.key?(:issue_models)
+          @phrase_matchers = args[:phrase_matchers] if args.key?(:phrase_matchers)
+          @run_entity_annotator = args[:run_entity_annotator] if args.key?(:run_entity_annotator)
+          @run_intent_annotator = args[:run_intent_annotator] if args.key?(:run_intent_annotator)
+          @run_interruption_annotator = args[:run_interruption_annotator] if args.key?(:run_interruption_annotator)
+          @run_issue_model_annotator = args[:run_issue_model_annotator] if args.key?(:run_issue_model_annotator)
+          @run_phrase_matcher_annotator = args[:run_phrase_matcher_annotator] if args.key?(:run_phrase_matcher_annotator)
+          @run_sentiment_annotator = args[:run_sentiment_annotator] if args.key?(:run_sentiment_annotator)
+          @run_silence_annotator = args[:run_silence_annotator] if args.key?(:run_silence_annotator)
+        end
+      end
+      
+      # The metadata for a bulk analyze conversations operation.
+      class GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The number of requested analyses that have completed successfully so far.
+        # Corresponds to the JSON property `completedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :completed_analyses_count
+      
+        # The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The number of requested analyses that have failed so far.
+        # Corresponds to the JSON property `failedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :failed_analyses_count
+      
+        # The request to analyze conversations in bulk.
+        # Corresponds to the JSON property `request`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest]
+        attr_accessor :request
+      
+        # Total number of analyses requested. Computed by the number of conversations
+        # returned by `filter` multiplied by `analysis_percentage` in the request.
+        # Corresponds to the JSON property `totalRequestedAnalysesCount`
+        # @return [Fixnum]
+        attr_accessor :total_requested_analyses_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @completed_analyses_count = args[:completed_analyses_count] if args.key?(:completed_analyses_count)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @failed_analyses_count = args[:failed_analyses_count] if args.key?(:failed_analyses_count)
+          @request = args[:request] if args.key?(:request)
+          @total_requested_analyses_count = args[:total_requested_analyses_count] if args.key?(:total_requested_analyses_count)
+        end
+      end
+      
+      # The request to analyze conversations in bulk.
+      class GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. Percentage of selected conversation to analyze, between [0, 100].
+        # Corresponds to the JSON property `analysisPercentage`
+        # @return [Float]
+        attr_accessor :analysis_percentage
+      
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector]
+        attr_accessor :annotator_selector
+      
+        # Required. Filter used to select the subset of conversations to analyze.
+        # Corresponds to the JSON property `filter`
+        # @return [String]
+        attr_accessor :filter
+      
+        # Required. The parent resource to create analyses in.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @analysis_percentage = args[:analysis_percentage] if args.key?(:analysis_percentage)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
+          @filter = args[:filter] if args.key?(:filter)
+          @parent = args[:parent] if args.key?(:parent)
+        end
+      end
+      
+      # The response for a bulk analyze conversations operation.
+      class GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsResponse
+        include Google::Apis::Core::Hashable
+      
+        # Count of failed analyses.
+        # Corresponds to the JSON property `failedAnalysisCount`
+        # @return [Fixnum]
+        attr_accessor :failed_analysis_count
+      
+        # Count of successful analyses.
+        # Corresponds to the JSON property `successfulAnalysisCount`
+        # @return [Fixnum]
+        attr_accessor :successful_analysis_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @failed_analysis_count = args[:failed_analysis_count] if args.key?(:failed_analysis_count)
+          @successful_analysis_count = args[:successful_analysis_count] if args.key?(:successful_analysis_count)
+        end
+      end
+      
       # Metadata for a create analysis operation.
       class GoogleCloudContactcenterinsightsV1alpha1CreateAnalysisOperationMetadata
         include Google::Apis::Core::Hashable
+      
+        # Selector of all available annotators and phrase matchers to run.
+        # Corresponds to the JSON property `annotatorSelector`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1AnnotatorSelector]
+        attr_accessor :annotator_selector
       
         # Output only. The Conversation that this Analysis Operation belongs to.
         # Corresponds to the JSON property `conversation`
@@ -2443,6 +3183,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @annotator_selector = args[:annotator_selector] if args.key?(:annotator_selector)
           @conversation = args[:conversation] if args.key?(:conversation)
           @create_time = args[:create_time] if args.key?(:create_time)
           @end_time = args[:end_time] if args.key?(:end_time)
@@ -2683,6 +3424,11 @@ module Google
         # @return [String]
         attr_accessor :parent
       
+        # Options for what to do if the destination table already exists.
+        # Corresponds to the JSON property `writeDisposition`
+        # @return [String]
+        attr_accessor :write_disposition
+      
         def initialize(**args)
            update!(**args)
         end
@@ -2693,6 +3439,7 @@ module Google
           @filter = args[:filter] if args.key?(:filter)
           @kms_key = args[:kms_key] if args.key?(:kms_key)
           @parent = args[:parent] if args.key?(:parent)
+          @write_disposition = args[:write_disposition] if args.key?(:write_disposition)
         end
       end
       
@@ -2745,6 +3492,198 @@ module Google
         end
       end
       
+      # The metadata for an IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Statistics for IngestConversations operation.
+        # Corresponds to the JSON property `ingestConversationsStats`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats]
+        attr_accessor :ingest_conversations_stats
+      
+        # Output only. Partial errors during ingest operation that might cause the
+        # operation output to be incomplete.
+        # Corresponds to the JSON property `partialErrors`
+        # @return [Array<Google::Apis::ContactcenterinsightsV1::GoogleRpcStatus>]
+        attr_accessor :partial_errors
+      
+        # The request to ingest conversations.
+        # Corresponds to the JSON property `request`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest]
+        attr_accessor :request
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @ingest_conversations_stats = args[:ingest_conversations_stats] if args.key?(:ingest_conversations_stats)
+          @partial_errors = args[:partial_errors] if args.key?(:partial_errors)
+          @request = args[:request] if args.key?(:request)
+        end
+      end
+      
+      # Statistics for IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsMetadataIngestConversationsStats
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The number of objects skipped because another conversation with
+        # the same transcript uri had already been ingested.
+        # Corresponds to the JSON property `duplicatesSkippedCount`
+        # @return [Fixnum]
+        attr_accessor :duplicates_skipped_count
+      
+        # Output only. The number of objects which were unable to be ingested due to
+        # errors. The errors are populated in the partial_errors field.
+        # Corresponds to the JSON property `failedIngestCount`
+        # @return [Fixnum]
+        attr_accessor :failed_ingest_count
+      
+        # Output only. The number of objects processed during the ingest operation.
+        # Corresponds to the JSON property `processedObjectCount`
+        # @return [Fixnum]
+        attr_accessor :processed_object_count
+      
+        # Output only. The number of new conversations added during this ingest
+        # operation.
+        # Corresponds to the JSON property `successfulIngestCount`
+        # @return [Fixnum]
+        attr_accessor :successful_ingest_count
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @duplicates_skipped_count = args[:duplicates_skipped_count] if args.key?(:duplicates_skipped_count)
+          @failed_ingest_count = args[:failed_ingest_count] if args.key?(:failed_ingest_count)
+          @processed_object_count = args[:processed_object_count] if args.key?(:processed_object_count)
+          @successful_ingest_count = args[:successful_ingest_count] if args.key?(:successful_ingest_count)
+        end
+      end
+      
+      # The request to ingest conversations.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Configuration that applies to all conversations.
+        # Corresponds to the JSON property `conversationConfig`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig]
+        attr_accessor :conversation_config
+      
+        # Configuration for Cloud Storage bucket sources.
+        # Corresponds to the JSON property `gcsSource`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource]
+        attr_accessor :gcs_source
+      
+        # Required. The parent resource for new conversations.
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # Configuration for processing transcript objects.
+        # Corresponds to the JSON property `transcriptObjectConfig`
+        # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptObjectConfig]
+        attr_accessor :transcript_object_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @conversation_config = args[:conversation_config] if args.key?(:conversation_config)
+          @gcs_source = args[:gcs_source] if args.key?(:gcs_source)
+          @parent = args[:parent] if args.key?(:parent)
+          @transcript_object_config = args[:transcript_object_config] if args.key?(:transcript_object_config)
+        end
+      end
+      
+      # Configuration that applies to all conversations.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestConversationConfig
+        include Google::Apis::Core::Hashable
+      
+        # An opaque, user-specified string representing the human agent who handled the
+        # conversations.
+        # Corresponds to the JSON property `agentId`
+        # @return [String]
+        attr_accessor :agent_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @agent_id = args[:agent_id] if args.key?(:agent_id)
+        end
+      end
+      
+      # Configuration for Cloud Storage bucket sources.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestGcsSource
+        include Google::Apis::Core::Hashable
+      
+        # Required. The Cloud Storage bucket containing source objects.
+        # Corresponds to the JSON property `bucketUri`
+        # @return [String]
+        attr_accessor :bucket_uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bucket_uri = args[:bucket_uri] if args.key?(:bucket_uri)
+        end
+      end
+      
+      # Configuration for processing transcript objects.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsRequestTranscriptObjectConfig
+        include Google::Apis::Core::Hashable
+      
+        # Required. The medium transcript objects represent.
+        # Corresponds to the JSON property `medium`
+        # @return [String]
+        attr_accessor :medium
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @medium = args[:medium] if args.key?(:medium)
+        end
+      end
+      
+      # The response to an IngestConversations operation.
+      class GoogleCloudContactcenterinsightsV1alpha1IngestConversationsResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # The issue model resource.
       class GoogleCloudContactcenterinsightsV1alpha1IssueModel
         include Google::Apis::Core::Hashable
@@ -2763,6 +3702,11 @@ module Google
         # Corresponds to the JSON property `inputDataConfig`
         # @return [Google::Apis::ContactcenterinsightsV1::GoogleCloudContactcenterinsightsV1alpha1IssueModelInputDataConfig]
         attr_accessor :input_data_config
+      
+        # Output only. Number of issues in this issue model.
+        # Corresponds to the JSON property `issueCount`
+        # @return [Fixnum]
+        attr_accessor :issue_count
       
         # Immutable. The resource name of the issue model. Format: projects/`project`/
         # locations/`location`/issueModels/`issue_model`
@@ -2794,6 +3738,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @display_name = args[:display_name] if args.key?(:display_name)
           @input_data_config = args[:input_data_config] if args.key?(:input_data_config)
+          @issue_count = args[:issue_count] if args.key?(:issue_count)
           @name = args[:name] if args.key?(:name)
           @state = args[:state] if args.key?(:state)
           @training_stats = args[:training_stats] if args.key?(:training_stats)
@@ -2871,6 +3816,11 @@ module Google
       class GoogleCloudContactcenterinsightsV1alpha1IssueModelLabelStatsIssueStats
         include Google::Apis::Core::Hashable
       
+        # Display name of the issue.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
         # Issue resource. Format: projects/`project`/locations/`location`/issueModels/`
         # issue_model`/issues/`issue`
         # Corresponds to the JSON property `issue`
@@ -2888,6 +3838,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
           @issue = args[:issue] if args.key?(:issue)
           @labeled_conversations_count = args[:labeled_conversations_count] if args.key?(:labeled_conversations_count)
         end
@@ -3046,8 +3997,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class GoogleProtobufEmpty
         include Google::Apis::Core::Hashable
       

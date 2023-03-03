@@ -184,19 +184,13 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class FlexibleRuntimeSettings
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleAppengineV1betaLocationMetadata
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class GoogleAppengineV2OperationMetadata
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class GoogleAppengineV2mainOperationMetadata
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -352,7 +346,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ProjectEvent
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectState
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProjectsMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ReadinessCheck
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Reasons
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -729,42 +747,20 @@ module Google
         end
       end
       
+      class FlexibleRuntimeSettings
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :operating_system, as: 'operatingSystem'
+          property :runtime_version, as: 'runtimeVersion'
+        end
+      end
+      
       class GoogleAppengineV1betaLocationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :flexible_environment_available, as: 'flexibleEnvironmentAvailable'
           property :search_api_available, as: 'searchApiAvailable'
           property :standard_environment_available, as: 'standardEnvironmentAvailable'
-        end
-      end
-      
-      class GoogleAppengineV2OperationMetadata
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :api_version, as: 'apiVersion'
-          property :create_time, as: 'createTime'
-          property :end_time, as: 'endTime'
-          property :ephemeral_message, as: 'ephemeralMessage'
-          property :requested_cancellation, as: 'requestedCancellation'
-          property :status_message, as: 'statusMessage'
-          property :target, as: 'target'
-          property :verb, as: 'verb'
-          collection :warning, as: 'warning'
-        end
-      end
-      
-      class GoogleAppengineV2mainOperationMetadata
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :api_version, as: 'apiVersion'
-          property :create_time, as: 'createTime'
-          property :end_time, as: 'endTime'
-          property :ephemeral_message, as: 'ephemeralMessage'
-          property :requested_cancellation, as: 'requestedCancellation'
-          property :status_message, as: 'statusMessage'
-          property :target, as: 'target'
-          property :verb, as: 'verb'
-          collection :warning, as: 'warning'
         end
       end
       
@@ -955,6 +951,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :forwarded_ports, as: 'forwardedPorts'
+          property :instance_ip_mode, as: 'instanceIpMode'
           property :instance_tag, as: 'instanceTag'
           property :name, as: 'name'
           property :session_affinity, as: 'sessionAffinity'
@@ -1036,6 +1033,43 @@ module Google
         end
       end
       
+      class ProjectEvent
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :event_id, as: 'eventId'
+          property :phase, as: 'phase'
+          property :project_metadata, as: 'projectMetadata', class: Google::Apis::AppengineV1::ProjectsMetadata, decorator: Google::Apis::AppengineV1::ProjectsMetadata::Representation
+      
+          property :state, as: 'state', class: Google::Apis::AppengineV1::ProjectState, decorator: Google::Apis::AppengineV1::ProjectState::Representation
+      
+        end
+      end
+      
+      class ProjectState
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :current_reasons, as: 'currentReasons', class: Google::Apis::AppengineV1::Reasons, decorator: Google::Apis::AppengineV1::Reasons::Representation
+      
+          property :previous_reasons, as: 'previousReasons', class: Google::Apis::AppengineV1::Reasons, decorator: Google::Apis::AppengineV1::Reasons::Representation
+      
+          property :state, as: 'state'
+        end
+      end
+      
+      class ProjectsMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :consumer_project_id, as: 'consumerProjectId'
+          property :consumer_project_number, :numeric_string => true, as: 'consumerProjectNumber'
+          property :consumer_project_state, as: 'consumerProjectState'
+          property :p4_service_account, as: 'p4ServiceAccount'
+          property :producer_project_id, as: 'producerProjectId'
+          property :producer_project_number, :numeric_string => true, as: 'producerProjectNumber'
+          property :tenant_project_id, as: 'tenantProjectId'
+          property :tenant_project_number, :numeric_string => true, as: 'tenantProjectNumber'
+        end
+      end
+      
       class ReadinessCheck
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1046,6 +1080,16 @@ module Google
           property :path, as: 'path'
           property :success_threshold, as: 'successThreshold'
           property :timeout, as: 'timeout'
+        end
+      end
+      
+      class Reasons
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :abuse, as: 'abuse'
+          property :billing, as: 'billing'
+          property :data_governance, as: 'dataGovernance'
+          property :service_management, as: 'serviceManagement'
         end
       end
       
@@ -1184,6 +1228,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :api_config, as: 'apiConfig', class: Google::Apis::AppengineV1::ApiConfigHandler, decorator: Google::Apis::AppengineV1::ApiConfigHandler::Representation
       
+          property :app_engine_apis, as: 'appEngineApis'
           property :automatic_scaling, as: 'automaticScaling', class: Google::Apis::AppengineV1::AutomaticScaling, decorator: Google::Apis::AppengineV1::AutomaticScaling::Representation
       
           property :basic_scaling, as: 'basicScaling', class: Google::Apis::AppengineV1::BasicScaling, decorator: Google::Apis::AppengineV1::BasicScaling::Representation
@@ -1203,6 +1248,8 @@ module Google
           property :env, as: 'env'
           hash :env_variables, as: 'envVariables'
           collection :error_handlers, as: 'errorHandlers', class: Google::Apis::AppengineV1::ErrorHandler, decorator: Google::Apis::AppengineV1::ErrorHandler::Representation
+      
+          property :flexible_runtime_settings, as: 'flexibleRuntimeSettings', class: Google::Apis::AppengineV1::FlexibleRuntimeSettings, decorator: Google::Apis::AppengineV1::FlexibleRuntimeSettings::Representation
       
           collection :handlers, as: 'handlers', class: Google::Apis::AppengineV1::UrlMap, decorator: Google::Apis::AppengineV1::UrlMap::Representation
       

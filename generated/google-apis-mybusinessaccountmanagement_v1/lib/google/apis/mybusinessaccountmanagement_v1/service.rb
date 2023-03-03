@@ -23,7 +23,8 @@ module Google
       # My Business Account Management API
       #
       # The My Business Account Management API provides an interface for managing
-      #  access to a location on Google.
+      #  access to a location on Google. Note - If you have a quota of 0 after enabling
+      #  the API, please request for GBP API access.
       #
       # @example
       #    require 'google/apis/mybusinessaccountmanagement_v1'
@@ -125,8 +126,7 @@ module Google
         #   account. For example, a request with the filter `type=USER_GROUP` will only
         #   return user groups. The `type` field is the only supported filter.
         # @param [Fixnum] page_size
-        #   Optional. How many accounts to fetch per page. The minimum supported page_size
-        #   is 2. The default and maximum is 20.
+        #   Optional. How many accounts to fetch per page. The default and maximum is 20.
         # @param [String] page_token
         #   Optional. If specified, the next page of accounts is retrieved. The `pageToken`
         #   is returned when a call to `accounts.list` returns more results than can fit

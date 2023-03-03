@@ -47,6 +47,26 @@ module Google
         end
       end
       
+      # Indicates which analysis completed successfully. Multiple types of analysis
+      # can be performed on a single resource.
+      class AnalysisCompleted
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `analysisType`
+        # @return [Array<String>]
+        attr_accessor :analysis_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @analysis_type = args[:analysis_type] if args.key?(:analysis_type)
+        end
+      end
+      
       # AnalyzePackagesMetadata contains metadata for an active scan of a container
       # image.
       class AnalyzePackagesMetadata
@@ -104,7 +124,8 @@ module Google
       class AnalyzePackagesRequestV1
         include Google::Apis::Core::Hashable
       
-        # Whether to include OSV data in the scan.
+        # [DEPRECATED] Whether to include OSV data in the scan. For backwards
+        # compatibility reasons, this field can be neither removed nor renamed.
         # Corresponds to the JSON property `includeOsvData`
         # @return [Boolean]
         attr_accessor :include_osv_data
@@ -260,10 +281,18 @@ module Google
       class BuildOccurrence
         include Google::Apis::Core::Hashable
       
-        # In-toto Provenance representation as defined in spec.
+        # Deprecated. See InTotoStatement for the replacement. In-toto Provenance
+        # representation as defined in spec.
         # Corresponds to the JSON property `intotoProvenance`
         # @return [Google::Apis::OndemandscanningV1::InTotoProvenance]
         attr_accessor :intoto_provenance
+      
+        # Spec defined at https://github.com/in-toto/attestation/tree/main/spec#
+        # statement The serialized InTotoStatement will be stored as Envelope.payload.
+        # Envelope.payloadType is always "application/vnd.in-toto+json".
+        # Corresponds to the JSON property `intotoStatement`
+        # @return [Google::Apis::OndemandscanningV1::InTotoStatement]
+        attr_accessor :intoto_statement
       
         # Provenance of a build. Contains all information needed to verify the full
         # details about the build from source to completion.
@@ -290,6 +319,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @intoto_provenance = args[:intoto_provenance] if args.key?(:intoto_provenance)
+          @intoto_statement = args[:intoto_statement] if args.key?(:intoto_statement)
           @provenance = args[:provenance] if args.key?(:provenance)
           @provenance_bytes = args[:provenance_bytes] if args.key?(:provenance_bytes)
         end
@@ -406,6 +436,95 @@ module Google
         # Update properties of this object
         def update!(**args)
           @id = args[:id] if args.key?(:id)
+        end
+      end
+      
+      # Common Vulnerability Scoring System. For details, see https://www.first.org/
+      # cvss/specification-document This is a message we will try to use for storing
+      # various versions of CVSS rather than making a separate proto for storing a
+      # specific version.
+      class Cvss
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `attackComplexity`
+        # @return [String]
+        attr_accessor :attack_complexity
+      
+        # Base Metrics Represents the intrinsic characteristics of a vulnerability that
+        # are constant over time and across user environments.
+        # Corresponds to the JSON property `attackVector`
+        # @return [String]
+        attr_accessor :attack_vector
+      
+        # 
+        # Corresponds to the JSON property `authentication`
+        # @return [String]
+        attr_accessor :authentication
+      
+        # 
+        # Corresponds to the JSON property `availabilityImpact`
+        # @return [String]
+        attr_accessor :availability_impact
+      
+        # The base score is a function of the base metric scores.
+        # Corresponds to the JSON property `baseScore`
+        # @return [Float]
+        attr_accessor :base_score
+      
+        # 
+        # Corresponds to the JSON property `confidentialityImpact`
+        # @return [String]
+        attr_accessor :confidentiality_impact
+      
+        # 
+        # Corresponds to the JSON property `exploitabilityScore`
+        # @return [Float]
+        attr_accessor :exploitability_score
+      
+        # 
+        # Corresponds to the JSON property `impactScore`
+        # @return [Float]
+        attr_accessor :impact_score
+      
+        # 
+        # Corresponds to the JSON property `integrityImpact`
+        # @return [String]
+        attr_accessor :integrity_impact
+      
+        # 
+        # Corresponds to the JSON property `privilegesRequired`
+        # @return [String]
+        attr_accessor :privileges_required
+      
+        # 
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        # 
+        # Corresponds to the JSON property `userInteraction`
+        # @return [String]
+        attr_accessor :user_interaction
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @attack_complexity = args[:attack_complexity] if args.key?(:attack_complexity)
+          @attack_vector = args[:attack_vector] if args.key?(:attack_vector)
+          @authentication = args[:authentication] if args.key?(:authentication)
+          @availability_impact = args[:availability_impact] if args.key?(:availability_impact)
+          @base_score = args[:base_score] if args.key?(:base_score)
+          @confidentiality_impact = args[:confidentiality_impact] if args.key?(:confidentiality_impact)
+          @exploitability_score = args[:exploitability_score] if args.key?(:exploitability_score)
+          @impact_score = args[:impact_score] if args.key?(:impact_score)
+          @integrity_impact = args[:integrity_impact] if args.key?(:integrity_impact)
+          @privileges_required = args[:privileges_required] if args.key?(:privileges_required)
+          @scope = args[:scope] if args.key?(:scope)
+          @user_interaction = args[:user_interaction] if args.key?(:user_interaction)
         end
       end
       
@@ -581,7 +700,8 @@ module Google
         end
       end
       
-      # 
+      # Deprecated. Prefer to use a regular Occurrence, and populate the Envelope at
+      # the top level of the Occurrence.
       class DsseAttestationOccurrence
         include Google::Apis::Core::Hashable
       
@@ -669,6 +789,18 @@ module Google
       class DiscoveryOccurrence
         include Google::Apis::Core::Hashable
       
+        # Indicates which analysis completed successfully. Multiple types of analysis
+        # can be performed on a single resource.
+        # Corresponds to the JSON property `analysisCompleted`
+        # @return [Google::Apis::OndemandscanningV1::AnalysisCompleted]
+        attr_accessor :analysis_completed
+      
+        # Indicates any errors encountered during analysis of a resource. There could be
+        # 0 or more of these errors.
+        # Corresponds to the JSON property `analysisError`
+        # @return [Array<Google::Apis::OndemandscanningV1::Status>]
+        attr_accessor :analysis_error
+      
         # The status of discovery for the resource.
         # Corresponds to the JSON property `analysisStatus`
         # @return [String]
@@ -683,6 +815,12 @@ module Google
         # Corresponds to the JSON property `analysisStatusError`
         # @return [Google::Apis::OndemandscanningV1::Status]
         attr_accessor :analysis_status_error
+      
+        # Output only. The time occurrences related to this discovery occurrence were
+        # archived.
+        # Corresponds to the JSON property `archiveTime`
+        # @return [String]
+        attr_accessor :archive_time
       
         # Whether the resource is continuously analyzed.
         # Corresponds to the JSON property `continuousAnalysis`
@@ -705,8 +843,11 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @analysis_completed = args[:analysis_completed] if args.key?(:analysis_completed)
+          @analysis_error = args[:analysis_error] if args.key?(:analysis_error)
           @analysis_status = args[:analysis_status] if args.key?(:analysis_status)
           @analysis_status_error = args[:analysis_status_error] if args.key?(:analysis_status_error)
+          @archive_time = args[:archive_time] if args.key?(:archive_time)
           @continuous_analysis = args[:continuous_analysis] if args.key?(:continuous_analysis)
           @cpe = args[:cpe] if args.key?(:cpe)
           @last_scan_time = args[:last_scan_time] if args.key?(:last_scan_time)
@@ -716,8 +857,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -806,6 +946,26 @@ module Google
         # Update properties of this object
         def update!(**args)
           @file_hash = args[:file_hash] if args.key?(:file_hash)
+        end
+      end
+      
+      # Indicates the location at which a package was found.
+      class FileLocation
+        include Google::Apis::Core::Hashable
+      
+        # For jars that are contained inside .war files, this filepath can indicate the
+        # path to war file combined with the path to jar file.
+        # Corresponds to the JSON property `filePath`
+        # @return [String]
+        attr_accessor :file_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_path = args[:file_path] if args.key?(:file_path)
         end
       end
       
@@ -904,6 +1064,216 @@ module Google
         def update!(**args)
           @revision_id = args[:revision_id] if args.key?(:revision_id)
           @url = args[:url] if args.key?(:url)
+        end
+      end
+      
+      # Indicates the location at which a package was found.
+      class GrafeasV1FileLocation
+        include Google::Apis::Core::Hashable
+      
+        # For jars that are contained inside .war files, this filepath can indicate the
+        # path to war file combined with the path to jar file.
+        # Corresponds to the JSON property `filePath`
+        # @return [String]
+        attr_accessor :file_path
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_path = args[:file_path] if args.key?(:file_path)
+        end
+      end
+      
+      # Identifies the entity that executed the recipe, which is trusted to have
+      # correctly performed the operation and populated this provenance.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+        end
+      end
+      
+      # Indicates that the builder claims certain fields in this message to be
+      # complete.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `environment`
+        # @return [Boolean]
+        attr_accessor :environment
+        alias_method :environment?, :environment
+      
+        # 
+        # Corresponds to the JSON property `materials`
+        # @return [Boolean]
+        attr_accessor :materials
+        alias_method :materials?, :materials
+      
+        # 
+        # Corresponds to the JSON property `parameters`
+        # @return [Boolean]
+        attr_accessor :parameters
+        alias_method :parameters?, :parameters
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @environment = args[:environment] if args.key?(:environment)
+          @materials = args[:materials] if args.key?(:materials)
+          @parameters = args[:parameters] if args.key?(:parameters)
+        end
+      end
+      
+      # Describes where the config file that kicked off the build came from. This is
+      # effectively a pointer to the source where buildConfig came from.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `digest`
+        # @return [Hash<String,String>]
+        attr_accessor :digest
+      
+        # 
+        # Corresponds to the JSON property `entryPoint`
+        # @return [String]
+        attr_accessor :entry_point
+      
+        # 
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @digest = args[:digest] if args.key?(:digest)
+          @entry_point = args[:entry_point] if args.key?(:entry_point)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # Identifies the event that kicked off the build.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation
+        include Google::Apis::Core::Hashable
+      
+        # Describes where the config file that kicked off the build came from. This is
+        # effectively a pointer to the source where buildConfig came from.
+        # Corresponds to the JSON property `configSource`
+        # @return [Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaConfigSource]
+        attr_accessor :config_source
+      
+        # 
+        # Corresponds to the JSON property `environment`
+        # @return [Hash<String,Object>]
+        attr_accessor :environment
+      
+        # 
+        # Corresponds to the JSON property `parameters`
+        # @return [Hash<String,Object>]
+        attr_accessor :parameters
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @config_source = args[:config_source] if args.key?(:config_source)
+          @environment = args[:environment] if args.key?(:environment)
+          @parameters = args[:parameters] if args.key?(:parameters)
+        end
+      end
+      
+      # The collection of artifacts that influenced the build including sources,
+      # dependencies, build tools, base images, and so on.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `digest`
+        # @return [Hash<String,String>]
+        attr_accessor :digest
+      
+        # 
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @digest = args[:digest] if args.key?(:digest)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # Other properties of the build.
+      class GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `buildFinishedOn`
+        # @return [String]
+        attr_accessor :build_finished_on
+      
+        # 
+        # Corresponds to the JSON property `buildInvocationId`
+        # @return [String]
+        attr_accessor :build_invocation_id
+      
+        # 
+        # Corresponds to the JSON property `buildStartedOn`
+        # @return [String]
+        attr_accessor :build_started_on
+      
+        # Indicates that the builder claims certain fields in this message to be
+        # complete.
+        # Corresponds to the JSON property `completeness`
+        # @return [Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaCompleteness]
+        attr_accessor :completeness
+      
+        # 
+        # Corresponds to the JSON property `reproducible`
+        # @return [Boolean]
+        attr_accessor :reproducible
+        alias_method :reproducible?, :reproducible
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @build_finished_on = args[:build_finished_on] if args.key?(:build_finished_on)
+          @build_invocation_id = args[:build_invocation_id] if args.key?(:build_invocation_id)
+          @build_started_on = args[:build_started_on] if args.key?(:build_started_on)
+          @completeness = args[:completeness] if args.key?(:completeness)
+          @reproducible = args[:reproducible] if args.key?(:reproducible)
         end
       end
       
@@ -1046,7 +1416,12 @@ module Google
       class InTotoStatement
         include Google::Apis::Core::Hashable
       
-        # "https://in-toto.io/Provenance/v0.1" for InTotoProvenance.
+        # Always `https://in-toto.io/Statement/v0.1`.
+        # Corresponds to the JSON property `_type`
+        # @return [String]
+        attr_accessor :_type
+      
+        # `https://slsa.dev/provenance/v0.1` for SlsaProvenance.
         # Corresponds to the JSON property `predicateType`
         # @return [String]
         attr_accessor :predicate_type
@@ -1057,14 +1432,19 @@ module Google
         attr_accessor :provenance
       
         # 
+        # Corresponds to the JSON property `slsaProvenance`
+        # @return [Google::Apis::OndemandscanningV1::SlsaProvenance]
+        attr_accessor :slsa_provenance
+      
+        # See full explanation of fields at slsa.dev/provenance/v0.2.
+        # Corresponds to the JSON property `slsaProvenanceZeroTwo`
+        # @return [Google::Apis::OndemandscanningV1::SlsaProvenanceZeroTwo]
+        attr_accessor :slsa_provenance_zero_two
+      
+        # 
         # Corresponds to the JSON property `subject`
         # @return [Array<Google::Apis::OndemandscanningV1::Subject>]
         attr_accessor :subject
-      
-        # Always "https://in-toto.io/Statement/v0.1".
-        # Corresponds to the JSON property `type`
-        # @return [String]
-        attr_accessor :type
       
         def initialize(**args)
            update!(**args)
@@ -1072,10 +1452,12 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @_type = args[:_type] if args.key?(:_type)
           @predicate_type = args[:predicate_type] if args.key?(:predicate_type)
           @provenance = args[:provenance] if args.key?(:provenance)
+          @slsa_provenance = args[:slsa_provenance] if args.key?(:slsa_provenance)
+          @slsa_provenance_zero_two = args[:slsa_provenance_zero_two] if args.key?(:slsa_provenance_zero_two)
           @subject = args[:subject] if args.key?(:subject)
-          @type = args[:type] if args.key?(:type)
         end
       end
       
@@ -1097,6 +1479,32 @@ module Google
         # Update properties of this object
         def update!(**args)
           @compact_jwt = args[:compact_jwt] if args.key?(:compact_jwt)
+        end
+      end
+      
+      # Indicates a language package available between this package and the customer's
+      # resource artifact.
+      class LanguagePackageDependency
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `package`
+        # @return [String]
+        attr_accessor :package
+      
+        # 
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @package = args[:package] if args.key?(:package)
+          @version = args[:version] if args.key?(:version)
         end
       end
       
@@ -1123,6 +1531,34 @@ module Google
         def update!(**args)
           @arguments = args[:arguments] if args.key?(:arguments)
           @directive = args[:directive] if args.key?(:directive)
+        end
+      end
+      
+      # License information.
+      class License
+        include Google::Apis::Core::Hashable
+      
+        # Comments
+        # Corresponds to the JSON property `comments`
+        # @return [String]
+        attr_accessor :comments
+      
+        # Often a single license can be used to represent the licensing terms. Sometimes
+        # it is necessary to include a choice of one or more licenses or some
+        # combination of license identifiers. Examples: "LGPL-2.1-only OR MIT", "LGPL-2.
+        # 1-only AND MIT", "GPL-2.0-or-later WITH Bison-exception-2.2".
+        # Corresponds to the JSON property `expression`
+        # @return [String]
+        attr_accessor :expression
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @comments = args[:comments] if args.key?(:comments)
+          @expression = args[:expression] if args.key?(:expression)
         end
       end
       
@@ -1183,8 +1619,7 @@ module Google
       class Location
         include Google::Apis::Core::Hashable
       
-        # Required. The CPE URI in [CPE format](https://cpe.mitre.org/specification/)
-        # denoting the package manager version distributing a package.
+        # Deprecated. The CPE URI in [CPE format](https://cpe.mitre.org/specification/)
         # Corresponds to the JSON property `cpeUri`
         # @return [String]
         attr_accessor :cpe_uri
@@ -1208,6 +1643,31 @@ module Google
           @cpe_uri = args[:cpe_uri] if args.key?(:cpe_uri)
           @path = args[:path] if args.key?(:path)
           @version = args[:version] if args.key?(:version)
+        end
+      end
+      
+      # 
+      class Material
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `digest`
+        # @return [Hash<String,String>]
+        attr_accessor :digest
+      
+        # 
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @digest = args[:digest] if args.key?(:digest)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       
@@ -1259,7 +1719,10 @@ module Google
         end
       end
       
-      # Details about files that caused a compliance check to fail.
+      # Details about files that caused a compliance check to fail. display_command is
+      # a single command that can be used to display a list of non compliant files.
+      # When there is no such command, we can also iterate a list of non compliant
+      # file using 'path'.
       class NonCompliantFile
         include Google::Apis::Core::Hashable
       
@@ -1268,9 +1731,7 @@ module Google
         # @return [String]
         attr_accessor :display_command
       
-        # display_command is a single command that can be used to display a list of non
-        # compliant files. When there is no such command, we can also iterate a list of
-        # non compliant file using 'path'. Empty if `display_command` is set.
+        # Empty if `display_command` is set.
         # Corresponds to the JSON property `path`
         # @return [String]
         attr_accessor :path
@@ -1333,7 +1794,8 @@ module Google
         # @return [Google::Apis::OndemandscanningV1::DiscoveryOccurrence]
         attr_accessor :discovery
       
-        # Describes an attestation of an artifact using dsse.
+        # Deprecated. Prefer to use a regular Occurrence, and populate the Envelope at
+        # the top level of the Occurrence.
         # Corresponds to the JSON property `dsseAttestation`
         # @return [Google::Apis::OndemandscanningV1::DsseAttestationOccurrence]
         attr_accessor :dsse_attestation
@@ -1505,14 +1967,31 @@ module Google
         # @return [String]
         attr_accessor :cpe_uri
       
-        # The OS affected by a vulnerability This field is deprecated and the
-        # information is in cpe_uri
+        # The dependency chain between this package and the user's artifact. List in
+        # order from the customer's package under review first, to the current package
+        # last. Inclusive of the original package and the current package.
+        # Corresponds to the JSON property `dependencyChain`
+        # @return [Array<Google::Apis::OndemandscanningV1::LanguagePackageDependency>]
+        attr_accessor :dependency_chain
+      
+        # The path to the jar file / go binary file.
+        # Corresponds to the JSON property `fileLocation`
+        # @return [Array<Google::Apis::OndemandscanningV1::FileLocation>]
+        attr_accessor :file_location
+      
+        # HashDigest stores the SHA512 hash digest of the jar file if the package is of
+        # type Maven. This field will be unset for non Maven packages.
+        # Corresponds to the JSON property `hashDigest`
+        # @return [String]
+        attr_accessor :hash_digest
+      
+        # The OS affected by a vulnerability Used to generate the cpe_uri for OS
+        # packages
         # Corresponds to the JSON property `os`
         # @return [String]
         attr_accessor :os
       
-        # The version of the OS This field is deprecated and the information is in
-        # cpe_uri
+        # The version of the OS Used to generate the cpe_uri for OS packages
         # Corresponds to the JSON property `osVersion`
         # @return [String]
         attr_accessor :os_version
@@ -1526,6 +2005,12 @@ module Google
         # Corresponds to the JSON property `packageType`
         # @return [String]
         attr_accessor :package_type
+      
+        # CVEs that this package is no longer vulnerable to go/drydock-dd-custom-binary-
+        # scanning
+        # Corresponds to the JSON property `patchedCve`
+        # @return [Array<String>]
+        attr_accessor :patched_cve
       
         # 
         # Corresponds to the JSON property `unused`
@@ -1544,10 +2029,14 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cpe_uri = args[:cpe_uri] if args.key?(:cpe_uri)
+          @dependency_chain = args[:dependency_chain] if args.key?(:dependency_chain)
+          @file_location = args[:file_location] if args.key?(:file_location)
+          @hash_digest = args[:hash_digest] if args.key?(:hash_digest)
           @os = args[:os] if args.key?(:os)
           @os_version = args[:os_version] if args.key?(:os_version)
           @package = args[:package] if args.key?(:package)
           @package_type = args[:package_type] if args.key?(:package_type)
+          @patched_cve = args[:patched_cve] if args.key?(:patched_cve)
           @unused = args[:unused] if args.key?(:unused)
           @version = args[:version] if args.key?(:version)
         end
@@ -1580,6 +2069,11 @@ module Google
         # Corresponds to the JSON property `effectiveSeverity`
         # @return [String]
         attr_accessor :effective_severity
+      
+        # The location at which this package was found.
+        # Corresponds to the JSON property `fileLocation`
+        # @return [Array<Google::Apis::OndemandscanningV1::GrafeasV1FileLocation>]
+        attr_accessor :file_location
       
         # Output only. Whether a fix is available for this package.
         # Corresponds to the JSON property `fixAvailable`
@@ -1619,6 +2113,7 @@ module Google
           @affected_package = args[:affected_package] if args.key?(:affected_package)
           @affected_version = args[:affected_version] if args.key?(:affected_version)
           @effective_severity = args[:effective_severity] if args.key?(:effective_severity)
+          @file_location = args[:file_location] if args.key?(:file_location)
           @fix_available = args[:fix_available] if args.key?(:fix_available)
           @fixed_cpe_uri = args[:fixed_cpe_uri] if args.key?(:fixed_cpe_uri)
           @fixed_package = args[:fixed_package] if args.key?(:fixed_package)
@@ -1631,16 +2126,45 @@ module Google
       class PackageOccurrence
         include Google::Apis::Core::Hashable
       
-        # Required. All of the places within the filesystem versions of this package
-        # have been found.
+        # Output only. The CPU architecture for which packages in this distribution
+        # channel were built. Architecture will be blank for language packages.
+        # Corresponds to the JSON property `architecture`
+        # @return [String]
+        attr_accessor :architecture
+      
+        # Output only. The cpe_uri in [CPE format](https://cpe.mitre.org/specification/)
+        # denoting the package manager version distributing a package. The cpe_uri will
+        # be blank for language packages.
+        # Corresponds to the JSON property `cpeUri`
+        # @return [String]
+        attr_accessor :cpe_uri
+      
+        # License information.
+        # Corresponds to the JSON property `license`
+        # @return [Google::Apis::OndemandscanningV1::License]
+        attr_accessor :license
+      
+        # All of the places within the filesystem versions of this package have been
+        # found.
         # Corresponds to the JSON property `location`
         # @return [Array<Google::Apis::OndemandscanningV1::Location>]
         attr_accessor :location
       
-        # Output only. The name of the installed package.
+        # Required. Output only. The name of the installed package.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
+      
+        # Output only. The type of package; whether native or non native (e.g., ruby
+        # gems, node.js packages, etc.).
+        # Corresponds to the JSON property `packageType`
+        # @return [String]
+        attr_accessor :package_type
+      
+        # Version contains structured information about the version of a package.
+        # Corresponds to the JSON property `version`
+        # @return [Google::Apis::OndemandscanningV1::Version]
+        attr_accessor :version
       
         def initialize(**args)
            update!(**args)
@@ -1648,8 +2172,13 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @architecture = args[:architecture] if args.key?(:architecture)
+          @cpe_uri = args[:cpe_uri] if args.key?(:cpe_uri)
+          @license = args[:license] if args.key?(:license)
           @location = args[:location] if args.key?(:location)
           @name = args[:name] if args.key?(:name)
+          @package_type = args[:package_type] if args.key?(:package_type)
+          @version = args[:version] if args.key?(:version)
         end
       end
       
@@ -1846,6 +2375,260 @@ module Google
         end
       end
       
+      # 
+      class SlsaBuilder
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+        end
+      end
+      
+      # Indicates that the builder claims certain fields in this message to be
+      # complete.
+      class SlsaCompleteness
+        include Google::Apis::Core::Hashable
+      
+        # If true, the builder claims that recipe.arguments is complete, meaning that
+        # all external inputs are properly captured in the recipe.
+        # Corresponds to the JSON property `arguments`
+        # @return [Boolean]
+        attr_accessor :arguments
+        alias_method :arguments?, :arguments
+      
+        # If true, the builder claims that recipe.environment is claimed to be complete.
+        # Corresponds to the JSON property `environment`
+        # @return [Boolean]
+        attr_accessor :environment
+        alias_method :environment?, :environment
+      
+        # If true, the builder claims that materials are complete, usually through some
+        # controls to prevent network access. Sometimes called "hermetic".
+        # Corresponds to the JSON property `materials`
+        # @return [Boolean]
+        attr_accessor :materials
+        alias_method :materials?, :materials
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @arguments = args[:arguments] if args.key?(:arguments)
+          @environment = args[:environment] if args.key?(:environment)
+          @materials = args[:materials] if args.key?(:materials)
+        end
+      end
+      
+      # Other properties of the build.
+      class SlsaMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The timestamp of when the build completed.
+        # Corresponds to the JSON property `buildFinishedOn`
+        # @return [String]
+        attr_accessor :build_finished_on
+      
+        # Identifies the particular build invocation, which can be useful for finding
+        # associated logs or other ad-hoc analysis. The value SHOULD be globally unique,
+        # per in-toto Provenance spec.
+        # Corresponds to the JSON property `buildInvocationId`
+        # @return [String]
+        attr_accessor :build_invocation_id
+      
+        # The timestamp of when the build started.
+        # Corresponds to the JSON property `buildStartedOn`
+        # @return [String]
+        attr_accessor :build_started_on
+      
+        # Indicates that the builder claims certain fields in this message to be
+        # complete.
+        # Corresponds to the JSON property `completeness`
+        # @return [Google::Apis::OndemandscanningV1::SlsaCompleteness]
+        attr_accessor :completeness
+      
+        # If true, the builder claims that running the recipe on materials will produce
+        # bit-for-bit identical output.
+        # Corresponds to the JSON property `reproducible`
+        # @return [Boolean]
+        attr_accessor :reproducible
+        alias_method :reproducible?, :reproducible
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @build_finished_on = args[:build_finished_on] if args.key?(:build_finished_on)
+          @build_invocation_id = args[:build_invocation_id] if args.key?(:build_invocation_id)
+          @build_started_on = args[:build_started_on] if args.key?(:build_started_on)
+          @completeness = args[:completeness] if args.key?(:completeness)
+          @reproducible = args[:reproducible] if args.key?(:reproducible)
+        end
+      end
+      
+      # 
+      class SlsaProvenance
+        include Google::Apis::Core::Hashable
+      
+        # required
+        # Corresponds to the JSON property `builder`
+        # @return [Google::Apis::OndemandscanningV1::SlsaBuilder]
+        attr_accessor :builder
+      
+        # The collection of artifacts that influenced the build including sources,
+        # dependencies, build tools, base images, and so on. This is considered to be
+        # incomplete unless metadata.completeness.materials is true. Unset or null is
+        # equivalent to empty.
+        # Corresponds to the JSON property `materials`
+        # @return [Array<Google::Apis::OndemandscanningV1::Material>]
+        attr_accessor :materials
+      
+        # Other properties of the build.
+        # Corresponds to the JSON property `metadata`
+        # @return [Google::Apis::OndemandscanningV1::SlsaMetadata]
+        attr_accessor :metadata
+      
+        # Steps taken to build the artifact. For a TaskRun, typically each container
+        # corresponds to one step in the recipe.
+        # Corresponds to the JSON property `recipe`
+        # @return [Google::Apis::OndemandscanningV1::SlsaRecipe]
+        attr_accessor :recipe
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @builder = args[:builder] if args.key?(:builder)
+          @materials = args[:materials] if args.key?(:materials)
+          @metadata = args[:metadata] if args.key?(:metadata)
+          @recipe = args[:recipe] if args.key?(:recipe)
+        end
+      end
+      
+      # See full explanation of fields at slsa.dev/provenance/v0.2.
+      class SlsaProvenanceZeroTwo
+        include Google::Apis::Core::Hashable
+      
+        # 
+        # Corresponds to the JSON property `buildConfig`
+        # @return [Hash<String,Object>]
+        attr_accessor :build_config
+      
+        # 
+        # Corresponds to the JSON property `buildType`
+        # @return [String]
+        attr_accessor :build_type
+      
+        # Identifies the entity that executed the recipe, which is trusted to have
+        # correctly performed the operation and populated this provenance.
+        # Corresponds to the JSON property `builder`
+        # @return [Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaBuilder]
+        attr_accessor :builder
+      
+        # Identifies the event that kicked off the build.
+        # Corresponds to the JSON property `invocation`
+        # @return [Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaInvocation]
+        attr_accessor :invocation
+      
+        # 
+        # Corresponds to the JSON property `materials`
+        # @return [Array<Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMaterial>]
+        attr_accessor :materials
+      
+        # Other properties of the build.
+        # Corresponds to the JSON property `metadata`
+        # @return [Google::Apis::OndemandscanningV1::GrafeasV1SlsaProvenanceZeroTwoSlsaMetadata]
+        attr_accessor :metadata
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @build_config = args[:build_config] if args.key?(:build_config)
+          @build_type = args[:build_type] if args.key?(:build_type)
+          @builder = args[:builder] if args.key?(:builder)
+          @invocation = args[:invocation] if args.key?(:invocation)
+          @materials = args[:materials] if args.key?(:materials)
+          @metadata = args[:metadata] if args.key?(:metadata)
+        end
+      end
+      
+      # Steps taken to build the artifact. For a TaskRun, typically each container
+      # corresponds to one step in the recipe.
+      class SlsaRecipe
+        include Google::Apis::Core::Hashable
+      
+        # Collection of all external inputs that influenced the build on top of recipe.
+        # definedInMaterial and recipe.entryPoint. For example, if the recipe type were "
+        # make", then this might be the flags passed to make aside from the target,
+        # which is captured in recipe.entryPoint. Depending on the recipe Type, the
+        # structure may be different.
+        # Corresponds to the JSON property `arguments`
+        # @return [Hash<String,Object>]
+        attr_accessor :arguments
+      
+        # Index in materials containing the recipe steps that are not implied by recipe.
+        # type. For example, if the recipe type were "make", then this would point to
+        # the source containing the Makefile, not the make program itself. Set to -1 if
+        # the recipe doesn't come from a material, as zero is default unset value for
+        # int64.
+        # Corresponds to the JSON property `definedInMaterial`
+        # @return [Fixnum]
+        attr_accessor :defined_in_material
+      
+        # String identifying the entry point into the build. This is often a path to a
+        # configuration file and/or a target label within that file. The syntax and
+        # meaning are defined by recipe.type. For example, if the recipe type were "make"
+        # , then this would reference the directory in which to run make as well as
+        # which target to use.
+        # Corresponds to the JSON property `entryPoint`
+        # @return [String]
+        attr_accessor :entry_point
+      
+        # Any other builder-controlled inputs necessary for correctly evaluating the
+        # recipe. Usually only needed for reproducing the build but not evaluated as
+        # part of policy. Depending on the recipe Type, the structure may be different.
+        # Corresponds to the JSON property `environment`
+        # @return [Hash<String,Object>]
+        attr_accessor :environment
+      
+        # URI indicating what type of recipe was performed. It determines the meaning of
+        # recipe.entryPoint, recipe.arguments, recipe.environment, and materials.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @arguments = args[:arguments] if args.key?(:arguments)
+          @defined_in_material = args[:defined_in_material] if args.key?(:defined_in_material)
+          @entry_point = args[:entry_point] if args.key?(:entry_point)
+          @environment = args[:environment] if args.key?(:environment)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # Source describes the location of the source used for the build.
       class Source
         include Google::Apis::Core::Hashable
@@ -1974,7 +2757,8 @@ module Google
       class Subject
         include Google::Apis::Core::Hashable
       
-        # "": ""
+        # `"": ""` Algorithms can be e.g. sha256, sha512 See https://github.com/in-toto/
+        # attestation/blob/main/spec/field_types.md#DigestSet
         # Corresponds to the JSON property `digest`
         # @return [Hash<String,String>]
         attr_accessor :digest
@@ -2150,6 +2934,27 @@ module Google
         # @return [Float]
         attr_accessor :cvss_score
       
+        # Common Vulnerability Scoring System. For details, see https://www.first.org/
+        # cvss/specification-document This is a message we will try to use for storing
+        # various versions of CVSS rather than making a separate proto for storing a
+        # specific version.
+        # Corresponds to the JSON property `cvssV2`
+        # @return [Google::Apis::OndemandscanningV1::Cvss]
+        attr_accessor :cvss_v2
+      
+        # Output only. CVSS version used to populate cvss_score and severity.
+        # Corresponds to the JSON property `cvssVersion`
+        # @return [String]
+        attr_accessor :cvss_version
+      
+        # Common Vulnerability Scoring System. For details, see https://www.first.org/
+        # cvss/specification-document This is a message we will try to use for storing
+        # various versions of CVSS rather than making a separate proto for storing a
+        # specific version.
+        # Corresponds to the JSON property `cvssv3`
+        # @return [Google::Apis::OndemandscanningV1::Cvss]
+        attr_accessor :cvssv3
+      
         # The distro assigned severity for this vulnerability when it is available,
         # otherwise this is the note provider assigned severity. When there are multiple
         # PackageIssues for this vulnerability, they can have different effective
@@ -2207,6 +3012,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cvss_score = args[:cvss_score] if args.key?(:cvss_score)
+          @cvss_v2 = args[:cvss_v2] if args.key?(:cvss_v2)
+          @cvss_version = args[:cvss_version] if args.key?(:cvss_version)
+          @cvssv3 = args[:cvssv3] if args.key?(:cvssv3)
           @effective_severity = args[:effective_severity] if args.key?(:effective_severity)
           @fix_available = args[:fix_available] if args.key?(:fix_available)
           @long_description = args[:long_description] if args.key?(:long_description)

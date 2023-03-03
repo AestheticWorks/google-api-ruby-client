@@ -93,7 +93,9 @@ module Google
         
         # Create a new contact group owned by the authenticated user. Created contact
         # group names must be unique to the users contact groups. Attempting to create a
-        # group with a duplicate name will return a HTTP 409 error.
+        # group with a duplicate name will return a HTTP 409 error. Mutate requests for
+        # the same user should be sent sequentially to avoid increased latency and
+        # failures.
         # @param [Google::Apis::PeopleV1::CreateContactGroupRequest] create_contact_group_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -124,7 +126,8 @@ module Google
         end
         
         # Delete an existing contact group owned by the authenticated user by specifying
-        # a contact group resource name.
+        # a contact group resource name. Mutate requests for the same user should be
+        # sent sequentially to avoid increased latency and failures.
         # @param [String] resource_name
         #   Required. The resource name of the contact group to delete.
         # @param [Boolean] delete_contacts
@@ -248,7 +251,8 @@ module Google
         # Update the name of an existing contact group owned by the authenticated user.
         # Updated contact group names must be unique to the users contact groups.
         # Attempting to create a group with a duplicate name will return a HTTP 409
-        # error.
+        # error. Mutate requests for the same user should be sent sequentially to avoid
+        # increased latency and failures.
         # @param [String] resource_name
         #   The resource name for the contact group, assigned by the server. An ASCII
         #   string, in the form of `contactGroups/`contact_group_id``.
@@ -319,6 +323,8 @@ module Google
         end
         
         # Copies an "Other contact" to a new contact in the user's "myContacts" group
+        # Mutate requests for the same user should be sent sequentially to avoid
+        # increased latency and failures.
         # @param [String] resource_name
         #   Required. The resource name of the "Other contact" to copy.
         # @param [Google::Apis::PeopleV1::CopyOtherContactToMyContactsGroupRequest] copy_other_contact_to_my_contacts_group_request_object
@@ -354,17 +360,19 @@ module Google
         # List all "Other contacts", that is contacts that are not in a contact group. "
         # Other contacts" are typically auto created contacts from interactions. Sync
         # tokens expire 7 days after the full sync. A request with an expired sync token
-        # will result in a 410 error. In the case of such an error clients should make a
-        # full sync request without a `sync_token`. The first page of a full sync
-        # request has an additional quota. If the quota is exceeded, a 429 error will be
-        # returned. This quota is fixed and can not be increased. When the `sync_token`
-        # is specified, resources deleted since the last sync will be returned as a
-        # person with `PersonMetadata.deleted` set to true. When the `page_token` or `
-        # sync_token` is specified, all other request parameters must match the first
-        # call. Writes may have a propagation delay of several minutes for sync requests.
-        # Incremental syncs are not intended for read-after-write use cases. See
-        # example usage at [List the user's other contacts that have changed](/people/v1/
-        # other-contacts#list_the_users_other_contacts_that_have_changed).
+        # will get an error with an [google.rpc.ErrorInfo](https://cloud.google.com/apis/
+        # design/errors#error_info) with reason "EXPIRED_SYNC_TOKEN". In the case of
+        # such an error clients should make a full sync request without a `sync_token`.
+        # The first page of a full sync request has an additional quota. If the quota is
+        # exceeded, a 429 error will be returned. This quota is fixed and can not be
+        # increased. When the `sync_token` is specified, resources deleted since the
+        # last sync will be returned as a person with `PersonMetadata.deleted` set to
+        # true. When the `page_token` or `sync_token` is specified, all other request
+        # parameters must match the first call. Writes may have a propagation delay of
+        # several minutes for sync requests. Incremental syncs are not intended for read-
+        # after-write use cases. See example usage at [List the user's other contacts
+        # that have changed](/people/v1/other-contacts#
+        # list_the_users_other_contacts_that_have_changed).
         # @param [Fixnum] page_size
         #   Optional. The number of "Other contacts" to include in the response. Valid
         #   values are between 1 and 1000, inclusive. Defaults to 100 if not set or set to
@@ -392,7 +400,10 @@ module Google
         #   behavior at `otherContacts.list`.
         # @param [Array<String>, String] sources
         #   Optional. A mask of what source types to return. Defaults to
-        #   READ_SOURCE_TYPE_CONTACT if not set.
+        #   READ_SOURCE_TYPE_CONTACT if not set. Possible values for this field are: *
+        #   READ_SOURCE_TYPE_CONTACT * READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE
+        #   Specifying READ_SOURCE_TYPE_PROFILE without specifying
+        #   READ_SOURCE_TYPE_CONTACT is not permitted.
         # @param [String] sync_token
         #   Optional. A sync token, received from a previous response `next_sync_token`
         #   Provide this to retrieve only the resources changed since the last request.
@@ -479,7 +490,8 @@ module Google
         end
         
         # Create a batch of new contacts and return the PersonResponses for the newly
-        # created contacts. Limited to 10 parallel requests per user.
+        # Mutate requests for the same user should be sent sequentially to avoid
+        # increased latency and failures.
         # @param [Google::Apis::PeopleV1::BatchCreateContactsRequest] batch_create_contacts_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -509,8 +521,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a batch of contacts. Any non-contact data will not be deleted. Limited
-        # to 10 parallel requests per user.
+        # Delete a batch of contacts. Any non-contact data will not be deleted. Mutate
+        # requests for the same user should be sent sequentially to avoid increased
+        # latency and failures.
         # @param [Google::Apis::PeopleV1::BatchDeleteContactsRequest] batch_delete_contacts_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -541,8 +554,8 @@ module Google
         end
         
         # Update a batch of contacts and return a map of resource names to
-        # PersonResponses for the updated contacts. Limited to 10 parallel requests per
-        # user.
+        # PersonResponses for the updated contacts. Mutate requests for the same user
+        # should be sent sequentially to avoid increased latency and failures.
         # @param [Google::Apis::PeopleV1::BatchUpdateContactsRequest] batch_update_contacts_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -575,7 +588,8 @@ module Google
         # Create a new contact and return the person resource for that contact. The
         # request returns a 400 error if more than one field is specified on a field
         # that is a singleton for contact sources: * biographies * birthdays * genders *
-        # names
+        # names Mutate requests for the same user should be sent sequentially to avoid
+        # increased latency and failures.
         # @param [Google::Apis::PeopleV1::Person] person_object
         # @param [String] person_fields
         #   Required. A field mask to restrict which fields on each person are returned.
@@ -619,7 +633,9 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a contact person. Any non-contact data will not be deleted.
+        # Delete a contact person. Any non-contact data will not be deleted. Mutate
+        # requests for the same user should be sent sequentially to avoid increased
+        # latency and failures.
         # @param [String] resource_name
         #   Required. The resource name of the contact to delete.
         # @param [String] fields
@@ -649,7 +665,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Delete a contact's photo.
+        # Delete a contact's photo. Mutate requests for the same user should be done
+        # sequentially to avoid // lock contention.
         # @param [String] resource_name
         #   Required. The resource name of the contact whose photo will be deleted.
         # @param [String] person_fields
@@ -1012,10 +1029,11 @@ module Google
         # are being updated and there are no contact group memberships specified on the
         # person. The server returns a 400 error if more than one field is specified on
         # a field that is a singleton for contact sources: * biographies * birthdays *
-        # genders * names
+        # genders * names Mutate requests for the same user should be sent sequentially
+        # to avoid increased latency and failures.
         # @param [String] resource_name
-        #   The resource name for the person, assigned by the server. An ASCII string with
-        #   a max length of 27 characters, in the form of `people/`person_id``.
+        #   The resource name for the person, assigned by the server. An ASCII string in
+        #   the form of `people/`person_id``.
         # @param [Google::Apis::PeopleV1::Person] person_object
         # @param [String] person_fields
         #   Optional. A field mask to restrict which fields on each person are returned.
@@ -1069,7 +1087,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Update a contact's photo.
+        # Update a contact's photo. Mutate requests for the same user should be sent
+        # sequentially to avoid increased latency and failures.
         # @param [String] resource_name
         #   Required. Person resource name
         # @param [Google::Apis::PeopleV1::UpdateContactPhotoRequest] update_contact_photo_request_object
@@ -1103,18 +1122,19 @@ module Google
         end
         
         # Provides a list of the authenticated user's contacts. Sync tokens expire 7
-        # days after the full sync. A request with an expired sync token will result in
-        # a 410 error. In the case of such an error clients should make a full sync
-        # request without a `sync_token`. The first page of a full sync request has an
-        # additional quota. If the quota is exceeded, a 429 error will be returned. This
-        # quota is fixed and can not be increased. When the `sync_token` is specified,
-        # resources deleted since the last sync will be returned as a person with `
-        # PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is
-        # specified, all other request parameters must match the first call. Writes may
-        # have a propagation delay of several minutes for sync requests. Incremental
-        # syncs are not intended for read-after-write use cases. See example usage at [
-        # List the user's contacts that have changed](/people/v1/contacts#
-        # list_the_users_contacts_that_have_changed).
+        # days after the full sync. A request with an expired sync token will get an
+        # error with an [google.rpc.ErrorInfo](https://cloud.google.com/apis/design/
+        # errors#error_info) with reason "EXPIRED_SYNC_TOKEN". In the case of such an
+        # error clients should make a full sync request without a `sync_token`. The
+        # first page of a full sync request has an additional quota. If the quota is
+        # exceeded, a 429 error will be returned. This quota is fixed and can not be
+        # increased. When the `sync_token` is specified, resources deleted since the
+        # last sync will be returned as a person with `PersonMetadata.deleted` set to
+        # true. When the `page_token` or `sync_token` is specified, all other request
+        # parameters must match the first call. Writes may have a propagation delay of
+        # several minutes for sync requests. Incremental syncs are not intended for read-
+        # after-write use cases. See example usage at [List the user's contacts that
+        # have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).
         # @param [String] resource_name
         #   Required. The resource name to return connections for. Only `people/me` is
         #   valid.

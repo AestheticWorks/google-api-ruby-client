@@ -63,7 +63,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -133,8 +133,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -191,7 +191,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -214,38 +214,43 @@ module Google
         # @return [Google::Apis::PrivatecaV1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -971,7 +976,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -1015,8 +1020,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -1037,7 +1041,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -1181,7 +1185,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -1750,6 +1754,93 @@ module Google
         end
       end
       
+      # Describes the X.509 name constraints extension, per https://tools.ietf.org/
+      # html/rfc5280#section-4.2.1.10
+      class NameConstraints
+        include Google::Apis::Core::Hashable
+      
+        # Indicates whether or not the name constraints are marked critical.
+        # Corresponds to the JSON property `critical`
+        # @return [Boolean]
+        attr_accessor :critical
+        alias_method :critical?, :critical
+      
+        # Contains excluded DNS names. Any DNS name that can be constructed by simply
+        # adding zero or more labels to the left-hand side of the name satisfies the
+        # name constraint. For example, `example.com`, `www.example.com`, `www.sub.
+        # example.com` would satisfy `example.com` while `example1.com` does not.
+        # Corresponds to the JSON property `excludedDnsNames`
+        # @return [Array<String>]
+        attr_accessor :excluded_dns_names
+      
+        # Contains the excluded email addresses. The value can be a particular email
+        # address, a hostname to indicate all email addresses on that host or a domain
+        # with a leading period (e.g. `.example.com`) to indicate all email addresses in
+        # that domain.
+        # Corresponds to the JSON property `excludedEmailAddresses`
+        # @return [Array<String>]
+        attr_accessor :excluded_email_addresses
+      
+        # Contains the excluded IP ranges. For IPv4 addresses, the ranges are expressed
+        # using CIDR notation as specified in RFC 4632. For IPv6 addresses, the ranges
+        # are expressed in similar encoding as IPv4 addresses.
+        # Corresponds to the JSON property `excludedIpRanges`
+        # @return [Array<String>]
+        attr_accessor :excluded_ip_ranges
+      
+        # Contains the excluded URIs that apply to the host part of the name. The value
+        # can be a hostname or a domain with a leading period (like `.example.com`)
+        # Corresponds to the JSON property `excludedUris`
+        # @return [Array<String>]
+        attr_accessor :excluded_uris
+      
+        # Contains permitted DNS names. Any DNS name that can be constructed by simply
+        # adding zero or more labels to the left-hand side of the name satisfies the
+        # name constraint. For example, `example.com`, `www.example.com`, `www.sub.
+        # example.com` would satisfy `example.com` while `example1.com` does not.
+        # Corresponds to the JSON property `permittedDnsNames`
+        # @return [Array<String>]
+        attr_accessor :permitted_dns_names
+      
+        # Contains the permitted email addresses. The value can be a particular email
+        # address, a hostname to indicate all email addresses on that host or a domain
+        # with a leading period (e.g. `.example.com`) to indicate all email addresses in
+        # that domain.
+        # Corresponds to the JSON property `permittedEmailAddresses`
+        # @return [Array<String>]
+        attr_accessor :permitted_email_addresses
+      
+        # Contains the permitted IP ranges. For IPv4 addresses, the ranges are expressed
+        # using CIDR notation as specified in RFC 4632. For IPv6 addresses, the ranges
+        # are expressed in similar encoding as IPv4 addresses.
+        # Corresponds to the JSON property `permittedIpRanges`
+        # @return [Array<String>]
+        attr_accessor :permitted_ip_ranges
+      
+        # Contains the permitted URIs that apply to the host part of the name. The value
+        # can be a hostname or a domain with a leading period (like `.example.com`)
+        # Corresponds to the JSON property `permittedUris`
+        # @return [Array<String>]
+        attr_accessor :permitted_uris
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @critical = args[:critical] if args.key?(:critical)
+          @excluded_dns_names = args[:excluded_dns_names] if args.key?(:excluded_dns_names)
+          @excluded_email_addresses = args[:excluded_email_addresses] if args.key?(:excluded_email_addresses)
+          @excluded_ip_ranges = args[:excluded_ip_ranges] if args.key?(:excluded_ip_ranges)
+          @excluded_uris = args[:excluded_uris] if args.key?(:excluded_uris)
+          @permitted_dns_names = args[:permitted_dns_names] if args.key?(:permitted_dns_names)
+          @permitted_email_addresses = args[:permitted_email_addresses] if args.key?(:permitted_email_addresses)
+          @permitted_ip_ranges = args[:permitted_ip_ranges] if args.key?(:permitted_ip_ranges)
+          @permitted_uris = args[:permitted_uris] if args.key?(:permitted_uris)
+        end
+      end
+      
       # An ObjectId specifies an object identifier (OID). These provide context and
       # describe types in ASN.1 messages.
       class ObjectIdProp
@@ -1894,31 +1985,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -1927,9 +2018,14 @@ module Google
         # @return [Array<Google::Apis::PrivatecaV1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::PrivatecaV1::Binding>]
         attr_accessor :bindings
@@ -2058,7 +2154,7 @@ module Google
         attr_accessor :delete_resource
         alias_method :delete_resource?, :delete_resource
       
-        # 
+        # Excluisive action returned by the CLH.
         # Corresponds to the JSON property `exclusiveAction`
         # @return [String]
         attr_accessor :exclusive_action
@@ -2112,7 +2208,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -2169,16 +2265,16 @@ module Google
       class RsaKeyType
         include Google::Apis::Core::Hashable
       
-        # Optional. The maximum allowed RSA modulus size, in bits. If this is not set,
-        # or if set to zero, the service will not enforce an explicit upper bound on RSA
-        # modulus sizes.
+        # Optional. The maximum allowed RSA modulus size (inclusive), in bits. If this
+        # is not set, or if set to zero, the service will not enforce an explicit upper
+        # bound on RSA modulus sizes.
         # Corresponds to the JSON property `maxModulusSize`
         # @return [Fixnum]
         attr_accessor :max_modulus_size
       
-        # Optional. The minimum allowed RSA modulus size, in bits. If this is not set,
-        # or if set to zero, the service-level min RSA modulus size will continue to
-        # apply.
+        # Optional. The minimum allowed RSA modulus size (inclusive), in bits. If this
+        # is not set, or if set to zero, the service-level min RSA modulus size will
+        # continue to apply.
         # Corresponds to the JSON property `minModulusSize`
         # @return [Fixnum]
         attr_accessor :min_modulus_size
@@ -2200,31 +2296,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::PrivatecaV1::Policy]
         attr_accessor :policy
@@ -2354,7 +2450,8 @@ module Google
       class SubjectAltNames
         include Google::Apis::Core::Hashable
       
-        # Contains additional subject alternative name values.
+        # Contains additional subject alternative name values. For each custom_san, the `
+        # value` field must contain an ASN.1 encoded UTF8String.
         # Corresponds to the JSON property `customSans`
         # @return [Array<Google::Apis::PrivatecaV1::X509Extension>]
         attr_accessor :custom_sans
@@ -2533,7 +2630,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -2576,7 +2673,7 @@ module Google
         # you must retry your request, the server will know to ignore the request if it
         # has already been completed. The server will guarantee that for at least 60
         # minutes since the first request. For example, consider a situation where you
-        # make an initial request and t he request times out. If you make the request
+        # make an initial request and the request times out. If you make the request
         # again with the same request ID, the server can check if original operation
         # with the same request ID was received, and if so, will ignore the second
         # request. This prevents clients from accidentally creating duplicate
@@ -2661,6 +2758,12 @@ module Google
         # @return [Google::Apis::PrivatecaV1::KeyUsage]
         attr_accessor :key_usage
       
+        # Describes the X.509 name constraints extension, per https://tools.ietf.org/
+        # html/rfc5280#section-4.2.1.10
+        # Corresponds to the JSON property `nameConstraints`
+        # @return [Google::Apis::PrivatecaV1::NameConstraints]
+        attr_accessor :name_constraints
+      
         # Optional. Describes the X.509 certificate policy object identifiers, per https:
         # //tools.ietf.org/html/rfc5280#section-4.2.1.4.
         # Corresponds to the JSON property `policyIds`
@@ -2677,6 +2780,7 @@ module Google
           @aia_ocsp_servers = args[:aia_ocsp_servers] if args.key?(:aia_ocsp_servers)
           @ca_options = args[:ca_options] if args.key?(:ca_options)
           @key_usage = args[:key_usage] if args.key?(:key_usage)
+          @name_constraints = args[:name_constraints] if args.key?(:name_constraints)
           @policy_ids = args[:policy_ids] if args.key?(:policy_ids)
         end
       end

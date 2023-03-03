@@ -482,6 +482,13 @@ module Google
       class DriveOptions
         include Google::Apis::Core::Hashable
       
+        # Set whether the results include only content encrypted with [Google Workspace
+        # Client-side encryption](https://support.google.com/a?p=cse_ov) content, only
+        # unencrypted content, or both. Defaults to both. Currently supported for Drive.
+        # Corresponds to the JSON property `clientSideEncryptedOption`
+        # @return [String]
+        attr_accessor :client_side_encrypted_option
+      
         # Set to **true** to include shared drives.
         # Corresponds to the JSON property `includeSharedDrives`
         # @return [Boolean]
@@ -507,6 +514,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @client_side_encrypted_option = args[:client_side_encrypted_option] if args.key?(:client_side_encrypted_option)
           @include_shared_drives = args[:include_shared_drives] if args.key?(:include_shared_drives)
           @include_team_drives = args[:include_team_drives] if args.key?(:include_team_drives)
           @version_date = args[:version_date] if args.key?(:version_date)
@@ -516,8 +524,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -562,7 +569,8 @@ module Google
         # @return [String]
         attr_accessor :matter_id
       
-        # The export name.
+        # The export name. Don't use special characters (~!$'(),;@:/?) in the name, they
+        # can prevent you from downloading exports.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -774,7 +782,8 @@ module Google
         include Google::Apis::Core::Hashable
       
         # A list of Chat spaces IDs, as provided by the [Chat API](https://developers.
-        # google.com/hangouts/chat).
+        # google.com/chat). There is a limit of exporting from 500 Chat spaces per
+        # request.
         # Corresponds to the JSON property `roomId`
         # @return [Array<String>]
         attr_accessor :room_id
@@ -1247,9 +1256,10 @@ module Google
         # @return [Fixnum]
         attr_accessor :matching_accounts_count
       
-        # When **DataScope** is **HELD_DATA**, the number of accounts in the request
-        # that are not queried because they are not on hold. For other data scopes, this
-        # field is not set.
+        # When **DataScope** is **HELD_DATA** and when account emails are passed in
+        # explicitly, the list of accounts in the request that are not queried because
+        # they are not on hold in the matter. For other data scopes, this field is not
+        # set.
         # Corresponds to the JSON property `nonQueryableAccounts`
         # @return [Array<String>]
         attr_accessor :non_queryable_accounts
@@ -1288,6 +1298,12 @@ module Google
         attr_accessor :show_confidential_mode_content
         alias_method :show_confidential_mode_content?, :show_confidential_mode_content
       
+        # To use the new export system, set to **true**.
+        # Corresponds to the JSON property `useNewExport`
+        # @return [Boolean]
+        attr_accessor :use_new_export
+        alias_method :use_new_export?, :use_new_export
+      
         def initialize(**args)
            update!(**args)
         end
@@ -1296,6 +1312,7 @@ module Google
         def update!(**args)
           @export_format = args[:export_format] if args.key?(:export_format)
           @show_confidential_mode_content = args[:show_confidential_mode_content] if args.key?(:show_confidential_mode_content)
+          @use_new_export = args[:use_new_export] if args.key?(:use_new_export)
         end
       end
       
@@ -1545,6 +1562,11 @@ module Google
         # @return [Google::Apis::VaultV1::SharedDriveInfo]
         attr_accessor :shared_drive_info
       
+        # The published site URLs of new Google Sites to search
+        # Corresponds to the JSON property `sitesUrlInfo`
+        # @return [Google::Apis::VaultV1::SitesUrlInfo]
+        attr_accessor :sites_url_info
+      
         # The start time for the search query. Specify in GMT. The value is rounded to
         # 12 AM on the specified date.
         # Corresponds to the JSON property `startTime`
@@ -1594,6 +1616,7 @@ module Google
           @org_unit_info = args[:org_unit_info] if args.key?(:org_unit_info)
           @search_method = args[:search_method] if args.key?(:search_method)
           @shared_drive_info = args[:shared_drive_info] if args.key?(:shared_drive_info)
+          @sites_url_info = args[:sites_url_info] if args.key?(:sites_url_info)
           @start_time = args[:start_time] if args.key?(:start_time)
           @team_drive_info = args[:team_drive_info] if args.key?(:team_drive_info)
           @terms = args[:terms] if args.key?(:terms)
@@ -1762,6 +1785,25 @@ module Google
         # Update properties of this object
         def update!(**args)
           @shared_drive_ids = args[:shared_drive_ids] if args.key?(:shared_drive_ids)
+        end
+      end
+      
+      # The published site URLs of new Google Sites to search
+      class SitesUrlInfo
+        include Google::Apis::Core::Hashable
+      
+        # A list of published site URLs.
+        # Corresponds to the JSON property `urls`
+        # @return [Array<String>]
+        attr_accessor :urls
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @urls = args[:urls] if args.key?(:urls)
         end
       end
       

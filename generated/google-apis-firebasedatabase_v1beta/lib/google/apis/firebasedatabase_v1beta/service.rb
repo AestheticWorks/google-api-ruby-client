@@ -20,10 +20,10 @@ require 'google/apis/errors'
 module Google
   module Apis
     module FirebasedatabaseV1beta
-      # Firebase Realtime Database Management API
+      # Firebase Realtime Database API
       #
-      # The Firebase Realtime Database Management API enables programmatic
-      #  provisioning and management of Realtime Database instances.
+      # The Firebase Realtime Database API enables programmatic provisioning and
+      #  management of Realtime Database instances.
       #
       # @example
       #    require 'google/apis/firebasedatabase_v1beta'
@@ -57,8 +57,8 @@ module Google
         # might take a few minutes for billing enablement state to propagate to Firebase
         # systems.
         # @param [String] parent
-        #   The parent project for which to create a database instance, in the form: `
-        #   projects/`project-number`/locations/`location-id``.
+        #   Required. The parent project for which to create a database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id``.
         # @param [Google::Apis::FirebasedatabaseV1beta::DatabaseInstance] database_instance_object
         # @param [String] database_id
         #   The globally unique identifier of the database instance.
@@ -95,13 +95,15 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Marks a DatabaseInstance to be deleted. The DatabaseInstance will be purged
-        # within 30 days. The default database cannot be deleted. IDs for deleted
-        # database instances may never be recovered or re-used. The Database may only be
-        # deleted if it is already in a DISABLED state.
+        # Marks a DatabaseInstance to be deleted. The DatabaseInstance will be set to
+        # the DELETED state for 20 days, and will be purged within 30 days. The default
+        # database cannot be deleted. IDs for deleted database instances may never be
+        # recovered or re-used. The Database may only be deleted if it is already in a
+        # DISABLED state.
         # @param [String] name
-        #   The fully qualified resource name of the database instance, in the form: `
-        #   projects/`project-number`/locations/`location-id`/instances/`database-id``
+        #   Required. The fully qualified resource name of the database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id`/instances/`database-
+        #   id``
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -133,8 +135,9 @@ module Google
         # ReenableDatabaseInstance. When a database is disabled, all reads and writes
         # are denied, including view access in the Firebase console.
         # @param [String] name
-        #   The fully qualified resource name of the database instance, in the form: `
-        #   projects/`project-number`/locations/`location-id`/instances/`database-id``
+        #   Required. The fully qualified resource name of the database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id`/instances/`database-
+        #   id``
         # @param [Google::Apis::FirebasedatabaseV1beta::DisableDatabaseInstanceRequest] disable_database_instance_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -167,13 +170,13 @@ module Google
         
         # Gets the DatabaseInstance identified by the specified resource name.
         # @param [String] name
-        #   The fully qualified resource name of the database instance, in the form: `
-        #   projects/`project-number`/locations/`location-id`/instances/`database-id``. `
-        #   database-id` is a globally unique identifier across all parent collections.
-        #   For convenience, this method allows you to supply `-` as a wildcard character
-        #   in place of specific collections under `projects` and `locations`. The
-        #   resulting wildcarding form of the method is: `projects/-/locations/-/instances/
-        #   `database-id``.
+        #   Required. The fully qualified resource name of the database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id`/instances/`database-
+        #   id``. `database-id` is a globally unique identifier across all parent
+        #   collections. For convenience, this method allows you to supply `-` as a
+        #   wildcard character in place of specific collections under `projects` and `
+        #   locations`. The resulting wildcarding form of the method is: `projects/-/
+        #   locations/-/instances/`database-id``.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -207,8 +210,8 @@ module Google
         # The resulting list contains instances in any STATE. The list results may be
         # stale by a few seconds. Use GetDatabaseInstance for consistent reads.
         # @param [String] parent
-        #   The parent project for which to list database instances, in the form: `
-        #   projects/`project-number`/locations/`location-id`` To list across all
+        #   Required. The parent project for which to list database instances, in the form:
+        #   `projects/`project-number`/locations/`location-id`` To list across all
         #   locations, use a parent in the form: `projects/`project-number`/locations/-`
         # @param [Fixnum] page_size
         #   The maximum number of database instances to return in the response. The server
@@ -217,6 +220,8 @@ module Google
         # @param [String] page_token
         #   Token returned from a previous call to `ListDatabaseInstances` indicating
         #   where in the set of database instances to resume listing.
+        # @param [Boolean] show_deleted
+        #   Indicate that DatabaseInstances in the `DELETED` state should also be returned.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -234,13 +239,14 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_instances(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_instances(parent, page_size: nil, page_token: nil, show_deleted: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v1beta/{+parent}/instances', options)
           command.response_representation = Google::Apis::FirebasedatabaseV1beta::ListDatabaseInstancesResponse::Representation
           command.response_class = Google::Apis::FirebasedatabaseV1beta::ListDatabaseInstancesResponse
           command.params['parent'] = parent unless parent.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['showDeleted'] = show_deleted unless show_deleted.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -250,8 +256,9 @@ module Google
         # using DisableDatabaseInstance. The state of a successfully reenabled
         # DatabaseInstance is ACTIVE.
         # @param [String] name
-        #   The fully qualified resource name of the database instance, in the form: `
-        #   projects/`project-number`/locations/`location-id`/instances/`database-id``
+        #   Required. The fully qualified resource name of the database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id`/instances/`database-
+        #   id``
         # @param [Google::Apis::FirebasedatabaseV1beta::ReenableDatabaseInstanceRequest] reenable_database_instance_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -274,6 +281,46 @@ module Google
           command = make_simple_command(:post, 'v1beta/{+name}:reenable', options)
           command.request_representation = Google::Apis::FirebasedatabaseV1beta::ReenableDatabaseInstanceRequest::Representation
           command.request_object = reenable_database_instance_request_object
+          command.response_representation = Google::Apis::FirebasedatabaseV1beta::DatabaseInstance::Representation
+          command.response_class = Google::Apis::FirebasedatabaseV1beta::DatabaseInstance
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Restores a DatabaseInstance that was previously marked to be deleted. After
+        # the delete method is used, DatabaseInstances are set to the DELETED state for
+        # 20 days, and will be purged within 30 days. Databases in the DELETED state can
+        # be undeleted without losing any data. This method may only be used on a
+        # DatabaseInstance in the DELETED state. Purged DatabaseInstances may not be
+        # recovered.
+        # @param [String] name
+        #   Required. The fully qualified resource name of the database instance, in the
+        #   form: `projects/`project-number`/locations/`location-id`/instances/`database-
+        #   id``
+        # @param [Google::Apis::FirebasedatabaseV1beta::UndeleteDatabaseInstanceRequest] undelete_database_instance_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::FirebasedatabaseV1beta::DatabaseInstance] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::FirebasedatabaseV1beta::DatabaseInstance]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undelete_database_instance(name, undelete_database_instance_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta/{+name}:undelete', options)
+          command.request_representation = Google::Apis::FirebasedatabaseV1beta::UndeleteDatabaseInstanceRequest::Representation
+          command.request_object = undelete_database_instance_request_object
           command.response_representation = Google::Apis::FirebasedatabaseV1beta::DatabaseInstance::Representation
           command.response_class = Google::Apis::FirebasedatabaseV1beta::DatabaseInstance
           command.params['name'] = name unless name.nil?

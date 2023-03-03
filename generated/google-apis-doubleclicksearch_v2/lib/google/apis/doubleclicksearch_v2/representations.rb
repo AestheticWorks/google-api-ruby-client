@@ -52,6 +52,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class IdMappingFile
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Report
         class Representation < Google::Apis::Core::JsonRepresentation; end
         
@@ -130,6 +136,7 @@ module Google
           property :advertiser_id, :numeric_string => true, as: 'advertiserId'
           property :agency_id, :numeric_string => true, as: 'agencyId'
           property :availability_timestamp, :numeric_string => true, as: 'availabilityTimestamp'
+          property :customer_id, as: 'customerId'
           property :segmentation_id, :numeric_string => true, as: 'segmentationId'
           property :segmentation_name, as: 'segmentationName'
           property :segmentation_type, as: 'segmentationType'
@@ -157,6 +164,7 @@ module Google
       
           collection :custom_metric, as: 'customMetric', class: Google::Apis::DoubleclicksearchV2::CustomMetric, decorator: Google::Apis::DoubleclicksearchV2::CustomMetric::Representation
       
+          property :customer_id, as: 'customerId'
           property :device_type, as: 'deviceType'
           property :ds_conversion_id, :numeric_string => true, as: 'dsConversionId'
           property :engine_account_id, :numeric_string => true, as: 'engineAccountId'
@@ -199,6 +207,12 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :name, as: 'name'
           property :value, as: 'value'
+        end
+      end
+      
+      class IdMappingFile
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       

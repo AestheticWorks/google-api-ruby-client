@@ -28,18 +28,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class AddDnsPeeringRequest
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class AddDnsPeeringResponse
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class AuditConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -77,6 +65,12 @@ module Google
       end
       
       class Empty
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class EventPublishConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -172,18 +166,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class RemoveDnsPeeringRequest
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class RemoveDnsPeeringResponse
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class RemoveIamPolicyRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -242,20 +224,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :accelerator_type, as: 'acceleratorType'
-        end
-      end
-      
-      class AddDnsPeeringRequest
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :dns_peering, as: 'dnsPeering', class: Google::Apis::DatafusionV1beta1::DnsPeering, decorator: Google::Apis::DatafusionV1beta1::DnsPeering::Representation
-      
-        end
-      end
-      
-      class AddDnsPeeringResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
+          property :state, as: 'state'
         end
       end
       
@@ -304,15 +273,23 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :description, as: 'description'
           property :domain, as: 'domain'
+          property :name, as: 'name'
           property :target_network, as: 'targetNetwork'
           property :target_project, as: 'targetProject'
-          property :zone, as: 'zone'
         end
       end
       
       class Empty
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class EventPublishConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enabled, as: 'enabled'
+          property :topic, as: 'topic'
         end
       end
       
@@ -349,10 +326,14 @@ module Google
       
           property :dataproc_service_account, as: 'dataprocServiceAccount'
           property :description, as: 'description'
+          collection :disabled_reason, as: 'disabledReason'
           property :display_name, as: 'displayName'
           property :enable_rbac, as: 'enableRbac'
           property :enable_stackdriver_logging, as: 'enableStackdriverLogging'
           property :enable_stackdriver_monitoring, as: 'enableStackdriverMonitoring'
+          property :enable_zone_separation, as: 'enableZoneSeparation'
+          property :event_publish_config, as: 'eventPublishConfig', class: Google::Apis::DatafusionV1beta1::EventPublishConfig, decorator: Google::Apis::DatafusionV1beta1::EventPublishConfig::Representation
+      
           property :gcs_bucket, as: 'gcsBucket'
           hash :labels, as: 'labels'
           property :name, as: 'name'
@@ -471,6 +452,7 @@ module Google
       class OperationMetadata
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          hash :additional_status, as: 'additionalStatus'
           property :api_version, as: 'apiVersion'
           property :create_time, as: 'createTime'
           property :end_time, as: 'endTime'
@@ -490,19 +472,6 @@ module Google
       
           property :etag, :base64 => true, as: 'etag'
           property :version, as: 'version'
-        end
-      end
-      
-      class RemoveDnsPeeringRequest
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :zone, as: 'zone'
-        end
-      end
-      
-      class RemoveDnsPeeringResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
         end
       end
       
@@ -567,6 +536,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :available_features, as: 'availableFeatures'
           property :default_version, as: 'defaultVersion'
+          property :type, as: 'type'
           property :version_number, as: 'versionNumber'
         end
       end

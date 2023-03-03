@@ -31,6 +31,13 @@ module Google
         # @return [String]
         attr_accessor :cause
       
+        # List of project IDs that the user has specified in the request but does not
+        # have permission to access network configs. Analysis is aborted in this case
+        # with the PERMISSION_DENIED cause.
+        # Corresponds to the JSON property `projectsMissingPermission`
+        # @return [Array<String>]
+        attr_accessor :projects_missing_permission
+      
         # URI of the resource that caused the abort.
         # Corresponds to the JSON property `resourceUri`
         # @return [String]
@@ -43,7 +50,66 @@ module Google
         # Update properties of this object
         def update!(**args)
           @cause = args[:cause] if args.key?(:cause)
+          @projects_missing_permission = args[:projects_missing_permission] if args.key?(:projects_missing_permission)
           @resource_uri = args[:resource_uri] if args.key?(:resource_uri)
+        end
+      end
+      
+      # Wrapper for app engine service version attributes.
+      class AppEngineVersionEndpoint
+        include Google::Apis::Core::Hashable
+      
+        # An [App Engine](https://cloud.google.com/appengine) [service version](https://
+        # cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.
+        # versions) name.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # For display only. Metadata associated with an App Engine version.
+      class AppEngineVersionInfo
+        include Google::Apis::Core::Hashable
+      
+        # Name of an App Engine version.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # App Engine execution environment for a version.
+        # Corresponds to the JSON property `environment`
+        # @return [String]
+        attr_accessor :environment
+      
+        # Runtime of the App Engine version.
+        # Corresponds to the JSON property `runtime`
+        # @return [String]
+        attr_accessor :runtime
+      
+        # URI of an App Engine version.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @environment = args[:environment] if args.key?(:environment)
+          @runtime = args[:runtime] if args.key?(:runtime)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       
@@ -60,8 +126,8 @@ module Google
       # "audit_log_configs": [ ` "log_type": "DATA_READ" `, ` "log_type": "DATA_WRITE"
       # , "exempted_members": [ "user:aliya@example.com" ] ` ] ` ] ` For sampleservice,
       # this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also
-      # exempts jose@example.com from DATA_READ logging, and aliya@example.com from
-      # DATA_WRITE logging.
+      # exempts `jose@example.com` from DATA_READ logging, and `aliya@example.com`
+      # from DATA_WRITE logging.
       class AuditConfig
         include Google::Apis::Core::Hashable
       
@@ -118,7 +184,7 @@ module Google
         end
       end
       
-      # Associates `members` with a `role`.
+      # Associates `members`, or principals, with a `role`.
       class Binding
         include Google::Apis::Core::Hashable
       
@@ -141,38 +207,43 @@ module Google
         # @return [Google::Apis::NetworkmanagementV1beta1::Expr]
         attr_accessor :condition
       
-        # Specifies the identities requesting access for a Cloud Platform resource. `
+        # Specifies the principals requesting access for a Google Cloud resource. `
         # members` can have the following values: * `allUsers`: A special identifier
         # that represents anyone who is on the internet; with or without a Google
         # account. * `allAuthenticatedUsers`: A special identifier that represents
-        # anyone who is authenticated with a Google account or a service account. * `
-        # user:`emailid``: An email address that represents a specific Google account.
-        # For example, `alice@example.com` . * `serviceAccount:`emailid``: An email
-        # address that represents a service account. For example, `my-other-app@appspot.
-        # gserviceaccount.com`. * `group:`emailid``: An email address that represents a
-        # Google group. For example, `admins@example.com`. * `deleted:user:`emailid`?uid=
-        # `uniqueid``: An email address (plus unique identifier) representing a user
-        # that has been recently deleted. For example, `alice@example.com?uid=
-        # 123456789012345678901`. If the user is recovered, this value reverts to `user:`
-        # emailid`` and the recovered user retains the role in the binding. * `deleted:
-        # serviceAccount:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a service account that has been recently deleted. For
-        # example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-        # If the service account is undeleted, this value reverts to `serviceAccount:`
-        # emailid`` and the undeleted service account retains the role in the binding. *
-        # `deleted:group:`emailid`?uid=`uniqueid``: An email address (plus unique
-        # identifier) representing a Google group that has been recently deleted. For
-        # example, `admins@example.com?uid=123456789012345678901`. If the group is
-        # recovered, this value reverts to `group:`emailid`` and the recovered group
-        # retains the role in the binding. * `domain:`domain``: The G Suite domain (
-        # primary) that represents all the users of that domain. For example, `google.
-        # com` or `example.com`.
+        # anyone who is authenticated with a Google account or a service account. Does
+        # not include identities that come from external identity providers (IdPs)
+        # through identity federation. * `user:`emailid``: An email address that
+        # represents a specific Google account. For example, `alice@example.com` . * `
+        # serviceAccount:`emailid``: An email address that represents a Google service
+        # account. For example, `my-other-app@appspot.gserviceaccount.com`. * `
+        # serviceAccount:`projectid`.svc.id.goog[`namespace`/`kubernetes-sa`]`: An
+        # identifier for a [Kubernetes service account](https://cloud.google.com/
+        # kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-
+        # project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:`emailid``: An
+        # email address that represents a Google group. For example, `admins@example.com`
+        # . * `domain:`domain``: The G Suite domain (primary) that represents all the
+        # users of that domain. For example, `google.com` or `example.com`. * `deleted:
+        # user:`emailid`?uid=`uniqueid``: An email address (plus unique identifier)
+        # representing a user that has been recently deleted. For example, `alice@
+        # example.com?uid=123456789012345678901`. If the user is recovered, this value
+        # reverts to `user:`emailid`` and the recovered user retains the role in the
+        # binding. * `deleted:serviceAccount:`emailid`?uid=`uniqueid``: An email address
+        # (plus unique identifier) representing a service account that has been recently
+        # deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=
+        # 123456789012345678901`. If the service account is undeleted, this value
+        # reverts to `serviceAccount:`emailid`` and the undeleted service account
+        # retains the role in the binding. * `deleted:group:`emailid`?uid=`uniqueid``:
+        # An email address (plus unique identifier) representing a Google group that has
+        # been recently deleted. For example, `admins@example.com?uid=
+        # 123456789012345678901`. If the group is recovered, this value reverts to `
+        # group:`emailid`` and the recovered group retains the role in the binding.
         # Corresponds to the JSON property `members`
         # @return [Array<String>]
         attr_accessor :members
       
-        # Role that is assigned to `members`. For example, `roles/viewer`, `roles/editor`
-        # , or `roles/owner`.
+        # Role that is assigned to the list of `members`, or principals. For example, `
+        # roles/viewer`, `roles/editor`, or `roles/owner`.
         # Corresponds to the JSON property `role`
         # @return [String]
         attr_accessor :role
@@ -199,6 +270,126 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+        end
+      end
+      
+      # Wrapper for Cloud Function attributes.
+      class CloudFunctionEndpoint
+        include Google::Apis::Core::Hashable
+      
+        # A [Cloud Function](https://cloud.google.com/functions) name.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # For display only. Metadata associated with a Cloud Function.
+      class CloudFunctionInfo
+        include Google::Apis::Core::Hashable
+      
+        # Name of a Cloud Function.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Location in which the Cloud Function is deployed.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # URI of a Cloud Function.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        # Latest successfully deployed version id of the Cloud Function.
+        # Corresponds to the JSON property `versionId`
+        # @return [Fixnum]
+        attr_accessor :version_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @location = args[:location] if args.key?(:location)
+          @uri = args[:uri] if args.key?(:uri)
+          @version_id = args[:version_id] if args.key?(:version_id)
+        end
+      end
+      
+      # Wrapper for Cloud Run revision attributes.
+      class CloudRunRevisionEndpoint
+        include Google::Apis::Core::Hashable
+      
+        # A [Cloud Run](https://cloud.google.com/run) [revision](https://cloud.google.
+        # com/run/docs/reference/rest/v1/namespaces.revisions/get) URI. The format is:
+        # projects/`project`/locations/`location`/revisions/`revision`
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # For display only. Metadata associated with a Cloud Run revision.
+      class CloudRunRevisionInfo
+        include Google::Apis::Core::Hashable
+      
+        # Name of a Cloud Run revision.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Location in which this revision is deployed.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # ID of Cloud Run Service this revision belongs to.
+        # Corresponds to the JSON property `serviceName`
+        # @return [String]
+        attr_accessor :service_name
+      
+        # URI of Cloud Run service this revision belongs to.
+        # Corresponds to the JSON property `serviceUri`
+        # @return [String]
+        attr_accessor :service_uri
+      
+        # URI of a Cloud Run revision.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @location = args[:location] if args.key?(:location)
+          @service_name = args[:service_name] if args.key?(:service_name)
+          @service_uri = args[:service_uri] if args.key?(:service_uri)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       
@@ -390,11 +581,30 @@ module Google
         end
       end
       
+      # Representation of a network edge location as per https://cloud.google.com/vpc/
+      # docs/edge-locations.
+      class EdgeLocation
+        include Google::Apis::Core::Hashable
+      
+        # Name of the metropolitan area.
+        # Corresponds to the JSON property `metropolitanArea`
+        # @return [String]
+        attr_accessor :metropolitan_area
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metropolitan_area = args[:metropolitan_area] if args.key?(:metropolitan_area)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -410,6 +620,21 @@ module Google
       # Source or destination of the Connectivity Test.
       class Endpoint
         include Google::Apis::Core::Hashable
+      
+        # Wrapper for app engine service version attributes.
+        # Corresponds to the JSON property `appEngineVersion`
+        # @return [Google::Apis::NetworkmanagementV1beta1::AppEngineVersionEndpoint]
+        attr_accessor :app_engine_version
+      
+        # Wrapper for Cloud Function attributes.
+        # Corresponds to the JSON property `cloudFunction`
+        # @return [Google::Apis::NetworkmanagementV1beta1::CloudFunctionEndpoint]
+        attr_accessor :cloud_function
+      
+        # Wrapper for Cloud Run revision attributes.
+        # Corresponds to the JSON property `cloudRunRevision`
+        # @return [Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionEndpoint]
+        attr_accessor :cloud_run_revision
       
         # A [Cloud SQL](https://cloud.google.com/sql) instance URI.
         # Corresponds to the JSON property `cloudSqlInstance`
@@ -469,6 +694,9 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @app_engine_version = args[:app_engine_version] if args.key?(:app_engine_version)
+          @cloud_function = args[:cloud_function] if args.key?(:cloud_function)
+          @cloud_run_revision = args[:cloud_run_revision] if args.key?(:cloud_run_revision)
           @cloud_sql_instance = args[:cloud_sql_instance] if args.key?(:cloud_sql_instance)
           @gke_master_cluster = args[:gke_master_cluster] if args.key?(:gke_master_cluster)
           @instance = args[:instance] if args.key?(:instance)
@@ -506,6 +734,11 @@ module Google
         # @return [String]
         attr_accessor :protocol
       
+        # URI of the source telemetry agent this packet originates from.
+        # Corresponds to the JSON property `sourceAgentUri`
+        # @return [String]
+        attr_accessor :source_agent_uri
+      
         # Source IP address.
         # Corresponds to the JSON property `sourceIp`
         # @return [String]
@@ -531,6 +764,7 @@ module Google
           @destination_network_uri = args[:destination_network_uri] if args.key?(:destination_network_uri)
           @destination_port = args[:destination_port] if args.key?(:destination_port)
           @protocol = args[:protocol] if args.key?(:protocol)
+          @source_agent_uri = args[:source_agent_uri] if args.key?(:source_agent_uri)
           @source_ip = args[:source_ip] if args.key?(:source_ip)
           @source_network_uri = args[:source_network_uri] if args.key?(:source_network_uri)
           @source_port = args[:source_port] if args.key?(:source_port)
@@ -1260,31 +1494,31 @@ module Google
       
       # An Identity and Access Management (IAM) policy, which specifies access
       # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-      # A `binding` binds one or more `members` to a single `role`. Members can be
-      # user accounts, service accounts, Google groups, and domains (such as G Suite).
-      # A `role` is a named list of permissions; each `role` can be an IAM predefined
-      # role or a user-created custom role. For some types of Google Cloud resources,
-      # a `binding` can also specify a `condition`, which is a logical expression that
-      # allows access to a resource only if the expression evaluates to `true`. A
-      # condition can add constraints based on attributes of the request, the resource,
-      # or both. To learn which resources support conditions in their IAM policies,
-      # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-      # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-      # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-      # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-      # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-      # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-      # title": "expirable access", "description": "Does not grant access after Sep
-      # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-      # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-      # members: - user:mike@example.com - group:admins@example.com - domain:google.
-      # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-      # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-      # roles/resourcemanager.organizationViewer condition: title: expirable access
-      # description: Does not grant access after Sep 2020 expression: request.time <
-      # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-      # description of IAM and its features, see the [IAM documentation](https://cloud.
-      # google.com/iam/docs/).
+      # A `binding` binds one or more `members`, or principals, to a single `role`.
+      # Principals can be user accounts, service accounts, Google groups, and domains (
+      # such as G Suite). A `role` is a named list of permissions; each `role` can be
+      # an IAM predefined role or a user-created custom role. For some types of Google
+      # Cloud resources, a `binding` can also specify a `condition`, which is a
+      # logical expression that allows access to a resource only if the expression
+      # evaluates to `true`. A condition can add constraints based on attributes of
+      # the request, the resource, or both. To learn which resources support
+      # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+      # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+      # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+      # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+      # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+      # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+      # ], "condition": ` "title": "expirable access", "description": "Does not grant
+      # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+      # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+      # bindings: - members: - user:mike@example.com - group:admins@example.com -
+      # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+      # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+      # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+      # access description: Does not grant access after Sep 2020 expression: request.
+      # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+      # a description of IAM and its features, see the [IAM documentation](https://
+      # cloud.google.com/iam/docs/).
       class Policy
         include Google::Apis::Core::Hashable
       
@@ -1293,9 +1527,14 @@ module Google
         # @return [Array<Google::Apis::NetworkmanagementV1beta1::AuditConfig>]
         attr_accessor :audit_configs
       
-        # Associates a list of `members` to a `role`. Optionally, may specify a `
-        # condition` that determines how and when the `bindings` are applied. Each of
-        # the `bindings` must contain at least one member.
+        # Associates a list of `members`, or principals, with a `role`. Optionally, may
+        # specify a `condition` that determines how and when the `bindings` are applied.
+        # Each of the `bindings` must contain at least one principal. The `bindings` in
+        # a `Policy` can refer to up to 1,500 principals; up to 250 of these principals
+        # can be Google groups. Each occurrence of a principal counts towards these
+        # limits. For example, if the `bindings` grant 50 different roles to `user:alice@
+        # example.com`, and not to any other principal, then you can add another 1,450
+        # principals to the `bindings` in the `Policy`.
         # Corresponds to the JSON property `bindings`
         # @return [Array<Google::Apis::NetworkmanagementV1beta1::Binding>]
         attr_accessor :bindings
@@ -1357,6 +1596,12 @@ module Google
         # @return [String]
         attr_accessor :abort_cause
       
+        # Representation of a network edge location as per https://cloud.google.com/vpc/
+        # docs/edge-locations.
+        # Corresponds to the JSON property `destinationEgressLocation`
+        # @return [Google::Apis::NetworkmanagementV1beta1::EdgeLocation]
+        attr_accessor :destination_egress_location
+      
         # For display only. The specification of the endpoints for the test.
         # EndpointInfo is derived from source and destination Endpoint and validated by
         # the backend data plane model.
@@ -1406,6 +1651,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @abort_cause = args[:abort_cause] if args.key?(:abort_cause)
+          @destination_egress_location = args[:destination_egress_location] if args.key?(:destination_egress_location)
           @endpoint_info = args[:endpoint_info] if args.key?(:endpoint_info)
           @error = args[:error] if args.key?(:error)
           @probing_latency = args[:probing_latency] if args.key?(:probing_latency)
@@ -1482,6 +1728,11 @@ module Google
         # @return [String]
         attr_accessor :dest_ip_range
       
+        # Destination port ranges of the route. Policy based routes only.
+        # Corresponds to the JSON property `destPortRanges`
+        # @return [Array<String>]
+        attr_accessor :dest_port_ranges
+      
         # Name of a Compute Engine route.
         # Corresponds to the JSON property `displayName`
         # @return [String]
@@ -1512,10 +1763,25 @@ module Google
         # @return [Fixnum]
         attr_accessor :priority
       
+        # Protocols of the route. Policy based routes only.
+        # Corresponds to the JSON property `protocols`
+        # @return [Array<String>]
+        attr_accessor :protocols
+      
         # Type of route.
         # Corresponds to the JSON property `routeType`
         # @return [String]
         attr_accessor :route_type
+      
+        # Source IP address range of the route. Policy based routes only.
+        # Corresponds to the JSON property `srcIpRange`
+        # @return [String]
+        attr_accessor :src_ip_range
+      
+        # Source port ranges of the route. Policy based routes only.
+        # Corresponds to the JSON property `srcPortRanges`
+        # @return [Array<String>]
+        attr_accessor :src_port_ranges
       
         # URI of a Compute Engine route. Dynamic route from cloud router does not have a
         # URI. Advertised route from Google Cloud VPC to on-premises network also does
@@ -1531,13 +1797,17 @@ module Google
         # Update properties of this object
         def update!(**args)
           @dest_ip_range = args[:dest_ip_range] if args.key?(:dest_ip_range)
+          @dest_port_ranges = args[:dest_port_ranges] if args.key?(:dest_port_ranges)
           @display_name = args[:display_name] if args.key?(:display_name)
           @instance_tags = args[:instance_tags] if args.key?(:instance_tags)
           @network_uri = args[:network_uri] if args.key?(:network_uri)
           @next_hop = args[:next_hop] if args.key?(:next_hop)
           @next_hop_type = args[:next_hop_type] if args.key?(:next_hop_type)
           @priority = args[:priority] if args.key?(:priority)
+          @protocols = args[:protocols] if args.key?(:protocols)
           @route_type = args[:route_type] if args.key?(:route_type)
+          @src_ip_range = args[:src_ip_range] if args.key?(:src_ip_range)
+          @src_port_ranges = args[:src_port_ranges] if args.key?(:src_port_ranges)
           @uri = args[:uri] if args.key?(:uri)
         end
       end
@@ -1548,31 +1818,31 @@ module Google
       
         # An Identity and Access Management (IAM) policy, which specifies access
         # controls for Google Cloud resources. A `Policy` is a collection of `bindings`.
-        # A `binding` binds one or more `members` to a single `role`. Members can be
-        # user accounts, service accounts, Google groups, and domains (such as G Suite).
-        # A `role` is a named list of permissions; each `role` can be an IAM predefined
-        # role or a user-created custom role. For some types of Google Cloud resources,
-        # a `binding` can also specify a `condition`, which is a logical expression that
-        # allows access to a resource only if the expression evaluates to `true`. A
-        # condition can add constraints based on attributes of the request, the resource,
-        # or both. To learn which resources support conditions in their IAM policies,
-        # see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        # resource-policies). **JSON example:** ` "bindings": [ ` "role": "roles/
-        # resourcemanager.organizationAdmin", "members": [ "user:mike@example.com", "
-        # group:admins@example.com", "domain:google.com", "serviceAccount:my-project-id@
-        # appspot.gserviceaccount.com" ] `, ` "role": "roles/resourcemanager.
-        # organizationViewer", "members": [ "user:eve@example.com" ], "condition": ` "
-        # title": "expirable access", "description": "Does not grant access after Sep
-        # 2020", "expression": "request.time < timestamp('2020-10-01T00:00:00.000Z')", `
-        # ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:** bindings: -
-        # members: - user:mike@example.com - group:admins@example.com - domain:google.
-        # com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/
-        # resourcemanager.organizationAdmin - members: - user:eve@example.com role:
-        # roles/resourcemanager.organizationViewer condition: title: expirable access
-        # description: Does not grant access after Sep 2020 expression: request.time <
-        # timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For a
-        # description of IAM and its features, see the [IAM documentation](https://cloud.
-        # google.com/iam/docs/).
+        # A `binding` binds one or more `members`, or principals, to a single `role`.
+        # Principals can be user accounts, service accounts, Google groups, and domains (
+        # such as G Suite). A `role` is a named list of permissions; each `role` can be
+        # an IAM predefined role or a user-created custom role. For some types of Google
+        # Cloud resources, a `binding` can also specify a `condition`, which is a
+        # logical expression that allows access to a resource only if the expression
+        # evaluates to `true`. A condition can add constraints based on attributes of
+        # the request, the resource, or both. To learn which resources support
+        # conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        # google.com/iam/help/conditions/resource-policies). **JSON example:** ` "
+        # bindings": [ ` "role": "roles/resourcemanager.organizationAdmin", "members": [
+        # "user:mike@example.com", "group:admins@example.com", "domain:google.com", "
+        # serviceAccount:my-project-id@appspot.gserviceaccount.com" ] `, ` "role": "
+        # roles/resourcemanager.organizationViewer", "members": [ "user:eve@example.com"
+        # ], "condition": ` "title": "expirable access", "description": "Does not grant
+        # access after Sep 2020", "expression": "request.time < timestamp('2020-10-01T00:
+        # 00:00.000Z')", ` ` ], "etag": "BwWWja0YfJA=", "version": 3 ` **YAML example:**
+        # bindings: - members: - user:mike@example.com - group:admins@example.com -
+        # domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+        # role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.
+        # com role: roles/resourcemanager.organizationViewer condition: title: expirable
+        # access description: Does not grant access after Sep 2020 expression: request.
+        # time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 For
+        # a description of IAM and its features, see the [IAM documentation](https://
+        # cloud.google.com/iam/docs/).
         # Corresponds to the JSON property `policy`
         # @return [Google::Apis::NetworkmanagementV1beta1::Policy]
         attr_accessor :policy
@@ -1644,11 +1914,26 @@ module Google
         # @return [Google::Apis::NetworkmanagementV1beta1::AbortInfo]
         attr_accessor :abort
       
+        # For display only. Metadata associated with an App Engine version.
+        # Corresponds to the JSON property `appEngineVersion`
+        # @return [Google::Apis::NetworkmanagementV1beta1::AppEngineVersionInfo]
+        attr_accessor :app_engine_version
+      
         # This is a step that leads to the final state Drop.
         # Corresponds to the JSON property `causesDrop`
         # @return [Boolean]
         attr_accessor :causes_drop
         alias_method :causes_drop?, :causes_drop
+      
+        # For display only. Metadata associated with a Cloud Function.
+        # Corresponds to the JSON property `cloudFunction`
+        # @return [Google::Apis::NetworkmanagementV1beta1::CloudFunctionInfo]
+        attr_accessor :cloud_function
+      
+        # For display only. Metadata associated with a Cloud Run revision.
+        # Corresponds to the JSON property `cloudRunRevision`
+        # @return [Google::Apis::NetworkmanagementV1beta1::CloudRunRevisionInfo]
+        attr_accessor :cloud_run_revision
       
         # For display only. Metadata associated with a Cloud SQL instance.
         # Corresponds to the JSON property `cloudSqlInstance`
@@ -1729,6 +2014,11 @@ module Google
         # @return [String]
         attr_accessor :state
       
+        # For display only. Metadata associated with a VPC connector.
+        # Corresponds to the JSON property `vpcConnector`
+        # @return [Google::Apis::NetworkmanagementV1beta1::VpcConnectorInfo]
+        attr_accessor :vpc_connector
+      
         # For display only. Metadata associated with a Compute Engine VPN gateway.
         # Corresponds to the JSON property `vpnGateway`
         # @return [Google::Apis::NetworkmanagementV1beta1::VpnGatewayInfo]
@@ -1746,7 +2036,10 @@ module Google
         # Update properties of this object
         def update!(**args)
           @abort = args[:abort] if args.key?(:abort)
+          @app_engine_version = args[:app_engine_version] if args.key?(:app_engine_version)
           @causes_drop = args[:causes_drop] if args.key?(:causes_drop)
+          @cloud_function = args[:cloud_function] if args.key?(:cloud_function)
+          @cloud_run_revision = args[:cloud_run_revision] if args.key?(:cloud_run_revision)
           @cloud_sql_instance = args[:cloud_sql_instance] if args.key?(:cloud_sql_instance)
           @deliver = args[:deliver] if args.key?(:deliver)
           @description = args[:description] if args.key?(:description)
@@ -1762,6 +2055,7 @@ module Google
           @project_id = args[:project_id] if args.key?(:project_id)
           @route = args[:route] if args.key?(:route)
           @state = args[:state] if args.key?(:state)
+          @vpc_connector = args[:vpc_connector] if args.key?(:vpc_connector)
           @vpn_gateway = args[:vpn_gateway] if args.key?(:vpn_gateway)
           @vpn_tunnel = args[:vpn_tunnel] if args.key?(:vpn_tunnel)
         end
@@ -1772,7 +2066,7 @@ module Google
         include Google::Apis::Core::Hashable
       
         # The set of permissions to check for the `resource`. Permissions with wildcards
-        # (such as '*' or 'storage.*') are not allowed. For more information see [IAM
+        # (such as `*` or `storage.*`) are not allowed. For more information see [IAM
         # Overview](https://cloud.google.com/iam/docs/overview#permissions).
         # Corresponds to the JSON property `permissions`
         # @return [Array<String>]
@@ -1840,6 +2134,37 @@ module Google
         def update!(**args)
           @endpoint_info = args[:endpoint_info] if args.key?(:endpoint_info)
           @steps = args[:steps] if args.key?(:steps)
+        end
+      end
+      
+      # For display only. Metadata associated with a VPC connector.
+      class VpcConnectorInfo
+        include Google::Apis::Core::Hashable
+      
+        # Name of a VPC connector.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Location in which the VPC connector is deployed.
+        # Corresponds to the JSON property `location`
+        # @return [String]
+        attr_accessor :location
+      
+        # URI of a VPC connector.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @location = args[:location] if args.key?(:location)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       

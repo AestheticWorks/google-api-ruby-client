@@ -52,6 +52,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BatchCreatePrintServersRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BatchCreatePrintServersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class BatchCreatePrintersRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -59,6 +71,18 @@ module Google
       end
       
       class BatchCreatePrintersResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BatchDeletePrintServersRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BatchDeletePrintServersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -226,6 +250,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CreatePrintServerRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CreatePrinterRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -334,7 +364,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GroupAlias
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Groups
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ListPrintServersResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -401,6 +443,24 @@ module Google
       end
       
       class OrgUnits
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OsUpdateStatus
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PrintServer
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PrintServerFailureInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -509,6 +569,12 @@ module Google
       end
       
       class UserAddress
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class UserAlias
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -686,6 +752,24 @@ module Google
         end
       end
       
+      class BatchCreatePrintServersRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :requests, as: 'requests', class: Google::Apis::AdminDirectoryV1::CreatePrintServerRequest, decorator: Google::Apis::AdminDirectoryV1::CreatePrintServerRequest::Representation
+      
+        end
+      end
+      
+      class BatchCreatePrintServersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :failures, as: 'failures', class: Google::Apis::AdminDirectoryV1::PrintServerFailureInfo, decorator: Google::Apis::AdminDirectoryV1::PrintServerFailureInfo::Representation
+      
+          collection :print_servers, as: 'printServers', class: Google::Apis::AdminDirectoryV1::PrintServer, decorator: Google::Apis::AdminDirectoryV1::PrintServer::Representation
+      
+        end
+      end
+      
       class BatchCreatePrintersRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -701,6 +785,22 @@ module Google
       
           collection :printers, as: 'printers', class: Google::Apis::AdminDirectoryV1::Printer, decorator: Google::Apis::AdminDirectoryV1::Printer::Representation
       
+        end
+      end
+      
+      class BatchDeletePrintServersRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :print_server_ids, as: 'printServerIds'
+        end
+      end
+      
+      class BatchDeletePrintServersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :failed_print_servers, as: 'failedPrintServers', class: Google::Apis::AdminDirectoryV1::PrintServerFailureInfo, decorator: Google::Apis::AdminDirectoryV1::PrintServerFailureInfo::Representation
+      
+          collection :print_server_ids, as: 'printServerIds'
         end
       end
       
@@ -830,6 +930,7 @@ module Google
       
           collection :cpu_status_reports, as: 'cpuStatusReports', class: Google::Apis::AdminDirectoryV1::ChromeOsDevice::CpuStatusReport, decorator: Google::Apis::AdminDirectoryV1::ChromeOsDevice::CpuStatusReport::Representation
       
+          property :deprovision_reason, as: 'deprovisionReason'
           collection :device_files, as: 'deviceFiles', class: Google::Apis::AdminDirectoryV1::ChromeOsDevice::DeviceFile, decorator: Google::Apis::AdminDirectoryV1::ChromeOsDevice::DeviceFile::Representation
       
           property :device_id, as: 'deviceId'
@@ -840,7 +941,9 @@ module Google
           property :ethernet_mac_address, as: 'ethernetMacAddress'
           property :ethernet_mac_address0, as: 'ethernetMacAddress0'
           property :firmware_version, as: 'firmwareVersion'
+          property :first_enrollment_time, as: 'firstEnrollmentTime'
           property :kind, as: 'kind'
+          property :last_deprovision_timestamp, as: 'lastDeprovisionTimestamp'
           property :last_enrollment_time, as: 'lastEnrollmentTime', type: DateTime
       
           collection :last_known_network, as: 'lastKnownNetwork', class: Google::Apis::AdminDirectoryV1::ChromeOsDevice::LastKnownNetwork, decorator: Google::Apis::AdminDirectoryV1::ChromeOsDevice::LastKnownNetwork::Representation
@@ -853,7 +956,10 @@ module Google
           property :model, as: 'model'
           property :notes, as: 'notes'
           property :order_number, as: 'orderNumber'
+          property :org_unit_id, as: 'orgUnitId'
           property :org_unit_path, as: 'orgUnitPath'
+          property :os_update_status, as: 'osUpdateStatus', class: Google::Apis::AdminDirectoryV1::OsUpdateStatus, decorator: Google::Apis::AdminDirectoryV1::OsUpdateStatus::Representation
+      
           property :os_version, as: 'osVersion'
           property :platform_version, as: 'platformVersion'
           collection :recent_users, as: 'recentUsers', class: Google::Apis::AdminDirectoryV1::ChromeOsDevice::RecentUser, decorator: Google::Apis::AdminDirectoryV1::ChromeOsDevice::RecentUser::Representation
@@ -1033,6 +1139,15 @@ module Google
         end
       end
       
+      class CreatePrintServerRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :parent, as: 'parent'
+          property :print_server, as: 'printServer', class: Google::Apis::AdminDirectoryV1::PrintServer, decorator: Google::Apis::AdminDirectoryV1::PrintServer::Representation
+      
+        end
+      end
+      
       class CreatePrinterRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1091,6 +1206,7 @@ module Google
       class DirectoryChromeosdevicesCommandResult
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :command_result_payload, as: 'commandResultPayload'
           property :error_message, as: 'errorMessage'
           property :execute_time, as: 'executeTime'
           property :result, as: 'result'
@@ -1226,6 +1342,17 @@ module Google
         end
       end
       
+      class GroupAlias
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :alias, as: 'alias'
+          property :etag, as: 'etag'
+          property :id, as: 'id'
+          property :kind, as: 'kind'
+          property :primary_email, as: 'primaryEmail'
+        end
+      end
+      
       class Groups
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1234,6 +1361,15 @@ module Google
       
           property :kind, as: 'kind'
           property :next_page_token, as: 'nextPageToken'
+        end
+      end
+      
+      class ListPrintServersResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :print_servers, as: 'printServers', class: Google::Apis::AdminDirectoryV1::PrintServer, decorator: Google::Apis::AdminDirectoryV1::PrintServer::Representation
+      
         end
       end
       
@@ -1387,6 +1523,42 @@ module Google
           property :kind, as: 'kind'
           collection :organization_units, as: 'organizationUnits', class: Google::Apis::AdminDirectoryV1::OrgUnit, decorator: Google::Apis::AdminDirectoryV1::OrgUnit::Representation
       
+        end
+      end
+      
+      class OsUpdateStatus
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :reboot_time, as: 'rebootTime'
+          property :state, as: 'state'
+          property :target_kiosk_app_version, as: 'targetKioskAppVersion'
+          property :target_os_version, as: 'targetOsVersion'
+          property :update_check_time, as: 'updateCheckTime'
+          property :update_time, as: 'updateTime'
+        end
+      end
+      
+      class PrintServer
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :create_time, as: 'createTime'
+          property :description, as: 'description'
+          property :display_name, as: 'displayName'
+          property :id, as: 'id'
+          property :name, as: 'name'
+          property :org_unit_id, as: 'orgUnitId'
+          property :uri, as: 'uri'
+        end
+      end
+      
+      class PrintServerFailureInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :error_code, as: 'errorCode'
+          property :error_message, as: 'errorMessage'
+          property :print_server, as: 'printServer', class: Google::Apis::AdminDirectoryV1::PrintServer, decorator: Google::Apis::AdminDirectoryV1::PrintServer::Representation
+      
+          property :print_server_id, as: 'printServerId'
         end
       end
       
@@ -1653,6 +1825,17 @@ module Google
         end
       end
       
+      class UserAlias
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :alias, as: 'alias'
+          property :etag, as: 'etag'
+          property :id, as: 'id'
+          property :kind, as: 'kind'
+          property :primary_email, as: 'primaryEmail'
+        end
+      end
+      
       class UserEmail
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1707,6 +1890,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :custom_language, as: 'customLanguage'
           property :language_code, as: 'languageCode'
+          property :preference, as: 'preference'
         end
       end
       
@@ -1733,6 +1917,7 @@ module Google
       class UserName
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :display_name, as: 'displayName'
           property :family_name, as: 'familyName'
           property :full_name, as: 'fullName'
           property :given_name, as: 'givenName'

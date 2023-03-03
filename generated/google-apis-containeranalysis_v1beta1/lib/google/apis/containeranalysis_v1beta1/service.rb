@@ -189,8 +189,9 @@ module Google
         # The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for
         # notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -306,8 +307,9 @@ module Google
         # NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`
         # for occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -344,8 +346,9 @@ module Google
         # for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for
         # occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -555,8 +558,9 @@ module Google
         # The resource takes the format `projects/[PROJECT_ID]/notes/[NOTE_ID]` for
         # notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -738,8 +742,9 @@ module Google
         # NOTE_ID]` for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]`
         # for occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -776,8 +781,9 @@ module Google
         # for notes and `projects/[PROJECT_ID]/occurrences/[OCCURRENCE_ID]` for
         # occurrences.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ContaineranalysisV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -803,111 +809,6 @@ module Google
           command.response_representation = Google::Apis::ContaineranalysisV1beta1::TestIamPermissionsResponse::Representation
           command.response_class = Google::Apis::ContaineranalysisV1beta1::TestIamPermissionsResponse
           command.params['resource'] = resource unless resource.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
-        # Gets the specified scan configuration.
-        # @param [String] name
-        #   Required. The name of the scan configuration in the form of `projects/[
-        #   PROJECT_ID]/scanConfigs/[SCAN_CONFIG_ID]`.
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::ContaineranalysisV1beta1::ScanConfig] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::ContaineranalysisV1beta1::ScanConfig]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def get_project_scan_config(name, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v1beta1/{+name}', options)
-          command.response_representation = Google::Apis::ContaineranalysisV1beta1::ScanConfig::Representation
-          command.response_class = Google::Apis::ContaineranalysisV1beta1::ScanConfig
-          command.params['name'] = name unless name.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
-        # Lists scan configurations for the specified project.
-        # @param [String] parent
-        #   Required. The name of the project to list scan configurations for in the form
-        #   of `projects/[PROJECT_ID]`.
-        # @param [String] filter
-        #   Required. The filter expression.
-        # @param [Fixnum] page_size
-        #   The number of scan configs to return in the list.
-        # @param [String] page_token
-        #   Token to provide to skip to a particular spot in the list.
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::ContaineranalysisV1beta1::ListScanConfigsResponse] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::ContaineranalysisV1beta1::ListScanConfigsResponse]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_scan_configs(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:get, 'v1beta1/{+parent}/scanConfigs', options)
-          command.response_representation = Google::Apis::ContaineranalysisV1beta1::ListScanConfigsResponse::Representation
-          command.response_class = Google::Apis::ContaineranalysisV1beta1::ListScanConfigsResponse
-          command.params['parent'] = parent unless parent.nil?
-          command.query['filter'] = filter unless filter.nil?
-          command.query['pageSize'] = page_size unless page_size.nil?
-          command.query['pageToken'] = page_token unless page_token.nil?
-          command.query['fields'] = fields unless fields.nil?
-          command.query['quotaUser'] = quota_user unless quota_user.nil?
-          execute_or_queue_command(command, &block)
-        end
-        
-        # Updates the specified scan configuration.
-        # @param [String] name
-        #   Required. The name of the scan configuration in the form of `projects/[
-        #   PROJECT_ID]/scanConfigs/[SCAN_CONFIG_ID]`.
-        # @param [Google::Apis::ContaineranalysisV1beta1::ScanConfig] scan_config_object
-        # @param [String] fields
-        #   Selector specifying which fields to include in a partial response.
-        # @param [String] quota_user
-        #   Available to use for quota purposes for server-side applications. Can be any
-        #   arbitrary string assigned to a user, but should not exceed 40 characters.
-        # @param [Google::Apis::RequestOptions] options
-        #   Request-specific options
-        #
-        # @yield [result, err] Result & error if block supplied
-        # @yieldparam result [Google::Apis::ContaineranalysisV1beta1::ScanConfig] parsed result object
-        # @yieldparam err [StandardError] error object if request failed
-        #
-        # @return [Google::Apis::ContaineranalysisV1beta1::ScanConfig]
-        #
-        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
-        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
-        # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def update_project_scan_config(name, scan_config_object = nil, fields: nil, quota_user: nil, options: nil, &block)
-          command = make_simple_command(:put, 'v1beta1/{+name}', options)
-          command.request_representation = Google::Apis::ContaineranalysisV1beta1::ScanConfig::Representation
-          command.request_object = scan_config_object
-          command.response_representation = Google::Apis::ContaineranalysisV1beta1::ScanConfig::Representation
-          command.response_class = Google::Apis::ContaineranalysisV1beta1::ScanConfig
-          command.params['name'] = name unless name.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

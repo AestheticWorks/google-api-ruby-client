@@ -1506,6 +1506,52 @@ module Google
       end
       
       # 
+      class Address
+        include Google::Apis::Core::Hashable
+      
+        # Required. Top-level administrative subdivision of the country. For example, a
+        # state like California ("CA") or a province like Quebec ("QC").
+        # Corresponds to the JSON property `administrativeArea`
+        # @return [String]
+        attr_accessor :administrative_area
+      
+        # Required. City, town or commune. May also include dependent localities or
+        # sublocalities (e.g. neighborhoods or suburbs).
+        # Corresponds to the JSON property `city`
+        # @return [String]
+        attr_accessor :city
+      
+        # Required. [CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/
+        # common/main/en.xml)(e.g. "US").
+        # Corresponds to the JSON property `country`
+        # @return [String]
+        attr_accessor :country
+      
+        # Required. Postal code or ZIP (e.g. "94043"). Required.
+        # Corresponds to the JSON property `postalCode`
+        # @return [String]
+        attr_accessor :postal_code
+      
+        # Street-level part of the address.
+        # Corresponds to the JSON property `streetAddress`
+        # @return [String]
+        attr_accessor :street_address
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @administrative_area = args[:administrative_area] if args.key?(:administrative_area)
+          @city = args[:city] if args.key?(:city)
+          @country = args[:country] if args.key?(:country)
+          @postal_code = args[:postal_code] if args.key?(:postal_code)
+          @street_address = args[:street_address] if args.key?(:street_address)
+        end
+      end
+      
+      # 
       class Amount
         include Google::Apis::Core::Hashable
       
@@ -2911,419 +2957,6 @@ module Google
         def update!(**args)
           @amount = args[:amount] if args.key?(:amount)
           @months = args[:months] if args.key?(:months)
-        end
-      end
-      
-      # 
-      class Inventory
-        include Google::Apis::Core::Hashable
-      
-        # The availability of the product. Acceptable values are: - "`in stock`" - "`out
-        # of stock`" - "`preorder`"
-        # Corresponds to the JSON property `availability`
-        # @return [String]
-        attr_accessor :availability
-      
-        # Custom label 0 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel0`
-        # @return [String]
-        attr_accessor :custom_label0
-      
-        # Custom label 1 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel1`
-        # @return [String]
-        attr_accessor :custom_label1
-      
-        # Custom label 2 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel2`
-        # @return [String]
-        attr_accessor :custom_label2
-      
-        # Custom label 3 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel3`
-        # @return [String]
-        attr_accessor :custom_label3
-      
-        # Custom label 3 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel4`
-        # @return [String]
-        attr_accessor :custom_label4
-      
-        # Number and amount of installments to pay for an item. Brazil only.
-        # Corresponds to the JSON property `installment`
-        # @return [Google::Apis::ContentV2::Installment]
-        attr_accessor :installment
-      
-        # The instore product location. Supported only for local products.
-        # Corresponds to the JSON property `instoreProductLocation`
-        # @return [String]
-        attr_accessor :instore_product_location
-      
-        # Identifies what kind of resource this is. Value: the fixed string "`content#
-        # inventory`"
-        # Corresponds to the JSON property `kind`
-        # @return [String]
-        attr_accessor :kind
-      
-        # Loyalty points that users receive after purchasing the item. Japan only.
-        # Corresponds to the JSON property `loyaltyPoints`
-        # @return [Google::Apis::ContentV2::LoyaltyPoints]
-        attr_accessor :loyalty_points
-      
-        # Store pickup information. Only supported for local inventory. Not setting `
-        # pickup` means "don't update" while setting it to the empty value (```` in JSON)
-        # means "delete". Otherwise, `pickupMethod` and `pickupSla` must be set
-        # together, unless `pickupMethod` is "not supported".
-        # Corresponds to the JSON property `pickup`
-        # @return [Google::Apis::ContentV2::InventoryPickup]
-        attr_accessor :pickup
-      
-        # The price of the product.
-        # Corresponds to the JSON property `price`
-        # @return [Google::Apis::ContentV2::Price]
-        attr_accessor :price
-      
-        # The quantity of the product. Must be equal to or greater than zero. Supported
-        # only for local products.
-        # Corresponds to the JSON property `quantity`
-        # @return [Fixnum]
-        attr_accessor :quantity
-      
-        # The sale price of the product. Mandatory if `sale_price_effective_date` is
-        # defined.
-        # Corresponds to the JSON property `salePrice`
-        # @return [Google::Apis::ContentV2::Price]
-        attr_accessor :sale_price
-      
-        # A date range represented by a pair of ISO 8601 dates separated by a space,
-        # comma, or slash. Both dates might be specified as 'null' if undecided.
-        # Corresponds to the JSON property `salePriceEffectiveDate`
-        # @return [String]
-        attr_accessor :sale_price_effective_date
-      
-        # The quantity of the product that is available for selling on Google. Supported
-        # only for online products.
-        # Corresponds to the JSON property `sellOnGoogleQuantity`
-        # @return [Fixnum]
-        attr_accessor :sell_on_google_quantity
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @availability = args[:availability] if args.key?(:availability)
-          @custom_label0 = args[:custom_label0] if args.key?(:custom_label0)
-          @custom_label1 = args[:custom_label1] if args.key?(:custom_label1)
-          @custom_label2 = args[:custom_label2] if args.key?(:custom_label2)
-          @custom_label3 = args[:custom_label3] if args.key?(:custom_label3)
-          @custom_label4 = args[:custom_label4] if args.key?(:custom_label4)
-          @installment = args[:installment] if args.key?(:installment)
-          @instore_product_location = args[:instore_product_location] if args.key?(:instore_product_location)
-          @kind = args[:kind] if args.key?(:kind)
-          @loyalty_points = args[:loyalty_points] if args.key?(:loyalty_points)
-          @pickup = args[:pickup] if args.key?(:pickup)
-          @price = args[:price] if args.key?(:price)
-          @quantity = args[:quantity] if args.key?(:quantity)
-          @sale_price = args[:sale_price] if args.key?(:sale_price)
-          @sale_price_effective_date = args[:sale_price_effective_date] if args.key?(:sale_price_effective_date)
-          @sell_on_google_quantity = args[:sell_on_google_quantity] if args.key?(:sell_on_google_quantity)
-        end
-      end
-      
-      # 
-      class BatchInventoryRequest
-        include Google::Apis::Core::Hashable
-      
-        # The request entries to be processed in the batch.
-        # Corresponds to the JSON property `entries`
-        # @return [Array<Google::Apis::ContentV2::InventoryBatchRequestEntry>]
-        attr_accessor :entries
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @entries = args[:entries] if args.key?(:entries)
-        end
-      end
-      
-      # A batch entry encoding a single non-batch inventory request.
-      class InventoryBatchRequestEntry
-        include Google::Apis::Core::Hashable
-      
-        # An entry ID, unique within the batch request.
-        # Corresponds to the JSON property `batchId`
-        # @return [Fixnum]
-        attr_accessor :batch_id
-      
-        # Price and availability of the product.
-        # Corresponds to the JSON property `inventory`
-        # @return [Google::Apis::ContentV2::Inventory]
-        attr_accessor :inventory
-      
-        # The ID of the managing account.
-        # Corresponds to the JSON property `merchantId`
-        # @return [Fixnum]
-        attr_accessor :merchant_id
-      
-        # The ID of the product for which to update price and availability.
-        # Corresponds to the JSON property `productId`
-        # @return [String]
-        attr_accessor :product_id
-      
-        # The code of the store for which to update price and availability. Use `online`
-        # to update price and availability of an online product.
-        # Corresponds to the JSON property `storeCode`
-        # @return [String]
-        attr_accessor :store_code
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @batch_id = args[:batch_id] if args.key?(:batch_id)
-          @inventory = args[:inventory] if args.key?(:inventory)
-          @merchant_id = args[:merchant_id] if args.key?(:merchant_id)
-          @product_id = args[:product_id] if args.key?(:product_id)
-          @store_code = args[:store_code] if args.key?(:store_code)
-        end
-      end
-      
-      # 
-      class BatchInventoryResponse
-        include Google::Apis::Core::Hashable
-      
-        # The result of the execution of the batch requests.
-        # Corresponds to the JSON property `entries`
-        # @return [Array<Google::Apis::ContentV2::InventoryBatchResponseEntry>]
-        attr_accessor :entries
-      
-        # Identifies what kind of resource this is. Value: the fixed string "content#
-        # inventoryCustomBatchResponse".
-        # Corresponds to the JSON property `kind`
-        # @return [String]
-        attr_accessor :kind
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @entries = args[:entries] if args.key?(:entries)
-          @kind = args[:kind] if args.key?(:kind)
-        end
-      end
-      
-      # A batch entry encoding a single non-batch inventory response.
-      class InventoryBatchResponseEntry
-        include Google::Apis::Core::Hashable
-      
-        # The ID of the request entry this entry responds to.
-        # Corresponds to the JSON property `batchId`
-        # @return [Fixnum]
-        attr_accessor :batch_id
-      
-        # A list of errors returned by a failed batch entry.
-        # Corresponds to the JSON property `errors`
-        # @return [Google::Apis::ContentV2::Errors]
-        attr_accessor :errors
-      
-        # Identifies what kind of resource this is. Value: the fixed string "`content#
-        # inventoryCustomBatchResponseEntry`"
-        # Corresponds to the JSON property `kind`
-        # @return [String]
-        attr_accessor :kind
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @batch_id = args[:batch_id] if args.key?(:batch_id)
-          @errors = args[:errors] if args.key?(:errors)
-          @kind = args[:kind] if args.key?(:kind)
-        end
-      end
-      
-      # 
-      class InventoryPickup
-        include Google::Apis::Core::Hashable
-      
-        # Whether store pickup is available for this offer and whether the pickup option
-        # should be shown as buy, reserve, or not supported. Only supported for local
-        # inventory. Unless the value is "not supported", must be submitted together
-        # with `pickupSla`. Acceptable values are: - "`buy`" - "`not supported`" - "`
-        # reserve`" - "`ship to store`"
-        # Corresponds to the JSON property `pickupMethod`
-        # @return [String]
-        attr_accessor :pickup_method
-      
-        # The expected date that an order will be ready for pickup, relative to when the
-        # order is placed. Only supported for local inventory. Must be submitted
-        # together with `pickupMethod`. Acceptable values are: - "`five day`" - "`four
-        # day`" - "`multi day`" - "`multi week`" - "`next day`" - "`same day`" - "`seven
-        # day`" - "`six day`" - "`three day`" - "`two day`"
-        # Corresponds to the JSON property `pickupSla`
-        # @return [String]
-        attr_accessor :pickup_sla
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @pickup_method = args[:pickup_method] if args.key?(:pickup_method)
-          @pickup_sla = args[:pickup_sla] if args.key?(:pickup_sla)
-        end
-      end
-      
-      # 
-      class SetInventoryRequest
-        include Google::Apis::Core::Hashable
-      
-        # The availability of the product. Acceptable values are: - "`in stock`" - "`out
-        # of stock`" - "`preorder`"
-        # Corresponds to the JSON property `availability`
-        # @return [String]
-        attr_accessor :availability
-      
-        # Custom label 0 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel0`
-        # @return [String]
-        attr_accessor :custom_label0
-      
-        # Custom label 1 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel1`
-        # @return [String]
-        attr_accessor :custom_label1
-      
-        # Custom label 2 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel2`
-        # @return [String]
-        attr_accessor :custom_label2
-      
-        # Custom label 3 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel3`
-        # @return [String]
-        attr_accessor :custom_label3
-      
-        # Custom label 3 for custom grouping of items in a Shopping campaign. Only
-        # supported for online products.
-        # Corresponds to the JSON property `customLabel4`
-        # @return [String]
-        attr_accessor :custom_label4
-      
-        # Number and amount of installments to pay for an item. Brazil only.
-        # Corresponds to the JSON property `installment`
-        # @return [Google::Apis::ContentV2::Installment]
-        attr_accessor :installment
-      
-        # The instore product location. Supported only for local products.
-        # Corresponds to the JSON property `instoreProductLocation`
-        # @return [String]
-        attr_accessor :instore_product_location
-      
-        # Loyalty points that users receive after purchasing the item. Japan only.
-        # Corresponds to the JSON property `loyaltyPoints`
-        # @return [Google::Apis::ContentV2::LoyaltyPoints]
-        attr_accessor :loyalty_points
-      
-        # Store pickup information. Only supported for local inventory. Not setting `
-        # pickup` means "don't update" while setting it to the empty value (```` in JSON)
-        # means "delete". Otherwise, `pickupMethod` and `pickupSla` must be set
-        # together, unless `pickupMethod` is "not supported".
-        # Corresponds to the JSON property `pickup`
-        # @return [Google::Apis::ContentV2::InventoryPickup]
-        attr_accessor :pickup
-      
-        # The price of the product.
-        # Corresponds to the JSON property `price`
-        # @return [Google::Apis::ContentV2::Price]
-        attr_accessor :price
-      
-        # The quantity of the product. Must be equal to or greater than zero. Supported
-        # only for local products.
-        # Corresponds to the JSON property `quantity`
-        # @return [Fixnum]
-        attr_accessor :quantity
-      
-        # The sale price of the product. Mandatory if `sale_price_effective_date` is
-        # defined.
-        # Corresponds to the JSON property `salePrice`
-        # @return [Google::Apis::ContentV2::Price]
-        attr_accessor :sale_price
-      
-        # A date range represented by a pair of ISO 8601 dates separated by a space,
-        # comma, or slash. Both dates might be specified as 'null' if undecided.
-        # Corresponds to the JSON property `salePriceEffectiveDate`
-        # @return [String]
-        attr_accessor :sale_price_effective_date
-      
-        # The quantity of the product that is available for selling on Google. Supported
-        # only for online products.
-        # Corresponds to the JSON property `sellOnGoogleQuantity`
-        # @return [Fixnum]
-        attr_accessor :sell_on_google_quantity
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @availability = args[:availability] if args.key?(:availability)
-          @custom_label0 = args[:custom_label0] if args.key?(:custom_label0)
-          @custom_label1 = args[:custom_label1] if args.key?(:custom_label1)
-          @custom_label2 = args[:custom_label2] if args.key?(:custom_label2)
-          @custom_label3 = args[:custom_label3] if args.key?(:custom_label3)
-          @custom_label4 = args[:custom_label4] if args.key?(:custom_label4)
-          @installment = args[:installment] if args.key?(:installment)
-          @instore_product_location = args[:instore_product_location] if args.key?(:instore_product_location)
-          @loyalty_points = args[:loyalty_points] if args.key?(:loyalty_points)
-          @pickup = args[:pickup] if args.key?(:pickup)
-          @price = args[:price] if args.key?(:price)
-          @quantity = args[:quantity] if args.key?(:quantity)
-          @sale_price = args[:sale_price] if args.key?(:sale_price)
-          @sale_price_effective_date = args[:sale_price_effective_date] if args.key?(:sale_price_effective_date)
-          @sell_on_google_quantity = args[:sell_on_google_quantity] if args.key?(:sell_on_google_quantity)
-        end
-      end
-      
-      # 
-      class SetInventoryResponse
-        include Google::Apis::Core::Hashable
-      
-        # Identifies what kind of resource this is. Value: the fixed string "content#
-        # inventorySetResponse".
-        # Corresponds to the JSON property `kind`
-        # @return [String]
-        attr_accessor :kind
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @kind = args[:kind] if args.key?(:kind)
         end
       end
       
@@ -8691,11 +8324,26 @@ module Google
       class PosStore
         include Google::Apis::Core::Hashable
       
+        # The business type of the store.
+        # Corresponds to the JSON property `gcidCategory`
+        # @return [Array<String>]
+        attr_accessor :gcid_category
+      
         # Identifies what kind of resource this is. Value: the fixed string "`content#
         # posStore`"
         # Corresponds to the JSON property `kind`
         # @return [String]
         attr_accessor :kind
+      
+        # The store phone number.
+        # Corresponds to the JSON property `phoneNumber`
+        # @return [String]
+        attr_accessor :phone_number
+      
+        # The Google Place Id of the store location.
+        # Corresponds to the JSON property `placeId`
+        # @return [String]
+        attr_accessor :place_id
       
         # Required. The street address of the store.
         # Corresponds to the JSON property `storeAddress`
@@ -8707,15 +8355,30 @@ module Google
         # @return [String]
         attr_accessor :store_code
       
+        # The merchant or store name.
+        # Corresponds to the JSON property `storeName`
+        # @return [String]
+        attr_accessor :store_name
+      
+        # The website url for the store or merchant.
+        # Corresponds to the JSON property `websiteUrl`
+        # @return [String]
+        attr_accessor :website_url
+      
         def initialize(**args)
            update!(**args)
         end
       
         # Update properties of this object
         def update!(**args)
+          @gcid_category = args[:gcid_category] if args.key?(:gcid_category)
           @kind = args[:kind] if args.key?(:kind)
+          @phone_number = args[:phone_number] if args.key?(:phone_number)
+          @place_id = args[:place_id] if args.key?(:place_id)
           @store_address = args[:store_address] if args.key?(:store_address)
           @store_code = args[:store_code] if args.key?(:store_code)
+          @store_name = args[:store_name] if args.key?(:store_name)
+          @website_url = args[:website_url] if args.key?(:website_url)
         end
       end
       
@@ -10654,6 +10317,11 @@ module Google
         # @return [Array<Google::Apis::ContentV2::Service>]
         attr_accessor :services
       
+        # Optional. A list of warehouses which can be referred to in `services`.
+        # Corresponds to the JSON property `warehouses`
+        # @return [Array<Google::Apis::ContentV2::Warehouse>]
+        attr_accessor :warehouses
+      
         def initialize(**args)
            update!(**args)
         end
@@ -10663,6 +10331,7 @@ module Google
           @account_id = args[:account_id] if args.key?(:account_id)
           @postal_code_groups = args[:postal_code_groups] if args.key?(:postal_code_groups)
           @services = args[:services] if args.key?(:services)
+          @warehouses = args[:warehouses] if args.key?(:warehouses)
         end
       end
       
@@ -11525,6 +11194,54 @@ module Google
         end
       end
       
+      # A fulfillment warehouse, which stores and handles inventory.
+      class Warehouse
+        include Google::Apis::Core::Hashable
+      
+        # Business days of the warehouse. If not set, will be Monday to Friday by
+        # default.
+        # Corresponds to the JSON property `businessDayConfig`
+        # @return [Google::Apis::ContentV2::BusinessDayConfig]
+        attr_accessor :business_day_config
+      
+        # Required. The latest time of day that an order can be accepted and begin
+        # processing. Later orders will be processed in the next day. The time is based
+        # on the warehouse postal code.
+        # Corresponds to the JSON property `cutoffTime`
+        # @return [Google::Apis::ContentV2::WarehouseCutoffTime]
+        attr_accessor :cutoff_time
+      
+        # Required. The number of days it takes for this warehouse to pack up and ship
+        # an item. This is on the warehouse level, but can be overridden on the offer
+        # level based on the attributes of an item.
+        # Corresponds to the JSON property `handlingDays`
+        # @return [Fixnum]
+        attr_accessor :handling_days
+      
+        # Required. The name of the warehouse. Must be unique within account.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. Shipping address of the warehouse.
+        # Corresponds to the JSON property `shippingAddress`
+        # @return [Google::Apis::ContentV2::Address]
+        attr_accessor :shipping_address
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @business_day_config = args[:business_day_config] if args.key?(:business_day_config)
+          @cutoff_time = args[:cutoff_time] if args.key?(:cutoff_time)
+          @handling_days = args[:handling_days] if args.key?(:handling_days)
+          @name = args[:name] if args.key?(:name)
+          @shipping_address = args[:shipping_address] if args.key?(:shipping_address)
+        end
+      end
+      
       # 
       class WarehouseBasedDeliveryTime
         include Google::Apis::Core::Hashable
@@ -11543,23 +11260,23 @@ module Google
         # @return [String]
         attr_accessor :carrier_service
       
-        # Required. Shipping origin's state.
+        # Shipping origin's state.
         # Corresponds to the JSON property `originAdministrativeArea`
         # @return [String]
         attr_accessor :origin_administrative_area
       
-        # Required. Shipping origin's city.
+        # Shipping origin's city.
         # Corresponds to the JSON property `originCity`
         # @return [String]
         attr_accessor :origin_city
       
-        # Required. Shipping origin's country represented as a [CLDR territory code](
-        # http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml).
+        # Shipping origin's country represented as a [CLDR territory code](http://www.
+        # unicode.org/repos/cldr/tags/latest/common/main/en.xml).
         # Corresponds to the JSON property `originCountry`
         # @return [String]
         attr_accessor :origin_country
       
-        # Required. Shipping origin.
+        # Shipping origin.
         # Corresponds to the JSON property `originPostalCode`
         # @return [String]
         attr_accessor :origin_postal_code
@@ -11568,6 +11285,13 @@ module Google
         # Corresponds to the JSON property `originStreetAddress`
         # @return [String]
         attr_accessor :origin_street_address
+      
+        # The name of the warehouse. Warehouse name need to be matched with name. If
+        # warehouseName is set, the below fields will be ignored. The warehouse info
+        # will be read from warehouse.
+        # Corresponds to the JSON property `warehouseName`
+        # @return [String]
+        attr_accessor :warehouse_name
       
         def initialize(**args)
            update!(**args)
@@ -11582,6 +11306,36 @@ module Google
           @origin_country = args[:origin_country] if args.key?(:origin_country)
           @origin_postal_code = args[:origin_postal_code] if args.key?(:origin_postal_code)
           @origin_street_address = args[:origin_street_address] if args.key?(:origin_street_address)
+          @warehouse_name = args[:warehouse_name] if args.key?(:warehouse_name)
+        end
+      end
+      
+      # 
+      class WarehouseCutoffTime
+        include Google::Apis::Core::Hashable
+      
+        # Required. Hour (24-hour clock) of the cutoff time until which an order has to
+        # be placed to be processed in the same day by the warehouse. Hour is based on
+        # the timezone of warehouse.
+        # Corresponds to the JSON property `hour`
+        # @return [Fixnum]
+        attr_accessor :hour
+      
+        # Required. Minute of the cutoff time until which an order has to be placed to
+        # be processed in the same day by the warehouse. Minute is based on the timezone
+        # of warehouse.
+        # Corresponds to the JSON property `minute`
+        # @return [Fixnum]
+        attr_accessor :minute
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @hour = args[:hour] if args.key?(:hour)
+          @minute = args[:minute] if args.key?(:minute)
         end
       end
       

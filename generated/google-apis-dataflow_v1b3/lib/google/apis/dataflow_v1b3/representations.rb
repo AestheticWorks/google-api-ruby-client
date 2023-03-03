@@ -268,7 +268,19 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class HotKeyDebuggingInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class HotKeyDetection
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HotKeyInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -544,12 +556,6 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
-      class QueryInfo
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
       class ReadInstruction
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -796,6 +802,30 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Straggler
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StragglerDebuggingInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StragglerInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StragglerSummary
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class StreamLocation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -850,6 +880,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class StreamingStragglerInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class StringList
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -881,12 +917,6 @@ module Google
       end
       
       class TransformSummary
-        class Representation < Google::Apis::Core::JsonRepresentation; end
-      
-        include Google::Apis::Core::JsonObjectSupport
-      end
-      
-      class ValidateResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -977,6 +1007,18 @@ module Google
       end
       
       class WorkerShutdownNoticeResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class WorkerThreadScalingReport
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class WorkerThreadScalingReportResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1119,6 +1161,9 @@ module Google
           property :default_environment, as: 'defaultEnvironment', class: Google::Apis::DataflowV1b3::FlexTemplateRuntimeEnvironment, decorator: Google::Apis::DataflowV1b3::FlexTemplateRuntimeEnvironment::Representation
       
           property :image, as: 'image'
+          property :image_repository_cert_path, as: 'imageRepositoryCertPath'
+          property :image_repository_password_secret_id, as: 'imageRepositoryPasswordSecretId'
+          property :image_repository_username_secret_id, as: 'imageRepositoryUsernameSecretId'
           property :metadata, as: 'metadata', class: Google::Apis::DataflowV1b3::TemplateMetadata, decorator: Google::Apis::DataflowV1b3::TemplateMetadata::Representation
       
           property :sdk_info, as: 'sdkInfo', class: Google::Apis::DataflowV1b3::SdkInfo, decorator: Google::Apis::DataflowV1b3::SdkInfo::Representation
@@ -1386,6 +1431,7 @@ module Google
           property :autoscaling_algorithm, as: 'autoscalingAlgorithm'
           property :disk_size_gb, as: 'diskSizeGb'
           property :dump_heap_on_oom, as: 'dumpHeapOnOom'
+          property :enable_launcher_vm_serial_port_logging, as: 'enableLauncherVmSerialPortLogging'
           property :enable_streaming_engine, as: 'enableStreamingEngine'
           property :flexrs_goal, as: 'flexrsGoal'
           property :ip_configuration, as: 'ipConfiguration'
@@ -1460,12 +1506,29 @@ module Google
         end
       end
       
+      class HotKeyDebuggingInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :detected_hot_keys, as: 'detectedHotKeys', class: Google::Apis::DataflowV1b3::HotKeyInfo, decorator: Google::Apis::DataflowV1b3::HotKeyInfo::Representation
+      
+        end
+      end
+      
       class HotKeyDetection
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :hot_key_age, as: 'hotKeyAge'
           property :system_name, as: 'systemName'
           property :user_step_name, as: 'userStepName'
+        end
+      end
+      
+      class HotKeyInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hot_key_age, as: 'hotKeyAge'
+          property :key, as: 'key'
+          property :key_truncated, as: 'keyTruncated'
         end
       end
       
@@ -1756,6 +1819,7 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :current_limit_bytes, :numeric_string => true, as: 'currentLimitBytes'
+          property :current_ooms, :numeric_string => true, as: 'currentOoms'
           property :current_rss_bytes, :numeric_string => true, as: 'currentRssBytes'
           property :timestamp, as: 'timestamp'
           property :total_gb_ms, :numeric_string => true, as: 'totalGbMs'
@@ -1906,6 +1970,7 @@ module Google
       
           collection :original_pipeline_transform, as: 'originalPipelineTransform', class: Google::Apis::DataflowV1b3::TransformSummary, decorator: Google::Apis::DataflowV1b3::TransformSummary::Representation
       
+          property :step_names_hash, as: 'stepNamesHash'
         end
       end
       
@@ -1966,13 +2031,6 @@ module Google
           property :expire_time, as: 'expireTime'
           property :snapshot_name, as: 'snapshotName'
           property :topic_name, as: 'topicName'
-        end
-      end
-      
-      class QueryInfo
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          collection :query_property, as: 'queryProperty'
         end
       end
       
@@ -2074,6 +2132,7 @@ module Google
       class SdkHarnessContainerImage
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :capabilities, as: 'capabilities'
           property :container_image, as: 'containerImage'
           property :environment_id, as: 'environmentId'
           property :use_single_core_per_container, as: 'useSingleCorePerContainer'
@@ -2094,6 +2153,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :component_id, as: 'componentId'
           property :data, as: 'data'
+          property :data_format, as: 'dataFormat'
           property :location, as: 'location'
           property :worker_id, as: 'workerId'
         end
@@ -2358,6 +2418,8 @@ module Google
           property :stage_id, as: 'stageId'
           property :start_time, as: 'startTime'
           property :state, as: 'state'
+          property :straggler_summary, as: 'stragglerSummary', class: Google::Apis::DataflowV1b3::StragglerSummary, decorator: Google::Apis::DataflowV1b3::StragglerSummary::Representation
+      
         end
       end
       
@@ -2384,6 +2446,43 @@ module Google
           property :kind, as: 'kind'
           property :name, as: 'name'
           hash :properties, as: 'properties'
+        end
+      end
+      
+      class Straggler
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :batch_straggler, as: 'batchStraggler', class: Google::Apis::DataflowV1b3::StragglerInfo, decorator: Google::Apis::DataflowV1b3::StragglerInfo::Representation
+      
+          property :streaming_straggler, as: 'streamingStraggler', class: Google::Apis::DataflowV1b3::StreamingStragglerInfo, decorator: Google::Apis::DataflowV1b3::StreamingStragglerInfo::Representation
+      
+        end
+      end
+      
+      class StragglerDebuggingInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :hot_key, as: 'hotKey', class: Google::Apis::DataflowV1b3::HotKeyDebuggingInfo, decorator: Google::Apis::DataflowV1b3::HotKeyDebuggingInfo::Representation
+      
+        end
+      end
+      
+      class StragglerInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :causes, as: 'causes', class: Google::Apis::DataflowV1b3::StragglerDebuggingInfo, decorator: Google::Apis::DataflowV1b3::StragglerDebuggingInfo::Representation
+      
+          property :start_time, as: 'startTime'
+        end
+      end
+      
+      class StragglerSummary
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :recent_stragglers, as: 'recentStragglers', class: Google::Apis::DataflowV1b3::Straggler, decorator: Google::Apis::DataflowV1b3::Straggler::Representation
+      
+          hash :straggler_cause_count, as: 'stragglerCauseCount'
+          property :total_straggler_count, :numeric_string => true, as: 'totalStragglerCount'
         end
       end
       
@@ -2483,6 +2582,17 @@ module Google
         end
       end
       
+      class StreamingStragglerInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :data_watermark_lag, as: 'dataWatermarkLag'
+          property :end_time, as: 'endTime'
+          property :start_time, as: 'startTime'
+          property :system_watermark_lag, as: 'systemWatermarkLag'
+          property :worker_name, as: 'workerName'
+        end
+      end
+      
       class StringList
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2562,15 +2672,6 @@ module Google
         end
       end
       
-      class ValidateResponse
-        # @private
-        class Representation < Google::Apis::Core::JsonRepresentation
-          property :error_message, as: 'errorMessage'
-          property :query_info, as: 'queryInfo', class: Google::Apis::DataflowV1b3::QueryInfo, decorator: Google::Apis::DataflowV1b3::QueryInfo::Representation
-      
-        end
-      end
-      
       class WorkItem
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2611,6 +2712,8 @@ module Google
       
           property :start_time, as: 'startTime'
           property :state, as: 'state'
+          property :straggler_info, as: 'stragglerInfo', class: Google::Apis::DataflowV1b3::StragglerInfo, decorator: Google::Apis::DataflowV1b3::StragglerInfo::Representation
+      
           property :task_id, as: 'taskId'
         end
       end
@@ -2719,6 +2822,8 @@ module Google
       
           property :worker_shutdown_notice, as: 'workerShutdownNotice', class: Google::Apis::DataflowV1b3::WorkerShutdownNotice, decorator: Google::Apis::DataflowV1b3::WorkerShutdownNotice::Representation
       
+          property :worker_thread_scaling_report, as: 'workerThreadScalingReport', class: Google::Apis::DataflowV1b3::WorkerThreadScalingReport, decorator: Google::Apis::DataflowV1b3::WorkerThreadScalingReport::Representation
+      
         end
       end
       
@@ -2738,6 +2843,8 @@ module Google
           property :worker_metrics_response, as: 'workerMetricsResponse', class: Google::Apis::DataflowV1b3::ResourceUtilizationReportResponse, decorator: Google::Apis::DataflowV1b3::ResourceUtilizationReportResponse::Representation
       
           property :worker_shutdown_notice_response, as: 'workerShutdownNoticeResponse', class: Google::Apis::DataflowV1b3::WorkerShutdownNoticeResponse, decorator: Google::Apis::DataflowV1b3::WorkerShutdownNoticeResponse::Representation
+      
+          property :worker_thread_scaling_report_response, as: 'workerThreadScalingReportResponse', class: Google::Apis::DataflowV1b3::WorkerThreadScalingReportResponse, decorator: Google::Apis::DataflowV1b3::WorkerThreadScalingReportResponse::Representation
       
         end
       end
@@ -2797,6 +2904,20 @@ module Google
       class WorkerShutdownNoticeResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+        end
+      end
+      
+      class WorkerThreadScalingReport
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :current_thread_count, as: 'currentThreadCount'
+        end
+      end
+      
+      class WorkerThreadScalingReportResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :recommended_thread_count, as: 'recommendedThreadCount'
         end
       end
       

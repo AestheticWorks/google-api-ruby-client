@@ -64,7 +64,37 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GpsDataGapFailureDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Imu
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ImuDataGapFailureDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class InsufficientGpsFailureDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class LatLng
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class LatLngBounds
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -76,7 +106,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListPhotoSequencesResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListPhotosResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Measurement3d
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NoOverlapGpsFailureDetails
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class NotOutdoorsFailureDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -106,6 +160,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class PhotoSequence
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Place
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -113,6 +173,12 @@ module Google
       end
       
       class Pose
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ProcessingFailureDetails
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -189,11 +255,56 @@ module Google
         end
       end
       
+      class GpsDataGapFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gap_duration, as: 'gapDuration'
+          property :gap_start_time, as: 'gapStartTime'
+        end
+      end
+      
+      class Imu
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :accel_mpsps, as: 'accelMpsps', class: Google::Apis::StreetviewpublishV1::Measurement3d, decorator: Google::Apis::StreetviewpublishV1::Measurement3d::Representation
+      
+          collection :gyro_rps, as: 'gyroRps', class: Google::Apis::StreetviewpublishV1::Measurement3d, decorator: Google::Apis::StreetviewpublishV1::Measurement3d::Representation
+      
+          collection :mag_ut, as: 'magUt', class: Google::Apis::StreetviewpublishV1::Measurement3d, decorator: Google::Apis::StreetviewpublishV1::Measurement3d::Representation
+      
+        end
+      end
+      
+      class ImuDataGapFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gap_duration, as: 'gapDuration'
+          property :gap_start_time, as: 'gapStartTime'
+        end
+      end
+      
+      class InsufficientGpsFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gps_points_found, as: 'gpsPointsFound'
+        end
+      end
+      
       class LatLng
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :latitude, as: 'latitude'
           property :longitude, as: 'longitude'
+        end
+      end
+      
+      class LatLngBounds
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :northeast, as: 'northeast', class: Google::Apis::StreetviewpublishV1::LatLng, decorator: Google::Apis::StreetviewpublishV1::LatLng::Representation
+      
+          property :southwest, as: 'southwest', class: Google::Apis::StreetviewpublishV1::LatLng, decorator: Google::Apis::StreetviewpublishV1::LatLng::Representation
+      
         end
       end
       
@@ -205,12 +316,48 @@ module Google
         end
       end
       
+      class ListPhotoSequencesResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :next_page_token, as: 'nextPageToken'
+          collection :photo_sequences, as: 'photoSequences', class: Google::Apis::StreetviewpublishV1::Operation, decorator: Google::Apis::StreetviewpublishV1::Operation::Representation
+      
+        end
+      end
+      
       class ListPhotosResponse
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :next_page_token, as: 'nextPageToken'
           collection :photos, as: 'photos', class: Google::Apis::StreetviewpublishV1::Photo, decorator: Google::Apis::StreetviewpublishV1::Photo::Representation
       
+        end
+      end
+      
+      class Measurement3d
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :capture_time, as: 'captureTime'
+          property :x, as: 'x'
+          property :y, as: 'y'
+          property :z, as: 'z'
+        end
+      end
+      
+      class NoOverlapGpsFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gps_end_time, as: 'gpsEndTime'
+          property :gps_start_time, as: 'gpsStartTime'
+          property :video_end_time, as: 'videoEndTime'
+          property :video_start_time, as: 'videoStartTime'
+        end
+      end
+      
+      class NotOutdoorsFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :start_time, as: 'startTime'
         end
       end
       
@@ -267,6 +414,33 @@ module Google
         end
       end
       
+      class PhotoSequence
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :capture_time_override, as: 'captureTimeOverride'
+          property :distance_meters, as: 'distanceMeters'
+          property :failure_details, as: 'failureDetails', class: Google::Apis::StreetviewpublishV1::ProcessingFailureDetails, decorator: Google::Apis::StreetviewpublishV1::ProcessingFailureDetails::Representation
+      
+          property :failure_reason, as: 'failureReason'
+          property :filename, as: 'filename'
+          property :gps_source, as: 'gpsSource'
+          property :id, as: 'id'
+          property :imu, as: 'imu', class: Google::Apis::StreetviewpublishV1::Imu, decorator: Google::Apis::StreetviewpublishV1::Imu::Representation
+      
+          collection :photos, as: 'photos', class: Google::Apis::StreetviewpublishV1::Photo, decorator: Google::Apis::StreetviewpublishV1::Photo::Representation
+      
+          property :processing_state, as: 'processingState'
+          collection :raw_gps_timeline, as: 'rawGpsTimeline', class: Google::Apis::StreetviewpublishV1::Pose, decorator: Google::Apis::StreetviewpublishV1::Pose::Representation
+      
+          property :sequence_bounds, as: 'sequenceBounds', class: Google::Apis::StreetviewpublishV1::LatLngBounds, decorator: Google::Apis::StreetviewpublishV1::LatLngBounds::Representation
+      
+          property :upload_reference, as: 'uploadReference', class: Google::Apis::StreetviewpublishV1::UploadRef, decorator: Google::Apis::StreetviewpublishV1::UploadRef::Representation
+      
+          property :upload_time, as: 'uploadTime'
+          property :view_count, :numeric_string => true, as: 'viewCount'
+        end
+      end
+      
       class Place
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -281,6 +455,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :accuracy_meters, as: 'accuracyMeters'
           property :altitude, as: 'altitude'
+          property :gps_record_timestamp_unix_epoch, as: 'gpsRecordTimestampUnixEpoch'
           property :heading, as: 'heading'
           property :lat_lng_pair, as: 'latLngPair', class: Google::Apis::StreetviewpublishV1::LatLng, decorator: Google::Apis::StreetviewpublishV1::LatLng::Representation
       
@@ -288,6 +463,22 @@ module Google
       
           property :pitch, as: 'pitch'
           property :roll, as: 'roll'
+        end
+      end
+      
+      class ProcessingFailureDetails
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :gps_data_gap_details, as: 'gpsDataGapDetails', class: Google::Apis::StreetviewpublishV1::GpsDataGapFailureDetails, decorator: Google::Apis::StreetviewpublishV1::GpsDataGapFailureDetails::Representation
+      
+          property :imu_data_gap_details, as: 'imuDataGapDetails', class: Google::Apis::StreetviewpublishV1::ImuDataGapFailureDetails, decorator: Google::Apis::StreetviewpublishV1::ImuDataGapFailureDetails::Representation
+      
+          property :insufficient_gps_details, as: 'insufficientGpsDetails', class: Google::Apis::StreetviewpublishV1::InsufficientGpsFailureDetails, decorator: Google::Apis::StreetviewpublishV1::InsufficientGpsFailureDetails::Representation
+      
+          property :no_overlap_gps_details, as: 'noOverlapGpsDetails', class: Google::Apis::StreetviewpublishV1::NoOverlapGpsFailureDetails, decorator: Google::Apis::StreetviewpublishV1::NoOverlapGpsFailureDetails::Representation
+      
+          property :not_outdoors_details, as: 'notOutdoorsDetails', class: Google::Apis::StreetviewpublishV1::NotOutdoorsFailureDetails, decorator: Google::Apis::StreetviewpublishV1::NotOutdoorsFailureDetails::Representation
+      
         end
       end
       

@@ -130,11 +130,11 @@ module Google
       # Represents a whole or partial calendar date, such as a birthday. The time of
       # day and time zone are either specified elsewhere or are insignificant. The
       # date is relative to the Gregorian Calendar. This can represent one of the
-      # following: * A full date, with non-zero year, month, and day values * A month
-      # and day value, with a zero year, such as an anniversary * A year on its own,
-      # with zero month and day values * A year and month value, with a zero day, such
-      # as a credit card expiration date Related types are google.type.TimeOfDay and `
-      # google.protobuf.Timestamp`.
+      # following: * A full date, with non-zero year, month, and day values. * A month
+      # and day, with a zero year (for example, an anniversary). * A year on its own,
+      # with a zero month and a zero day. * A year and month, with a zero day (for
+      # example, a credit card expiration date). Related types: * google.type.
+      # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
       class Date
         include Google::Apis::Core::Hashable
       
@@ -171,8 +171,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -209,6 +208,52 @@ module Google
         def update!(**args)
           @fixed = args[:fixed] if args.key?(:fixed)
           @percent = args[:percent] if args.key?(:percent)
+        end
+      end
+      
+      # OS policy assignment operation metadata provided by OS policy assignment API
+      # methods that return long running operations.
+      class GoogleCloudOsconfigV1OsPolicyAssignmentOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The OS policy assignment API method.
+        # Corresponds to the JSON property `apiMethod`
+        # @return [String]
+        attr_accessor :api_method
+      
+        # Reference to the `OSPolicyAssignment` API resource. Format: `projects/`
+        # project_number`/locations/`location`/osPolicyAssignments/`
+        # os_policy_assignment_id@revision_id``
+        # Corresponds to the JSON property `osPolicyAssignment`
+        # @return [String]
+        attr_accessor :os_policy_assignment
+      
+        # Rollout start time
+        # Corresponds to the JSON property `rolloutStartTime`
+        # @return [String]
+        attr_accessor :rollout_start_time
+      
+        # State of the rollout
+        # Corresponds to the JSON property `rolloutState`
+        # @return [String]
+        attr_accessor :rollout_state
+      
+        # Rollout update time
+        # Corresponds to the JSON property `rolloutUpdateTime`
+        # @return [String]
+        attr_accessor :rollout_update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_method = args[:api_method] if args.key?(:api_method)
+          @os_policy_assignment = args[:os_policy_assignment] if args.key?(:os_policy_assignment)
+          @rollout_start_time = args[:rollout_start_time] if args.key?(:rollout_start_time)
+          @rollout_state = args[:rollout_state] if args.key?(:rollout_state)
+          @rollout_update_time = args[:rollout_update_time] if args.key?(:rollout_update_time)
         end
       end
       
@@ -522,10 +567,9 @@ module Google
         # @return [Google::Apis::OsconfigV1alpha::InventoryWindowsQuickFixEngineeringPackage]
         attr_accessor :qfe_package
       
-        # Contains information about a Windows application as retrieved from the Windows
-        # Registry. For more information about these fields, see [Windows Installer
-        # Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/
-        # windows/win32/msi/uninstall-registry-key)`: class="external" `
+        # Contains information about a Windows application that is retrieved from the
+        # Windows Registry. For more information about these fields, see: https://docs.
+        # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
         # Corresponds to the JSON property `windowsApplication`
         # @return [Google::Apis::OsconfigV1alpha::InventoryWindowsApplication]
         attr_accessor :windows_application
@@ -605,10 +649,9 @@ module Google
         end
       end
       
-      # Contains information about a Windows application as retrieved from the Windows
-      # Registry. For more information about these fields, see [Windows Installer
-      # Properties for the Uninstall Registry](https://docs.microsoft.com/en-us/
-      # windows/win32/msi/uninstall-registry-key)`: class="external" `
+      # Contains information about a Windows application that is retrieved from the
+      # Windows Registry. For more information about these fields, see: https://docs.
+      # microsoft.com/en-us/windows/win32/msi/uninstall-registry-key
       class InventoryWindowsApplication
         include Google::Apis::Core::Hashable
       
@@ -630,11 +673,11 @@ module Google
         # Represents a whole or partial calendar date, such as a birthday. The time of
         # day and time zone are either specified elsewhere or are insignificant. The
         # date is relative to the Gregorian Calendar. This can represent one of the
-        # following: * A full date, with non-zero year, month, and day values * A month
-        # and day value, with a zero year, such as an anniversary * A year on its own,
-        # with zero month and day values * A year and month value, with a zero day, such
-        # as a credit card expiration date Related types are google.type.TimeOfDay and `
-        # google.protobuf.Timestamp`.
+        # following: * A full date, with non-zero year, month, and day values. * A month
+        # and day, with a zero year (for example, an anniversary). * A year on its own,
+        # with a zero month and a zero day. * A year and month, with a zero day (for
+        # example, a credit card expiration date). Related types: * google.type.
+        # TimeOfDay * google.type.DateTime * google.protobuf.Timestamp
         # Corresponds to the JSON property `installDate`
         # @return [Google::Apis::OsconfigV1alpha::Date]
         attr_accessor :install_date
@@ -1829,7 +1872,7 @@ module Google
         # @return [String]
         attr_accessor :output_file_path
       
-        # An inline script. The size of the script is limited to 1024 characters.
+        # An inline script. The size of the script is limited to 32KiB.
         # Corresponds to the JSON property `script`
         # @return [String]
         attr_accessor :script
@@ -1949,8 +1992,7 @@ module Google
       class OsPolicyResourceFileResource
         include Google::Apis::Core::Hashable
       
-        # A a file with this content. The size of the content is limited to 1024
-        # characters.
+        # A a file with this content. The size of the content is limited to 32KiB.
         # Corresponds to the JSON property `content`
         # @return [String]
         attr_accessor :content
@@ -2632,6 +2674,11 @@ module Google
         # @return [Array<String>]
         attr_accessor :installed_inventory_item_ids
       
+        # List of items affected by the vulnerability.
+        # Corresponds to the JSON property `items`
+        # @return [Array<Google::Apis::OsconfigV1alpha::VulnerabilityReportVulnerabilityItem>]
+        attr_accessor :items
+      
         # The timestamp for when the vulnerability was last modified.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
@@ -2647,6 +2694,7 @@ module Google
           @create_time = args[:create_time] if args.key?(:create_time)
           @details = args[:details] if args.key?(:details)
           @installed_inventory_item_ids = args[:installed_inventory_item_ids] if args.key?(:installed_inventory_item_ids)
+          @items = args[:items] if args.key?(:items)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -2726,6 +2774,53 @@ module Google
         def update!(**args)
           @source = args[:source] if args.key?(:source)
           @url = args[:url] if args.key?(:url)
+        end
+      end
+      
+      # OS inventory item that is affected by a vulnerability or fixed as a result of
+      # a vulnerability.
+      class VulnerabilityReportVulnerabilityItem
+        include Google::Apis::Core::Hashable
+      
+        # Corresponds to the `AVAILABLE_PACKAGE` inventory item on the VM. If the
+        # vulnerability report was not updated after the VM inventory update, these
+        # values might not display in VM inventory. If there is no available fix, the
+        # field is empty. The `inventory_item` value specifies the latest `
+        # SoftwarePackage` available to the VM that fixes the vulnerability.
+        # Corresponds to the JSON property `availableInventoryItemId`
+        # @return [String]
+        attr_accessor :available_inventory_item_id
+      
+        # The recommended [CPE URI](https://cpe.mitre.org/specification/) update that
+        # contains a fix for this vulnerability.
+        # Corresponds to the JSON property `fixedCpeUri`
+        # @return [String]
+        attr_accessor :fixed_cpe_uri
+      
+        # Corresponds to the `INSTALLED_PACKAGE` inventory item on the VM. This field
+        # displays the inventory items affected by this vulnerability. If the
+        # vulnerability report was not updated after the VM inventory update, these
+        # values might not display in VM inventory. For some operating systems, this
+        # field might be empty.
+        # Corresponds to the JSON property `installedInventoryItemId`
+        # @return [String]
+        attr_accessor :installed_inventory_item_id
+      
+        # The upstream OS patch, packages or KB that fixes the vulnerability.
+        # Corresponds to the JSON property `upstreamFix`
+        # @return [String]
+        attr_accessor :upstream_fix
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @available_inventory_item_id = args[:available_inventory_item_id] if args.key?(:available_inventory_item_id)
+          @fixed_cpe_uri = args[:fixed_cpe_uri] if args.key?(:fixed_cpe_uri)
+          @installed_inventory_item_id = args[:installed_inventory_item_id] if args.key?(:installed_inventory_item_id)
+          @upstream_fix = args[:upstream_fix] if args.key?(:upstream_fix)
         end
       end
     end

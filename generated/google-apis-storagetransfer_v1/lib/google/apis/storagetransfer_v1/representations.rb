@@ -22,7 +22,19 @@ module Google
   module Apis
     module StoragetransferV1
       
+      class AgentPool
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AwsAccessKey
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class AwsS3CompatibleData
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -41,6 +53,12 @@ module Google
       end
       
       class AzureCredentials
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BandwidthLimit
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -76,6 +94,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class EventStream
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GcsData
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -94,6 +118,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class ListAgentPoolsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ListOperationsResponse
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -107,6 +137,12 @@ module Google
       end
       
       class LoggingConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MetadataOptions
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -154,6 +190,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class S3CompatibleMetadata
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Schedule
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -184,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class TransferManifest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class TransferOperation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -208,11 +256,34 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class AgentPool
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bandwidth_limit, as: 'bandwidthLimit', class: Google::Apis::StoragetransferV1::BandwidthLimit, decorator: Google::Apis::StoragetransferV1::BandwidthLimit::Representation
+      
+          property :display_name, as: 'displayName'
+          property :name, as: 'name'
+          property :state, as: 'state'
+        end
+      end
+      
       class AwsAccessKey
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :access_key_id, as: 'accessKeyId'
           property :secret_access_key, as: 'secretAccessKey'
+        end
+      end
+      
+      class AwsS3CompatibleData
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :bucket_name, as: 'bucketName'
+          property :endpoint, as: 'endpoint'
+          property :path, as: 'path'
+          property :region, as: 'region'
+          property :s3_metadata, as: 's3Metadata', class: Google::Apis::StoragetransferV1::S3CompatibleMetadata, decorator: Google::Apis::StoragetransferV1::S3CompatibleMetadata::Representation
+      
         end
       end
       
@@ -242,6 +313,13 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :sas_token, as: 'sasToken'
+        end
+      end
+      
+      class BandwidthLimit
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :limit_mbps, :numeric_string => true, as: 'limitMbps'
         end
       end
       
@@ -284,6 +362,15 @@ module Google
         end
       end
       
+      class EventStream
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :event_stream_expiration_time, as: 'eventStreamExpirationTime'
+          property :event_stream_start_time, as: 'eventStreamStartTime'
+          property :name, as: 'name'
+        end
+      end
+      
       class GcsData
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -304,6 +391,15 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :list_url, as: 'listUrl'
+        end
+      end
+      
+      class ListAgentPoolsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :agent_pools, as: 'agentPools', class: Google::Apis::StoragetransferV1::AgentPool, decorator: Google::Apis::StoragetransferV1::AgentPool::Representation
+      
+          property :next_page_token, as: 'nextPageToken'
         end
       end
       
@@ -329,6 +425,23 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :enable_onprem_gcs_transfer_logs, as: 'enableOnpremGcsTransferLogs'
+          collection :log_action_states, as: 'logActionStates'
+          collection :log_actions, as: 'logActions'
+        end
+      end
+      
+      class MetadataOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :acl, as: 'acl'
+          property :gid, as: 'gid'
+          property :kms_key, as: 'kmsKey'
+          property :mode, as: 'mode'
+          property :storage_class, as: 'storageClass'
+          property :symlink, as: 'symlink'
+          property :temporary_hold, as: 'temporaryHold'
+          property :time_created, as: 'timeCreated'
+          property :uid, as: 'uid'
         end
       end
       
@@ -391,6 +504,16 @@ module Google
         end
       end
       
+      class S3CompatibleMetadata
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :auth_method, as: 'authMethod'
+          property :list_api, as: 'listApi'
+          property :protocol, as: 'protocol'
+          property :request_model, as: 'requestModel'
+        end
+      end
+      
       class Schedule
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -439,6 +562,8 @@ module Google
           property :directories_failed_to_list_from_source, :numeric_string => true, as: 'directoriesFailedToListFromSource'
           property :directories_found_from_source, :numeric_string => true, as: 'directoriesFoundFromSource'
           property :directories_successfully_listed_from_source, :numeric_string => true, as: 'directoriesSuccessfullyListedFromSource'
+          property :intermediate_objects_cleaned_up, :numeric_string => true, as: 'intermediateObjectsCleanedUp'
+          property :intermediate_objects_failed_cleaned_up, :numeric_string => true, as: 'intermediateObjectsFailedCleanedUp'
           property :objects_copied_to_sink, :numeric_string => true, as: 'objectsCopiedToSink'
           property :objects_deleted_from_sink, :numeric_string => true, as: 'objectsDeletedFromSink'
           property :objects_deleted_from_source, :numeric_string => true, as: 'objectsDeletedFromSource'
@@ -456,6 +581,8 @@ module Google
           property :creation_time, as: 'creationTime'
           property :deletion_time, as: 'deletionTime'
           property :description, as: 'description'
+          property :event_stream, as: 'eventStream', class: Google::Apis::StoragetransferV1::EventStream, decorator: Google::Apis::StoragetransferV1::EventStream::Representation
+      
           property :last_modification_time, as: 'lastModificationTime'
           property :latest_operation_name, as: 'latestOperationName'
           property :logging_config, as: 'loggingConfig', class: Google::Apis::StoragetransferV1::LoggingConfig, decorator: Google::Apis::StoragetransferV1::LoggingConfig::Representation
@@ -469,6 +596,13 @@ module Google
           property :status, as: 'status'
           property :transfer_spec, as: 'transferSpec', class: Google::Apis::StoragetransferV1::TransferSpec, decorator: Google::Apis::StoragetransferV1::TransferSpec::Representation
       
+        end
+      end
+      
+      class TransferManifest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :location, as: 'location'
         end
       end
       
@@ -497,13 +631,18 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :delete_objects_from_source_after_transfer, as: 'deleteObjectsFromSourceAfterTransfer'
           property :delete_objects_unique_in_sink, as: 'deleteObjectsUniqueInSink'
+          property :metadata_options, as: 'metadataOptions', class: Google::Apis::StoragetransferV1::MetadataOptions, decorator: Google::Apis::StoragetransferV1::MetadataOptions::Representation
+      
           property :overwrite_objects_already_existing_in_sink, as: 'overwriteObjectsAlreadyExistingInSink'
+          property :overwrite_when, as: 'overwriteWhen'
         end
       end
       
       class TransferSpec
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :aws_s3_compatible_data_source, as: 'awsS3CompatibleDataSource', class: Google::Apis::StoragetransferV1::AwsS3CompatibleData, decorator: Google::Apis::StoragetransferV1::AwsS3CompatibleData::Representation
+      
           property :aws_s3_data_source, as: 'awsS3DataSource', class: Google::Apis::StoragetransferV1::AwsS3Data, decorator: Google::Apis::StoragetransferV1::AwsS3Data::Representation
       
           property :azure_blob_storage_data_source, as: 'azureBlobStorageDataSource', class: Google::Apis::StoragetransferV1::AzureBlobStorageData, decorator: Google::Apis::StoragetransferV1::AzureBlobStorageData::Representation
@@ -512,11 +651,19 @@ module Google
       
           property :gcs_data_source, as: 'gcsDataSource', class: Google::Apis::StoragetransferV1::GcsData, decorator: Google::Apis::StoragetransferV1::GcsData::Representation
       
+          property :gcs_intermediate_data_location, as: 'gcsIntermediateDataLocation', class: Google::Apis::StoragetransferV1::GcsData, decorator: Google::Apis::StoragetransferV1::GcsData::Representation
+      
           property :http_data_source, as: 'httpDataSource', class: Google::Apis::StoragetransferV1::HttpData, decorator: Google::Apis::StoragetransferV1::HttpData::Representation
       
           property :object_conditions, as: 'objectConditions', class: Google::Apis::StoragetransferV1::ObjectConditions, decorator: Google::Apis::StoragetransferV1::ObjectConditions::Representation
       
+          property :posix_data_sink, as: 'posixDataSink', class: Google::Apis::StoragetransferV1::PosixFilesystem, decorator: Google::Apis::StoragetransferV1::PosixFilesystem::Representation
+      
           property :posix_data_source, as: 'posixDataSource', class: Google::Apis::StoragetransferV1::PosixFilesystem, decorator: Google::Apis::StoragetransferV1::PosixFilesystem::Representation
+      
+          property :sink_agent_pool_name, as: 'sinkAgentPoolName'
+          property :source_agent_pool_name, as: 'sourceAgentPoolName'
+          property :transfer_manifest, as: 'transferManifest', class: Google::Apis::StoragetransferV1::TransferManifest, decorator: Google::Apis::StoragetransferV1::TransferManifest::Representation
       
           property :transfer_options, as: 'transferOptions', class: Google::Apis::StoragetransferV1::TransferOptions, decorator: Google::Apis::StoragetransferV1::TransferOptions::Representation
       

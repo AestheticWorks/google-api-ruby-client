@@ -58,7 +58,73 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class Expr
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1AuditConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1AuditLogConfig
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1Binding
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1GetIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1GetPolicyOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1Policy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1SetIamPolicyRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1TestIamPermissionsRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class GoogleIamV1TestIamPermissionsResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class ManagedZone
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class ManagedZoneCloudLoggingConfig
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -227,6 +293,24 @@ module Google
       end
       
       class RrSetRoutingPolicyGeoPolicyGeoPolicyItem
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RrSetRoutingPolicyHealthCheckTargets
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RrSetRoutingPolicyLoadBalancerTarget
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class RrSetRoutingPolicyPrimaryBackupPolicy
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -403,9 +487,98 @@ module Google
         end
       end
       
+      class Expr
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :description, as: 'description'
+          property :expression, as: 'expression'
+          property :location, as: 'location'
+          property :title, as: 'title'
+        end
+      end
+      
+      class GoogleIamV1AuditConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :audit_log_configs, as: 'auditLogConfigs', class: Google::Apis::DnsV1beta2::GoogleIamV1AuditLogConfig, decorator: Google::Apis::DnsV1beta2::GoogleIamV1AuditLogConfig::Representation
+      
+          property :service, as: 'service'
+        end
+      end
+      
+      class GoogleIamV1AuditLogConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :exempted_members, as: 'exemptedMembers'
+          property :log_type, as: 'logType'
+        end
+      end
+      
+      class GoogleIamV1Binding
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :condition, as: 'condition', class: Google::Apis::DnsV1beta2::Expr, decorator: Google::Apis::DnsV1beta2::Expr::Representation
+      
+          collection :members, as: 'members'
+          property :role, as: 'role'
+        end
+      end
+      
+      class GoogleIamV1GetIamPolicyRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :options, as: 'options', class: Google::Apis::DnsV1beta2::GoogleIamV1GetPolicyOptions, decorator: Google::Apis::DnsV1beta2::GoogleIamV1GetPolicyOptions::Representation
+      
+        end
+      end
+      
+      class GoogleIamV1GetPolicyOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :requested_policy_version, as: 'requestedPolicyVersion'
+        end
+      end
+      
+      class GoogleIamV1Policy
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :audit_configs, as: 'auditConfigs', class: Google::Apis::DnsV1beta2::GoogleIamV1AuditConfig, decorator: Google::Apis::DnsV1beta2::GoogleIamV1AuditConfig::Representation
+      
+          collection :bindings, as: 'bindings', class: Google::Apis::DnsV1beta2::GoogleIamV1Binding, decorator: Google::Apis::DnsV1beta2::GoogleIamV1Binding::Representation
+      
+          property :etag, :base64 => true, as: 'etag'
+          property :version, as: 'version'
+        end
+      end
+      
+      class GoogleIamV1SetIamPolicyRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :policy, as: 'policy', class: Google::Apis::DnsV1beta2::GoogleIamV1Policy, decorator: Google::Apis::DnsV1beta2::GoogleIamV1Policy::Representation
+      
+          property :update_mask, as: 'updateMask'
+        end
+      end
+      
+      class GoogleIamV1TestIamPermissionsRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :permissions, as: 'permissions'
+        end
+      end
+      
+      class GoogleIamV1TestIamPermissionsResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :permissions, as: 'permissions'
+        end
+      end
+      
       class ManagedZone
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :cloud_logging_config, as: 'cloudLoggingConfig', class: Google::Apis::DnsV1beta2::ManagedZoneCloudLoggingConfig, decorator: Google::Apis::DnsV1beta2::ManagedZoneCloudLoggingConfig::Representation
+      
           property :creation_time, as: 'creationTime'
           property :description, as: 'description'
           property :dns_name, as: 'dnsName'
@@ -428,6 +601,14 @@ module Google
           property :service_directory_config, as: 'serviceDirectoryConfig', class: Google::Apis::DnsV1beta2::ManagedZoneServiceDirectoryConfig, decorator: Google::Apis::DnsV1beta2::ManagedZoneServiceDirectoryConfig::Representation
       
           property :visibility, as: 'visibility'
+        end
+      end
+      
+      class ManagedZoneCloudLoggingConfig
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :enable_logging, as: 'enableLogging'
+          property :kind, as: 'kind'
         end
       end
       
@@ -682,6 +863,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :dns_keys_per_managed_zone, as: 'dnsKeysPerManagedZone'
           property :gke_clusters_per_managed_zone, as: 'gkeClustersPerManagedZone'
+          property :gke_clusters_per_policy, as: 'gkeClustersPerPolicy'
           property :gke_clusters_per_response_policy, as: 'gkeClustersPerResponsePolicy'
           property :items_per_routing_policy, as: 'itemsPerRoutingPolicy'
           property :kind, as: 'kind'
@@ -690,8 +872,11 @@ module Google
           property :managed_zones_per_network, as: 'managedZonesPerNetwork'
           property :networks_per_managed_zone, as: 'networksPerManagedZone'
           property :networks_per_policy, as: 'networksPerPolicy'
+          property :networks_per_response_policy, as: 'networksPerResponsePolicy'
+          property :peering_zones_per_target_network, as: 'peeringZonesPerTargetNetwork'
           property :policies, as: 'policies'
           property :resource_records_per_rrset, as: 'resourceRecordsPerRrset'
+          property :response_policies, as: 'responsePolicies'
           property :response_policy_rules_per_response_policy, as: 'responsePolicyRulesPerResponsePolicy'
           property :rrset_additions_per_change, as: 'rrsetAdditionsPerChange'
           property :rrset_deletions_per_change, as: 'rrsetDeletionsPerChange'
@@ -712,6 +897,8 @@ module Google
           property :geo_policy, as: 'geoPolicy', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicy, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicy::Representation
       
           property :kind, as: 'kind'
+          property :primary_backup, as: 'primaryBackup', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyPrimaryBackupPolicy, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyPrimaryBackupPolicy::Representation
+      
           property :wrr, as: 'wrr', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyWrrPolicy, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyWrrPolicy::Representation
       
           property :wrr_policy, as: 'wrrPolicy', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyWrrPolicy, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyWrrPolicy::Representation
@@ -722,8 +909,7 @@ module Google
       class RrSetRoutingPolicyGeoPolicy
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
-          collection :failovers, as: 'failovers', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicyGeoPolicyItem, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicyGeoPolicyItem::Representation
-      
+          property :enable_fencing, as: 'enableFencing'
           collection :items, as: 'items', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicyGeoPolicyItem, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicyGeoPolicyItem::Representation
       
           property :kind, as: 'kind'
@@ -733,10 +919,46 @@ module Google
       class RrSetRoutingPolicyGeoPolicyGeoPolicyItem
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :health_checked_targets, as: 'healthCheckedTargets', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets::Representation
+      
           property :kind, as: 'kind'
           property :location, as: 'location'
           collection :rrdatas, as: 'rrdatas'
           collection :signature_rrdatas, as: 'signatureRrdatas'
+        end
+      end
+      
+      class RrSetRoutingPolicyHealthCheckTargets
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :internal_load_balancers, as: 'internalLoadBalancers', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyLoadBalancerTarget, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyLoadBalancerTarget::Representation
+      
+        end
+      end
+      
+      class RrSetRoutingPolicyLoadBalancerTarget
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :ip_address, as: 'ipAddress'
+          property :ip_protocol, as: 'ipProtocol'
+          property :kind, as: 'kind'
+          property :load_balancer_type, as: 'loadBalancerType'
+          property :network_url, as: 'networkUrl'
+          property :port, as: 'port'
+          property :project, as: 'project'
+          property :region, as: 'region'
+        end
+      end
+      
+      class RrSetRoutingPolicyPrimaryBackupPolicy
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :backup_geo_targets, as: 'backupGeoTargets', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicy, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyGeoPolicy::Representation
+      
+          property :kind, as: 'kind'
+          property :primary_targets, as: 'primaryTargets', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets::Representation
+      
+          property :trickle_traffic, as: 'trickleTraffic'
         end
       end
       
@@ -752,6 +974,8 @@ module Google
       class RrSetRoutingPolicyWrrPolicyWrrPolicyItem
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :health_checked_targets, as: 'healthCheckedTargets', class: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets, decorator: Google::Apis::DnsV1beta2::RrSetRoutingPolicyHealthCheckTargets::Representation
+      
           property :kind, as: 'kind'
           collection :rrdatas, as: 'rrdatas'
           collection :signature_rrdatas, as: 'signatureRrdatas'
@@ -831,6 +1055,7 @@ module Google
       
           property :id, :numeric_string => true, as: 'id'
           property :kind, as: 'kind'
+          hash :labels, as: 'labels'
           collection :networks, as: 'networks', class: Google::Apis::DnsV1beta2::ResponsePolicyNetwork, decorator: Google::Apis::DnsV1beta2::ResponsePolicyNetwork::Representation
       
           property :response_policy_name, as: 'responsePolicyName'

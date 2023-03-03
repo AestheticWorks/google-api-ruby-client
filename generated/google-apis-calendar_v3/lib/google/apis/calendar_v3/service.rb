@@ -1025,7 +1025,8 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Returns an event.
+        # Returns an event based on its Google Calendar ID. To retrieve an event using
+        # its iCalendar ID, call the events.list method using the iCalUID parameter.
         # @param [String] calendar_id
         #   Calendar identifier. To retrieve calendar IDs call the calendarList.list
         #   method. If you want to access the primary calendar of the currently logged in
@@ -1278,8 +1279,8 @@ module Google
         #   the organizer, creator and attendees, even if no real email address is
         #   available (i.e. a generated, non-working value will be provided).
         # @param [String] i_cal_uid
-        #   Specifies event ID in the iCalendar format to be included in the response.
-        #   Optional.
+        #   Specifies an event ID in the iCalendar format to be provided in the response.
+        #   Optional. Use this if you want to search for an event by its iCalendar ID.
         # @param [Fixnum] max_attendees
         #   The maximum number of attendees to include in the response. If there are more
         #   than the specified number of attendees, only the participant is returned.
@@ -1300,8 +1301,9 @@ module Google
         #   private properties. This parameter might be repeated multiple times to return
         #   events that match all given constraints.
         # @param [String] q
-        #   Free text search terms to find events that match these terms in any field,
-        #   except for extended properties. Optional.
+        #   Free text search terms to find events that match these terms in the following
+        #   fields: summary, description, location, attendee's displayName, attendee's
+        #   email. Optional.
         # @param [Array<String>, String] shared_extended_property
         #   Extended properties constraint specified as propertyName=value. Matches only
         #   shared properties. This parameter might be repeated multiple times to return
@@ -1659,8 +1661,8 @@ module Google
         #   the organizer, creator and attendees, even if no real email address is
         #   available (i.e. a generated, non-working value will be provided).
         # @param [String] i_cal_uid
-        #   Specifies event ID in the iCalendar format to be included in the response.
-        #   Optional.
+        #   Specifies an event ID in the iCalendar format to be provided in the response.
+        #   Optional. Use this if you want to search for an event by its iCalendar ID.
         # @param [Fixnum] max_attendees
         #   The maximum number of attendees to include in the response. If there are more
         #   than the specified number of attendees, only the participant is returned.
@@ -1681,8 +1683,9 @@ module Google
         #   private properties. This parameter might be repeated multiple times to return
         #   events that match all given constraints.
         # @param [String] q
-        #   Free text search terms to find events that match these terms in any field,
-        #   except for extended properties. Optional.
+        #   Free text search terms to find events that match these terms in the following
+        #   fields: summary, description, location, attendee's displayName, attendee's
+        #   email. Optional.
         # @param [Array<String>, String] shared_extended_property
         #   Extended properties constraint specified as propertyName=value. Matches only
         #   shared properties. This parameter might be repeated multiple times to return

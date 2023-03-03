@@ -1,5 +1,22 @@
 # Release history for google-apis-bigtableadmin_v1
 
+### v0.11.0 (2022-01-14)
+
+* Regenerated from discovery document revision 20211218
+* Regenerated using generator version 0.4.1
+
+### v0.10.0 (2021-12-14)
+
+* Regenerated from discovery document revision 20211202
+
+### v0.9.0 (2021-11-16)
+
+* Regenerated from discovery document revision 20211104
+
+### v0.8.0 (2021-10-20)
+
+* Unspecified changes
+
 ### v0.7.0 (2021-09-07)
 
 * Regenerated from discovery document revision 20210811

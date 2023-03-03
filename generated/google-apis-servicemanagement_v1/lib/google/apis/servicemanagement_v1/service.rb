@@ -171,8 +171,9 @@ module Google
         # UndeleteService to restore the service. After 30 days, the service will be
         # permanently deleted. Operation
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -272,8 +273,9 @@ module Google
         
         # Gets a service configuration (version) for a managed service.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] config_id
         #   Required. The id of the service configuration resource. This field must be
         #   specified for the server to return all fields, including `SourceInfo`.
@@ -311,8 +313,9 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -351,7 +354,7 @@ module Google
         #   Management implementation accepts the following forms: - project:
         # @param [Fixnum] page_size
         #   The max number of items to include in the response list. Page size is 50 if
-        #   not specified. Maximum value is 100.
+        #   not specified. Maximum value is 500.
         # @param [String] page_token
         #   Token identifying which result to start with; returned by a previous list call.
         # @param [String] producer_project_id
@@ -390,8 +393,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -428,8 +432,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -465,8 +470,9 @@ module Google
         # service must exist and must have been deleted within the last 30 days.
         # Operation
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -500,8 +506,9 @@ module Google
         # 100 most recent service configurations and ones referenced by existing
         # rollouts are kept for each service. The rest will be deleted eventually.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [Google::Apis::ServicemanagementV1::Service] service_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -534,8 +541,9 @@ module Google
         
         # Gets a service configuration (version) for a managed service.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] config_id
         #   Required. The id of the service configuration resource. This field must be
         #   specified for the server to return all fields, including `SourceInfo`.
@@ -573,8 +581,9 @@ module Google
         # Lists the history of the service configuration for a managed service, from the
         # newest to the oldest.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [Fixnum] page_size
         #   The max number of items to include in the response list. Page size is 50 if
         #   not specified. Maximum value is 100.
@@ -617,8 +626,9 @@ module Google
         # ones referenced by existing service configurtions are kept for each service.
         # The rest will be deleted eventually. Operation
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [Google::Apis::ServicemanagementV1::SubmitConfigSourceRequest] submit_config_source_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -652,8 +662,9 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::GetIamPolicyRequest] get_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -688,8 +699,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -726,8 +738,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::ServicemanagementV1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -768,8 +781,9 @@ module Google
         # set of 100 most recent) rollouts are kept for each service. The rest will be
         # deleted eventually. Operation
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [Google::Apis::ServicemanagementV1::Rollout] rollout_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -802,8 +816,9 @@ module Google
         
         # Gets a service configuration rollout.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] rollout_id
         #   Required. The id of the rollout resource.
         # @param [String] fields
@@ -837,15 +852,13 @@ module Google
         # Lists the history of the service configuration rollouts for a managed service,
         # from the newest to the oldest.
         # @param [String] service_name
-        #   Required. The name of the service. See the [overview](/service-management/
-        #   overview) for naming requirements. For example: `example.googleapis.com`.
+        #   Required. The name of the service. See the [overview](https://cloud.google.com/
+        #   service-management/overview) for naming requirements. For example: `example.
+        #   googleapis.com`.
         # @param [String] filter
         #   Required. Use `filter` to return subset of rollouts. The following filters are
-        #   supported: -- To limit the results to only those in [status](google.api.
-        #   servicemanagement.v1.RolloutStatus) 'SUCCESS', use filter='status=SUCCESS' --
-        #   To limit the results to those in [status](google.api.servicemanagement.v1.
-        #   RolloutStatus) 'CANCELLED' or 'FAILED', use filter='status=CANCELLED OR status=
-        #   FAILED'
+        #   supported: -- By status. For example, `filter='status=SUCCESS'` -- By strategy.
+        #   For example, `filter='strategy=TrafficPercentStrategy'`
         # @param [Fixnum] page_size
         #   The max number of items to include in the response list. Page size is 50 if
         #   not specified. Maximum value is 100.

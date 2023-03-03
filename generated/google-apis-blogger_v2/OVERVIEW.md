@@ -1,6 +1,6 @@
-# Simple REST client for version V2 of the Blogger API v3
+# Simple REST client for version V2 of the Blogger API
 
-This is a simple client library for version V2 of the Blogger API v3. It provides:
+This is a simple client library for version V2 of the Blogger API. It provides:
 
 * A client object that connects to the HTTP/JSON REST endpoint for the service.
 * Ruby objects for data structures related to the service.
@@ -51,7 +51,7 @@ require "google/apis/blogger_v2"
 client = Google::Apis::BloggerV2::BloggerService.new
 
 # Authenticate calls
-client.authentication = # ... use the googleauth gem to create credentials
+client.authorization = # ... use the googleauth gem to create credentials
 ```
 
 See the class reference docs for information on the methods you can call from a client.
@@ -60,12 +60,12 @@ See the class reference docs for information on the methods you can call from a 
 
 More detailed descriptions of the Google simple REST clients are available in two documents.
 
- *  The [Usage Guide](https://github.com/googleapis/google-api-ruby-client/blob/master/docs/usage-guide.md) discusses how to make API calls, how to use the provided data structures, and how to work the various features of the client library, including media upload and download, error handling, retries, pagination, and logging.
- *  The [Auth Guide](https://github.com/googleapis/google-api-ruby-client/blob/master/docs/auth-guide.md) discusses authentication in the client libraries, including API keys, OAuth 2.0, service accounts, and environment variables.
+ *  The [Usage Guide](https://github.com/googleapis/google-api-ruby-client/blob/main/docs/usage-guide.md) discusses how to make API calls, how to use the provided data structures, and how to work the various features of the client library, including media upload and download, error handling, retries, pagination, and logging.
+ *  The [Auth Guide](https://github.com/googleapis/google-api-ruby-client/blob/main/docs/auth-guide.md) discusses authentication in the client libraries, including API keys, OAuth 2.0, service accounts, and environment variables.
 
 (Note: the above documents are written for the simple REST clients in general, and their examples may not reflect the Blogger service in particular.)
 
-For reference information on specific calls in the Blogger API v3, see the {Google::Apis::BloggerV2::BloggerService class reference docs}.
+For reference information on specific calls in the Blogger API, see the {Google::Apis::BloggerV2::BloggerService class reference docs}.
 
 ## Which client should I use?
 

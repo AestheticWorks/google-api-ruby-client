@@ -22,8 +22,9 @@ module Google
     module DisplayvideoV1
       # Display & Video 360 API
       #
-      # Display & Video 360 API allows users to manage and create campaigns and
-      #  reports.
+      # Display & Video 360 API allows users to automate complex Display & Video 360
+      #  workflows, such as creating insertion orders and setting targeting options for
+      #  individual line items.
       #
       # @example
       #    require 'google/apis/displayvideo_v1'
@@ -299,7 +300,7 @@ module Google
         #   ascending. To specify descending order for a field, a suffix "desc" should be
         #   added to the field name. For example, `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -378,7 +379,10 @@ module Google
         
         # Uploads an asset. Returns the ID of the newly uploaded asset if successful.
         # The asset file size should be no more than 10 MB for images, 200 MB for ZIP
-        # files, and 1 GB for videos.
+        # files, and 1 GB for videos. Must be used within the [multipart media upload
+        # process](/display-video/api/guides/how-tos/upload#multipart). Examples using
+        # provided client libraries can be found in our [Creating Creatives guide](/
+        # display-video/api/guides/creating-creatives/overview#upload_an_asset).
         # @param [Fixnum] advertiser_id
         #   Required. The ID of the advertiser this asset belongs to.
         # @param [Google::Apis::DisplayvideoV1::CreateAssetRequest] create_asset_request_object
@@ -612,7 +616,7 @@ module Google
         #   ascending. To specify descending order for a field, a suffix "desc" should be
         #   added to the field name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -907,7 +911,7 @@ module Google
         #   descending order for a field, a suffix " desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -1321,25 +1325,32 @@ module Google
         #   fields: - `entityStatus` - `creativeType`. - `dimensions` - `minDuration` - `
         #   maxDuration` - `approvalStatus` - `exchangeReviewStatus` - `dynamic` - `
         #   creativeId` * The operator must be `HAS (:)` for the following fields: - `
-        #   lineItemIds` * For `entityStatus`, `minDuration`, `maxDuration`, and `dynamic`
-        #   there may be at most one restriction. * For `dimensions`, the value is in the
-        #   form of `"`width`x`height`"`. * For `exchangeReviewStatus`, the value is in
-        #   the form of ``exchange`-`reviewStatus``. * For `minDuration` and `maxDuration`,
-        #   the value is in the form of `"`duration`s"`. Only seconds are supported with
-        #   millisecond granularity. * There may be multiple `lineItemIds` restrictions in
-        #   order to search against multiple possible line item IDs. * There may be
-        #   multiple `creativeId` restrictions in order to search against multiple
-        #   possible creative IDs. Examples: * All native creatives: `creativeType="
-        #   CREATIVE_TYPE_NATIVE"` * All active creatives with 300x400 or 50x100
-        #   dimensions: `entityStatus="ENTITY_STATUS_ACTIVE" AND (dimensions="300x400" OR
-        #   dimensions="50x100")` * All dynamic creatives that are approved by AdX or
-        #   AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic="true" AND
-        #   minDuration="5.2s" AND (exchangeReviewStatus="EXCHANGE_GOOGLE_AD_MANAGER-
-        #   REVIEW_STATUS_APPROVED" OR exchangeReviewStatus="EXCHANGE_APPNEXUS-
-        #   REVIEW_STATUS_APPROVED")` * All video creatives that are associated with line
-        #   item ID 1 or 2: `creativeType="CREATIVE_TYPE_VIDEO" AND (lineItemIds:1 OR
-        #   lineItemIds:2)` * Find creatives by multiple creative IDs: `creativeId=1 OR
-        #   creativeId=2` The length of this field should be no more than 500 characters.
+        #   lineItemIds` * The operator must be `GREATER THAN OR EQUAL TO (>=)` or `LESS
+        #   THAN OR EQUAL TO (<=)` for the following fields: - `updateTime` (input in ISO
+        #   8601 format, or YYYY-MM-DDTHH:MM:SSZ) * For `entityStatus`, `minDuration`, `
+        #   maxDuration`, `updateTime`, and `dynamic`, there may be at most one
+        #   restriction. * For `dimensions`, the value is in the form of `"`width`x`height`
+        #   "`. * For `exchangeReviewStatus`, the value is in the form of ``exchange`-`
+        #   reviewStatus``. * For `minDuration` and `maxDuration`, the value is in the
+        #   form of `"`duration`s"`. Only seconds are supported with millisecond
+        #   granularity. * For `updateTime`, a creative resource's field value reflects
+        #   the last time that a creative has been updated, which includes updates made by
+        #   the system (e.g. creative review updates). * There may be multiple `
+        #   lineItemIds` restrictions in order to search against multiple possible line
+        #   item IDs. * There may be multiple `creativeId` restrictions in order to search
+        #   against multiple possible creative IDs. Examples: * All native creatives: `
+        #   creativeType="CREATIVE_TYPE_NATIVE"` * All active creatives with 300x400 or
+        #   50x100 dimensions: `entityStatus="ENTITY_STATUS_ACTIVE" AND (dimensions="
+        #   300x400" OR dimensions="50x100")` * All dynamic creatives that are approved by
+        #   AdX or AppNexus, with a minimum duration of 5 seconds and 200ms. `dynamic="
+        #   true" AND minDuration="5.2s" AND (exchangeReviewStatus="
+        #   EXCHANGE_GOOGLE_AD_MANAGER-REVIEW_STATUS_APPROVED" OR exchangeReviewStatus="
+        #   EXCHANGE_APPNEXUS-REVIEW_STATUS_APPROVED")` * All video creatives that are
+        #   associated with line item ID 1 or 2: `creativeType="CREATIVE_TYPE_VIDEO" AND (
+        #   lineItemIds:1 OR lineItemIds:2)` * Find creatives by multiple creative IDs: `
+        #   creativeId=1 OR creativeId=2` * All creatives with an update time greater than
+        #   or equal to `2020-11-04T18:54:47Z (format of ISO 8601)`: `updateTime>="2020-11-
+        #   04T18:54:47Z"` The length of this field should be no more than 500 characters.
         # @param [String] order_by
         #   Field by which to sort the list. Acceptable values are: * `creativeId` (
         #   default) * `createTime` * `mediaDuration` * `dimensions` (sorts by width first,
@@ -1347,7 +1358,7 @@ module Google
         #   order for a field, a suffix "desc" should be added to the field name. Example:
         #   `createTime desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -1529,7 +1540,7 @@ module Google
         # @param [Fixnum] advertiser_id
         #   The ID of the advertiser this insertion order belongs to.
         # @param [Fixnum] insertion_order_id
-        #   The ID of the insertion order we need to delete.
+        #   The ID of the insertion order to delete.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -1710,7 +1721,32 @@ module Google
         #   Required. The ID of the insertion order the assigned targeting option belongs
         #   to.
         # @param [String] targeting_type
-        #   Required. Identifies the type of this assigned targeting option.
+        #   Required. Identifies the type of this assigned targeting option. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY`
         # @param [String] assigned_targeting_option_id
         #   Required. An identifier unique to the targeting type in this insertion order
         #   that identifies the assigned targeting option being requested.
@@ -1750,7 +1786,32 @@ module Google
         # @param [Fixnum] insertion_order_id
         #   Required. The ID of the insertion order to list assigned targeting options for.
         # @param [String] targeting_type
-        #   Required. Identifies the type of assigned targeting options to list.
+        #   Required. Identifies the type of assigned targeting options to list. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY`
         # @param [String] filter
         #   Allows filtering by assigned targeting option properties. Supported syntax: *
         #   Filter expressions are made up of one or more restrictions. * Restrictions can
@@ -1821,7 +1882,7 @@ module Google
         #   Select type of invoice to retrieve for Loi Sapin advertisers. Only applicable
         #   to Loi Sapin advertisers. Will be ignored otherwise.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -1898,7 +1959,10 @@ module Google
         # delete the assigned targeting options provided in
         # BulkEditLineItemAssignedTargetingOptionsRequest.delete_requests and then
         # create the assigned targeting options provided in
-        # BulkEditLineItemAssignedTargetingOptionsRequest.create_requests .
+        # BulkEditLineItemAssignedTargetingOptionsRequest.create_requests. Requests to
+        # this endpoint cannot be made concurrently with the following requests updating
+        # the same line item: * UpdateLineItem * CreateLineItemAssignedTargetingOption *
+        # DeleteLineItemAssignedTargetingOption
         # @param [Fixnum] advertiser_id
         #   Required. The ID of the advertiser the line item belongs to.
         # @param [Fixnum] line_item_id
@@ -1959,7 +2023,7 @@ module Google
         #   targetingType desc`.
         # @param [Fixnum] page_size
         #   Requested page size. The size must be an integer between `1` and `5000`. If
-        #   unspecified, the default is '5000'. Returns error code `INVALID_ARGUMENT` if
+        #   unspecified, the default is `5000`. Returns error code `INVALID_ARGUMENT` if
         #   an invalid value is specified.
         # @param [String] page_token
         #   A token that lets the client fetch the next page of results. Typically, this
@@ -2037,7 +2101,7 @@ module Google
         # @param [Fixnum] advertiser_id
         #   The ID of the advertiser this line item belongs to.
         # @param [Fixnum] line_item_id
-        #   The ID of the line item we need to fetch.
+        #   The ID of the line item to delete.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2171,12 +2235,12 @@ module Google
         #   targetedNegativeKeywordListId=789 AND targetedChannelId=12345` The length of
         #   this field should be no more than 500 characters.
         # @param [String] order_by
-        #   Field by which to sort the list. Acceptable values are: * "displayName" (
-        #   default) * "entityStatus" * “flight.dateRange.endDate” * "updateTime" The
+        #   Field by which to sort the list. Acceptable values are: * `displayName` (
+        #   default) * `entityStatus` * `flight.dateRange.endDate` * `updateTime` The
         #   default sorting order is ascending. To specify descending order for a field, a
         #   suffix "desc" should be added to the field name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -2216,6 +2280,10 @@ module Google
         end
         
         # Updates an existing line item. Returns the updated line item if successful.
+        # Requests to this endpoint cannot be made concurrently with the following
+        # requests updating the same line item: * BulkEditAssignedTargetingOptions *
+        # BulkUpdateLineItems * CreateLineItemAssignedTargetingOption *
+        # DeleteLineItemAssignedTargetingOption
         # @param [Fixnum] advertiser_id
         #   Output only. The unique ID of the advertiser the line item belongs to.
         # @param [Fixnum] line_item_id
@@ -2255,13 +2323,41 @@ module Google
         end
         
         # Assigns a targeting option to a line item. Returns the assigned targeting
-        # option if successful.
+        # option if successful. Requests to this endpoint cannot be made concurrently
+        # with the following requests updating the same line item: *
+        # BulkEditAssignedTargetingOptions * BulkUpdate * UpdateLineItem *
+        # DeleteLineItemAssignedTargetingOption
         # @param [Fixnum] advertiser_id
         #   Required. The ID of the advertiser the line item belongs to.
         # @param [Fixnum] line_item_id
         #   Required. The ID of the line item the assigned targeting option will belong to.
         # @param [String] targeting_type
-        #   Required. Identifies the type of this assigned targeting option.
+        #   Required. Identifies the type of this assigned targeting option. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY`
         # @param [Google::Apis::DisplayvideoV1::AssignedTargetingOption] assigned_targeting_option_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -2294,13 +2390,41 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes an assigned targeting option from a line item.
+        # Deletes an assigned targeting option from a line item. Requests to this
+        # endpoint cannot be made concurrently with the following requests updating the
+        # same line item: * BulkEditAssignedTargetingOptions * BulkUpdate *
+        # UpdateLineItem * CreateLineItemAssignedTargetingOption
         # @param [Fixnum] advertiser_id
         #   Required. The ID of the advertiser the line item belongs to.
         # @param [Fixnum] line_item_id
         #   Required. The ID of the line item the assigned targeting option belongs to.
         # @param [String] targeting_type
-        #   Required. Identifies the type of this assigned targeting option.
+        #   Required. Identifies the type of this assigned targeting option. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY`
         # @param [String] assigned_targeting_option_id
         #   Required. The ID of the assigned targeting option to delete.
         # @param [String] fields
@@ -2339,7 +2463,35 @@ module Google
         # @param [Fixnum] line_item_id
         #   Required. The ID of the line item the assigned targeting option belongs to.
         # @param [String] targeting_type
-        #   Required. Identifies the type of this assigned targeting option.
+        #   Required. Identifies the type of this assigned targeting option. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for `
+        #   LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) * `
+        #   TARGETING_TYPE_YOUTUBE_VIDEO` (only for `
+        #   LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items)
         # @param [String] assigned_targeting_option_id
         #   Required. An identifier unique to the targeting type in this line item that
         #   identifies the assigned targeting option being requested.
@@ -2379,7 +2531,35 @@ module Google
         # @param [Fixnum] line_item_id
         #   Required. The ID of the line item to list assigned targeting options for.
         # @param [String] targeting_type
-        #   Required. Identifies the type of assigned targeting options to list.
+        #   Required. Identifies the type of assigned targeting options to list. Supported
+        #   targeting types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
+        #   `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` * `
+        #   TARGETING_TYPE_AUDIO_CONTENT_TYPE` * `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS`
+        #   * `TARGETING_TYPE_BROWSER` * `TARGETING_TYPE_BUSINESS_CHAIN` * `
+        #   TARGETING_TYPE_CARRIER_AND_ISP` * `TARGETING_TYPE_CATEGORY` * `
+        #   TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_CONTENT_DURATION` * `
+        #   TARGETING_TYPE_CONTENT_GENRE` * `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `
+        #   TARGETING_TYPE_CONTENT_STREAM_TYPE` * `TARGETING_TYPE_DAY_AND_TIME` * `
+        #   TARGETING_TYPE_DEVICE_MAKE_MODEL` * `TARGETING_TYPE_DEVICE_TYPE` * `
+        #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_ENVIRONMENT`
+        #   * `TARGETING_TYPE_EXCHANGE` * `TARGETING_TYPE_GENDER` * `
+        #   TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` * `
+        #   TARGETING_TYPE_INVENTORY_SOURCE` * `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `
+        #   TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` * `
+        #   TARGETING_TYPE_NATIVE_CONTENT_POSITION` * `
+        #   TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` * `
+        #   TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` * `
+        #   TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_POI` * `
+        #   TARGETING_TYPE_PROXIMITY_LOCATION_LIST` * `
+        #   TARGETING_TYPE_REGIONAL_LOCATION_LIST` * `
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_SUB_EXCHANGE` *
+        #   `TARGETING_TYPE_THIRD_PARTY_VERIFIER` * `TARGETING_TYPE_URL` * `
+        #   TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` * `
+        #   TARGETING_TYPE_VIEWABILITY` * `TARGETING_TYPE_YOUTUBE_CHANNEL` (only for `
+        #   LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items) * `
+        #   TARGETING_TYPE_YOUTUBE_VIDEO` (only for `
+        #   LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_VIDEO_SEQUENCE` line items)
         # @param [String] filter
         #   Allows filtering by assigned targeting option properties. Supported syntax: *
         #   Filter expressions are made up of one or more restrictions. * Restrictions can
@@ -2525,7 +2705,7 @@ module Google
         #   descending order for a field, a suffix "desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. Defaults to `100` if not
+        #   Requested page size. Must be between `1` and `200`. Defaults to `100` if not
         #   set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -2732,7 +2912,7 @@ module Google
         #   for a field, a suffix " desc" should be added to the field name. Example: `
         #   assignedLocationId desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -2933,7 +3113,7 @@ module Google
         #   descending order for a field, a suffix "desc" should be added to the field
         #   name. For example, `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -3121,7 +3301,7 @@ module Google
         #   Required. The ID of the DV360 advertiser to which the fetched negative keyword
         #   lists belong.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. Defaults to `100` if not
+        #   Requested page size. Must be between `1` and `200`. Defaults to `100` if not
         #   set. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -3504,7 +3684,8 @@ module Google
         #   Required. Identifies the type of this assigned targeting option. Supported
         #   targeting types: * `TARGETING_TYPE_CHANNEL` * `
         #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `
-        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` *
+        #   `TARGETING_TYPE_YOUTUBE_CHANNEL`
         # @param [String] assigned_targeting_option_id
         #   Required. An identifier unique to the targeting type in this advertiser that
         #   identifies the assigned targeting option being requested.
@@ -3544,7 +3725,8 @@ module Google
         #   Required. Identifies the type of assigned targeting options to list. Supported
         #   targeting types: * `TARGETING_TYPE_CHANNEL` * `
         #   TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `
-        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+        #   TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_YOUTUBE_VIDEO` *
+        #   `TARGETING_TYPE_YOUTUBE_CHANNEL`
         # @param [String] filter
         #   Allows filtering by assigned targeting option properties. Supported syntax: *
         #   Filter expressions are made up of one or more restrictions. * Restrictions can
@@ -3652,7 +3834,7 @@ module Google
         #   descending order for a field, a suffix "desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -3689,6 +3871,37 @@ module Google
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new custom bidding algorithm. Returns the newly created custom
+        # bidding algorithm if successful.
+        # @param [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm] custom_bidding_algorithm_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_custom_bidding_algorithm(custom_bidding_algorithm_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/customBiddingAlgorithms', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm::Representation
+          command.request_object = custom_bidding_algorithm_object
+          command.response_representation = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3742,26 +3955,21 @@ module Google
         #   restriction has the form of ``field` `operator` `value``. * The operator must
         #   be `CONTAINS (:)` or `EQUALS (=)`. * The operator must be `CONTAINS (:)` for
         #   the following field: - `displayName` * The operator must be `EQUALS (=)` for
-        #   the following field: - `customBiddingAlgorithmType` - `
-        #   customBiddingAlgorithmState` * For `displayName`, the value is a string. We
-        #   return all custom bidding algorithms whose display_name contains such string. *
-        #   For `customBiddingAlgorithmType`, the value is a string. We return all
-        #   algorithms whose custom_bidding_algorithm_type is equal to the given type. *
-        #   For `customBiddingAlgorithmState`, the value is a string. We return all
-        #   algorithms whose custom_bidding_algorithm_state is equal to the given type.
-        #   Examples: * All custom bidding algorithms for which the display name contains "
-        #   politics": `displayName:politics`. * All custom bidding algorithms for which
-        #   the type is "SCRIPT_BASED": `customBiddingAlgorithmType=SCRIPT_BASED` * All
-        #   custom bidding algorithms for which the state is "ENABLED": `
-        #   customBiddingAlgorithmState=ENABLED` The length of this field should be no
-        #   more than 500 characters.
+        #   the following field: - `customBiddingAlgorithmType` * For `displayName`, the
+        #   value is a string. We return all custom bidding algorithms whose display_name
+        #   contains such string. * For `customBiddingAlgorithmType`, the value is a
+        #   string. We return all algorithms whose custom_bidding_algorithm_type is equal
+        #   to the given type. Examples: * All custom bidding algorithms for which the
+        #   display name contains "politics": `displayName:politics`. * All custom bidding
+        #   algorithms for which the type is "SCRIPT_BASED": `customBiddingAlgorithmType=
+        #   SCRIPT_BASED` The length of this field should be no more than 500 characters.
         # @param [String] order_by
         #   Field by which to sort the list. Acceptable values are: * `displayName` (
         #   default) The default sorting order is ascending. To specify descending order
         #   for a field, a suffix "desc" should be added to the field name. Example: `
         #   displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -3794,6 +4002,219 @@ module Google
           command.response_class = Google::Apis::DisplayvideoV1::ListCustomBiddingAlgorithmsResponse
           command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
           command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing custom bidding algorithm. Returns the updated custom
+        # bidding algorithm if successful.
+        # @param [Fixnum] custom_bidding_algorithm_id
+        #   Output only. The unique ID of the custom bidding algorithm. Assigned by the
+        #   system.
+        # @param [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm] custom_bidding_algorithm_object
+        # @param [String] update_mask
+        #   Required. The mask to control which fields to update.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_custom_bidding_algorithm(custom_bidding_algorithm_id, custom_bidding_algorithm_object = nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm::Representation
+          command.request_object = custom_bidding_algorithm_object
+          command.response_representation = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::CustomBiddingAlgorithm
+          command.params['customBiddingAlgorithmId'] = custom_bidding_algorithm_id unless custom_bidding_algorithm_id.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a custom bidding script reference object for a script file. The
+        # resulting reference object provides a resource path to which the script file
+        # should be uploaded. This reference object should be included in when creating
+        # a new custom bidding script object.
+        # @param [Fixnum] custom_bidding_algorithm_id
+        #   Required. The ID of the custom bidding algorithm owns the script.
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that owns the parent custom bidding algorithm.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that owns the parent custom bidding algorithm. Only this
+        #   partner will have write access to this custom bidding script.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::CustomBiddingScriptRef] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingScriptRef]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def upload_custom_bidding_algorithm_script(custom_bidding_algorithm_id, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}:uploadScript', options)
+          command.response_representation = Google::Apis::DisplayvideoV1::CustomBiddingScriptRef::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::CustomBiddingScriptRef
+          command.params['customBiddingAlgorithmId'] = custom_bidding_algorithm_id unless custom_bidding_algorithm_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new custom bidding script. Returns the newly created script if
+        # successful.
+        # @param [Fixnum] custom_bidding_algorithm_id
+        #   Required. The ID of the custom bidding algorithm that owns the script.
+        # @param [Google::Apis::DisplayvideoV1::CustomBiddingScript] custom_bidding_script_object
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that owns the parent custom bidding algorithm.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that owns the parent custom bidding algorithm. Only this
+        #   partner will have write access to this custom bidding script.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::CustomBiddingScript] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingScript]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_custom_bidding_algorithm_script(custom_bidding_algorithm_id, custom_bidding_script_object = nil, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}/scripts', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::CustomBiddingScript::Representation
+          command.request_object = custom_bidding_script_object
+          command.response_representation = Google::Apis::DisplayvideoV1::CustomBiddingScript::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::CustomBiddingScript
+          command.params['customBiddingAlgorithmId'] = custom_bidding_algorithm_id unless custom_bidding_algorithm_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a custom bidding script.
+        # @param [Fixnum] custom_bidding_algorithm_id
+        #   Required. The ID of the custom bidding algorithm owns the script.
+        # @param [Fixnum] custom_bidding_script_id
+        #   Required. The ID of the custom bidding script to fetch.
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that owns the parent custom bidding algorithm.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that owns the parent custom bidding algorithm. Only this
+        #   partner will have write access to this custom bidding script.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::CustomBiddingScript] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::CustomBiddingScript]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_custom_bidding_algorithm_script(custom_bidding_algorithm_id, custom_bidding_script_id, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}/scripts/{+customBiddingScriptId}', options)
+          command.response_representation = Google::Apis::DisplayvideoV1::CustomBiddingScript::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::CustomBiddingScript
+          command.params['customBiddingAlgorithmId'] = custom_bidding_algorithm_id unless custom_bidding_algorithm_id.nil?
+          command.params['customBiddingScriptId'] = custom_bidding_script_id unless custom_bidding_script_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists custom bidding scripts that belong to the given algorithm. The order is
+        # defined by the order_by parameter.
+        # @param [Fixnum] custom_bidding_algorithm_id
+        #   Required. The ID of the custom bidding algorithm owns the script.
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that owns the parent custom bidding algorithm.
+        # @param [String] order_by
+        #   Field by which to sort the list. Acceptable values are: * `createTime desc` (
+        #   default) The default sorting order is descending. To specify ascending order
+        #   for a field, the suffix "desc" should be removed. Example: `createTime`.
+        # @param [Fixnum] page_size
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
+        #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
+        #   specified.
+        # @param [String] page_token
+        #   A token identifying a page of results the server should return. Typically,
+        #   this is the value of next_page_token returned from the previous call to `
+        #   ListCustomBiddingScripts` method. If not specified, the first page of results
+        #   will be returned.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that owns the parent custom bidding algorithm. Only this
+        #   partner will have write access to this custom bidding script.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::ListCustomBiddingScriptsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::ListCustomBiddingScriptsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_custom_bidding_algorithm_scripts(custom_bidding_algorithm_id, advertiser_id: nil, order_by: nil, page_size: nil, page_token: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/customBiddingAlgorithms/{+customBiddingAlgorithmId}/scripts', options)
+          command.response_representation = Google::Apis::DisplayvideoV1::ListCustomBiddingScriptsResponse::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::ListCustomBiddingScriptsResponse
+          command.params['customBiddingAlgorithmId'] = custom_bidding_algorithm_id unless custom_bidding_algorithm_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
           command.query['orderBy'] = order_by unless order_by.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
@@ -3852,7 +4273,7 @@ module Google
         #   descending order for a field, a suffix "desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -3886,6 +4307,77 @@ module Google
           command.query['orderBy'] = order_by unless order_by.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a FirstAndThirdPartyAudience. Only supported for the following
+        # audience_type: * `CUSTOMER_MATCH_CONTACT_INFO` * `CUSTOMER_MATCH_DEVICE_ID`
+        # @param [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience] first_and_third_party_audience_object
+        # @param [Fixnum] advertiser_id
+        #   Required. The ID of the advertiser under whom the FirstAndThirdPartyAudience
+        #   will be created.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_first_and_third_party_audience(first_and_third_party_audience_object = nil, advertiser_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/firstAndThirdPartyAudiences', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience::Representation
+          command.request_object = first_and_third_party_audience_object
+          command.response_representation = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates the member list of a Customer Match audience. Only supported for the
+        # following audience_type: * `CUSTOMER_MATCH_CONTACT_INFO` * `
+        # CUSTOMER_MATCH_DEVICE_ID`
+        # @param [Fixnum] first_and_third_party_audience_id
+        #   Required. The ID of the Customer Match FirstAndThirdPartyAudience whose
+        #   members will be edited.
+        # @param [Google::Apis::DisplayvideoV1::EditCustomerMatchMembersRequest] edit_customer_match_members_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::EditCustomerMatchMembersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::EditCustomerMatchMembersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def edit_first_and_third_party_audience_customer_match_members(first_and_third_party_audience_id, edit_customer_match_members_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}:editCustomerMatchMembers', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::EditCustomerMatchMembersRequest::Representation
+          command.request_object = edit_customer_match_members_request_object
+          command.response_representation = Google::Apis::DisplayvideoV1::EditCustomerMatchMembersResponse::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::EditCustomerMatchMembersResponse
+          command.params['firstAndThirdPartyAudienceId'] = first_and_third_party_audience_id unless first_and_third_party_audience_id.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3948,7 +4440,7 @@ module Google
         #   order is ascending. To specify descending order for a field, a suffix "desc"
         #   should be added to the field name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -3986,6 +4478,51 @@ module Google
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing FirstAndThirdPartyAudience. Only supported for the
+        # following audience_type: * `CUSTOMER_MATCH_CONTACT_INFO` * `
+        # CUSTOMER_MATCH_DEVICE_ID`
+        # @param [Fixnum] first_and_third_party_audience_id
+        #   Output only. The unique ID of the first and third party audience. Assigned by
+        #   the system.
+        # @param [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience] first_and_third_party_audience_object
+        # @param [Fixnum] advertiser_id
+        #   Required. The ID of the owner advertiser of the updated
+        #   FirstAndThirdPartyAudience.
+        # @param [String] update_mask
+        #   Required. The mask to control which fields to update. Updates are only
+        #   supported for the following fields: * `displayName` * `description` * `
+        #   membershipDurationDays`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_first_and_third_party_audience(first_and_third_party_audience_id, first_and_third_party_audience_object = nil, advertiser_id: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/firstAndThirdPartyAudiences/{+firstAndThirdPartyAudienceId}', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience::Representation
+          command.request_object = first_and_third_party_audience_object
+          command.response_representation = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::FirstAndThirdPartyAudience
+          command.params['firstAndThirdPartyAudienceId'] = first_and_third_party_audience_id unless first_and_third_party_audience_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -4117,7 +4654,7 @@ module Google
         #   descending order for a field, a suffix "desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -4154,6 +4691,222 @@ module Google
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new guaranteed order. Returns the newly created guaranteed order if
+        # successful.
+        # @param [Google::Apis::DisplayvideoV1::GuaranteedOrder] guaranteed_order_object
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that the request is being made within.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that the request is being made within.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::GuaranteedOrder] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::GuaranteedOrder]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_guaranteed_order(guaranteed_order_object = nil, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/guaranteedOrders', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
+          command.request_object = guaranteed_order_object
+          command.response_representation = Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::GuaranteedOrder
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Edits read advertisers of a guaranteed order.
+        # @param [String] guaranteed_order_id
+        #   Required. The ID of the guaranteed order to edit. The ID is of the format ``
+        #   exchange`-`legacy_guaranteed_order_id``
+        # @param [Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsRequest] edit_guaranteed_order_read_accessors_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def edit_guaranteed_order_read_accessors(guaranteed_order_id, edit_guaranteed_order_read_accessors_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/guaranteedOrders/{+guaranteedOrderId}:editGuaranteedOrderReadAccessors', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsRequest::Representation
+          command.request_object = edit_guaranteed_order_read_accessors_request_object
+          command.response_representation = Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsResponse::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::EditGuaranteedOrderReadAccessorsResponse
+          command.params['guaranteedOrderId'] = guaranteed_order_id unless guaranteed_order_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets a guaranteed order.
+        # @param [String] guaranteed_order_id
+        #   Required. The ID of the guaranteed order to fetch. The ID is of the format ``
+        #   exchange`-`legacy_guaranteed_order_id``
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that has access to the guaranteed order.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that has access to the guaranteed order.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::GuaranteedOrder] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::GuaranteedOrder]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_guaranteed_order(guaranteed_order_id, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/guaranteedOrders/{+guaranteedOrderId}', options)
+          command.response_representation = Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::GuaranteedOrder
+          command.params['guaranteedOrderId'] = guaranteed_order_id unless guaranteed_order_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists guaranteed orders that are accessible to the current user. The order is
+        # defined by the order_by parameter. If a filter by entity_status is not
+        # specified, guaranteed orders with entity status `ENTITY_STATUS_ARCHIVED` will
+        # not be included in the results.
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that has access to the guaranteed order.
+        # @param [String] filter
+        #   Allows filtering by guaranteed order properties. * Filter expressions are made
+        #   up of one or more restrictions. * Restrictions can be combined by `AND` or `OR`
+        #   logical operators. A sequence of restrictions implicitly uses `AND`. * A
+        #   restriction has the form of ``field` `operator` `value``. * The operator must
+        #   be `EQUALS (=)`. * Supported fields: - `guaranteed_order_id` - `exchange` - `
+        #   display_name` - `status.entityStatus` Examples: * All active guaranteed orders:
+        #   `status.entityStatus="ENTITY_STATUS_ACTIVE"` * Guaranteed orders belonging to
+        #   Google Ad Manager or Rubicon exchanges: `exchange="EXCHANGE_GOOGLE_AD_MANAGER"
+        #   OR exchange="EXCHANGE_RUBICON"` The length of this field should be no more
+        #   than 500 characters.
+        # @param [String] order_by
+        #   Field by which to sort the list. Acceptable values are: * `displayName` (
+        #   default) The default sorting order is ascending. To specify descending order
+        #   for a field, a suffix "desc" should be added to the field name. For example, `
+        #   displayName desc`.
+        # @param [Fixnum] page_size
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
+        #   default to `100`.
+        # @param [String] page_token
+        #   A token identifying a page of results the server should return. Typically,
+        #   this is the value of next_page_token returned from the previous call to `
+        #   ListGuaranteedOrders` method. If not specified, the first page of results will
+        #   be returned.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that has access to the guaranteed order.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::ListGuaranteedOrdersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::ListGuaranteedOrdersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_guaranteed_orders(advertiser_id: nil, filter: nil, order_by: nil, page_size: nil, page_token: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1/guaranteedOrders', options)
+          command.response_representation = Google::Apis::DisplayvideoV1::ListGuaranteedOrdersResponse::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::ListGuaranteedOrdersResponse
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['filter'] = filter unless filter.nil?
+          command.query['orderBy'] = order_by unless order_by.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Updates an existing guaranteed order. Returns the updated guaranteed order if
+        # successful.
+        # @param [String] guaranteed_order_id
+        #   Output only. The unique identifier of the guaranteed order. The guaranteed
+        #   order IDs have the format ``exchange`-`legacy_guaranteed_order_id``.
+        # @param [Google::Apis::DisplayvideoV1::GuaranteedOrder] guaranteed_order_object
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that the request is being made within.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that the request is being made within.
+        # @param [String] update_mask
+        #   Required. The mask to control which fields to update.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::GuaranteedOrder] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::GuaranteedOrder]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_guaranteed_order(guaranteed_order_id, guaranteed_order_object = nil, advertiser_id: nil, partner_id: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/guaranteedOrders/{+guaranteedOrderId}', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
+          command.request_object = guaranteed_order_object
+          command.response_representation = Google::Apis::DisplayvideoV1::GuaranteedOrder::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::GuaranteedOrder
+          command.params['guaranteedOrderId'] = guaranteed_order_id unless guaranteed_order_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -4295,7 +5048,7 @@ module Google
         #   specify descending order for a field, a suffix "desc" should be added to the
         #   field name. For example, `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -4574,6 +5327,77 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates a new inventory source. Returns the newly created inventory source if
+        # successful.
+        # @param [Google::Apis::DisplayvideoV1::InventorySource] inventory_source_object
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that the request is being made within.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that the request is being made within.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::InventorySource] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::InventorySource]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_inventory_source(inventory_source_object = nil, advertiser_id: nil, partner_id: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/inventorySources', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::InventorySource::Representation
+          command.request_object = inventory_source_object
+          command.response_representation = Google::Apis::DisplayvideoV1::InventorySource::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::InventorySource
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Edits read/write accessors of an inventory source. Returns the updated
+        # read_write_accessors for the inventory source.
+        # @param [Fixnum] inventory_source_id
+        #   Required. The ID of inventory source to update.
+        # @param [Google::Apis::DisplayvideoV1::EditInventorySourceReadWriteAccessorsRequest] edit_inventory_source_read_write_accessors_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::InventorySourceAccessors] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::InventorySourceAccessors]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def edit_inventory_source_read_write_accessors(inventory_source_id, edit_inventory_source_read_write_accessors_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1/inventorySources/{+inventorySourceId}:editInventorySourceReadWriteAccessors', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::EditInventorySourceReadWriteAccessorsRequest::Representation
+          command.request_object = edit_inventory_source_read_write_accessors_request_object
+          command.response_representation = Google::Apis::DisplayvideoV1::InventorySourceAccessors::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::InventorySourceAccessors
+          command.params['inventorySourceId'] = inventory_source_id unless inventory_source_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets an inventory source.
         # @param [Fixnum] inventory_source_id
         #   Required. The ID of the inventory source to fetch.
@@ -4632,7 +5456,7 @@ module Google
         #   for a field, a suffix "desc" should be added to the field name. For example, `
         #   displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -4673,6 +5497,49 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Updates an existing inventory source. Returns the updated inventory source if
+        # successful.
+        # @param [Fixnum] inventory_source_id
+        #   Output only. The unique ID of the inventory source. Assigned by the system.
+        # @param [Google::Apis::DisplayvideoV1::InventorySource] inventory_source_object
+        # @param [Fixnum] advertiser_id
+        #   The ID of the advertiser that the request is being made within.
+        # @param [Fixnum] partner_id
+        #   The ID of the partner that the request is being made within.
+        # @param [String] update_mask
+        #   Required. The mask to control which fields to update.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::InventorySource] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::InventorySource]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def patch_inventory_source(inventory_source_id, inventory_source_object = nil, advertiser_id: nil, partner_id: nil, update_mask: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:patch, 'v1/inventorySources/{+inventorySourceId}', options)
+          command.request_representation = Google::Apis::DisplayvideoV1::InventorySource::Representation
+          command.request_object = inventory_source_object
+          command.response_representation = Google::Apis::DisplayvideoV1::InventorySource::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::InventorySource
+          command.params['inventorySourceId'] = inventory_source_id unless inventory_source_id.nil?
+          command.query['advertiserId'] = advertiser_id unless advertiser_id.nil?
+          command.query['partnerId'] = partner_id unless partner_id.nil?
+          command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Downloads media. Download is supported on the URI `/download/`resource_name=**`
         # ?alt=media.` **Note**: Download requests will not be successful without
         # including `alt=media` query string.
@@ -4704,6 +5571,51 @@ module Google
             command = make_download_command(:get, 'download/{+resourceName}', options)
             command.download_dest = download_dest
           end
+          command.response_representation = Google::Apis::DisplayvideoV1::GoogleBytestreamMedia::Representation
+          command.response_class = Google::Apis::DisplayvideoV1::GoogleBytestreamMedia
+          command.params['resourceName'] = resource_name unless resource_name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Uploads media. Upload is supported on the URI `/upload/media/`resource_name=**`
+        # ?upload_type=media.` **Note**: Upload requests will not be successful without
+        # including `upload_type=media` query string.
+        # @param [String] resource_name
+        #   Name of the media that is being downloaded. See ReadRequest.resource_name.
+        # @param [Google::Apis::DisplayvideoV1::GoogleBytestreamMedia] google_bytestream_media_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [IO, String] upload_source
+        #   IO stream or filename containing content to upload
+        # @param [String] content_type
+        #   Content type of the uploaded content.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DisplayvideoV1::GoogleBytestreamMedia] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DisplayvideoV1::GoogleBytestreamMedia]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def upload_medium(resource_name, google_bytestream_media_object = nil, fields: nil, quota_user: nil, upload_source: nil, content_type: nil, options: nil, &block)
+          if upload_source.nil?
+            command = make_simple_command(:post, 'media/{+resourceName}', options)
+          else
+            command = make_upload_command(:post, 'media/{+resourceName}', options)
+            command.upload_source = upload_source
+            command.upload_content_type = content_type
+          end
+          command.request_representation = Google::Apis::DisplayvideoV1::GoogleBytestreamMedia::Representation
+          command.request_object = google_bytestream_media_object
           command.response_representation = Google::Apis::DisplayvideoV1::GoogleBytestreamMedia::Representation
           command.response_class = Google::Apis::DisplayvideoV1::GoogleBytestreamMedia
           command.params['resourceName'] = resource_name unless resource_name.nil?
@@ -4795,7 +5707,7 @@ module Google
         #   suffix "desc" should be added to the field name. For example, `displayName
         #   desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,
@@ -4922,7 +5834,7 @@ module Google
         #   descending order for a field, a suffix " desc" should be added to the field
         #   name. Example: `displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -5351,7 +6263,7 @@ module Google
         #   To specify descending order for a field, a suffix "desc" should be added to
         #   the field name. Example: `assignedTargetingOptionId desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -5548,7 +6460,7 @@ module Google
         #   for a field, a suffix "desc" should be added to the field name. Example: `
         #   targetingOptionId desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is
         #   specified.
         # @param [String] page_token
@@ -5779,7 +6691,7 @@ module Google
         #   for a field, a suffix "desc" should be added to the field name. For example, `
         #   displayName desc`.
         # @param [Fixnum] page_size
-        #   Requested page size. Must be between `1` and `100`. If unspecified will
+        #   Requested page size. Must be between `1` and `200`. If unspecified will
         #   default to `100`.
         # @param [String] page_token
         #   A token identifying a page of results the server should return. Typically,

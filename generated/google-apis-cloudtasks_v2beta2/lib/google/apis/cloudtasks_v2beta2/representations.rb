@@ -58,6 +58,18 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class BufferTaskRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class BufferTaskResponse
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class CancelLeaseRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -89,6 +101,36 @@ module Google
       end
       
       class GetPolicyOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Header
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HeaderOverride
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HttpBody
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HttpRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HttpTarget
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -130,6 +172,24 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class OAuthToken
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class OidcToken
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PathOverride
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class PauseQueueRequest
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -155,6 +215,12 @@ module Google
       end
       
       class PurgeQueueRequest
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class QueryOverride
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -238,6 +304,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class UriOverride
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class AcknowledgeTaskRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -296,6 +368,22 @@ module Google
         end
       end
       
+      class BufferTaskRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :body, as: 'body', class: Google::Apis::CloudtasksV2beta2::HttpBody, decorator: Google::Apis::CloudtasksV2beta2::HttpBody::Representation
+      
+        end
+      end
+      
+      class BufferTaskResponse
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :task, as: 'task', class: Google::Apis::CloudtasksV2beta2::Task, decorator: Google::Apis::CloudtasksV2beta2::Task::Representation
+      
+        end
+      end
+      
       class CancelLeaseRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -341,6 +429,60 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :requested_policy_version, as: 'requestedPolicyVersion'
+        end
+      end
+      
+      class Header
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :key, as: 'key'
+          property :value, as: 'value'
+        end
+      end
+      
+      class HeaderOverride
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :header, as: 'header', class: Google::Apis::CloudtasksV2beta2::Header, decorator: Google::Apis::CloudtasksV2beta2::Header::Representation
+      
+        end
+      end
+      
+      class HttpBody
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :content_type, as: 'contentType'
+          property :data, :base64 => true, as: 'data'
+          collection :extensions, as: 'extensions'
+        end
+      end
+      
+      class HttpRequest
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :body, :base64 => true, as: 'body'
+          hash :headers, as: 'headers'
+          property :http_method, as: 'httpMethod'
+          property :oauth_token, as: 'oauthToken', class: Google::Apis::CloudtasksV2beta2::OAuthToken, decorator: Google::Apis::CloudtasksV2beta2::OAuthToken::Representation
+      
+          property :oidc_token, as: 'oidcToken', class: Google::Apis::CloudtasksV2beta2::OidcToken, decorator: Google::Apis::CloudtasksV2beta2::OidcToken::Representation
+      
+          property :url, as: 'url'
+        end
+      end
+      
+      class HttpTarget
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :header_overrides, as: 'headerOverrides', class: Google::Apis::CloudtasksV2beta2::HeaderOverride, decorator: Google::Apis::CloudtasksV2beta2::HeaderOverride::Representation
+      
+          property :http_method, as: 'httpMethod'
+          property :oauth_token, as: 'oauthToken', class: Google::Apis::CloudtasksV2beta2::OAuthToken, decorator: Google::Apis::CloudtasksV2beta2::OAuthToken::Representation
+      
+          property :oidc_token, as: 'oidcToken', class: Google::Apis::CloudtasksV2beta2::OidcToken, decorator: Google::Apis::CloudtasksV2beta2::OidcToken::Representation
+      
+          property :uri_override, as: 'uriOverride', class: Google::Apis::CloudtasksV2beta2::UriOverride, decorator: Google::Apis::CloudtasksV2beta2::UriOverride::Representation
+      
         end
       end
       
@@ -400,6 +542,29 @@ module Google
         end
       end
       
+      class OAuthToken
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :scope, as: 'scope'
+          property :service_account_email, as: 'serviceAccountEmail'
+        end
+      end
+      
+      class OidcToken
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :audience, as: 'audience'
+          property :service_account_email, as: 'serviceAccountEmail'
+        end
+      end
+      
+      class PathOverride
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :path, as: 'path'
+        end
+      end
+      
       class PauseQueueRequest
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -436,10 +601,19 @@ module Google
         end
       end
       
+      class QueryOverride
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :query_params, as: 'queryParams'
+        end
+      end
+      
       class Queue
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :app_engine_http_target, as: 'appEngineHttpTarget', class: Google::Apis::CloudtasksV2beta2::AppEngineHttpTarget, decorator: Google::Apis::CloudtasksV2beta2::AppEngineHttpTarget::Representation
+      
+          property :http_target, as: 'httpTarget', class: Google::Apis::CloudtasksV2beta2::HttpTarget, decorator: Google::Apis::CloudtasksV2beta2::HttpTarget::Representation
       
           property :name, as: 'name'
           property :pull_target, as: 'pullTarget', class: Google::Apis::CloudtasksV2beta2::PullTarget, decorator: Google::Apis::CloudtasksV2beta2::PullTarget::Representation
@@ -534,6 +708,8 @@ module Google
           property :app_engine_http_request, as: 'appEngineHttpRequest', class: Google::Apis::CloudtasksV2beta2::AppEngineHttpRequest, decorator: Google::Apis::CloudtasksV2beta2::AppEngineHttpRequest::Representation
       
           property :create_time, as: 'createTime'
+          property :http_request, as: 'httpRequest', class: Google::Apis::CloudtasksV2beta2::HttpRequest, decorator: Google::Apis::CloudtasksV2beta2::HttpRequest::Representation
+      
           property :name, as: 'name'
           property :pull_message, as: 'pullMessage', class: Google::Apis::CloudtasksV2beta2::PullMessage, decorator: Google::Apis::CloudtasksV2beta2::PullMessage::Representation
       
@@ -567,6 +743,20 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :permissions, as: 'permissions'
+        end
+      end
+      
+      class UriOverride
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :host, as: 'host'
+          property :path_override, as: 'pathOverride', class: Google::Apis::CloudtasksV2beta2::PathOverride, decorator: Google::Apis::CloudtasksV2beta2::PathOverride::Representation
+      
+          property :port, :numeric_string => true, as: 'port'
+          property :query_override, as: 'queryOverride', class: Google::Apis::CloudtasksV2beta2::QueryOverride, decorator: Google::Apis::CloudtasksV2beta2::QueryOverride::Representation
+      
+          property :scheme, as: 'scheme'
+          property :uri_override_enforce_mode, as: 'uriOverrideEnforceMode'
         end
       end
     end

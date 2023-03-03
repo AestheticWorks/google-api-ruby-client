@@ -31,6 +31,11 @@ module Google
         # @return [Array<Google::Apis::StorageV1::BucketAccessControl>]
         attr_accessor :acl
       
+        # The bucket's Autoclass configuration.
+        # Corresponds to the JSON property `autoclass`
+        # @return [Google::Apis::StorageV1::Bucket::Autoclass]
+        attr_accessor :autoclass
+      
         # The bucket's billing configuration.
         # Corresponds to the JSON property `billing`
         # @return [Google::Apis::StorageV1::Bucket::Billing]
@@ -212,6 +217,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @acl = args[:acl] if args.key?(:acl)
+          @autoclass = args[:autoclass] if args.key?(:autoclass)
           @billing = args[:billing] if args.key?(:billing)
           @cors_configurations = args[:cors_configurations] if args.key?(:cors_configurations)
           @custom_placement_config = args[:custom_placement_config] if args.key?(:custom_placement_config)
@@ -240,6 +246,33 @@ module Google
           @updated = args[:updated] if args.key?(:updated)
           @versioning = args[:versioning] if args.key?(:versioning)
           @website = args[:website] if args.key?(:website)
+        end
+        
+        # The bucket's Autoclass configuration.
+        class Autoclass
+          include Google::Apis::Core::Hashable
+        
+          # Whether or not Autoclass is enabled on this bucket
+          # Corresponds to the JSON property `enabled`
+          # @return [Boolean]
+          attr_accessor :enabled
+          alias_method :enabled?, :enabled
+        
+          # A date and time in RFC 3339 format representing the instant at which "enabled"
+          # was last toggled.
+          # Corresponds to the JSON property `toggleTime`
+          # @return [DateTime]
+          attr_accessor :toggle_time
+        
+          def initialize(**args)
+             update!(**args)
+          end
+        
+          # Update properties of this object
+          def update!(**args)
+            @enabled = args[:enabled] if args.key?(:enabled)
+            @toggle_time = args[:toggle_time] if args.key?(:toggle_time)
+          end
         end
         
         # The bucket's billing configuration.
@@ -356,7 +389,7 @@ module Google
           # @return [Google::Apis::StorageV1::Bucket::IamConfiguration::BucketPolicyOnly]
           attr_accessor :bucket_policy_only
         
-          # The bucket's Public Access Prevention configuration. Currently, 'unspecified'
+          # The bucket's Public Access Prevention configuration. Currently, 'inherited'
           # and 'enforced' are supported.
           # Corresponds to the JSON property `publicAccessPrevention`
           # @return [String]
@@ -494,7 +527,8 @@ module Google
               # @return [String]
               attr_accessor :storage_class
             
-              # Type of the action. Currently, only Delete and SetStorageClass are supported.
+              # Type of the action. Currently, only Delete, SetStorageClass, and
+              # AbortIncompleteMultipartUpload are supported.
               # Corresponds to the JSON property `type`
               # @return [String]
               attr_accessor :type
@@ -566,12 +600,24 @@ module Google
               # @return [String]
               attr_accessor :matches_pattern
             
+              # List of object name prefixes. This condition will be satisfied when at least
+              # one of the prefixes exactly matches the beginning of the object name.
+              # Corresponds to the JSON property `matchesPrefix`
+              # @return [Array<String>]
+              attr_accessor :matches_prefix
+            
               # Objects having any of the storage classes specified by this condition will be
               # matched. Values include MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, ARCHIVE,
               # STANDARD, and DURABLE_REDUCED_AVAILABILITY.
               # Corresponds to the JSON property `matchesStorageClass`
               # @return [Array<String>]
               attr_accessor :matches_storage_class
+            
+              # List of object name suffixes. This condition will be satisfied when at least
+              # one of the suffixes exactly matches the end of the object name.
+              # Corresponds to the JSON property `matchesSuffix`
+              # @return [Array<String>]
+              attr_accessor :matches_suffix
             
               # A date in RFC 3339 format with only the date part (for instance, "2013-01-15").
               # This condition is satisfied when the noncurrent time on an object is before
@@ -600,7 +646,9 @@ module Google
                 @days_since_noncurrent_time = args[:days_since_noncurrent_time] if args.key?(:days_since_noncurrent_time)
                 @is_live = args[:is_live] if args.key?(:is_live)
                 @matches_pattern = args[:matches_pattern] if args.key?(:matches_pattern)
+                @matches_prefix = args[:matches_prefix] if args.key?(:matches_prefix)
                 @matches_storage_class = args[:matches_storage_class] if args.key?(:matches_storage_class)
+                @matches_suffix = args[:matches_suffix] if args.key?(:matches_suffix)
                 @noncurrent_time_before = args[:noncurrent_time_before] if args.key?(:noncurrent_time_before)
                 @num_newer_versions = args[:num_newer_versions] if args.key?(:num_newer_versions)
               end
@@ -1566,7 +1614,11 @@ module Google
         # @return [DateTime]
         attr_accessor :time_storage_class_updated
       
-        # The modification time of the object metadata in RFC 3339 format.
+        # The modification time of the object metadata in RFC 3339 format. Set initially
+        # to object creation time and then updated whenever any metadata of the object
+        # changes. This includes changes made by a requester, such as modifying custom
+        # metadata, as well as changes made by Cloud Storage on behalf of a requester,
+        # such as changing the storage class based on an Object Lifecycle Configuration.
         # Corresponds to the JSON property `updated`
         # @return [DateTime]
         attr_accessor :updated

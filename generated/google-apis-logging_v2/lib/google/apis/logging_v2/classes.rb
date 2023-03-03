@@ -22,6 +22,29 @@ module Google
   module Apis
     module LoggingV2
       
+      # Describes a BigQuery dataset that was created by a link.
+      class BigQueryDataset
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The full resource name of the BigQuery dataset. The DATASET_ID
+        # will match the ID of the link, so the link must match the naming restrictions
+        # of BigQuery datasets (alphanumeric characters and underscores only).The
+        # dataset will have a resource path of "bigquery.googleapis.com/projects/
+        # PROJECT_ID/datasets/DATASET_ID"
+        # Corresponds to the JSON property `datasetId`
+        # @return [String]
+        attr_accessor :dataset_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dataset_id = args[:dataset_id] if args.key?(:dataset_id)
+        end
+      end
+      
       # Options that change functionality of a sink exporting data to BigQuery.
       class BigQueryOptions
         include Google::Apis::Core::Hashable
@@ -56,6 +79,49 @@ module Google
         def update!(**args)
           @use_partitioned_tables = args[:use_partitioned_tables] if args.key?(:use_partitioned_tables)
           @uses_timestamp_column_partitioning = args[:uses_timestamp_column_partitioning] if args.key?(:uses_timestamp_column_partitioning)
+        end
+      end
+      
+      # Metadata for LongRunningUpdateBucket Operations.
+      class BucketMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The parameters to CreateBucket.
+        # Corresponds to the JSON property `createBucketRequest`
+        # @return [Google::Apis::LoggingV2::CreateBucketRequest]
+        attr_accessor :create_bucket_request
+      
+        # The end time of an operation.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The create time of an operation.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        # State of an operation.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        # The parameters to UpdateBucket.
+        # Corresponds to the JSON property `updateBucketRequest`
+        # @return [Google::Apis::LoggingV2::UpdateBucketRequest]
+        attr_accessor :update_bucket_request
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_bucket_request = args[:create_bucket_request] if args.key?(:create_bucket_request)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @start_time = args[:start_time] if args.key?(:start_time)
+          @state = args[:state] if args.key?(:state)
+          @update_bucket_request = args[:update_bucket_request] if args.key?(:update_bucket_request)
         end
       end
       
@@ -131,43 +197,54 @@ module Google
       
       # Describes the customer-managed encryption key (CMEK) settings associated with
       # a project, folder, organization, billing account, or flexible resource.Note:
-      # CMEK for the Logs Router can currently only be configured for GCP
+      # CMEK for the Log Router can currently only be configured for Google Cloud
       # organizations. Once configured, it applies to all projects and folders in the
-      # GCP organization.See Enabling CMEK for Logs Router (https://cloud.google.com/
-      # logging/docs/routing/managed-encryption) for more information.
+      # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+      # google.com/logging/docs/routing/managed-encryption) for more information.
       class CmekSettings
         include Google::Apis::Core::Hashable
       
         # The resource name for the configured Cloud KMS key.KMS key name format: "
         # projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoKeys/[KEY]"
         # For example:"projects/my-project/locations/us-central1/keyRings/my-ring/
-        # cryptoKeys/my-key"To enable CMEK for the Logs Router, set this field to a
-        # valid kms_key_name for which the associated service account has the required
-        # roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.The Cloud
-        # KMS key used by the Log Router can be updated by changing the kms_key_name to
-        # a new valid key name. Encryption operations that are in progress will be
-        # completed with the key that was in use when they started. Decryption
-        # operations will be completed using the key that was used at the time of
-        # encryption unless access to that key has been revoked.To disable CMEK for the
-        # Logs Router, set this field to an empty string.See Enabling CMEK for Logs
-        # Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for
-        # more information.
+        # cryptoKeys/my-key"To enable CMEK for the Log Router, set this field to a valid
+        # kms_key_name for which the associated service account has the required
+        # cloudkms.cryptoKeyEncrypterDecrypter roles assigned for the key.The Cloud KMS
+        # key used by the Log Router can be updated by changing the kms_key_name to a
+        # new valid key name or disabled by setting the key name to an empty string.
+        # Encryption operations that are in progress will be completed with the key that
+        # was in use when they started. Decryption operations will be completed using
+        # the key that was used at the time of encryption unless access to that key has
+        # been revoked.To disable CMEK for the Log Router, set this field to an empty
+        # string.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/
+        # routing/managed-encryption) for more information.
         # Corresponds to the JSON property `kmsKeyName`
         # @return [String]
         attr_accessor :kms_key_name
+      
+        # The CryptoKeyVersion resource name for the configured Cloud KMS key.KMS key
+        # name format: "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/
+        # cryptoKeys/[KEY]/cryptoKeyVersions/[VERSION]" For example:"projects/my-project/
+        # locations/us-central1/keyRings/my-ring/cryptoKeys/my-key/cryptoKeyVersions/1"
+        # This is a read-only field used to convey the specific configured
+        # CryptoKeyVersion of kms_key that has been configured. It will be populated in
+        # cases where the CMEK settings are bound to a single key version.If this field
+        # is populated, the kms_key is tied to a specific CryptoKeyVersion.
+        # Corresponds to the JSON property `kmsKeyVersionName`
+        # @return [String]
+        attr_accessor :kms_key_version_name
       
         # Output only. The resource name of the CMEK settings.
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
       
-        # Output only. The service account that will be used by the Logs Router to
-        # access your Cloud KMS key.Before enabling CMEK for Logs Router, you must first
-        # assign the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the service
-        # account that the Logs Router will use to access your Cloud KMS key. Use
-        # GetCmekSettings to obtain the service account ID.See Enabling CMEK for Logs
-        # Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for
-        # more information.
+        # Output only. The service account that will be used by the Log Router to access
+        # your Cloud KMS key.Before enabling CMEK for Log Router, you must first assign
+        # the cloudkms.cryptoKeyEncrypterDecrypter role to the service account that the
+        # Log Router will use to access your Cloud KMS key. Use GetCmekSettings to
+        # obtain the service account ID.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
         # Corresponds to the JSON property `serviceAccountId`
         # @return [String]
         attr_accessor :service_account_id
@@ -179,6 +256,7 @@ module Google
         # Update properties of this object
         def update!(**args)
           @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
+          @kms_key_version_name = args[:kms_key_version_name] if args.key?(:kms_key_version_name)
           @name = args[:name] if args.key?(:name)
           @service_account_id = args[:service_account_id] if args.key?(:service_account_id)
         end
@@ -295,11 +373,106 @@ module Google
         end
       end
       
+      # The parameters to CreateBucket.
+      class CreateBucketRequest
+        include Google::Apis::Core::Hashable
+      
+        # Describes a repository in which log entries are stored.
+        # Corresponds to the JSON property `bucket`
+        # @return [Google::Apis::LoggingV2::LogBucket]
+        attr_accessor :bucket
+      
+        # Required. A client-assigned identifier such as "my-bucket". Identifiers are
+        # limited to 100 characters and can include only letters, digits, underscores,
+        # hyphens, and periods.
+        # Corresponds to the JSON property `bucketId`
+        # @return [String]
+        attr_accessor :bucket_id
+      
+        # Required. The resource in which to create the log bucket: "projects/[
+        # PROJECT_ID]/locations/[LOCATION_ID]" For example:"projects/my-project/
+        # locations/global"
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bucket = args[:bucket] if args.key?(:bucket)
+          @bucket_id = args[:bucket_id] if args.key?(:bucket_id)
+          @parent = args[:parent] if args.key?(:parent)
+        end
+      end
+      
+      # The parameters to CreateLink.
+      class CreateLinkRequest
+        include Google::Apis::Core::Hashable
+      
+        # Describes a link connected to an analytics enabled bucket.
+        # Corresponds to the JSON property `link`
+        # @return [Google::Apis::LoggingV2::Link]
+        attr_accessor :link
+      
+        # Required. The ID to use for the link. The link_id can have up to 100
+        # characters. A valid link_id must only have alphanumeric characters and
+        # underscores within it.
+        # Corresponds to the JSON property `linkId`
+        # @return [String]
+        attr_accessor :link_id
+      
+        # Required. The full resource name of the bucket to create a link for. "projects/
+        # [PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        # ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        # [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        # FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]"
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @link = args[:link] if args.key?(:link)
+          @link_id = args[:link_id] if args.key?(:link_id)
+          @parent = args[:parent] if args.key?(:parent)
+        end
+      end
+      
+      # The parameters to DeleteLink.
+      class DeleteLinkRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The full resource name of the link to delete."projects/PROJECT_ID/
+        # locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "organizations/
+        # ORGANIZATION_ID/locations/LOCATION_ID/buckets/BUCKET_ID/links/LINK_ID" "
+        # billingAccounts/BILLING_ACCOUNT_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # links/LINK_ID" "folders/FOLDER_ID/locations/LOCATION_ID/buckets/BUCKET_ID/
+        # links/LINK_ID"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # Empty is empty JSON object ``.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -492,6 +665,41 @@ module Google
         end
       end
       
+      # Configuration for an indexed field.
+      class IndexConfig
+        include Google::Apis::Core::Hashable
+      
+        # Output only. The timestamp when the index was last modified.This is used to
+        # return the timestamp, and will be ignored if supplied during update.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Required. The LogEntry field path to index.Note that some paths are
+        # automatically indexed, and other paths are not eligible for indexing. See
+        # indexing documentation( https://cloud.google.com/logging/docs/view/advanced-
+        # queries#indexed-fields) for details.For example: jsonPayload.request.status
+        # Corresponds to the JSON property `fieldPath`
+        # @return [String]
+        attr_accessor :field_path
+      
+        # Required. The type of data in this index.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @field_path = args[:field_path] if args.key?(:field_path)
+          @type = args[:type] if args.key?(:type)
+        end
+      end
+      
       # A description of a label.
       class LabelDescriptor
         include Google::Apis::Core::Hashable
@@ -558,6 +766,100 @@ module Google
         end
       end
       
+      # Describes a link connected to an analytics enabled bucket.
+      class Link
+        include Google::Apis::Core::Hashable
+      
+        # Describes a BigQuery dataset that was created by a link.
+        # Corresponds to the JSON property `bigqueryDataset`
+        # @return [Google::Apis::LoggingV2::BigQueryDataset]
+        attr_accessor :bigquery_dataset
+      
+        # Output only. The creation timestamp of the link.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Describes this link.The maximum length of the description is 8000 characters.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Output only. The resource lifecycle state.
+        # Corresponds to the JSON property `lifecycleState`
+        # @return [String]
+        attr_accessor :lifecycle_state
+      
+        # The resource name of the link. The name can have up to 100 characters. A valid
+        # link id (at the end of the link name) must only have alphanumeric characters
+        # and underscores within it. "projects/[PROJECT_ID]/locations/[LOCATION_ID]/
+        # buckets/[BUCKET_ID]/links/[LINK_ID]" "organizations/[ORGANIZATION_ID]/
+        # locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]" "billingAccounts/[
+        # BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[LINK_ID]
+        # " "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/links/[
+        # LINK_ID]" For example:`projects/my-project/locations/global/buckets/my-bucket/
+        # links/my_link
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bigquery_dataset = args[:bigquery_dataset] if args.key?(:bigquery_dataset)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @description = args[:description] if args.key?(:description)
+          @lifecycle_state = args[:lifecycle_state] if args.key?(:lifecycle_state)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # Metadata for long running Link operations.
+      class LinkMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The parameters to CreateLink.
+        # Corresponds to the JSON property `createLinkRequest`
+        # @return [Google::Apis::LoggingV2::CreateLinkRequest]
+        attr_accessor :create_link_request
+      
+        # The parameters to DeleteLink.
+        # Corresponds to the JSON property `deleteLinkRequest`
+        # @return [Google::Apis::LoggingV2::DeleteLinkRequest]
+        attr_accessor :delete_link_request
+      
+        # The end time of an operation.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # The start time of an operation.
+        # Corresponds to the JSON property `startTime`
+        # @return [String]
+        attr_accessor :start_time
+      
+        # State of an operation.
+        # Corresponds to the JSON property `state`
+        # @return [String]
+        attr_accessor :state
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_link_request = args[:create_link_request] if args.key?(:create_link_request)
+          @delete_link_request = args[:delete_link_request] if args.key?(:delete_link_request)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @start_time = args[:start_time] if args.key?(:start_time)
+          @state = args[:state] if args.key?(:state)
+        end
+      end
+      
       # The response from ListBuckets.
       class ListBucketsResponse
         include Google::Apis::Core::Hashable
@@ -612,6 +914,33 @@ module Google
         end
       end
       
+      # The response from ListLinks.
+      class ListLinksResponse
+        include Google::Apis::Core::Hashable
+      
+        # A list of links.
+        # Corresponds to the JSON property `links`
+        # @return [Array<Google::Apis::LoggingV2::Link>]
+        attr_accessor :links
+      
+        # If there might be more results than those appearing in this response, then
+        # nextPageToken is included. To get the next set of results, call the same
+        # method again using the value of nextPageToken as pageToken.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @links = args[:links] if args.key?(:links)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
       # The response message for Locations.ListLocations.
       class ListLocationsResponse
         include Google::Apis::Core::Hashable
@@ -641,12 +970,10 @@ module Google
       class ListLogEntriesRequest
         include Google::Apis::Core::Hashable
       
-        # Optional. A filter that chooses which log entries to return. See Advanced Logs
-        # Queries (https://cloud.google.com/logging/docs/view/advanced-queries). Only
-        # log entries that match the filter are returned. An empty filter matches all
-        # log entries in the resources listed in resource_names. Referencing a parent
-        # resource that is not listed in resource_names will cause the filter to return
-        # no results. The maximum length of the filter is 20000 characters.
+        # Optional. Only log entries that match the filter are returned. An empty filter
+        # matches all log entries in the resources listed in resource_names. Referencing
+        # a parent resource that is not listed in resource_names will cause the filter
+        # to return no results. The maximum length of a filter is 20,000 characters.
         # Corresponds to the JSON property `filter`
         # @return [String]
         attr_accessor :filter
@@ -692,7 +1019,8 @@ module Google
         # BUCKET_ID]/views/[VIEW_ID] billingAccounts/[BILLING_ACCOUNT_ID]/locations/[
         # LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID] folders/[FOLDER_ID]/locations/
         # [LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]Projects listed in the
-        # project_ids field are added to this list.
+        # project_ids field are added to this list. A maximum of 100 resources may be
+        # specified in a single request.
         # Corresponds to the JSON property `resourceNames`
         # @return [Array<String>]
         attr_accessor :resource_names
@@ -955,9 +1283,47 @@ module Google
         end
       end
       
+      # Cloud Logging specific location metadata.
+      class LocationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Indicates whether or not Log Analytics features are supported in the given
+        # location.
+        # Corresponds to the JSON property `logAnalyticsEnabled`
+        # @return [Boolean]
+        attr_accessor :log_analytics_enabled
+        alias_method :log_analytics_enabled?, :log_analytics_enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @log_analytics_enabled = args[:log_analytics_enabled] if args.key?(:log_analytics_enabled)
+        end
+      end
+      
       # Describes a repository in which log entries are stored.
       class LogBucket
         include Google::Apis::Core::Hashable
+      
+        # Whether log analytics is enabled for this bucket.Once enabled, log analytics
+        # features cannot be disabled.
+        # Corresponds to the JSON property `analyticsEnabled`
+        # @return [Boolean]
+        attr_accessor :analytics_enabled
+        alias_method :analytics_enabled?, :analytics_enabled
+      
+        # Describes the customer-managed encryption key (CMEK) settings associated with
+        # a project, folder, organization, billing account, or flexible resource.Note:
+        # CMEK for the Log Router can currently only be configured for Google Cloud
+        # organizations. Once configured, it applies to all projects and folders in the
+        # Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # Corresponds to the JSON property `cmekSettings`
+        # @return [Google::Apis::LoggingV2::CmekSettings]
+        attr_accessor :cmek_settings
       
         # Output only. The creation timestamp of the bucket. This is not set for any of
         # the default buckets.
@@ -969,6 +1335,11 @@ module Google
         # Corresponds to the JSON property `description`
         # @return [String]
         attr_accessor :description
+      
+        # A list of indexed fields and related configuration data.
+        # Corresponds to the JSON property `indexConfigs`
+        # @return [Array<Google::Apis::LoggingV2::IndexConfig>]
+        attr_accessor :index_configs
       
         # Output only. The bucket lifecycle state.
         # Corresponds to the JSON property `lifecycleState`
@@ -1019,8 +1390,11 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @analytics_enabled = args[:analytics_enabled] if args.key?(:analytics_enabled)
+          @cmek_settings = args[:cmek_settings] if args.key?(:cmek_settings)
           @create_time = args[:create_time] if args.key?(:create_time)
           @description = args[:description] if args.key?(:description)
+          @index_configs = args[:index_configs] if args.key?(:index_configs)
           @lifecycle_state = args[:lifecycle_state] if args.key?(:lifecycle_state)
           @locked = args[:locked] if args.key?(:locked)
           @name = args[:name] if args.key?(:name)
@@ -1126,9 +1500,9 @@ module Google
         # Information in the labels field identifies the actual resource and its
         # attributes according to the schema. For example, a particular Compute Engine
         # VM instance could be represented by the following object, because the
-        # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-        # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-        # zone": "us-central1-a" ``
+        # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+        # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+        # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
         # Corresponds to the JSON property `resource`
         # @return [Google::Apis::LoggingV2::MonitoredResource]
         attr_accessor :resource
@@ -1145,12 +1519,34 @@ module Google
         # @return [Google::Apis::LoggingV2::LogEntrySourceLocation]
         attr_accessor :source_location
       
-        # Optional. The span ID within the trace associated with the log entry.For Trace
-        # spans, this is the same format that the Trace API v2 uses: a 16-character
-        # hexadecimal encoding of an 8-byte array, such as 000000000000004a.
+        # Optional. The ID of the Cloud Trace (https://cloud.google.com/trace) span
+        # associated with the current operation in which the log is being written. For
+        # example, if a span has the REST resource name of "projects/some-project/traces/
+        # some-trace/spans/some-span-id", then the span_id field is "some-span-id".A
+        # Span (https://cloud.google.com/trace/docs/reference/v2/rest/v2/projects.traces/
+        # batchWrite#Span) represents a single operation within a trace. Whereas a trace
+        # may involve multiple different microservices running on multiple different
+        # machines, a span generally corresponds to a single logical operation being
+        # performed in a single instance of a microservice on one specific machine.
+        # Spans are the nodes within the tree that is a trace.Applications that are
+        # instrumented for tracing (https://cloud.google.com/trace/docs/setup) will
+        # generally assign a new, unique span ID on each incoming request. It is also
+        # common to create and record additional spans corresponding to internal
+        # processing elements as well as issuing requests to dependencies.The span ID is
+        # expected to be a 16-character, hexadecimal encoding of an 8-byte array and
+        # should not be zero. It should be unique within the trace and should, ideally,
+        # be generated in a manner that is uniformly random.Example values:
+        # 000000000000004a 7a2190356c3fc94b 0000f00300090021 d39223e101960076
         # Corresponds to the JSON property `spanId`
         # @return [String]
         attr_accessor :span_id
+      
+        # Additional information used to correlate multiple log entries. Used when a
+        # single LogEntry would exceed the Google Cloud Logging size limit and is split
+        # across multiple log entries.
+        # Corresponds to the JSON property `split`
+        # @return [Google::Apis::LoggingV2::LogSplit]
+        attr_accessor :split
       
         # The log entry payload, represented as a Unicode string (UTF-8).
         # Corresponds to the JSON property `textPayload`
@@ -1170,10 +1566,13 @@ module Google
         # @return [String]
         attr_accessor :timestamp
       
-        # Optional. Resource name of the trace associated with the log entry, if any. If
-        # it contains a relative resource name, the name is assumed to be relative to //
-        # tracing.googleapis.com. Example: projects/my-projectid/traces/
-        # 06796866738c859f2f19b7cfb3214824
+        # Optional. The REST resource name of the trace being written to Cloud Trace (
+        # https://cloud.google.com/trace) in association with this log entry. For
+        # example, if your trace data is stored in the Cloud project "my-trace-project"
+        # and if the service that is creating the log entry receives a trace header that
+        # includes the trace ID "12345", then the service should use "projects/my-
+        # tracing-project/traces/12345".The trace field provides the link between logs
+        # and traces. By using this field, you can navigate from a log entry to a trace.
         # Corresponds to the JSON property `trace`
         # @return [String]
         attr_accessor :trace
@@ -1208,6 +1607,7 @@ module Google
           @severity = args[:severity] if args.key?(:severity)
           @source_location = args[:source_location] if args.key?(:source_location)
           @span_id = args[:span_id] if args.key?(:span_id)
+          @split = args[:split] if args.key?(:split)
           @text_payload = args[:text_payload] if args.key?(:text_payload)
           @timestamp = args[:timestamp] if args.key?(:timestamp)
           @trace = args[:trace] if args.key?(:trace)
@@ -1296,12 +1696,11 @@ module Google
         end
       end
       
-      # Specifies a set of log entries that are not to be stored in Cloud Logging. If
-      # your GCP resource receives a large volume of log entries, you can use
-      # exclusions to reduce your chargeable logs. Exclusions are processed after log
-      # sinks, so you can export log entries before they are excluded. Note that
-      # organization-level and folder-level exclusions don't apply to child resources,
-      # and that you can't exclude audit log entries.
+      # Specifies a set of log entries that are filtered out by a sink. If your Google
+      # Cloud resource receives a large volume of log entries, you can use exclusions
+      # to reduce your chargeable logs. Note that exclusions on organization-level and
+      # folder-level sinks don't apply to child resources. Note also that you cannot
+      # modify the _Required sink or exclude logs from it.
       class LogExclusion
         include Google::Apis::Core::Hashable
       
@@ -1408,6 +1807,14 @@ module Google
       class LogMetric
         include Google::Apis::Core::Hashable
       
+        # Optional. The resource name of the Log Bucket that owns the Log Metric. Only
+        # Log Buckets in projects are supported. The bucket has to be in the same
+        # project as the metric.For example:projects/my-project/locations/global/buckets/
+        # my-bucketIf empty, then the Log Metric is considered a non-Bucket Log Metric.
+        # Corresponds to the JSON property `bucketName`
+        # @return [String]
+        attr_accessor :bucket_name
+      
         # BucketOptions describes the bucket boundaries used to create a histogram for
         # the distribution. The buckets can be in a linear sequence, an exponential
         # sequence, or each bucket can be specified explicitly. BucketOptions does not
@@ -1457,11 +1864,11 @@ module Google
         # Each label key specified in the LabelDescriptor must have an associated
         # extractor expression in this map. The syntax of the extractor expression is
         # the same as for the value_extractor field.The extracted value is converted to
-        # the type defined in the label descriptor. If the either the extraction or the
-        # type conversion fails, the label will have a default value. The default value
-        # for a string label is an empty string, for an integer label its 0, and for a
-        # boolean label its false.Note that there are upper bounds on the maximum number
-        # of labels and the number of active time series that are allowed in a project.
+        # the type defined in the label descriptor. If either the extraction or the type
+        # conversion fails, the label will have a default value. The default value for a
+        # string label is an empty string, for an integer label its 0, and for a boolean
+        # label its false.Note that there are upper bounds on the maximum number of
+        # labels and the number of active time series that are allowed in a project.
         # Corresponds to the JSON property `labelExtractors`
         # @return [Hash<String,String>]
         attr_accessor :label_extractors
@@ -1477,11 +1884,11 @@ module Google
         # nginx/requests".Metric identifiers are limited to 100 characters and can
         # include only the following characters: A-Z, a-z, 0-9, and the special
         # characters _-.,+!*',()%/. The forward-slash character (/) denotes a hierarchy
-        # of name pieces, and it cannot be the first character of the name.The metric
-        # identifier in this field must not be URL-encoded (https://en.wikipedia.org/
-        # wiki/Percent-encoding). However, when the metric identifier appears as the [
-        # METRIC_ID] part of a metric_name API parameter, then the metric identifier
-        # must be URL-encoded. Example: "projects/my-project/metrics/nginx%2Frequests".
+        # of name pieces, and it cannot be the first character of the name.This field is
+        # the [METRIC_ID] part of a metric resource name in the format "projects/
+        # PROJECT_ID/metrics/METRIC_ID". Example: If the resource name of a metric is "
+        # projects/my-project/metrics/nginx%2Frequests", this field's value is "nginx/
+        # requests".
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1495,8 +1902,8 @@ module Google
         # Optional. A value_extractor is required when using a distribution logs-based
         # metric to extract the values to record from a log entry. Two functions are
         # supported for value extraction: EXTRACT(field) or REGEXP_EXTRACT(field, regex).
-        # The argument are: 1. field: The name of the log entry field from which the
-        # value is to be extracted. 2. regex: A regular expression using the Google RE2
+        # The arguments are: field: The name of the log entry field from which the
+        # value is to be extracted. regex: A regular expression using the Google RE2
         # syntax (https://github.com/google/re2/wiki/Syntax) with a single capture group
         # to extract data from the specified log entry field. The value of the field is
         # converted to a string before applying the regex. It is an error to specify a
@@ -1521,6 +1928,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @bucket_name = args[:bucket_name] if args.key?(:bucket_name)
           @bucket_options = args[:bucket_options] if args.key?(:bucket_options)
           @create_time = args[:create_time] if args.key?(:create_time)
           @description = args[:description] if args.key?(:description)
@@ -1631,14 +2039,16 @@ module Google
       
         # Output only. An IAM identity—a service account or group—under which Cloud
         # Logging writes the exported log entries to the sink's destination. This field
-        # is set by sinks.create and sinks.update based on the value of
-        # unique_writer_identity in those methods.Until you grant this identity write-
-        # access to the destination, log entry exports from this sink will fail. For
-        # more information, see Granting Access for a Resource (https://cloud.google.com/
-        # iam/docs/granting-roles-to-service-accounts#
-        # granting_access_to_a_service_account_for_a_resource). Consult the destination
-        # service's documentation to determine the appropriate IAM roles to assign to
-        # the identity.
+        # is either set by specifying custom_writer_identity or set automatically by
+        # sinks.create and sinks.update based on the value of unique_writer_identity in
+        # those methods.Until you grant this identity write-access to the destination,
+        # log entry exports from this sink will fail. For more information, see Granting
+        # Access for a Resource (https://cloud.google.com/iam/docs/granting-roles-to-
+        # service-accounts#granting_access_to_a_service_account_for_a_resource). Consult
+        # the destination service's documentation to determine the appropriate IAM roles
+        # to assign to the identity.Sinks that have a destination that is a log bucket
+        # in the same project as the sink cannot have a writer_identity and no
+        # additional permissions are required.
         # Corresponds to the JSON property `writerIdentity`
         # @return [String]
         attr_accessor :writer_identity
@@ -1661,6 +2071,42 @@ module Google
           @output_version_format = args[:output_version_format] if args.key?(:output_version_format)
           @update_time = args[:update_time] if args.key?(:update_time)
           @writer_identity = args[:writer_identity] if args.key?(:writer_identity)
+        end
+      end
+      
+      # Additional information used to correlate multiple log entries. Used when a
+      # single LogEntry would exceed the Google Cloud Logging size limit and is split
+      # across multiple log entries.
+      class LogSplit
+        include Google::Apis::Core::Hashable
+      
+        # The index of this LogEntry in the sequence of split log entries. Log entries
+        # are given |index| values 0, 1, ..., n-1 for a sequence of n log entries.
+        # Corresponds to the JSON property `index`
+        # @return [Fixnum]
+        attr_accessor :index
+      
+        # The total number of log entries that the original LogEntry was split into.
+        # Corresponds to the JSON property `totalSplits`
+        # @return [Fixnum]
+        attr_accessor :total_splits
+      
+        # A globally unique identifier for all log entries in a sequence of split log
+        # entries. All log entries with the same |LogSplit.uid| are assumed to be part
+        # of the same sequence of split log entries.
+        # Corresponds to the JSON property `uid`
+        # @return [String]
+        attr_accessor :uid
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @index = args[:index] if args.key?(:index)
+          @total_splits = args[:total_splits] if args.key?(:total_splits)
+          @uid = args[:uid] if args.key?(:uid)
         end
       end
       
@@ -1693,11 +2139,6 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Schema of a table containing logs.
-        # Corresponds to the JSON property `schema`
-        # @return [Google::Apis::LoggingV2::TableSchema]
-        attr_accessor :schema
-      
         # Output only. The last update timestamp of the view.
         # Corresponds to the JSON property `updateTime`
         # @return [String]
@@ -1713,7 +2154,6 @@ module Google
           @description = args[:description] if args.key?(:description)
           @filter = args[:filter] if args.key?(:filter)
           @name = args[:name] if args.key?(:name)
-          @schema = args[:schema] if args.key?(:schema)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
@@ -1901,9 +2341,9 @@ module Google
       # Information in the labels field identifies the actual resource and its
       # attributes according to the schema. For example, a particular Compute Engine
       # VM instance could be represented by the following object, because the
-      # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-      # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-      # zone": "us-central1-a" ``
+      # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+      # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+      # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
       class MonitoredResource
         include Google::Apis::Core::Hashable
       
@@ -1916,7 +2356,9 @@ module Google
       
         # Required. The monitored resource type. This field must match the type field of
         # a MonitoredResourceDescriptor object. For example, the type of a Compute
-        # Engine VM instance is gce_instance.
+        # Engine VM instance is gce_instance. Some descriptors include the service name
+        # in the type; for example, the type of a Datastream stream is datastream.
+        # googleapis.com/Stream.
         # Corresponds to the JSON property `type`
         # @return [String]
         attr_accessor :type
@@ -2232,6 +2674,11 @@ module Google
         # @return [Array<Google::Apis::LoggingV2::SourceReference>]
         attr_accessor :source_reference
       
+        # Stackdriver Trace span identifier for this request.
+        # Corresponds to the JSON property `spanId`
+        # @return [String]
+        attr_accessor :span_id
+      
         # Time when the request started.
         # Corresponds to the JSON property `startTime`
         # @return [String]
@@ -2314,6 +2761,7 @@ module Google
           @resource = args[:resource] if args.key?(:resource)
           @response_size = args[:response_size] if args.key?(:response_size)
           @source_reference = args[:source_reference] if args.key?(:source_reference)
+          @span_id = args[:span_id] if args.key?(:span_id)
           @start_time = args[:start_time] if args.key?(:start_time)
           @status = args[:status] if args.key?(:status)
           @task_name = args[:task_name] if args.key?(:task_name)
@@ -2324,6 +2772,74 @@ module Google
           @user_agent = args[:user_agent] if args.key?(:user_agent)
           @version_id = args[:version_id] if args.key?(:version_id)
           @was_loading_request = args[:was_loading_request] if args.key?(:was_loading_request)
+        end
+      end
+      
+      # Describes the settings associated with a project, folder, organization,
+      # billing account, or flexible resource.
+      class Settings
+        include Google::Apis::Core::Hashable
+      
+        # Optional. If set to true, the _Default sink in newly created projects and
+        # folders will created in a disabled state. This can be used to automatically
+        # disable log ingestion if there is already an aggregated sink configured in the
+        # hierarchy. The _Default sink can be re-enabled manually if needed.
+        # Corresponds to the JSON property `disableDefaultSink`
+        # @return [Boolean]
+        attr_accessor :disable_default_sink
+        alias_method :disable_default_sink?, :disable_default_sink
+      
+        # Optional. The resource name for the configured Cloud KMS key.KMS key name
+        # format: "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/
+        # cryptoKeys/[KEY]" For example:"projects/my-project/locations/us-central1/
+        # keyRings/my-ring/cryptoKeys/my-key"To enable CMEK for the Log Router, set this
+        # field to a valid kms_key_name for which the associated service account has the
+        # required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.
+        # The Cloud KMS key used by the Log Router can be updated by changing the
+        # kms_key_name to a new valid key name. Encryption operations that are in
+        # progress will be completed with the key that was in use when they started.
+        # Decryption operations will be completed using the key that was used at the
+        # time of encryption unless access to that key has been revoked.To disable CMEK
+        # for the Log Router, set this field to an empty string.See Enabling CMEK for
+        # Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption)
+        # for more information.
+        # Corresponds to the JSON property `kmsKeyName`
+        # @return [String]
+        attr_accessor :kms_key_name
+      
+        # Output only. The service account that will be used by the Log Router to access
+        # your Cloud KMS key.Before enabling CMEK for Log Router, you must first assign
+        # the role roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account
+        # that the Log Router will use to access your Cloud KMS key. Use GetSettings to
+        # obtain the service account ID.See Enabling CMEK for Log Router (https://cloud.
+        # google.com/logging/docs/routing/managed-encryption) for more information.
+        # Corresponds to the JSON property `kmsServiceAccountId`
+        # @return [String]
+        attr_accessor :kms_service_account_id
+      
+        # Output only. The resource name of the settings.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Optional. The Cloud region that will be used for _Default and _Required log
+        # buckets for newly created projects and folders. For example europe-west1. This
+        # setting does not affect the location of custom log buckets.
+        # Corresponds to the JSON property `storageLocation`
+        # @return [String]
+        attr_accessor :storage_location
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @disable_default_sink = args[:disable_default_sink] if args.key?(:disable_default_sink)
+          @kms_key_name = args[:kms_key_name] if args.key?(:kms_key_name)
+          @kms_service_account_id = args[:kms_service_account_id] if args.key?(:kms_service_account_id)
+          @name = args[:name] if args.key?(:name)
+          @storage_location = args[:storage_location] if args.key?(:storage_location)
         end
       end
       
@@ -2455,74 +2971,6 @@ module Google
         end
       end
       
-      # A field in TableSchema. The fields describe the static fields in the LogEntry.
-      # Any dynamic fields generated by the customer in fields like labels and
-      # jsonPayload are not listed in the schema as they use a native JSON type field.
-      class TableFieldSchema
-        include Google::Apis::Core::Hashable
-      
-        # Optional. The field description.
-        # Corresponds to the JSON property `description`
-        # @return [String]
-        attr_accessor :description
-      
-        # Optional. Describes the nested schema fields if the type property is set to
-        # RECORD.
-        # Corresponds to the JSON property `fields`
-        # @return [Array<Google::Apis::LoggingV2::TableFieldSchema>]
-        attr_accessor :fields
-      
-        # Optional. The field mode. Possible values include NULLABLE, REQUIRED and
-        # REPEATED. The default value is NULLABLE.
-        # Corresponds to the JSON property `mode`
-        # @return [String]
-        attr_accessor :mode
-      
-        # Required. The field name corresponding to fields in the LogEntry.
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Required. The field data type. Possible values include: STRING INTEGER (or
-        # INT64) FLOAT (or FLOAT64) BOOLEAN (or BOOL) TIMESTAMP RECORD (or STRUCT)Use of
-        # RECORD/STRUT indicates that the field contains a nested schema.
-        # Corresponds to the JSON property `type`
-        # @return [String]
-        attr_accessor :type
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @description = args[:description] if args.key?(:description)
-          @fields = args[:fields] if args.key?(:fields)
-          @mode = args[:mode] if args.key?(:mode)
-          @name = args[:name] if args.key?(:name)
-          @type = args[:type] if args.key?(:type)
-        end
-      end
-      
-      # Schema of a table containing logs.
-      class TableSchema
-        include Google::Apis::Core::Hashable
-      
-        # Describes the fields in a table.
-        # Corresponds to the JSON property `fields`
-        # @return [Array<Google::Apis::LoggingV2::TableFieldSchema>]
-        attr_accessor :fields
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @fields = args[:fields] if args.key?(:fields)
-        end
-      end
-      
       # The parameters to TailLogEntries.
       class TailLogEntriesRequest
         include Google::Apis::Core::Hashable
@@ -2534,12 +2982,10 @@ module Google
         # @return [String]
         attr_accessor :buffer_window
       
-        # Optional. A filter that chooses which log entries to return. See Advanced Logs
-        # Filters (https://cloud.google.com/logging/docs/view/advanced_filters). Only
-        # log entries that match the filter are returned. An empty filter matches all
-        # log entries in the resources listed in resource_names. Referencing a parent
-        # resource that is not in resource_names will cause the filter to return no
-        # results. The maximum length of the filter is 20000 characters.
+        # Optional. Only log entries that match the filter are returned. An empty filter
+        # matches all log entries in the resources listed in resource_names. Referencing
+        # a parent resource that is not listed in resource_names will cause the filter
+        # to return no results. The maximum length of a filter is 20,000 characters.
         # Corresponds to the JSON property `filter`
         # @return [String]
         attr_accessor :filter
@@ -2612,6 +3058,47 @@ module Google
         end
       end
       
+      # The parameters to UpdateBucket.
+      class UpdateBucketRequest
+        include Google::Apis::Core::Hashable
+      
+        # Describes a repository in which log entries are stored.
+        # Corresponds to the JSON property `bucket`
+        # @return [Google::Apis::LoggingV2::LogBucket]
+        attr_accessor :bucket
+      
+        # Required. The full resource name of the bucket to update. "projects/[
+        # PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "organizations/[
+        # ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "billingAccounts/
+        # [BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" "folders/[
+        # FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]" For example:"projects/
+        # my-project/locations/global/buckets/my-bucket"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. Field mask that specifies the fields in bucket that need an update.
+        # A bucket field will be overwritten if, and only if, it is in the update mask.
+        # name and output only fields cannot be updated.For a detailed FieldMask
+        # definition, see: https://developers.google.com/protocol-buffers/docs/reference/
+        # google.protobuf#google.protobuf.FieldMaskFor example: updateMask=
+        # retention_days
+        # Corresponds to the JSON property `updateMask`
+        # @return [String]
+        attr_accessor :update_mask
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bucket = args[:bucket] if args.key?(:bucket)
+          @name = args[:name] if args.key?(:name)
+          @update_mask = args[:update_mask] if args.key?(:update_mask)
+        end
+      end
+      
       # The parameters to WriteLogEntries.
       class WriteLogEntriesRequest
         include Google::Apis::Core::Hashable
@@ -2665,11 +3152,13 @@ module Google
         # @return [String]
         attr_accessor :log_name
       
-        # Optional. Whether valid entries should be written even if some other entries
-        # fail due to INVALID_ARGUMENT or PERMISSION_DENIED errors. If any entry is not
-        # written, then the response status is the error associated with one of the
-        # failed entries and the response includes error details keyed by the entries'
-        # zero-based index in the entries.write method.
+        # Optional. Whether a batch's valid entries should be written even if some other
+        # entry failed due to a permanent error such as INVALID_ARGUMENT or
+        # PERMISSION_DENIED. If any entry failed, then the response status is the
+        # response status of one of the failed entries. The response will include error
+        # details in WriteLogEntriesPartialErrors.log_entry_errors keyed by the entries'
+        # zero-based index in the entries. Failed requests for which no entries are
+        # written will not include per-entry errors.
         # Corresponds to the JSON property `partialSuccess`
         # @return [Boolean]
         attr_accessor :partial_success
@@ -2682,9 +3171,9 @@ module Google
         # Information in the labels field identifies the actual resource and its
         # attributes according to the schema. For example, a particular Compute Engine
         # VM instance could be represented by the following object, because the
-        # MonitoredResourceDescriptor for "gce_instance" has labels "instance_id" and "
-        # zone": ` "type": "gce_instance", "labels": ` "instance_id": "12345678901234", "
-        # zone": "us-central1-a" ``
+        # MonitoredResourceDescriptor for "gce_instance" has labels "project_id", "
+        # instance_id" and "zone": ` "type": "gce_instance", "labels": ` "project_id": "
+        # my-project", "instance_id": "12345678901234", "zone": "us-central1-a" ``
         # Corresponds to the JSON property `resource`
         # @return [Google::Apis::LoggingV2::MonitoredResource]
         attr_accessor :resource

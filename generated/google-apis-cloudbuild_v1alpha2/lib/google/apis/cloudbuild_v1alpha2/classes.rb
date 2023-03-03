@@ -167,11 +167,28 @@ module Google
         # @return [Array<String>]
         attr_accessor :images
       
+        # A list of Maven artifacts to be uploaded to Artifact Registry upon successful
+        # completion of all build steps. Artifacts in the workspace matching specified
+        # paths globs will be uploaded to the specified Artifact Registry repository
+        # using the builder service account's credentials. If any artifacts fail to be
+        # pushed, the build is marked FAILURE.
+        # Corresponds to the JSON property `mavenArtifacts`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::MavenArtifact>]
+        attr_accessor :maven_artifacts
+      
         # Files in the workspace to upload to Cloud Storage upon successful completion
         # of all build steps.
         # Corresponds to the JSON property `objects`
         # @return [Google::Apis::CloudbuildV1alpha2::ArtifactObjects]
         attr_accessor :objects
+      
+        # A list of Python packages to be uploaded to Artifact Registry upon successful
+        # completion of all build steps. The build service account credentials will be
+        # used to perform the upload. If any objects fail to be pushed, the build is
+        # marked FAILURE.
+        # Corresponds to the JSON property `pythonPackages`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::PythonPackage>]
+        attr_accessor :python_packages
       
         def initialize(**args)
            update!(**args)
@@ -180,7 +197,205 @@ module Google
         # Update properties of this object
         def update!(**args)
           @images = args[:images] if args.key?(:images)
+          @maven_artifacts = args[:maven_artifacts] if args.key?(:maven_artifacts)
           @objects = args[:objects] if args.key?(:objects)
+          @python_packages = args[:python_packages] if args.key?(:python_packages)
+        end
+      end
+      
+      # Response of BatchCreateBitbucketServerConnectedRepositories RPC method
+      # including all successfully connected Bitbucket Server repositories.
+      class BatchCreateBitbucketServerConnectedRepositoriesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The connected Bitbucket Server repositories.
+        # Corresponds to the JSON property `bitbucketServerConnectedRepositories`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::BitbucketServerConnectedRepository>]
+        attr_accessor :bitbucket_server_connected_repositories
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bitbucket_server_connected_repositories = args[:bitbucket_server_connected_repositories] if args.key?(:bitbucket_server_connected_repositories)
+        end
+      end
+      
+      # Metadata for `BatchCreateBitbucketServerConnectedRepositories` operation.
+      class BatchCreateBitbucketServerConnectedRepositoriesResponseMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # The name of the `BitbucketServerConfig` that added connected repositories.
+        # Format: `projects/`project`/locations/`location`/bitbucketServerConfigs/`
+        # config``
+        # Corresponds to the JSON property `config`
+        # @return [String]
+        attr_accessor :config
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @config = args[:config] if args.key?(:config)
+          @create_time = args[:create_time] if args.key?(:create_time)
+        end
+      end
+      
+      # Response of BatchCreateGitLabConnectedRepositories RPC method.
+      class BatchCreateGitLabConnectedRepositoriesResponse
+        include Google::Apis::Core::Hashable
+      
+        # The GitLab connected repository requests' responses.
+        # Corresponds to the JSON property `gitlabConnectedRepositories`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::GitLabConnectedRepository>]
+        attr_accessor :gitlab_connected_repositories
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @gitlab_connected_repositories = args[:gitlab_connected_repositories] if args.key?(:gitlab_connected_repositories)
+        end
+      end
+      
+      # Metadata for `BatchCreateGitLabConnectedRepositories` operation.
+      class BatchCreateGitLabConnectedRepositoriesResponseMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # The name of the `GitLabConfig` that added connected repositories. Format: `
+        # projects/`project`/locations/`location`/gitLabConfigs/`config``
+        # Corresponds to the JSON property `config`
+        # @return [String]
+        attr_accessor :config
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @config = args[:config] if args.key?(:config)
+          @create_time = args[:create_time] if args.key?(:create_time)
+        end
+      end
+      
+      # Message for response of creating repositories in batch.
+      class BatchCreateRepositoriesResponse
+        include Google::Apis::Core::Hashable
+      
+        # Repository resources created.
+        # Corresponds to the JSON property `repositories`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::Repository>]
+        attr_accessor :repositories
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @repositories = args[:repositories] if args.key?(:repositories)
+        end
+      end
+      
+      # / BitbucketServerConnectedRepository represents a connected Bitbucket Server /
+      # repository.
+      class BitbucketServerConnectedRepository
+        include Google::Apis::Core::Hashable
+      
+        # The name of the `BitbucketServerConfig` that added connected repository.
+        # Format: `projects/`project`/locations/`location`/bitbucketServerConfigs/`
+        # config``
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # BitbucketServerRepositoryId identifies a specific repository hosted on a
+        # Bitbucket Server.
+        # Corresponds to the JSON property `repo`
+        # @return [Google::Apis::CloudbuildV1alpha2::BitbucketServerRepositoryId]
+        attr_accessor :repo
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::CloudbuildV1alpha2::Status]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @parent = args[:parent] if args.key?(:parent)
+          @repo = args[:repo] if args.key?(:repo)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # BitbucketServerRepositoryId identifies a specific repository hosted on a
+      # Bitbucket Server.
+      class BitbucketServerRepositoryId
+        include Google::Apis::Core::Hashable
+      
+        # Required. Identifier for the project storing the repository.
+        # Corresponds to the JSON property `projectKey`
+        # @return [String]
+        attr_accessor :project_key
+      
+        # Required. Identifier for the repository.
+        # Corresponds to the JSON property `repoSlug`
+        # @return [String]
+        attr_accessor :repo_slug
+      
+        # Output only. The ID of the webhook that was created for receiving events from
+        # this repo. We only create and manage a single webhook for each repo.
+        # Corresponds to the JSON property `webhookId`
+        # @return [Fixnum]
+        attr_accessor :webhook_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @project_key = args[:project_key] if args.key?(:project_key)
+          @repo_slug = args[:repo_slug] if args.key?(:repo_slug)
+          @webhook_id = args[:webhook_id] if args.key?(:webhook_id)
         end
       end
       
@@ -358,10 +573,10 @@ module Google
         attr_accessor :timeout
       
         # Output only. Stores timing information for phases of the build. Valid keys are:
-        # * BUILD: time to execute all build steps. * PUSH: time to push all specified
-        # images. * FETCHSOURCE: time to fetch source. * SETUPBUILD: time to set up
-        # build. If the build does not specify source or images, these keys will not be
-        # included.
+        # * BUILD: time to execute all build steps. * PUSH: time to push all artifacts
+        # including docker images and non docker artifacts. * FETCHSOURCE: time to fetch
+        # source. * SETUPBUILD: time to set up build. If the build does not specify
+        # source or images, these keys will not be included.
         # Corresponds to the JSON property `timing`
         # @return [Hash<String,Google::Apis::CloudbuildV1alpha2::TimeSpan>]
         attr_accessor :timing
@@ -479,7 +694,7 @@ module Google
         # disk free"; some of the space will be used by the operating system and build
         # utilities. Also note that this is the minimum disk size that will be allocated
         # for the build -- the build may run with a larger disk than requested. At
-        # present, the maximum disk size is 1000GB; builds that request more than the
+        # present, the maximum disk size is 2000GB; builds that request more than the
         # maximum are rejected with an error.
         # Corresponds to the JSON property `diskSizeGb`
         # @return [Fixnum]
@@ -590,6 +805,22 @@ module Google
       class BuildStep
         include Google::Apis::Core::Hashable
       
+        # Allow this build step to fail without failing the entire build if and only if
+        # the exit code is one of the specified codes. If allow_failure is also
+        # specified, this field will take precedence.
+        # Corresponds to the JSON property `allowExitCodes`
+        # @return [Array<Fixnum>]
+        attr_accessor :allow_exit_codes
+      
+        # Allow this build step to fail without failing the entire build. If false, the
+        # entire build will fail if this step fails. Otherwise, the build will succeed,
+        # but this step will still have a failure status. Error information will be
+        # reported in the failure_detail field.
+        # Corresponds to the JSON property `allowFailure`
+        # @return [Boolean]
+        attr_accessor :allow_failure
+        alias_method :allow_failure?, :allow_failure
+      
         # A list of arguments that will be presented to the step when it is started. If
         # the image used to run the step's container has an entrypoint, the `args` are
         # used as arguments to that entrypoint. If the image does not define an
@@ -622,6 +853,11 @@ module Google
         # Corresponds to the JSON property `env`
         # @return [Array<String>]
         attr_accessor :env
+      
+        # Output only. Return code from running the step.
+        # Corresponds to the JSON property `exitCode`
+        # @return [Fixnum]
+        attr_accessor :exit_code
       
         # Unique identifier for this build step, used in `wait_for` to reference this
         # build step as a dependency.
@@ -704,10 +940,13 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @allow_exit_codes = args[:allow_exit_codes] if args.key?(:allow_exit_codes)
+          @allow_failure = args[:allow_failure] if args.key?(:allow_failure)
           @args = args[:args] if args.key?(:args)
           @dir = args[:dir] if args.key?(:dir)
           @entrypoint = args[:entrypoint] if args.key?(:entrypoint)
           @env = args[:env] if args.key?(:env)
+          @exit_code = args[:exit_code] if args.key?(:exit_code)
           @id = args[:id] if args.key?(:id)
           @name = args[:name] if args.key?(:name)
           @pull_timing = args[:pull_timing] if args.key?(:pull_timing)
@@ -766,6 +1005,38 @@ module Google
         end
       end
       
+      # Metadata for `CreateBitbucketServerConfig` operation.
+      class CreateBitbucketServerConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the BitbucketServerConfig to be created. Format: `
+        # projects/`project`/locations/`location`/bitbucketServerConfigs/`id``.
+        # Corresponds to the JSON property `bitbucketServerConfig`
+        # @return [String]
+        attr_accessor :bitbucket_server_config
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bitbucket_server_config = args[:bitbucket_server_config] if args.key?(:bitbucket_server_config)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+        end
+      end
+      
       # Metadata for `CreateGithubEnterpriseConfig` operation.
       class CreateGitHubEnterpriseConfigOperationMetadata
         include Google::Apis::Core::Hashable
@@ -795,6 +1066,38 @@ module Google
           @complete_time = args[:complete_time] if args.key?(:complete_time)
           @create_time = args[:create_time] if args.key?(:create_time)
           @github_enterprise_config = args[:github_enterprise_config] if args.key?(:github_enterprise_config)
+        end
+      end
+      
+      # Metadata for `CreateGitLabConfig` operation.
+      class CreateGitLabConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The resource name of the GitLabConfig to be created. Format: `projects/`
+        # project`/locations/`location`/gitlabConfigs/`id``.
+        # Corresponds to the JSON property `gitlabConfig`
+        # @return [String]
+        attr_accessor :gitlab_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @gitlab_config = args[:gitlab_config] if args.key?(:gitlab_config)
         end
       end
       
@@ -830,6 +1133,38 @@ module Google
         end
       end
       
+      # Metadata for `DeleteBitbucketServerConfig` operation.
+      class DeleteBitbucketServerConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the BitbucketServerConfig to be deleted. Format: `
+        # projects/`project`/locations/`location`/bitbucketServerConfigs/`id``.
+        # Corresponds to the JSON property `bitbucketServerConfig`
+        # @return [String]
+        attr_accessor :bitbucket_server_config
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bitbucket_server_config = args[:bitbucket_server_config] if args.key?(:bitbucket_server_config)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+        end
+      end
+      
       # Metadata for `DeleteGitHubEnterpriseConfig` operation.
       class DeleteGitHubEnterpriseConfigOperationMetadata
         include Google::Apis::Core::Hashable
@@ -859,6 +1194,38 @@ module Google
           @complete_time = args[:complete_time] if args.key?(:complete_time)
           @create_time = args[:create_time] if args.key?(:create_time)
           @github_enterprise_config = args[:github_enterprise_config] if args.key?(:github_enterprise_config)
+        end
+      end
+      
+      # Metadata for `DeleteGitLabConfig` operation.
+      class DeleteGitLabConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The resource name of the GitLabConfig to be created. Format: `projects/`
+        # project`/locations/`location`/gitlabConfigs/`id``.
+        # Corresponds to the JSON property `gitlabConfig`
+        # @return [String]
+        attr_accessor :gitlab_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @gitlab_config = args[:gitlab_config] if args.key?(:gitlab_config)
         end
       end
       
@@ -897,8 +1264,7 @@ module Google
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class Empty
         include Google::Apis::Core::Hashable
       
@@ -953,6 +1319,73 @@ module Google
         # Update properties of this object
         def update!(**args)
           @file_hash = args[:file_hash] if args.key?(:file_hash)
+        end
+      end
+      
+      # GitLabConnectedRepository represents a GitLab connected repository request
+      # response.
+      class GitLabConnectedRepository
+        include Google::Apis::Core::Hashable
+      
+        # The name of the `GitLabConfig` that added connected repository. Format: `
+        # projects/`project`/locations/`location`/gitLabConfigs/`config``
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        # GitLabRepositoryId identifies a specific repository hosted on GitLab.com or
+        # GitLabEnterprise
+        # Corresponds to the JSON property `repo`
+        # @return [Google::Apis::CloudbuildV1alpha2::GitLabRepositoryId]
+        attr_accessor :repo
+      
+        # The `Status` type defines a logical error model that is suitable for different
+        # programming environments, including REST APIs and RPC APIs. It is used by [
+        # gRPC](https://github.com/grpc). Each `Status` message contains three pieces of
+        # data: error code, error message, and error details. You can find out more
+        # about this error model and how to work with it in the [API Design Guide](https:
+        # //cloud.google.com/apis/design/errors).
+        # Corresponds to the JSON property `status`
+        # @return [Google::Apis::CloudbuildV1alpha2::Status]
+        attr_accessor :status
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @parent = args[:parent] if args.key?(:parent)
+          @repo = args[:repo] if args.key?(:repo)
+          @status = args[:status] if args.key?(:status)
+        end
+      end
+      
+      # GitLabRepositoryId identifies a specific repository hosted on GitLab.com or
+      # GitLabEnterprise
+      class GitLabRepositoryId
+        include Google::Apis::Core::Hashable
+      
+        # Required. Identifier for the repository. example: "namespace/project-slug",
+        # namespace is usually the username or group ID
+        # Corresponds to the JSON property `id`
+        # @return [String]
+        attr_accessor :id
+      
+        # Output only. The ID of the webhook that was created for receiving events from
+        # this repo. We only create and manage a single webhook for each repo.
+        # Corresponds to the JSON property `webhookId`
+        # @return [Fixnum]
+        attr_accessor :webhook_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @id = args[:id] if args.key?(:id)
+          @webhook_id = args[:webhook_id] if args.key?(:webhook_id)
         end
       end
       
@@ -1106,6 +1539,55 @@ module Google
         # Update properties of this object
         def update!(**args)
           @worker_pools = args[:worker_pools] if args.key?(:worker_pools)
+        end
+      end
+      
+      # A Maven artifact to upload to Artifact Registry upon successful completion of
+      # all build steps.
+      class MavenArtifact
+        include Google::Apis::Core::Hashable
+      
+        # Maven `artifactId` value used when uploading the artifact to Artifact Registry.
+        # Corresponds to the JSON property `artifactId`
+        # @return [String]
+        attr_accessor :artifact_id
+      
+        # Maven `groupId` value used when uploading the artifact to Artifact Registry.
+        # Corresponds to the JSON property `groupId`
+        # @return [String]
+        attr_accessor :group_id
+      
+        # Path to an artifact in the build's workspace to be uploaded to Artifact
+        # Registry. This can be either an absolute path, e.g. /workspace/my-app/target/
+        # my-app-1.0.SNAPSHOT.jar or a relative path from /workspace, e.g. my-app/target/
+        # my-app-1.0.SNAPSHOT.jar.
+        # Corresponds to the JSON property `path`
+        # @return [String]
+        attr_accessor :path
+      
+        # Artifact Registry repository, in the form "https://$REGION-maven.pkg.dev/$
+        # PROJECT/$REPOSITORY" Artifact in the workspace specified by path will be
+        # uploaded to Artifact Registry with this location as a prefix.
+        # Corresponds to the JSON property `repository`
+        # @return [String]
+        attr_accessor :repository
+      
+        # Maven `version` value used when uploading the artifact to Artifact Registry.
+        # Corresponds to the JSON property `version`
+        # @return [String]
+        attr_accessor :version
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @artifact_id = args[:artifact_id] if args.key?(:artifact_id)
+          @group_id = args[:group_id] if args.key?(:group_id)
+          @path = args[:path] if args.key?(:path)
+          @repository = args[:repository] if args.key?(:repository)
+          @version = args[:version] if args.key?(:version)
         end
       end
       
@@ -1500,6 +1982,36 @@ module Google
         end
       end
       
+      # Python package to upload to Artifact Registry upon successful completion of
+      # all build steps. A package can encapsulate multiple objects to be uploaded to
+      # a single repository.
+      class PythonPackage
+        include Google::Apis::Core::Hashable
+      
+        # Path globs used to match files in the build's workspace. For Python/ Twine,
+        # this is usually `dist/*`, and sometimes additionally an `.asc` file.
+        # Corresponds to the JSON property `paths`
+        # @return [Array<String>]
+        attr_accessor :paths
+      
+        # Artifact Registry repository, in the form "https://$REGION-python.pkg.dev/$
+        # PROJECT/$REPOSITORY" Files in the workspace matching any path pattern will be
+        # uploaded to Artifact Registry with this location as a prefix.
+        # Corresponds to the JSON property `repository`
+        # @return [String]
+        attr_accessor :repository
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @paths = args[:paths] if args.key?(:paths)
+          @repository = args[:repository] if args.key?(:repository)
+        end
+      end
+      
       # Location of the source in a Google Cloud Source Repository.
       class RepoSource
         include Google::Apis::Core::Hashable
@@ -1570,11 +2082,64 @@ module Google
         end
       end
       
+      # A repository associated to a parent connection.
+      class Repository
+        include Google::Apis::Core::Hashable
+      
+        # Allows clients to store small amounts of arbitrary data.
+        # Corresponds to the JSON property `annotations`
+        # @return [Hash<String,String>]
+        attr_accessor :annotations
+      
+        # Output only. Server assigned timestamp for when the connection was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # This checksum is computed by the server based on the value of other fields,
+        # and may be sent on update and delete requests to ensure the client has an up-
+        # to-date value before proceeding.
+        # Corresponds to the JSON property `etag`
+        # @return [String]
+        attr_accessor :etag
+      
+        # Immutable. Resource name of the repository, in the format `projects/*/
+        # locations/*/connections/*/repositories/*`.
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. Git Clone HTTPS URI.
+        # Corresponds to the JSON property `remoteUri`
+        # @return [String]
+        attr_accessor :remote_uri
+      
+        # Output only. Server assigned timestamp for when the connection was updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @annotations = args[:annotations] if args.key?(:annotations)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @etag = args[:etag] if args.key?(:etag)
+          @name = args[:name] if args.key?(:name)
+          @remote_uri = args[:remote_uri] if args.key?(:remote_uri)
+          @update_time = args[:update_time] if args.key?(:update_time)
+        end
+      end
+      
       # Artifacts created by the build pipeline.
       class Results
         include Google::Apis::Core::Hashable
       
-        # Path to the artifact manifest. Only populated when artifacts are uploaded.
+        # Path to the artifact manifest for non-container artifacts uploaded to Cloud
+        # Storage. Only populated when artifacts are uploaded to Cloud Storage.
         # Corresponds to the JSON property `artifactManifest`
         # @return [String]
         attr_accessor :artifact_manifest
@@ -1602,10 +2167,21 @@ module Google
         # @return [Array<Google::Apis::CloudbuildV1alpha2::BuiltImage>]
         attr_accessor :images
       
-        # Number of artifacts uploaded. Only populated when artifacts are uploaded.
+        # Maven artifacts uploaded to Artifact Registry at the end of the build.
+        # Corresponds to the JSON property `mavenArtifacts`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::UploadedMavenArtifact>]
+        attr_accessor :maven_artifacts
+      
+        # Number of non-container artifacts uploaded to Cloud Storage. Only populated
+        # when artifacts are uploaded to Cloud Storage.
         # Corresponds to the JSON property `numArtifacts`
         # @return [Fixnum]
         attr_accessor :num_artifacts
+      
+        # Python artifacts uploaded to Artifact Registry at the end of the build.
+        # Corresponds to the JSON property `pythonPackages`
+        # @return [Array<Google::Apis::CloudbuildV1alpha2::UploadedPythonPackage>]
+        attr_accessor :python_packages
       
         def initialize(**args)
            update!(**args)
@@ -1618,7 +2194,68 @@ module Google
           @build_step_images = args[:build_step_images] if args.key?(:build_step_images)
           @build_step_outputs = args[:build_step_outputs] if args.key?(:build_step_outputs)
           @images = args[:images] if args.key?(:images)
+          @maven_artifacts = args[:maven_artifacts] if args.key?(:maven_artifacts)
           @num_artifacts = args[:num_artifacts] if args.key?(:num_artifacts)
+          @python_packages = args[:python_packages] if args.key?(:python_packages)
+        end
+      end
+      
+      # Represents the custom metadata of the RunWorkflow long-running operation.
+      class RunWorkflowCustomOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Output only. API version used to start the operation.
+        # Corresponds to the JSON property `apiVersion`
+        # @return [String]
+        attr_accessor :api_version
+      
+        # Output only. The time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Output only. The time the operation finished running.
+        # Corresponds to the JSON property `endTime`
+        # @return [String]
+        attr_accessor :end_time
+      
+        # Output only. ID of the pipeline run created by RunWorkflow.
+        # Corresponds to the JSON property `pipelineRunId`
+        # @return [String]
+        attr_accessor :pipeline_run_id
+      
+        # Output only. Identifies whether the user has requested cancellation of the
+        # operation. Operations that have successfully been cancelled have Operation.
+        # error value with a google.rpc.Status.code of 1, corresponding to `Code.
+        # CANCELLED`.
+        # Corresponds to the JSON property `requestedCancellation`
+        # @return [Boolean]
+        attr_accessor :requested_cancellation
+        alias_method :requested_cancellation?, :requested_cancellation
+      
+        # Output only. Server-defined resource path for the target of the operation.
+        # Corresponds to the JSON property `target`
+        # @return [String]
+        attr_accessor :target
+      
+        # Output only. Name of the verb executed by the operation.
+        # Corresponds to the JSON property `verb`
+        # @return [String]
+        attr_accessor :verb
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @api_version = args[:api_version] if args.key?(:api_version)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @end_time = args[:end_time] if args.key?(:end_time)
+          @pipeline_run_id = args[:pipeline_run_id] if args.key?(:pipeline_run_id)
+          @requested_cancellation = args[:requested_cancellation] if args.key?(:requested_cancellation)
+          @target = args[:target] if args.key?(:target)
+          @verb = args[:verb] if args.key?(:verb)
         end
       end
       
@@ -1995,6 +2632,38 @@ module Google
         end
       end
       
+      # Metadata for `UpdateBitbucketServerConfig` operation.
+      class UpdateBitbucketServerConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The resource name of the BitbucketServerConfig to be updated. Format: `
+        # projects/`project`/locations/`location`/bitbucketServerConfigs/`id``.
+        # Corresponds to the JSON property `bitbucketServerConfig`
+        # @return [String]
+        attr_accessor :bitbucket_server_config
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bitbucket_server_config = args[:bitbucket_server_config] if args.key?(:bitbucket_server_config)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+        end
+      end
+      
       # Metadata for `UpdateGitHubEnterpriseConfig` operation.
       class UpdateGitHubEnterpriseConfigOperationMetadata
         include Google::Apis::Core::Hashable
@@ -2027,6 +2696,38 @@ module Google
         end
       end
       
+      # Metadata for `UpdateGitLabConfig` operation.
+      class UpdateGitLabConfigOperationMetadata
+        include Google::Apis::Core::Hashable
+      
+        # Time the operation was completed.
+        # Corresponds to the JSON property `completeTime`
+        # @return [String]
+        attr_accessor :complete_time
+      
+        # Time the operation was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # The resource name of the GitLabConfig to be created. Format: `projects/`
+        # project`/locations/`location`/gitlabConfigs/`id``.
+        # Corresponds to the JSON property `gitlabConfig`
+        # @return [String]
+        attr_accessor :gitlab_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @complete_time = args[:complete_time] if args.key?(:complete_time)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @gitlab_config = args[:gitlab_config] if args.key?(:gitlab_config)
+        end
+      end
+      
       # Metadata for the `UpdateWorkerPool` operation.
       class UpdateWorkerPoolOperationMetadata
         include Google::Apis::Core::Hashable
@@ -2056,6 +2757,70 @@ module Google
           @complete_time = args[:complete_time] if args.key?(:complete_time)
           @create_time = args[:create_time] if args.key?(:create_time)
           @worker_pool = args[:worker_pool] if args.key?(:worker_pool)
+        end
+      end
+      
+      # A Maven artifact uploaded using the MavenArtifact directive.
+      class UploadedMavenArtifact
+        include Google::Apis::Core::Hashable
+      
+        # Container message for hashes of byte content of files, used in
+        # SourceProvenance messages to verify integrity of source input to the build.
+        # Corresponds to the JSON property `fileHashes`
+        # @return [Google::Apis::CloudbuildV1alpha2::FileHashes]
+        attr_accessor :file_hashes
+      
+        # Start and end times for a build execution phase.
+        # Corresponds to the JSON property `pushTiming`
+        # @return [Google::Apis::CloudbuildV1alpha2::TimeSpan]
+        attr_accessor :push_timing
+      
+        # URI of the uploaded artifact.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_hashes = args[:file_hashes] if args.key?(:file_hashes)
+          @push_timing = args[:push_timing] if args.key?(:push_timing)
+          @uri = args[:uri] if args.key?(:uri)
+        end
+      end
+      
+      # Artifact uploaded using the PythonPackage directive.
+      class UploadedPythonPackage
+        include Google::Apis::Core::Hashable
+      
+        # Container message for hashes of byte content of files, used in
+        # SourceProvenance messages to verify integrity of source input to the build.
+        # Corresponds to the JSON property `fileHashes`
+        # @return [Google::Apis::CloudbuildV1alpha2::FileHashes]
+        attr_accessor :file_hashes
+      
+        # Start and end times for a build execution phase.
+        # Corresponds to the JSON property `pushTiming`
+        # @return [Google::Apis::CloudbuildV1alpha2::TimeSpan]
+        attr_accessor :push_timing
+      
+        # URI of the uploaded artifact.
+        # Corresponds to the JSON property `uri`
+        # @return [String]
+        attr_accessor :uri
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @file_hashes = args[:file_hashes] if args.key?(:file_hashes)
+          @push_timing = args[:push_timing] if args.key?(:push_timing)
+          @uri = args[:uri] if args.key?(:uri)
         end
       end
       

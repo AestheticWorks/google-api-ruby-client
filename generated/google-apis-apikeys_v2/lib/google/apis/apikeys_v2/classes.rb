@@ -222,30 +222,6 @@ module Google
         end
       end
       
-      # Request message for `CloneKey` method.
-      class V2CloneKeyRequest
-        include Google::Apis::Core::Hashable
-      
-        # User specified key id (optional). If specified, it will become the final
-        # component of the key resource name. The id must be unique within the project,
-        # must conform with RFC-1034, is restricted to lower-cased letters, and has a
-        # maximum length of 63 characters. In another word, the id must match the
-        # regular expression: `[a-z]([a-z0-9-]`0,61`[a-z0-9])?`. The id must NOT be a
-        # UUID-like string.
-        # Corresponds to the JSON property `keyId`
-        # @return [String]
-        attr_accessor :key_id
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @key_id = args[:key_id] if args.key?(:key_id)
-        end
-      end
-      
       # Response message for `GetKeyString` method.
       class V2GetKeyStringResponse
         include Google::Apis::Core::Hashable
@@ -288,6 +264,13 @@ module Google
       class V2Key
         include Google::Apis::Core::Hashable
       
+        # Annotations is an unstructured key-value map stored with a policy that may be
+        # set by external tools to store and retrieve arbitrary metadata. They are not
+        # queryable and should be preserved when modifying objects.
+        # Corresponds to the JSON property `annotations`
+        # @return [Hash<String,String>]
+        attr_accessor :annotations
+      
         # Output only. A timestamp identifying the time this key was originally created.
         # Corresponds to the JSON property `createTime`
         # @return [String]
@@ -307,7 +290,8 @@ module Google
       
         # Output only. A checksum computed by the server based on the current value of
         # the Key resource. This may be sent on update and delete requests to ensure the
-        # client has an up-to-date value before proceeding.
+        # client has an up-to-date value before proceeding. See https://google.aip.dev/
+        # 154.
         # Corresponds to the JSON property `etag`
         # @return [String]
         attr_accessor :etag
@@ -347,6 +331,7 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @annotations = args[:annotations] if args.key?(:annotations)
           @create_time = args[:create_time] if args.key?(:create_time)
           @delete_time = args[:delete_time] if args.key?(:delete_time)
           @display_name = args[:display_name] if args.key?(:display_name)

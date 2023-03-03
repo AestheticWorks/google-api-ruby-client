@@ -22,6 +22,51 @@ module Google
   module Apis
     module BigtableadminV1
       
+      # Limits for the number of nodes a Cluster can autoscale up/down to.
+      class AutoscalingLimits
+        include Google::Apis::Core::Hashable
+      
+        # Required. Maximum number of nodes to scale up to.
+        # Corresponds to the JSON property `maxServeNodes`
+        # @return [Fixnum]
+        attr_accessor :max_serve_nodes
+      
+        # Required. Minimum number of nodes to scale down to.
+        # Corresponds to the JSON property `minServeNodes`
+        # @return [Fixnum]
+        attr_accessor :min_serve_nodes
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @max_serve_nodes = args[:max_serve_nodes] if args.key?(:max_serve_nodes)
+          @min_serve_nodes = args[:min_serve_nodes] if args.key?(:min_serve_nodes)
+        end
+      end
+      
+      # The Autoscaling targets for a Cluster. These determine the recommended nodes.
+      class AutoscalingTargets
+        include Google::Apis::Core::Hashable
+      
+        # The cpu utilization that the Autoscaler should be trying to achieve. This
+        # number is on a scale from 0 (no utilization) to 100 (total utilization).
+        # Corresponds to the JSON property `cpuUtilizationPercent`
+        # @return [Fixnum]
+        attr_accessor :cpu_utilization_percent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cpu_utilization_percent = args[:cpu_utilization_percent] if args.key?(:cpu_utilization_percent)
+        end
+      end
+      
       # A backup of a Cloud Bigtable table.
       class Backup
         include Google::Apis::Core::Hashable
@@ -142,6 +187,11 @@ module Google
       class Cluster
         include Google::Apis::Core::Hashable
       
+        # Configuration for a cluster.
+        # Corresponds to the JSON property `clusterConfig`
+        # @return [Google::Apis::BigtableadminV1::ClusterConfig]
+        attr_accessor :cluster_config
+      
         # Immutable. The type of storage used by this cluster to serve its parent
         # instance's tables, unless explicitly overridden.
         # Corresponds to the JSON property `defaultStorageType`
@@ -167,8 +217,8 @@ module Google
         # @return [String]
         attr_accessor :name
       
-        # Required. The number of nodes allocated to this cluster. More nodes enable
-        # higher throughput and more consistent performance.
+        # The number of nodes allocated to this cluster. More nodes enable higher
+        # throughput and more consistent performance.
         # Corresponds to the JSON property `serveNodes`
         # @return [Fixnum]
         attr_accessor :serve_nodes
@@ -184,12 +234,57 @@ module Google
       
         # Update properties of this object
         def update!(**args)
+          @cluster_config = args[:cluster_config] if args.key?(:cluster_config)
           @default_storage_type = args[:default_storage_type] if args.key?(:default_storage_type)
           @encryption_config = args[:encryption_config] if args.key?(:encryption_config)
           @location = args[:location] if args.key?(:location)
           @name = args[:name] if args.key?(:name)
           @serve_nodes = args[:serve_nodes] if args.key?(:serve_nodes)
           @state = args[:state] if args.key?(:state)
+        end
+      end
+      
+      # Autoscaling config for a cluster.
+      class ClusterAutoscalingConfig
+        include Google::Apis::Core::Hashable
+      
+        # Limits for the number of nodes a Cluster can autoscale up/down to.
+        # Corresponds to the JSON property `autoscalingLimits`
+        # @return [Google::Apis::BigtableadminV1::AutoscalingLimits]
+        attr_accessor :autoscaling_limits
+      
+        # The Autoscaling targets for a Cluster. These determine the recommended nodes.
+        # Corresponds to the JSON property `autoscalingTargets`
+        # @return [Google::Apis::BigtableadminV1::AutoscalingTargets]
+        attr_accessor :autoscaling_targets
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @autoscaling_limits = args[:autoscaling_limits] if args.key?(:autoscaling_limits)
+          @autoscaling_targets = args[:autoscaling_targets] if args.key?(:autoscaling_targets)
+        end
+      end
+      
+      # Configuration for a cluster.
+      class ClusterConfig
+        include Google::Apis::Core::Hashable
+      
+        # Autoscaling config for a cluster.
+        # Corresponds to the JSON property `clusterAutoscalingConfig`
+        # @return [Google::Apis::BigtableadminV1::ClusterAutoscalingConfig]
+        attr_accessor :cluster_autoscaling_config
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster_autoscaling_config = args[:cluster_autoscaling_config] if args.key?(:cluster_autoscaling_config)
         end
       end
       
@@ -446,63 +541,14 @@ module Google
         end
       end
       
-      # Added to the error payload.
-      class FailureTrace
-        include Google::Apis::Core::Hashable
-      
-        # 
-        # Corresponds to the JSON property `frames`
-        # @return [Array<Google::Apis::BigtableadminV1::Frame>]
-        attr_accessor :frames
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @frames = args[:frames] if args.key?(:frames)
-        end
-      end
-      
-      # 
-      class Frame
-        include Google::Apis::Core::Hashable
-      
-        # 
-        # Corresponds to the JSON property `targetName`
-        # @return [String]
-        attr_accessor :target_name
-      
-        # 
-        # Corresponds to the JSON property `workflowGuid`
-        # @return [String]
-        attr_accessor :workflow_guid
-      
-        # 
-        # Corresponds to the JSON property `zoneId`
-        # @return [String]
-        attr_accessor :zone_id
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @target_name = args[:target_name] if args.key?(:target_name)
-          @workflow_guid = args[:workflow_guid] if args.key?(:workflow_guid)
-          @zone_id = args[:zone_id] if args.key?(:zone_id)
-        end
-      end
-      
       # A collection of Bigtable Tables and the resources that serve them. All tables
       # in an instance are served from all Clusters in the instance.
       class Instance
         include Google::Apis::Core::Hashable
       
         # Output only. A server-assigned timestamp representing when this Instance was
-        # created.
+        # created. For instances created before this field was added (August 2021), this
+        # value is `seconds: 0, nanos: 1`.
         # Corresponds to the JSON property `createTime`
         # @return [String]
         attr_accessor :create_time
@@ -614,6 +660,63 @@ module Google
         def update!(**args)
           @name = args[:name] if args.key?(:name)
           @progress = args[:progress] if args.key?(:progress)
+        end
+      end
+      
+      # The metadata for the Operation returned by PartialUpdateCluster.
+      class PartialUpdateClusterMetadata
+        include Google::Apis::Core::Hashable
+      
+        # The time at which the operation failed or was completed successfully.
+        # Corresponds to the JSON property `finishTime`
+        # @return [String]
+        attr_accessor :finish_time
+      
+        # Request message for BigtableInstanceAdmin.PartialUpdateCluster.
+        # Corresponds to the JSON property `originalRequest`
+        # @return [Google::Apis::BigtableadminV1::PartialUpdateClusterRequest]
+        attr_accessor :original_request
+      
+        # The time at which the original request was received.
+        # Corresponds to the JSON property `requestTime`
+        # @return [String]
+        attr_accessor :request_time
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @finish_time = args[:finish_time] if args.key?(:finish_time)
+          @original_request = args[:original_request] if args.key?(:original_request)
+          @request_time = args[:request_time] if args.key?(:request_time)
+        end
+      end
+      
+      # Request message for BigtableInstanceAdmin.PartialUpdateCluster.
+      class PartialUpdateClusterRequest
+        include Google::Apis::Core::Hashable
+      
+        # A resizable group of nodes in a particular cloud location, capable of serving
+        # all Tables in the parent Instance.
+        # Corresponds to the JSON property `cluster`
+        # @return [Google::Apis::BigtableadminV1::Cluster]
+        attr_accessor :cluster
+      
+        # Required. The subset of Cluster fields which should be replaced.
+        # Corresponds to the JSON property `updateMask`
+        # @return [String]
+        attr_accessor :update_mask
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @cluster = args[:cluster] if args.key?(:cluster)
+          @update_mask = args[:update_mask] if args.key?(:update_mask)
         end
       end
       

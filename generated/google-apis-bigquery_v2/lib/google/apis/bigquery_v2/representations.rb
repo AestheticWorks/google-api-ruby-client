@@ -178,6 +178,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class CloneDefinition
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Cluster
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -220,6 +226,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DataMaskingStatistics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DataSplitResult
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -234,18 +246,18 @@ module Google
         
           include Google::Apis::Core::JsonObjectSupport
         end
+        
+        class Tag
+          class Representation < Google::Apis::Core::JsonRepresentation; end
+        
+          include Google::Apis::Core::JsonObjectSupport
+        end
       
         include Google::Apis::Core::JsonObjectSupport
       end
       
       class DatasetAccessEntry
         class Representation < Google::Apis::Core::JsonRepresentation; end
-        
-        class TargetType
-          class Representation < Google::Apis::Core::JsonRepresentation; end
-        
-          include Google::Apis::Core::JsonObjectSupport
-        end
       
         include Google::Apis::Core::JsonObjectSupport
       end
@@ -274,7 +286,31 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class DimensionalityReductionMetrics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class DmlStatistics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DoubleCandidates
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DoubleHparamSearchSpace
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class DoubleRange
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -311,6 +347,12 @@ module Google
       end
       
       class ExplainQueryStep
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class Explanation
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -358,6 +400,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class GlobalExplanation
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class GoogleSheetsOptions
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -365,6 +413,54 @@ module Google
       end
       
       class HivePartitioningOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HparamSearchSpaces
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class HparamTuningTrial
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IndexUnusedReason
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IntArray
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IntArrayHparamSearchSpace
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IntCandidates
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IntHparamSearchSpace
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class IntRange
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -472,6 +568,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class JobStatistics5
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class JobStatus
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -503,6 +605,12 @@ module Google
       end
       
       class MaterializedViewDefinition
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class MlStatistics
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -545,6 +653,12 @@ module Google
       end
       
       class Policy
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class PrincipalComponentInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -634,6 +748,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class RemoteFunctionOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class Routine
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -682,6 +802,12 @@ module Google
         include Google::Apis::Core::JsonObjectSupport
       end
       
+      class SearchStatistics
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
       class SessionInfo
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
@@ -695,6 +821,24 @@ module Google
       end
       
       class SnapshotDefinition
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SparkLoggingInfo
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SparkOptions
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class SparkStatistics
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -725,6 +869,12 @@ module Google
       end
       
       class Streamingbuffer
+        class Representation < Google::Apis::Core::JsonRepresentation; end
+      
+        include Google::Apis::Core::JsonObjectSupport
+      end
+      
+      class StringHparamSearchSpace
         class Representation < Google::Apis::Core::JsonRepresentation; end
       
         include Google::Apis::Core::JsonObjectSupport
@@ -1020,6 +1170,7 @@ module Google
       class BiEngineStatistics
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :acceleration_mode, as: 'accelerationMode'
           property :bi_engine_mode, as: 'biEngineMode'
           collection :bi_engine_reasons, as: 'biEngineReasons', class: Google::Apis::BigqueryV2::BiEngineReason, decorator: Google::Apis::BigqueryV2::BiEngineReason::Representation
       
@@ -1160,6 +1311,16 @@ module Google
         end
       end
       
+      class CloneDefinition
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :base_table_reference, as: 'baseTableReference', class: Google::Apis::BigqueryV2::TableReference, decorator: Google::Apis::BigqueryV2::TableReference::Representation
+      
+          property :clone_time, as: 'cloneTime', type: DateTime
+      
+        end
+      end
+      
       class Cluster
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1221,8 +1382,16 @@ module Google
           property :encoding, as: 'encoding'
           property :field_delimiter, as: 'fieldDelimiter'
           property :null_marker, as: 'null_marker'
+          property :preserve_ascii_control_characters, as: 'preserveAsciiControlCharacters'
           property :quote, as: 'quote'
           property :skip_leading_rows, :numeric_string => true, as: 'skipLeadingRows'
+        end
+      end
+      
+      class DataMaskingStatistics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :data_masking_applied, as: 'dataMaskingApplied'
         end
       end
       
@@ -1230,6 +1399,8 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :evaluation_table, as: 'evaluationTable', class: Google::Apis::BigqueryV2::TableReference, decorator: Google::Apis::BigqueryV2::TableReference::Representation
+      
+          property :test_table, as: 'testTable', class: Google::Apis::BigqueryV2::TableReference, decorator: Google::Apis::BigqueryV2::TableReference::Representation
       
           property :training_table, as: 'trainingTable', class: Google::Apis::BigqueryV2::TableReference, decorator: Google::Apis::BigqueryV2::TableReference::Representation
       
@@ -1248,6 +1419,7 @@ module Google
           property :default_encryption_configuration, as: 'defaultEncryptionConfiguration', class: Google::Apis::BigqueryV2::EncryptionConfiguration, decorator: Google::Apis::BigqueryV2::EncryptionConfiguration::Representation
       
           property :default_partition_expiration_ms, :numeric_string => true, as: 'defaultPartitionExpirationMs'
+          property :default_rounding_mode, as: 'defaultRoundingMode'
           property :default_table_expiration_ms, :numeric_string => true, as: 'defaultTableExpirationMs'
           property :description, as: 'description'
           property :etag, as: 'etag'
@@ -1258,8 +1430,12 @@ module Google
           hash :labels, as: 'labels'
           property :last_modified_time, :numeric_string => true, as: 'lastModifiedTime'
           property :location, as: 'location'
-          property :satisfies_pzs, as: 'satisfiesPZS'
+          property :max_time_travel_hours, :numeric_string => true, as: 'maxTimeTravelHours'
+          property :satisfies_pzs, as: 'satisfiesPzs'
           property :self_link, as: 'selfLink'
+          property :storage_billing_model, as: 'storageBillingModel'
+          collection :tags, as: 'tags', class: Google::Apis::BigqueryV2::Dataset::Tag, decorator: Google::Apis::BigqueryV2::Dataset::Tag::Representation
+      
         end
         
         class Access
@@ -1279,6 +1455,14 @@ module Google
         
           end
         end
+        
+        class Tag
+          # @private
+          class Representation < Google::Apis::Core::JsonRepresentation
+            property :tag_key, as: 'tagKey'
+            property :tag_value, as: 'tagValue'
+          end
+        end
       end
       
       class DatasetAccessEntry
@@ -1286,15 +1470,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :dataset, as: 'dataset', class: Google::Apis::BigqueryV2::DatasetReference, decorator: Google::Apis::BigqueryV2::DatasetReference::Representation
       
-          collection :target_types, as: 'target_types', class: Google::Apis::BigqueryV2::DatasetAccessEntry::TargetType, decorator: Google::Apis::BigqueryV2::DatasetAccessEntry::TargetType::Representation
-      
-        end
-        
-        class TargetType
-          # @private
-          class Representation < Google::Apis::Core::JsonRepresentation
-            property :target_type, as: 'targetType'
-          end
+          collection :target_types, as: 'targetTypes'
         end
       end
       
@@ -1334,8 +1510,17 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :description, as: 'description'
+          property :expiration_time, as: 'expirationTime', type: DateTime
+      
           property :friendly_name, as: 'friendlyName'
           hash :labels, as: 'labels'
+        end
+      end
+      
+      class DimensionalityReductionMetrics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :total_explained_variance_ratio, as: 'totalExplainedVarianceRatio'
         end
       end
       
@@ -1345,6 +1530,31 @@ module Google
           property :deleted_row_count, :numeric_string => true, as: 'deletedRowCount'
           property :inserted_row_count, :numeric_string => true, as: 'insertedRowCount'
           property :updated_row_count, :numeric_string => true, as: 'updatedRowCount'
+        end
+      end
+      
+      class DoubleCandidates
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :candidates, as: 'candidates'
+        end
+      end
+      
+      class DoubleHparamSearchSpace
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :candidates, as: 'candidates', class: Google::Apis::BigqueryV2::DoubleCandidates, decorator: Google::Apis::BigqueryV2::DoubleCandidates::Representation
+      
+          property :range, as: 'range', class: Google::Apis::BigqueryV2::DoubleRange, decorator: Google::Apis::BigqueryV2::DoubleRange::Representation
+      
+        end
+      end
+      
+      class DoubleRange
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :max, as: 'max'
+          property :min, as: 'min'
         end
       end
       
@@ -1381,6 +1591,8 @@ module Google
           property :binary_classification_metrics, as: 'binaryClassificationMetrics', class: Google::Apis::BigqueryV2::BinaryClassificationMetrics, decorator: Google::Apis::BigqueryV2::BinaryClassificationMetrics::Representation
       
           property :clustering_metrics, as: 'clusteringMetrics', class: Google::Apis::BigqueryV2::ClusteringMetrics, decorator: Google::Apis::BigqueryV2::ClusteringMetrics::Representation
+      
+          property :dimensionality_reduction_metrics, as: 'dimensionalityReductionMetrics', class: Google::Apis::BigqueryV2::DimensionalityReductionMetrics, decorator: Google::Apis::BigqueryV2::DimensionalityReductionMetrics::Representation
       
           property :multi_class_classification_metrics, as: 'multiClassClassificationMetrics', class: Google::Apis::BigqueryV2::MultiClassClassificationMetrics, decorator: Google::Apis::BigqueryV2::MultiClassClassificationMetrics::Representation
       
@@ -1436,6 +1648,14 @@ module Google
         end
       end
       
+      class Explanation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :attribution, as: 'attribution'
+          property :feature_name, as: 'featureName'
+        end
+      end
+      
       class Expr
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1465,8 +1685,11 @@ module Google
       
           property :ignore_unknown_values, as: 'ignoreUnknownValues'
           property :max_bad_records, as: 'maxBadRecords'
+          property :metadata_cache_mode, as: 'metadataCacheMode'
+          property :object_metadata, as: 'objectMetadata'
           property :parquet_options, as: 'parquetOptions', class: Google::Apis::BigqueryV2::ParquetOptions, decorator: Google::Apis::BigqueryV2::ParquetOptions::Representation
       
+          property :reference_file_schema_uri, as: 'referenceFileSchemaUri'
           property :schema, as: 'schema', class: Google::Apis::BigqueryV2::TableSchema, decorator: Google::Apis::BigqueryV2::TableSchema::Representation
       
           property :source_format, as: 'sourceFormat'
@@ -1529,6 +1752,15 @@ module Google
         end
       end
       
+      class GlobalExplanation
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :class_label, as: 'classLabel'
+          collection :explanations, as: 'explanations', class: Google::Apis::BigqueryV2::Explanation, decorator: Google::Apis::BigqueryV2::Explanation::Representation
+      
+        end
+      end
+      
       class GoogleSheetsOptions
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -1546,13 +1778,129 @@ module Google
         end
       end
       
+      class HparamSearchSpaces
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :activation_fn, as: 'activationFn', class: Google::Apis::BigqueryV2::StringHparamSearchSpace, decorator: Google::Apis::BigqueryV2::StringHparamSearchSpace::Representation
+      
+          property :batch_size, as: 'batchSize', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :booster_type, as: 'boosterType', class: Google::Apis::BigqueryV2::StringHparamSearchSpace, decorator: Google::Apis::BigqueryV2::StringHparamSearchSpace::Representation
+      
+          property :colsample_bylevel, as: 'colsampleBylevel', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :colsample_bynode, as: 'colsampleBynode', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :colsample_bytree, as: 'colsampleBytree', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :dart_normalize_type, as: 'dartNormalizeType', class: Google::Apis::BigqueryV2::StringHparamSearchSpace, decorator: Google::Apis::BigqueryV2::StringHparamSearchSpace::Representation
+      
+          property :dropout, as: 'dropout', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :hidden_units, as: 'hiddenUnits', class: Google::Apis::BigqueryV2::IntArrayHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntArrayHparamSearchSpace::Representation
+      
+          property :l1_reg, as: 'l1Reg', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :l2_reg, as: 'l2Reg', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :learn_rate, as: 'learnRate', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :max_tree_depth, as: 'maxTreeDepth', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :min_split_loss, as: 'minSplitLoss', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :min_tree_child_weight, as: 'minTreeChildWeight', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :num_clusters, as: 'numClusters', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :num_factors, as: 'numFactors', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :num_parallel_tree, as: 'numParallelTree', class: Google::Apis::BigqueryV2::IntHparamSearchSpace, decorator: Google::Apis::BigqueryV2::IntHparamSearchSpace::Representation
+      
+          property :optimizer, as: 'optimizer', class: Google::Apis::BigqueryV2::StringHparamSearchSpace, decorator: Google::Apis::BigqueryV2::StringHparamSearchSpace::Representation
+      
+          property :subsample, as: 'subsample', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+          property :tree_method, as: 'treeMethod', class: Google::Apis::BigqueryV2::StringHparamSearchSpace, decorator: Google::Apis::BigqueryV2::StringHparamSearchSpace::Representation
+      
+          property :wals_alpha, as: 'walsAlpha', class: Google::Apis::BigqueryV2::DoubleHparamSearchSpace, decorator: Google::Apis::BigqueryV2::DoubleHparamSearchSpace::Representation
+      
+        end
+      end
+      
+      class HparamTuningTrial
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :end_time_ms, :numeric_string => true, as: 'endTimeMs'
+          property :error_message, as: 'errorMessage'
+          property :eval_loss, as: 'evalLoss'
+          property :evaluation_metrics, as: 'evaluationMetrics', class: Google::Apis::BigqueryV2::EvaluationMetrics, decorator: Google::Apis::BigqueryV2::EvaluationMetrics::Representation
+      
+          property :hparam_tuning_evaluation_metrics, as: 'hparamTuningEvaluationMetrics', class: Google::Apis::BigqueryV2::EvaluationMetrics, decorator: Google::Apis::BigqueryV2::EvaluationMetrics::Representation
+      
+          property :hparams, as: 'hparams', class: Google::Apis::BigqueryV2::TrainingOptions, decorator: Google::Apis::BigqueryV2::TrainingOptions::Representation
+      
+          property :start_time_ms, :numeric_string => true, as: 'startTimeMs'
+          property :status, as: 'status'
+          property :training_loss, as: 'trainingLoss'
+          property :trial_id, :numeric_string => true, as: 'trialId'
+        end
+      end
+      
+      class IndexUnusedReason
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :base_table, as: 'base_table', class: Google::Apis::BigqueryV2::TableReference, decorator: Google::Apis::BigqueryV2::TableReference::Representation
+      
+          property :code, as: 'code'
+          property :index_name, as: 'index_name'
+          property :message, as: 'message'
+        end
+      end
+      
+      class IntArray
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :elements, as: 'elements'
+        end
+      end
+      
+      class IntArrayHparamSearchSpace
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :candidates, as: 'candidates', class: Google::Apis::BigqueryV2::IntArray, decorator: Google::Apis::BigqueryV2::IntArray::Representation
+      
+        end
+      end
+      
+      class IntCandidates
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :candidates, as: 'candidates'
+        end
+      end
+      
+      class IntHparamSearchSpace
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :candidates, as: 'candidates', class: Google::Apis::BigqueryV2::IntCandidates, decorator: Google::Apis::BigqueryV2::IntCandidates::Representation
+      
+          property :range, as: 'range', class: Google::Apis::BigqueryV2::IntRange, decorator: Google::Apis::BigqueryV2::IntRange::Representation
+      
+        end
+      end
+      
+      class IntRange
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :max, :numeric_string => true, as: 'max'
+          property :min, :numeric_string => true, as: 'min'
+        end
+      end
+      
       class IterationResult
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
-          property :arima_result, as: 'arimaResult', class: Google::Apis::BigqueryV2::ArimaResult, decorator: Google::Apis::BigqueryV2::ArimaResult::Representation
-      
-          collection :cluster_infos, as: 'clusterInfos', class: Google::Apis::BigqueryV2::ClusterInfo, decorator: Google::Apis::BigqueryV2::ClusterInfo::Representation
-      
           property :duration_ms, :numeric_string => true, as: 'durationMs'
           property :eval_loss, as: 'evalLoss'
           property :index, as: 'index'
@@ -1632,7 +1980,10 @@ module Google
           property :autodetect, as: 'autodetect'
           property :clustering, as: 'clustering', class: Google::Apis::BigqueryV2::Clustering, decorator: Google::Apis::BigqueryV2::Clustering::Representation
       
+          collection :connection_properties, as: 'connectionProperties', class: Google::Apis::BigqueryV2::ConnectionProperty, decorator: Google::Apis::BigqueryV2::ConnectionProperty::Representation
+      
           property :create_disposition, as: 'createDisposition'
+          property :create_session, as: 'createSession'
           collection :decimal_target_types, as: 'decimalTargetTypes'
           property :destination_encryption_configuration, as: 'destinationEncryptionConfiguration', class: Google::Apis::BigqueryV2::EncryptionConfiguration, decorator: Google::Apis::BigqueryV2::EncryptionConfiguration::Representation
       
@@ -1650,10 +2001,12 @@ module Google
           property :null_marker, as: 'nullMarker'
           property :parquet_options, as: 'parquetOptions', class: Google::Apis::BigqueryV2::ParquetOptions, decorator: Google::Apis::BigqueryV2::ParquetOptions::Representation
       
+          property :preserve_ascii_control_characters, as: 'preserveAsciiControlCharacters'
           collection :projection_fields, as: 'projectionFields'
           property :quote, as: 'quote'
           property :range_partitioning, as: 'rangePartitioning', class: Google::Apis::BigqueryV2::RangePartitioning, decorator: Google::Apis::BigqueryV2::RangePartitioning::Representation
       
+          property :reference_file_schema_uri, as: 'referenceFileSchemaUri'
           property :schema, as: 'schema', class: Google::Apis::BigqueryV2::TableSchema, decorator: Google::Apis::BigqueryV2::TableSchema::Representation
       
           property :schema_inline, as: 'schemaInline'
@@ -1771,7 +2124,11 @@ module Google
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
           property :completion_ratio, as: 'completionRatio'
+          property :copy, as: 'copy', class: Google::Apis::BigqueryV2::JobStatistics5, decorator: Google::Apis::BigqueryV2::JobStatistics5::Representation
+      
           property :creation_time, :numeric_string => true, as: 'creationTime'
+          property :data_masking_statistics, as: 'dataMaskingStatistics', class: Google::Apis::BigqueryV2::DataMaskingStatistics, decorator: Google::Apis::BigqueryV2::DataMaskingStatistics::Representation
+      
           property :end_time, :numeric_string => true, as: 'endTime'
           property :extract, as: 'extract', class: Google::Apis::BigqueryV2::JobStatistics4, decorator: Google::Apis::BigqueryV2::JobStatistics4::Representation
       
@@ -1829,6 +2186,8 @@ module Google
           property :dml_stats, as: 'dmlStats', class: Google::Apis::BigqueryV2::DmlStatistics, decorator: Google::Apis::BigqueryV2::DmlStatistics::Representation
       
           property :estimated_bytes_processed, :numeric_string => true, as: 'estimatedBytesProcessed'
+          property :ml_statistics, as: 'mlStatistics', class: Google::Apis::BigqueryV2::MlStatistics, decorator: Google::Apis::BigqueryV2::MlStatistics::Representation
+      
           property :model_training, as: 'modelTraining', class: Google::Apis::BigqueryV2::BigQueryModelTraining, decorator: Google::Apis::BigqueryV2::BigQueryModelTraining::Representation
       
           property :model_training_current_iteration, as: 'modelTrainingCurrentIteration'
@@ -1844,6 +2203,10 @@ module Google
       
           property :schema, as: 'schema', class: Google::Apis::BigqueryV2::TableSchema, decorator: Google::Apis::BigqueryV2::TableSchema::Representation
       
+          property :search_statistics, as: 'searchStatistics', class: Google::Apis::BigqueryV2::SearchStatistics, decorator: Google::Apis::BigqueryV2::SearchStatistics::Representation
+      
+          property :spark_statistics, as: 'sparkStatistics', class: Google::Apis::BigqueryV2::SparkStatistics, decorator: Google::Apis::BigqueryV2::SparkStatistics::Representation
+      
           property :statement_type, as: 'statementType'
           collection :timeline, as: 'timeline', class: Google::Apis::BigqueryV2::QueryTimelineSample, decorator: Google::Apis::BigqueryV2::QueryTimelineSample::Representation
       
@@ -1852,6 +2215,7 @@ module Google
           property :total_bytes_processed_accuracy, as: 'totalBytesProcessedAccuracy'
           property :total_partitions_processed, :numeric_string => true, as: 'totalPartitionsProcessed'
           property :total_slot_ms, :numeric_string => true, as: 'totalSlotMs'
+          property :transferred_bytes, :numeric_string => true, as: 'transferredBytes'
           collection :undeclared_query_parameters, as: 'undeclaredQueryParameters', class: Google::Apis::BigqueryV2::QueryParameter, decorator: Google::Apis::BigqueryV2::QueryParameter::Representation
       
         end
@@ -1881,6 +2245,14 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           collection :destination_uri_file_counts, as: 'destinationUriFileCounts'
           property :input_bytes, :numeric_string => true, as: 'inputBytes'
+        end
+      end
+      
+      class JobStatistics5
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :copied_logical_bytes, :numeric_string => true, as: 'copied_logical_bytes'
+          property :copied_rows, :numeric_string => true, as: 'copied_rows'
         end
       end
       
@@ -1932,10 +2304,21 @@ module Google
       class MaterializedViewDefinition
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :allow_non_incremental_definition, as: 'allow_non_incremental_definition'
           property :enable_refresh, as: 'enableRefresh'
           property :last_refresh_time, :numeric_string => true, as: 'lastRefreshTime'
+          property :max_staleness, :base64 => true, as: 'maxStaleness'
           property :query, as: 'query'
           property :refresh_interval_ms, :numeric_string => true, as: 'refreshIntervalMs'
+        end
+      end
+      
+      class MlStatistics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :iteration_results, as: 'iterationResults', class: Google::Apis::BigqueryV2::IterationResult, decorator: Google::Apis::BigqueryV2::IterationResult::Representation
+      
+          property :max_iterations, :numeric_string => true, as: 'maxIterations'
         end
       end
       
@@ -1944,6 +2327,7 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :best_trial_id, :numeric_string => true, as: 'bestTrialId'
           property :creation_time, :numeric_string => true, as: 'creationTime'
+          property :default_trial_id, :numeric_string => true, as: 'defaultTrialId'
           property :description, as: 'description'
           property :encryption_configuration, as: 'encryptionConfiguration', class: Google::Apis::BigqueryV2::EncryptionConfiguration, decorator: Google::Apis::BigqueryV2::EncryptionConfiguration::Representation
       
@@ -1952,6 +2336,10 @@ module Google
           collection :feature_columns, as: 'featureColumns', class: Google::Apis::BigqueryV2::StandardSqlField, decorator: Google::Apis::BigqueryV2::StandardSqlField::Representation
       
           property :friendly_name, as: 'friendlyName'
+          property :hparam_search_spaces, as: 'hparamSearchSpaces', class: Google::Apis::BigqueryV2::HparamSearchSpaces, decorator: Google::Apis::BigqueryV2::HparamSearchSpaces::Representation
+      
+          collection :hparam_trials, as: 'hparamTrials', class: Google::Apis::BigqueryV2::HparamTuningTrial, decorator: Google::Apis::BigqueryV2::HparamTuningTrial::Representation
+      
           collection :label_columns, as: 'labelColumns', class: Google::Apis::BigqueryV2::StandardSqlField, decorator: Google::Apis::BigqueryV2::StandardSqlField::Representation
       
           hash :labels, as: 'labels'
@@ -1960,6 +2348,7 @@ module Google
           property :model_reference, as: 'modelReference', class: Google::Apis::BigqueryV2::ModelReference, decorator: Google::Apis::BigqueryV2::ModelReference::Representation
       
           property :model_type, as: 'modelType'
+          collection :optimal_trial_ids, as: 'optimalTrialIds'
           collection :training_runs, as: 'trainingRuns', class: Google::Apis::BigqueryV2::TrainingRun, decorator: Google::Apis::BigqueryV2::TrainingRun::Representation
       
         end
@@ -2020,6 +2409,16 @@ module Google
       
           property :etag, :base64 => true, as: 'etag'
           property :version, as: 'version'
+        end
+      end
+      
+      class PrincipalComponentInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :cumulative_explained_variance_ratio, as: 'cumulativeExplainedVarianceRatio'
+          property :explained_variance, as: 'explainedVariance'
+          property :explained_variance_ratio, as: 'explainedVarianceRatio'
+          property :principal_component_id, :numeric_string => true, as: 'principalComponentId'
         end
       end
       
@@ -2154,6 +2553,7 @@ module Google
           property :active_units, :numeric_string => true, as: 'activeUnits'
           property :completed_units, :numeric_string => true, as: 'completedUnits'
           property :elapsed_ms, :numeric_string => true, as: 'elapsedMs'
+          property :estimated_runnable_units, :numeric_string => true, as: 'estimatedRunnableUnits'
           property :pending_units, :numeric_string => true, as: 'pendingUnits'
           property :total_slot_ms, :numeric_string => true, as: 'totalSlotMs'
         end
@@ -2198,6 +2598,16 @@ module Google
         end
       end
       
+      class RemoteFunctionOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :connection, as: 'connection'
+          property :endpoint, as: 'endpoint'
+          property :max_batching_rows, :numeric_string => true, as: 'maxBatchingRows'
+          hash :user_defined_context, as: 'userDefinedContext'
+        end
+      end
+      
       class Routine
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2211,6 +2621,8 @@ module Google
           collection :imported_libraries, as: 'importedLibraries'
           property :language, as: 'language'
           property :last_modified_time, :numeric_string => true, as: 'lastModifiedTime'
+          property :remote_function_options, as: 'remoteFunctionOptions', class: Google::Apis::BigqueryV2::RemoteFunctionOptions, decorator: Google::Apis::BigqueryV2::RemoteFunctionOptions::Representation
+      
           property :return_table_type, as: 'returnTableType', class: Google::Apis::BigqueryV2::StandardSqlTableType, decorator: Google::Apis::BigqueryV2::StandardSqlTableType::Representation
       
           property :return_type, as: 'returnType', class: Google::Apis::BigqueryV2::StandardSqlDataType, decorator: Google::Apis::BigqueryV2::StandardSqlDataType::Representation
@@ -2218,6 +2630,8 @@ module Google
           property :routine_reference, as: 'routineReference', class: Google::Apis::BigqueryV2::RoutineReference, decorator: Google::Apis::BigqueryV2::RoutineReference::Representation
       
           property :routine_type, as: 'routineType'
+          property :spark_options, as: 'sparkOptions', class: Google::Apis::BigqueryV2::SparkOptions, decorator: Google::Apis::BigqueryV2::SparkOptions::Representation
+      
           property :strict_mode, as: 'strictMode'
         end
       end
@@ -2290,6 +2704,15 @@ module Google
         end
       end
       
+      class SearchStatistics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :index_unused_reason, as: 'indexUnusedReason', class: Google::Apis::BigqueryV2::IndexUnusedReason, decorator: Google::Apis::BigqueryV2::IndexUnusedReason::Representation
+      
+          property :index_usage_mode, as: 'indexUsageMode'
+        end
+      end
+      
       class SessionInfo
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
@@ -2313,6 +2736,40 @@ module Google
       
           property :snapshot_time, as: 'snapshotTime', type: DateTime
       
+        end
+      end
+      
+      class SparkLoggingInfo
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          property :project_id, as: 'project_id'
+          property :resource_type, as: 'resource_type'
+        end
+      end
+      
+      class SparkOptions
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :archive_uris, as: 'archiveUris'
+          property :connection, as: 'connection'
+          property :container_image, as: 'containerImage'
+          collection :file_uris, as: 'fileUris'
+          collection :jar_uris, as: 'jarUris'
+          property :main_file_uri, as: 'mainFileUri'
+          hash :properties, as: 'properties'
+          collection :py_file_uris, as: 'pyFileUris'
+          property :runtime_version, as: 'runtimeVersion'
+        end
+      end
+      
+      class SparkStatistics
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          hash :endpoints, as: 'endpoints'
+          property :logging_info, as: 'logging_info', class: Google::Apis::BigqueryV2::SparkLoggingInfo, decorator: Google::Apis::BigqueryV2::SparkLoggingInfo::Representation
+      
+          property :spark_job_id, as: 'spark_job_id'
+          property :spark_job_location, as: 'spark_job_location'
         end
       end
       
@@ -2361,13 +2818,23 @@ module Google
         end
       end
       
+      class StringHparamSearchSpace
+        # @private
+        class Representation < Google::Apis::Core::JsonRepresentation
+          collection :candidates, as: 'candidates'
+        end
+      end
+      
       class Table
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          property :clone_definition, as: 'cloneDefinition', class: Google::Apis::BigqueryV2::CloneDefinition, decorator: Google::Apis::BigqueryV2::CloneDefinition::Representation
+      
           property :clustering, as: 'clustering', class: Google::Apis::BigqueryV2::Clustering, decorator: Google::Apis::BigqueryV2::Clustering::Representation
       
           property :creation_time, :numeric_string => true, as: 'creationTime'
           property :default_collation, as: 'defaultCollation'
+          property :default_rounding_mode, as: 'defaultRoundingMode'
           property :description, as: 'description'
           property :encryption_configuration, as: 'encryptionConfiguration', class: Google::Apis::BigqueryV2::EncryptionConfiguration, decorator: Google::Apis::BigqueryV2::EncryptionConfiguration::Representation
       
@@ -2383,12 +2850,21 @@ module Google
           property :location, as: 'location'
           property :materialized_view, as: 'materializedView', class: Google::Apis::BigqueryV2::MaterializedViewDefinition, decorator: Google::Apis::BigqueryV2::MaterializedViewDefinition::Representation
       
+          property :max_staleness, :base64 => true, as: 'maxStaleness'
           property :model, as: 'model', class: Google::Apis::BigqueryV2::ModelDefinition, decorator: Google::Apis::BigqueryV2::ModelDefinition::Representation
       
           property :num_bytes, :numeric_string => true, as: 'numBytes'
           property :num_long_term_bytes, :numeric_string => true, as: 'numLongTermBytes'
           property :num_physical_bytes, :numeric_string => true, as: 'numPhysicalBytes'
           property :num_rows, :numeric_string => true, as: 'numRows'
+          property :num_active_logical_bytes, :numeric_string => true, as: 'num_active_logical_bytes'
+          property :num_active_physical_bytes, :numeric_string => true, as: 'num_active_physical_bytes'
+          property :num_long_term_logical_bytes, :numeric_string => true, as: 'num_long_term_logical_bytes'
+          property :num_long_term_physical_bytes, :numeric_string => true, as: 'num_long_term_physical_bytes'
+          property :num_partitions, :numeric_string => true, as: 'num_partitions'
+          property :num_time_travel_physical_bytes, :numeric_string => true, as: 'num_time_travel_physical_bytes'
+          property :num_total_logical_bytes, :numeric_string => true, as: 'num_total_logical_bytes'
+          property :num_total_physical_bytes, :numeric_string => true, as: 'num_total_physical_bytes'
           property :range_partitioning, as: 'rangePartitioning', class: Google::Apis::BigqueryV2::RangePartitioning, decorator: Google::Apis::BigqueryV2::RangePartitioning::Representation
       
           property :require_partition_filter, as: 'requirePartitionFilter'
@@ -2471,7 +2947,8 @@ module Google
         class Representation < Google::Apis::Core::JsonRepresentation
           property :categories, as: 'categories', class: Google::Apis::BigqueryV2::TableFieldSchema::Categories, decorator: Google::Apis::BigqueryV2::TableFieldSchema::Categories::Representation
       
-          property :collation_spec, as: 'collationSpec'
+          property :collation, as: 'collation'
+          property :default_value_expression, as: 'defaultValueExpression'
           property :description, as: 'description'
           collection :fields, as: 'fields', class: Google::Apis::BigqueryV2::TableFieldSchema, decorator: Google::Apis::BigqueryV2::TableFieldSchema::Representation
       
@@ -2481,6 +2958,7 @@ module Google
           property :policy_tags, as: 'policyTags', class: Google::Apis::BigqueryV2::TableFieldSchema::PolicyTags, decorator: Google::Apis::BigqueryV2::TableFieldSchema::PolicyTags::Representation
       
           property :precision, :numeric_string => true, as: 'precision'
+          property :rounding_mode, as: 'roundingMode'
           property :scale, :numeric_string => true, as: 'scale'
           property :type, as: 'type'
         end
@@ -2599,7 +3077,9 @@ module Google
           property :auto_arima_max_order, :numeric_string => true, as: 'autoArimaMaxOrder'
           property :batch_size, :numeric_string => true, as: 'batchSize'
           property :booster_type, as: 'boosterType'
+          property :calculate_p_values, as: 'calculatePValues'
           property :clean_spikes_and_dips, as: 'cleanSpikesAndDips'
+          property :color_space, as: 'colorSpace'
           property :colsample_bylevel, as: 'colsampleBylevel'
           property :colsample_bynode, as: 'colsampleBynode'
           property :colsample_bytree, as: 'colsampleBytree'
@@ -2612,13 +3092,16 @@ module Google
           property :distance_type, as: 'distanceType'
           property :dropout, as: 'dropout'
           property :early_stop, as: 'earlyStop'
+          property :enable_global_explain, as: 'enableGlobalExplain'
           property :feedback_type, as: 'feedbackType'
           collection :hidden_units, as: 'hiddenUnits'
           property :holiday_region, as: 'holidayRegion'
           property :horizon, :numeric_string => true, as: 'horizon'
+          collection :hparam_tuning_objectives, as: 'hparamTuningObjectives'
           property :include_drift, as: 'includeDrift'
           property :initial_learn_rate, as: 'initialLearnRate'
           collection :input_label_columns, as: 'inputLabelColumns'
+          property :integrated_gradients_num_steps, :numeric_string => true, as: 'integratedGradientsNumSteps'
           property :item_column, as: 'itemColumn'
           property :kmeans_initialization_column, as: 'kmeansInitializationColumn'
           property :kmeans_initialization_method, as: 'kmeansInitializationMethod'
@@ -2629,9 +3112,12 @@ module Google
           property :learn_rate_strategy, as: 'learnRateStrategy'
           property :loss_type, as: 'lossType'
           property :max_iterations, :numeric_string => true, as: 'maxIterations'
+          property :max_parallel_trials, :numeric_string => true, as: 'maxParallelTrials'
+          property :max_time_series_length, :numeric_string => true, as: 'maxTimeSeriesLength'
           property :max_tree_depth, :numeric_string => true, as: 'maxTreeDepth'
           property :min_relative_progress, as: 'minRelativeProgress'
           property :min_split_loss, as: 'minSplitLoss'
+          property :min_time_series_length, :numeric_string => true, as: 'minTimeSeriesLength'
           property :min_tree_child_weight, :numeric_string => true, as: 'minTreeChildWeight'
           property :model_uri, as: 'modelUri'
           property :non_seasonal_order, as: 'nonSeasonalOrder', class: Google::Apis::BigqueryV2::ArimaOrder, decorator: Google::Apis::BigqueryV2::ArimaOrder::Representation
@@ -2639,14 +3125,18 @@ module Google
           property :num_clusters, :numeric_string => true, as: 'numClusters'
           property :num_factors, :numeric_string => true, as: 'numFactors'
           property :num_parallel_tree, :numeric_string => true, as: 'numParallelTree'
+          property :num_trials, :numeric_string => true, as: 'numTrials'
           property :optimization_strategy, as: 'optimizationStrategy'
           property :preserve_input_structs, as: 'preserveInputStructs'
+          property :sampled_shapley_num_paths, :numeric_string => true, as: 'sampledShapleyNumPaths'
           property :subsample, as: 'subsample'
           property :time_series_data_column, as: 'timeSeriesDataColumn'
           property :time_series_id_column, as: 'timeSeriesIdColumn'
           collection :time_series_id_columns, as: 'timeSeriesIdColumns'
+          property :time_series_length_fraction, as: 'timeSeriesLengthFraction'
           property :time_series_timestamp_column, as: 'timeSeriesTimestampColumn'
           property :tree_method, as: 'treeMethod'
+          property :trend_smoothing_window_size, :numeric_string => true, as: 'trendSmoothingWindowSize'
           property :user_column, as: 'userColumn'
           property :wals_alpha, as: 'walsAlpha'
           property :warm_start, as: 'warmStart'
@@ -2656,15 +3146,22 @@ module Google
       class TrainingRun
         # @private
         class Representation < Google::Apis::Core::JsonRepresentation
+          collection :class_level_global_explanations, as: 'classLevelGlobalExplanations', class: Google::Apis::BigqueryV2::GlobalExplanation, decorator: Google::Apis::BigqueryV2::GlobalExplanation::Representation
+      
           property :data_split_result, as: 'dataSplitResult', class: Google::Apis::BigqueryV2::DataSplitResult, decorator: Google::Apis::BigqueryV2::DataSplitResult::Representation
       
           property :evaluation_metrics, as: 'evaluationMetrics', class: Google::Apis::BigqueryV2::EvaluationMetrics, decorator: Google::Apis::BigqueryV2::EvaluationMetrics::Representation
+      
+          property :model_level_global_explanation, as: 'modelLevelGlobalExplanation', class: Google::Apis::BigqueryV2::GlobalExplanation, decorator: Google::Apis::BigqueryV2::GlobalExplanation::Representation
       
           collection :results, as: 'results', class: Google::Apis::BigqueryV2::IterationResult, decorator: Google::Apis::BigqueryV2::IterationResult::Representation
       
           property :start_time, as: 'startTime'
           property :training_options, as: 'trainingOptions', class: Google::Apis::BigqueryV2::TrainingOptions, decorator: Google::Apis::BigqueryV2::TrainingOptions::Representation
       
+          property :training_start_time, :numeric_string => true, as: 'trainingStartTime'
+          property :vertex_ai_model_id, as: 'vertexAiModelId'
+          property :vertex_ai_model_version, as: 'vertexAiModelVersion'
         end
       end
       

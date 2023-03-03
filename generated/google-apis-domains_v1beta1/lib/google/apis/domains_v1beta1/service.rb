@@ -84,8 +84,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -302,9 +302,17 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Deletes a `Registration` resource. This method only works on resources in one
-        # of the following states: * `state` is `EXPORTED` with `expire_time` in the
-        # past * `state` is `REGISTRATION_FAILED`
+        # Deletes a `Registration` resource. This method works on any `Registration`
+        # resource using [Subscription or Commitment billing](/domains/pricing#billing-
+        # models), provided that the resource was created at least 1 day in the past.
+        # For `Registration` resources using [Monthly billing](/domains/pricing#billing-
+        # models), this method works if: * `state` is `EXPORTED` with `expire_time` in
+        # the past * `state` is `REGISTRATION_FAILED` * `state` is `TRANSFER_FAILED`
+        # When an active registration is successfully deleted, you can continue to use
+        # the domain in [Google Domains](https://domains.google/) until it expires. The
+        # calling user becomes the domain's sole owner in Google Domains, and
+        # permissions for the domain are subsequently managed there. The domain does not
+        # renew automatically unless the new owner sets up billing in Google Domains.
         # @param [String] name
         #   Required. The name of the `Registration` to delete, in the format `projects/*/
         #   locations/*/registrations/*`.
@@ -335,15 +343,12 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Exports a `Registration` that you no longer want to use with Cloud Domains.
-        # You can continue to use the domain in [Google Domains](https://domains.google/)
-        # until it expires. If the export is successful: * The resource's `state`
-        # becomes `EXPORTED`, meaning that it is no longer managed by Cloud Domains *
-        # Because individual users can own domains in Google Domains, the calling user
-        # becomes the domain's sole owner. Permissions for the domain are subsequently
-        # managed in Google Domains. * Without further action, the domain does not renew
-        # automatically. The new owner can set up billing in Google Domains to renew the
-        # domain if needed.
+        # Exports a `Registration` resource, such that it is no longer managed by Cloud
+        # Domains. When an active domain is successfully exported, you can continue to
+        # use the domain in [Google Domains](https://domains.google/) until it expires.
+        # The calling user becomes the domain's sole owner in Google Domains, and
+        # permissions for the domain are subsequently managed there. The domain does not
+        # renew automatically unless the new owner sets up billing in Google Domains.
         # @param [String] name
         #   Required. The name of the `Registration` to export, in the format `projects/*/
         #   locations/*/registrations/*`.
@@ -411,16 +416,20 @@ module Google
         # Gets the access control policy for a resource. Returns an empty policy if the
         # resource exists and does not have a policy set.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being requested. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Fixnum] options_requested_policy_version
-        #   Optional. The policy format version to be returned. Valid values are 0, 1, and
-        #   3. Requests specifying an invalid value will be rejected. Requests for
-        #   policies with any conditional bindings must specify version 3. Policies
-        #   without any conditional bindings may specify any valid value or leave the
-        #   field unset. To learn which resources support conditions in their IAM policies,
-        #   see the [IAM documentation](https://cloud.google.com/iam/help/conditions/
-        #   resource-policies).
+        #   Optional. The maximum policy version that will be used to format the policy.
+        #   Valid values are 0, 1, and 3. Requests specifying an invalid value will be
+        #   rejected. Requests for policies with any conditional role bindings must
+        #   specify version 3. Policies with no conditional role bindings may specify any
+        #   valid value or leave the field unset. The policy in the response might use the
+        #   policy version that you specified, or it might use a lower policy version. For
+        #   example, if you specify version 3, but the policy has no conditional role
+        #   bindings, the response uses version 1. To learn which resources support
+        #   conditions in their IAM policies, see the [IAM documentation](https://cloud.
+        #   google.com/iam/help/conditions/resource-policies).
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -444,6 +453,43 @@ module Google
           command.response_class = Google::Apis::DomainsV1beta1::Policy
           command.params['resource'] = resource unless resource.nil?
           command.query['options.requestedPolicyVersion'] = options_requested_policy_version unless options_requested_policy_version.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Imports a domain name from [Google Domains](https://domains.google/) for use
+        # in Cloud Domains. To transfer a domain from another registrar, use the `
+        # TransferDomain` method instead. Since individual users can own domains in
+        # Google Domains, the calling user must have ownership permission on the domain.
+        # @param [String] parent
+        #   Required. The parent resource of the Registration. Must be in the format `
+        #   projects/*/locations/*`.
+        # @param [Google::Apis::DomainsV1beta1::ImportDomainRequest] import_domain_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DomainsV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DomainsV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_registration_domain(parent, import_domain_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+parent}/registrations:import', options)
+          command.request_representation = Google::Apis::DomainsV1beta1::ImportDomainRequest::Representation
+          command.request_object = import_domain_request_object
+          command.response_representation = Google::Apis::DomainsV1beta1::Operation::Representation
+          command.response_class = Google::Apis::DomainsV1beta1::Operation
+          command.params['parent'] = parent unless parent.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -512,7 +558,7 @@ module Google
         # @param [String] update_mask
         #   Required. The field mask describing which fields to update as a comma-
         #   separated list. For example, if only the labels are being updated, the `
-        #   update_mask` would be `"labels"`.
+        #   update_mask` is `"labels"`.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -654,6 +700,47 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Lists domain names from [Google Domains](https://domains.google/) that can be
+        # imported to Cloud Domains using the `ImportDomain` method. Since individual
+        # users can own domains in Google Domains, the list of domains returned depends
+        # on the individual user making the call. Domains already managed by Cloud
+        # Domains are not returned.
+        # @param [String] location
+        #   Required. The location. Must be in the format `projects/*/locations/*`.
+        # @param [Fixnum] page_size
+        #   Maximum number of results to return.
+        # @param [String] page_token
+        #   When set to the `next_page_token` from a prior response, provides the next
+        #   page of results.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DomainsV1beta1::RetrieveImportableDomainsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DomainsV1beta1::RetrieveImportableDomainsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def retrieve_project_location_registration_importable_domains(location, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1beta1/{+location}/registrations:retrieveImportableDomains', options)
+          command.response_representation = Google::Apis::DomainsV1beta1::RetrieveImportableDomainsResponse::Representation
+          command.response_class = Google::Apis::DomainsV1beta1::RetrieveImportableDomainsResponse
+          command.params['location'] = location unless location.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Gets parameters needed to register a new domain name, including price and up-
         # to-date availability. Use the returned values to call `RegisterDomain`.
         # @param [String] location
@@ -682,6 +769,43 @@ module Google
           command = make_simple_command(:get, 'v1beta1/{+location}/registrations:retrieveRegisterParameters', options)
           command.response_representation = Google::Apis::DomainsV1beta1::RetrieveRegisterParametersResponse::Representation
           command.response_class = Google::Apis::DomainsV1beta1::RetrieveRegisterParametersResponse
+          command.params['location'] = location unless location.nil?
+          command.query['domainName'] = domain_name unless domain_name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets parameters needed to transfer a domain name from another registrar to
+        # Cloud Domains. For domains already managed by [Google Domains](https://domains.
+        # google/), use `ImportDomain` instead. Use the returned values to call `
+        # TransferDomain`.
+        # @param [String] location
+        #   Required. The location. Must be in the format `projects/*/locations/*`.
+        # @param [String] domain_name
+        #   Required. The domain name. Unicode domain names must be expressed in Punycode
+        #   format.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DomainsV1beta1::RetrieveTransferParametersResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DomainsV1beta1::RetrieveTransferParametersResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def retrieve_project_location_registration_transfer_parameters(location, domain_name: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v1beta1/{+location}/registrations:retrieveTransferParameters', options)
+          command.response_representation = Google::Apis::DomainsV1beta1::RetrieveTransferParametersResponse::Representation
+          command.response_class = Google::Apis::DomainsV1beta1::RetrieveTransferParametersResponse
           command.params['location'] = location unless location.nil?
           command.query['domainName'] = domain_name unless domain_name.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -729,8 +853,9 @@ module Google
         # existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `
         # PERMISSION_DENIED` errors.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy is being specified. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy is being specified. See [Resource
+        #   names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DomainsV1beta1::SetIamPolicyRequest] set_iam_policy_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -767,8 +892,9 @@ module Google
         # permission-aware UIs and command-line tools, not for authorization checking.
         # This operation may "fail open" without warning.
         # @param [String] resource
-        #   REQUIRED: The resource for which the policy detail is being requested. See the
-        #   operation documentation for the appropriate value for this field.
+        #   REQUIRED: The resource for which the policy detail is being requested. See [
+        #   Resource names](https://cloud.google.com/apis/design/resource_names) for the
+        #   appropriate value for this field.
         # @param [Google::Apis::DomainsV1beta1::TestIamPermissionsRequest] test_iam_permissions_request_object
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
@@ -794,6 +920,54 @@ module Google
           command.response_representation = Google::Apis::DomainsV1beta1::TestIamPermissionsResponse::Representation
           command.response_class = Google::Apis::DomainsV1beta1::TestIamPermissionsResponse
           command.params['resource'] = resource unless resource.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Transfers a domain name from another registrar to Cloud Domains. For domains
+        # already managed by [Google Domains](https://domains.google/), use `
+        # ImportDomain` instead. Before calling this method, go to the domain's current
+        # registrar to unlock the domain for transfer and retrieve the domain's transfer
+        # authorization code. Then call `RetrieveTransferParameters` to confirm that the
+        # domain is unlocked and to get values needed to build a call to this method. A
+        # successful call creates a `Registration` resource in state `TRANSFER_PENDING`.
+        # It can take several days to complete the transfer process. The registrant can
+        # often speed up this process by approving the transfer through the current
+        # registrar, either by clicking a link in an email from the registrar or by
+        # visiting the registrar's website. A few minutes after transfer approval, the
+        # resource transitions to state `ACTIVE`, indicating that the transfer was
+        # successful. If the transfer is rejected or the request expires without being
+        # approved, the resource can end up in state `TRANSFER_FAILED`. If transfer
+        # fails, you can safely delete the resource and retry the transfer.
+        # @param [String] parent
+        #   Required. The parent resource of the `Registration`. Must be in the format `
+        #   projects/*/locations/*`.
+        # @param [Google::Apis::DomainsV1beta1::TransferDomainRequest] transfer_domain_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DomainsV1beta1::Operation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DomainsV1beta1::Operation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def transfer_registration_domain(parent, transfer_domain_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v1beta1/{+parent}/registrations:transfer', options)
+          command.request_representation = Google::Apis::DomainsV1beta1::TransferDomainRequest::Representation
+          command.request_object = transfer_domain_request_object
+          command.response_representation = Google::Apis::DomainsV1beta1::Operation::Representation
+          command.response_class = Google::Apis::DomainsV1beta1::Operation
+          command.params['parent'] = parent unless parent.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)

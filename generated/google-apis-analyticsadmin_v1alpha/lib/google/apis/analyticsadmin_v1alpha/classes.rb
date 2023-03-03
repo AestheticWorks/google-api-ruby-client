@@ -22,6 +22,590 @@ module Google
   module Apis
     module AnalyticsadminV1alpha
       
+      # To express that the result needs to be between two numbers (inclusive).
+      class GoogleAnalyticsAdminV1alphaAccessBetweenFilter
+        include Google::Apis::Core::Hashable
+      
+        # To represent a number.
+        # Corresponds to the JSON property `fromValue`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaNumericValue]
+        attr_accessor :from_value
+      
+        # To represent a number.
+        # Corresponds to the JSON property `toValue`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaNumericValue]
+        attr_accessor :to_value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @from_value = args[:from_value] if args.key?(:from_value)
+          @to_value = args[:to_value] if args.key?(:to_value)
+        end
+      end
+      
+      # A binding of a user to a set of roles.
+      class GoogleAnalyticsAdminV1alphaAccessBinding
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Resource name of this binding. Format: accounts/`account`/
+        # accessBindings/`access_binding` or properties/`property`/accessBindings/`
+        # access_binding` Example: "accounts/100/accessBindings/200"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # A list of roles for to grant to the parent resource. Valid values:
+        # predefinedRoles/viewer predefinedRoles/analyst predefinedRoles/editor
+        # predefinedRoles/admin predefinedRoles/no-cost-data predefinedRoles/no-revenue-
+        # data For users, if an empty list of roles is set, this AccessBinding will be
+        # deleted.
+        # Corresponds to the JSON property `roles`
+        # @return [Array<String>]
+        attr_accessor :roles
+      
+        # If set, the email address of the user to set roles for. Format: "someuser@
+        # gmail.com"
+        # Corresponds to the JSON property `user`
+        # @return [String]
+        attr_accessor :user
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+          @roles = args[:roles] if args.key?(:roles)
+          @user = args[:user] if args.key?(:user)
+        end
+      end
+      
+      # A contiguous range of days: startDate, startDate + 1, ..., endDate.
+      class GoogleAnalyticsAdminV1alphaAccessDateRange
+        include Google::Apis::Core::Hashable
+      
+        # The inclusive end date for the query in the format `YYYY-MM-DD`. Cannot be
+        # before `startDate`. The format `NdaysAgo`, `yesterday`, or `today` is also
+        # accepted, and in that case, the date is inferred based on the current time in
+        # the request's time zone.
+        # Corresponds to the JSON property `endDate`
+        # @return [String]
+        attr_accessor :end_date
+      
+        # The inclusive start date for the query in the format `YYYY-MM-DD`. Cannot be
+        # after `endDate`. The format `NdaysAgo`, `yesterday`, or `today` is also
+        # accepted, and in that case, the date is inferred based on the current time in
+        # the request's time zone.
+        # Corresponds to the JSON property `startDate`
+        # @return [String]
+        attr_accessor :start_date
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @end_date = args[:end_date] if args.key?(:end_date)
+          @start_date = args[:start_date] if args.key?(:start_date)
+        end
+      end
+      
+      # Dimensions are attributes of your data. For example, the dimension `userEmail`
+      # indicates the email of the user that accessed reporting data. Dimension values
+      # in report responses are strings.
+      class GoogleAnalyticsAdminV1alphaAccessDimension
+        include Google::Apis::Core::Hashable
+      
+        # The API name of the dimension. See [Data Access Schema](https://developers.
+        # google.com/analytics/devguides/config/admin/v1/access-api-schema) for the list
+        # of dimensions supported in this API. Dimensions are referenced by name in `
+        # dimensionFilter` and `orderBys`.
+        # Corresponds to the JSON property `dimensionName`
+        # @return [String]
+        attr_accessor :dimension_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dimension_name = args[:dimension_name] if args.key?(:dimension_name)
+        end
+      end
+      
+      # Describes a dimension column in the report. Dimensions requested in a report
+      # produce column entries within rows and DimensionHeaders. However, dimensions
+      # used exclusively within filters or expressions do not produce columns in a
+      # report; correspondingly, those dimensions do not produce headers.
+      class GoogleAnalyticsAdminV1alphaAccessDimensionHeader
+        include Google::Apis::Core::Hashable
+      
+        # The dimension's name; for example 'userEmail'.
+        # Corresponds to the JSON property `dimensionName`
+        # @return [String]
+        attr_accessor :dimension_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dimension_name = args[:dimension_name] if args.key?(:dimension_name)
+        end
+      end
+      
+      # The value of a dimension.
+      class GoogleAnalyticsAdminV1alphaAccessDimensionValue
+        include Google::Apis::Core::Hashable
+      
+        # The dimension value. For example, this value may be 'France' for the 'country'
+        # dimension.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # An expression to filter dimension or metric values.
+      class GoogleAnalyticsAdminV1alphaAccessFilter
+        include Google::Apis::Core::Hashable
+      
+        # To express that the result needs to be between two numbers (inclusive).
+        # Corresponds to the JSON property `betweenFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBetweenFilter]
+        attr_accessor :between_filter
+      
+        # The dimension name or metric name.
+        # Corresponds to the JSON property `fieldName`
+        # @return [String]
+        attr_accessor :field_name
+      
+        # The result needs to be in a list of string values.
+        # Corresponds to the JSON property `inListFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessInListFilter]
+        attr_accessor :in_list_filter
+      
+        # Filters for numeric or date values.
+        # Corresponds to the JSON property `numericFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessNumericFilter]
+        attr_accessor :numeric_filter
+      
+        # The filter for strings.
+        # Corresponds to the JSON property `stringFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessStringFilter]
+        attr_accessor :string_filter
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @between_filter = args[:between_filter] if args.key?(:between_filter)
+          @field_name = args[:field_name] if args.key?(:field_name)
+          @in_list_filter = args[:in_list_filter] if args.key?(:in_list_filter)
+          @numeric_filter = args[:numeric_filter] if args.key?(:numeric_filter)
+          @string_filter = args[:string_filter] if args.key?(:string_filter)
+        end
+      end
+      
+      # Expresses dimension or metric filters. The fields in the same expression need
+      # to be either all dimensions or all metrics.
+      class GoogleAnalyticsAdminV1alphaAccessFilterExpression
+        include Google::Apis::Core::Hashable
+      
+        # An expression to filter dimension or metric values.
+        # Corresponds to the JSON property `accessFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilter]
+        attr_accessor :access_filter
+      
+        # A list of filter expressions.
+        # Corresponds to the JSON property `andGroup`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpressionList]
+        attr_accessor :and_group
+      
+        # Expresses dimension or metric filters. The fields in the same expression need
+        # to be either all dimensions or all metrics.
+        # Corresponds to the JSON property `notExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpression]
+        attr_accessor :not_expression
+      
+        # A list of filter expressions.
+        # Corresponds to the JSON property `orGroup`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpressionList]
+        attr_accessor :or_group
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_filter = args[:access_filter] if args.key?(:access_filter)
+          @and_group = args[:and_group] if args.key?(:and_group)
+          @not_expression = args[:not_expression] if args.key?(:not_expression)
+          @or_group = args[:or_group] if args.key?(:or_group)
+        end
+      end
+      
+      # A list of filter expressions.
+      class GoogleAnalyticsAdminV1alphaAccessFilterExpressionList
+        include Google::Apis::Core::Hashable
+      
+        # A list of filter expressions.
+        # Corresponds to the JSON property `expressions`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpression>]
+        attr_accessor :expressions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @expressions = args[:expressions] if args.key?(:expressions)
+        end
+      end
+      
+      # The result needs to be in a list of string values.
+      class GoogleAnalyticsAdminV1alphaAccessInListFilter
+        include Google::Apis::Core::Hashable
+      
+        # If true, the string value is case sensitive.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # The list of string values. Must be non-empty.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # The quantitative measurements of a report. For example, the metric `
+      # accessCount` is the total number of data access records.
+      class GoogleAnalyticsAdminV1alphaAccessMetric
+        include Google::Apis::Core::Hashable
+      
+        # The API name of the metric. See [Data Access Schema](https://developers.google.
+        # com/analytics/devguides/config/admin/v1/access-api-schema) for the list of
+        # metrics supported in this API. Metrics are referenced by name in `metricFilter`
+        # & `orderBys`.
+        # Corresponds to the JSON property `metricName`
+        # @return [String]
+        attr_accessor :metric_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metric_name = args[:metric_name] if args.key?(:metric_name)
+        end
+      end
+      
+      # Describes a metric column in the report. Visible metrics requested in a report
+      # produce column entries within rows and MetricHeaders. However, metrics used
+      # exclusively within filters or expressions do not produce columns in a report;
+      # correspondingly, those metrics do not produce headers.
+      class GoogleAnalyticsAdminV1alphaAccessMetricHeader
+        include Google::Apis::Core::Hashable
+      
+        # The metric's name; for example 'accessCount'.
+        # Corresponds to the JSON property `metricName`
+        # @return [String]
+        attr_accessor :metric_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metric_name = args[:metric_name] if args.key?(:metric_name)
+        end
+      end
+      
+      # The value of a metric.
+      class GoogleAnalyticsAdminV1alphaAccessMetricValue
+        include Google::Apis::Core::Hashable
+      
+        # The measurement value. For example, this value may be '13'.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Filters for numeric or date values.
+      class GoogleAnalyticsAdminV1alphaAccessNumericFilter
+        include Google::Apis::Core::Hashable
+      
+        # The operation type for this filter.
+        # Corresponds to the JSON property `operation`
+        # @return [String]
+        attr_accessor :operation
+      
+        # To represent a number.
+        # Corresponds to the JSON property `value`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaNumericValue]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @operation = args[:operation] if args.key?(:operation)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Order bys define how rows will be sorted in the response. For example,
+      # ordering rows by descending access count is one ordering, and ordering rows by
+      # the country string is a different ordering.
+      class GoogleAnalyticsAdminV1alphaAccessOrderBy
+        include Google::Apis::Core::Hashable
+      
+        # If true, sorts by descending order. If false or unspecified, sorts in
+        # ascending order.
+        # Corresponds to the JSON property `desc`
+        # @return [Boolean]
+        attr_accessor :desc
+        alias_method :desc?, :desc
+      
+        # Sorts by dimension values.
+        # Corresponds to the JSON property `dimension`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy]
+        attr_accessor :dimension
+      
+        # Sorts by metric values.
+        # Corresponds to the JSON property `metric`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy]
+        attr_accessor :metric
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @desc = args[:desc] if args.key?(:desc)
+          @dimension = args[:dimension] if args.key?(:dimension)
+          @metric = args[:metric] if args.key?(:metric)
+        end
+      end
+      
+      # Sorts by dimension values.
+      class GoogleAnalyticsAdminV1alphaAccessOrderByDimensionOrderBy
+        include Google::Apis::Core::Hashable
+      
+        # A dimension name in the request to order by.
+        # Corresponds to the JSON property `dimensionName`
+        # @return [String]
+        attr_accessor :dimension_name
+      
+        # Controls the rule for dimension value ordering.
+        # Corresponds to the JSON property `orderType`
+        # @return [String]
+        attr_accessor :order_type
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dimension_name = args[:dimension_name] if args.key?(:dimension_name)
+          @order_type = args[:order_type] if args.key?(:order_type)
+        end
+      end
+      
+      # Sorts by metric values.
+      class GoogleAnalyticsAdminV1alphaAccessOrderByMetricOrderBy
+        include Google::Apis::Core::Hashable
+      
+        # A metric name in the request to order by.
+        # Corresponds to the JSON property `metricName`
+        # @return [String]
+        attr_accessor :metric_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @metric_name = args[:metric_name] if args.key?(:metric_name)
+        end
+      end
+      
+      # Current state of all quotas for this Analytics property. If any quota for a
+      # property is exhausted, all requests to that property will return Resource
+      # Exhausted errors.
+      class GoogleAnalyticsAdminV1alphaAccessQuota
+        include Google::Apis::Core::Hashable
+      
+        # Current state for a particular quota group.
+        # Corresponds to the JSON property `concurrentRequests`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuotaStatus]
+        attr_accessor :concurrent_requests
+      
+        # Current state for a particular quota group.
+        # Corresponds to the JSON property `serverErrorsPerProjectPerHour`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuotaStatus]
+        attr_accessor :server_errors_per_project_per_hour
+      
+        # Current state for a particular quota group.
+        # Corresponds to the JSON property `tokensPerDay`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuotaStatus]
+        attr_accessor :tokens_per_day
+      
+        # Current state for a particular quota group.
+        # Corresponds to the JSON property `tokensPerHour`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuotaStatus]
+        attr_accessor :tokens_per_hour
+      
+        # Current state for a particular quota group.
+        # Corresponds to the JSON property `tokensPerProjectPerHour`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuotaStatus]
+        attr_accessor :tokens_per_project_per_hour
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @concurrent_requests = args[:concurrent_requests] if args.key?(:concurrent_requests)
+          @server_errors_per_project_per_hour = args[:server_errors_per_project_per_hour] if args.key?(:server_errors_per_project_per_hour)
+          @tokens_per_day = args[:tokens_per_day] if args.key?(:tokens_per_day)
+          @tokens_per_hour = args[:tokens_per_hour] if args.key?(:tokens_per_hour)
+          @tokens_per_project_per_hour = args[:tokens_per_project_per_hour] if args.key?(:tokens_per_project_per_hour)
+        end
+      end
+      
+      # Current state for a particular quota group.
+      class GoogleAnalyticsAdminV1alphaAccessQuotaStatus
+        include Google::Apis::Core::Hashable
+      
+        # Quota consumed by this request.
+        # Corresponds to the JSON property `consumed`
+        # @return [Fixnum]
+        attr_accessor :consumed
+      
+        # Quota remaining after this request.
+        # Corresponds to the JSON property `remaining`
+        # @return [Fixnum]
+        attr_accessor :remaining
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @consumed = args[:consumed] if args.key?(:consumed)
+          @remaining = args[:remaining] if args.key?(:remaining)
+        end
+      end
+      
+      # Access report data for each row.
+      class GoogleAnalyticsAdminV1alphaAccessRow
+        include Google::Apis::Core::Hashable
+      
+        # List of dimension values. These values are in the same order as specified in
+        # the request.
+        # Corresponds to the JSON property `dimensionValues`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessDimensionValue>]
+        attr_accessor :dimension_values
+      
+        # List of metric values. These values are in the same order as specified in the
+        # request.
+        # Corresponds to the JSON property `metricValues`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessMetricValue>]
+        attr_accessor :metric_values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dimension_values = args[:dimension_values] if args.key?(:dimension_values)
+          @metric_values = args[:metric_values] if args.key?(:metric_values)
+        end
+      end
+      
+      # The filter for strings.
+      class GoogleAnalyticsAdminV1alphaAccessStringFilter
+        include Google::Apis::Core::Hashable
+      
+        # If true, the string value is case sensitive.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # The match type for this filter.
+        # Corresponds to the JSON property `matchType`
+        # @return [String]
+        attr_accessor :match_type
+      
+        # The string value used for the matching.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @match_type = args[:match_type] if args.key?(:match_type)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
       # A resource message representing a Google Analytics account.
       class GoogleAnalyticsAdminV1alphaAccount
         include Google::Apis::Core::Hashable
@@ -114,44 +698,19 @@ module Google
         end
       end
       
-      # A resource message representing a Google Analytics Android app stream.
-      class GoogleAnalyticsAdminV1alphaAndroidAppDataStream
+      # Request message for AcknowledgeUserDataCollection RPC.
+      class GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionRequest
         include Google::Apis::Core::Hashable
       
-        # Output only. Time when this stream was originally created.
-        # Corresponds to the JSON property `createTime`
+        # Required. An acknowledgement that the caller of this method understands the
+        # terms of user data collection. This field must contain the exact value: "I
+        # acknowledge that I have the necessary privacy disclosures and rights from my
+        # end users for the collection and processing of their data, including the
+        # association of such data with the visitation information Google Analytics
+        # collects from my site and/or app property."
+        # Corresponds to the JSON property `acknowledgement`
         # @return [String]
-        attr_accessor :create_time
-      
-        # Human-readable display name for the Data Stream. The max allowed display name
-        # length is 255 UTF-16 code units.
-        # Corresponds to the JSON property `displayName`
-        # @return [String]
-        attr_accessor :display_name
-      
-        # Output only. ID of the corresponding Android app in Firebase, if any. This ID
-        # can change if the Android app is deleted and recreated.
-        # Corresponds to the JSON property `firebaseAppId`
-        # @return [String]
-        attr_accessor :firebase_app_id
-      
-        # Output only. Resource name of this Data Stream. Format: properties/`
-        # property_id`/androidAppDataStreams/`stream_id` Example: "properties/1000/
-        # androidAppDataStreams/2000"
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Immutable. The package name for the app being measured. Example: "com.example.
-        # myandroidapp"
-        # Corresponds to the JSON property `packageName`
-        # @return [String]
-        attr_accessor :package_name
-      
-        # Output only. Time when stream payload fields were last updated.
-        # Corresponds to the JSON property `updateTime`
-        # @return [String]
-        attr_accessor :update_time
+        attr_accessor :acknowledgement
       
         def initialize(**args)
            update!(**args)
@@ -159,12 +718,20 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @create_time = args[:create_time] if args.key?(:create_time)
-          @display_name = args[:display_name] if args.key?(:display_name)
-          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
-          @name = args[:name] if args.key?(:name)
-          @package_name = args[:package_name] if args.key?(:package_name)
-          @update_time = args[:update_time] if args.key?(:update_time)
+          @acknowledgement = args[:acknowledgement] if args.key?(:acknowledgement)
+        end
+      end
+      
+      # Response message for AcknowledgeUserDataCollection RPC.
+      class GoogleAnalyticsAdminV1alphaAcknowledgeUserDataCollectionResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
         end
       end
       
@@ -200,6 +767,19 @@ module Google
         end
       end
       
+      # Request message for ArchiveAudience RPC.
+      class GoogleAnalyticsAdminV1alphaArchiveAudienceRequest
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
       # Request message for ArchiveCustomDimension RPC.
       class GoogleAnalyticsAdminV1alphaArchiveCustomDimensionRequest
         include Google::Apis::Core::Hashable
@@ -226,12 +806,585 @@ module Google
         end
       end
       
+      # The attribution settings used for a given property. This is a singleton
+      # resource.
+      class GoogleAnalyticsAdminV1alphaAttributionSettings
+        include Google::Apis::Core::Hashable
+      
+        # Required. The lookback window configuration for acquisition conversion events.
+        # The default window size is 30 days.
+        # Corresponds to the JSON property `acquisitionConversionEventLookbackWindow`
+        # @return [String]
+        attr_accessor :acquisition_conversion_event_lookback_window
+      
+        # Output only. Resource name of this attribution settings resource. Format:
+        # properties/`property_id`/attributionSettings Example: "properties/1000/
+        # attributionSettings"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. The lookback window for all other, non-acquisition conversion events.
+        # The default window size is 90 days.
+        # Corresponds to the JSON property `otherConversionEventLookbackWindow`
+        # @return [String]
+        attr_accessor :other_conversion_event_lookback_window
+      
+        # Required. The reporting attribution model used to calculate conversion credit
+        # in this property's reports. Changing the attribution model will apply to both
+        # historical and future data. These changes will be reflected in reports with
+        # conversion and revenue data. User and session data will be unaffected.
+        # Corresponds to the JSON property `reportingAttributionModel`
+        # @return [String]
+        attr_accessor :reporting_attribution_model
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @acquisition_conversion_event_lookback_window = args[:acquisition_conversion_event_lookback_window] if args.key?(:acquisition_conversion_event_lookback_window)
+          @name = args[:name] if args.key?(:name)
+          @other_conversion_event_lookback_window = args[:other_conversion_event_lookback_window] if args.key?(:other_conversion_event_lookback_window)
+          @reporting_attribution_model = args[:reporting_attribution_model] if args.key?(:reporting_attribution_model)
+        end
+      end
+      
+      # A resource message representing a GA4 Audience.
+      class GoogleAnalyticsAdminV1alphaAudience
+        include Google::Apis::Core::Hashable
+      
+        # Output only. It is automatically set by GA to false if this is an NPA Audience
+        # and is excluded from ads personalization.
+        # Corresponds to the JSON property `adsPersonalizationEnabled`
+        # @return [Boolean]
+        attr_accessor :ads_personalization_enabled
+        alias_method :ads_personalization_enabled?, :ads_personalization_enabled
+      
+        # Required. The description of the Audience.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # Required. The display name of the Audience.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Specifies an event to log when a user joins the Audience.
+        # Corresponds to the JSON property `eventTrigger`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceEventTrigger]
+        attr_accessor :event_trigger
+      
+        # Immutable. Specifies how long an exclusion lasts for users that meet the
+        # exclusion filter. It is applied to all EXCLUDE filter clauses and is ignored
+        # when there is no EXCLUDE filter clause in the Audience.
+        # Corresponds to the JSON property `exclusionDurationMode`
+        # @return [String]
+        attr_accessor :exclusion_duration_mode
+      
+        # Required. Immutable. Unordered list. Filter clauses that define the Audience.
+        # All clauses will be AND’ed together.
+        # Corresponds to the JSON property `filterClauses`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterClause>]
+        attr_accessor :filter_clauses
+      
+        # Required. Immutable. The duration a user should stay in an Audience. It cannot
+        # be set to more than 540 days.
+        # Corresponds to the JSON property `membershipDurationDays`
+        # @return [Fixnum]
+        attr_accessor :membership_duration_days
+      
+        # Output only. The resource name for this Audience resource. Format: properties/`
+        # propertyId`/audiences/`audienceId`
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @ads_personalization_enabled = args[:ads_personalization_enabled] if args.key?(:ads_personalization_enabled)
+          @description = args[:description] if args.key?(:description)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @event_trigger = args[:event_trigger] if args.key?(:event_trigger)
+          @exclusion_duration_mode = args[:exclusion_duration_mode] if args.key?(:exclusion_duration_mode)
+          @filter_clauses = args[:filter_clauses] if args.key?(:filter_clauses)
+          @membership_duration_days = args[:membership_duration_days] if args.key?(:membership_duration_days)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # A specific filter for a single dimension or metric.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. Indicates whether this filter needs dynamic evaluation or not. If
+        # set to true, users join the Audience if they ever met the condition (static
+        # evaluation). If unset or set to false, user evaluation for an Audience is
+        # dynamic; users are added to an Audience when they meet the conditions and then
+        # removed when they no longer meet them. This can only be set when Audience
+        # scope is ACROSS_ALL_SESSIONS.
+        # Corresponds to the JSON property `atAnyPointInTime`
+        # @return [Boolean]
+        attr_accessor :at_any_point_in_time
+        alias_method :at_any_point_in_time?, :at_any_point_in_time
+      
+        # A filter for numeric or date values between certain values on a dimension or
+        # metric.
+        # Corresponds to the JSON property `betweenFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter]
+        attr_accessor :between_filter
+      
+        # Required. Immutable. The dimension name or metric name to filter.
+        # Corresponds to the JSON property `fieldName`
+        # @return [String]
+        attr_accessor :field_name
+      
+        # Optional. If set, specifies the time window for which to evaluate data in
+        # number of days. If not set, then audience data is evaluated against lifetime
+        # data (i.e., infinite time window). For example, if set to 1 day, only the
+        # current day's data is evaluated. The reference point is the current day when
+        # at_any_point_in_time is unset or false. It can only be set when Audience scope
+        # is ACROSS_ALL_SESSIONS and cannot be greater than 60 days.
+        # Corresponds to the JSON property `inAnyNDayPeriod`
+        # @return [Fixnum]
+        attr_accessor :in_any_n_day_period
+      
+        # A filter for a string dimension that matches a particular list of options.
+        # Corresponds to the JSON property `inListFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter]
+        attr_accessor :in_list_filter
+      
+        # A filter for numeric or date values on a dimension or metric.
+        # Corresponds to the JSON property `numericFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter]
+        attr_accessor :numeric_filter
+      
+        # A filter for a string-type dimension that matches a particular pattern.
+        # Corresponds to the JSON property `stringFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter]
+        attr_accessor :string_filter
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @at_any_point_in_time = args[:at_any_point_in_time] if args.key?(:at_any_point_in_time)
+          @between_filter = args[:between_filter] if args.key?(:between_filter)
+          @field_name = args[:field_name] if args.key?(:field_name)
+          @in_any_n_day_period = args[:in_any_n_day_period] if args.key?(:in_any_n_day_period)
+          @in_list_filter = args[:in_list_filter] if args.key?(:in_list_filter)
+          @numeric_filter = args[:numeric_filter] if args.key?(:numeric_filter)
+          @string_filter = args[:string_filter] if args.key?(:string_filter)
+        end
+      end
+      
+      # A filter for numeric or date values between certain values on a dimension or
+      # metric.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterBetweenFilter
+        include Google::Apis::Core::Hashable
+      
+        # To represent a number.
+        # Corresponds to the JSON property `fromValue`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue]
+        attr_accessor :from_value
+      
+        # To represent a number.
+        # Corresponds to the JSON property `toValue`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue]
+        attr_accessor :to_value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @from_value = args[:from_value] if args.key?(:from_value)
+          @to_value = args[:to_value] if args.key?(:to_value)
+        end
+      end
+      
+      # A filter for a string dimension that matches a particular list of options.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterInListFilter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. If true, the match is case-sensitive. If false, the match is case-
+        # insensitive.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # Required. The list of possible string values to match against. Must be non-
+        # empty.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # A filter for numeric or date values on a dimension or metric.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericFilter
+        include Google::Apis::Core::Hashable
+      
+        # Required. The operation applied to a numeric filter.
+        # Corresponds to the JSON property `operation`
+        # @return [String]
+        attr_accessor :operation
+      
+        # To represent a number.
+        # Corresponds to the JSON property `value`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @operation = args[:operation] if args.key?(:operation)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # To represent a number.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterNumericValue
+        include Google::Apis::Core::Hashable
+      
+        # Double value.
+        # Corresponds to the JSON property `doubleValue`
+        # @return [Float]
+        attr_accessor :double_value
+      
+        # Integer value.
+        # Corresponds to the JSON property `int64Value`
+        # @return [Fixnum]
+        attr_accessor :int64_value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @double_value = args[:double_value] if args.key?(:double_value)
+          @int64_value = args[:int64_value] if args.key?(:int64_value)
+        end
+      end
+      
+      # A filter for a string-type dimension that matches a particular pattern.
+      class GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilterStringFilter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. If true, the match is case-sensitive. If false, the match is case-
+        # insensitive.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # Required. The match type for the string filter.
+        # Corresponds to the JSON property `matchType`
+        # @return [String]
+        attr_accessor :match_type
+      
+        # Required. The string value to be matched against.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @match_type = args[:match_type] if args.key?(:match_type)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # A filter that matches events of a single event name. If an event parameter is
+      # specified, only the subset of events that match both the single event name and
+      # the parameter filter expressions match this event filter.
+      class GoogleAnalyticsAdminV1alphaAudienceEventFilter
+        include Google::Apis::Core::Hashable
+      
+        # Required. Immutable. The name of the event to match against.
+        # Corresponds to the JSON property `eventName`
+        # @return [String]
+        attr_accessor :event_name
+      
+        # A logical expression of Audience dimension, metric, or event filters.
+        # Corresponds to the JSON property `eventParameterFilterExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpression]
+        attr_accessor :event_parameter_filter_expression
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @event_name = args[:event_name] if args.key?(:event_name)
+          @event_parameter_filter_expression = args[:event_parameter_filter_expression] if args.key?(:event_parameter_filter_expression)
+        end
+      end
+      
+      # Specifies an event to log when a user joins the Audience.
+      class GoogleAnalyticsAdminV1alphaAudienceEventTrigger
+        include Google::Apis::Core::Hashable
+      
+        # Required. The event name that will be logged.
+        # Corresponds to the JSON property `eventName`
+        # @return [String]
+        attr_accessor :event_name
+      
+        # Required. When to log the event.
+        # Corresponds to the JSON property `logCondition`
+        # @return [String]
+        attr_accessor :log_condition
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @event_name = args[:event_name] if args.key?(:event_name)
+          @log_condition = args[:log_condition] if args.key?(:log_condition)
+        end
+      end
+      
+      # A clause for defining either a simple or sequence filter. A filter can be
+      # inclusive (i.e., users satisfying the filter clause are included in the
+      # Audience) or exclusive (i.e., users satisfying the filter clause are excluded
+      # from the Audience).
+      class GoogleAnalyticsAdminV1alphaAudienceFilterClause
+        include Google::Apis::Core::Hashable
+      
+        # Required. Specifies whether this is an include or exclude filter clause.
+        # Corresponds to the JSON property `clauseType`
+        # @return [String]
+        attr_accessor :clause_type
+      
+        # Defines filters that must occur in a specific order for the user to be a
+        # member of the Audience.
+        # Corresponds to the JSON property `sequenceFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceSequenceFilter]
+        attr_accessor :sequence_filter
+      
+        # Defines a simple filter that a user must satisfy to be a member of the
+        # Audience.
+        # Corresponds to the JSON property `simpleFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceSimpleFilter]
+        attr_accessor :simple_filter
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @clause_type = args[:clause_type] if args.key?(:clause_type)
+          @sequence_filter = args[:sequence_filter] if args.key?(:sequence_filter)
+          @simple_filter = args[:simple_filter] if args.key?(:simple_filter)
+        end
+      end
+      
+      # A logical expression of Audience dimension, metric, or event filters.
+      class GoogleAnalyticsAdminV1alphaAudienceFilterExpression
+        include Google::Apis::Core::Hashable
+      
+        # A list of Audience filter expressions.
+        # Corresponds to the JSON property `andGroup`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList]
+        attr_accessor :and_group
+      
+        # A specific filter for a single dimension or metric.
+        # Corresponds to the JSON property `dimensionOrMetricFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceDimensionOrMetricFilter]
+        attr_accessor :dimension_or_metric_filter
+      
+        # A filter that matches events of a single event name. If an event parameter is
+        # specified, only the subset of events that match both the single event name and
+        # the parameter filter expressions match this event filter.
+        # Corresponds to the JSON property `eventFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceEventFilter]
+        attr_accessor :event_filter
+      
+        # A logical expression of Audience dimension, metric, or event filters.
+        # Corresponds to the JSON property `notExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpression]
+        attr_accessor :not_expression
+      
+        # A list of Audience filter expressions.
+        # Corresponds to the JSON property `orGroup`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList]
+        attr_accessor :or_group
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @and_group = args[:and_group] if args.key?(:and_group)
+          @dimension_or_metric_filter = args[:dimension_or_metric_filter] if args.key?(:dimension_or_metric_filter)
+          @event_filter = args[:event_filter] if args.key?(:event_filter)
+          @not_expression = args[:not_expression] if args.key?(:not_expression)
+          @or_group = args[:or_group] if args.key?(:or_group)
+        end
+      end
+      
+      # A list of Audience filter expressions.
+      class GoogleAnalyticsAdminV1alphaAudienceFilterExpressionList
+        include Google::Apis::Core::Hashable
+      
+        # A list of Audience filter expressions.
+        # Corresponds to the JSON property `filterExpressions`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpression>]
+        attr_accessor :filter_expressions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter_expressions = args[:filter_expressions] if args.key?(:filter_expressions)
+        end
+      end
+      
+      # Defines filters that must occur in a specific order for the user to be a
+      # member of the Audience.
+      class GoogleAnalyticsAdminV1alphaAudienceSequenceFilter
+        include Google::Apis::Core::Hashable
+      
+        # Required. Immutable. Specifies the scope for this filter.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        # Optional. Defines the time period in which the whole sequence must occur.
+        # Corresponds to the JSON property `sequenceMaximumDuration`
+        # @return [String]
+        attr_accessor :sequence_maximum_duration
+      
+        # Required. An ordered sequence of steps. A user must complete each step in
+        # order to join the sequence filter.
+        # Corresponds to the JSON property `sequenceSteps`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep>]
+        attr_accessor :sequence_steps
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @scope = args[:scope] if args.key?(:scope)
+          @sequence_maximum_duration = args[:sequence_maximum_duration] if args.key?(:sequence_maximum_duration)
+          @sequence_steps = args[:sequence_steps] if args.key?(:sequence_steps)
+        end
+      end
+      
+      # A condition that must occur in the specified step order for this user to match
+      # the sequence.
+      class GoogleAnalyticsAdminV1alphaAudienceSequenceFilterAudienceSequenceStep
+        include Google::Apis::Core::Hashable
+      
+        # Optional. When set, this step must be satisfied within the constraint_duration
+        # of the previous step (i.e., t[i] - t[i-1] <= constraint_duration). If not set,
+        # there is no duration requirement (the duration is effectively unlimited). It
+        # is ignored for the first step.
+        # Corresponds to the JSON property `constraintDuration`
+        # @return [String]
+        attr_accessor :constraint_duration
+      
+        # A logical expression of Audience dimension, metric, or event filters.
+        # Corresponds to the JSON property `filterExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpression]
+        attr_accessor :filter_expression
+      
+        # Optional. If true, the event satisfying this step must be the very next event
+        # after the event satisfying the last step. If unset or false, this step
+        # indirectly follows the prior step; for example, there may be events between
+        # the prior step and this step. It is ignored for the first step.
+        # Corresponds to the JSON property `immediatelyFollows`
+        # @return [Boolean]
+        attr_accessor :immediately_follows
+        alias_method :immediately_follows?, :immediately_follows
+      
+        # Required. Immutable. Specifies the scope for this step.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @constraint_duration = args[:constraint_duration] if args.key?(:constraint_duration)
+          @filter_expression = args[:filter_expression] if args.key?(:filter_expression)
+          @immediately_follows = args[:immediately_follows] if args.key?(:immediately_follows)
+          @scope = args[:scope] if args.key?(:scope)
+        end
+      end
+      
+      # Defines a simple filter that a user must satisfy to be a member of the
+      # Audience.
+      class GoogleAnalyticsAdminV1alphaAudienceSimpleFilter
+        include Google::Apis::Core::Hashable
+      
+        # A logical expression of Audience dimension, metric, or event filters.
+        # Corresponds to the JSON property `filterExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudienceFilterExpression]
+        attr_accessor :filter_expression
+      
+        # Required. Immutable. Specifies the scope for this filter.
+        # Corresponds to the JSON property `scope`
+        # @return [String]
+        attr_accessor :scope
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter_expression = args[:filter_expression] if args.key?(:filter_expression)
+          @scope = args[:scope] if args.key?(:scope)
+        end
+      end
+      
       # Read-only resource used to summarize a principal's effective roles.
       class GoogleAnalyticsAdminV1alphaAuditUserLink
         include Google::Apis::Core::Hashable
       
         # Roles directly assigned to this user for this entity. Format: predefinedRoles/
-        # read Excludes roles that are inherited from an account (if this is for a
+        # viewer Excludes roles that are inherited from an account (if this is for a
         # property), group, or organization admin role.
         # Corresponds to the JSON property `directRoles`
         # @return [Array<String>]
@@ -239,7 +1392,7 @@ module Google
       
         # Union of all permissions a user has at this account or property (includes
         # direct permissions, group-inherited permissions, etc.). Format:
-        # predefinedRoles/read
+        # predefinedRoles/viewer
         # Corresponds to the JSON property `effectiveRoles`
         # @return [Array<String>]
         attr_accessor :effective_roles
@@ -323,6 +1476,45 @@ module Google
         end
       end
       
+      # Request message for BatchCreateAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The requests specifying the access bindings to create. A maximum of
+        # 1000 access bindings can be created in a batch.
+        # Corresponds to the JSON property `requests`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest>]
+        attr_accessor :requests
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @requests = args[:requests] if args.key?(:requests)
+        end
+      end
+      
+      # Response message for BatchCreateAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchCreateAccessBindingsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The access bindings created.
+        # Corresponds to the JSON property `accessBindings`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding>]
+        attr_accessor :access_bindings
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_bindings = args[:access_bindings] if args.key?(:access_bindings)
+        end
+      end
+      
       # Request message for BatchCreateUserLinks RPC.
       class GoogleAnalyticsAdminV1alphaBatchCreateUserLinksRequest
         include Google::Apis::Core::Hashable
@@ -371,6 +1563,26 @@ module Google
         end
       end
       
+      # Request message for BatchDeleteAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchDeleteAccessBindingsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The requests specifying the access bindings to delete. A maximum of
+        # 1000 access bindings can be deleted in a batch.
+        # Corresponds to the JSON property `requests`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest>]
+        attr_accessor :requests
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @requests = args[:requests] if args.key?(:requests)
+        end
+      end
+      
       # Request message for BatchDeleteUserLinks RPC.
       class GoogleAnalyticsAdminV1alphaBatchDeleteUserLinksRequest
         include Google::Apis::Core::Hashable
@@ -391,6 +1603,25 @@ module Google
         end
       end
       
+      # Response message for BatchGetAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchGetAccessBindingsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The requested access bindings.
+        # Corresponds to the JSON property `accessBindings`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding>]
+        attr_accessor :access_bindings
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_bindings = args[:access_bindings] if args.key?(:access_bindings)
+        end
+      end
+      
       # Response message for BatchGetUserLinks RPC.
       class GoogleAnalyticsAdminV1alphaBatchGetUserLinksResponse
         include Google::Apis::Core::Hashable
@@ -407,6 +1638,45 @@ module Google
         # Update properties of this object
         def update!(**args)
           @user_links = args[:user_links] if args.key?(:user_links)
+        end
+      end
+      
+      # Request message for BatchUpdateAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The requests specifying the access bindings to update. A maximum of
+        # 1000 access bindings can be updated in a batch.
+        # Corresponds to the JSON property `requests`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest>]
+        attr_accessor :requests
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @requests = args[:requests] if args.key?(:requests)
+        end
+      end
+      
+      # Response message for BatchUpdateAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaBatchUpdateAccessBindingsResponse
+        include Google::Apis::Core::Hashable
+      
+        # The access bindings updated.
+        # Corresponds to the JSON property `accessBindings`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding>]
+        attr_accessor :access_bindings
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_bindings = args[:access_bindings] if args.key?(:access_bindings)
         end
       end
       
@@ -446,6 +1716,79 @@ module Google
         # Update properties of this object
         def update!(**args)
           @user_links = args[:user_links] if args.key?(:user_links)
+        end
+      end
+      
+      # A link between a GA4 Property and BigQuery project.
+      class GoogleAnalyticsAdminV1alphaBigQueryLink
+        include Google::Apis::Core::Hashable
+      
+        # Output only. Time when the link was created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # If set true, enables daily data export to the linked Google Cloud project.
+        # Corresponds to the JSON property `dailyExportEnabled`
+        # @return [Boolean]
+        attr_accessor :daily_export_enabled
+        alias_method :daily_export_enabled?, :daily_export_enabled
+      
+        # The list of event names that will be excluded from exports.
+        # Corresponds to the JSON property `excludedEvents`
+        # @return [Array<String>]
+        attr_accessor :excluded_events
+      
+        # The list of streams under the parent property for which data will be exported.
+        # Format: properties/`property_id`/dataStreams/`stream_id` Example: ['properties/
+        # 1000/dataStreams/2000']
+        # Corresponds to the JSON property `exportStreams`
+        # @return [Array<String>]
+        attr_accessor :export_streams
+      
+        # If set true, exported data will include advertising identifiers for mobile app
+        # streams.
+        # Corresponds to the JSON property `includeAdvertisingId`
+        # @return [Boolean]
+        attr_accessor :include_advertising_id
+        alias_method :include_advertising_id?, :include_advertising_id
+      
+        # Output only. Resource name of this BigQuery link. Format: 'properties/`
+        # property_id`/bigQueryLinks/`bigquery_link_id`' Format: 'properties/1234/
+        # bigQueryLinks/abc567'
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Immutable. The linked Google Cloud project. When creating a BigQueryLink, you
+        # may provide this resource name using either a project number or project ID.
+        # Once this resource has been created, the returned project will always have a
+        # project that contains a project number. Format: 'projects/`project number`'
+        # Example: 'projects/1234'
+        # Corresponds to the JSON property `project`
+        # @return [String]
+        attr_accessor :project
+      
+        # If set true, enables streaming export to the linked Google Cloud project.
+        # Corresponds to the JSON property `streamingExportEnabled`
+        # @return [Boolean]
+        attr_accessor :streaming_export_enabled
+        alias_method :streaming_export_enabled?, :streaming_export_enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @daily_export_enabled = args[:daily_export_enabled] if args.key?(:daily_export_enabled)
+          @excluded_events = args[:excluded_events] if args.key?(:excluded_events)
+          @export_streams = args[:export_streams] if args.key?(:export_streams)
+          @include_advertising_id = args[:include_advertising_id] if args.key?(:include_advertising_id)
+          @name = args[:name] if args.key?(:name)
+          @project = args[:project] if args.key?(:project)
+          @streaming_export_enabled = args[:streaming_export_enabled] if args.key?(:streaming_export_enabled)
         end
       end
       
@@ -511,10 +1854,16 @@ module Google
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccount]
         attr_accessor :account
       
-        # A resource message representing a Google Analytics Android app stream.
-        # Corresponds to the JSON property `androidAppDataStream`
-        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAndroidAppDataStream]
-        attr_accessor :android_app_data_stream
+        # The attribution settings used for a given property. This is a singleton
+        # resource.
+        # Corresponds to the JSON property `attributionSettings`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAttributionSettings]
+        attr_accessor :attribution_settings
+      
+        # A link between a GA4 Property and BigQuery project.
+        # Corresponds to the JSON property `bigqueryLink`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaBigQueryLink]
+        attr_accessor :bigquery_link
       
         # A conversion event in a Google Analytics property.
         # Corresponds to the JSON property `conversionEvent`
@@ -536,12 +1885,17 @@ module Google
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataRetentionSettings]
         attr_accessor :data_retention_settings
       
+        # A resource message representing a data stream.
+        # Corresponds to the JSON property `dataStream`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataStream]
+        attr_accessor :data_stream
+      
         # A link between a GA4 property and a Display & Video 360 advertiser.
         # Corresponds to the JSON property `displayVideo360AdvertiserLink`
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLink]
         attr_accessor :display_video360_advertiser_link
       
-        # A proposal for a link between an GA4 property and a Display & Video 360
+        # A proposal for a link between a GA4 property and a Display & Video 360
         # advertiser. A proposal is converted to a DisplayVideo360AdvertiserLink once
         # approved. Google Analytics admins approve inbound proposals while Display &
         # Video 360 admins approve outbound proposals.
@@ -549,12 +1903,17 @@ module Google
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDisplayVideo360AdvertiserLinkProposal]
         attr_accessor :display_video360_advertiser_link_proposal
       
-        # A link between an GA4 property and a Firebase project.
+        # A resource message representing a GA4 ExpandedDataSet.
+        # Corresponds to the JSON property `expandedDataSet`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSet]
+        attr_accessor :expanded_data_set
+      
+        # A link between a GA4 property and a Firebase project.
         # Corresponds to the JSON property `firebaseLink`
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaFirebaseLink]
         attr_accessor :firebase_link
       
-        # A link between an GA4 property and a Google Ads account.
+        # A link between a GA4 property and a Google Ads account.
         # Corresponds to the JSON property `googleAdsLink`
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaGoogleAdsLink]
         attr_accessor :google_ads_link
@@ -563,11 +1922,6 @@ module Google
         # Corresponds to the JSON property `googleSignalsSettings`
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaGoogleSignalsSettings]
         attr_accessor :google_signals_settings
-      
-        # A resource message representing a Google Analytics IOS app stream.
-        # Corresponds to the JSON property `iosAppDataStream`
-        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaIosAppDataStream]
-        attr_accessor :ios_app_data_stream
       
         # A secret value used for sending hits to Measurement Protocol.
         # Corresponds to the JSON property `measurementProtocolSecret`
@@ -579,10 +1933,10 @@ module Google
         # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaProperty]
         attr_accessor :property
       
-        # A resource message representing a Google Analytics web stream.
-        # Corresponds to the JSON property `webDataStream`
-        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaWebDataStream]
-        attr_accessor :web_data_stream
+        # A link between a GA4 property and a Search Ads 360 entity.
+        # Corresponds to the JSON property `searchAds360Link`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaSearchAds360Link]
+        attr_accessor :search_ads360_link
       
         def initialize(**args)
            update!(**args)
@@ -591,20 +1945,22 @@ module Google
         # Update properties of this object
         def update!(**args)
           @account = args[:account] if args.key?(:account)
-          @android_app_data_stream = args[:android_app_data_stream] if args.key?(:android_app_data_stream)
+          @attribution_settings = args[:attribution_settings] if args.key?(:attribution_settings)
+          @bigquery_link = args[:bigquery_link] if args.key?(:bigquery_link)
           @conversion_event = args[:conversion_event] if args.key?(:conversion_event)
           @custom_dimension = args[:custom_dimension] if args.key?(:custom_dimension)
           @custom_metric = args[:custom_metric] if args.key?(:custom_metric)
           @data_retention_settings = args[:data_retention_settings] if args.key?(:data_retention_settings)
+          @data_stream = args[:data_stream] if args.key?(:data_stream)
           @display_video360_advertiser_link = args[:display_video360_advertiser_link] if args.key?(:display_video360_advertiser_link)
           @display_video360_advertiser_link_proposal = args[:display_video360_advertiser_link_proposal] if args.key?(:display_video360_advertiser_link_proposal)
+          @expanded_data_set = args[:expanded_data_set] if args.key?(:expanded_data_set)
           @firebase_link = args[:firebase_link] if args.key?(:firebase_link)
           @google_ads_link = args[:google_ads_link] if args.key?(:google_ads_link)
           @google_signals_settings = args[:google_signals_settings] if args.key?(:google_signals_settings)
-          @ios_app_data_stream = args[:ios_app_data_stream] if args.key?(:ios_app_data_stream)
           @measurement_protocol_secret = args[:measurement_protocol_secret] if args.key?(:measurement_protocol_secret)
           @property = args[:property] if args.key?(:property)
-          @web_data_stream = args[:web_data_stream] if args.key?(:web_data_stream)
+          @search_ads360_link = args[:search_ads360_link] if args.key?(:search_ads360_link)
         end
       end
       
@@ -715,6 +2071,31 @@ module Google
           @deletable = args[:deletable] if args.key?(:deletable)
           @event_name = args[:event_name] if args.key?(:event_name)
           @name = args[:name] if args.key?(:name)
+        end
+      end
+      
+      # Request message for CreateAccessBinding RPC.
+      class GoogleAnalyticsAdminV1alphaCreateAccessBindingRequest
+        include Google::Apis::Core::Hashable
+      
+        # A binding of a user to a set of roles.
+        # Corresponds to the JSON property `accessBinding`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding]
+        attr_accessor :access_binding
+      
+        # Required. Formats: - accounts/`account` - properties/`property`
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_binding = args[:access_binding] if args.key?(:access_binding)
+          @parent = args[:parent] if args.key?(:parent)
         end
       end
       
@@ -854,6 +2235,13 @@ module Google
         # @return [String]
         attr_accessor :parameter_name
       
+        # Optional. Types of restricted data that this metric may contain. Required for
+        # metrics with CURRENCY measurement unit. Must be empty for metrics with a non-
+        # CURRENCY measurement unit.
+        # Corresponds to the JSON property `restrictedMetricType`
+        # @return [Array<String>]
+        attr_accessor :restricted_metric_type
+      
         # Required. Immutable. The scope of this custom metric.
         # Corresponds to the JSON property `scope`
         # @return [String]
@@ -870,6 +2258,7 @@ module Google
           @measurement_unit = args[:measurement_unit] if args.key?(:measurement_unit)
           @name = args[:name] if args.key?(:name)
           @parameter_name = args[:parameter_name] if args.key?(:parameter_name)
+          @restricted_metric_type = args[:restricted_metric_type] if args.key?(:restricted_metric_type)
           @scope = args[:scope] if args.key?(:scope)
         end
       end
@@ -967,6 +2356,178 @@ module Google
         end
       end
       
+      # A resource message representing a data stream.
+      class GoogleAnalyticsAdminV1alphaDataStream
+        include Google::Apis::Core::Hashable
+      
+        # Data specific to Android app streams.
+        # Corresponds to the JSON property `androidAppStreamData`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData]
+        attr_accessor :android_app_stream_data
+      
+        # Output only. Time when this stream was originally created.
+        # Corresponds to the JSON property `createTime`
+        # @return [String]
+        attr_accessor :create_time
+      
+        # Human-readable display name for the Data Stream. Required for web data streams.
+        # The max allowed display name length is 255 UTF-16 code units.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Data specific to iOS app streams.
+        # Corresponds to the JSON property `iosAppStreamData`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData]
+        attr_accessor :ios_app_stream_data
+      
+        # Output only. Resource name of this Data Stream. Format: properties/`
+        # property_id`/dataStreams/`stream_id` Example: "properties/1000/dataStreams/
+        # 2000"
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Required. Immutable. The type of this DataStream resource.
+        # Corresponds to the JSON property `type`
+        # @return [String]
+        attr_accessor :type
+      
+        # Output only. Time when stream payload fields were last updated.
+        # Corresponds to the JSON property `updateTime`
+        # @return [String]
+        attr_accessor :update_time
+      
+        # Data specific to web streams.
+        # Corresponds to the JSON property `webStreamData`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataStreamWebStreamData]
+        attr_accessor :web_stream_data
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @android_app_stream_data = args[:android_app_stream_data] if args.key?(:android_app_stream_data)
+          @create_time = args[:create_time] if args.key?(:create_time)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @ios_app_stream_data = args[:ios_app_stream_data] if args.key?(:ios_app_stream_data)
+          @name = args[:name] if args.key?(:name)
+          @type = args[:type] if args.key?(:type)
+          @update_time = args[:update_time] if args.key?(:update_time)
+          @web_stream_data = args[:web_stream_data] if args.key?(:web_stream_data)
+        end
+      end
+      
+      # Data specific to Android app streams.
+      class GoogleAnalyticsAdminV1alphaDataStreamAndroidAppStreamData
+        include Google::Apis::Core::Hashable
+      
+        # Output only. ID of the corresponding Android app in Firebase, if any. This ID
+        # can change if the Android app is deleted and recreated.
+        # Corresponds to the JSON property `firebaseAppId`
+        # @return [String]
+        attr_accessor :firebase_app_id
+      
+        # Immutable. The package name for the app being measured. Example: "com.example.
+        # myandroidapp"
+        # Corresponds to the JSON property `packageName`
+        # @return [String]
+        attr_accessor :package_name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
+          @package_name = args[:package_name] if args.key?(:package_name)
+        end
+      end
+      
+      # Data specific to iOS app streams.
+      class GoogleAnalyticsAdminV1alphaDataStreamIosAppStreamData
+        include Google::Apis::Core::Hashable
+      
+        # Required. Immutable. The Apple App Store Bundle ID for the app Example: "com.
+        # example.myiosapp"
+        # Corresponds to the JSON property `bundleId`
+        # @return [String]
+        attr_accessor :bundle_id
+      
+        # Output only. ID of the corresponding iOS app in Firebase, if any. This ID can
+        # change if the iOS app is deleted and recreated.
+        # Corresponds to the JSON property `firebaseAppId`
+        # @return [String]
+        attr_accessor :firebase_app_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bundle_id = args[:bundle_id] if args.key?(:bundle_id)
+          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
+        end
+      end
+      
+      # Data specific to web streams.
+      class GoogleAnalyticsAdminV1alphaDataStreamWebStreamData
+        include Google::Apis::Core::Hashable
+      
+        # Immutable. Domain name of the web app being measured, or empty. Example: "http:
+        # //www.google.com", "https://www.google.com"
+        # Corresponds to the JSON property `defaultUri`
+        # @return [String]
+        attr_accessor :default_uri
+      
+        # Output only. ID of the corresponding web app in Firebase, if any. This ID can
+        # change if the web app is deleted and recreated.
+        # Corresponds to the JSON property `firebaseAppId`
+        # @return [String]
+        attr_accessor :firebase_app_id
+      
+        # Output only. Analytics "Measurement ID", without the "G-" prefix. Example: "G-
+        # 1A2BCD345E" would just be "1A2BCD345E"
+        # Corresponds to the JSON property `measurementId`
+        # @return [String]
+        attr_accessor :measurement_id
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @default_uri = args[:default_uri] if args.key?(:default_uri)
+          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
+          @measurement_id = args[:measurement_id] if args.key?(:measurement_id)
+        end
+      end
+      
+      # Request message for DeleteAccessBinding RPC.
+      class GoogleAnalyticsAdminV1alphaDeleteAccessBindingRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. Formats: - accounts/`account`/accessBindings/`accessBinding` -
+        # properties/`property`/accessBindings/`accessBinding`
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @name = args[:name] if args.key?(:name)
+        end
+      end
+      
       # Request message for DeleteUserLink RPC.
       class GoogleAnalyticsAdminV1alphaDeleteUserLinkRequest
         include Google::Apis::Core::Hashable
@@ -1017,7 +2578,7 @@ module Google
         alias_method :campaign_data_sharing_enabled?, :campaign_data_sharing_enabled
       
         # Immutable. Enables the import of cost data from Display & Video 360 into the
-        # GA4 property. This can only be enabled if campaign_data_import_enabled is
+        # GA4 property. This can only be enabled if campaign_data_sharing_enabled is
         # enabled. After link creation, this can only be updated from the Display &
         # Video 360 product. If this field is not set on create, it will be defaulted to
         # true.
@@ -1048,7 +2609,7 @@ module Google
         end
       end
       
-      # A proposal for a link between an GA4 property and a Display & Video 360
+      # A proposal for a link between a GA4 property and a Display & Video 360
       # advertiser. A proposal is converted to a DisplayVideo360AdvertiserLink once
       # approved. Google Analytics admins approve inbound proposals while Display &
       # Video 360 admins approve outbound proposals.
@@ -1081,7 +2642,7 @@ module Google
         alias_method :campaign_data_sharing_enabled?, :campaign_data_sharing_enabled
       
         # Immutable. Enables the import of cost data from Display & Video 360. This can
-        # only be enabled if campaign_data_import_enabled is enabled. If this field is
+        # only be enabled if campaign_data_sharing_enabled is enabled. If this field is
         # not set on create, it will be defaulted to true.
         # Corresponds to the JSON property `costDataSharingEnabled`
         # @return [Boolean]
@@ -1128,91 +2689,49 @@ module Google
         end
       end
       
-      # Singleton resource under a WebDataStream, configuring measurement of
-      # additional site interactions and content.
-      class GoogleAnalyticsAdminV1alphaEnhancedMeasurementSettings
+      # A resource message representing a GA4 ExpandedDataSet.
+      class GoogleAnalyticsAdminV1alphaExpandedDataSet
         include Google::Apis::Core::Hashable
       
-        # If enabled, capture a file download event each time a link is clicked with a
-        # common document, compressed file, application, video, or audio extension.
-        # Corresponds to the JSON property `fileDownloadsEnabled`
-        # @return [Boolean]
-        attr_accessor :file_downloads_enabled
-        alias_method :file_downloads_enabled?, :file_downloads_enabled
+        # Output only. Time when expanded data set began (or will begin) collecing data.
+        # Corresponds to the JSON property `dataCollectionStartTime`
+        # @return [String]
+        attr_accessor :data_collection_start_time
       
-        # Output only. Resource name of this Data Stream. Format: properties/`
-        # property_id`/webDataStreams/`stream_id`/enhancedMeasurementSettings Example: "
-        # properties/1000/webDataStreams/2000/enhancedMeasurementSettings"
+        # Optional. The description of the ExpandedDataSet. Max 50 chars.
+        # Corresponds to the JSON property `description`
+        # @return [String]
+        attr_accessor :description
+      
+        # A logical expression of EnhancedDataSet dimension filters.
+        # Corresponds to the JSON property `dimensionFilterExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression]
+        attr_accessor :dimension_filter_expression
+      
+        # Immutable. The list of dimensions included in the ExpandedDataSet. See the [
+        # API Dimensions](https://developers.google.com/analytics/devguides/reporting/
+        # data/v1/api-schema#dimensions) for the list of dimension names.
+        # Corresponds to the JSON property `dimensionNames`
+        # @return [Array<String>]
+        attr_accessor :dimension_names
+      
+        # Required. The display name of the ExpandedDataSet. Max 200 chars.
+        # Corresponds to the JSON property `displayName`
+        # @return [String]
+        attr_accessor :display_name
+      
+        # Immutable. The list of metrics included in the ExpandedDataSet. See the [API
+        # Metrics](https://developers.google.com/analytics/devguides/reporting/data/v1/
+        # api-schema#metrics) for the list of dimension names.
+        # Corresponds to the JSON property `metricNames`
+        # @return [Array<String>]
+        attr_accessor :metric_names
+      
+        # Output only. The resource name for this ExpandedDataSet resource. Format:
+        # properties/`property_id`/expandedDataSets/`expanded_data_set`
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
-      
-        # If enabled, capture an outbound click event each time a visitor clicks a link
-        # that leads them away from your domain.
-        # Corresponds to the JSON property `outboundClicksEnabled`
-        # @return [Boolean]
-        attr_accessor :outbound_clicks_enabled
-        alias_method :outbound_clicks_enabled?, :outbound_clicks_enabled
-      
-        # If enabled, capture a page view event each time the website changes the
-        # browser history state.
-        # Corresponds to the JSON property `pageChangesEnabled`
-        # @return [Boolean]
-        attr_accessor :page_changes_enabled
-        alias_method :page_changes_enabled?, :page_changes_enabled
-      
-        # Output only. If enabled, capture a page view event each time a page loads.
-        # Corresponds to the JSON property `pageLoadsEnabled`
-        # @return [Boolean]
-        attr_accessor :page_loads_enabled
-        alias_method :page_loads_enabled?, :page_loads_enabled
-      
-        # Output only. If enabled, capture a page view event each time a page loads or
-        # the website changes the browser history state.
-        # Corresponds to the JSON property `pageViewsEnabled`
-        # @return [Boolean]
-        attr_accessor :page_views_enabled
-        alias_method :page_views_enabled?, :page_views_enabled
-      
-        # If enabled, capture scroll events each time a visitor gets to the bottom of a
-        # page.
-        # Corresponds to the JSON property `scrollsEnabled`
-        # @return [Boolean]
-        attr_accessor :scrolls_enabled
-        alias_method :scrolls_enabled?, :scrolls_enabled
-      
-        # Required. URL query parameters to interpret as site search parameters. Max
-        # length is 1024 characters. Must not be empty.
-        # Corresponds to the JSON property `searchQueryParameter`
-        # @return [String]
-        attr_accessor :search_query_parameter
-      
-        # If enabled, capture a view search results event each time a visitor performs a
-        # search on your site (based on a query parameter).
-        # Corresponds to the JSON property `siteSearchEnabled`
-        # @return [Boolean]
-        attr_accessor :site_search_enabled
-        alias_method :site_search_enabled?, :site_search_enabled
-      
-        # Indicates whether Enhanced Measurement Settings will be used to automatically
-        # measure interactions and content on this web stream. Changing this value does
-        # not affect the settings themselves, but determines whether they are respected.
-        # Corresponds to the JSON property `streamEnabled`
-        # @return [Boolean]
-        attr_accessor :stream_enabled
-        alias_method :stream_enabled?, :stream_enabled
-      
-        # Additional URL query parameters. Max length is 1024 characters.
-        # Corresponds to the JSON property `uriQueryParameter`
-        # @return [String]
-        attr_accessor :uri_query_parameter
-      
-        # If enabled, capture video play, progress, and complete events as visitors view
-        # embedded videos on your site.
-        # Corresponds to the JSON property `videoEngagementEnabled`
-        # @return [Boolean]
-        attr_accessor :video_engagement_enabled
-        alias_method :video_engagement_enabled?, :video_engagement_enabled
       
         def initialize(**args)
            update!(**args)
@@ -1220,22 +2739,202 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @file_downloads_enabled = args[:file_downloads_enabled] if args.key?(:file_downloads_enabled)
+          @data_collection_start_time = args[:data_collection_start_time] if args.key?(:data_collection_start_time)
+          @description = args[:description] if args.key?(:description)
+          @dimension_filter_expression = args[:dimension_filter_expression] if args.key?(:dimension_filter_expression)
+          @dimension_names = args[:dimension_names] if args.key?(:dimension_names)
+          @display_name = args[:display_name] if args.key?(:display_name)
+          @metric_names = args[:metric_names] if args.key?(:metric_names)
           @name = args[:name] if args.key?(:name)
-          @outbound_clicks_enabled = args[:outbound_clicks_enabled] if args.key?(:outbound_clicks_enabled)
-          @page_changes_enabled = args[:page_changes_enabled] if args.key?(:page_changes_enabled)
-          @page_loads_enabled = args[:page_loads_enabled] if args.key?(:page_loads_enabled)
-          @page_views_enabled = args[:page_views_enabled] if args.key?(:page_views_enabled)
-          @scrolls_enabled = args[:scrolls_enabled] if args.key?(:scrolls_enabled)
-          @search_query_parameter = args[:search_query_parameter] if args.key?(:search_query_parameter)
-          @site_search_enabled = args[:site_search_enabled] if args.key?(:site_search_enabled)
-          @stream_enabled = args[:stream_enabled] if args.key?(:stream_enabled)
-          @uri_query_parameter = args[:uri_query_parameter] if args.key?(:uri_query_parameter)
-          @video_engagement_enabled = args[:video_engagement_enabled] if args.key?(:video_engagement_enabled)
         end
       end
       
-      # A link between an GA4 property and a Firebase project.
+      # A specific filter for a single dimension
+      class GoogleAnalyticsAdminV1alphaExpandedDataSetFilter
+        include Google::Apis::Core::Hashable
+      
+        # Required. The dimension name to filter.
+        # Corresponds to the JSON property `fieldName`
+        # @return [String]
+        attr_accessor :field_name
+      
+        # A filter for a string dimension that matches a particular list of options.
+        # Corresponds to the JSON property `inListFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter]
+        attr_accessor :in_list_filter
+      
+        # A filter for a string-type dimension that matches a particular pattern.
+        # Corresponds to the JSON property `stringFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter]
+        attr_accessor :string_filter
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @field_name = args[:field_name] if args.key?(:field_name)
+          @in_list_filter = args[:in_list_filter] if args.key?(:in_list_filter)
+          @string_filter = args[:string_filter] if args.key?(:string_filter)
+        end
+      end
+      
+      # A logical expression of EnhancedDataSet dimension filters.
+      class GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression
+        include Google::Apis::Core::Hashable
+      
+        # A list of ExpandedDataSet filter expressions.
+        # Corresponds to the JSON property `andGroup`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList]
+        attr_accessor :and_group
+      
+        # A specific filter for a single dimension
+        # Corresponds to the JSON property `filter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilter]
+        attr_accessor :filter
+      
+        # A logical expression of EnhancedDataSet dimension filters.
+        # Corresponds to the JSON property `notExpression`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression]
+        attr_accessor :not_expression
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @and_group = args[:and_group] if args.key?(:and_group)
+          @filter = args[:filter] if args.key?(:filter)
+          @not_expression = args[:not_expression] if args.key?(:not_expression)
+        end
+      end
+      
+      # A list of ExpandedDataSet filter expressions.
+      class GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpressionList
+        include Google::Apis::Core::Hashable
+      
+        # A list of ExpandedDataSet filter expressions.
+        # Corresponds to the JSON property `filterExpressions`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSetFilterExpression>]
+        attr_accessor :filter_expressions
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @filter_expressions = args[:filter_expressions] if args.key?(:filter_expressions)
+        end
+      end
+      
+      # A filter for a string dimension that matches a particular list of options.
+      class GoogleAnalyticsAdminV1alphaExpandedDataSetFilterInListFilter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. If true, the match is case-sensitive. If false, the match is case-
+        # insensitive. Must be true.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # Required. The list of possible string values to match against. Must be non-
+        # empty.
+        # Corresponds to the JSON property `values`
+        # @return [Array<String>]
+        attr_accessor :values
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @values = args[:values] if args.key?(:values)
+        end
+      end
+      
+      # A filter for a string-type dimension that matches a particular pattern.
+      class GoogleAnalyticsAdminV1alphaExpandedDataSetFilterStringFilter
+        include Google::Apis::Core::Hashable
+      
+        # Optional. If true, the match is case-sensitive. If false, the match is case-
+        # insensitive. Must be true when match_type is EXACT. Must be false when
+        # match_type is CONTAINS.
+        # Corresponds to the JSON property `caseSensitive`
+        # @return [Boolean]
+        attr_accessor :case_sensitive
+        alias_method :case_sensitive?, :case_sensitive
+      
+        # Required. The match type for the string filter.
+        # Corresponds to the JSON property `matchType`
+        # @return [String]
+        attr_accessor :match_type
+      
+        # Required. The string value to be matched against.
+        # Corresponds to the JSON property `value`
+        # @return [String]
+        attr_accessor :value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @case_sensitive = args[:case_sensitive] if args.key?(:case_sensitive)
+          @match_type = args[:match_type] if args.key?(:match_type)
+          @value = args[:value] if args.key?(:value)
+        end
+      end
+      
+      # Request for fetching the opt out status for the automated GA4 setup process.
+      class GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutRequest
+        include Google::Apis::Core::Hashable
+      
+        # Required. The UA property to get the opt out status. Note this request uses
+        # the internal property ID, not the tracking ID of the form UA-XXXXXX-YY. Format:
+        # properties/`internalWebPropertyId` Example: properties/1234
+        # Corresponds to the JSON property `property`
+        # @return [String]
+        attr_accessor :property
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @property = args[:property] if args.key?(:property)
+        end
+      end
+      
+      # Response message for fetching the opt out status for the automated GA4 setup
+      # process.
+      class GoogleAnalyticsAdminV1alphaFetchAutomatedGa4ConfigurationOptOutResponse
+        include Google::Apis::Core::Hashable
+      
+        # The opt out status for the UA property.
+        # Corresponds to the JSON property `optOut`
+        # @return [Boolean]
+        attr_accessor :opt_out
+        alias_method :opt_out?, :opt_out
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @opt_out = args[:opt_out] if args.key?(:opt_out)
+        end
+      end
+      
+      # A link between a GA4 property and a Firebase project.
       class GoogleAnalyticsAdminV1alphaFirebaseLink
         include Google::Apis::Core::Hashable
       
@@ -1271,12 +2970,13 @@ module Google
       end
       
       # Read-only resource with the tag for sending data from a website to a
-      # WebDataStream.
+      # DataStream. Only present for web DataStream resources.
       class GoogleAnalyticsAdminV1alphaGlobalSiteTag
         include Google::Apis::Core::Hashable
       
         # Output only. Resource name for this GlobalSiteTag resource. Format: properties/
-        # `propertyId`/globalSiteTag
+        # `property_id`/dataStreams/`stream_id`/globalSiteTag Example: "properties/123/
+        # dataStreams/456/globalSiteTag"
         # Corresponds to the JSON property `name`
         # @return [String]
         attr_accessor :name
@@ -1298,7 +2998,7 @@ module Google
         end
       end
       
-      # A link between an GA4 property and a Google Ads account.
+      # A link between a GA4 property and a Google Ads account.
       class GoogleAnalyticsAdminV1alphaGoogleAdsLink
         include Google::Apis::Core::Hashable
       
@@ -1392,60 +3092,6 @@ module Google
         end
       end
       
-      # A resource message representing a Google Analytics IOS app stream.
-      class GoogleAnalyticsAdminV1alphaIosAppDataStream
-        include Google::Apis::Core::Hashable
-      
-        # Required. Immutable. The Apple App Store Bundle ID for the app Example: "com.
-        # example.myiosapp"
-        # Corresponds to the JSON property `bundleId`
-        # @return [String]
-        attr_accessor :bundle_id
-      
-        # Output only. Time when this stream was originally created.
-        # Corresponds to the JSON property `createTime`
-        # @return [String]
-        attr_accessor :create_time
-      
-        # Human-readable display name for the Data Stream. The max allowed display name
-        # length is 255 UTF-16 code units.
-        # Corresponds to the JSON property `displayName`
-        # @return [String]
-        attr_accessor :display_name
-      
-        # Output only. ID of the corresponding iOS app in Firebase, if any. This ID can
-        # change if the iOS app is deleted and recreated.
-        # Corresponds to the JSON property `firebaseAppId`
-        # @return [String]
-        attr_accessor :firebase_app_id
-      
-        # Output only. Resource name of this Data Stream. Format: properties/`
-        # property_id`/iosAppDataStreams/`stream_id` Example: "properties/1000/
-        # iosAppDataStreams/2000"
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Output only. Time when stream payload fields were last updated.
-        # Corresponds to the JSON property `updateTime`
-        # @return [String]
-        attr_accessor :update_time
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @bundle_id = args[:bundle_id] if args.key?(:bundle_id)
-          @create_time = args[:create_time] if args.key?(:create_time)
-          @display_name = args[:display_name] if args.key?(:display_name)
-          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
-          @name = args[:name] if args.key?(:name)
-          @update_time = args[:update_time] if args.key?(:update_time)
-        end
-      end
-      
       # Status information for a link proposal.
       class GoogleAnalyticsAdminV1alphaLinkProposalStatusDetails
         include Google::Apis::Core::Hashable
@@ -1474,6 +3120,33 @@ module Google
           @link_proposal_initiating_product = args[:link_proposal_initiating_product] if args.key?(:link_proposal_initiating_product)
           @link_proposal_state = args[:link_proposal_state] if args.key?(:link_proposal_state)
           @requestor_email = args[:requestor_email] if args.key?(:requestor_email)
+        end
+      end
+      
+      # Response message for ListAccessBindings RPC.
+      class GoogleAnalyticsAdminV1alphaListAccessBindingsResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of AccessBindings. These will be ordered stably, but in an arbitrary
+        # order.
+        # Corresponds to the JSON property `accessBindings`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding>]
+        attr_accessor :access_bindings
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_bindings = args[:access_bindings] if args.key?(:access_bindings)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
       
@@ -1529,14 +3202,14 @@ module Google
         end
       end
       
-      # Request message for ListAndroidDataStreams RPC.
-      class GoogleAnalyticsAdminV1alphaListAndroidAppDataStreamsResponse
+      # Response message for ListAudiences RPC.
+      class GoogleAnalyticsAdminV1alphaListAudiencesResponse
         include Google::Apis::Core::Hashable
       
-        # Results that matched the filter criteria and were accessible to the caller.
-        # Corresponds to the JSON property `androidAppDataStreams`
-        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAndroidAppDataStream>]
-        attr_accessor :android_app_data_streams
+        # List of Audiences.
+        # Corresponds to the JSON property `audiences`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAudience>]
+        attr_accessor :audiences
       
         # A token, which can be sent as `page_token` to retrieve the next page. If this
         # field is omitted, there are no subsequent pages.
@@ -1550,7 +3223,33 @@ module Google
       
         # Update properties of this object
         def update!(**args)
-          @android_app_data_streams = args[:android_app_data_streams] if args.key?(:android_app_data_streams)
+          @audiences = args[:audiences] if args.key?(:audiences)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response message for ListBigQueryLinks RPC
+      class GoogleAnalyticsAdminV1alphaListBigQueryLinksResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of BigQueryLinks.
+        # Corresponds to the JSON property `bigqueryLinks`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaBigQueryLink>]
+        attr_accessor :bigquery_links
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @bigquery_links = args[:bigquery_links] if args.key?(:bigquery_links)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -1633,6 +3332,32 @@ module Google
         end
       end
       
+      # Response message for ListDataStreams RPC.
+      class GoogleAnalyticsAdminV1alphaListDataStreamsResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of DataStreams.
+        # Corresponds to the JSON property `dataStreams`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaDataStream>]
+        attr_accessor :data_streams
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @data_streams = args[:data_streams] if args.key?(:data_streams)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
       # Response message for ListDisplayVideo360AdvertiserLinkProposals RPC.
       class GoogleAnalyticsAdminV1alphaListDisplayVideo360AdvertiserLinkProposalsResponse
         include Google::Apis::Core::Hashable
@@ -1681,6 +3406,33 @@ module Google
         # Update properties of this object
         def update!(**args)
           @display_video360_advertiser_links = args[:display_video360_advertiser_links] if args.key?(:display_video360_advertiser_links)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+        end
+      end
+      
+      # Response message for ListExpandedDataSets RPC.
+      class GoogleAnalyticsAdminV1alphaListExpandedDataSetsResponse
+        include Google::Apis::Core::Hashable
+      
+        # List of ExpandedDataSet. These will be ordered stably, but in an arbitrary
+        # order.
+        # Corresponds to the JSON property `expandedDataSets`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaExpandedDataSet>]
+        attr_accessor :expanded_data_sets
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @expanded_data_sets = args[:expanded_data_sets] if args.key?(:expanded_data_sets)
           @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
         end
       end
@@ -1738,32 +3490,6 @@ module Google
         end
       end
       
-      # Request message for ListIosAppDataStreams RPC.
-      class GoogleAnalyticsAdminV1alphaListIosAppDataStreamsResponse
-        include Google::Apis::Core::Hashable
-      
-        # Results that matched the filter criteria and were accessible to the caller.
-        # Corresponds to the JSON property `iosAppDataStreams`
-        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaIosAppDataStream>]
-        attr_accessor :ios_app_data_streams
-      
-        # A token, which can be sent as `page_token` to retrieve the next page. If this
-        # field is omitted, there are no subsequent pages.
-        # Corresponds to the JSON property `nextPageToken`
-        # @return [String]
-        attr_accessor :next_page_token
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @ios_app_data_streams = args[:ios_app_data_streams] if args.key?(:ios_app_data_streams)
-          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
-        end
-      end
-      
       # Response message for ListMeasurementProtocolSecret RPC
       class GoogleAnalyticsAdminV1alphaListMeasurementProtocolSecretsResponse
         include Google::Apis::Core::Hashable
@@ -1816,6 +3542,32 @@ module Google
         end
       end
       
+      # Response message for ListSearchAds360Links RPC.
+      class GoogleAnalyticsAdminV1alphaListSearchAds360LinksResponse
+        include Google::Apis::Core::Hashable
+      
+        # A token, which can be sent as `page_token` to retrieve the next page. If this
+        # field is omitted, there are no subsequent pages.
+        # Corresponds to the JSON property `nextPageToken`
+        # @return [String]
+        attr_accessor :next_page_token
+      
+        # List of SearchAds360Links.
+        # Corresponds to the JSON property `searchAds360Links`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaSearchAds360Link>]
+        attr_accessor :search_ads360_links
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
+          @search_ads360_links = args[:search_ads360_links] if args.key?(:search_ads360_links)
+        end
+      end
+      
       # Response message for ListUserLinks RPC.
       class GoogleAnalyticsAdminV1alphaListUserLinksResponse
         include Google::Apis::Core::Hashable
@@ -1842,32 +3594,6 @@ module Google
         end
       end
       
-      # Request message for ListWebDataStreams RPC.
-      class GoogleAnalyticsAdminV1alphaListWebDataStreamsResponse
-        include Google::Apis::Core::Hashable
-      
-        # A token, which can be sent as `page_token` to retrieve the next page. If this
-        # field is omitted, there are no subsequent pages.
-        # Corresponds to the JSON property `nextPageToken`
-        # @return [String]
-        attr_accessor :next_page_token
-      
-        # Results that matched the filter criteria and were accessible to the caller.
-        # Corresponds to the JSON property `webDataStreams`
-        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaWebDataStream>]
-        attr_accessor :web_data_streams
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @next_page_token = args[:next_page_token] if args.key?(:next_page_token)
-          @web_data_streams = args[:web_data_streams] if args.key?(:web_data_streams)
-        end
-      end
-      
       # A secret value used for sending hits to Measurement Protocol.
       class GoogleAnalyticsAdminV1alphaMeasurementProtocolSecret
         include Google::Apis::Core::Hashable
@@ -1878,7 +3604,7 @@ module Google
         attr_accessor :display_name
       
         # Output only. Resource name of this secret. This secret may be a child of any
-        # type of stream. Format: properties/`property`/webDataStreams/`webDataStream`/
+        # type of stream. Format: properties/`property`/dataStreams/`dataStream`/
         # measurementProtocolSecrets/`measurementProtocolSecret`
         # Corresponds to the JSON property `name`
         # @return [String]
@@ -1900,6 +3626,31 @@ module Google
           @display_name = args[:display_name] if args.key?(:display_name)
           @name = args[:name] if args.key?(:name)
           @secret_value = args[:secret_value] if args.key?(:secret_value)
+        end
+      end
+      
+      # To represent a number.
+      class GoogleAnalyticsAdminV1alphaNumericValue
+        include Google::Apis::Core::Hashable
+      
+        # Double value
+        # Corresponds to the JSON property `doubleValue`
+        # @return [Float]
+        attr_accessor :double_value
+      
+        # Integer value
+        # Corresponds to the JSON property `int64Value`
+        # @return [Fixnum]
+        attr_accessor :int64_value
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @double_value = args[:double_value] if args.key?(:double_value)
+          @int64_value = args[:int64_value] if args.key?(:int64_value)
         end
       end
       
@@ -1955,11 +3706,19 @@ module Google
         attr_accessor :name
       
         # Immutable. Resource name of this property's logical parent. Note: The Property-
-        # Moving UI can be used to change the parent. Format: accounts/`account` Example:
-        # "accounts/100"
+        # Moving UI can be used to change the parent. Format: accounts/`account`,
+        # properties/`property` Example: "accounts/100", "properties/101"
         # Corresponds to the JSON property `parent`
         # @return [String]
         attr_accessor :parent
+      
+        # Immutable. The property type for this Property resource. When creating a
+        # property, if the type is "PROPERTY_TYPE_UNSPECIFIED", then "ORDINARY_PROPERTY"
+        # will be implied. "SUBPROPERTY" and "ROLLUP_PROPERTY" types cannot yet be
+        # created via Google Analytics Admin API.
+        # Corresponds to the JSON property `propertyType`
+        # @return [String]
+        attr_accessor :property_type
       
         # Output only. The Google Analytics service level that applies to this property.
         # Corresponds to the JSON property `serviceLevel`
@@ -1995,26 +3754,39 @@ module Google
           @industry_category = args[:industry_category] if args.key?(:industry_category)
           @name = args[:name] if args.key?(:name)
           @parent = args[:parent] if args.key?(:parent)
+          @property_type = args[:property_type] if args.key?(:property_type)
           @service_level = args[:service_level] if args.key?(:service_level)
           @time_zone = args[:time_zone] if args.key?(:time_zone)
           @update_time = args[:update_time] if args.key?(:update_time)
         end
       end
       
-      # A virtual resource representing metadata for an GA4 property.
+      # A virtual resource representing metadata for a GA4 property.
       class GoogleAnalyticsAdminV1alphaPropertySummary
         include Google::Apis::Core::Hashable
       
-        # Display name for the property referred to in this account summary.
+        # Display name for the property referred to in this property summary.
         # Corresponds to the JSON property `displayName`
         # @return [String]
         attr_accessor :display_name
+      
+        # Resource name of this property's logical parent. Note: The Property-Moving UI
+        # can be used to change the parent. Format: accounts/`account`, properties/`
+        # property` Example: "accounts/100", "properties/200"
+        # Corresponds to the JSON property `parent`
+        # @return [String]
+        attr_accessor :parent
       
         # Resource name of property referred to by this property summary Format:
         # properties/`property_id` Example: "properties/1000"
         # Corresponds to the JSON property `property`
         # @return [String]
         attr_accessor :property
+      
+        # The property's property type.
+        # Corresponds to the JSON property `propertyType`
+        # @return [String]
+        attr_accessor :property_type
       
         def initialize(**args)
            update!(**args)
@@ -2023,7 +3795,9 @@ module Google
         # Update properties of this object
         def update!(**args)
           @display_name = args[:display_name] if args.key?(:display_name)
+          @parent = args[:parent] if args.key?(:parent)
           @property = args[:property] if args.key?(:property)
+          @property_type = args[:property_type] if args.key?(:property_type)
         end
       end
       
@@ -2037,7 +3811,7 @@ module Google
         attr_accessor :account
       
         # Redirect URI where the user will be sent after accepting Terms of Service.
-        # Must be configured in Developers Console as a Redirect URI
+        # Must be configured in Developers Console as a Redirect URI.
         # Corresponds to the JSON property `redirectUri`
         # @return [String]
         attr_accessor :redirect_uri
@@ -2069,6 +3843,231 @@ module Google
         # Update properties of this object
         def update!(**args)
           @account_ticket_id = args[:account_ticket_id] if args.key?(:account_ticket_id)
+        end
+      end
+      
+      # The request for a Data Access Record Report.
+      class GoogleAnalyticsAdminV1alphaRunAccessReportRequest
+        include Google::Apis::Core::Hashable
+      
+        # Date ranges of access records to read. If multiple date ranges are requested,
+        # each response row will contain a zero based date range index. If two date
+        # ranges overlap, the access records for the overlapping days is included in the
+        # response rows for both date ranges. Requests are allowed up to 2 date ranges.
+        # Corresponds to the JSON property `dateRanges`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessDateRange>]
+        attr_accessor :date_ranges
+      
+        # Expresses dimension or metric filters. The fields in the same expression need
+        # to be either all dimensions or all metrics.
+        # Corresponds to the JSON property `dimensionFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpression]
+        attr_accessor :dimension_filter
+      
+        # The dimensions requested and displayed in the response. Requests are allowed
+        # up to 9 dimensions.
+        # Corresponds to the JSON property `dimensions`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessDimension>]
+        attr_accessor :dimensions
+      
+        # The number of rows to return. If unspecified, 10,000 rows are returned. The
+        # API returns a maximum of 100,000 rows per request, no matter how many you ask
+        # for. `limit` must be positive. The API may return fewer rows than the
+        # requested `limit`, if there aren't as many remaining rows as the `limit`. For
+        # instance, there are fewer than 300 possible values for the dimension `country`,
+        # so when reporting on only `country`, you can't get more than 300 rows, even
+        # if you set `limit` to a higher value. To learn more about this pagination
+        # parameter, see [Pagination](https://developers.google.com/analytics/devguides/
+        # reporting/data/v1/basics#pagination).
+        # Corresponds to the JSON property `limit`
+        # @return [Fixnum]
+        attr_accessor :limit
+      
+        # Expresses dimension or metric filters. The fields in the same expression need
+        # to be either all dimensions or all metrics.
+        # Corresponds to the JSON property `metricFilter`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessFilterExpression]
+        attr_accessor :metric_filter
+      
+        # The metrics requested and displayed in the response. Requests are allowed up
+        # to 10 metrics.
+        # Corresponds to the JSON property `metrics`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessMetric>]
+        attr_accessor :metrics
+      
+        # The row count of the start row. The first row is counted as row 0. If offset
+        # is unspecified, it is treated as 0. If offset is zero, then this method will
+        # return the first page of results with `limit` entries. To learn more about
+        # this pagination parameter, see [Pagination](https://developers.google.com/
+        # analytics/devguides/reporting/data/v1/basics#pagination).
+        # Corresponds to the JSON property `offset`
+        # @return [Fixnum]
+        attr_accessor :offset
+      
+        # Specifies how rows are ordered in the response.
+        # Corresponds to the JSON property `orderBys`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessOrderBy>]
+        attr_accessor :order_bys
+      
+        # Toggles whether to return the current state of this Analytics Property's quota.
+        # Quota is returned in [AccessQuota](#AccessQuota). For account-level requests,
+        # this field must be false.
+        # Corresponds to the JSON property `returnEntityQuota`
+        # @return [Boolean]
+        attr_accessor :return_entity_quota
+        alias_method :return_entity_quota?, :return_entity_quota
+      
+        # This request's time zone if specified. If unspecified, the property's time
+        # zone is used. The request's time zone is used to interpret the start & end
+        # dates of the report. Formatted as strings from the IANA Time Zone database (
+        # https://www.iana.org/time-zones); for example "America/New_York" or "Asia/
+        # Tokyo".
+        # Corresponds to the JSON property `timeZone`
+        # @return [String]
+        attr_accessor :time_zone
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @date_ranges = args[:date_ranges] if args.key?(:date_ranges)
+          @dimension_filter = args[:dimension_filter] if args.key?(:dimension_filter)
+          @dimensions = args[:dimensions] if args.key?(:dimensions)
+          @limit = args[:limit] if args.key?(:limit)
+          @metric_filter = args[:metric_filter] if args.key?(:metric_filter)
+          @metrics = args[:metrics] if args.key?(:metrics)
+          @offset = args[:offset] if args.key?(:offset)
+          @order_bys = args[:order_bys] if args.key?(:order_bys)
+          @return_entity_quota = args[:return_entity_quota] if args.key?(:return_entity_quota)
+          @time_zone = args[:time_zone] if args.key?(:time_zone)
+        end
+      end
+      
+      # The customized Data Access Record Report response.
+      class GoogleAnalyticsAdminV1alphaRunAccessReportResponse
+        include Google::Apis::Core::Hashable
+      
+        # The header for a column in the report that corresponds to a specific dimension.
+        # The number of DimensionHeaders and ordering of DimensionHeaders matches the
+        # dimensions present in rows.
+        # Corresponds to the JSON property `dimensionHeaders`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessDimensionHeader>]
+        attr_accessor :dimension_headers
+      
+        # The header for a column in the report that corresponds to a specific metric.
+        # The number of MetricHeaders and ordering of MetricHeaders matches the metrics
+        # present in rows.
+        # Corresponds to the JSON property `metricHeaders`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessMetricHeader>]
+        attr_accessor :metric_headers
+      
+        # Current state of all quotas for this Analytics property. If any quota for a
+        # property is exhausted, all requests to that property will return Resource
+        # Exhausted errors.
+        # Corresponds to the JSON property `quota`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessQuota]
+        attr_accessor :quota
+      
+        # The total number of rows in the query result. `rowCount` is independent of the
+        # number of rows returned in the response, the `limit` request parameter, and
+        # the `offset` request parameter. For example if a query returns 175 rows and
+        # includes `limit` of 50 in the API request, the response will contain `rowCount`
+        # of 175 but only 50 rows. To learn more about this pagination parameter, see [
+        # Pagination](https://developers.google.com/analytics/devguides/reporting/data/
+        # v1/basics#pagination).
+        # Corresponds to the JSON property `rowCount`
+        # @return [Fixnum]
+        attr_accessor :row_count
+      
+        # Rows of dimension value combinations and metric values in the report.
+        # Corresponds to the JSON property `rows`
+        # @return [Array<Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessRow>]
+        attr_accessor :rows
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @dimension_headers = args[:dimension_headers] if args.key?(:dimension_headers)
+          @metric_headers = args[:metric_headers] if args.key?(:metric_headers)
+          @quota = args[:quota] if args.key?(:quota)
+          @row_count = args[:row_count] if args.key?(:row_count)
+          @rows = args[:rows] if args.key?(:rows)
+        end
+      end
+      
+      # A link between a GA4 property and a Search Ads 360 entity.
+      class GoogleAnalyticsAdminV1alphaSearchAds360Link
+        include Google::Apis::Core::Hashable
+      
+        # Enables personalized advertising features with this integration. If this field
+        # is not set on create, it will be defaulted to true.
+        # Corresponds to the JSON property `adsPersonalizationEnabled`
+        # @return [Boolean]
+        attr_accessor :ads_personalization_enabled
+        alias_method :ads_personalization_enabled?, :ads_personalization_enabled
+      
+        # Output only. The display name of the Search Ads 360 Advertiser. Allows users
+        # to easily identify the linked resource.
+        # Corresponds to the JSON property `advertiserDisplayName`
+        # @return [String]
+        attr_accessor :advertiser_display_name
+      
+        # Immutable. This field represents the Advertiser ID of the Search Ads 360
+        # Advertiser. that has been linked.
+        # Corresponds to the JSON property `advertiserId`
+        # @return [String]
+        attr_accessor :advertiser_id
+      
+        # Immutable. Enables the import of campaign data from Search Ads 360 into the
+        # GA4 property. After link creation, this can only be updated from the Search
+        # Ads 360 product. If this field is not set on create, it will be defaulted to
+        # true.
+        # Corresponds to the JSON property `campaignDataSharingEnabled`
+        # @return [Boolean]
+        attr_accessor :campaign_data_sharing_enabled
+        alias_method :campaign_data_sharing_enabled?, :campaign_data_sharing_enabled
+      
+        # Immutable. Enables the import of cost data from Search Ads 360 to the GA4
+        # property. This can only be enabled if campaign_data_sharing_enabled is enabled.
+        # After link creation, this can only be updated from the Search Ads 360 product.
+        # If this field is not set on create, it will be defaulted to true.
+        # Corresponds to the JSON property `costDataSharingEnabled`
+        # @return [Boolean]
+        attr_accessor :cost_data_sharing_enabled
+        alias_method :cost_data_sharing_enabled?, :cost_data_sharing_enabled
+      
+        # Output only. The resource name for this SearchAds360Link resource. Format:
+        # properties/`propertyId`/searchAds360Links/`linkId` Note: linkId is not the
+        # Search Ads 360 advertiser ID
+        # Corresponds to the JSON property `name`
+        # @return [String]
+        attr_accessor :name
+      
+        # Enables export of site stats with this integration. If this field is not set
+        # on create, it will be defaulted to true.
+        # Corresponds to the JSON property `siteStatsSharingEnabled`
+        # @return [Boolean]
+        attr_accessor :site_stats_sharing_enabled
+        alias_method :site_stats_sharing_enabled?, :site_stats_sharing_enabled
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @ads_personalization_enabled = args[:ads_personalization_enabled] if args.key?(:ads_personalization_enabled)
+          @advertiser_display_name = args[:advertiser_display_name] if args.key?(:advertiser_display_name)
+          @advertiser_id = args[:advertiser_id] if args.key?(:advertiser_id)
+          @campaign_data_sharing_enabled = args[:campaign_data_sharing_enabled] if args.key?(:campaign_data_sharing_enabled)
+          @cost_data_sharing_enabled = args[:cost_data_sharing_enabled] if args.key?(:cost_data_sharing_enabled)
+          @name = args[:name] if args.key?(:name)
+          @site_stats_sharing_enabled = args[:site_stats_sharing_enabled] if args.key?(:site_stats_sharing_enabled)
         end
       end
       
@@ -2168,6 +4167,67 @@ module Google
         end
       end
       
+      # Request for setting the opt out status for the automated GA4 setup process.
+      class GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutRequest
+        include Google::Apis::Core::Hashable
+      
+        # The status to set.
+        # Corresponds to the JSON property `optOut`
+        # @return [Boolean]
+        attr_accessor :opt_out
+        alias_method :opt_out?, :opt_out
+      
+        # Required. The UA property to set the opt out status. Note this request uses
+        # the internal property ID, not the tracking ID of the form UA-XXXXXX-YY. Format:
+        # properties/`internalWebPropertyId` Example: properties/1234
+        # Corresponds to the JSON property `property`
+        # @return [String]
+        attr_accessor :property
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @opt_out = args[:opt_out] if args.key?(:opt_out)
+          @property = args[:property] if args.key?(:property)
+        end
+      end
+      
+      # Response message for setting the opt out status for the automated GA4 setup
+      # process.
+      class GoogleAnalyticsAdminV1alphaSetAutomatedGa4ConfigurationOptOutResponse
+        include Google::Apis::Core::Hashable
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+        end
+      end
+      
+      # Request message for UpdateAccessBinding RPC.
+      class GoogleAnalyticsAdminV1alphaUpdateAccessBindingRequest
+        include Google::Apis::Core::Hashable
+      
+        # A binding of a user to a set of roles.
+        # Corresponds to the JSON property `accessBinding`
+        # @return [Google::Apis::AnalyticsadminV1alpha::GoogleAnalyticsAdminV1alphaAccessBinding]
+        attr_accessor :access_binding
+      
+        def initialize(**args)
+           update!(**args)
+        end
+      
+        # Update properties of this object
+        def update!(**args)
+          @access_binding = args[:access_binding] if args.key?(:access_binding)
+        end
+      end
+      
       # Request message for UpdateUserLink RPC.
       class GoogleAnalyticsAdminV1alphaUpdateUserLinkRequest
         include Google::Apis::Core::Hashable
@@ -2194,10 +4254,11 @@ module Google
         include Google::Apis::Core::Hashable
       
         # Roles directly assigned to this user for this account or property. Valid
-        # values: predefinedRoles/read predefinedRoles/collaborate predefinedRoles/edit
-        # predefinedRoles/admin Excludes roles that are inherited from a higher-level
-        # entity, group, or organization admin role. A UserLink that is updated to have
-        # an empty list of direct_roles will be deleted.
+        # values: predefinedRoles/viewer predefinedRoles/analyst predefinedRoles/editor
+        # predefinedRoles/admin predefinedRoles/no-cost-data predefinedRoles/no-revenue-
+        # data Excludes roles that are inherited from a higher-level entity, group, or
+        # organization admin role. A UserLink that is updated to have an empty list of
+        # direct_roles will be deleted.
         # Corresponds to the JSON property `directRoles`
         # @return [Array<String>]
         attr_accessor :direct_roles
@@ -2224,72 +4285,10 @@ module Google
         end
       end
       
-      # A resource message representing a Google Analytics web stream.
-      class GoogleAnalyticsAdminV1alphaWebDataStream
-        include Google::Apis::Core::Hashable
-      
-        # Output only. Time when this stream was originally created.
-        # Corresponds to the JSON property `createTime`
-        # @return [String]
-        attr_accessor :create_time
-      
-        # Immutable. Domain name of the web app being measured, or empty. Example: "http:
-        # //www.google.com", "https://www.google.com"
-        # Corresponds to the JSON property `defaultUri`
-        # @return [String]
-        attr_accessor :default_uri
-      
-        # Required. Human-readable display name for the Data Stream. The max allowed
-        # display name length is 100 UTF-16 code units.
-        # Corresponds to the JSON property `displayName`
-        # @return [String]
-        attr_accessor :display_name
-      
-        # Output only. ID of the corresponding web app in Firebase, if any. This ID can
-        # change if the web app is deleted and recreated.
-        # Corresponds to the JSON property `firebaseAppId`
-        # @return [String]
-        attr_accessor :firebase_app_id
-      
-        # Output only. Analytics "Measurement ID", without the "G-" prefix. Example: "G-
-        # 1A2BCD345E" would just be "1A2BCD345E"
-        # Corresponds to the JSON property `measurementId`
-        # @return [String]
-        attr_accessor :measurement_id
-      
-        # Output only. Resource name of this Data Stream. Format: properties/`
-        # property_id`/webDataStreams/`stream_id` Example: "properties/1000/
-        # webDataStreams/2000"
-        # Corresponds to the JSON property `name`
-        # @return [String]
-        attr_accessor :name
-      
-        # Output only. Time when stream payload fields were last updated.
-        # Corresponds to the JSON property `updateTime`
-        # @return [String]
-        attr_accessor :update_time
-      
-        def initialize(**args)
-           update!(**args)
-        end
-      
-        # Update properties of this object
-        def update!(**args)
-          @create_time = args[:create_time] if args.key?(:create_time)
-          @default_uri = args[:default_uri] if args.key?(:default_uri)
-          @display_name = args[:display_name] if args.key?(:display_name)
-          @firebase_app_id = args[:firebase_app_id] if args.key?(:firebase_app_id)
-          @measurement_id = args[:measurement_id] if args.key?(:measurement_id)
-          @name = args[:name] if args.key?(:name)
-          @update_time = args[:update_time] if args.key?(:update_time)
-        end
-      end
-      
       # A generic empty message that you can re-use to avoid defining duplicated empty
       # messages in your APIs. A typical example is to use it as the request or the
       # response type of an API method. For instance: service Foo ` rpc Bar(google.
-      # protobuf.Empty) returns (google.protobuf.Empty); ` The JSON representation for
-      # `Empty` is empty JSON object ````.
+      # protobuf.Empty) returns (google.protobuf.Empty); `
       class GoogleProtobufEmpty
         include Google::Apis::Core::Hashable
       

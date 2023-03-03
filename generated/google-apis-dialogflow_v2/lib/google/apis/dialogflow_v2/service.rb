@@ -1200,9 +1200,12 @@ module Google
         # Processes a natural language query and returns structured, actionable data as
         # a result. This method is not idempotent, because it may cause contexts and
         # session entity types to be updated, which in turn might affect results of
-        # future queries. Note: Always use agent versions for production traffic. See [
-        # Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-
-        # versions).
+        # future queries. If you might use [Agent Assist](https://cloud.google.com/
+        # dialogflow/docs/#aa) or other CCAI products now or in the future, consider
+        # using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has
+        # additional functionality for Agent Assist and other CCAI products. Note:
+        # Always use agent versions for production traffic. See [Versions and
+        # environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
         # @param [String] session
         #   Required. The name of the session this query is sent to. Format: `projects//
         #   agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `
@@ -2030,6 +2033,19 @@ module Google
         # @param [String] parent
         #   Required. The project to list of knowledge bases for. Format: `projects//
         #   locations/`.
+        # @param [String] filter
+        #   The filter expression used to filter knowledge bases returned by the list
+        #   method. The expression has the following syntax: [AND ] ... The following
+        #   fields and operators are supported: * display_name with has(:) operator *
+        #   language_code with equals(=) operator Examples: * 'language_code=en-us'
+        #   matches knowledge bases with en-us language code. * 'display_name:articles'
+        #   matches knowledge bases whose display name contains "articles". * '
+        #   display_name:"Best Articles"' matches knowledge bases whose display name
+        #   contains "Best Articles". * 'language_code=en-gb AND display_name=articles'
+        #   matches all knowledge bases whose display name contains "articles" and whose
+        #   language code is "en-gb". Note: An empty filter string (i.e. "") is a no-op
+        #   and will result in no filtering. For more information about filtering, see [
+        #   API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -2052,11 +2068,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_agent_knowledge_bases(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_agent_knowledge_bases(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/knowledgeBases', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -2210,6 +2227,16 @@ module Google
         # @param [String] parent
         #   Required. The knowledge base to list all documents for. Format: `projects//
         #   locations//knowledgeBases/`.
+        # @param [String] filter
+        #   The filter expression used to filter documents returned by the list method.
+        #   The expression has the following syntax: [AND ] ... The following fields and
+        #   operators are supported: * knowledge_types with has(:) operator * display_name
+        #   with has(:) operator * state with equals(=) operator Examples: * "
+        #   knowledge_types:FAQ" matches documents with FAQ knowledge type. * "
+        #   display_name:customer" matches documents whose display name contains "customer"
+        #   . * "state=ACTIVE" matches documents with ACTIVE state. * "knowledge_types:FAQ
+        #   AND state=ACTIVE" matches all active FAQ documents. For more information about
+        #   filtering, see [API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -2232,11 +2259,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_agent_knowledge_basis_documents(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_agent_knowledge_basis_documents(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/documents', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -2364,9 +2392,12 @@ module Google
         # Processes a natural language query and returns structured, actionable data as
         # a result. This method is not idempotent, because it may cause contexts and
         # session entity types to be updated, which in turn might affect results of
-        # future queries. Note: Always use agent versions for production traffic. See [
-        # Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-
-        # versions).
+        # future queries. If you might use [Agent Assist](https://cloud.google.com/
+        # dialogflow/docs/#aa) or other CCAI products now or in the future, consider
+        # using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has
+        # additional functionality for Agent Assist and other CCAI products. Note:
+        # Always use agent versions for production traffic. See [Versions and
+        # environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
         # @param [String] session
         #   Required. The name of the session this query is sent to. Format: `projects//
         #   agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `
@@ -2971,10 +3002,9 @@ module Google
         #   Required. The project to list all answer records for in reverse chronological
         #   order. Format: `projects//locations/`.
         # @param [String] filter
-        #   Required. Filters to restrict results to specific answer records. Filter on
-        #   answer record type. Currently predicates on `type` is supported, valid values
-        #   are `ARTICLE_ANSWER`, `FAQ_ANSWER`. For more information about filtering, see [
-        #   API Filtering](https://aip.dev/160).
+        #   Optional. Filters to restrict results to specific answer records. Marked
+        #   deprecated as it hasn't been, and isn't currently, supported. For more
+        #   information about filtering, see [API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   Optional. The maximum number of records to return in a single page. The server
         #   may return fewer records than this. If unspecified, we use 10. The maximum is
@@ -3044,6 +3074,447 @@ module Google
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2AnswerRecord
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves the specified conversation dataset.
+        # @param [String] name
+        #   Required. The conversation dataset to retrieve. Format: `projects//locations//
+        #   conversationDatasets/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_conversation_dataset(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Import data into the specified conversation dataset. Note that it is not
+        # allowed to import data to a conversation dataset that already has data in it.
+        # This method is a [long-running operation](https://cloud.google.com/dialogflow/
+        # es/docs/how/long-running-operations). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`:
+        # ImportConversationDataOperationMetadata - `response`:
+        # ImportConversationDataOperationResponse
+        # @param [String] name
+        #   Required. Dataset resource name. Format: `projects//locations//
+        #   conversationDatasets/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportConversationDataRequest] google_cloud_dialogflow_v2_import_conversation_data_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_project_conversation_dataset_conversation_data(name, google_cloud_dialogflow_v2_import_conversation_data_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:importConversationData', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportConversationDataRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_import_conversation_data_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns the list of all conversation datasets in the specified project and
+        # location.
+        # @param [String] parent
+        #   Required. The project and location name to list all conversation datasets for.
+        #   Format: `projects//locations/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of conversation datasets to return in a single page.
+        #   By default 100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_conversation_datasets(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/conversationDatasets', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a model. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # CreateConversationModelOperationMetadata - `response`: ConversationModel
+        # @param [String] parent
+        #   The project to create conversation model for. Format: `projects/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel] google_cloud_dialogflow_v2_conversation_model_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_conversation_model(parent, google_cloud_dialogflow_v2_conversation_model_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/conversationModels', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel::Representation
+          command.request_object = google_cloud_dialogflow_v2_conversation_model_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a model. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # DeleteConversationModelOperationMetadata - `response`: An [Empty message](
+        # https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#
+        # empty)
+        # @param [String] name
+        #   Required. The conversation model to delete. Format: `projects//
+        #   conversationModels/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_conversation_model(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deploys a model. If a model is already deployed, deploying it has no effect. A
+        # model can only serve prediction requests after it gets deployed. For article
+        # suggestion, custom model will not be used unless it is deployed. This method
+        # is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/
+        # long-running-operations). The returned `Operation` type has the following
+        # method-specific fields: - `metadata`: DeployConversationModelOperationMetadata
+        # - `response`: An [Empty message](https://developers.google.com/protocol-
+        # buffers/docs/reference/google.protobuf#empty)
+        # @param [String] name
+        #   Required. The conversation model to deploy. Format: `projects//
+        #   conversationModels/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2DeployConversationModelRequest] google_cloud_dialogflow_v2_deploy_conversation_model_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def deploy_project_conversation_model(name, google_cloud_dialogflow_v2_deploy_conversation_model_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:deploy', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2DeployConversationModelRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_deploy_conversation_model_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets conversation model.
+        # @param [String] name
+        #   Required. The conversation model to retrieve. Format: `projects//
+        #   conversationModels/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_conversation_model(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists conversation models.
+        # @param [String] parent
+        #   Required. The project to list all conversation models for. Format: `projects/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of conversation models to return in a single page. By
+        #   default 100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_conversation_models(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/conversationModels', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Undeploys a model. If the model is not deployed this method has no effect. If
+        # the model is currently being used: - For article suggestion, article
+        # suggestion will fallback to the default model if model is undeployed. This
+        # method is a [long-running operation](https://cloud.google.com/dialogflow/es/
+        # docs/how/long-running-operations). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`:
+        # UndeployConversationModelOperationMetadata - `response`: An [Empty message](
+        # https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#
+        # empty)
+        # @param [String] name
+        #   Required. The conversation model to undeploy. Format: `projects//
+        #   conversationModels/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2UndeployConversationModelRequest] google_cloud_dialogflow_v2_undeploy_conversation_model_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undeploy_project_conversation_model(name, google_cloud_dialogflow_v2_undeploy_conversation_model_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:undeploy', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2UndeployConversationModelRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_undeploy_conversation_model_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets an evaluation of conversation model.
+        # @param [String] name
+        #   Required. The conversation model evaluation resource name. Format: `projects//
+        #   conversationModels//evaluations/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_conversation_model_evaluation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists evaluations of a conversation model.
+        # @param [String] parent
+        #   Required. The conversation model resource name. Format: `projects//
+        #   conversationModels/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of evaluations to return in a single page. By default
+        #   100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_conversation_model_evaluations(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/evaluations', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Clears a suggestion feature from a conversation profile for the given
+        # participant role. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # ClearSuggestionFeatureConfigOperationMetadata - `response`:
+        # ConversationProfile
+        # @param [String] conversation_profile
+        #   Required. The Conversation Profile to add or update the suggestion feature
+        #   config. Format: `projects//locations//conversationProfiles/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest] google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def clear_project_conversation_profile_suggestion_feature_config(conversation_profile, google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversationProfile}:clearSuggestionFeatureConfig', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['conversationProfile'] = conversation_profile unless conversation_profile.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3219,6 +3690,50 @@ module Google
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationProfile
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Adds or updates a suggestion feature in a conversation profile. If the
+        # conversation profile contains the type of suggestion feature for the
+        # participant role, it will update it. Otherwise it will insert the suggestion
+        # feature. This method is a [long-running operation](https://cloud.google.com/
+        # dialogflow/es/docs/how/long-running-operations). The returned `Operation` type
+        # has the following method-specific fields: - `metadata`:
+        # SetSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile
+        # If a long running operation to add or update suggestion feature config for the
+        # same conversation profile, participant role and suggestion feature type exists,
+        # please cancel the existing long running operation before sending such request,
+        # otherwise the request will be rejected.
+        # @param [String] conversation_profile
+        #   Required. The Conversation Profile to add or update the suggestion feature
+        #   config. Format: `projects//locations//conversationProfiles/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest] google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_project_conversation_profile_suggestion_feature_config(conversation_profile, google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversationProfile}:setSuggestionFeatureConfig', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['conversationProfile'] = conversation_profile unless conversation_profile.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -3687,6 +4202,75 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Gets smart replies for a participant based on specific historical messages.
+        # @param [String] parent
+        #   Required. The name of the participant to fetch suggestion for. Format: `
+        #   projects//locations//conversations//participants/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesRequest] google_cloud_dialogflow_v2_suggest_smart_replies_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def suggest_project_conversation_participant_suggestion_smart_replies(parent, google_cloud_dialogflow_v2_suggest_smart_replies_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/suggestions:suggestSmartReplies', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_suggest_smart_replies_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Suggests summary for a conversation based on specific historical messages. The
+        # range of the messages to be used for summary can be specified in the request.
+        # @param [String] conversation
+        #   Required. The conversation to fetch suggestion for. Format: `projects//
+        #   locations//conversations/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryRequest] google_cloud_dialogflow_v2_suggest_conversation_summary_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def suggest_project_conversation_suggestion_conversation_summary(conversation, google_cloud_dialogflow_v2_suggest_conversation_summary_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversation}/suggestions:suggestConversationSummary', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_suggest_conversation_summary_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse
+          command.params['conversation'] = conversation unless conversation.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a knowledge base.
         # @param [String] parent
         #   Required. The project to create a knowledge base for. Format: `projects//
@@ -3791,6 +4375,19 @@ module Google
         # @param [String] parent
         #   Required. The project to list of knowledge bases for. Format: `projects//
         #   locations/`.
+        # @param [String] filter
+        #   The filter expression used to filter knowledge bases returned by the list
+        #   method. The expression has the following syntax: [AND ] ... The following
+        #   fields and operators are supported: * display_name with has(:) operator *
+        #   language_code with equals(=) operator Examples: * 'language_code=en-us'
+        #   matches knowledge bases with en-us language code. * 'display_name:articles'
+        #   matches knowledge bases whose display name contains "articles". * '
+        #   display_name:"Best Articles"' matches knowledge bases whose display name
+        #   contains "Best Articles". * 'language_code=en-gb AND display_name=articles'
+        #   matches all knowledge bases whose display name contains "articles" and whose
+        #   language code is "en-gb". Note: An empty filter string (i.e. "") is a no-op
+        #   and will result in no filtering. For more information about filtering, see [
+        #   API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -3813,11 +4410,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_knowledge_bases(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_knowledge_bases(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/knowledgeBases', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -3936,6 +4534,44 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Exports a smart messaging candidate document into the specified destination.
+        # This method is a [long-running operation](https://cloud.google.com/dialogflow/
+        # cx/docs/how/long-running-operation). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`: KnowledgeOperationMetadata - `
+        # response`: Document
+        # @param [String] name
+        #   Required. The name of the document to export. Format: `projects//locations//
+        #   knowledgeBases//documents/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ExportDocumentRequest] google_cloud_dialogflow_v2_export_document_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def export_project_knowledge_basis_document(name, google_cloud_dialogflow_v2_export_document_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:export', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ExportDocumentRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_export_document_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Retrieves the specified document.
         # @param [String] name
         #   Required. The name of the document to retrieve. Format `projects//locations//
@@ -3967,10 +4603,59 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates documents by importing data from external sources. Dialogflow supports
+        # up to 350 documents in each request. If you try to import more, Dialogflow
+        # will return an error. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/cx/docs/how/long-running-operation). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # KnowledgeOperationMetadata - `response`: ImportDocumentsResponse
+        # @param [String] parent
+        #   Required. The knowledge base to import documents into. Format: `projects//
+        #   locations//knowledgeBases/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportDocumentsRequest] google_cloud_dialogflow_v2_import_documents_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_project_knowledge_basis_document(parent, google_cloud_dialogflow_v2_import_documents_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/documents:import', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportDocumentsRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_import_documents_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Returns the list of all documents of the knowledge base.
         # @param [String] parent
         #   Required. The knowledge base to list all documents for. Format: `projects//
         #   locations//knowledgeBases/`.
+        # @param [String] filter
+        #   The filter expression used to filter documents returned by the list method.
+        #   The expression has the following syntax: [AND ] ... The following fields and
+        #   operators are supported: * knowledge_types with has(:) operator * display_name
+        #   with has(:) operator * state with equals(=) operator Examples: * "
+        #   knowledge_types:FAQ" matches documents with FAQ knowledge type. * "
+        #   display_name:customer" matches documents whose display name contains "customer"
+        #   . * "state=ACTIVE" matches documents with ACTIVE state. * "knowledge_types:FAQ
+        #   AND state=ACTIVE" matches all active FAQ documents. For more information about
+        #   filtering, see [API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -3993,11 +4678,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_knowledge_basis_documents(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_knowledge_basis_documents(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/documents', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -4186,8 +4872,8 @@ module Google
         #   The resource that owns the locations collection, if applicable.
         # @param [String] filter
         #   A filter to narrow down results to a preferred subset. The filtering language
-        #   accepts strings like "displayName=tokyo", and is documented in more detail in [
-        #   AIP-160](https://google.aip.dev/160).
+        #   accepts strings like `"displayName=tokyo"`, and is documented in more detail
+        #   in [AIP-160](https://google.aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of results to return. If not set, the service selects a
         #   default.
@@ -5312,9 +5998,12 @@ module Google
         # Processes a natural language query and returns structured, actionable data as
         # a result. This method is not idempotent, because it may cause contexts and
         # session entity types to be updated, which in turn might affect results of
-        # future queries. Note: Always use agent versions for production traffic. See [
-        # Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-
-        # versions).
+        # future queries. If you might use [Agent Assist](https://cloud.google.com/
+        # dialogflow/docs/#aa) or other CCAI products now or in the future, consider
+        # using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has
+        # additional functionality for Agent Assist and other CCAI products. Note:
+        # Always use agent versions for production traffic. See [Versions and
+        # environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
         # @param [String] session
         #   Required. The name of the session this query is sent to. Format: `projects//
         #   agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `
@@ -6074,9 +6763,12 @@ module Google
         # Processes a natural language query and returns structured, actionable data as
         # a result. This method is not idempotent, because it may cause contexts and
         # session entity types to be updated, which in turn might affect results of
-        # future queries. Note: Always use agent versions for production traffic. See [
-        # Versions and environments](https://cloud.google.com/dialogflow/es/docs/agents-
-        # versions).
+        # future queries. If you might use [Agent Assist](https://cloud.google.com/
+        # dialogflow/docs/#aa) or other CCAI products now or in the future, consider
+        # using AnalyzeContent instead of `DetectIntent`. `AnalyzeContent` has
+        # additional functionality for Agent Assist and other CCAI products. Note:
+        # Always use agent versions for production traffic. See [Versions and
+        # environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
         # @param [String] session
         #   Required. The name of the session this query is sent to. Format: `projects//
         #   agent/sessions/`, or `projects//agent/environments//users//sessions/`. If `
@@ -6681,10 +7373,9 @@ module Google
         #   Required. The project to list all answer records for in reverse chronological
         #   order. Format: `projects//locations/`.
         # @param [String] filter
-        #   Required. Filters to restrict results to specific answer records. Filter on
-        #   answer record type. Currently predicates on `type` is supported, valid values
-        #   are `ARTICLE_ANSWER`, `FAQ_ANSWER`. For more information about filtering, see [
-        #   API Filtering](https://aip.dev/160).
+        #   Optional. Filters to restrict results to specific answer records. Marked
+        #   deprecated as it hasn't been, and isn't currently, supported. For more
+        #   information about filtering, see [API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   Optional. The maximum number of records to return in a single page. The server
         #   may return fewer records than this. If unspecified, we use 10. The maximum is
@@ -6754,6 +7445,555 @@ module Google
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2AnswerRecord
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a new conversation dataset. This method is a [long-running operation](
+        # https://cloud.google.com/dialogflow/es/docs/how/long-running-operations). The
+        # returned `Operation` type has the following method-specific fields: - `
+        # metadata`: CreateConversationDatasetOperationMetadata - `response`:
+        # ConversationDataset
+        # @param [String] parent
+        #   Required. The project to create conversation dataset for. Format: `projects//
+        #   locations/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset] google_cloud_dialogflow_v2_conversation_dataset_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_location_conversation_dataset(parent, google_cloud_dialogflow_v2_conversation_dataset_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/conversationDatasets', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset::Representation
+          command.request_object = google_cloud_dialogflow_v2_conversation_dataset_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes the specified conversation dataset. This method is a [long-running
+        # operation](https://cloud.google.com/dialogflow/es/docs/how/long-running-
+        # operations). The returned `Operation` type has the following method-specific
+        # fields: - `metadata`: DeleteConversationDatasetOperationMetadata - `response`:
+        # An [Empty message](https://developers.google.com/protocol-buffers/docs/
+        # reference/google.protobuf#empty)
+        # @param [String] name
+        #   Required. The conversation dataset to delete. Format: `projects//locations//
+        #   conversationDatasets/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_location_conversation_dataset(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves the specified conversation dataset.
+        # @param [String] name
+        #   Required. The conversation dataset to retrieve. Format: `projects//locations//
+        #   conversationDatasets/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_conversation_dataset(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationDataset
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Import data into the specified conversation dataset. Note that it is not
+        # allowed to import data to a conversation dataset that already has data in it.
+        # This method is a [long-running operation](https://cloud.google.com/dialogflow/
+        # es/docs/how/long-running-operations). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`:
+        # ImportConversationDataOperationMetadata - `response`:
+        # ImportConversationDataOperationResponse
+        # @param [String] name
+        #   Required. Dataset resource name. Format: `projects//locations//
+        #   conversationDatasets/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportConversationDataRequest] google_cloud_dialogflow_v2_import_conversation_data_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_project_location_conversation_dataset_conversation_data(name, google_cloud_dialogflow_v2_import_conversation_data_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:importConversationData', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportConversationDataRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_import_conversation_data_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Returns the list of all conversation datasets in the specified project and
+        # location.
+        # @param [String] parent
+        #   Required. The project and location name to list all conversation datasets for.
+        #   Format: `projects//locations/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of conversation datasets to return in a single page.
+        #   By default 100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_conversation_datasets(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/conversationDatasets', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationDatasetsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates a model. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # CreateConversationModelOperationMetadata - `response`: ConversationModel
+        # @param [String] parent
+        #   The project to create conversation model for. Format: `projects/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel] google_cloud_dialogflow_v2_conversation_model_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_location_conversation_model(parent, google_cloud_dialogflow_v2_conversation_model_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/conversationModels', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel::Representation
+          command.request_object = google_cloud_dialogflow_v2_conversation_model_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deletes a model. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # DeleteConversationModelOperationMetadata - `response`: An [Empty message](
+        # https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#
+        # empty)
+        # @param [String] name
+        #   Required. The conversation model to delete. Format: `projects//
+        #   conversationModels/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def delete_project_location_conversation_model(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:delete, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Deploys a model. If a model is already deployed, deploying it has no effect. A
+        # model can only serve prediction requests after it gets deployed. For article
+        # suggestion, custom model will not be used unless it is deployed. This method
+        # is a [long-running operation](https://cloud.google.com/dialogflow/es/docs/how/
+        # long-running-operations). The returned `Operation` type has the following
+        # method-specific fields: - `metadata`: DeployConversationModelOperationMetadata
+        # - `response`: An [Empty message](https://developers.google.com/protocol-
+        # buffers/docs/reference/google.protobuf#empty)
+        # @param [String] name
+        #   Required. The conversation model to deploy. Format: `projects//
+        #   conversationModels/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2DeployConversationModelRequest] google_cloud_dialogflow_v2_deploy_conversation_model_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def deploy_project_location_conversation_model(name, google_cloud_dialogflow_v2_deploy_conversation_model_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:deploy', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2DeployConversationModelRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_deploy_conversation_model_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets conversation model.
+        # @param [String] name
+        #   Required. The conversation model to retrieve. Format: `projects//
+        #   conversationModels/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_conversation_model(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModel
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists conversation models.
+        # @param [String] parent
+        #   Required. The project to list all conversation models for. Format: `projects/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of conversation models to return in a single page. By
+        #   default 100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_conversation_models(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/conversationModels', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Undeploys a model. If the model is not deployed this method has no effect. If
+        # the model is currently being used: - For article suggestion, article
+        # suggestion will fallback to the default model if model is undeployed. This
+        # method is a [long-running operation](https://cloud.google.com/dialogflow/es/
+        # docs/how/long-running-operations). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`:
+        # UndeployConversationModelOperationMetadata - `response`: An [Empty message](
+        # https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#
+        # empty)
+        # @param [String] name
+        #   Required. The conversation model to undeploy. Format: `projects//
+        #   conversationModels/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2UndeployConversationModelRequest] google_cloud_dialogflow_v2_undeploy_conversation_model_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def undeploy_project_location_conversation_model(name, google_cloud_dialogflow_v2_undeploy_conversation_model_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:undeploy', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2UndeployConversationModelRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_undeploy_conversation_model_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Creates evaluation of a conversation model.
+        # @param [String] parent
+        #   Required. The conversation model resource name. Format: `projects//locations//
+        #   conversationModels/`
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest] google_cloud_dialogflow_v2_create_conversation_model_evaluation_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def create_project_location_conversation_model_evaluation(parent, google_cloud_dialogflow_v2_create_conversation_model_evaluation_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/evaluations', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2CreateConversationModelEvaluationRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_create_conversation_model_evaluation_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Gets an evaluation of conversation model.
+        # @param [String] name
+        #   Required. The conversation model evaluation resource name. Format: `projects//
+        #   conversationModels//evaluations/`
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_project_location_conversation_model_evaluation(name, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+name}', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationModelEvaluation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Lists evaluations of a conversation model.
+        # @param [String] parent
+        #   Required. The conversation model resource name. Format: `projects//
+        #   conversationModels/`
+        # @param [Fixnum] page_size
+        #   Optional. Maximum number of evaluations to return in a single page. By default
+        #   100 and at most 1000.
+        # @param [String] page_token
+        #   Optional. The next_page_token value returned from a previous list request.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def list_project_location_conversation_model_evaluations(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, 'v2/{+parent}/evaluations', options)
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListConversationModelEvaluationsResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['pageSize'] = page_size unless page_size.nil?
+          command.query['pageToken'] = page_token unless page_token.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Clears a suggestion feature from a conversation profile for the given
+        # participant role. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/es/docs/how/long-running-operations). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # ClearSuggestionFeatureConfigOperationMetadata - `response`:
+        # ConversationProfile
+        # @param [String] conversation_profile
+        #   Required. The Conversation Profile to add or update the suggestion feature
+        #   config. Format: `projects//locations//conversationProfiles/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest] google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def clear_project_location_conversation_profile_suggestion_feature_config(conversation_profile, google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversationProfile}:clearSuggestionFeatureConfig', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ClearSuggestionFeatureConfigRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_clear_suggestion_feature_config_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['conversationProfile'] = conversation_profile unless conversation_profile.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -6929,6 +8169,50 @@ module Google
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ConversationProfile
           command.params['name'] = name unless name.nil?
           command.query['updateMask'] = update_mask unless update_mask.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Adds or updates a suggestion feature in a conversation profile. If the
+        # conversation profile contains the type of suggestion feature for the
+        # participant role, it will update it. Otherwise it will insert the suggestion
+        # feature. This method is a [long-running operation](https://cloud.google.com/
+        # dialogflow/es/docs/how/long-running-operations). The returned `Operation` type
+        # has the following method-specific fields: - `metadata`:
+        # SetSuggestionFeatureConfigOperationMetadata - `response`: ConversationProfile
+        # If a long running operation to add or update suggestion feature config for the
+        # same conversation profile, participant role and suggestion feature type exists,
+        # please cancel the existing long running operation before sending such request,
+        # otherwise the request will be rejected.
+        # @param [String] conversation_profile
+        #   Required. The Conversation Profile to add or update the suggestion feature
+        #   config. Format: `projects//locations//conversationProfiles/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest] google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def set_project_location_conversation_profile_suggestion_feature_config(conversation_profile, google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversationProfile}:setSuggestionFeatureConfig', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SetSuggestionFeatureConfigRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_set_suggestion_feature_config_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['conversationProfile'] = conversation_profile unless conversation_profile.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
@@ -7397,6 +8681,75 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Gets smart replies for a participant based on specific historical messages.
+        # @param [String] parent
+        #   Required. The name of the participant to fetch suggestion for. Format: `
+        #   projects//locations//conversations//participants/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesRequest] google_cloud_dialogflow_v2_suggest_smart_replies_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def suggest_project_location_conversation_participant_suggestion_smart_replies(parent, google_cloud_dialogflow_v2_suggest_smart_replies_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/suggestions:suggestSmartReplies', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_suggest_smart_replies_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestSmartRepliesResponse
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Suggests summary for a conversation based on specific historical messages. The
+        # range of the messages to be used for summary can be specified in the request.
+        # @param [String] conversation
+        #   Required. The conversation to fetch suggestion for. Format: `projects//
+        #   locations//conversations/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryRequest] google_cloud_dialogflow_v2_suggest_conversation_summary_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def suggest_project_location_conversation_suggestion_conversation_summary(conversation, google_cloud_dialogflow_v2_suggest_conversation_summary_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+conversation}/suggestions:suggestConversationSummary', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_suggest_conversation_summary_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2SuggestConversationSummaryResponse
+          command.params['conversation'] = conversation unless conversation.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Creates a knowledge base.
         # @param [String] parent
         #   Required. The project to create a knowledge base for. Format: `projects//
@@ -7501,6 +8854,19 @@ module Google
         # @param [String] parent
         #   Required. The project to list of knowledge bases for. Format: `projects//
         #   locations/`.
+        # @param [String] filter
+        #   The filter expression used to filter knowledge bases returned by the list
+        #   method. The expression has the following syntax: [AND ] ... The following
+        #   fields and operators are supported: * display_name with has(:) operator *
+        #   language_code with equals(=) operator Examples: * 'language_code=en-us'
+        #   matches knowledge bases with en-us language code. * 'display_name:articles'
+        #   matches knowledge bases whose display name contains "articles". * '
+        #   display_name:"Best Articles"' matches knowledge bases whose display name
+        #   contains "Best Articles". * 'language_code=en-gb AND display_name=articles'
+        #   matches all knowledge bases whose display name contains "articles" and whose
+        #   language code is "en-gb". Note: An empty filter string (i.e. "") is a no-op
+        #   and will result in no filtering. For more information about filtering, see [
+        #   API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -7523,11 +8889,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_knowledge_bases(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_knowledge_bases(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/knowledgeBases', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListKnowledgeBasesResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?
@@ -7646,6 +9013,44 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Exports a smart messaging candidate document into the specified destination.
+        # This method is a [long-running operation](https://cloud.google.com/dialogflow/
+        # cx/docs/how/long-running-operation). The returned `Operation` type has the
+        # following method-specific fields: - `metadata`: KnowledgeOperationMetadata - `
+        # response`: Document
+        # @param [String] name
+        #   Required. The name of the document to export. Format: `projects//locations//
+        #   knowledgeBases//documents/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ExportDocumentRequest] google_cloud_dialogflow_v2_export_document_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def export_project_location_knowledge_basis_document(name, google_cloud_dialogflow_v2_export_document_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+name}:export', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ExportDocumentRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_export_document_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['name'] = name unless name.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Retrieves the specified document.
         # @param [String] name
         #   Required. The name of the document to retrieve. Format `projects//locations//
@@ -7677,10 +9082,59 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
+        # Creates documents by importing data from external sources. Dialogflow supports
+        # up to 350 documents in each request. If you try to import more, Dialogflow
+        # will return an error. This method is a [long-running operation](https://cloud.
+        # google.com/dialogflow/cx/docs/how/long-running-operation). The returned `
+        # Operation` type has the following method-specific fields: - `metadata`:
+        # KnowledgeOperationMetadata - `response`: ImportDocumentsResponse
+        # @param [String] parent
+        #   Required. The knowledge base to import documents into. Format: `projects//
+        #   locations//knowledgeBases/`.
+        # @param [Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportDocumentsRequest] google_cloud_dialogflow_v2_import_documents_request_object
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::DialogflowV2::GoogleLongrunningOperation] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::DialogflowV2::GoogleLongrunningOperation]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def import_project_location_knowledge_basis_document(parent, google_cloud_dialogflow_v2_import_documents_request_object = nil, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:post, 'v2/{+parent}/documents:import', options)
+          command.request_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ImportDocumentsRequest::Representation
+          command.request_object = google_cloud_dialogflow_v2_import_documents_request_object
+          command.response_representation = Google::Apis::DialogflowV2::GoogleLongrunningOperation::Representation
+          command.response_class = Google::Apis::DialogflowV2::GoogleLongrunningOperation
+          command.params['parent'] = parent unless parent.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
         # Returns the list of all documents of the knowledge base.
         # @param [String] parent
         #   Required. The knowledge base to list all documents for. Format: `projects//
         #   locations//knowledgeBases/`.
+        # @param [String] filter
+        #   The filter expression used to filter documents returned by the list method.
+        #   The expression has the following syntax: [AND ] ... The following fields and
+        #   operators are supported: * knowledge_types with has(:) operator * display_name
+        #   with has(:) operator * state with equals(=) operator Examples: * "
+        #   knowledge_types:FAQ" matches documents with FAQ knowledge type. * "
+        #   display_name:customer" matches documents whose display name contains "customer"
+        #   . * "state=ACTIVE" matches documents with ACTIVE state. * "knowledge_types:FAQ
+        #   AND state=ACTIVE" matches all active FAQ documents. For more information about
+        #   filtering, see [API Filtering](https://aip.dev/160).
         # @param [Fixnum] page_size
         #   The maximum number of items to return in a single page. By default 10 and at
         #   most 100.
@@ -7703,11 +9157,12 @@ module Google
         # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
         # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
         # @raise [Google::Apis::AuthorizationError] Authorization is required
-        def list_project_location_knowledge_basis_documents(parent, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
+        def list_project_location_knowledge_basis_documents(parent, filter: nil, page_size: nil, page_token: nil, fields: nil, quota_user: nil, options: nil, &block)
           command = make_simple_command(:get, 'v2/{+parent}/documents', options)
           command.response_representation = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse::Representation
           command.response_class = Google::Apis::DialogflowV2::GoogleCloudDialogflowV2ListDocumentsResponse
           command.params['parent'] = parent unless parent.nil?
+          command.query['filter'] = filter unless filter.nil?
           command.query['pageSize'] = page_size unless page_size.nil?
           command.query['pageToken'] = page_token unless page_token.nil?
           command.query['fields'] = fields unless fields.nil?

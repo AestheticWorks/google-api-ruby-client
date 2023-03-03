@@ -51,7 +51,7 @@ require "google/apis/assuredworkloads_v1"
 client = Google::Apis::AssuredworkloadsV1::AssuredworkloadsService.new
 
 # Authenticate calls
-client.authentication = # ... use the googleauth gem to create credentials
+client.authorization = # ... use the googleauth gem to create credentials
 ```
 
 See the class reference docs for information on the methods you can call from a client.
@@ -60,8 +60,8 @@ See the class reference docs for information on the methods you can call from a 
 
 More detailed descriptions of the Google simple REST clients are available in two documents.
 
- *  The [Usage Guide](https://github.com/googleapis/google-api-ruby-client/blob/master/docs/usage-guide.md) discusses how to make API calls, how to use the provided data structures, and how to work the various features of the client library, including media upload and download, error handling, retries, pagination, and logging.
- *  The [Auth Guide](https://github.com/googleapis/google-api-ruby-client/blob/master/docs/auth-guide.md) discusses authentication in the client libraries, including API keys, OAuth 2.0, service accounts, and environment variables.
+ *  The [Usage Guide](https://github.com/googleapis/google-api-ruby-client/blob/main/docs/usage-guide.md) discusses how to make API calls, how to use the provided data structures, and how to work the various features of the client library, including media upload and download, error handling, retries, pagination, and logging.
+ *  The [Auth Guide](https://github.com/googleapis/google-api-ruby-client/blob/main/docs/auth-guide.md) discusses authentication in the client libraries, including API keys, OAuth 2.0, service accounts, and environment variables.
 
 (Note: the above documents are written for the simple REST clients in general, and their examples may not reflect the Assuredworkloads service in particular.)
 
@@ -79,7 +79,7 @@ Gem names for modern clients are often of the form `google-cloud-<service_name>`
 
 **For most users, we recommend the modern client, if one is available.** Compared with simple clients, modern clients are generally much easier to use and more Ruby-like, support more advanced features such as streaming and long-running operations, and often provide much better performance. You may consider using a simple client instead, if a modern client is not yet available for the service you want to use, or if you are not able to use gRPC on your infrastructure.
 
-The [product documentation](https://cloud.google.com) may provide guidance regarding the preferred client library to use.
+The [product documentation](https://cloud.google.com/learnmoreurl) may provide guidance regarding the preferred client library to use.
 
 ## Supported Ruby versions
 

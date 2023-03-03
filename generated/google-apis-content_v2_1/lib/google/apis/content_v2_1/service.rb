@@ -84,9 +84,10 @@ module Google
         # @param [Fixnum] account_id
         #   The ID of the account whose website is claimed.
         # @param [Boolean] overwrite
-        #   Only available to selected merchants. When set to `True`, this flag removes
-        #   any existing claim on the requested website by another account and replaces it
-        #   with a claim from this account.
+        #   Only available to selected merchants, for example multi-client accounts (MCAs)
+        #   and their sub-accounts. When set to `True`, this flag removes any existing
+        #   claim on the requested website and replaces it with a claim from the account
+        #   that makes the request.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2141,14 +2142,13 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Retrieves the list of accessible Google My Business accounts.
+        # Retrieves the list of accessible Business Profiles.
         # @param [Fixnum] merchant_id
         #   The ID of the managing account. If this parameter is not the same as accountId,
         #   then this account must be a multi-client account and `accountId` must be the
         #   ID of a sub-account of this account.
         # @param [Fixnum] account_id
-        #   The ID of the account for which to retrieve accessible Google My Business
-        #   accounts.
+        #   The ID of the account for which to retrieve accessible Business Profiles.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2241,15 +2241,15 @@ module Google
           execute_or_queue_command(command, &block)
         end
         
-        # Requests access to a specified Google My Business account.
+        # Requests access to a specified Business Profile.
         # @param [Fixnum] merchant_id
         #   The ID of the managing account. If this parameter is not the same as accountId,
         #   then this account must be a multi-client account and `accountId` must be the
         #   ID of a sub-account of this account.
         # @param [Fixnum] account_id
-        #   The ID of the account for which GMB access is requested.
+        #   The ID of the account for which Business Profile access is requested.
         # @param [String] gmb_email
-        #   The email of the Google My Business account.
+        #   The email of the Business Profile.
         # @param [String] fields
         #   Selector specifying which fields to include in a partial response.
         # @param [String] quota_user
@@ -2372,8 +2372,7 @@ module Google
         #   then this account must be a multi-client account and `accountId` must be the
         #   ID of a sub-account of this account.
         # @param [Fixnum] account_id
-        #   The ID of the account for which to retrieve accessible Google My Business
-        #   accounts.
+        #   The ID of the account for which to retrieve accessible Business Profiles.
         # @param [String] country
         #   The country for which the POS data provider is selected.
         # @param [Fixnum] pos_data_provider_id
@@ -4512,6 +4511,39 @@ module Google
           command.response_representation = Google::Apis::ContentV2_1::Promotion::Representation
           command.response_class = Google::Apis::ContentV2_1::Promotion
           command.params['merchantId'] = merchant_id unless merchant_id.nil?
+          command.query['fields'] = fields unless fields.nil?
+          command.query['quotaUser'] = quota_user unless quota_user.nil?
+          execute_or_queue_command(command, &block)
+        end
+        
+        # Retrieves a promotion from your Merchant Center account.
+        # @param [Fixnum] merchant_id
+        #   Required. The ID of the account that contains the collection.
+        # @param [String] id
+        #   Required. REST ID of the promotion to retrieve.
+        # @param [String] fields
+        #   Selector specifying which fields to include in a partial response.
+        # @param [String] quota_user
+        #   Available to use for quota purposes for server-side applications. Can be any
+        #   arbitrary string assigned to a user, but should not exceed 40 characters.
+        # @param [Google::Apis::RequestOptions] options
+        #   Request-specific options
+        #
+        # @yield [result, err] Result & error if block supplied
+        # @yieldparam result [Google::Apis::ContentV2_1::Promotion] parsed result object
+        # @yieldparam err [StandardError] error object if request failed
+        #
+        # @return [Google::Apis::ContentV2_1::Promotion]
+        #
+        # @raise [Google::Apis::ServerError] An error occurred on the server and the request can be retried
+        # @raise [Google::Apis::ClientError] The request is invalid and should not be retried without modification
+        # @raise [Google::Apis::AuthorizationError] Authorization is required
+        def get_promotion(merchant_id, id, fields: nil, quota_user: nil, options: nil, &block)
+          command = make_simple_command(:get, '{merchantId}/promotions/{id}', options)
+          command.response_representation = Google::Apis::ContentV2_1::Promotion::Representation
+          command.response_class = Google::Apis::ContentV2_1::Promotion
+          command.params['merchantId'] = merchant_id unless merchant_id.nil?
+          command.params['id'] = id unless id.nil?
           command.query['fields'] = fields unless fields.nil?
           command.query['quotaUser'] = quota_user unless quota_user.nil?
           execute_or_queue_command(command, &block)
